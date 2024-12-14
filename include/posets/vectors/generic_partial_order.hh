@@ -4,8 +4,10 @@ namespace posets::vectors {
   template <typename Vec>
   class generic_partial_order {
     public:
-      generic_partial_order (const Vec& lhs, const Vec& rhs) : lhs {lhs}, rhs {rhs},
-                                                     nblocks {lhs.data_size ()} {
+      generic_partial_order (const Vec& lhs, const Vec& rhs)
+        : lhs {lhs},
+          rhs {rhs},
+          nblocks {lhs.data_size ()} {
         if constexpr (requires { lhs.sum; }) {
           bgeq = (lhs.sum >= rhs.sum);
           if (not bgeq)
@@ -25,7 +27,8 @@ namespace posets::vectors {
           }
           else {
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
+              auto diff =
+                  lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
               bgeq = bgeq and (diff >= 0);
               bleq = bleq and (diff <= 0);
             }
@@ -56,7 +59,8 @@ namespace posets::vectors {
             bgeq = bgeq and (std::experimental::all_of (lhs.data ()[up_to] >= rhs.data ()[up_to]));
           else
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
+              auto diff =
+                  lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
               bgeq = bgeq and (diff >= 0);
             }
 
@@ -76,7 +80,8 @@ namespace posets::vectors {
             bleq = bleq and (std::experimental::all_of (lhs.data ()[up_to] <= rhs.data ()[up_to]));
           else
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
+              auto diff =
+                  lhs[up_to * Vec::items_per_block + i] - rhs[up_to * Vec::items_per_block + i];
               bleq = bleq and (diff <= 0);
             }
 
@@ -91,8 +96,7 @@ namespace posets::vectors {
       const Vec& rhs;
       const size_t nblocks;
       bool bgeq = true, bleq = true;
-      bool has_bgeq = false,
-        has_bleq = false;
+      bool has_bgeq = false, has_bleq = false;
       size_t up_to = 0;
   };
 }

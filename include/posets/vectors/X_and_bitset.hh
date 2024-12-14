@@ -2,8 +2,8 @@
 #include <bitset>
 
 #include <posets/concepts.hh>
-#include <posets/vectors/traits.hh>
 #include <posets/utils/vector_mm.hh>
+#include <posets/vectors/traits.hh>
 
 namespace posets::vectors {
 
@@ -18,50 +18,47 @@ namespace posets::vectors {
   template <typename X, size_t NBitsets>
   class X_and_bitset {
       static constexpr auto Bools = nbitsets_to_nbools (NBitsets);
+
     public:
       using value_type = typename X::value_type;
 
       X_and_bitset (size_t k) : k {k}, x {std::min (bitset_threshold, k)} {}
 
-      X_and_bitset (std::span<const value_type> v) :
-        k {v.size ()},
-        x {std::span (v.data (), std::min (bitset_threshold, k))},
-        sum {0}
-      {
+      X_and_bitset (std::span<const value_type> v)
+        : k {v.size ()},
+          x {std::span (v.data (), std::min (bitset_threshold, k))},
+          sum {0} {
         bools.reset ();
-        for (size_t i = bitset_threshold; i < k; ++i) {
+        for (size_t i = bitset_threshold; i < k; ++i)
           if ((bools[i - bitset_threshold] = (v[i] + 1)) == true)
             sum++;
-        }
         assert (sum == bools.count ());
       }
 
-      X_and_bitset (std::initializer_list<value_type> v) :
-        X_and_bitset (posets::utils::vector_mm<value_type> (v)) {}
+      X_and_bitset (std::initializer_list<value_type> v)
+        : X_and_bitset (posets::utils::vector_mm<value_type> (v)) {}
 
       size_t size () const { return k; }
 
       X_and_bitset (X_and_bitset&& other) = default;
 
     private:
-
-      X_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools) :
-        k {k},
-        x {std::move (x)},
-        bools {std::move (bools)} {
+      X_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools)
+        : k {k},
+          x {std::move (x)},
+          bools {std::move (bools)} {
         sum = this->bools.count ();
       }
 
-      X_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools, size_t sum) :
-        k {k},
-        x {std::move (x)},
-        bools {std::move (bools)},
-        sum {sum} {
+      X_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools, size_t sum)
+        : k {k},
+          x {std::move (x)},
+          bools {std::move (bools)},
+          sum {sum} {
         assert (sum == this->bools.count ());
       }
 
     public:
-
       // explicit copy operator
       X_and_bitset copy () const {
         std::bitset<Bools> b = bools;
@@ -99,13 +96,10 @@ namespace posets::vectors {
             bleq = bleq and po.leq ();
           }
 
-          inline bool geq () {
-            return bgeq;
-          }
+          inline bool geq () { return bgeq; }
 
-          inline bool leq () {
-            return bleq;
-          }
+          inline bool leq () { return bleq; }
+
         private:
           bool bgeq, bleq;
       };
@@ -116,12 +110,12 @@ namespace posets::vectors {
       }
 
       bool operator== (const X_and_bitset& rhs) const {
-        assert (not (sum != rhs.sum and bools == rhs.bools));
+        assert (not(sum != rhs.sum and bools == rhs.bools));
         return sum == rhs.sum and bools == rhs.bools and x == rhs.x;
       }
 
       bool operator!= (const X_and_bitset& rhs) const {
-        assert (not (sum != rhs.sum and bools == rhs.bools));
+        assert (not(sum != rhs.sum and bools == rhs.bools));
         return sum != rhs.sum or bools != rhs.bools or x != rhs.x;
       }
 
@@ -145,10 +139,11 @@ namespace posets::vectors {
       }
 
       auto bin () const {
-        auto bitset_bin = sum; // / (k - bitset_threshold);
+        auto bitset_bin = sum;  // / (k - bitset_threshold);
 
         // Even if X doesn't have bin (), our local sum is valid, in that:
-        //   if u dominates v, then in particular, it dominates it over the boolean part, so u.sum >= v.sum.
+        //   if u dominates v, then in particular, it dominates it over the boolean part, so u.sum
+        //   >= v.sum.
         if constexpr (has_bin<X>::value)
           bitset_bin += x.bin ();
 
@@ -164,11 +159,11 @@ namespace posets::vectors {
       }
 
     private:
-      size_t k; // used to be const, but it does not add much, and forces
-                // explicit definition of move operators.
+      size_t k;  // used to be const, but it does not add much, and forces
+                 // explicit definition of move operators.
       X x;
       std::bitset<Bools> bools;
-      size_t sum; // The sum of all the elements of bools (not of X) seen as 0/1 values.
+      size_t sum;  // The sum of all the elements of bools (not of X) seen as 0/1 values.
   };
 
   template <class X>

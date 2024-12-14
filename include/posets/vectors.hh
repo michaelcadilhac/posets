@@ -1,15 +1,15 @@
 #pragma once
 
 #include <posets/concepts.hh>
-#include <posets/vectors/generic.hh>
 #include <posets/vectors/X_and_bitset.hh>
+#include <posets/vectors/generic.hh>
 
 namespace posets::vectors {
 
   /// Instantiate all vector types stemming from generic:
   template <typename T, size_t K>
-  using simd_array_t = std::array<typename utils::simd_traits<T>::fssimd,
-                                  utils::simd_traits<T>::simds_for (K)>;
+  using simd_array_t =
+      std::array<typename utils::simd_traits<T>::fssimd, utils::simd_traits<T>::simds_for (K)>;
   static_assert (IsDataSimd<simd_array_t<char, 8>>);
 
   template <typename T, size_t K>
@@ -35,10 +35,11 @@ namespace posets::vectors {
   template <typename T>
   using simd_vector_backed_sum = generic<simd_vector_t<T>, true, true>;
 
-  #define ITEMS_PER_BLOCK 8
+#define ITEMS_PER_BLOCK 8
 
   template <typename T, size_t K>
-  using array_t = std::array<std::array<T, ITEMS_PER_BLOCK>, (K + ITEMS_PER_BLOCK - 1) / ITEMS_PER_BLOCK>;
+  using array_t =
+      std::array<std::array<T, ITEMS_PER_BLOCK>, (K + ITEMS_PER_BLOCK - 1) / ITEMS_PER_BLOCK>;
 
   static_assert (not IsDataSimd<array_t<char, 8>>);
 
@@ -66,14 +67,19 @@ namespace posets::vectors {
   using vector_backed_sum = generic<vector_t<T>, true, true>;
 
   template <typename T>
-  concept IsGenericVector = requires (T&& t) { { new generic (std::move (t)) } -> std::same_as<T*>; };
+  concept IsGenericVector = requires (T&& t) {
+    { new generic (std::move (t)) } -> std::same_as<T*>;
+  };
 
   template <template <typename, auto...> typename D, typename T>
-  requires IsGenericVector<D<T>> or IsGenericVector<D<T, 42>>
+    requires IsGenericVector<D<T>> or IsGenericVector<D<T, 42>>
   struct traits<D, T> {
       using qualified_type_t = decltype ([] () {
-        if constexpr (requires (D<T> d) { true; }) return D<T> (0); else return D<T, 42> (0);
-      } ());
+        if constexpr (requires (D<T> d) { true; })
+          return D<T> (0);
+        else
+          return D<T, 42> (0);
+      }());
 
       static constexpr auto capacity_for (size_t elts) {
         return qualified_type_t::blocks_for (elts) * qualified_type_t::items_per_block;
@@ -99,6 +105,7 @@ namespace posets::vectors {
 
 namespace std {
   template <posets::Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os, const V& v) { return v.print (os); }
+  inline std::ostream& operator<< (std::ostream& os, const V& v) {
+    return v.print (os);
+  }
 }

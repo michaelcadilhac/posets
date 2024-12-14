@@ -1,22 +1,22 @@
 #pragma once
 
 #include <cassert>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <vector>
 
 #include <posets/concepts.hh>
-
 #include <posets/downsets/kdtree_backed.hh>
 #include <posets/downsets/vector_backed.hh>
 
 // FIXME? the theory says it should be (exp (dim) < m)
-# define KD_THRESH(M, D)  (D * 2 < M)
+#define KD_THRESH(M, D) (D * 2 < M)
 
 #ifdef AC_DATA
-# define data_do(acts...) do { \
-    acts;                      \
-  } while (0)
+# define data_do(acts...) \
+   do {                   \
+     acts;                \
+   } while (0)
 #else
 # define data_do(x...)
 #endif
@@ -27,7 +27,7 @@ namespace posets::downsets {
   class vector_or_kdtree_backed;
 
   template <Vector V>
-  std::ostream& operator<<(std::ostream& os, const vector_or_kdtree_backed<V>& f);
+  std::ostream& operator<< (std::ostream& os, const vector_or_kdtree_backed<V>& f);
 
   template <Vector V>
   class vector_or_kdtree_backed {
@@ -36,7 +36,7 @@ namespace posets::downsets {
       std::unique_ptr<kdtree_backed<V>> kdtree;
 
       template <Vector V2>
-      friend std::ostream& operator<<(std::ostream& os, const vector_or_kdtree_backed<V2>& f);
+      friend std::ostream& operator<< (std::ostream& os, const vector_or_kdtree_backed<V2>& f);
 
       size_t dim () {
         if (this->vector != nullptr)
@@ -58,7 +58,8 @@ namespace posets::downsets {
             this->vector->intersect_with (std::move (*(other.vector)));
           else
             this->vector->union_with (std::move (*(other.vector)));
-        } else if (this->kdtree == nullptr && other.kdtree != nullptr) {
+        }
+        else if (this->kdtree == nullptr && other.kdtree != nullptr) {
           // case 2. reinterpret kdtree as vector
           assert (this->vector != nullptr);
           assert (other.vector == nullptr);
@@ -69,17 +70,20 @@ namespace posets::downsets {
             this->vector->intersect_with (std::move (B));
           else
             this->vector->union_with (std::move (B));
-        } else if (other.kdtree == nullptr && this->kdtree != nullptr) {
+        }
+        else if (other.kdtree == nullptr && this->kdtree != nullptr) {
           // case 3. again reinterpret kdtree as vector
           assert (other.vector != nullptr);
           assert (this->vector == nullptr);
-          this->vector = std::make_unique<vector_backed<V>> (std::move (this->kdtree->tree.vector_set));
+          this->vector =
+              std::make_unique<vector_backed<V>> (std::move (this->kdtree->tree.vector_set));
           this->kdtree = nullptr;
           if (inter)
             this->vector->intersect_with (std::move (*(other.vector)));
           else
             this->vector->union_with (std::move (*(other.vector)));
-        } else {
+        }
+        else {
           // case 4. we have two kdtrees, though we still
           // need to check if reinterpreting them as vectors
           // is easier
@@ -87,7 +91,8 @@ namespace posets::downsets {
           if (this->size () > other.size ()) {
             m = other.size ();
             n = this->size ();
-          } else {
+          }
+          else {
             m = this->size ();
             n = this->size ();
           }
@@ -96,8 +101,10 @@ namespace posets::downsets {
               this->kdtree->intersect_with (std::move (*(other.kdtree)));
             else
               this->kdtree->union_with (std::move (*(other.kdtree)));
-          } else {
-            this->vector = std::make_unique<vector_backed<V>> (std::move (this->kdtree->tree.vector_set));
+          }
+          else {
+            this->vector =
+                std::make_unique<vector_backed<V>> (std::move (this->kdtree->tree.vector_set));
             this->kdtree = nullptr;
             vector_backed<V> B = vector_backed<V> (std::move (other.kdtree->tree.vector_set));
             if (inter)
@@ -112,9 +119,8 @@ namespace posets::downsets {
         // kd-tree
         size_t m = this->size ();
         size_t dim = this->dim ();
-        data_do (std::cout << "|VEKD: downset_size="
-                         << dim << "," << m << "|" << std::endl);
-        if (this->kdtree == nullptr && KD_THRESH(m, dim)) {
+        data_do (std::cout << "|VEKD: downset_size=" << dim << "," << m << "|" << std::endl);
+        if (this->kdtree == nullptr && KD_THRESH (m, dim)) {
           this->kdtree = std::make_unique<kdtree_backed<V>> (std::move (this->vector->vector_set));
           this->vector = nullptr;
           data_do (std::cout << "VEKD: upgraded to kd-tree downset" << std::endl);
@@ -127,20 +133,20 @@ namespace posets::downsets {
       vector_or_kdtree_backed () = delete;
 
       vector_or_kdtree_backed (std::vector<V>&& elements) noexcept {
-        assert (elements.size() > 0);
+        assert (elements.size () > 0);
         size_t m = elements.size ();
         size_t dim = elements[0].size ();
-        data_do (std::cout << "|VEKD: downset_size="
-                         << dim << "," << m << "|" << std::endl);
+        data_do (std::cout << "|VEKD: downset_size=" << dim << "," << m << "|" << std::endl);
 
         // NOTE: we are checking the size BEFORE we actually create the
         // downset container; their respective constructors may reduce the
         // size by removing dominated elements... it's easier and clearer
         // to do the check here though
-        if (KD_THRESH(m, dim)) {
+        if (KD_THRESH (m, dim)) {
           this->kdtree = std::make_unique<kdtree_backed<V>> (std::move (elements));
           data_do (std::cout << "VEKD: created kd-tree downset" << std::endl);
-        } else {
+        }
+        else {
           this->vector = std::make_unique<vector_backed<V>> (std::move (elements));
           data_do (std::cout << "VEKD: created vector downset" << std::endl);
         }
@@ -154,9 +160,7 @@ namespace posets::downsets {
       template <typename F>
       auto apply (const F& lambda) const {
         const std::vector<V>& backing_vector =
-          this->kdtree != nullptr ?
-          this->kdtree->tree.vector_set :
-          this->vector->vector_set;
+            this->kdtree != nullptr ? this->kdtree->tree.vector_set : this->vector->vector_set;
         std::vector<V> ss;
         ss.reserve (backing_vector.size ());
 
@@ -193,25 +197,23 @@ namespace posets::downsets {
       }
 
       auto size () const {
-        return this->kdtree != nullptr? this->kdtree->size () : this->vector->size ();
+        return this->kdtree != nullptr ? this->kdtree->size () : this->vector->size ();
       }
 
-      auto        begin ()       { return this->kdtree != nullptr?
-                                          this->kdtree->begin () :
-                                          this->vector->begin (); }
-      const auto  begin () const { return this->kdtree != nullptr?
-                                          this->kdtree->begin () :
-                                          this->vector->begin (); }
-      auto        end ()         { return this->kdtree != nullptr?
-                                          this->kdtree->end () :
-                                          this->vector->end (); }
-      const auto  end () const   { return this->kdtree != nullptr?
-                                          this->kdtree->end () :
-                                          this->vector->end (); }
+      auto begin () {
+        return this->kdtree != nullptr ? this->kdtree->begin () : this->vector->begin ();
+      }
+      const auto begin () const {
+        return this->kdtree != nullptr ? this->kdtree->begin () : this->vector->begin ();
+      }
+      auto end () { return this->kdtree != nullptr ? this->kdtree->end () : this->vector->end (); }
+      const auto end () const {
+        return this->kdtree != nullptr ? this->kdtree->end () : this->vector->end ();
+      }
   };
 
   template <Vector V>
-  inline std::ostream& operator<<(std::ostream& os, const vector_or_kdtree_backed<V>& f) {
+  inline std::ostream& operator<< (std::ostream& os, const vector_or_kdtree_backed<V>& f) {
     if (f.kdtree != nullptr)
       os << *(f.kdtree) << std::endl;
     else

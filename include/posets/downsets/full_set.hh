@@ -1,12 +1,12 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
-#include <set>
-#include <iostream>
 #include <cassert>
-#include <list>
 #include <functional>
+#include <iostream>
+#include <list>
+#include <set>
+#include <vector>
 
 #include <posets/concepts.hh>
 
@@ -22,23 +22,17 @@ namespace posets::downsets {
       full_set (full_set&&) = default;
       full_set& operator= (full_set&&) = default;
 
-      full_set (V&& v) {
-        insert (std::move (v));
-      }
+      full_set (V&& v) { insert (std::move (v)); }
 
       full_set (std::vector<V>&& elements) noexcept {
-        assert (elements.size() > 0);
+        assert (elements.size () > 0);
         for (auto&& e : elements)
           insert (std::move (e));
       }
 
-      bool contains (const V& v) const {
-        return vector_set.find (v) != vector_set.end ();
-      }
+      bool contains (const V& v) const { return vector_set.find (v) != vector_set.end (); }
 
-      auto size () const {
-        return vector_set.size ();
-      }
+      auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
         if (vector_set.insert (std::move (v)).second) {
@@ -59,7 +53,7 @@ namespace posets::downsets {
           std::vector<typename V::value_type> elcopy (vector_set.front ().size ());
           elcopy.reserve (V::capacity_for (elcopy.size ()));
 
-          for (auto& el : vector_set) { // Iterate while making copies.
+          for (auto& el : vector_set) {  // Iterate while making copies.
             el.to_vector (elcopy);
             for (size_t i = 0; i < el.size (); ++i)
               if (elcopy[i] > -1) {
@@ -78,7 +72,6 @@ namespace posets::downsets {
       }
 
     public:
-
       void union_with (const full_set& other) {
         for (auto&& el : other)
           vector_set.insert (el.copy ());
@@ -87,9 +80,9 @@ namespace posets::downsets {
 
       void intersect_with (const full_set& other) {
         std::list<std::reference_wrapper<const V>> intersection;
-        std::set_intersection(vector_set.cbegin (), vector_set.cend (),
-                              other.vector_set.cbegin (), other.vector_set.cend (),
-                              std::inserter (intersection, intersection.begin()));
+        std::set_intersection (vector_set.cbegin (), vector_set.cend (),
+                               other.vector_set.cbegin (), other.vector_set.cend (),
+                               std::inserter (intersection, intersection.begin ()));
         if (intersection.size () != vector_set.size ()) {
           vector_set.clear ();
           for (auto& r : intersection)
@@ -117,19 +110,17 @@ namespace posets::downsets {
         return res;
       }
 
-      auto        begin ()       { return vector_set.begin (); }
-      const auto  begin () const { return vector_set.begin (); }
-      auto        end ()         { return vector_set.end (); }
-      const auto  end () const   { return vector_set.end (); }
+      auto begin () { return vector_set.begin (); }
+      const auto begin () const { return vector_set.begin (); }
+      auto end () { return vector_set.end (); }
+      const auto end () const { return vector_set.end (); }
 
     private:
       std::set<V> vector_set;
   };
 
   template <Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os, const full_set<V>& f)
-  {
+  inline std::ostream& operator<< (std::ostream& os, const full_set<V>& f) {
     for (auto&& el : f)
       os << el << std::endl;
 

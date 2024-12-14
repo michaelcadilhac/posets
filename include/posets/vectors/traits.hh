@@ -15,7 +15,7 @@ namespace posets::vectors {
   //       if u.bin () < v.bin (), then u can't dominate v.
   // or equivalently:
   //       if u dominates v, then u.bin () >= v.bin ()
-  template<class T, class = void>
+  template <class T, class = void>
   struct has_bin : std::false_type {};
 
   template <class T>

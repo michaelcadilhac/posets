@@ -17,21 +17,23 @@ namespace posets::vectors {
 
   /// Conditional member when has_sum is set in @a simd_array_backed_.
   template <bool has_sum>
-  struct sum_member { int sum = 0; };
+  struct sum_member {
+      int sum = 0;
+  };
 
-  template<>
+  template <>
   struct sum_member<false> {};
 
   /// Conditional member when embeds_data is unset in @a simd_array_backed_.
   template <typename Data>
   struct basic_malloc {
       static Data* construct () { return new Data (); }
-      static void  destroy (Data* d) { delete (d); }
+      static void destroy (Data* d) { delete (d); }
   };
 
   template <bool embeds_data, typename Data>
   struct malloc_member {
-      //static inline boost::object_pool<Data> malloc {8192};
+      // static inline boost::object_pool<Data> malloc {8192};
       static inline basic_malloc<Data> malloc;
   };
 

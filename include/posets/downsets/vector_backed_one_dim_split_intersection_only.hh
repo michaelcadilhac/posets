@@ -1,31 +1,30 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
-#include <set>
-#include <iostream>
 #include <cassert>
+#include <iostream>
+#include <set>
+#include <vector>
 
 #include <posets/concepts.hh>
-
 #include <posets/utils/vector_mm.hh>
 
 namespace posets::downsets {
   template <Vector V>
   class vector_backed_one_dim_split_intersection_only {
       using self = vector_backed_one_dim_split_intersection_only;
+
     public:
       typedef V value_type;
 
-      vector_backed_one_dim_split_intersection_only (V&& v) {
-        insert (std::move (v));
-      }
+      vector_backed_one_dim_split_intersection_only (V&& v) { insert (std::move (v)); }
 
       vector_backed_one_dim_split_intersection_only (std::vector<V>&& elements) noexcept {
-        assert (elements.size() > 0);
+        assert (elements.size () > 0);
         for (auto&& e : elements)
           insert (std::move (e));
       }
+
     private:
       vector_backed_one_dim_split_intersection_only () = default;
 
@@ -44,9 +43,7 @@ namespace posets::downsets {
         return false;
       }
 
-      auto size () const {
-        return vector_set.size ();
-      }
+      auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
         bool must_remove = false;
@@ -56,23 +53,25 @@ namespace posets::downsets {
         auto end = vector_set.end ();
 
         for (auto it = result; it != end; ++it) {
-	  auto res = v.partial_order (*it);
-	  if (not must_remove and res.leq ()) { // v is dominated.
-	    // if must_remove is true, since we started with an antichain,
-	    // it's not possible that res.leq () holds.  Hence we don't check for
-	    // leq if must_remove is true.
-	    return false;
-	  } else if (res.geq ()) { // v dominates *it
-	    must_remove = true; /* *it should be removed */
-	  } else { // *it needs to be kept
-	    if (result != it) // This can be false only on the first element.
-	      *result = std::move (*it);
-	    ++result;
-	  }
+          auto res = v.partial_order (*it);
+          if (not must_remove and res.leq ()) {  // v is dominated.
+            // if must_remove is true, since we started with an antichain,
+            // it's not possible that res.leq () holds.  Hence we don't check for
+            // leq if must_remove is true.
+            return false;
+          }
+          else if (res.geq ()) {  // v dominates *it
+            must_remove = true;   /* *it should be removed */
+          }
+          else {               // *it needs to be kept
+            if (result != it)  // This can be false only on the first element.
+              *result = std::move (*it);
+            ++result;
+          }
         }
 
         if (result != vector_set.end ())
-	  vector_set.erase (result, vector_set.end ());
+          vector_set.erase (result, vector_set.end ());
         vector_set.push_back (std::move (v));
         return true;
       }
@@ -125,18 +124,17 @@ namespace posets::downsets {
               return split_cache.at (x[0]);
             } catch (...) {
               auto& cv = split_cache[x[0]];
-              for (const auto& y : other.vector_set) {
+              for (const auto& y : other.vector_set)
                 if (y[0] >= x[0])
                   cv.first.insert (std::ref (y));
                 else
                   cv.second.push_back (std::ref (y));
-              }
               return cv;
             }
           }) ();
 
           auto meet = [&] (std::reference_wrapper<const V> y) {
-            V &&v = x.meet (y.get ());
+            V&& v = x.meet (y.get ());
             if (v == x)
               dominated = true;
             intersection.insert (std::move (v));
@@ -164,20 +162,18 @@ namespace posets::downsets {
         return res;
       }
 
-      auto        begin ()      { return vector_set.begin (); }
-      const auto  begin() const { return vector_set.begin (); }
-      auto        end()         { return vector_set.end (); }
-      const auto  end() const   { return vector_set.end (); }
+      auto begin () { return vector_set.begin (); }
+      const auto begin () const { return vector_set.begin (); }
+      auto end () { return vector_set.end (); }
+      const auto end () const { return vector_set.end (); }
 
     private:
       std::vector<V> vector_set;
-   };
+  };
 
   template <Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os,
-                           const vector_backed_one_dim_split_intersection_only<V>& f)
-  {
+  inline std::ostream& operator<< (std::ostream& os,
+                                   const vector_backed_one_dim_split_intersection_only<V>& f) {
     for (auto&& el : f)
       os << el << std::endl;
 

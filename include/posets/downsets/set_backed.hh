@@ -1,13 +1,13 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
-#include <set>
-#include <iostream>
 #include <cassert>
-#include <posets/utils/ref_ptr_cmp.hh>
+#include <iostream>
+#include <set>
+#include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/ref_ptr_cmp.hh>
 
 namespace posets::downsets {
   template <Vector V>
@@ -24,10 +24,7 @@ namespace posets::downsets {
           insert (std::move (v));
       }
 
-
-      set_backed (V&& v) noexcept {
-        insert (std::move (v));
-      }
+      set_backed (V&& v) noexcept { insert (std::move (v)); }
 
       set_backed (const set_backed&) = delete;
       set_backed (set_backed&&) = default;
@@ -40,9 +37,7 @@ namespace posets::downsets {
         return false;
       }
 
-      auto size () const {
-        return vector_set.size ();
-      }
+      auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
         utils::reference_wrapper_set<const V> to_remove;
@@ -53,7 +48,8 @@ namespace posets::downsets {
           if (po.leq ()) {
             should_be_inserted = false;
             break;
-          } else if (po.geq ()) {
+          }
+          else if (po.geq ()) {
             should_be_inserted = true;
             to_remove.insert (std::cref (e));
           }
@@ -62,9 +58,8 @@ namespace posets::downsets {
         for (const auto& elt : to_remove)
           vector_set.erase (elt.get ());
 
-        if (should_be_inserted) {
+        if (should_be_inserted)
           vector_set.insert (std::move (v));
-        }
 
         return should_be_inserted;
       }
@@ -82,7 +77,7 @@ namespace posets::downsets {
           bool dominated = false;
 
           for (const auto& y : other.vector_set) {
-            V &&v = x.meet (y);
+            V&& v = x.meet (y);
             if (v == x)
               dominated = true;
             intersection.insert (std::move (v));
@@ -94,9 +89,8 @@ namespace posets::downsets {
           smaller_set |= not dominated;
         }
 
-        if (smaller_set) {
+        if (smaller_set)
           this->vector_set = std::move (intersection.vector_set);
-        }
       }
 
       template <typename F>
@@ -117,20 +111,17 @@ namespace posets::downsets {
         return res;
       }
 
-      auto        begin ()       { return vector_set.begin (); }
-      const auto  begin () const { return vector_set.begin (); }
-      auto        end ()         { return vector_set.end (); }
-      const auto  end () const   { return vector_set.end (); }
-
+      auto begin () { return vector_set.begin (); }
+      const auto begin () const { return vector_set.begin (); }
+      auto end () { return vector_set.end (); }
+      const auto end () const { return vector_set.end (); }
 
     private:
       std::set<V> vector_set;
   };
 
   template <Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os, const set_backed<V>& f)
-  {
+  inline std::ostream& operator<< (std::ostream& os, const set_backed<V>& f) {
     for (auto&& el : f)
       os << el << std::endl;
 

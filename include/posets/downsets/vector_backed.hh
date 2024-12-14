@@ -1,9 +1,9 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
-#include <iostream>
 #include <cassert>
+#include <iostream>
+#include <vector>
 
 #include <posets/concepts.hh>
 
@@ -17,12 +17,10 @@ namespace posets::downsets {
     public:
       typedef V value_type;
 
-      vector_backed (V&& v) {
-        insert (std::move (v));
-      }
+      vector_backed (V&& v) { insert (std::move (v)); }
 
       vector_backed (std::vector<V>&& elements) noexcept {
-        assert (elements.size() > 0);
+        assert (elements.size () > 0);
         for (auto&& e : elements)
           insert (std::move (e));
       }
@@ -46,9 +44,7 @@ namespace posets::downsets {
         return false;
       }
 
-      auto size () const {
-        return vector_set.size ();
-      }
+      auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
         bool must_remove = false;
@@ -58,23 +54,25 @@ namespace posets::downsets {
         auto end = vector_set.end ();
 
         for (auto it = result; it != end; ++it) {
-	  auto res = v.partial_order (*it);
-	  if (not must_remove and res.leq ()) { // v is dominated.
-	    // if must_remove is true, since we started with an antichain,
-	    // it's not possible that res.leq () holds.  Hence we don't check for
-	    // leq if must_remove is true.
-	    return false;
-	  } else if (res.geq ()) { // v dominates *it
-	    must_remove = true; /* *it should be removed */
-	  } else { // *it needs to be kept
-	    if (result != it) // This can be false only on the first element.
-	      *result = std::move (*it);
-	    ++result;
-	  }
+          auto res = v.partial_order (*it);
+          if (not must_remove and res.leq ()) {  // v is dominated.
+            // if must_remove is true, since we started with an antichain,
+            // it's not possible that res.leq () holds.  Hence we don't check for
+            // leq if must_remove is true.
+            return false;
+          }
+          else if (res.geq ()) {  // v dominates *it
+            must_remove = true;   /* *it should be removed */
+          }
+          else {               // *it needs to be kept
+            if (result != it)  // This can be false only on the first element.
+              *result = std::move (*it);
+            ++result;
+          }
         }
 
         if (result != vector_set.end ())
-	  vector_set.erase (result, vector_set.end ());
+          vector_set.erase (result, vector_set.end ());
         vector_set.push_back (std::move (v));
         return true;
       }
@@ -116,19 +114,17 @@ namespace posets::downsets {
         return res;
       }
 
-      //auto        begin ()      { return vector_set.begin (); }
-      const auto  begin() const { return vector_set.begin (); }
-      //auto        end()         { return vector_set.end (); }
-      const auto  end() const   { return vector_set.end (); }
+      // auto        begin ()      { return vector_set.begin (); }
+      const auto begin () const { return vector_set.begin (); }
+      // auto        end()         { return vector_set.end (); }
+      const auto end () const { return vector_set.end (); }
 
       template <Vector V2>
       friend class vector_or_kdtree_backed;
   };
 
   template <Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os, const vector_backed<V>& f)
-  {
+  inline std::ostream& operator<< (std::ostream& os, const vector_backed<V>& f) {
     for (auto&& el : f)
       os << el << std::endl;
 

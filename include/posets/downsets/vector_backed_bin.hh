@@ -1,14 +1,15 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
-#include <set>
-#include <iostream>
 #include <cassert>
-#include <sstream>
 #include <cstdlib>
+#include <iostream>
+#include <set>
+#include <sstream>
+#include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/vectors/traits.hh>
 
 namespace posets::downsets {
   template <Vector V>
@@ -22,7 +23,7 @@ namespace posets::downsets {
       }
 
       vector_backed_bin (std::vector<V>&& elements) noexcept {
-        assert (elements.size() > 0);
+        assert (elements.size () > 0);
         vector_set.resize (elements[0].size ());
         for (auto&& e : elements)
           insert (std::move (e));
@@ -53,9 +54,7 @@ namespace posets::downsets {
         return false;
       }
 
-      auto size () const {
-        return _size;
-      }
+      auto size () const { return _size; }
 
       inline bool insert (V&& v, bool antichain = true) {
         size_t bin = bin_of (v);
@@ -72,15 +71,17 @@ namespace posets::downsets {
 
             for (auto it = result; it != end; ++it) {
               auto res = v.partial_order (*it);
-              if (not must_remove and res.leq ()) { // v is dominated.
+              if (not must_remove and res.leq ()) {  // v is dominated.
                 // if must_remove is true, since we started with an antichain,
                 // it's not possible that res.leq () holds.  Hence we don't check for
                 // leq if must_remove is true.
                 return false;
-              } else if (res.geq ()) { // v dominates *it
-                must_remove = true; /* *it should be removed */
-              } else { // *it needs to be kept
-                if (result != it) // This can be false only on the first element.
+              }
+              else if (res.geq ()) {  // v dominates *it
+                must_remove = true;   /* *it should be removed */
+              }
+              else {               // *it needs to be kept
+                if (result != it)  // This can be false only on the first element.
                   *result = std::move (*it);
                 ++result;
               }
@@ -95,9 +96,8 @@ namespace posets::downsets {
           } while (i != start);
         }
 
-        if (bin >= vector_set.size ()) {
+        if (bin >= vector_set.size ())
           vector_set.resize (bin + 1);
-        }
         vector_set[bin].push_back (std::move (v));
         ++_size;
         return true;
@@ -139,12 +139,13 @@ namespace posets::downsets {
 
             // These cannot dominate x
             for (ssize_t i = std::min (bin, other.vector_set.size () - 1); i >= 0; --i) {
-              for (auto&& it = other.vector_set[i].begin (); it != other.vector_set[i].end (); /* in-body */) {
+              for (auto&& it = other.vector_set[i].begin (); it != other.vector_set[i].end ();
+                   /* in-body */) {
                 V&& v = x.meet (*it);
                 if (v == *it) {
                   intersection.insert (std::move (v));
                   if (it != other.vector_set[i].end () - 1)
-                    std::swap (*it, other.vector_set[i].back());
+                    std::swap (*it, other.vector_set[i].back ());
                   other.vector_set[i].pop_back ();
                 }
                 else {
@@ -224,7 +225,6 @@ namespace posets::downsets {
       // const auto  begin() const { return const_iterator (vector_set, false); }
       // const auto  end()   const { return const_iterator (vector_set, true); }
 
-
       template <typename T>
       struct iterator {
           using value_type = T;
@@ -233,7 +233,8 @@ namespace posets::downsets {
           iterator () {}
 
           iterator (T first, T end) : it {first}, end {end} {
-            if (it == end) return;
+            if (it == end)
+              return;
             sub_it = it->begin ();
             sub_end = it->end ();
             stabilize ();
@@ -253,17 +254,13 @@ namespace posets::downsets {
           }
 
           bool operator!= (const iterator& other) const {
-            return not (it == other.it and end == other.end and
-                        (it == end or
-                         (sub_it == other.sub_it and
-                          sub_end == other.sub_end)));
+            return not(it == other.it and end == other.end and
+                       (it == end or (sub_it == other.sub_it and sub_end == other.sub_end)));
           }
 
-          bool operator== (const iterator& other) const {
-            return not (*this != other);
-          }
+          bool operator== (const iterator& other) const { return not(*this != other); }
 
-          auto&& operator* () const { return *sub_it;}
+          auto&& operator* () const { return *sub_it; }
 
         private:
           void stabilize () {
@@ -279,17 +276,19 @@ namespace posets::downsets {
           decltype (T ()->begin ()) sub_it, sub_end;
       };
 
-      const auto begin() const {
+      const auto begin () const {
         // Making the type explicit for clang.
-        return iterator<decltype (vector_set.crbegin ())>  (vector_set.crbegin (), vector_set.crend ());
+        return iterator<decltype (vector_set.crbegin ())> (vector_set.crbegin (),
+                                                           vector_set.crend ());
       }
 
-      const auto end() const {
+      const auto end () const {
         // Making the type explicit for clang.
-        return iterator<decltype (vector_set.crbegin ())> (vector_set.crend (), vector_set.crend ());
+        return iterator<decltype (vector_set.crbegin ())> (vector_set.crend (),
+                                                           vector_set.crend ());
       }
       using vector_set_t = std::vector<std::vector<V>>;
-      vector_set_t vector_set; // [n] -> all the vectors with v.bin() = n
+      vector_set_t vector_set;  // [n] -> all the vectors with v.bin() = n
       size_t _size = 0;
 
       // Surely: if bin_of (u) > bin_of (v), then v can't dominate u.
@@ -301,9 +300,7 @@ namespace posets::downsets {
   };
 
   template <Vector V>
-  inline
-  std::ostream& operator<<(std::ostream& os, const vector_backed_bin<V>& f)
-  {
+  inline std::ostream& operator<< (std::ostream& os, const vector_backed_bin<V>& f) {
     for (auto&& el : f)
       os << el << std::endl;
 

@@ -1,31 +1,31 @@
 #pragma once
 
-#include <cstring>
 #include <cassert>
+#include <cstring>
 #include <experimental/simd>
 #include <iostream>
 
 #include <posets/concepts.hh>
 #include <posets/utils/simd_traits.hh>
-
-#include <posets/vectors/generic_partial_order.hh>
 #include <posets/vectors/generic_helpers.hh>
+#include <posets/vectors/generic_partial_order.hh>
 
 namespace posets::vectors {
   template <typename Data, bool has_sum, bool embeds_data>
-  requires HasData<Data>
-  class generic :
-      private sum_member<has_sum>,
-      private malloc_member<embeds_data, Data> {
-
+    requires HasData<Data>
+  class generic : private sum_member<has_sum>, private malloc_member<embeds_data, Data> {
     public:
       using block_type = typename Data::value_type;
       using value_type = block_type::value_type;
-      static const auto uses_simd = [] () { if constexpr (IsDataSimd<Data>) return true; else return false; } ();
+      static const auto uses_simd = [] () {
+        if constexpr (IsDataSimd<Data>)
+          return true;
+        else
+          return false;
+      }();
 
     public:
       static const auto items_per_block = sizeof (block_type) / sizeof (value_type);
-
 
       static constexpr size_t blocks_for (size_t nelts) {
         return (nelts + items_per_block - 1) / items_per_block;
@@ -34,12 +34,12 @@ namespace posets::vectors {
     private:
       static const bool is_resizable = ([] () {
         if constexpr (requires (Data d) { d.resize (42); })
-            return true;
-          else
-            return false;
+          return true;
+        else
+          return false;
       }) ();
 
-      static_assert (not (is_resizable and not embeds_data),
+      static_assert (not(is_resizable and not embeds_data),
                      "Resizable data should be embeded, as they are already managed by pointers.");
 
       block_type* data () {
@@ -57,7 +57,10 @@ namespace posets::vectors {
       }
 
       size_t data_size () const {
-        if constexpr (embeds_data) return _data.size (); else return _data->size ();
+        if constexpr (embeds_data)
+          return _data.size ();
+        else
+          return _data->size ();
       }
 
       void clear_back () {
@@ -69,12 +72,16 @@ namespace posets::vectors {
       }
 
     public:
-      generic (size_t k) requires is_resizable
-        : k {k}, _data {blocks_for (k)} {
+      generic (size_t k)
+        requires is_resizable
+        : k {k},
+          _data {blocks_for (k)} {
         clear_back ();
       }
 
-      generic (size_t k) requires (not is_resizable) : k {k} {
+      generic (size_t k)
+        requires (not is_resizable)
+        : k {k} {
         if constexpr (not embeds_data)
           _data = this->malloc.construct ();
         assert (data_size () >= blocks_for (k));
@@ -87,18 +94,23 @@ namespace posets::vectors {
           for (auto&& c : v)
             this->sum += c;
         }
-        std::memcpy (reinterpret_cast<value_type*> (data ()), v.data (), v.size () * sizeof (value_type));
+        std::memcpy (reinterpret_cast<value_type*> (data ()), v.data (),
+                     v.size () * sizeof (value_type));
       }
 
       generic () = delete;
       generic (const generic& other) = delete;
       generic (generic&& other) : k {other.k}, _data {other._data} {
-        if constexpr (not embeds_data) other._data = nullptr;
-        if constexpr (has_sum) this->sum = other.sum;
+        if constexpr (not embeds_data)
+          other._data = nullptr;
+        if constexpr (has_sum)
+          this->sum = other.sum;
       }
 
       ~generic () {
-        if constexpr (not embeds_data) if (_data) this->malloc.destroy (_data);
+        if constexpr (not embeds_data)
+          if (_data)
+            this->malloc.destroy (_data);
       }
 
       // explicit copy operator
@@ -106,23 +118,28 @@ namespace posets::vectors {
         if constexpr (embeds_data) {
           auto res = generic (k);
           res._data = _data;
-          if constexpr (has_sum) res.sum = this->sum;
+          if constexpr (has_sum)
+            res.sum = this->sum;
           return res;
         }
         else {
           auto res = generic (std::span ((value_type*) _data, k));
-          if constexpr (has_sum) res.sum = this->sum;
+          if constexpr (has_sum)
+            res.sum = this->sum;
           return res;
         }
       }
 
       generic& operator= (generic&& other) {
         if constexpr (not embeds_data)
-          if (_data) this->malloc.destroy (_data);
+          if (_data)
+            this->malloc.destroy (_data);
         k = other.k;
         _data = other._data;
-        if constexpr (not embeds_data) other._data = nullptr;
-        if constexpr (has_sum) this->sum = other.sum;
+        if constexpr (not embeds_data)
+          other._data = nullptr;
+        if constexpr (has_sum)
+          this->sum = other.sum;
 
         return *this;
       }
@@ -179,7 +196,8 @@ namespace posets::vectors {
 
       generic meet (const generic& rhs) const {
         auto res = generic (k);
-        if constexpr (not embeds_data) res._data = this->malloc.construct ();
+        if constexpr (not embeds_data)
+          res._data = this->malloc.construct ();
 
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd)
@@ -202,12 +220,9 @@ namespace posets::vectors {
         return res;
       }
 
-      auto size () const {
-        return k;
-      }
+      auto size () const { return k; }
 
-      auto& print (std::ostream& os) const
-      {
+      auto& print (std::ostream& os) const {
         os << "{ ";
         for (size_t i = 0; i < k; ++i)
           os << (int) (*this)[i] << " ";
@@ -216,28 +231,24 @@ namespace posets::vectors {
       }
 
     private:
-      value_type& at (size_t i) {
-        return *(reinterpret_cast<value_type*> (data ()) + i);
-      }
+      value_type& at (size_t i) { return *(reinterpret_cast<value_type*> (data ()) + i); }
 
       const value_type& at (size_t i) const {
         return *(reinterpret_cast<const value_type*> (data ()) + i);
       }
 
     public:
-      const value_type& operator[] (size_t i) const {
-        return at (i);
-      }
+      const value_type& operator[] (size_t i) const { return at (i); }
 
       using iterator = value_type*;
       using const_iterator = const value_type*;
 
-      iterator begin () { return iterator (data()); }
-      const_iterator begin() const { return const_iterator (data ()); }
-      iterator end() { return iterator (data ()) + k; }
-      const_iterator end() const { return const_iterator (data ()) + k; }
-    public:
+      iterator begin () { return iterator (data ()); }
+      const_iterator begin () const { return const_iterator (data ()); }
+      iterator end () { return iterator (data ()) + k; }
+      const_iterator end () const { return const_iterator (data ()) + k; }
 
+    public:
       auto bin () const {
         if constexpr (has_sum)
           return std::abs (this->sum) / k;

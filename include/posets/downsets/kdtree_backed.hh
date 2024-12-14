@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cassert>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <memory>
 #include <set>
 #include <vector>
@@ -16,7 +16,7 @@ namespace posets::downsets {
   class kdtree_backed;
 
   template <Vector V>
-  std::ostream& operator<<(std::ostream& os, const kdtree_backed<V>& f);
+  std::ostream& operator<< (std::ostream& os, const kdtree_backed<V>& f);
 
   // Another forward def to have friend status
   template <Vector V>
@@ -29,19 +29,19 @@ namespace posets::downsets {
       utils::kdtree<V> tree;
 
       template <Vector V2>
-      friend std::ostream& operator<<(std::ostream& os, const kdtree_backed<V2>& f);
+      friend std::ostream& operator<< (std::ostream& os, const kdtree_backed<V2>& f);
 
       struct proj {
           const V& operator() (const V* pv) { return *pv; }
-          V&& operator() (V*&& pv)          { return std::move (*pv); }
+          V&& operator() (V*&& pv) { return std::move (*pv); }
       };
 
       void inline reset_tree (std::vector<V>&& elements) noexcept {
         std::vector<V*> pelements;
-        for (auto& e : elements) pelements.push_back (&e);
+        for (auto& e : elements)
+          pelements.push_back (&e);
 
-        std::sort (pelements.begin (),
-                   pelements.end (),
+        std::sort (pelements.begin (), pelements.end (),
                    // A strict total order.
                    [] (const V* v1, const V* v2) {
                      // A quite costly thing to do.
@@ -50,7 +50,7 @@ namespace posets::downsets {
                          return false;
                        if ((*v1)[i] < (*v2)[i])
                          return true;
-                      }
+                     }
                      // Equal MUST return false.
                      return false;
                    });
@@ -83,13 +83,9 @@ namespace posets::downsets {
 
       kdtree_backed () = delete;
 
-      kdtree_backed (std::vector<V>&& elements) noexcept {
-        reset_tree (std::move (elements));
-      }
+      kdtree_backed (std::vector<V>&& elements) noexcept { reset_tree (std::move (elements)); }
 
-      kdtree_backed (V&& e) :
-        tree ( std::array<V, 1> { std::move (e) } )
-      {}
+      kdtree_backed (V&& e) : tree (std::array<V, 1> {std::move (e)}) {}
 
       template <typename F>
       auto apply (const F& lambda) const {
@@ -108,9 +104,7 @@ namespace posets::downsets {
       kdtree_backed& operator= (const kdtree_backed&) = delete;
       kdtree_backed& operator= (kdtree_backed&&) = default;
 
-      bool contains (const V& v) const {
-        return this->tree.dominates(v);
-      }
+      bool contains (const V& v) const { return this->tree.dominates (v); }
 
       // Union in place
       void union_with (kdtree_backed&& other) {
@@ -168,20 +162,18 @@ namespace posets::downsets {
         reset_tree (std::move (intersection));
       }
 
-      auto size () const {
-        return this->tree.size ();
-      }
+      auto size () const { return this->tree.size (); }
 
-      auto        begin ()       { return this->tree.begin (); }
-      const auto  begin () const { return this->tree.begin (); }
-      auto        end ()         { return this->tree.end (); }
-      const auto  end () const   { return this->tree.end (); }
+      auto begin () { return this->tree.begin (); }
+      const auto begin () const { return this->tree.begin (); }
+      auto end () { return this->tree.end (); }
+      const auto end () const { return this->tree.end (); }
 
       friend class vector_or_kdtree_backed<V>;
   };
 
   template <Vector V>
-  inline std::ostream& operator<<(std::ostream& os, const kdtree_backed<V>& f) {
+  inline std::ostream& operator<< (std::ostream& os, const kdtree_backed<V>& f) {
     os << f.tree << std::endl;
     return os;
   }
