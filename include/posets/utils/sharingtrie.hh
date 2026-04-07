@@ -1,14 +1,12 @@
 #pragma once
 
 #include <unordered_map>
-#include <unordered_set>
 
+#include <algorithm>
 #include <boost/functional/hash.hpp>
 #include <cassert>
 #include <iostream>
-#include <map>
 #include <ranges>
-#include <stack>
 #include <tuple>
 #include <vector>
 
@@ -46,6 +44,17 @@ namespace posets::utils {
       size_t bt_size;
       std::vector<V> vector_set;
 
+      // Generation-stamp cache for dominates(): avoids allocating hash sets on
+      // every call.  After color_as_dfa() runs, dominates_stamp has size
+      // dim * (nxt_color * 2); entry [depth * nxt_color*2 + strict_color] holds
+      // the generation when that (depth, strict_color) pair was last seen.
+      // dominates() bumps dominates_gen on entry; on the rare unsigned wrap to 0
+      // the stamp array is cleared and the generation restarted at 1.
+      int nxt_color {0};
+      mutable std::vector<unsigned> dominates_stamp;
+      mutable unsigned dominates_gen {0};
+      mutable std::vector<std::tuple<int, short, bool>> dominates_stack;
+
       // We need to compare subtrees (assuming the trie construction
       // has been applied)
       struct intvec_hash {
@@ -54,18 +63,18 @@ namespace posets::utils {
           }
       };
 
-      // We change the sibling pointers/indices of children of the given nodes
+      // We change the sibling pointers/indices of children of nodes[start..end)
       // so that they form a single set of siblings
-      void string_children (const std::vector<int>& nodes) {
+      void string_children (const std::vector<int>& nodes, size_t start, size_t end) {
         // we fetch the first sibling, if there is one
-        st_node* cur = this->bin_tree + nodes[0];
+        st_node* cur = this->bin_tree + nodes[start];
         if (cur->son == -1)
           return;
         st_node* last = this->bin_tree + cur->son;
         // now, for all remaining nodes we
         // (1) get to the last sibling
         // (2) link to the next first sibling and
-        for (size_t i = 1; i < nodes.size (); i++) {
+        for (size_t i = start + 1; i < end; i++) {
           while (last->bro > -1)
             last = this->bin_tree + last->bro;
           cur = this->bin_tree + nodes[i];
@@ -75,15 +84,19 @@ namespace posets::utils {
       }
 
       void to_trie () {
-        // A stack of node indices and
-        // modes (0 reorder siblings, 1 down, 2 right)
-        std::stack<std::tuple<int, short>> to_visit;
-        to_visit.emplace (this->root, 0);
+        // A vector used as a stack of node indices and
+        // modes (0 reorder siblings, 1 down, 2 right); bounded by dim so we
+        // can reserve upfront and avoid std::deque chunked allocation
+        std::vector<std::tuple<int, short>> to_visit;
+        to_visit.reserve (this->dim);
+        to_visit.emplace_back (this->root, 0);
+        // reused across mode-0 iterations to avoid repeated heap allocation
+        std::vector<int> sibs;
 
         while (not to_visit.empty ()) {
           assert (to_visit.size () <= this->dim);
-          const auto [idx, mode] = to_visit.top ();
-          to_visit.pop ();
+          const auto [idx, mode] = to_visit.back ();
+          to_visit.pop_back ();
 
           if (mode == 1) {
             // we are going down, so look for a son and push it into the
@@ -91,8 +104,8 @@ namespace posets::utils {
             // mode=right so that when we come back we move to its sibling
             st_node* cur = this->bin_tree + idx;
             if (cur->son > -1) {
-              to_visit.emplace (idx, 2);
-              to_visit.emplace (cur->son, 0);
+              to_visit.emplace_back (idx, 2);
+              to_visit.emplace_back (cur->son, 0);
             }
           }
           else if (mode == 2) {
@@ -100,33 +113,41 @@ namespace posets::utils {
             // stack in mode=down
             st_node* cur = this->bin_tree + idx;
             if (cur->bro > -1)
-              to_visit.emplace (cur->bro, 1);
+              to_visit.emplace_back (cur->bro, 1);
           }
           else if (mode == 0) {
-            // order nodes in label-decreasing order
-            std::map<int, std::vector<int>, std::greater<>> buckets;
+            // collect siblings into a vector and sort by label descending
+            // (single allocation reused across iterations, avoids map overhead)
+            sibs.clear ();
             int sib_idx = idx;
             while (sib_idx > -1) {
-              st_node* cur = this->bin_tree + sib_idx;
-              buckets[cur->label].push_back (sib_idx);
-              sib_idx = cur->bro;
+              sibs.push_back (sib_idx);
+              sib_idx = this->bin_tree[sib_idx].bro;
             }
-            // traverse the map in order to construct a set of children with the
-            // first node per label only (in decreasing order)
-            int head = -1;
-            st_node* prev;
-            for (auto& [label, nodes] : buckets) {
-              string_children (nodes);
-              if (head == -1)
-                head = nodes[0];
+            std::sort (sibs.begin (), sibs.end (), [this] (int a, int b) {
+              return this->bin_tree[a].label > this->bin_tree[b].label;
+            });
+            // process groups of same-label siblings and relink bro pointers
+            int head = sibs[0];
+            st_node* prev = nullptr;
+            size_t i = 0;
+            while (i < sibs.size ()) {
+              const auto label = this->bin_tree[sibs[i]].label;
+              size_t j = i + 1;
+              while (j < sibs.size () && this->bin_tree[sibs[j]].label == label)
+                j++;
+              string_children (sibs, i, j);
+              if (prev == nullptr)
+                head = sibs[i];
               else
-                prev->bro = nodes[0];
-              prev = this->bin_tree + nodes[0];
+                prev->bro = sibs[i];
+              prev = this->bin_tree + sibs[i];
+              i = j;
             }
             prev->bro = -1;
             // now, we either repair the root, or the top-of-stack node
             if (not to_visit.empty ()) {
-              const auto [idx_parent, mode_parent] = to_visit.top ();
+              const auto [idx_parent, mode_parent] = to_visit.back ();
               assert (mode_parent == 2);  // went down already, next time right
               st_node* parent = this->bin_tree + idx_parent;
               parent->son = head;
@@ -134,7 +155,7 @@ namespace posets::utils {
             else
               this->root = head;
             // finally we put the head back in the stack in mode=down
-            to_visit.emplace (head, 1);
+            to_visit.emplace_back (head, 1);
           }
           else
             assert (false);
@@ -145,14 +166,16 @@ namespace posets::utils {
         std::vector<std::vector<int>> layer (dim);
 
         // We collect the indices of nodes per layer via a DFS. For this, we
-        // use a stack of node indices and directions (0 down, 1 right)
-        std::stack<std::tuple<int, short>> to_visit;
-        to_visit.emplace (this->root, 0);
+        // use a vector as a stack of node indices and directions (0 down, 1 right);
+        // bounded by dim so we reserve upfront
+        std::vector<std::tuple<int, short>> to_visit;
+        to_visit.reserve (this->dim);
+        to_visit.emplace_back (this->root, 0);
 
         while (not to_visit.empty ()) {
           assert (to_visit.size () <= this->dim);
-          const auto [idx, direction] = to_visit.top ();
-          to_visit.pop ();
+          const auto [idx, direction] = to_visit.back ();
+          to_visit.pop_back ();
           st_node* cur = this->bin_tree + idx;
 
           // base case: reached the bottom layer
@@ -162,7 +185,7 @@ namespace posets::utils {
             layer[to_visit.size ()].push_back (idx);
             // is there a sibling?
             if (cur->bro > -1)
-              to_visit.emplace (cur->bro, 0);
+              to_visit.emplace_back (cur->bro, 0);
           }
           // recursive case: we need to push something into the stack
           else {
@@ -173,14 +196,14 @@ namespace posets::utils {
             if (direction == 0) {
               assert (cur->son > -1);
               layer[to_visit.size ()].push_back (idx);
-              to_visit.emplace (idx, 1);
-              to_visit.emplace (cur->son, 0);
+              to_visit.emplace_back (idx, 1);
+              to_visit.emplace_back (cur->son, 0);
             }
             // or we're already going right and we need to push its
             // sibling (and start by going down from there)
             else if (direction == 1) {
               if (cur->bro > -1)
-                to_visit.emplace (cur->bro, 0);
+                to_visit.emplace_back (cur->bro, 0);
             }
             else
               assert (false);
@@ -189,13 +212,16 @@ namespace posets::utils {
 
         // Now, per layer (in bottom-up fashion) we use a hash table to assign
         // "colors" to the nodes based on their label and the colors of their
-        // children.
+        // children. Both the key vector and the map are hoisted out of the
+        // inner loop to reuse their heap allocations across iterations.
         int nxt_color = 0;
+        std::vector<int> k;
+        std::unordered_map<std::vector<int>, std::vector<int>, intvec_hash> colors2indices;
         for (int i = this->dim - 1; i >= 0; i--) {
-          std::unordered_map<std::vector<int>, std::vector<int>, intvec_hash> colors2indices;
+          colors2indices.clear ();
           for (const int idx : layer[i]) {
             st_node* cur = this->bin_tree + idx;
-            std::vector<int> k;
+            k.clear ();
             k.push_back (cur->label);
             int son_idx = cur->son;
             while (son_idx > -1) {
@@ -215,6 +241,11 @@ namespace posets::utils {
             nxt_color += 1;
           }
         }
+        // Set up the generation-stamp cache and DFS stack for dominates()
+        this->nxt_color = nxt_color;
+        this->dominates_stamp.assign (this->dim * (nxt_color * 2), 0u);
+        this->dominates_gen = 0u;
+        this->dominates_stack.reserve (this->dim);
       }
 
     public:
@@ -302,7 +333,11 @@ namespace posets::utils {
           root (other.root),
           bin_tree (other.bin_tree),
           bt_size (other.bt_size),
-          vector_set (std::move (other.vector_set)) {
+          vector_set (std::move (other.vector_set)),
+          nxt_color (other.nxt_color),
+          dominates_stamp (std::move (other.dominates_stamp)),
+          dominates_gen (other.dominates_gen),
+          dominates_stack (std::move (other.dominates_stack)) {
         other.bin_tree = nullptr;
       }
       ~sharingtrie () { delete[] this->bin_tree; }
@@ -311,6 +346,10 @@ namespace posets::utils {
         this->root = other.root;
         this->bt_size = other.bt_size;
         this->vector_set = std::move (other.vector_set);
+        this->nxt_color = other.nxt_color;
+        this->dominates_stamp = std::move (other.dominates_stamp);
+        this->dominates_gen = other.dominates_gen;
+        this->dominates_stack = std::move (other.dominates_stack);
         // WARNING: 3 variable follows to make the whole thing safe for
         // self-assignment
         st_node* temp_tree = other.bin_tree;
@@ -335,18 +374,24 @@ namespace posets::utils {
         // the right subtrees afterwards). To speed things up, we keep track
         // of visited colors and strictness per level.
 
-        // First the DFS, for which we use a stack of node indices and
-        // directions (0 down, 1 right). We also keep track of the strictness
-        // required thus far.
-        std::stack<std::tuple<int, short, bool>> to_visit;
-        to_visit.emplace (this->root, 0, strict);
-        std::vector<std::unordered_set<int>> colors_visited (this->dim);
+        // Bump the generation counter; on unsigned wrap-around to 0 (roughly
+        // every 4 billion calls) clear the stamp array and restart at 1.
+        if (++this->dominates_gen == 0u) {
+          std::fill (this->dominates_stamp.begin (), this->dominates_stamp.end (), 0u);
+          ++this->dominates_gen;
+        }
+        const int sc_stride = this->nxt_color * 2;
+
+        // DFS: reuse the member stack (capacity already reserved to dim).
+        auto& to_visit = this->dominates_stack;
+        to_visit.clear ();
+        to_visit.emplace_back (this->root, 0, strict);
 
         bool ret = false;
         while (not to_visit.empty ()) {
           assert (to_visit.size () <= this->dim);
-          const auto [idx, direction, loc_strict] = to_visit.top ();
-          to_visit.pop ();
+          const auto [idx, direction, loc_strict] = to_visit.back ();
+          to_visit.pop_back ();
           st_node* cur = this->bin_tree + idx;
 
           // if we're already going right, we need to push its
@@ -356,7 +401,7 @@ namespace posets::utils {
             // leaves only reached going down
             assert (to_visit.size () < this->dim - 1);
             if (cur->bro > -1)
-              to_visit.emplace (cur->bro, 0, loc_strict);
+              to_visit.emplace_back (cur->bro, 0, loc_strict);
           }
           else if (direction == 0) {
             // This is a general check, if this does not hold, we can ignore
@@ -382,18 +427,19 @@ namespace posets::utils {
             else {
               assert (to_visit.size () < this->dim - 1);
               // before actually checking this subtree, we check if we've
-              // visited an equivalent one and otherwise mark it for the
-              // future; skipping = go to sibling directly (as in dir=1)
+              // visited an equivalent one (using the generation-stamp cache)
+              // and otherwise mark it for the future; skipping = go to sibling
               const int strict_color = (cur->color << 1) + (new_strict ? 1 : 0);
-              auto iter = colors_visited[to_visit.size ()].find (strict_color);
-              if (iter != colors_visited[to_visit.size ()].end ()) {
+              const size_t depth = to_visit.size ();
+              unsigned& stamp = this->dominates_stamp[depth * sc_stride + strict_color];
+              if (stamp == this->dominates_gen) {
                 if (cur->bro > -1)
-                  to_visit.emplace (cur->bro, 0, loc_strict);
+                  to_visit.emplace_back (cur->bro, 0, loc_strict);
               }
               else {
-                colors_visited[to_visit.size ()].insert (strict_color);
-                to_visit.emplace (idx, 1, loc_strict);
-                to_visit.emplace (cur->son, 0, new_strict);
+                stamp = this->dominates_gen;
+                to_visit.emplace_back (idx, 1, loc_strict);
+                to_visit.emplace_back (cur->son, 0, new_strict);
               }
             }
           }
@@ -404,16 +450,17 @@ namespace posets::utils {
       }
 
       [[nodiscard]] std::vector<V> get_all () const {
-        // A stack of node indices and directions (0 down, 1 right)
-        std::stack<std::tuple<int, short>> to_visit;
-        to_visit.emplace (this->root, 0);
+        // A vector used as a stack of node indices and directions (0 down, 1 right)
+        std::vector<std::tuple<int, short>> to_visit;
+        to_visit.reserve (this->dim);
+        to_visit.emplace_back (this->root, 0);
         std::vector<V> res;
         std::vector<typename V::value_type> temp;
 
         while (not to_visit.empty ()) {
           assert (to_visit.size () <= this->dim);
-          const auto [idx, direction] = to_visit.top ();
-          to_visit.pop ();
+          const auto [idx, direction] = to_visit.back ();
+          to_visit.pop_back ();
           st_node* cur = this->bin_tree + idx;
 
           // base case: reached the bottom layer
@@ -425,7 +472,7 @@ namespace posets::utils {
             temp.pop_back ();
             // is there a sibling with another label?
             if (cur->bro > -1)
-              to_visit.emplace (cur->bro, 0);
+              to_visit.emplace_back (cur->bro, 0);
           }
           // recursive case: we need to push something into the stack
           else {
@@ -435,16 +482,16 @@ namespace posets::utils {
             // first, and its child...
             if (direction == 0) {
               assert (cur->son > -1);
-              to_visit.emplace (idx, 1);
+              to_visit.emplace_back (idx, 1);
               temp.push_back (cur->label);
-              to_visit.emplace (cur->son, 0);
+              to_visit.emplace_back (cur->son, 0);
             }
             // or we're already going right and we need to push its
             // sibling (and start by going down from there)
             else if (direction == 1) {
               temp.pop_back ();
               if (cur->bro > -1)
-                to_visit.emplace (cur->bro, 0);
+                to_visit.emplace_back (cur->bro, 0);
             }
             else
               assert (false);
