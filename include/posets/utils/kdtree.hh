@@ -5,11 +5,8 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
-#include <map>
-#include <memory>
 #include <numeric>
 #include <ranges>
-#include <stack>
 #include <utility>
 #include <vector>
 
@@ -37,17 +34,20 @@ namespace posets::utils {
       using kdtree_node_ptr = kdtree_node*;
 
       struct kdtree_node {
-          std::optional<size_t> value_idx;  // only for leaves: the index of
-                                            // the element from the list
-          int location;                     // the value at which we split
-          size_t axis;                      // the dimension at which we
-                                            // split
-          bool clean_split;                 // whether the split is s.t.
-                                            // to the left all is smaller
+          // SIZE_MAX marks an internal node; any other value is a leaf index.
+          // Using a sentinel instead of std::optional<size_t> saves 16 bytes
+          // of overhead and avoids the extra boolean flag in the struct.
+          size_t value_idx;   // leaf: index into vector_set; internal: SIZE_MAX
+          int location;       // the value at which we split
+          int axis;           // the dimension at which we split (fits in int)
+          bool clean_split;   // whether the split is s.t. to the left all is
+                              // smaller
       };
 
       size_t dim;
       kdtree_node_ptr tree;
+      // Reused across dominates() calls to avoid a heap allocation per call.
+      mutable std::vector<int> lbounds_cache;
 
       template <Vector V2>
       friend std::ostream& operator<< (std::ostream& os, const kdtree<V2>& f);
@@ -75,7 +75,7 @@ namespace posets::utils {
         // if the list of elements is now a singleton, we make a leaf
         if (length == 1) {
           this->tree[result].value_idx = *begin_it;
-          return;
+          return;  // location/axis/clean_split unused for leaves
         }
 
         // Use a selection algorithm to get the median
@@ -109,9 +109,9 @@ namespace posets::utils {
         const size_t next_axis = (axis + 1) % this->dim;
         // we can now prepare the information of the root node and then
         // recursively prepare the left and right children
-        this->tree[result].value_idx = std::nullopt;
+        this->tree[result].value_idx = std::numeric_limits<size_t>::max ();
         this->tree[result].location = loc;
-        this->tree[result].axis = axis;
+        this->tree[result].axis = static_cast<int> (axis);
         this->tree[result].clean_split = clean;
         // now the recursive calls
         recursive_build ((result * 2) + 1, begin_it, median_it, length / 2, next_axis);
@@ -139,8 +139,8 @@ namespace posets::utils {
         kdtree_node_ptr node = this->tree + node_idx;
 
         // if we are at a leaf, just check if it dominates
-        if (node->value_idx) {
-          auto po = v.partial_order (this->vector_set[*(node->value_idx)]);
+        if (node->value_idx != std::numeric_limits<size_t>::max ()) {
+          auto po = v.partial_order (this->vector_set[node->value_idx]);
           if (strict)
             return po.leq () and not po.geq ();
           return po.leq ();
@@ -216,6 +216,7 @@ namespace posets::utils {
           this->tree = new kdtree_node[tsize];
         }
         recursive_build (0, points.begin (), points.end (), points.size (), 0);
+        this->lbounds_cache.resize (this->dim);
       }
       // NOLINTEND(misc-no-recursion)
 
@@ -239,6 +240,7 @@ namespace posets::utils {
       kdtree (kdtree&& other) noexcept
         : dim (other.dim),
           tree (other.tree),
+          lbounds_cache (std::move (other.lbounds_cache)),
           vector_set (std::move (other.vector_set)) {
         other.tree = nullptr;
       }
@@ -248,6 +250,7 @@ namespace posets::utils {
       kdtree& operator= (kdtree&& other) noexcept {
         this->dim = other.dim;
         this->vector_set = std::move (other.vector_set);
+        this->lbounds_cache = std::move (other.lbounds_cache);
         // WARNING: 3 variable follows to make the whole thing safe for
         // self-assignment
         kdtree_node_ptr temp_tree = other.tree;
@@ -266,11 +269,11 @@ namespace posets::utils {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
-        int* lbounds = new int[this->dim];
-        std::fill_n (lbounds, this->dim, std::numeric_limits<int>::min ());
-        const bool res = this->recursive_dominates (v, strict, 0, lbounds, this->dim);
-        delete[] lbounds;
-        return res;
+        // lbounds_cache is a mutable member pre-sized to dim in relabel_tree(),
+        // so no heap allocation is needed here.
+        std::fill (this->lbounds_cache.begin (), this->lbounds_cache.end (),
+                   std::numeric_limits<int>::min ());
+        return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
       }
 
       [[nodiscard]] bool is_antichain () const {
