@@ -243,7 +243,7 @@ namespace posets::utils {
         }
         // Set up the generation-stamp cache and DFS stack for dominates()
         this->nxt_color = nxt_color;
-        this->dominates_stamp.assign (this->dim * (nxt_color * 2), 0U);
+        this->dominates_stamp.assign (this->dim * (static_cast<size_t> (nxt_color) * 2), 0U);
         this->dominates_gen = 0U;
         this->dominates_stack.reserve (this->dim);
       }
@@ -377,7 +377,7 @@ namespace posets::utils {
         // Bump the generation counter; on unsigned wrap-around to 0 (roughly
         // every 4 billion calls) clear the stamp array and restart at 1.
         if (++this->dominates_gen == 0U) {
-          std::fill (this->dominates_stamp.begin (), this->dominates_stamp.end (), 0U);
+          std::ranges::fill (this->dominates_stamp.begin (), this->dominates_stamp.end (), 0U);
           ++this->dominates_gen;
         }
         const int sc_stride = this->nxt_color * 2;
@@ -431,7 +431,7 @@ namespace posets::utils {
               // and otherwise mark it for the future; skipping = go to sibling
               const int strict_color = (cur->color << 1) + (new_strict ? 1 : 0);
               const size_t depth = to_visit.size ();
-              unsigned& stamp = this->dominates_stamp[depth * sc_stride + strict_color];
+              unsigned& stamp = this->dominates_stamp[(depth * sc_stride) + strict_color];
               if (stamp == this->dominates_gen) {
                 if (cur->bro > -1)
                   to_visit.emplace_back (cur->bro, 0, loc_strict);

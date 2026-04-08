@@ -271,8 +271,8 @@ namespace posets::utils {
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
         // lbounds_cache is a mutable member pre-sized to dim in relabel_tree(),
         // so no heap allocation is needed here.
-        std::fill (this->lbounds_cache.begin (), this->lbounds_cache.end (),
-                   std::numeric_limits<int>::min ());
+        std::ranges::fill (this->lbounds_cache.begin (), this->lbounds_cache.end (),
+                           std::numeric_limits<int>::min ());
         return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
       }
 
