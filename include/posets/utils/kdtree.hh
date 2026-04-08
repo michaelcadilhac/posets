@@ -37,11 +37,11 @@ namespace posets::utils {
           // SIZE_MAX marks an internal node; any other value is a leaf index.
           // Using a sentinel instead of std::optional<size_t> saves 16 bytes
           // of overhead and avoids the extra boolean flag in the struct.
-          size_t value_idx;   // leaf: index into vector_set; internal: SIZE_MAX
-          int location;       // the value at which we split
-          int axis;           // the dimension at which we split (fits in int)
-          bool clean_split;   // whether the split is s.t. to the left all is
-                              // smaller
+          size_t value_idx;  // leaf: index into vector_set; internal: SIZE_MAX
+          int location;      // the value at which we split
+          int axis;          // the dimension at which we split (fits in int)
+          bool clean_split;  // whether the split is s.t. to the left all is
+                             // smaller
       };
 
       size_t dim;

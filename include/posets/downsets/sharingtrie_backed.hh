@@ -39,16 +39,15 @@ namespace posets::downsets {
         // Sort and remove duplicates before building the trie so we can
         // iterate the trie's backing vector directly, avoiding get_all()'s
         // O(n*dim) allocation+copy purely for deduplication.
-        std::sort (pelements.begin (), pelements.end (),
-                   [] (const V* v1, const V* v2) {
-                     for (size_t i = 0; i < v1->size (); ++i) {
-                       if ((*v1)[i] > (*v2)[i])
-                         return false;
-                       if ((*v1)[i] < (*v2)[i])
-                         return true;
-                     }
-                     return false;
-                   });
+        std::sort (pelements.begin (), pelements.end (), [] (const V* v1, const V* v2) {
+          for (size_t i = 0; i < v1->size (); ++i) {
+            if ((*v1)[i] > (*v2)[i])
+              return false;
+            if ((*v1)[i] < (*v2)[i])
+              return true;
+          }
+          return false;
+        });
         size_t dups_pos = pelements.size ();
         for (size_t i = pelements.size () - 1; i > 0; --i)
           if (*pelements[i] == *pelements[i - 1])

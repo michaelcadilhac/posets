@@ -1,10 +1,9 @@
 #pragma once
 
 #include <cassert>
-#include <cmath>
 #include <iostream>
+#include <map>
 #include <memory>
-#include <set>
 #include <vector>
 
 #include <posets/concepts.hh>

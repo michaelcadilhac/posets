@@ -2,15 +2,14 @@
 
 #include <unordered_map>
 
+#include <algorithm>
 #include <boost/functional/hash.hpp>
 #include <cassert>
+#include <cstdint>
 #include <iostream>
-#include <map>
 #include <numeric>
 #include <optional>
-#include <queue>
 #include <ranges>
-#include <stack>
 #include <tuple>
 #include <vector>
 
@@ -47,7 +46,7 @@ namespace posets::utils {
 
       struct st_node {
           typename V::value_type label;
-          size_t numchild;
+          uint32_t numchild;
           size_t cbuffer_offset;
       };
 
@@ -106,6 +105,13 @@ namespace posets::utils {
       std::vector<std::unordered_map<std::pair<size_t, size_t>, size_t,
                                      boost::hash<std::pair<size_t, size_t>>>>
           cached_union, cached_inter;
+      // Reusable stacks to avoid per-call heap allocations
+      std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> simulates_stack;
+      std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> node_union_stack;
+      std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> st_intersect_stack;
+      std::vector<std::tuple<size_t, size_t, bool, size_t>> covers_stack;
+      std::vector<std::unordered_map<size_t, bool>> covers_visited;
+      mutable std::vector<std::tuple<size_t, size_t, size_t>> get_all_stack;
 
       void init (size_t dim) {
         this->dim = dim;
@@ -117,15 +123,16 @@ namespace posets::utils {
           cached_union.emplace_back ();
           cached_inter.emplace_back ();
         }
+        covers_visited.resize (dim + 1);
 
         cbuffer_size = SHARINGFOREST_INIT_LAYER_SIZE * SHARINGFOREST_INIT_MAX_CHILDREN;
         child_buffer = new size_t[cbuffer_size];
         cbuffer_nxt = 0;
       }
 
-      std::optional<size_t> has_son (st_node& node, size_t child_layer, int val) {
+      size_t has_son (st_node& node, size_t child_layer, int val) {
         if (node.numchild == 0)
-          return std::nullopt;
+          return SIZE_MAX;
 
         size_t left = 0;
         size_t right = node.numchild - 1;
@@ -144,10 +151,12 @@ namespace posets::utils {
             right = mid - 1;
         }
 
-        return std::nullopt;
+        return SIZE_MAX;
       }
 
       bool simulates (size_t n1idx, size_t n2idx, size_t layidx) {
+        if (n1idx == n2idx)
+          return true;
         auto node_pair = std::make_pair (n1idx, n2idx);
         auto cached = simulating[layidx].find (node_pair);
         if (cached != simulating[layidx].end ())
@@ -168,16 +177,16 @@ namespace posets::utils {
         }
 
         // Stack contains node and child ID of S, node and child ID of T, layer
-        std::stack<std::tuple<size_t, size_t, size_t, size_t, size_t>> current_stack;
-        current_stack.emplace (n1idx, 0, n2idx, 0, layidx);
+        simulates_stack.clear ();
+        simulates_stack.emplace_back (n1idx, 0, n2idx, 0, layidx);
 
-        while (not current_stack.empty ()) {
-          auto [n1idx, c1, n2idx, c2, layidx] = current_stack.top ();
+        while (not simulates_stack.empty ()) {
+          auto [n1idx, c1, n2idx, c2, layidx] = simulates_stack.back ();
 #ifndef NDEBUG
           std::cout << "Simulation check: " << "Node " << layidx << "." << n1idx << " (c=" << c1
                     << ") vs. " << layidx << "." << n2idx << " (c=" << c2 << ")\n";
 #endif
-          current_stack.pop ();
+          simulates_stack.pop_back ();
           n1 = layers[layidx][n1idx];
           n2 = layers[layidx][n2idx];
 
@@ -188,10 +197,10 @@ namespace posets::utils {
           if (c2 == n2.numchild or layidx == this->dim) {
             assert (c2 == n2.numchild);
             simulating[layidx][std::make_pair (n1idx, n2idx)] = true;
-            if (not current_stack.empty ()) {
-              auto [m1idx, d1, m2idx, d2, ell] = current_stack.top ();
-              current_stack.pop ();
-              current_stack.emplace (m1idx, 0, m2idx, d2 + 1, ell);
+            if (not simulates_stack.empty ()) {
+              auto [m1idx, d1, m2idx, d2, ell] = simulates_stack.back ();
+              simulates_stack.pop_back ();
+              simulates_stack.emplace_back (m1idx, 0, m2idx, d2 + 1, ell);
             }
           }
           // Another base case: we've iterated through all the children on the
@@ -201,10 +210,10 @@ namespace posets::utils {
             std::cout << "Another base case (layidx=" << layidx << ")\n";
 #endif
             simulating[layidx][std::make_pair (n1idx, n2idx)] = false;
-            if (not current_stack.empty ()) {
-              auto [m1idx, d1, m2idx, d2, ell] = current_stack.top ();
-              current_stack.pop ();
-              current_stack.emplace (m1idx, d1 + 1, m2idx, d2, ell);
+            if (not simulates_stack.empty ()) {
+              auto [m1idx, d1, m2idx, d2, ell] = simulates_stack.back ();
+              simulates_stack.pop_back ();
+              simulates_stack.emplace_back (m1idx, d1 + 1, m2idx, d2, ell);
             }
           }
           // The last case is that we have two valid children indices,
@@ -223,9 +232,9 @@ namespace posets::utils {
               std::cout << "Got lucky with simulate cache!\n";
 #endif
               if (cached->second)
-                current_stack.emplace (n1idx, 0, n2idx, c2 + 1, layidx);
+                simulates_stack.emplace_back (n1idx, 0, n2idx, c2 + 1, layidx);
               else
-                current_stack.emplace (n1idx, c1 + 1, n2idx, c2, layidx);
+                simulates_stack.emplace_back (n1idx, c1 + 1, n2idx, c2, layidx);
             }
             else {
               const st_node c1_node = layers[layidx + 1][n1_children[c1]];
@@ -237,13 +246,13 @@ namespace posets::utils {
                   (layidx + 1 < this->dim and
                    layers[layidx + 2][c1_children[0]].label <
                        layers[layidx + 2][c2_children[c2_node.numchild - 1]].label)) {
-                current_stack.emplace (n1idx, c1 + 1, n2idx, c2, layidx);
+                simulates_stack.emplace_back (n1idx, c1 + 1, n2idx, c2, layidx);
                 // Alright, we have to go deeper now; and push back what we just
                 // popped
               }
               else {
-                current_stack.emplace (n1idx, c1, n2idx, c2, layidx);
-                current_stack.emplace (n1_children[c1], 0, n2_children[c2], 0, layidx + 1);
+                simulates_stack.emplace_back (n1idx, c1, n2idx, c2, layidx);
+                simulates_stack.emplace_back (n1_children[c1], 0, n2_children[c2], 0, layidx + 1);
               }
             }
           }
@@ -294,34 +303,33 @@ namespace posets::utils {
             left = mid + 1;
         }
 
-        // NOLINTBEGIN(bugprone-unchecked-optional-access)
         // Shift elements in the child buffer to make room for the new child
         // Overwrite simulated elements!
-        std::optional<size_t> to_insert {son};
+        size_t to_insert = son;  // SIZE_MAX means "none pending"
         size_t next_insertion {static_cast<size_t> (left)};
         const size_t current_children {node.numchild};
         for (size_t i = left; i < current_children; i++) {
           assert (next_insertion <= i);
           if (not simulates (son, children[i], son_layer)) {
-            if (next_insertion < i and not to_insert.has_value ()) {
+            if (next_insertion < i and to_insert == SIZE_MAX) {
               // The next insertion point is smaller, so we already looked at it
               // We can directly overwrite the value with our current one
               children[next_insertion] = children[i];
             }
-            else if (to_insert.has_value ()) {
+            else if (to_insert != SIZE_MAX) {
               // The space we want to insert is occupied - we save the value for later
-              size_t temp = children[i];
-              children[next_insertion] = to_insert.value ();
+              const size_t temp = children[i];
+              children[next_insertion] = to_insert;
               to_insert = temp;
             }
             next_insertion++;
           }
           else {
-            if (to_insert.has_value ()) {
+            if (to_insert != SIZE_MAX) {
               // There might still be a child we have not inserted so we overwrite
               // No other check necessary because next_insertion is always <= i
-              children[next_insertion] = to_insert.value ();
-              to_insert.reset ();
+              children[next_insertion] = to_insert;
+              to_insert = SIZE_MAX;
               next_insertion++;
             }
             node.numchild--;
@@ -330,9 +338,8 @@ namespace posets::utils {
 
         // If we had to shift every element, there will be something left to insert
         // We add it to the new end
-        if (to_insert.has_value ())
-          children[next_insertion] = to_insert.value ();
-        // NOLINTEND(bugprone-unchecked-optional-access)
+        if (to_insert != SIZE_MAX)
+          children[next_insertion] = to_insert;
 
         // Increase count by the new element
         node.numchild++;
@@ -387,17 +394,17 @@ namespace posets::utils {
 
       size_t node_union (size_t ns, size_t nt, size_t destination_layer) {
         // Stack contains node and child ID of S, node and child ID of T, layer
-        std::stack<std::tuple<size_t, size_t, size_t, size_t, size_t>> current_stack;
+        node_union_stack.clear ();
 
         [[maybe_unused]] const st_node root_nod_e1 = layers[destination_layer][ns];
         [[maybe_unused]] const st_node root_nod_e2 = layers[destination_layer][nt];
         assert (root_nod_e1.numchild > 0 and root_nod_e2.numchild > 0);
 
-        current_stack.emplace (ns, 0, nt, 0, destination_layer);
+        node_union_stack.emplace_back (ns, 0, nt, 0, destination_layer);
 
-        while (not current_stack.empty ()) {
-          auto [n_s, c_s, n_t, c_t, layer] = current_stack.top ();
-          current_stack.pop ();
+        while (not node_union_stack.empty ()) {
+          auto [n_s, c_s, n_t, c_t, layer] = node_union_stack.back ();
+          node_union_stack.pop_back ();
           assert (n_s < layers[layer].size ());
           const st_node node_s = layers[layer][n_s];
           assert (n_t < layers[layer].size ());
@@ -458,12 +465,12 @@ namespace posets::utils {
             if (c_s == node_s.numchild) {
               add_son_if_not_simulated (node_t_children[c_t], layer + 1, under_construction);
               if (c_t < node_t.numchild)
-                current_stack.emplace (n_s, c_s, n_t, c_t + 1, layer);
+                node_union_stack.emplace_back (n_s, c_s, n_t, c_t + 1, layer);
             }
             else if (c_t == node_t.numchild) {
               add_son_if_not_simulated (node_s_children[c_s], layer + 1, under_construction);
               if (c_s < node_s.numchild)
-                current_stack.emplace (n_s, c_s + 1, n_t, c_t, layer);
+                node_union_stack.emplace_back (n_s, c_s + 1, n_t, c_t, layer);
             }
             else {
               const st_node& son_s = layers[layer + 1][node_s_children[c_s]];
@@ -472,20 +479,20 @@ namespace posets::utils {
               if (son_t.label > son_s.label) {
                 add_son_if_not_simulated (node_t_children[c_t], layer + 1, under_construction);
                 if (c_t < node_t.numchild)
-                  current_stack.emplace (n_s, c_s, n_t, c_t + 1, layer);
+                  node_union_stack.emplace_back (n_s, c_s, n_t, c_t + 1, layer);
               }
               else if (son_s.label > son_t.label) {
                 add_son_if_not_simulated (node_s_children[c_s], layer + 1, under_construction);
                 if (c_s < node_s.numchild)
-                  current_stack.emplace (n_s, c_s + 1, n_t, c_t, layer);
+                  node_union_stack.emplace_back (n_s, c_s + 1, n_t, c_t, layer);
               }
               // Case 3: The values of the sons match, so we need to continue the recursion
               else {
                 assert (son_s.label == son_t.label);
                 if (c_s < node_s.numchild and c_t < node_t.numchild)
-                  current_stack.emplace (n_s, c_s + 1, n_t, c_t + 1, layer);
-                current_stack.emplace (node_s_children[c_s], 0, node_t_children[c_t], 0,
-                                       layer + 1);
+                  node_union_stack.emplace_back (n_s, c_s + 1, n_t, c_t + 1, layer);
+                node_union_stack.emplace_back (node_s_children[c_s], 0, node_t_children[c_t], 0,
+                                               layer + 1);
               }
             }
           }
@@ -499,7 +506,7 @@ namespace posets::utils {
       }
 
       std::optional<size_t> node_intersect (size_t n_s, size_t n_t, size_t destination_layer,
-                                            std::optional<st_node> father) {
+                                            const st_node* father) {
         st_node& node_s = layers[destination_layer][n_s];
         st_node& node_t = layers[destination_layer][n_t];
         st_node new_node {std::min (node_s.label, node_t.label), 0};
@@ -512,17 +519,17 @@ namespace posets::utils {
           for (size_t s_s = 0; s_s < node_s.numchild; s_s++) {
             for (size_t s_t = 0; s_t < node_t.numchild; s_t++) {
               auto intersect_res = node_intersect (node_s_children[s_s], node_t_children[s_t],
-                                                   destination_layer + 1, new_node);
+                                                   destination_layer + 1, &new_node);
               if (intersect_res.has_value ()) {
                 // Can happen that we insert the same value twice, so we need to check
-                auto existing_son =
+                const size_t existing_son =
                     has_son (new_node, destination_layer + 1,
                              layers[destination_layer + 1][intersect_res.value ()].label);
-                if (existing_son.has_value ()) {
-                  size_t new_son = node_union (existing_son.value (), intersect_res.value (),
-                                               destination_layer + 1);
+                if (existing_son != SIZE_MAX) {
+                  size_t new_son =
+                      node_union (existing_son, intersect_res.value (), destination_layer + 1);
                   size_t* new_node_children = child_buffer + new_node.cbuffer_offset;
-                  new_node_children[existing_son.value ()] = new_son;
+                  new_node_children[existing_son] = new_son;
                 }
                 else {
                   add_son (new_node, destination_layer + 1, intersect_res.value ());
@@ -534,8 +541,8 @@ namespace posets::utils {
           if (new_node.numchild == 0)
             return std::nullopt;
         }
-        if (father.has_value ()) {
-          auto [res, domd] = add_if_not_simulated (new_node, destination_layer, father.value ());
+        if (father != nullptr) {
+          auto [res, domd] = add_if_not_simulated (new_node, destination_layer, *father);
           if (domd)
             return std::nullopt;
           return res;
@@ -550,26 +557,24 @@ namespace posets::utils {
        *
        * Complexity: The implementation below has complexity O(n.d.lg(n)) where n is
        * the number of vectors, d is the number of dimensions. The nd factor is
-       * nor surprising: it already corresponds to the set of prefixes of the set
-       * of vectors. The lg(n) factor comes from the use of an (ordered) map at
-       * every recursive step to (re)partition the vectors for the children based
-       * on the list itself. It can be traded off by a factor of k (see TODO in
-       * code).
+       * not surprising: it already corresponds to the set of prefixes of the set
+       * of vectors. The lg(n) factor comes from sorting at each recursive level
+       * to partition vectors by their value in the current dimension.
        */
-      size_t build_node (std::vector<size_t>& vecs, size_t current_layer, const auto& element_vec,
-                         bool check_sim = true) {
-        assert (not vecs.empty ());
+      size_t build_node (std::vector<size_t>& vecs, size_t start, size_t end, size_t current_layer,
+                         const auto& element_vec, bool check_sim = true) {
+        assert (start < end);
         // If currentLayer is 0, we set the label to the dummy value -1 for the root
         // Else all nodes should have the same value at index currentLayer - 1, so
         // we just use the first
         const typename V::value_type label {current_layer == 0
                                                 ? static_cast<typename V::value_type> (-1)
-                                                : element_vec[vecs[0]][current_layer - 1]};
+                                                : element_vec[vecs[start]][current_layer - 1]};
         st_node new_node {label, 0};
         // We have not reached the last layer - so add children
         if (current_layer < this->dim) {
-          if (vecs.size () == 1) {
-            auto& vec = element_vec[vecs[0]];
+          if (end - start == 1) {
+            auto& vec = element_vec[vecs[start]];
             st_node last_son_node {vec[vec.size () - 1], 0};
             size_t next_son = add_node (last_son_node, this->dim);
             for (size_t i = vec.size () - 1; i > current_layer; i--) {
@@ -582,19 +587,28 @@ namespace posets::utils {
             add_son (new_node, current_layer + 1, next_son);
           }
           else {
-            // Partition and order the future children
-            // TODO: Try to do constant-access bucketing based on the value of k.
-            // Probably won't pay off unless the set of vectors we are adding is
-            // dense in most components.
-            std::map<typename V::value_type, std::vector<size_t>, std::greater<>> new_partition {};
-            for (const auto& vec : vecs)
-              new_partition[element_vec[vec][current_layer]].push_back (vec);
-            new_node.cbuffer_offset = add_children (new_partition.size ());
+            // Sort vecs[start..end) descending by value at current_layer, then
+            // scan for group boundaries — no map or per-group vector allocation.
+            std::sort (vecs.begin () + static_cast<std::ptrdiff_t> (start),
+                       vecs.begin () + static_cast<std::ptrdiff_t> (end),
+                       [&] (size_t a, size_t b) {
+                         return element_vec[a][current_layer] > element_vec[b][current_layer];
+                       });
+            size_t num_groups = 1;
+            for (size_t k = start + 1; k < end; ++k)
+              if (element_vec[vecs[k]][current_layer] != element_vec[vecs[k - 1]][current_layer])
+                ++num_groups;
+            new_node.cbuffer_offset = add_children (num_groups);
 
-            for (auto& [n, children] : new_partition) {
-              // Build a new son for each individual value at currentLayer + 1
+            size_t i = start;
+            while (i < end) {
+              const auto val = element_vec[vecs[i]][current_layer];
+              size_t j = i + 1;
+              while (j < end and element_vec[vecs[j]][current_layer] == val)
+                ++j;
+              // Build a new son for each group vecs[i..j)
               const size_t new_son =
-                  build_node (children, current_layer + 1, element_vec, check_sim);
+                  build_node (vecs, i, j, current_layer + 1, element_vec, check_sim);
               bool found = false;
               if (check_sim) {
                 size_t* current_children = child_buffer + new_node.cbuffer_offset;
@@ -607,6 +621,7 @@ namespace posets::utils {
               }
               if (not found)
                 add_son (new_node, current_layer + 1, new_son);
+              i = j;
             }
           }
         }
@@ -628,25 +643,25 @@ namespace posets::utils {
 
       [[nodiscard]] std::vector<V> get_all (std::optional<size_t> root = {}) const {
         // Stack with tuples (layer, node id, child id)
-        std::stack<std::tuple<size_t, size_t, size_t>> to_visit;
+        get_all_stack.clear ();
 
         if (root) {
           const st_node& root_node = layers[0][root.value ()];
           size_t* first_children = child_buffer + root_node.cbuffer_offset;
           for (size_t c = 0; c < root_node.numchild; c++)
-            to_visit.emplace (1, first_children[c], 0);
+            get_all_stack.emplace_back (1, first_children[c], 0);
         }
         else {
           // Add all roots at dimension 0
           for (size_t i = 0; i < layers[1].size (); i++)
-            to_visit.emplace (1, i, 0);
+            get_all_stack.emplace_back (1, i, 0);
         }
 
         std::vector<V> res;
         std::vector<typename V::value_type> temp;
-        while (not to_visit.empty ()) {
-          const auto [lay, node, child] = to_visit.top ();
-          to_visit.pop ();
+        while (not get_all_stack.empty ()) {
+          const auto [lay, node, child] = get_all_stack.back ();
+          get_all_stack.pop_back ();
           const auto parent = layers[lay][node];
           // first time we see parent? get its label
           if (child == 0)
@@ -664,8 +679,8 @@ namespace posets::utils {
             // we need to keep it and we add it's next son
             size_t* children = child_buffer + parent.cbuffer_offset;
             if (child < parent.numchild) {
-              to_visit.emplace (lay, node, child + 1);
-              to_visit.emplace (lay + 1, children[child], 0);
+              get_all_stack.emplace_back (lay, node, child + 1);
+              get_all_stack.emplace_back (lay + 1, children[child], 0);
             }
             else {
               temp.pop_back ();  // done with this parent
@@ -696,7 +711,7 @@ namespace posets::utils {
           return cache_res->second;
 
         // Stack contains node and child ID of S, node and child ID of T, layer
-        std::stack<std::tuple<size_t, size_t, size_t, size_t, size_t>> current_stack;
+        st_intersect_stack.clear ();
 
         // Insert a draft of root node, dirty one without checking if it's there,
         // we'll clean later
@@ -712,14 +727,14 @@ namespace posets::utils {
         size_t* root2_children = child_buffer + root_nod_e2.cbuffer_offset;
         for (size_t c_1 = 1; c_1 <= root_nod_e1.numchild; c_1++) {
           for (size_t c_2 = 1; c_2 <= root_nod_e2.numchild; c_2++) {
-            current_stack.push ({root1_children[root_nod_e1.numchild - c_1], 0,
-                                 root2_children[root_nod_e2.numchild - c_2], 0, 1});
+            st_intersect_stack.push_back ({root1_children[root_nod_e1.numchild - c_1], 0,
+                                           root2_children[root_nod_e2.numchild - c_2], 0, 1});
           }
         }
 
-        while (not current_stack.empty ()) {
-          auto [n_s, c_s, n_t, c_t, layer] = current_stack.top ();
-          current_stack.pop ();
+        while (not st_intersect_stack.empty ()) {
+          auto [n_s, c_s, n_t, c_t, layer] = st_intersect_stack.back ();
+          st_intersect_stack.pop_back ();
           assert (n_s < layers[layer].size ());
           const st_node node_s = layers[layer][n_s];
           assert (n_t < layers[layer].size ());
@@ -771,11 +786,12 @@ namespace posets::utils {
             size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
 
             if (c_t < node_t.numchild)
-              current_stack.emplace (n_s, c_s, n_t, c_t + 1, layer);
+              st_intersect_stack.emplace_back (n_s, c_s, n_t, c_t + 1, layer);
             else if (c_s < node_s.numchild)
-              current_stack.emplace (n_s, c_s + 1, n_t, 0, layer);
+              st_intersect_stack.emplace_back (n_s, c_s + 1, n_t, 0, layer);
             if (c_t < node_t.numchild and c_s < node_s.numchild)
-              current_stack.emplace (node_s_children[c_s], 0, node_t_children[c_t], 0, layer + 1);
+              st_intersect_stack.emplace_back (node_s_children[c_s], 0, node_t_children[c_t], 0,
+                                               layer + 1);
           }
         }
 
@@ -797,12 +813,10 @@ namespace posets::utils {
        */
       bool covers_vector (size_t root, const V& covered, bool strict = false) {
         // Stack with tuples (layer, node id, strictness, child id)
-        std::stack<std::tuple<size_t, size_t, bool, size_t>> to_visit;
-        // Visited cache
-        std::vector<std::unordered_map<size_t, bool>> visited;
-        visited.reserve (this->dim + 1);
-        for (size_t i = 0; i < this->dim + 1; i++)
-          visited.emplace_back ();
+        covers_stack.clear ();
+        // Visited cache (reused across calls)
+        for (auto& m : covers_visited)
+          m.clear ();
 
         // Add all roots at dimension 0 such that their labels cover the first
         // component of the given vector
@@ -812,23 +826,23 @@ namespace posets::utils {
           assert (root_children[i] < layers[1].size ());
           if (covered[0] <= layers[1][root_children[i]].label) {
             const bool owe_strict = strict and covered[0] == layers[1][root_children[i]].label;
-            to_visit.emplace (1, root_children[i], owe_strict, 0);
+            covers_stack.emplace_back (1, root_children[i], owe_strict, 0);
           }
         }
 
-        while (not to_visit.empty ()) {
-          const auto [lay, node, owe_strict, child] = to_visit.top ();
+        while (not covers_stack.empty ()) {
+          const auto [lay, node, owe_strict, child] = covers_stack.back ();
           assert (lay <= this->dim);
           assert (node < layers[lay].size ());
-          to_visit.pop ();
+          covers_stack.pop_back ();
           // if this node has been visited, it means this node is useless
           // NOTE: this works only because we are doing a DFS and not a BFS
           if (child == 0) {
-            auto res = visited[lay].find (node);
+            auto res = covers_visited[lay].find (node);
             // if we visited with strictness then we can safely exit only if
             // we come back with strictness prev_strict -> owe_strict, i.e.
             // not prev_strict or owe_strict
-            if (res != visited[lay].end ()) {
+            if (res != covers_visited[lay].end ()) {
               if ((not res->second) or owe_strict) {
 #ifndef NDEBUG
                 std::cout << "Avoided node in covers check, DFS cache helps.\n";
@@ -837,11 +851,11 @@ namespace posets::utils {
               }
               // we conjoin with previous result if any to make sure we have
               // more early exits based on implication condition above
-              visited[lay][node] = res->second and owe_strict;
+              covers_visited[lay][node] = res->second and owe_strict;
             }
             else {
               // no early exit? then mark the node as visited and keep going
-              visited[lay][node] = owe_strict;
+              covers_visited[lay][node] = owe_strict;
             }
           }
           const auto parent = layers[lay][node];
@@ -867,8 +881,8 @@ namespace posets::utils {
             const bool still_owe_strict = owe_strict and covered[lay] == child_node.label;
             assert (c < parent.numchild);
             if (c + 1 < parent.numchild)
-              to_visit.emplace (lay, node, owe_strict, c + 1);
-            to_visit.emplace (lay + 1, children[c], still_owe_strict, 0);
+              covers_stack.emplace_back (lay, node, owe_strict, c + 1);
+            covers_stack.emplace_back (lay + 1, children[c], still_owe_strict, 0);
           }
         }
         return false;
@@ -887,7 +901,8 @@ namespace posets::utils {
         std::iota (vector_ids.begin (), vector_ids.end (), 0);
         // NOLINTEND(boost-use-ranges)
 
-        const size_t root_id = build_node (vector_ids, 0, element_vec, check_sim);
+        const size_t root_id =
+            build_node (vector_ids, 0, vector_ids.size (), 0, element_vec, check_sim);
 #ifndef NDEBUG
         size_t maxlayer = 0;
         size_t totlayer = 0;
