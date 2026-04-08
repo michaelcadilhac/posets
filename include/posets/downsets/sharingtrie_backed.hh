@@ -1,10 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
-#include <cmath>
 #include <iostream>
-#include <memory>
-#include <set>
 #include <vector>
 
 #include <posets/concepts.hh>
@@ -38,16 +36,32 @@ namespace posets::downsets {
         for (auto& e : elements)
           pelements.push_back (&e);
 
-        // now, we can make a trie out of the set to eliminate dominated
-        // elements
+        // Sort and remove duplicates before building the trie so we can
+        // iterate the trie's backing vector directly, avoiding get_all()'s
+        // O(n*dim) allocation+copy purely for deduplication.
+        std::sort (pelements.begin (), pelements.end (),
+                   [] (const V* v1, const V* v2) {
+                     for (size_t i = 0; i < v1->size (); ++i) {
+                       if ((*v1)[i] > (*v2)[i])
+                         return false;
+                       if ((*v1)[i] < (*v2)[i])
+                         return true;
+                     }
+                     return false;
+                   });
+        size_t dups_pos = pelements.size ();
+        for (size_t i = pelements.size () - 1; i > 0; --i)
+          if (*pelements[i] == *pelements[i - 1])
+            std::swap (pelements[i], pelements[--dups_pos]);
+        if (dups_pos != pelements.size ())
+          pelements.erase (pelements.begin () + dups_pos, pelements.end ());
+
+        // Build the trie; backing vector now holds the deduplicated elements.
         auto antichain = std::vector<V*> ();
         antichain.reserve (pelements.size ());
         this->trie.relabel_trie (std::move (pelements), proj ());
 
-        // Get all will produce vectors represented by the trie, this will
-        // avoid possibly repeated ones in elements!
-        std::vector<V> repd = this->trie.get_all ();
-        for (auto& e : repd)
+        for (V& e : this->trie)
           if (not this->trie.dominates (e, true))
             antichain.push_back (&e);
 
