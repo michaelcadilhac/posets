@@ -32,11 +32,11 @@ void check_reduce (const std::vector<std::vector<value_type>>& raw) {
     assert (keys[i] == posets::utils::sum_key (reduced[i]));
   std::vector<size_t> expected;
   for (size_t i = 0; i < raw.size (); ++i) {
-    V candidate (std::span<const value_type> (raw[i]));
+    V candidate {std::span<const value_type> (raw[i])};
     bool dominated = false;
     bool duplicate_before = false;
     for (size_t j = 0; j < raw.size (); ++j) {
-      V other (std::span<const value_type> (raw[j]));
+      V other {std::span<const value_type> (raw[j])};
       auto po = candidate.partial_order (other);
       if (po.leq () and not po.geq ())
         dominated = true;
@@ -48,7 +48,7 @@ void check_reduce (const std::vector<std::vector<value_type>>& raw) {
   }
   assert (reduced.size () == expected.size ());
   for (size_t i : expected) {
-    V value (std::span<const value_type> (raw[i]));
+    V value {std::span<const value_type> (raw[i])};
     bool found = false;
     for (const auto& kept : reduced)
       found or_eq kept == value;
@@ -103,4 +103,17 @@ int main () {
   assert (reduced.size () == 1);
   assert (reduced.front () == expected);
   assert (keys == std::vector<long> {9});
+
+  const std::vector<std::vector<value_type>> relabel_raw {
+      {1, 0, 0},
+      {0, 1, 0},
+      {0, 0, 1},
+  };
+  posets::utils::kdtree<with_sum> default_tree;
+  default_tree.relabel_tree (make_vectors<with_sum> (relabel_raw));
+  assert (default_tree.size () == relabel_raw.size ());
+
+  posets::utils::kdtree<with_sum> zero_hint_tree (3, 0);
+  zero_hint_tree.relabel_tree (make_vectors<with_sum> (relabel_raw));
+  assert (zero_hint_tree.size () == relabel_raw.size ());
 }

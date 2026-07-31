@@ -38,9 +38,9 @@ namespace posets::downsets {
       template <Vector V2>
       friend std::ostream& operator<< (std::ostream& os, const vector_or_kdtree_backed<V2>& f);
 
-      size_t dim () {
-        // TODO  This is a terrible name for this function.
-        return get_backing_vector ().size ();
+      [[nodiscard]] size_t vector_dim () const {
+        const auto& backing = get_backing_vector ();
+        return backing.empty () ? 0 : backing[0].size ();
       }
 
       void boolop_with (vector_or_kdtree_backed&& other, bool inter = false) {
@@ -91,7 +91,7 @@ namespace posets::downsets {
           }
           else {
             m = this->size ();
-            n = this->size ();
+            n = other.size ();
           }
           if (static_cast<double> (n) < exp (static_cast<double> (m))) {
             if (inter)
@@ -116,7 +116,7 @@ namespace posets::downsets {
         // list but it satisfies the condition for it to be upgraded to a
         // kd-tree
         const size_t m = this->size ();
-        const size_t dim = this->dim ();
+        const size_t dim = this->vector_dim ();
         data_do (std::cout << "|VEKD: downset_size=" << dim << "," << m << "|" << std::endl);
         if (this->kdtree == nullptr and KD_THRESH (m, dim)) {
           this->kdtree =

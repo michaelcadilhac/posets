@@ -1,8 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <bit>
 #include <cassert>
-#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <limits>
@@ -66,6 +66,10 @@ namespace posets::utils {
         return not bound.has_value () or bound.value () < value;
       }
 
+      static size_t tree_capacity (size_t element_count) {
+        return size_t {4} * std::bit_floor (element_count);
+      }
+
       // NOLINTBEGIN(misc-no-recursion)
       /*
        * This is one of the only interesting parts of the code: building the
@@ -81,9 +85,7 @@ namespace posets::utils {
         // sanity checks
         assert (this->tree != nullptr);
         assert (this->dim <= std::numeric_limits<axis_type>::max ());
-        assert (std::cmp_greater (
-            size_t {4} << static_cast<size_t> (std::floor (std::log2 (this->vector_set.size ()))),
-            result));
+        assert (std::cmp_greater (tree_capacity (this->vector_set.size ()), result));
         assert (std::cmp_equal (std::distance (begin_it, end_it), length));
         assert (length > 0);
         assert (axis < this->dim);
@@ -147,9 +149,7 @@ namespace posets::utils {
                                 lower_bound_type* lbounds, size_t dims_to_dom) const {
         // sanity checks
         assert (this->tree != nullptr);
-        assert (std::cmp_greater (
-            size_t {4} << static_cast<size_t> (std::floor (std::log2 (this->vector_set.size ()))),
-            node_idx));
+        assert (std::cmp_greater (tree_capacity (this->vector_set.size ()), node_idx));
         assert (dims_to_dom > 0);
 
         // from index to node pointer
@@ -199,18 +199,18 @@ namespace posets::utils {
       // NOTE: this works for any collection of vectors, not even set assumed
       template <std::ranges::input_range R, class Proj = std::identity>
       void relabel_tree (R&& elements, Proj proj = {}) {
+        assert (elements.size () > 0);
         this->dim = (proj (*elements.begin ()).size ());
 
         // sanity checks
-        assert (elements.size () > 0);
         assert (this->dim > 0);
         assert (this->dim <= std::numeric_limits<axis_type>::max ());
 
         // Let n be the size of vector_set, the no. of leaves in the tree is
         // 2^{floor(lg(n)) + 1}, so this times 2 is the size of the full
         // binary tree we will be labelling
-        const size_t oldsize = 4 << (size_t) (std::floor (std::log2 (this->vector_set.size ())));
-        const size_t tsize = 4 << (size_t) (std::floor (std::log2 (elements.size ())));
+        const size_t oldsize = tree_capacity (this->vector_set.size ());
+        const size_t tsize = tree_capacity (elements.size ());
 
         // moving the given elements to the internal data structure
         std::vector<V> newset;
@@ -228,9 +228,7 @@ namespace posets::utils {
         // NOLINTBEGIN(boost-use-ranges)
         std::iota (points.begin (), points.end (), 0);
         // NOLINTEND(boost-use-ranges)
-        if (this->tree == nullptr)
-          this->tree = new kdtree_node[tsize];
-        if (this->tree != nullptr and oldsize < tsize) {
+        if (this->tree == nullptr or oldsize < tsize) {
           delete[] this->tree;
           this->tree = new kdtree_node[tsize];
         }
@@ -246,10 +244,11 @@ namespace posets::utils {
         assert (dim <= std::numeric_limits<axis_type>::max ());
       }
 
-      kdtree (size_t dim, size_t initsize) : dim (dim) {
+      kdtree (size_t dim, size_t initsize) : dim (dim), tree (nullptr) {
         assert (dim <= std::numeric_limits<axis_type>::max ());
-        const size_t tsize = 4 << (size_t) (std::floor (std::log2 (initsize)));
-        this->tree = new kdtree_node[tsize];
+        const size_t tsize = tree_capacity (initsize);
+        if (tsize > 0)
+          this->tree = new kdtree_node[tsize];
       }
 
       template <std::ranges::input_range R, class Proj = std::identity>
