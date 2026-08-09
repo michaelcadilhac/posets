@@ -44,7 +44,13 @@ antichain_factory_test_exe = executable ('antichain-factory-test',
                                          dependencies : [posets_dep ])
 
 test('antichains/vectors random', downsetbm_exe,
-     args : ['all', 'all', '--params=build=5,query=5,transfer=5,intersection=5,union=5' ])
+     args : ['all', 'all',
+             '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2' ])
+test('antichains/vectors random d128', downsetbm_d128_exe,
+     args : ['all', 'all',
+             '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2,bitset_tail=32' ])
+test('antichains/vectors simd benchmark', simdbm_exe,
+     args : ['vector_backed', 'simd_array_backed_sum_fixed<test_value_type>'])
 test('antichains/vectors implementations', tests_exe, args : ['all', 'all'])
 test('antichains/vectors kdtests', kdtests_exe)
 test('antichains/vectors sttests', sttests_exe)

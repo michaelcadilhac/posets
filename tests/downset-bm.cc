@@ -67,6 +67,9 @@ namespace {
     {"transfer", 1000000},
     {"intersection", 256},
     {"union", 512 * 20},
+    {"cpre", 128},
+    {"cpre_actions", 8},
+    {"bitset_tail", 0},
     {"rounds", 1}
   };
 
@@ -84,6 +87,7 @@ namespace {
       size_t t1_sz, t1_in, t1_out;
       size_t t2_sz;
       size_t t3_sz;
+      size_t t4_sz;
   } test_chk = {};
 }
 
@@ -132,6 +136,9 @@ struct test_t : public generic_test<result_t> {
         for (auto&& x : r)
           if (x > 0)
             x += delta;
+        const size_t bitset_tail = std::min (params["bitset_tail"], r.size ());
+        for (size_t j = r.size () - bitset_tail; j < r.size (); ++j)
+          r[j] = static_cast<value_type> ((r[j] & 1) - 1);
         elts.push_back (v_type (std::move (r)));
       }
       verb_do (3, vout << "done.\n" << std::flush);
@@ -269,6 +276,45 @@ struct test_t : public generic_test<result_t> {
         verb_do (1, vout << "UNION: " << uniontime / prounds << '\n');
       }
 
+      if (params["cpre"] != 0) {
+        verb_do (1, vout << "Test 4: CPre-shaped apply/union/intersection\n");
+
+        const size_t nitems = params["cpre"];
+        const size_t action_count = std::max<size_t> (1, params["cpre_actions"]);
+        spot::stopwatch sw;
+        double cpretime = 0;
+
+        for (size_t rounds = 0; rounds < prounds; ++rounds) {
+          verb_do (2, vout << "Round " << rounds << '\n');
+          auto frontier = vec_to_set (test_vector (nitems));
+
+          auto apply_action = [&frontier, action_count] (size_t action) {
+            return frontier.apply ([action, action_count] (const v_type& value) {
+              utils::vector_mm<value_type> transformed (value.size ());
+              for (size_t i = 0; i < value.size (); ++i) {
+                transformed[i] = value[i];
+                if (i % action_count == action and transformed[i] > -1)
+                  --transformed[i];
+              }
+              return v_type (std::move (transformed));
+            });
+          };
+
+          sw.start ();
+          CALLGRIND_START_INSTRUMENTATION;
+          auto predecessors = apply_action (0);
+          for (size_t action = 1; action < action_count; ++action)
+            predecessors.union_with (apply_action (action));
+          frontier.intersect_with (std::move (predecessors));
+          CALLGRIND_STOP_INSTRUMENTATION;
+          cpretime += sw.stop ();
+          verb_do (2, vout << " SIZE: " << frontier.size () << '\n');
+          chk (test_chk.t4_sz, frontier.size (), false);
+        }
+        res["cpre"] = cpretime;
+        verb_do (1, vout << "CPRE: " << cpretime / prounds << '\n');
+      }
+
       return res;
     }
 };
@@ -288,6 +334,11 @@ namespace posets::vectors {
 
   template <typename T>
   using simd_array_ptr_backed_fixed = posets::vectors::simd_array_ptr_backed<T, DIMENSION>;
+
+  template <typename T>
+  using simd_array_sum_and_bitset_fixed =
+      posets::vectors::x_and_bitset<posets::vectors::simd_array_backed_sum<T, DIMENSION>,
+                                   posets::vectors::nbools_to_nbitsets (DIMENSION)>;
 }
 
 VECTOR_TYPES (
@@ -296,6 +347,7 @@ VECTOR_TYPES (
   posets::vectors::simd_array_backed_fixed<test_value_type>,
   posets::vectors::simd_array_ptr_backed_fixed<test_value_type>,
   posets::vectors::simd_array_backed_sum_fixed<test_value_type>,
+  posets::vectors::simd_array_sum_and_bitset_fixed<test_value_type>,
   posets::vectors::vector_backed<test_value_type>,
   posets::vectors::simd_vector_backed<test_value_type>
   );
@@ -439,7 +491,8 @@ int main (int argc, char* argv[]) {
   for (auto& ds : downs)
     for (auto& v : vecs) {
       posets::vectors::bool_threshold = DIMENSION;
-      posets::vectors::bitset_threshold = DIMENSION;
+      posets::vectors::bitset_threshold =
+          DIMENSION - std::min (params["bitset_tail"], static_cast<size_t> (DIMENSION));
       all_res[ds + v] = tests[ds + v] ();
     }
   for (auto& res : all_res) {
