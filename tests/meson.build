@@ -21,6 +21,10 @@ downsetbm_d128_exe = executable ('downset-bm-d128', 'downset-bm.cc',
                                  dependencies : [posets_dep ],
                                  cpp_args : '-DDIMENSION=128')
 
+downsetbm_d512_exe = executable ('downset-bm-d512', 'downset-bm.cc',
+                                 dependencies : [posets_dep ],
+                                 cpp_args : '-DDIMENSION=512')
+
 reducetests_exe = executable ('reducetests', 'reducetests.cc',
                               dependencies : [posets_dep ])
 

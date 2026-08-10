@@ -3,6 +3,10 @@
 #include <optional>
 #include <utility>
 
+#if defined(__AVX512VPOPCNTDQ__) && defined(__AVX512F__)
+# include <immintrin.h>
+#endif
+
 #include <posets/concepts.hh>
 #include <posets/utils/vector_mm.hh>
 #include <posets/vectors/traits.hh>
@@ -34,7 +38,7 @@ namespace posets::vectors {
           if (bools[i - bitset_threshold])
             sum++;
         }
-        assert (sum == bools.count ());
+        assert (sum == bit_count (bools));
       }
 
       x_and_bitset (std::initializer_list<value_type> v)
@@ -49,7 +53,7 @@ namespace posets::vectors {
         : k {k},
           x {std::move (x)},
           bools {std::move (bools)} {
-        sum = this->bools.count ();
+        sum = bit_count (this->bools);
       }
 
       x_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools, size_t sum)
@@ -57,7 +61,7 @@ namespace posets::vectors {
           x {std::move (x)},
           bools {std::move (bools)},
           sum {sum} {
-        assert (sum == this->bools.count ());
+        assert (sum == bit_count (this->bools));
       }
 
     public:
@@ -166,14 +170,14 @@ namespace posets::vectors {
         assert (rhs.k == k);
         x.meet_with (rhs.x);
         bools and_eq rhs.bools;
-        sum = bools.count ();
+        sum = bit_count (bools);
       }
 
       void join_with (const x_and_bitset& rhs) {
         assert (rhs.k == k);
         x.join_with (rhs.x);
         bools or_eq rhs.bools;
-        sum = bools.count ();
+        sum = bit_count (bools);
       }
 
       [[nodiscard]] long cached_sum () const
@@ -210,6 +214,16 @@ namespace posets::vectors {
       }
 
     private:
+      [[nodiscard]] static size_t bit_count (const std::bitset<Bools>& bits) {
+#if defined(__AVX512VPOPCNTDQ__) && defined(__AVX512F__)
+        if constexpr (NBitsets == 8 and Bools == 512 and sizeof (bits) == sizeof (__m512i)) {
+          const auto counts = _mm512_popcnt_epi64 (_mm512_loadu_si512 (&bits));
+          return static_cast<size_t> (_mm512_reduce_add_epi64 (counts));
+        }
+#endif
+        return bits.count ();
+      }
+
       size_t k;  // used to be const, but it does not add much, and forces
                  // explicit definition of move operators.
       X x;

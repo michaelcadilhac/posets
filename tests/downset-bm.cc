@@ -339,6 +339,11 @@ namespace posets::vectors {
   using simd_array_sum_and_bitset_fixed =
       posets::vectors::x_and_bitset<posets::vectors::simd_array_backed_sum<T, DIMENSION>,
                                    posets::vectors::nbools_to_nbitsets (DIMENSION)>;
+
+  template <typename T>
+  using simd_vector_and_bitset_fixed =
+      posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<T>,
+                                   posets::vectors::nbools_to_nbitsets (DIMENSION)>;
 }
 
 VECTOR_TYPES (
@@ -348,6 +353,7 @@ VECTOR_TYPES (
   posets::vectors::simd_array_ptr_backed_fixed<test_value_type>,
   posets::vectors::simd_array_backed_sum_fixed<test_value_type>,
   posets::vectors::simd_array_sum_and_bitset_fixed<test_value_type>,
+  posets::vectors::simd_vector_and_bitset_fixed<test_value_type>,
   posets::vectors::vector_backed<test_value_type>,
   posets::vectors::simd_vector_backed<test_value_type>
   );
