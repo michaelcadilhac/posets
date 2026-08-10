@@ -1,9 +1,15 @@
 #pragma once
 
+#include <type_traits>
+
+#include <algorithm>
 #include <cassert>
-#include <cstring>
+#include <compare>
 #include <experimental/simd>
 #include <iostream>
+#include <iterator>
+#include <stdexcept>
+#include <utility>
 
 #include <posets/concepts.hh>
 #include <posets/utils/simd_traits.hh>
@@ -52,11 +58,27 @@ namespace posets::vectors {
           return datap->size ();
       }
 
+      [[noreturn, gnu::cold, gnu::noinline]] static void throw_fixed_capacity_exceeded () {
+        throw std::length_error {"vector size exceeds fixed storage capacity"};
+      }
+
       void clear_back () {
-        if (data_size () > blocks_for (k) or k % items_per_block) {
-          char* start = reinterpret_cast<char*> (data () + (k / items_per_block));
-          char* end = reinterpret_cast<char*> (data () + data_size ());
-          memset (start, 0, end - start);
+        if constexpr (is_resizable) {
+          if (k % items_per_block != 0) {
+            if constexpr (uses_simd)
+              data ()[data_size () - 1] = block_type (0);
+            else
+              data ()[data_size () - 1].fill (0);
+          }
+        }
+        else {
+          if (k == data_size () * items_per_block)
+            return;
+          for (size_t block = k / items_per_block; block < data_size (); ++block)
+            if constexpr (uses_simd)
+              data ()[block] = block_type (0);
+            else
+              data ()[block].fill (0);
         }
       }
 
@@ -73,6 +95,13 @@ namespace posets::vectors {
         : k {k} {
         if constexpr (not EmbedsData)
           datap = this->malloc.construct ();
+        if (k > data_size () * items_per_block) [[unlikely]] {
+          if constexpr (not EmbedsData) {
+            this->malloc.destroy (datap);
+            datap = nullptr;
+          }
+          throw_fixed_capacity_exceeded ();
+        }
         assert (data_size () >= blocks_for (k));
         clear_back ();
       }
@@ -83,8 +112,19 @@ namespace posets::vectors {
           for (auto&& c : v)
             this->sum += c;
         }
-        std::memcpy (reinterpret_cast<value_type*> (data ()), v.data (),
-                     v.size () * sizeof (value_type));
+        size_t offset = 0;
+        for (; offset + items_per_block <= v.size (); offset += items_per_block) {
+          const size_t block = offset / items_per_block;
+          if constexpr (uses_simd)
+            data ()[block].copy_from (v.data () + offset, std::experimental::element_aligned);
+          else {
+            block_type loaded;
+            std::copy_n (v.data () + offset, items_per_block, loaded.begin ());
+            data ()[block] = loaded;
+          }
+        }
+        for (; offset < v.size (); ++offset)
+          at (offset) = v[offset];
       }
 
       generic () = delete;
@@ -104,19 +144,12 @@ namespace posets::vectors {
 
       // explicit copy operator
       [[nodiscard]] generic copy () const {
-        if constexpr (EmbedsData) {
-          auto res = generic (k);
-          res.datap = datap;
-          if constexpr (HasSum)
-            res.sum = this->sum;
-          return res;
-        }
-        else {
-          auto res = generic (std::span ((value_type*) datap, k));
-          if constexpr (HasSum)
-            res.sum = this->sum;
-          return res;
-        }
+        auto res = generic (k);
+        for (size_t i = 0; i < data_size (); ++i)
+          res.data ()[i] = data ()[i];
+        if constexpr (HasSum)
+          res.sum = this->sum;
+        return res;
       }
 
       generic& operator= (generic&& other) noexcept {
@@ -137,8 +170,18 @@ namespace posets::vectors {
 
       void to_vector (std::span<value_type> v) const {
         assert (v.size () >= k);
-        std::memcpy (static_cast<void*> (v.data ()), static_cast<const void*> (data ()),
-                     k * sizeof (value_type));
+        size_t offset = 0;
+        for (; offset + items_per_block <= k; offset += items_per_block) {
+          const size_t block = offset / items_per_block;
+          if constexpr (uses_simd)
+            data ()[block].copy_to (v.data () + offset, std::experimental::element_aligned);
+          else {
+            const block_type stored = data ()[block];
+            std::copy_n (stored.begin (), items_per_block, v.data () + offset);
+          }
+        }
+        for (; offset < k; ++offset)
+          v[offset] = (*this)[offset];
       }
 
       [[nodiscard]] auto partial_order (const generic& rhs) const {
@@ -146,20 +189,22 @@ namespace posets::vectors {
       }
 
       bool operator== (const generic& rhs) const {
+        assert (k == rhs.k);
         if constexpr (HasSum)
           if (this->sum != rhs.sum)
             return false;
-        // Trust memcmp to DTRT
-        return std::memcmp (rhs.data (), data (), k * sizeof (value_type)) == 0;
+        for (size_t i = 0; i < data_size (); ++i) {
+          if constexpr (uses_simd) {
+            if (not std::experimental::all_of (data ()[i] == rhs.data ()[i]))
+              return false;
+          }
+          else if (data ()[i] != rhs.data ()[i])
+            return false;
+        }
+        return true;
       }
 
-      bool operator!= (const generic& rhs) const {
-        if constexpr (HasSum)
-          if (this->sum != rhs.sum)
-            return true;
-        // Trust memcmp to DTRT
-        return std::memcmp (rhs.data (), data (), k * sizeof (value_type)) != 0;
-      }
+      bool operator!= (const generic& rhs) const { return not(*this == rhs); }
 
       // Used by Sets, should be a total order.  Do not use.
       bool operator< (const generic& rhs) const {
@@ -186,17 +231,13 @@ namespace posets::vectors {
 
       [[nodiscard]] generic meet (const generic& rhs) const {
         auto res = generic (k);
-        if constexpr (not EmbedsData)
-          res.datap = this->malloc.construct ();
 
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd)
             res.data ()[i] = std::experimental::min (data ()[i], rhs.data ()[i]);
           else
-            for (size_t j = 0; j < items_per_block; ++j) {
-              auto pos = (i * items_per_block) + j;
-              res.at (pos) = std::min ((*this)[pos], rhs[pos]);
-            }
+            for (size_t j = 0; j < items_per_block; ++j)
+              res.data ()[i][j] = std::min (data ()[i][j], rhs.data ()[i][j]);
 
           // In case of SIMD, this:
           //   res.sum += std::experimental::reduce (res.data ()[i]);
@@ -212,17 +253,13 @@ namespace posets::vectors {
 
       [[nodiscard]] generic join (const generic& rhs) const {
         auto res = generic (k);
-        if constexpr (not EmbedsData)
-          res.datap = this->malloc.construct ();
 
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd)
             res.data ()[i] = std::experimental::max (data ()[i], rhs.data ()[i]);
           else
-            for (size_t j = 0; j < items_per_block; ++j) {
-              const auto pos = (i * items_per_block) + j;
-              res.at (pos) = std::max ((*this)[pos], rhs[pos]);
-            }
+            for (size_t j = 0; j < items_per_block; ++j)
+              res.data ()[i][j] = std::max (data ()[i][j], rhs.data ()[i][j]);
 
           // SIMD reductions over narrow element types can overflow, so keep
           // the scalar accumulation used by meet().
@@ -241,10 +278,8 @@ namespace posets::vectors {
           if constexpr (uses_simd)
             data ()[i] = std::experimental::min (data ()[i], rhs.data ()[i]);
           else
-            for (size_t j = 0; j < items_per_block; ++j) {
-              const auto pos = (i * items_per_block) + j;
-              at (pos) = std::min ((*this)[pos], rhs[pos]);
-            }
+            for (size_t j = 0; j < items_per_block; ++j)
+              data ()[i][j] = std::min (data ()[i][j], rhs.data ()[i][j]);
 
           if constexpr (HasSum)
             for (size_t j = 0; j < items_per_block; ++j)
@@ -261,10 +296,8 @@ namespace posets::vectors {
           if constexpr (uses_simd)
             data ()[i] = std::experimental::max (data ()[i], rhs.data ()[i]);
           else
-            for (size_t j = 0; j < items_per_block; ++j) {
-              const auto pos = (i * items_per_block) + j;
-              at (pos) = std::max ((*this)[pos], rhs[pos]);
-            }
+            for (size_t j = 0; j < items_per_block; ++j)
+              data ()[i][j] = std::max (data ()[i][j], rhs.data ()[i][j]);
 
           if constexpr (HasSum)
             for (size_t j = 0; j < items_per_block; ++j)
@@ -285,22 +318,105 @@ namespace posets::vectors {
       }
 
     private:
-      value_type& at (size_t i) { return *(reinterpret_cast<value_type*> (data ()) + i); }
+      decltype (auto) at (size_t i) { return data ()[i / items_per_block][i % items_per_block]; }
 
-      [[nodiscard]] const value_type& at (size_t i) const {
-        return *(reinterpret_cast<const value_type*> (data ()) + i);
+      [[nodiscard]] decltype (auto) at (size_t i) const {
+        return data ()[i / items_per_block][i % items_per_block];
       }
 
     public:
-      const value_type& operator[] (size_t i) const { return at (i); }
+      [[nodiscard]] value_type operator[] (size_t i) const { return at (i); }
 
-      using iterator = value_type*;
-      using const_iterator = const value_type*;
+      template <bool IsConst>
+      class basic_iterator {
+          template <bool>
+          friend class basic_iterator;
 
-      iterator begin () { return iterator (data ()); }
-      [[nodiscard]] const_iterator begin () const { return const_iterator (data ()); }
-      iterator end () { return iterator (data ()) + k; }
-      [[nodiscard]] const_iterator end () const { return const_iterator (data ()) + k; }
+          using owner_type = std::conditional_t<IsConst, const generic, generic>;
+
+        public:
+          using iterator_concept = std::random_access_iterator_tag;
+          using iterator_category = std::random_access_iterator_tag;
+          using value_type = typename generic::value_type;
+          using difference_type = std::ptrdiff_t;
+          using reference = decltype (std::declval<owner_type&> ().at (size_t {}));
+          using pointer = void;
+
+          basic_iterator () = default;
+          basic_iterator (owner_type* owner, difference_type position)
+            : owner {owner},
+              position {position} {}
+
+          basic_iterator (const basic_iterator<false>& other)
+            requires IsConst
+            : owner {other.owner},
+              position {other.position} {}
+
+          reference operator* () const { return owner->at (static_cast<size_t> (position)); }
+          reference operator[] (difference_type offset) const { return *(*this + offset); }
+
+          basic_iterator& operator++ () {
+            ++position;
+            return *this;
+          }
+          basic_iterator operator++ (int) {
+            auto previous = *this;
+            ++*this;
+            return previous;
+          }
+          basic_iterator& operator-- () {
+            --position;
+            return *this;
+          }
+          basic_iterator operator-- (int) {
+            auto previous = *this;
+            --*this;
+            return previous;
+          }
+          basic_iterator& operator+= (difference_type offset) {
+            position += offset;
+            return *this;
+          }
+          basic_iterator& operator-= (difference_type offset) {
+            position -= offset;
+            return *this;
+          }
+
+          friend basic_iterator operator+ (basic_iterator iterator, difference_type offset) {
+            iterator += offset;
+            return iterator;
+          }
+          friend basic_iterator operator+ (difference_type offset, basic_iterator iterator) {
+            return iterator + offset;
+          }
+          friend basic_iterator operator- (basic_iterator iterator, difference_type offset) {
+            iterator -= offset;
+            return iterator;
+          }
+          friend difference_type operator- (const basic_iterator& lhs, const basic_iterator& rhs) {
+            assert (lhs.owner == rhs.owner);
+            return lhs.position - rhs.position;
+          }
+          friend bool operator== (const basic_iterator&, const basic_iterator&) = default;
+          friend auto operator<=> (const basic_iterator& lhs, const basic_iterator& rhs) {
+            assert (lhs.owner == rhs.owner);
+            return lhs.position <=> rhs.position;
+          }
+
+        private:
+          owner_type* owner {nullptr};
+          difference_type position {0};
+      };
+
+      using iterator = basic_iterator<false>;
+      using const_iterator = basic_iterator<true>;
+
+      iterator begin () { return iterator (this, 0); }
+      [[nodiscard]] const_iterator begin () const { return const_iterator (this, 0); }
+      iterator end () { return iterator (this, static_cast<std::ptrdiff_t> (k)); }
+      [[nodiscard]] const_iterator end () const {
+        return const_iterator (this, static_cast<std::ptrdiff_t> (k));
+      }
 
       [[nodiscard]] auto bin () const {
         if constexpr (HasSum)
