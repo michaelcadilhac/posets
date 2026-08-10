@@ -157,7 +157,7 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      auto apply (const F& lambda) const {
+      [[nodiscard]] auto apply (const F& lambda) const {
         const std::vector<V>& backing_vector = get_backing_vector ();
         std::vector<V> ss;
         ss.reserve (backing_vector.size ());

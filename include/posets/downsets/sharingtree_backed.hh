@@ -120,12 +120,12 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      auto apply (const F& lambda) const {
-        ensure_materialized ();
+      [[nodiscard]] auto apply (const F& lambda) const {
+        const auto& materialized = get_backing_vector ();
         std::vector<V> ss;
-        ss.reserve (this->mat->size ());
+        ss.reserve (materialized.size ());
 
-        for (const auto& v : *this->mat)
+        for (const auto& v : materialized)
           ss.push_back (lambda (v));
 
         return sharingtree_backed (std::move (ss));

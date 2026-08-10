@@ -183,7 +183,7 @@ namespace posets::vectors {
       }
 
       bool operator< (const x_and_bitset& rhs) const {
-        int cmp = std::memcmp (&bools, &rhs.bools, sizeof (bools));
+        const int cmp = std::memcmp (&bools, &rhs.bools, sizeof (bools));
         if (cmp == 0)
           return (x < rhs.x);
         return (cmp < 0);

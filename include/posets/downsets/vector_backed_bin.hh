@@ -159,7 +159,7 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      vector_backed_bin apply (const F& lambda) const {
+      [[nodiscard]] vector_backed_bin apply (const F& lambda) const {
         vector_backed_bin res (bins.size ());
         for (auto& el : all_vs)
           res.insert (lambda (el));

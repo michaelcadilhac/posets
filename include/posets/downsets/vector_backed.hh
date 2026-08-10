@@ -128,7 +128,7 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      vector_backed apply (const F& lambda) const {
+      [[nodiscard]] vector_backed apply (const F& lambda) const {
         vector_backed res;
         for (const auto& el : vector_set)
           res.insert (lambda (el));

@@ -155,7 +155,7 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      self apply (const F& lambda) const {
+      [[nodiscard]] self apply (const F& lambda) const {
         self res;
         for (const auto& el : vector_set)
           res.insert (lambda (el));
