@@ -26,9 +26,16 @@ namespace posets::downsets {
         size_c.reset ();
       }
 
-      void ensure_materialized () const {
+      [[nodiscard]] std::vector<V>& ensure_materialized () {
         if (not mat)
           mat = forest->get_all (root);
+        return *mat;
+      }
+
+      [[nodiscard]] const std::vector<V>& ensure_materialized () const {
+        if (not mat)
+          mat = forest->get_all (root);
+        return *mat;
       }
 
       void init_forest (size_t dimkey) {
@@ -76,30 +83,12 @@ namespace posets::downsets {
           size_c = forest->count_vectors (root);
         return *size_c;
       }
-      auto begin () {
-        ensure_materialized ();
-        return mat->begin ();
-      }
-      [[nodiscard]] auto begin () const {
-        ensure_materialized ();
-        return mat->begin ();
-      }
-      auto end () {
-        ensure_materialized ();
-        return mat->end ();
-      }
-      [[nodiscard]] auto end () const {
-        ensure_materialized ();
-        return mat->end ();
-      }
-      [[nodiscard]] auto& get_backing_vector () {
-        ensure_materialized ();
-        return *mat;
-      }
-      [[nodiscard]] const auto& get_backing_vector () const {
-        ensure_materialized ();
-        return *mat;
-      }
+      auto begin () { return ensure_materialized ().begin (); }
+      [[nodiscard]] auto begin () const { return ensure_materialized ().begin (); }
+      auto end () { return ensure_materialized ().end (); }
+      [[nodiscard]] auto end () const { return ensure_materialized ().end (); }
+      [[nodiscard]] auto& get_backing_vector () { return ensure_materialized (); }
+      [[nodiscard]] const auto& get_backing_vector () const { return ensure_materialized (); }
 
       [[nodiscard]] bool contains (const V& v) const {
         return this->forest->covers_vector (this->root, v);
@@ -121,7 +110,7 @@ namespace posets::downsets {
 
       template <typename F>
       [[nodiscard]] auto apply (const F& lambda) const {
-        const auto& materialized = get_backing_vector ();
+        const auto& materialized = ensure_materialized ();
         std::vector<V> ss;
         ss.reserve (materialized.size ());
 
