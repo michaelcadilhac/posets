@@ -26,6 +26,13 @@ namespace posets::downsets {
       skiplist_backed () = default;
       utils::skiplist<V> sl;
 
+      void insert_copy (const V& v) {
+        if (sl.dominates (v))
+          return;
+        sl.remove_dominated_by (v);
+        sl.push (v.copy ());
+      }
+
     public:
       skiplist_backed (const skiplist_backed&) = delete;
       skiplist_backed (skiplist_backed&&) = default;
@@ -53,21 +60,22 @@ namespace posets::downsets {
 
       void intersect_with (const skiplist_backed& other) {
         skiplist_backed intersection;
+        intersection.sl.reserve (sl.size ());
         bool smaller_set = false;
 
         for (const auto& x : sl) {
-          bool dominated = false;
-
-          for (const auto& y : other.sl) {
-            V v = x.meet (y);
-            if (v == x)
-              dominated = true;
-            intersection.insert (std::move (v));
-            if (dominated)
-              break;
+          if (other.contains (x)) {
+            intersection.insert_copy (x);
+            continue;
           }
-          // If x wasn't <= an element in other, x is not in the intersection.
-          smaller_set or_eq not dominated;
+
+          smaller_set = true;
+          auto scratch = x.copy ();
+          for (const auto& y : other.sl) {
+            scratch.meet_with (y);
+            intersection.insert_copy (scratch);
+            scratch.join_with (x);
+          }
         }
 
         if (smaller_set)

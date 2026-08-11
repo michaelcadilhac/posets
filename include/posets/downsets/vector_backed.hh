@@ -29,6 +29,30 @@ namespace posets::downsets {
       vector_backed () = default;
       std::vector<V> vector_set;
 
+      void insert_copy (const V& v) {
+        bool must_remove = false;
+        auto result = vector_set.begin ();
+        const auto end = vector_set.end ();
+
+        for (auto it = result; it != end; ++it) {
+          auto order = v.partial_order (*it);
+          if (not must_remove and order.leq ())
+            return;
+          if (order.geq ()) {
+            must_remove = true;
+          }
+          else {
+            if (result != it)
+              *result = std::move (*it);
+            ++result;
+          }
+        }
+
+        if (result != vector_set.end ())
+          vector_set.erase (result, vector_set.end ());
+        vector_set.push_back (v.copy ());
+      }
+
       [[nodiscard]] bool debug_is_antichain () const {
 #ifndef NDEBUG
         for (auto lhs = vector_set.begin (); lhs != vector_set.end (); ++lhs)
@@ -105,22 +129,22 @@ namespace posets::downsets {
 
       void intersect_with (const vector_backed& other) {
         vector_backed intersection;
+        intersection.vector_set.reserve (vector_set.size ());
         bool smaller_set = false;
 
         for (const auto& x : vector_set) {
-          bool dominated = false;
+          if (other.contains (x)) {
+            intersection.insert_copy (x);
+            continue;
+          }
 
-          for (auto& y : other.vector_set) {
-            V v = x.meet (y);
-            if (v == x)
-              dominated = true;
-            intersection.insert (std::move (v));
-            if (dominated)
-              break;
-          };
-          // If x wasn't <= an element in other, then x is not in the
-          // intersection, thus the set is updated.
-          smaller_set = smaller_set or not dominated;
+          smaller_set = true;
+          auto scratch = x.copy ();
+          for (const auto& y : other.vector_set) {
+            scratch.meet_with (y);
+            intersection.insert_copy (scratch);
+            scratch.join_with (x);
+          }
         }
 
         if (smaller_set)

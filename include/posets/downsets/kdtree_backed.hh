@@ -104,6 +104,7 @@ namespace posets::downsets {
       // Intersection in place
       void intersect_with (const kdtree_backed& other) {
         std::vector<V> intersection;
+        intersection.reserve (this->size () * other.size ());
         bool smaller_set = false;
 
         for (auto& x : tree) {
