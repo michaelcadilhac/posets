@@ -16,7 +16,7 @@ namespace posets::vectors {
     public:
       using value_type = typename X::value_type;
 
-      x_and_boolvec (size_t k) : k {k}, x {std::min (bool_threshold, k)} {}
+      x_and_boolvec (size_t k) : k {k}, x {std::min (bool_threshold, k)}, sum {0} {}
 
       x_and_boolvec (std::span<const value_type> v)
         : k {v.size ()},
