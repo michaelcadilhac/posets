@@ -173,12 +173,14 @@ namespace posets::utils {
           list_size (other.list_size),
           dim (other.dim),
           rng (other.rng) {
-        // Restore other to a valid empty state with a fresh header.
+        // Keep the moved-from object destructible and assignable without
+        // allocating inside this noexcept move.  Mutating it recreates the
+        // header lazily in push().
         other.nodes.clear ();
-        other.nodes.emplace_back ();
         other.free_head = nil;
         other.current_level = 0;
         other.list_size = 0;
+        other.dim = 0;
       }
 
       skiplist& operator= (skiplist&& other) noexcept {
@@ -191,10 +193,10 @@ namespace posets::utils {
         dim = other.dim;
         rng = other.rng;
         other.nodes.clear ();
-        other.nodes.emplace_back ();
         other.free_head = nil;
         other.current_level = 0;
         other.list_size = 0;
+        other.dim = 0;
         return *this;
       }
 
@@ -203,6 +205,8 @@ namespace posets::utils {
 
       // Insert v without checking dominance (caller is responsible).
       void push (V&& v) {
+        if (nodes.empty ())
+          nodes.emplace_back ();
         if (dim == 0)
           dim = v.size ();
         std::array<int32_t, max_level> update {};
@@ -284,6 +288,8 @@ namespace posets::utils {
       [[nodiscard]] std::vector<V> drain () {
         std::vector<V> result;
         result.reserve (list_size);
+        if (nodes.empty ())
+          return result;
         int32_t cur = nodes[header_idx].forward[0];
         while (cur != nil) {
           result.push_back (std::move (nodes[cur].value));
@@ -356,6 +362,8 @@ namespace posets::utils {
       };
 
       [[nodiscard]] const_iterator begin () const {
+        if (nodes.empty ())
+          return end ();
         return const_iterator (this, nodes[header_idx].forward[0]);
       }
       [[nodiscard]] const_iterator end () const { return const_iterator (this, nil); }
