@@ -323,7 +323,6 @@ namespace posets::utils {
 
       [[nodiscard]] auto size () const { return list_size; }
       [[nodiscard]] bool empty () const { return list_size == 0; }
-      void reserve (size_t capacity) { nodes.reserve (capacity + 1); }
 
       // Forward iterator over the level-0 chain.  Holds an index + a back-
       // pointer to the owning skiplist so it can dereference; references to
