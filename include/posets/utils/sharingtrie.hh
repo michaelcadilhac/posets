@@ -32,8 +32,8 @@ namespace posets::utils {
       // and a single array of nodes to store them all. We also keep a color,
       // this will be used to define equivalence classes (as we DO NOT reduce
       // to a DFA/DAG, instead storing the intermediate trie).
-      size_t dim;
-      int root;
+      size_t dim {0};
+      int root {-1};
       struct st_node {
           typename V::value_type label;
           int color;
@@ -41,7 +41,7 @@ namespace posets::utils {
           int bro;
       };
       st_node* bin_tree;
-      size_t bt_size;
+      size_t bt_size {0};
       std::vector<V> vector_set;
 
       // Generation-stamp cache for dominates(): avoids allocating hash sets on
@@ -251,6 +251,17 @@ namespace posets::utils {
     public:
       template <std::ranges::input_range R, class Proj = std::identity>
       void relabel_trie (R&& elements, Proj proj = {}) {
+        if (elements.empty ()) {
+          this->dim = 0;
+          this->root = -1;
+          this->vector_set.clear ();
+          this->nxt_color = 0;
+          this->dominates_stamp.clear ();
+          this->dominates_gen = 0U;
+          this->dominates_stack.clear ();
+          return;
+        }
+
         this->dim = (proj (*elements.begin ()).size ());
 
         // sanity checks
@@ -316,9 +327,7 @@ namespace posets::utils {
       }
 
       template <std::ranges::input_range R, class Proj = std::identity>
-      sharingtrie (R&& elements, Proj proj = {})
-        : dim (proj (*elements.begin ()).size ()),
-          bin_tree (nullptr) {
+      sharingtrie (R&& elements, Proj proj = {}) : bin_tree (nullptr) {
         relabel_trie (std::forward<R> (elements), proj);
       }
 
@@ -368,6 +377,9 @@ namespace posets::utils {
       // experiments show large-dimensional vectors may make this overflow
       // otherwise.
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
+        if (this->vector_set.empty ())
+          return false;
+
         // This is essentially going to be a DFS where we check for domination
         // at each level/dimension and stopping when it does not hold (recall
         // we have ordered things in increasing fashion, so no need to look at
@@ -450,6 +462,9 @@ namespace posets::utils {
       }
 
       [[nodiscard]] std::vector<V> get_all () const {
+        if (this->vector_set.empty ())
+          return {};
+
         // A vector used as a stack of node indices and directions (0 down, 1 right)
         std::vector<std::tuple<int, short>> to_visit;
         to_visit.reserve (this->dim);

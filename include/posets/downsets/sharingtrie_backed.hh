@@ -33,7 +33,6 @@ namespace posets::downsets {
 
       void reset_trie (std::vector<V>&& elements) noexcept {
         auto antichain = utils::reduce_to_maxima (std::move (elements));
-        assert (not antichain.empty ());
         this->trie.relabel_trie (std::move (antichain));
         assert (this->trie.is_antichain ());
       }
@@ -70,7 +69,13 @@ namespace posets::downsets {
 
       // Union in place
       void union_with (sharingtrie_backed&& other) {
-        assert (other.size () > 0);
+        if (other.size () == 0)
+          return;
+        if (this->size () == 0) {
+          this->trie = std::move (other.trie);
+          return;
+        }
+
         std::vector<V*> result;
         result.reserve (this->size () + other.size ());
         // for all elements in this tree, if they are not strictly
@@ -101,6 +106,13 @@ namespace posets::downsets {
 
       // Intersection in place
       void intersect_with (const sharingtrie_backed& other) {
+        if (this->size () == 0)
+          return;
+        if (other.size () == 0) {
+          reset_trie (std::vector<V> {});
+          return;
+        }
+
         std::vector<V> intersection;
         bool smaller_set = false;
 
