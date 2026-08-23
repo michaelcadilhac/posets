@@ -20,7 +20,6 @@ namespace posets::downsets {
       rank_bucketed_vector_backed (V&& v) { insert (std::move (v)); }
 
       rank_bucketed_vector_backed (std::vector<V>&& elements) noexcept {
-        assert (not elements.empty ());
         for (auto&& e : elements)
           insert (std::move (e));
       }
