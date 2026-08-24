@@ -22,7 +22,7 @@ namespace posets::vectors {
         : k {v.size ()},
           x {std::span (v.data (), std::min (k, bool_threshold))},
           sum {0} {
-        bools.reserve (bool_threshold);
+        bools.reserve (k - std::min (k, bool_threshold));
         for (size_t i = bool_threshold; i < k; ++i) {
           bools.push_back (v[i] + 1);
           if (bools[i - bool_threshold])

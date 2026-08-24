@@ -40,6 +40,7 @@ header_files = [
   'posets/vectors/traits.hh',
   'posets/vectors/X_and_bitset.hh',
   'posets/vectors/X_and_boolvec.hh',
+  'posets/vectors/X_and_wordvec.hh',
   'posets/vectors.hh'
 ]
 
