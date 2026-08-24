@@ -1,7 +1,11 @@
 #include <cassert>
+#include <array>
+#include <algorithm>
+#include <random>
 #include <span>
 #include <memory>
 #include <ostream>
+#include <sstream>
 #include <set>
 #include <vector>
 #include <string>
@@ -21,6 +25,152 @@ size_t posets::vectors::bitset_threshold = 128;
 using test_value_type = std::int8_t;
 
 #define il std::initializer_list<test_value_type>
+
+template <typename Lhs, typename Rhs>
+void assert_same_vector_values (const Lhs& lhs, const Rhs& rhs) {
+  assert (lhs.size () == rhs.size ());
+  for (size_t i = 0; i < lhs.size (); ++i)
+    assert (lhs[i] == rhs[i]);
+
+  std::vector<test_value_type> lhs_values (lhs.size ());
+  std::vector<test_value_type> rhs_values (rhs.size ());
+  lhs.to_vector (lhs_values);
+  rhs.to_vector (rhs_values);
+  assert (lhs_values == rhs_values);
+}
+
+void test_x_and_wordvec () {
+  using inner_type = posets::vectors::vector_backed_sum<test_value_type>;
+  using bool_type = posets::vectors::x_and_boolvec<inner_type>;
+  using word_type = posets::vectors::x_and_wordvec<inner_type>;
+
+  const size_t previous_bool_threshold = posets::vectors::bool_threshold;
+  constexpr size_t inner_size = 7;
+  posets::vectors::bool_threshold = inner_size;
+
+  std::mt19937_64 random {0x58a6d17b2c9043efULL};
+  std::uniform_int_distribution<int> inner_value {-8, 8};
+  std::uniform_int_distribution<int> bool_value {-1, 0};
+  constexpr std::array<size_t, 6> tail_lengths {0, 1, 63, 64, 65, 1000};
+
+  for (size_t tail_length : tail_lengths) {
+    const size_t vector_size = inner_size + tail_length;
+
+    word_type sized (vector_size);
+    assert (sized.unused_trailing_bits_are_zero ());
+
+    for (size_t round = 0; round < 48; ++round) {
+      std::vector<test_value_type> lhs_values (vector_size);
+      std::vector<test_value_type> rhs_values (vector_size);
+      for (size_t i = 0; i < inner_size; ++i) {
+        lhs_values[i] = static_cast<test_value_type> (inner_value (random));
+        rhs_values[i] = static_cast<test_value_type> (inner_value (random));
+      }
+      for (size_t i = inner_size; i < vector_size; ++i) {
+        lhs_values[i] = static_cast<test_value_type> (bool_value (random));
+        rhs_values[i] = static_cast<test_value_type> (bool_value (random));
+      }
+
+      // In addition to unrelated pairs, force both domination directions and equality.
+      switch (round % 4) {
+        case 1:
+          for (size_t i = 0; i < vector_size; ++i)
+            rhs_values[i] = std::min (lhs_values[i], rhs_values[i]);
+          break;
+        case 2:
+          for (size_t i = 0; i < vector_size; ++i)
+            rhs_values[i] = std::max (lhs_values[i], rhs_values[i]);
+          break;
+        case 3: rhs_values = lhs_values; break;
+        default: break;
+      }
+
+      bool_type bool_lhs {std::span<const test_value_type> {lhs_values}};
+      bool_type bool_rhs {std::span<const test_value_type> {rhs_values}};
+      word_type word_lhs {std::span<const test_value_type> {lhs_values}};
+      word_type word_rhs {std::span<const test_value_type> {rhs_values}};
+
+      assert (word_lhs.unused_trailing_bits_are_zero ());
+      assert (word_rhs.unused_trailing_bits_are_zero ());
+      assert_same_vector_values (word_lhs, bool_lhs);
+      assert_same_vector_values (word_rhs, bool_rhs);
+      assert (word_lhs.cached_sum () == bool_lhs.cached_sum ());
+      assert (word_rhs.cached_sum () == bool_rhs.cached_sum ());
+      assert (word_lhs.bin () == bool_lhs.bin ());
+      assert (word_rhs.bin () == bool_rhs.bin ());
+
+      {
+        auto word_order = word_lhs.partial_order (word_rhs);
+        auto bool_order = bool_lhs.partial_order (bool_rhs);
+        assert (word_order.leq () == bool_order.leq ());
+        assert (word_order.geq () == bool_order.geq ());
+      }
+      {
+        auto word_order = word_rhs.partial_order (word_lhs);
+        auto bool_order = bool_rhs.partial_order (bool_lhs);
+        assert (word_order.geq () == bool_order.geq ());
+        assert (word_order.leq () == bool_order.leq ());
+      }
+
+      assert ((word_lhs == word_rhs) == (bool_lhs == bool_rhs));
+      assert ((word_lhs != word_rhs) == (bool_lhs != bool_rhs));
+      assert ((word_lhs < word_rhs) == (bool_lhs < bool_rhs));
+      assert ((word_rhs < word_lhs) == (bool_rhs < bool_lhs));
+
+      auto word_meet = word_lhs.meet (word_rhs);
+      auto bool_meet = bool_lhs.meet (bool_rhs);
+      assert (word_meet.unused_trailing_bits_are_zero ());
+      assert_same_vector_values (word_meet, bool_meet);
+      assert (word_meet.cached_sum () == bool_meet.cached_sum ());
+
+      auto word_join = word_lhs.join (word_rhs);
+      auto bool_join = bool_lhs.join (bool_rhs);
+      assert (word_join.unused_trailing_bits_are_zero ());
+      assert_same_vector_values (word_join, bool_join);
+      assert (word_join.cached_sum () == bool_join.cached_sum ());
+
+      auto word_meet_in_place = word_lhs.copy ();
+      auto bool_meet_in_place = bool_lhs.copy ();
+      word_meet_in_place.meet_with (word_rhs);
+      bool_meet_in_place.meet_with (bool_rhs);
+      assert (word_meet_in_place.unused_trailing_bits_are_zero ());
+      assert (word_meet_in_place == word_meet);
+      assert_same_vector_values (word_meet_in_place, bool_meet_in_place);
+
+      auto word_join_in_place = word_lhs.copy ();
+      auto bool_join_in_place = bool_lhs.copy ();
+      word_join_in_place.join_with (word_rhs);
+      bool_join_in_place.join_with (bool_rhs);
+      assert (word_join_in_place.unused_trailing_bits_are_zero ());
+      assert (word_join_in_place == word_join);
+      assert_same_vector_values (word_join_in_place, bool_join_in_place);
+
+      auto word_copy = word_lhs.copy ();
+      assert (word_copy.unused_trailing_bits_are_zero ());
+      assert (word_copy == word_lhs);
+      auto word_moved = std::move (word_copy);
+      assert (word_moved.unused_trailing_bits_are_zero ());
+      assert_same_vector_values (word_moved, bool_lhs);
+      word_moved = word_rhs.copy ();
+      assert (word_moved.unused_trailing_bits_are_zero ());
+      assert_same_vector_values (word_moved, bool_rhs);
+
+      std::ostringstream word_output;
+      std::ostringstream bool_output;
+      word_lhs.print (word_output);
+      bool_lhs.print (bool_output);
+      assert (word_output.str () == bool_output.str ());
+    }
+  }
+
+  posets::vectors::bool_threshold = 2;
+  word_type word_initialized (il {4, -3, -1, 0, -1});
+  bool_type bool_initialized (il {4, -3, -1, 0, -1});
+  assert (word_initialized.unused_trailing_bits_are_zero ());
+  assert_same_vector_values (word_initialized, bool_initialized);
+
+  posets::vectors::bool_threshold = previous_bool_threshold;
+}
 
 template<typename SetType>
 struct test_t : public generic_test<void> {
@@ -432,6 +582,9 @@ namespace posets::vectors {
 
   template <typename T>
   using simd_vector_and_boolvec_backed = posets::vectors::x_and_boolvec<posets::vectors::simd_vector_backed<T>>;
+
+  template <typename T>
+  using simd_vector_and_wordvec_backed = posets::vectors::x_and_wordvec<posets::vectors::simd_vector_backed<T>>;
 }
 
 #define DEFINE_VECTOR_NAME(V) template <> struct vector_name<V> { static constexpr auto str = #V; };
@@ -448,7 +601,8 @@ VECTOR_TYPES (posets::vectors::vector_backed<test_value_type>,
               posets::vectors::simd_array_backed_sum_fixed<test_value_type>,
               posets::vectors::simd_array_ptr_backed_sum_fixed<test_value_type>,
               posets::vectors::simd_vector_and_bitset_backed<test_value_type>,
-              posets::vectors::simd_vector_and_boolvec_backed<test_value_type>);
+              posets::vectors::simd_vector_and_boolvec_backed<test_value_type>,
+              posets::vectors::simd_vector_and_wordvec_backed<test_value_type>);
 
 using set_types = template_type_list<//posets::downsets::full_set, ; too slow.
   posets::downsets::bboxtree_backed,
@@ -470,6 +624,7 @@ using set_types = template_type_list<//posets::downsets::full_set, ; too slow.
 
 
 int main(int argc, char* argv[]) {
+  test_x_and_wordvec ();
   register_maker ((vector_types*) 0, (set_types*) 0);
 
   if (argc != 3)

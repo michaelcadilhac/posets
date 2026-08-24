@@ -10,6 +10,9 @@
 #if POSETS_ENABLE_VECTOR_X_AND_BOOLVEC
 # include <posets/vectors/X_and_boolvec.hh>
 #endif
+#if POSETS_ENABLE_VECTOR_X_AND_WORDVEC
+# include <posets/vectors/X_and_wordvec.hh>
+#endif
 
 namespace posets::vectors {
 

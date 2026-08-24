@@ -3,6 +3,7 @@
 #include <posets/vectors.hh>
 #include <posets/vectors/X_and_bitset.hh>
 #include <posets/vectors/X_and_boolvec.hh>
+#include <posets/vectors/X_and_wordvec.hh>
 
 namespace posets::vectors::concept_checks {
   static_assert (posets::Vector<simd_array_backed<int, 128>>);
@@ -23,4 +24,5 @@ namespace posets::vectors::concept_checks {
   using vector_test_int = vector_backed<int>;
   static_assert (posets::Vector<x_and_bitset<vector_test_int, 128>>);
   static_assert (posets::Vector<x_and_boolvec<vector_test_int>>);
+  static_assert (posets::Vector<x_and_wordvec<vector_test_int>>);
 }
