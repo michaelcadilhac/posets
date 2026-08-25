@@ -3,6 +3,7 @@
 #include <posets/concepts.hh>
 #include <posets/config.hh>
 #include <posets/vectors/generic.hh>
+#include <posets/vectors/traits.hh>
 
 #if POSETS_ENABLE_VECTOR_X_AND_BITSET
 # include <posets/vectors/X_and_bitset.hh>

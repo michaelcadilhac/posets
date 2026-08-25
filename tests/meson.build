@@ -39,6 +39,11 @@ concept_checks_exe = executable ('concept-checks', 'concept-checks.cc',
 pruned_concept_checks_exe = executable ('pruned-concept-checks', 'pruned-concept-checks.cc',
                                         dependencies : [posets_dep ])
 
+pruned_vector_only_concept_checks_exe = executable (
+  'pruned-vector-only-concept-checks',
+  'pruned-vector-only-concept-checks.cc',
+  dependencies : [posets_dep ])
+
 antichain_factory_test_exe = executable ('antichain-factory-test',
                                          'antichain-factory-test.cc',
                                          dependencies : [posets_dep ])
@@ -65,5 +70,7 @@ test('antichains/vectors bboxtree', bboxtests_exe)
 test('antichains/vectors comptrie', comptrietests_exe)
 test('antichains/vectors concept checks', concept_checks_exe)
 test('antichains/vectors pruned concept checks', pruned_concept_checks_exe)
+test('antichains/vectors pruned vector-only concept checks',
+     pruned_vector_only_concept_checks_exe)
 test('antichains/vector backed unchecked factory', antichain_factory_test_exe)
 test('antichains/empty downsets', empty_downsets_test_exe)
