@@ -79,10 +79,8 @@ namespace posets::utils {
 // Macros, not inline functions, so the disabled build has no argument to
 // evaluate: a counter update must not keep a size computation alive.
 #ifdef POSETS_RANK_STATS
-# define POSETS_RANK_STAT_ADD(field, n) \
-   (::posets::utils::rank_stats_current ().field += (n))
-# define POSETS_RANK_STAT_SIZE(n) \
-   (::posets::utils::rank_stats_current ().observe_size (n))
+# define POSETS_RANK_STAT_ADD(field, n) (::posets::utils::rank_stats_current ().field += (n))
+# define POSETS_RANK_STAT_SIZE(n) (::posets::utils::rank_stats_current ().observe_size (n))
 #else
 # define POSETS_RANK_STAT_ADD(field, n) ((void) 0)
 # define POSETS_RANK_STAT_SIZE(n) ((void) 0)

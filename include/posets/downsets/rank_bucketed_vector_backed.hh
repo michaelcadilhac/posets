@@ -1,6 +1,5 @@
 #pragma once
 
-#include <posets/utils/rank_stats.hh>
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -8,6 +7,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/rank_stats.hh>
 
 namespace posets::downsets {
   template <Vector V>
