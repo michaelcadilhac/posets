@@ -48,6 +48,15 @@ antichain_factory_test_exe = executable ('antichain-factory-test',
                                          'antichain-factory-test.cc',
                                          dependencies : [posets_dep ])
 
+rank_stats_on_exe = executable ('rank-stats-on',
+                                'rank-stats.cc',
+                                dependencies : [posets_dep ],
+                                cpp_args : '-DPOSETS_RANK_STATS')
+
+rank_stats_off_exe = executable ('rank-stats-off',
+                                 'rank-stats.cc',
+                                 dependencies : [posets_dep ])
+
 empty_downsets_test_exe = executable ('empty-downsets-test',
                                       'empty-downsets.cc',
                                       dependencies : [posets_dep ])
@@ -74,3 +83,5 @@ test('antichains/vectors pruned vector-only concept checks',
      pruned_vector_only_concept_checks_exe)
 test('antichains/vector backed unchecked factory', antichain_factory_test_exe)
 test('antichains/empty downsets', empty_downsets_test_exe)
+test('antichains/rank stats enabled', rank_stats_on_exe)
+test('antichains/rank stats compiled out', rank_stats_off_exe)

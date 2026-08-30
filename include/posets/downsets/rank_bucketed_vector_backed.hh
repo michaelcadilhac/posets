@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/rank_stats.hh>
 
 namespace posets::downsets {
   template <Vector V>
@@ -45,6 +46,8 @@ namespace posets::downsets {
       }
 
       void rebuild_buckets () {
+        POSETS_RANK_STAT_ADD (bucket_rebuilds, 1);
+        POSETS_RANK_STAT_ADD (bucket_rebuild_elements, vector_set.size ());
         buckets.clear ();
         if (vector_set.empty ())
           return;
@@ -76,24 +79,35 @@ namespace posets::downsets {
       bool operator== (const self&) = delete;
 
       [[nodiscard]] bool contains (const V& v) const {
+        POSETS_RANK_STAT_ADD (contains_calls, 1);
         const rank_t rv = rank_of (v);
         const size_t start = lower_rank_pos (rv);
 
-        for (size_t i = start; i < vector_set.size (); ++i)
+        // A dominator w of v has v <= w componentwise, so rank (w) >= rank (v):
+        // the scan can start at the first element of rank rv, and there is no
+        // upper bound to stop it early.
+        for (size_t i = start; i < vector_set.size (); ++i) {
+          POSETS_RANK_STAT_ADD (partial_order_calls, 1);
           if (v.partial_order (vector_set[i]).leq ())
             return true;
+        }
         return false;
       }
 
       [[nodiscard]] auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
+        POSETS_RANK_STAT_ADD (insert_attempts, 1);
         const rank_t rv = rank_of (v);
 
         const size_t first_possible_dominator = lower_rank_pos (rv);
-        for (size_t i = first_possible_dominator; i < vector_set.size (); ++i)
-          if (v.partial_order (vector_set[i]).leq ())
+        for (size_t i = first_possible_dominator; i < vector_set.size (); ++i) {
+          POSETS_RANK_STAT_ADD (partial_order_calls, 1);
+          if (v.partial_order (vector_set[i]).leq ()) {
+            POSETS_RANK_STAT_ADD (insert_rejected_dominated, 1);
             return false;
+          }
+        }
 
         const size_t stop = upper_rank_pos (rv);
         size_t write = 0;
@@ -101,11 +115,14 @@ namespace posets::downsets {
 
         for (size_t read = 0; read < vector_set.size (); ++read) {
           bool remove = false;
-          if (read < stop)
+          if (read < stop) {
+            POSETS_RANK_STAT_ADD (partial_order_calls, 1);
             remove = v.partial_order (vector_set[read]).geq ();
+          }
 
           if (remove) {
             removed_any = true;
+            POSETS_RANK_STAT_ADD (existing_elements_removed, 1);
             continue;
           }
 
@@ -126,10 +143,12 @@ namespace posets::downsets {
         vector_set.insert (vector_set.begin () + static_cast<std::ptrdiff_t> (pos), std::move (v));
         ranks.insert (ranks.begin () + static_cast<std::ptrdiff_t> (pos), rv);
         rebuild_buckets ();
+        POSETS_RANK_STAT_SIZE (vector_set.size ());
         return true;
       }
 
       void union_with (self&& other) {
+        POSETS_RANK_STAT_ADD (union_insertions, other.vector_set.size ());
         for (auto&& e : other.vector_set)
           insert (std::move (e));
       }
@@ -138,13 +157,18 @@ namespace posets::downsets {
         self intersection;
         bool smaller_set = false;
 
+        POSETS_RANK_STAT_ADD (intersection_left_elements, vector_set.size ());
         for (const auto& x : vector_set) {
           const bool dominated = other.contains (x);
-          if (dominated)
+          if (dominated) {
+            POSETS_RANK_STAT_ADD (intersection_short_circuits, 1);
             intersection.insert (x.copy ());
-          else
+          }
+          else {
+            POSETS_RANK_STAT_ADD (intersection_pair_meets, other.size ());
             for (const auto& y : other)
               intersection.insert (x.meet (y));
+          }
 
           smaller_set or_eq not dominated;
         }
@@ -156,6 +180,7 @@ namespace posets::downsets {
       template <typename F>
       [[nodiscard]] self apply (const F& lambda) const {
         self res;
+        POSETS_RANK_STAT_ADD (apply_elements, vector_set.size ());
         for (const auto& el : vector_set)
           res.insert (lambda (el));
         return res;
