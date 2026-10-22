@@ -37,8 +37,9 @@ namespace posets::utils {
       uint64_t intersection_pair_meets {0};
       uint64_t apply_elements {0};
 
-      // Representation size, and the bucket index maintained alongside it.
+      // Representation size.
       uint64_t peak_backing_size {0};
+      // Legacy counters, kept at zero since the unused bucket index was removed.
       uint64_t bucket_rebuilds {0};
       uint64_t bucket_rebuild_elements {0};
 
