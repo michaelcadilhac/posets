@@ -61,6 +61,9 @@ empty_downsets_test_exe = executable ('empty-downsets-test',
                                       'empty-downsets.cc',
                                       dependencies : [posets_dep ])
 
+vector_move_exe = executable ('vector-move', 'vector-move.cc',
+                              dependencies : [posets_dep ])
+
 test('antichains/vectors random', downsetbm_exe,
      args : ['all', 'all',
              '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2' ])
@@ -83,5 +86,6 @@ test('antichains/vectors pruned vector-only concept checks',
      pruned_vector_only_concept_checks_exe)
 test('antichains/vector backed unchecked factory', antichain_factory_test_exe)
 test('antichains/empty downsets', empty_downsets_test_exe)
+test('vectors/move assignment', vector_move_exe)
 test('antichains/rank stats enabled', rank_stats_on_exe)
 test('antichains/rank stats compiled out', rank_stats_off_exe)

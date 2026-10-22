@@ -26,40 +26,16 @@ namespace posets::downsets {
       }
 
     private:
-      struct bucket {
-          rank_t rank;
-          size_t begin;
-          size_t end;
-      };
-
       rank_bucketed_vector_backed () = default;
 
       std::vector<V> vector_set;
       std::vector<rank_t> ranks;
-      std::vector<bucket> buckets;
 
       static rank_t rank_of (const V& v) {
         rank_t sum = 0;
         for (size_t i = 0; i < v.size (); ++i)
           sum += static_cast<rank_t> (v[i]);
         return sum;
-      }
-
-      void rebuild_buckets () {
-        POSETS_RANK_STAT_ADD (bucket_rebuilds, 1);
-        POSETS_RANK_STAT_ADD (bucket_rebuild_elements, vector_set.size ());
-        buckets.clear ();
-        if (vector_set.empty ())
-          return;
-
-        size_t begin = 0;
-        while (begin < ranks.size ()) {
-          size_t end = begin + 1;
-          while (end < ranks.size () and ranks[end] == ranks[begin])
-            ++end;
-          buckets.push_back (bucket {ranks[begin], begin, end});
-          begin = end;
-        }
       }
 
       [[nodiscard]] size_t lower_rank_pos (rank_t r) const {
@@ -142,7 +118,6 @@ namespace posets::downsets {
         const size_t pos = lower_rank_pos (rv);
         vector_set.insert (vector_set.begin () + static_cast<std::ptrdiff_t> (pos), std::move (v));
         ranks.insert (ranks.begin () + static_cast<std::ptrdiff_t> (pos), rv);
-        rebuild_buckets ();
         POSETS_RANK_STAT_SIZE (vector_set.size ());
         return true;
       }

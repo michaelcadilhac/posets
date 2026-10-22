@@ -153,11 +153,13 @@ namespace posets::vectors {
       }
 
       generic& operator= (generic&& other) noexcept {
+        if (this == &other)
+          return *this;
         if constexpr (not EmbedsData)
           if (datap)
             this->malloc.destroy (datap);
         k = other.k;
-        datap = other.datap;
+        datap = std::move (other.datap);
         if constexpr (not EmbedsData)
           other.datap = nullptr;
         if constexpr (HasSum)
