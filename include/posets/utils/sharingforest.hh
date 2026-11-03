@@ -361,8 +361,19 @@ namespace posets::utils {
         auto existing_node = inverse[destination_layer].find (node);
         if (existing_node == inverse[destination_layer].end ()) {
           const size_t new_id = layers[destination_layer].size ();
-          inverse[destination_layer][node] = new_id;
-          layers[destination_layer].push_back (node);
+          const auto signature = node;
+          layers[destination_layer].push_back (signature);
+          try {
+            const auto [position, inserted] =
+                inverse[destination_layer].emplace (signature, new_id);
+            if (not inserted) {
+              layers[destination_layer].pop_back ();
+              return position->second;
+            }
+          } catch (...) {
+            layers[destination_layer].pop_back ();
+            throw;
+          }
           return new_id;
         }
         return existing_node->second;

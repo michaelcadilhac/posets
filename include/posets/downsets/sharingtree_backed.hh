@@ -67,7 +67,7 @@ namespace posets::downsets {
       sharingtree_backed& operator= (const sharingtree_backed&) = delete;
       sharingtree_backed& operator= (sharingtree_backed&&) = default;
 
-      sharingtree_backed (std::vector<V>&& elements) noexcept {
+      sharingtree_backed (std::vector<V>&& elements) {
         init_forest (elements.begin ()->size ());
         this->root = this->forest->add_vectors (std::move (elements));
       }

@@ -90,6 +90,10 @@ test('vectors/move assignment', vector_move_exe)
 test('antichains/rank stats enabled', rank_stats_on_exe)
 test('antichains/rank stats compiled out', rank_stats_off_exe)
 
+sharing_allocation_exe = executable('sharing-antichain-allocation',
+  'sharing-antichain-allocation.cc', dependencies: [posets_dep])
+test('antichains/sharing allocation failures', sharing_allocation_exe)
+
 # Keep the14-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 foreach mode : ['compatible', 'native', 'max']
