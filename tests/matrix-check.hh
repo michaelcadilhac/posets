@@ -94,9 +94,10 @@ namespace matrix_check {
   }
   template <class V>
   void vectors () {
-    for (size_t dim : {0u, 1u, 15u, 16u, 17u, 31u, 32u, 33u, 63u, 64u, 65u, 127u, 128u, 129u}) {
-      for (int value : {-1, 0, 1, 99}) {
-        logical raw (dim, value);
+    for (const size_t dim :
+         {0U, 1U, 15U, 16U, 17U, 31U, 32U, 33U, 63U, 64U, 65U, 127U, 128U, 129U}) {
+      for (const int value : {-1, 0, 1, 99}) {
+        const logical raw (dim, value);
         logical other (dim, value);
         if (dim)
           other.back () = value == -1 ? 0 : -1;
@@ -106,9 +107,9 @@ namespace matrix_check {
   }
   template <class S>
   void run (const std::string& which) {
-    using V = typename S::value_type;
+    using vector_type = typename S::value_type;
     if (which == "vectors") {
-      vectors<V> ();
+      vectors<vector_type> ();
       return;
     }
     if (which == "empty") {
@@ -141,7 +142,7 @@ namespace matrix_check {
       return;
     }
     require (which == "nonempty", "unknown semantic case");
-    for (size_t dim : {2u, 3u, 17u, 33u, 65u, 129u}) {
+    for (const size_t dim : {2U, 3U, 17U, 33U, 65U, 129U}) {
       region left (5, logical (dim, -1));
       region right (3, logical (dim, -1));
       for (size_t i = 0; i < dim; ++i) {
@@ -152,12 +153,12 @@ namespace matrix_check {
           right[j][i] = boolean ? int ((i + j + 1) % 2) - 1 : int ((i + 2 * j) % 4) - 1;
       }
       left.back () = left.front ();  // Duplicate plus sharing/repeated-coordinate patterns.
-      left.push_back (logical (dim, -1));
+      left.emplace_back (dim, -1);
       region queries = left;
       queries.insert (queries.end (), right.begin (), right.end ());
-      queries.push_back (logical (dim, -1));
+      queries.emplace_back (dim, -1);
       logical high (dim, 99);
-      std::fill (high.begin () + dim / 2, high.end (), 0);
+      std::ranges::fill (std::span (high).subspan (dim / 2), 0);
       queries.push_back (high);
       if (dim <= 3) {
         for (size_t code = 0; code < (size_t {1} << (2 * dim)); ++code) {
@@ -197,7 +198,7 @@ namespace matrix_check {
         logical lowered = unpack (value);
         for (auto& x : lowered)
           x = std::max (-1, x - 1);
-        return vector<V> (lowered);
+        return vector<vector_type> (lowered);
       });
       region lowered = left;
       for (auto& value : lowered)

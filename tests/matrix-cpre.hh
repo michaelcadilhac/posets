@@ -1,10 +1,11 @@
 #pragma once
 
 #include "matrix-check.hh"
+
 #include <charconv>
 #include <chrono>
-#include <ctime>
 #include <cstdint>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -35,7 +36,8 @@ namespace matrix_cpre {
     return result;
   }
   inline std::ifstream complete_file (const std::filesystem::path& path) {
-    require (std::filesystem::is_regular_file (std::filesystem::symlink_status (path)), "nonregular trace file");
+    require (std::filesystem::is_regular_file (std::filesystem::symlink_status (path)),
+             "nonregular trace file");
     std::ifstream input (path, std::ios::binary);
     input.seekg (0, std::ios::end);
     require (input.tellg () > 0, "empty trace file");
@@ -97,8 +99,9 @@ namespace matrix_cpre {
         break;
       }
       if (name == "input")
-        break; // BDD text is provenance, never parsed as an operation.
-      require (header.emplace (name, integer (word.substr (equal + 1))).second, "duplicate CPre header key");
+        break;  // BDD text is provenance, never parsed as an operation.
+      require (header.emplace (name, integer (word.substr (equal + 1))).second,
+               "duplicate CPre header key");
     }
     const auto bound = header.at ("k");
     require (bound > 0 and bound <= 127, "trace bound exceeds signed8-bit domain");
@@ -113,7 +116,7 @@ namespace matrix_cpre {
       const auto hits = header.at ("hits");
       size_t bin = 0;
       for (const auto mark : {16, 64, 256, 1024, 4096, 16384})
-        bin += header.at ("maxima") >= mark;
+        bin += size_t (header.at ("maxima") >= mark);
       require (header.at ("loop") >= 0 and header.at ("bin") == int64_t (bin) and ordinal > 0 and
                    hits >= 0 and hits <= ordinal and
                    (result.expected_answer ? hits > 0 : hits < ordinal),
@@ -132,7 +135,10 @@ namespace matrix_cpre {
                "missing generator section");
       bool ended = false;
       while (std::getline (input, line)) {
-        if (line == "[end]") { ended = true; break; }
+        if (line == "[end]") {
+          ended = true;
+          break;
+        }
         logical rank;
         const auto columns = fields (line);
         require (columns.size () == result.dimension, "generator dimension mismatch");
@@ -150,7 +156,8 @@ namespace matrix_cpre {
       const bool answer = std::ranges::any_of (result.before, [&] (const auto& value) {
         return matrix_check::below (result.query, value);
       });
-      require (answer == result.expected_answer, "source contains answer disagrees with scalar oracle");
+      require (answer == result.expected_answer,
+               "source contains answer disagrees with scalar oracle");
       return result;
     }
     require (header.size () == 5 and header.at ("schema_version") == 2 and
@@ -161,13 +168,16 @@ namespace matrix_cpre {
     int64_t after_count = -1;
     while (std::getline (input, line)) {
       if (line == "[before]") {
-        require (section == 0, "duplicate/out-of-order before section"); section = 1;
+        require (section == 0, "duplicate/out-of-order before section");
+        section = 1;
       }
       else if (line == "[actions]") {
-        require (section == 1, "out-of-order actions section"); section = 2;
+        require (section == 1, "out-of-order actions section");
+        section = 2;
       }
       else if (line.starts_with ("[after]\t")) {
-        require (section == 2, "out-of-order after section"); section = 3;
+        require (section == 2, "out-of-order after section");
+        section = 3;
         after_count = integer (line.substr (8));
         require (after_count >= 0, "negative after count");
       }
@@ -211,13 +221,14 @@ namespace matrix_cpre {
 
   inline logical predecessor (const logical& value, const action& edges, const trace& input) {
     logical image (input.dimension, 0);
-    std::fill (image.begin (), image.begin () + input.numeric, input.k - 1);
+    std::ranges::fill (std::span (image).first (input.numeric), input.k - 1);
     for (const auto& [destination, source, increment] : edges)
       image[source] = std::min (image[source], std::max (-1, value[destination] - increment));
     return image;
   }
   inline void insert (region& result, logical value) {
-    if (std::ranges::any_of (result, [&] (const auto& v) { return matrix_check::below (value, v); }))
+    if (std::ranges::any_of (result,
+                             [&] (const auto& v) { return matrix_check::below (value, v); }))
       return;
     std::erase_if (result, [&] (const auto& v) { return matrix_check::below (v, value); });
     result.push_back (std::move (value));
@@ -238,23 +249,26 @@ namespace matrix_cpre {
         insert (expected, std::move (met));
       }
     require (std::set<logical> (expected.begin (), expected.end ()) ==
-             std::set<logical> (input.after.begin (), input.after.end ()), "source CPre trace disagrees with scalar oracle");
+                 std::set<logical> (input.after.begin (), input.after.end ()),
+             "source CPre trace disagrees with scalar oracle");
   }
   inline void validate_source (const trace& input) {
-    require (matrix_check::maxima (input.before).size () == input.before.size (), "noncanonical source generators");
+    require (matrix_check::maxima (input.before).size () == input.before.size (),
+             "noncanonical source generators");
     if (not input.membership) {
-      require (matrix_check::maxima (input.after).size () == input.after.size (), "noncanonical source result");
+      require (matrix_check::maxima (input.after).size () == input.after.size (),
+               "noncanonical source result");
       reference (input);
     }
   }
   template <class S>
-  std::map<std::string, double> run (const std::filesystem::path& path, size_t rounds, bool verify_only, bool detail,
-                                    bool source_verified = false) {
+  std::map<std::string, double> run (const std::filesystem::path& path, size_t rounds,
+                                     bool verify_only, bool detail, bool source_verified = false) {
     const auto input = load (path);
     if (verify_only and not source_verified)
       validate_source (input);
     posets::vectors::bool_threshold = posets::vectors::bitset_threshold = input.numeric;
-    using V = typename S::value_type;
+    using vector_type = typename S::value_type;
     std::map<std::string, double> result;
     const auto timed = [&] (const std::string& key, auto work) {
       if (verify_only or
@@ -277,10 +291,11 @@ namespace matrix_cpre {
       for (size_t round = 0; round < rounds; ++round) {
         std::optional<S> region;
         timed ("build", [&] { region.emplace (matrix_check::build<S> (input.before)); });
-        const auto query = matrix_check::vector<V> (input.query);
+        const auto query = matrix_check::vector<vector_type> (input.query);
         bool answer = false;
         timed ("contains", [&] { answer = region->contains (query); });
-        require (answer == input.expected_answer, "backend contains answer disagrees with source/scalar oracle");
+        require (answer == input.expected_answer,
+                 "backend contains answer disagrees with source/scalar oracle");
         std::optional<S> rebuilt;
         timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.before)); });
       }
@@ -294,8 +309,8 @@ namespace matrix_cpre {
       }
       return result;
     }
-    posets::utils::vector_mm<typename V::value_type> reset (input.dimension, 0);
-    posets::utils::vector_mm<typename V::value_type> image;
+    posets::utils::vector_mm<typename vector_type::value_type> reset (input.dimension, 0);
+    posets::utils::vector_mm<typename vector_type::value_type> image;
     std::fill (reset.begin (), reset.begin () + input.numeric, input.k - 1);
     image.reserve (input.dimension);
     const std::set<logical> expected (input.after.begin (), input.after.end ());
@@ -316,21 +331,22 @@ namespace matrix_cpre {
         // Production constructs the bottom accumulator before replacing it
         // with the first mapped set. Include its construction and all CPre
         // temporary destructors, as the production scoped timer does.
-        posets::utils::vector_mm<typename V::value_type> bottom (input.dimension, -1);
+        posets::utils::vector_mm<typename vector_type::value_type> bottom (input.dimension, -1);
         std::optional<S> combined;
-        combined.emplace (V (bottom));
+        combined.emplace (vector_type (bottom));
         bool first = true;
         for (const auto& edges : input.actions) {
           std::optional<S> mapped;
           timed ("apply", [&] {
-            mapped.emplace (frontier->apply ([&] (const V& value) {
+            mapped.emplace (frontier->apply ([&] (const vector_type& value) {
               // Match the production actioner's retained reset/output scratch;
               // do not add an unpack/allocation per maximum to the measured map.
               image = reset;
               for (const auto& [destination, source, increment] : edges)
                 if (image[source] != -1)
-                  image[source] = std::min (int (image[source]), std::max (-1, int (value[destination]) - increment));
-              return V (std::span<const typename V::value_type> (image));
+                  image[source] = std::min (int (image[source]),
+                                            std::max (-1, int (value[destination]) - increment));
+              return vector_type (std::span<const typename vector_type::value_type> (image));
             }));
           });
           if (first) {
@@ -351,17 +367,20 @@ namespace matrix_cpre {
         result["cpre_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
       }
       std::set<logical> actual;
-      for (const auto& value : *frontier)
+      const auto& completed = frontier.value ();
+      for (const auto& value : completed)
         require (actual.insert (matrix_check::unpack (value)).second, "duplicate replay maximum");
-      require (actual == expected and frontier->size () == expected.size (),
+      require (actual == expected and completed.size () == expected.size (),
                "backend CPre result disagrees with source");
       logical initial (input.dimension, -1);
       initial[input.initial] = 0;
       bool answer = false;
-      timed ("contains", [&] { answer = frontier->contains (matrix_check::vector<V> (initial)); });
-      require (answer == std::ranges::any_of (input.after, [&] (const auto& v) {
-        return matrix_check::below (initial, v);
-      }), "replayed initial-state membership disagrees with scalar oracle");
+      timed ("contains",
+             [&] { answer = completed.contains (matrix_check::vector<vector_type> (initial)); });
+      require (answer == std::ranges::any_of (
+                             input.after,
+                             [&] (const auto& v) { return matrix_check::below (initial, v); }),
+               "replayed initial-state membership disagrees with scalar oracle");
       std::optional<S> rebuilt;
       timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.after)); });
     }
