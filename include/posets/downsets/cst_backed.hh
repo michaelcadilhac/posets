@@ -100,7 +100,7 @@ namespace posets::downsets {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool contains (const V& v) const {
-        return not this->vector_set.empty () && this->forest->covers_vector (this->root, v);
+        return not this->vector_set.empty () and this->forest->covers_vector (this->root, v);
       }
 
       void union_with (cst_backed&& other) {

@@ -166,12 +166,12 @@ struct test_t : public generic_test<result_t> {
 
     result_t operator() () override {
       result_t res;
-      if (!trace_file.empty ()) {
-        matrix_check::require (check_case.empty () || check_case == "trace" || check_case == "replay", "unknown trace check");
-        return matrix_cpre::run<SetType> (trace_file, params["rounds"], !check_case.empty (), params["detail"] != 0,
+      if (not trace_file.empty ()) {
+        matrix_check::require (check_case.empty () or check_case == "trace" or check_case == "replay", "unknown trace check");
+        return matrix_cpre::run<SetType> (trace_file, params["rounds"], not check_case.empty (), params["detail"] != 0,
                                          check_case == "replay");
       }
-      if (!check_case.empty ()) {
+      if (not check_case.empty ()) {
         matrix_check::run<SetType> (check_case);
         return res;
       }

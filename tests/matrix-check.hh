@@ -14,7 +14,7 @@ namespace matrix_check {
   using region = std::vector<logical>;
 
   inline void require (bool condition, const char* message) {
-    if (!condition)
+    if (not condition)
       throw std::runtime_error (message);
   }
   inline bool below (const logical& a, const logical& b) {
@@ -27,9 +27,7 @@ namespace matrix_check {
   inline std::set<logical> maxima (const region& values) {
     std::set<logical> result;
     for (const auto& v : values)
-      if (std::none_of (values.begin (), values.end (), [&] (const auto& w) {
-            return v != w && below (v, w);
-          }))
+      if (std::ranges::none_of (values, [&] (const auto& w) { return v != w and below (v, w); }))
         result.insert (v);
     return result;
   }
@@ -58,44 +56,48 @@ namespace matrix_check {
     std::set<logical> seen;
     for (const auto& value : actual)
       require (seen.insert (unpack (value)).second, "duplicate maximum");
-    require (seen == wanted && actual.size () == wanted.size (), "incorrect maximal generators");
+    require (seen == wanted and actual.size () == wanted.size (), "incorrect maximal generators");
     for (const auto& query : queries) {
-      const bool answer = std::any_of (expected.begin (), expected.end (), [&] (const auto& v) {
-        return below (query, v);
-      });
+      const bool answer =
+          std::ranges::any_of (expected, [&] (const auto& v) { return below (query, v); });
       require (actual.contains (vector<typename S::value_type> (query)) == answer,
                "incorrect membership");
     }
   }
   template <class V>
   void pair (const logical& raw, const logical& other) {
-    auto a = vector<V> (raw), b = vector<V> (other);
+    auto a = vector<V> (raw);
+    auto b = vector<V> (other);
     require (a.partial_order (b).leq () == below (raw, other), "signed/padding order");
     require (a.partial_order (b).geq () == below (other, raw), "signed/padding reverse order");
-    logical meet, join;
+    logical meet;
+    logical join;
     for (size_t i = 0; i < raw.size (); ++i) {
       meet.push_back (std::min (raw[i], other[i]));
       join.push_back (std::max (raw[i], other[i]));
     }
-    const auto met = a.meet (b), joined = a.join (b);
-    require (unpack (met) == meet && met == vector<V> (meet), "signed/padded min");
-    require (unpack (joined) == join && joined == vector<V> (join), "signed/padded max");
+    const auto met = a.meet (b);
+    const auto joined = a.join (b);
+    require (unpack (met) == meet and met == vector<V> (meet), "signed/padded min");
+    require (unpack (joined) == join and joined == vector<V> (join), "signed/padded max");
     auto copy = a.copy ();
     const logical bottom (raw.size (), -1);
     copy.meet_with (vector<V> (bottom));
-    require (unpack (a) == raw && a == vector<V> (raw), "copy aliases source/padding");
+    require (unpack (a) == raw and a == vector<V> (raw), "copy aliases source/padding");
     auto moved = std::move (copy);
     V* alias = &moved;
     moved = std::move (*alias);
-    require (unpack (moved) == bottom && moved == vector<V> (bottom), "self move lost coordinates");
+    require (unpack (moved) == bottom and moved == vector<V> (bottom),
+             "self move lost coordinates");
     a = std::move (b);
-    require (unpack (a) == other && a == vector<V> (other), "move assignment/padding");
+    require (unpack (a) == other and a == vector<V> (other), "move assignment/padding");
   }
   template <class V>
   void vectors () {
     for (size_t dim : {0u, 1u, 15u, 16u, 17u, 31u, 32u, 33u, 63u, 64u, 65u, 127u, 128u, 129u}) {
       for (int value : {-1, 0, 1, 99}) {
-        logical raw (dim, value), other (dim, value);
+        logical raw (dim, value);
+        logical other (dim, value);
         if (dim)
           other.back () = value == -1 ? 0 : -1;
         pair<V> (raw, other);
@@ -140,7 +142,8 @@ namespace matrix_check {
     }
     require (which == "nonempty", "unknown semantic case");
     for (size_t dim : {2u, 3u, 17u, 33u, 65u, 129u}) {
-      region left (5, logical (dim, -1)), right (3, logical (dim, -1));
+      region left (5, logical (dim, -1));
+      region right (3, logical (dim, -1));
       for (size_t i = 0; i < dim; ++i) {
         const bool boolean = i >= dim / 2;
         for (size_t j = 0; j < left.size (); ++j)
@@ -148,7 +151,7 @@ namespace matrix_check {
         for (size_t j = 0; j < right.size (); ++j)
           right[j][i] = boolean ? int ((i + j + 1) % 2) - 1 : int ((i + 2 * j) % 4) - 1;
       }
-      left.back () = left.front (); // Duplicate plus sharing/repeated-coordinate patterns.
+      left.back () = left.front ();  // Duplicate plus sharing/repeated-coordinate patterns.
       left.push_back (logical (dim, -1));
       region queries = left;
       queries.insert (queries.end (), right.begin (), right.end ());
@@ -161,14 +164,17 @@ namespace matrix_check {
           logical query;
           for (size_t i = 0; i < dim; ++i)
             query.push_back (i >= dim / 2 ? int ((code >> (2 * i)) & 1) - 1
-                                        : int ((code >> (2 * i)) & 3) - 1);
+                                          : int ((code >> (2 * i)) & 3) - 1);
           queries.push_back (std::move (query));
         }
       }
       auto a = build<S> (left);
       check (a, left, queries);
       auto owned = a.apply ([] (const auto& v) { return v.copy (); });
-      { auto temporary = build<S> (right); a = std::move (temporary); }
+      {
+        auto temporary = build<S> (right);
+        a = std::move (temporary);
+      }
       check (owned, left, queries);
       check (a, right, queries);
       a = build<S> (left);
