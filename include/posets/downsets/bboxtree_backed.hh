@@ -37,7 +37,6 @@ namespace posets::downsets {
       void reset_tree (std::vector<V>&& elements) {
         std::vector<long> keys;
         auto antichain = utils::reduce_to_maxima (std::move (elements), &keys);
-        assert (not antichain.empty ());
         tree.assign_and_build (std::move (antichain), std::move (keys));
         assert (tree.is_antichain ());
       }
@@ -65,6 +64,12 @@ namespace posets::downsets {
       void union_with (bboxtree_backed&& other) {
         const size_t this_size = size ();
         const size_t other_size = other.size ();
+        if (other_size == 0)
+          return;
+        if (this_size == 0) {
+          tree = std::move (other.tree);
+          return;
+        }
         std::vector<size_t> other_survivors;
         other_survivors.reserve (other_size);
         for (size_t i = 0; i < other_size; ++i) {
@@ -124,6 +129,12 @@ namespace posets::downsets {
       }
 
       void intersect_with (const bboxtree_backed& other) {
+        if (size () == 0)
+          return;
+        if (other.size () == 0) {
+          tree = utils::bboxtree<V> {};
+          return;
+        }
         constexpr size_t incremental_limit = 400000;
         const bool incremental = size () <= incremental_limit / other.size ();
         std::vector<V> intersection;

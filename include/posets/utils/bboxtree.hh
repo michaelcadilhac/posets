@@ -131,7 +131,6 @@ namespace posets::utils {
       }
 
       void assign_and_build (std::vector<V>&& sorted_antichain, std::vector<long>&& sorted_keys) {
-        assert (not sorted_antichain.empty ());
         assert (sorted_antichain.size () <= UINT32_MAX);
         assert (sorted_antichain.size () == sorted_keys.size ());
         assert (std::ranges::is_sorted (sorted_keys, std::greater<> {}));

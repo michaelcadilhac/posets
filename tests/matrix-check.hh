@@ -129,6 +129,29 @@ namespace matrix_check {
       check (nonempty, {{0, 0}}, query);
       empty.intersect_with (build<S> ({{0, 0}}));
       check (empty, {}, query);
+      {
+        auto bottom = build<S> ({{-1, -1}});
+        empty.union_with (std::move (bottom));
+      }
+      const region bottom_query {{-1, -1}, {-1, 0}, {0, -1}, {0, 0}};
+      check (empty, {{-1, -1}}, bottom_query);
+      auto owned = empty.apply ([] (const auto& v) { return v.copy (); });
+      empty.intersect_with (build<S> ({}));
+      check (empty, {}, bottom_query);
+      check (owned, {{-1, -1}}, bottom_query);
+      region ladder;
+      for (int i = 0; i < 20; ++i)
+        ladder.push_back ({i, 19 - i});
+      {
+        auto temporary = build<S> (ladder);
+        // BBox's first leaf has 16 points. The last incomparable point forces
+        // lazy corners to be built before their ownership is transferred.
+        require (temporary.contains (vector<vector_type> (ladder.back ())), "ladder membership");
+        empty.union_with (std::move (temporary));
+      }
+      check (empty, ladder, {{-1, -1}, {19, 0}, {0, 19}, {19, 19}});
+      empty.intersect_with (build<S> ({}));
+      check (empty, {}, ladder);
       return;
     }
     if (which == "zero") {
