@@ -42,6 +42,8 @@
   #define CALLGRIND_STOP_INSTRUMENTATION (void)0  
 #endif
 
+#include "matrix-cpre.hh"
+
 using namespace std::literals;
 namespace utils = posets::utils;
 
@@ -57,6 +59,9 @@ utils::voutstream utils::vout;
 
 using test_value_type = std::int8_t;
 
+#define POSETS_MATRIX_STRING_IMPL(...) #__VA_ARGS__
+#define POSETS_MATRIX_STRING(...) POSETS_MATRIX_STRING_IMPL(__VA_ARGS__)
+
 using result_t = std::map<std::string, double>;
 
 // A named, emitted kernel lets the matrix record the instructions actually used.
@@ -71,6 +76,7 @@ extern "C" [[gnu::noinline, gnu::used]] bool posets_matrix_compare (
 namespace {
   std::default_random_engine::result_type starting_seed = 0;
   std::string check_case;
+  std::filesystem::path trace_file;
 
   std::map<std::string, size_t> params = {
     {"maxval", 12},
@@ -82,7 +88,8 @@ namespace {
     {"cpre", 128},
     {"cpre_actions", 8},
     {"bitset_tail", 0},
-    {"rounds", 1}
+    {"rounds", 1},
+    {"detail", 0}
   };
 
   std::mt19937 rand_gen;
@@ -159,6 +166,11 @@ struct test_t : public generic_test<result_t> {
 
     result_t operator() () override {
       result_t res;
+      if (!trace_file.empty ()) {
+        matrix_check::require (check_case.empty () || check_case == "trace" || check_case == "replay", "unknown trace check");
+        return matrix_cpre::run<SetType> (trace_file, params["rounds"], !check_case.empty (), params["detail"] != 0,
+                                         check_case == "replay");
+      }
       if (!check_case.empty ()) {
         matrix_check::run<SetType> (check_case);
         return res;
@@ -416,7 +428,8 @@ namespace {
   }
 
   const auto LONG_OPTIONS =
-      std::to_array<struct option> ({{.name="check", .has_arg=required_argument, .flag=nullptr, .val='c'},
+      std::to_array<struct option> ({{.name="trace", .has_arg=required_argument, .flag=nullptr, .val='t'},
+                                     {.name="check", .has_arg=required_argument, .flag=nullptr, .val='c'},
                                      {.name="metadata", .has_arg=no_argument, .flag=nullptr, .val='m'},
                                      {.name="seed",    .has_arg=required_argument, .flag=nullptr, .val='s'},
                                      {.name="verbose", .has_arg=no_argument,       .flag=nullptr, .val='v'},
@@ -432,10 +445,13 @@ int main (int argc, char* argv[]) {
   register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
 
   while (true) {
-    const int c = getopt_long (argc, argv, "hmc:s:vp:", LONG_OPTIONS.data (), nullptr);
+    const int c = getopt_long (argc, argv, "hmc:s:t:vp:", LONG_OPTIONS.data (), nullptr);
     if (c == -1)
       break;
     switch (c) {
+      case 't':
+        trace_file = optarg;
+        break;
       case 'c':
         check_case = optarg;
         break;
@@ -450,7 +466,18 @@ int main (int argc, char* argv[]) {
                        std::experimental::simd_abi::native<test_value_type>>
                   << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
                   << ",\"alignment\":" << traits::memory_alignment_v
+#ifdef NDEBUG
+                  << ",\"ndebug\":true"
+#else
+                  << ",\"ndebug\":false"
+#endif
+#if defined(_GLIBCXX_ASSERTIONS) && _GLIBCXX_ASSERTIONS
+                  << ",\"stdlib_assertions\":true"
+#else
+                  << ",\"stdlib_assertions\":false"
+#endif
                   << ",\"simd_type\":" << std::quoted (typeid (typename traits::fssimd).name ())
+                  << ",\"hybrid_policy\":" << std::quoted (POSETS_MATRIX_STRING (KD_THRESH (M, D)))
                   << ",\"backends\":[";
         bool first = true;
         for (const auto& name : set_names) {
@@ -496,6 +523,13 @@ int main (int argc, char* argv[]) {
     }
   }
 
+  if (check_case == "trace-source") {
+    matrix_check::require (!trace_file.empty (), "trace-source requires --trace");
+    matrix_cpre::validate_source (matrix_cpre::load (trace_file));
+    std::cout << "[TRACE SOURCE OK]\n";
+    return 0;
+  }
+
   const decltype (distrib)::param_type distrib_params (0, (int32_t) params["maxval"]);
   distrib.param (distrib_params);
 
@@ -515,7 +549,9 @@ int main (int argc, char* argv[]) {
   for (auto&& da : downarg | std::ranges::views::split (',') |
                        std::ranges::views::transform (to_string_view))
     for (const auto& k : std::views::keys (tests))
-      if (da == "all" or k.starts_with ("posets::downsets::"s + std::string (da))) {
+      if (da == "all" or ((!trace_file.empty () || !check_case.empty ())
+            ? k.substr (0, k.find ('<')) == "posets::downsets::"s + std::string (da)
+            : k.starts_with ("posets::downsets::"s + std::string (da)))) {
         auto sub = k.substr (0, k.find ('<'));
         if (std::ranges::find (downs.begin (), downs.end (), sub) == downs.end ())
           downs.push_back (sub);
@@ -543,6 +579,7 @@ int main (int argc, char* argv[]) {
           DIMENSION - std::min (params["bitset_tail"], static_cast<size_t> (DIMENSION));
       all_res[ds + v] = tests[ds + v] ();
     }
+  std::cout << std::setprecision (17);
   for (auto& res : all_res) {
     std::cout << "- " << res.first << ":\n";
     for (auto& test : res.second)

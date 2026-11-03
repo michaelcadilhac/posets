@@ -102,6 +102,8 @@ foreach mode : ['compatible', 'native', 'max']
        args: ['--check=vectors', 'vector_backed', 'all'])
   test('matrix/CST empty/' + mode, matrix_exe,
        args: ['--check=empty', 'cst_backed', 'all'])
+  test('matrix/recorded operations/' + mode, find_program('python3'),
+       args: [meson.current_source_dir() / 'matrix-trace-check.py', matrix_exe], timeout: 60)
   tail_exe = executable('simd-tail-' + mode, 'simd-tail-check.cc',
                        dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/packed Boolean tails/' + mode, tail_exe)
