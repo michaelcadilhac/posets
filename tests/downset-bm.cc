@@ -21,6 +21,7 @@
 #include <cstdint>
 
 #include <getopt.h>
+#include <iomanip>
 
 #include "timer.hh"
 
@@ -32,6 +33,7 @@
 #include <posets/vectors.hh>
 
 #include "test_maker.hh"
+#include "matrix-check.hh"
 
 #if __has_include(<valgrind/callgrind.h>)
   #include <valgrind/callgrind.h>
@@ -57,8 +59,18 @@ using test_value_type = std::int8_t;
 
 using result_t = std::map<std::string, double>;
 
+// A named, emitted kernel lets the matrix record the instructions actually used.
+extern "C" [[gnu::noinline, gnu::used]] bool posets_matrix_compare (
+    const test_value_type* left, const test_value_type* right) {
+  using simd = posets::utils::simd_traits<test_value_type>::fssimd;
+  const simd a (left, std::experimental::element_aligned);
+  const simd b (right, std::experimental::element_aligned);
+  return std::experimental::all_of (a <= b);
+}
+
 namespace {
   std::default_random_engine::result_type starting_seed = 0;
+  std::string check_case;
 
   std::map<std::string, size_t> params = {
     {"maxval", 12},
@@ -147,6 +159,10 @@ struct test_t : public generic_test<result_t> {
 
     result_t operator() () override {
       result_t res;
+      if (!check_case.empty ()) {
+        matrix_check::run<SetType> (check_case);
+        return res;
+      }
 
       auto prounds = params["rounds"];
       if (params["build"] != 0) {
@@ -341,6 +357,10 @@ namespace posets::vectors {
                                    posets::vectors::nbools_to_nbitsets (DIMENSION)>;
 }
 
+#ifdef POSETS_MATRIX_ONLY
+VECTOR_TYPES (posets::vectors::vector_backed<test_value_type>,
+              posets::vectors::simd_vector_backed<test_value_type>);
+#else
 VECTOR_TYPES (
   posets::vectors::array_backed_fixed<test_value_type>,
   posets::vectors::array_ptr_backed_fixed<test_value_type>,
@@ -351,6 +371,8 @@ VECTOR_TYPES (
   posets::vectors::vector_backed<test_value_type>,
   posets::vectors::simd_vector_backed<test_value_type>
   );
+
+#endif
 
 using set_types = template_type_list<
   posets::downsets::bboxtree_backed,
@@ -394,7 +416,9 @@ namespace {
   }
 
   const auto LONG_OPTIONS =
-      std::to_array<struct option> ({{.name="seed",    .has_arg=required_argument, .flag=nullptr, .val='s'},
+      std::to_array<struct option> ({{.name="check", .has_arg=required_argument, .flag=nullptr, .val='c'},
+                                     {.name="metadata", .has_arg=no_argument, .flag=nullptr, .val='m'},
+                                     {.name="seed",    .has_arg=required_argument, .flag=nullptr, .val='s'},
                                      {.name="verbose", .has_arg=no_argument,       .flag=nullptr, .val='v'},
                                      {.name="params",  .has_arg=required_argument, .flag=nullptr, .val='p'},
                                      {.name="help",    .has_arg=no_argument,       .flag=nullptr, .val='h'},
@@ -408,10 +432,34 @@ int main (int argc, char* argv[]) {
   register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
 
   while (true) {
-    const int c = getopt_long (argc, argv, "hs:vp:", LONG_OPTIONS.data (), nullptr);
+    const int c = getopt_long (argc, argv, "hmc:s:vp:", LONG_OPTIONS.data (), nullptr);
     if (c == -1)
       break;
     switch (c) {
+      case 'c':
+        check_case = optarg;
+        break;
+      case 'm': {
+        using traits = posets::utils::simd_traits<test_value_type>;
+        std::array<test_value_type, traits::simd_size> values {};
+        matrix_check::require (posets_matrix_compare (values.data (), values.data ()), "SIMD probe");
+        std::cout << "{\"compiler\":" << std::quoted (__VERSION__) << ",\"element_bytes\":"
+                  << sizeof (test_value_type) << ",\"selected_lanes\":" << traits::simd_size
+                  << ",\"compatible_lanes\":" << std::experimental::simd_size_v<test_value_type>
+                  << ",\"native_lanes\":" << std::experimental::simd_size_v<test_value_type,
+                       std::experimental::simd_abi::native<test_value_type>>
+                  << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
+                  << ",\"alignment\":" << traits::memory_alignment_v
+                  << ",\"simd_type\":" << std::quoted (typeid (typename traits::fssimd).name ())
+                  << ",\"backends\":[";
+        bool first = true;
+        for (const auto& name : set_names) {
+          std::cout << (first ? "" : ",") << std::quoted (name.substr (name.find_last_of (':') + 1));
+          first = false;
+        }
+        std::cout << "]}\n";
+        return 0;
+      }
       case 's':
         starting_seed = std::strtoul (optarg, nullptr, 10);
         break;

@@ -76,6 +76,8 @@ namespace posets::downsets {
       cst_backed& operator= (cst_backed&&) = default;
 
       cst_backed (std::vector<V>&& elements) noexcept {
+        if (elements.empty ())
+          return;
         init_forest (elements.begin ()->size ());
         reset_tree (std::move (elements));
         assert (this->is_antichain ());
@@ -98,11 +100,16 @@ namespace posets::downsets {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool contains (const V& v) const {
-        return this->forest->covers_vector (this->root, v);
+        return not this->vector_set.empty () && this->forest->covers_vector (this->root, v);
       }
 
       void union_with (cst_backed&& other) {
-        assert (other.size () > 0);
+        if (other.size () == 0)
+          return;
+        if (this->size () == 0) {
+          *this = std::move (other);
+          return;
+        }
         std::vector<V*> undomd;
         undomd.reserve (this->size () + other.size ());
         for (auto& e : this->vector_set)
@@ -127,6 +134,12 @@ namespace posets::downsets {
       }
 
       void intersect_with (const cst_backed& other) {
+        if (this->size () == 0)
+          return;
+        if (other.size () == 0) {
+          this->vector_set.clear ();
+          return;
+        }
         std::vector<V> intersection;
         bool smaller_set = false;
 

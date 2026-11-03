@@ -89,3 +89,24 @@ test('antichains/empty downsets', empty_downsets_test_exe)
 test('vectors/move assignment', vector_move_exe)
 test('antichains/rank stats enabled', rank_stats_on_exe)
 test('antichains/rank stats compiled out', rank_stats_off_exe)
+
+# Keep the14-backend matrix on the two dynamic vector representations. Synthetic
+# timing still uses downset-bm; --check runs an independent logical scalar oracle.
+foreach mode : ['compatible', 'native', 'max']
+  matrix_args = ['-DPOSETS_MATRIX_ONLY', '-march=native',
+                 '-DSIMD_IS_MAX=' + (mode == 'max' ? '1' : '0'),
+                 '-DSIMD_IS_NATIVE=' + (mode == 'native' ? '1' : '0')]
+  matrix_exe = executable('downset-matrix-' + mode, 'downset-bm.cc',
+                          dependencies: [posets_dep], cpp_args: matrix_args)
+  test('matrix/vector semantics/' + mode, matrix_exe,
+       args: ['--check=vectors', 'vector_backed', 'all'])
+  test('matrix/CST empty/' + mode, matrix_exe,
+       args: ['--check=empty', 'cst_backed', 'all'])
+  tail_exe = executable('simd-tail-' + mode, 'simd-tail-check.cc',
+                       dependencies: [posets_dep], cpp_args: matrix_args)
+  test('matrix/packed Boolean tails/' + mode, tail_exe)
+endforeach
+
+native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
+  dependencies: [posets_dep], cpp_args: ['-DSIMD_IS_NATIVE=1', '-DSIMD_IS_MAX=1'])
+test('matrix/native overrides legacy max', native_precedence_exe)
