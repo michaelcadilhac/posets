@@ -27,10 +27,28 @@ void* operator new (std::size_t bytes) {
 }
 
 void* operator new[] (std::size_t bytes) { return ::operator new (bytes); }
+void* operator new (std::size_t bytes, const std::nothrow_t&) noexcept {
+  try {
+    return ::operator new (bytes);
+  } catch (...) {
+    return nullptr;
+  }
+}
+void* operator new[] (std::size_t bytes, const std::nothrow_t&) noexcept {
+  try {
+    return ::operator new[] (bytes);
+  } catch (...) {
+    return nullptr;
+  }
+}
 void operator delete (void* memory) noexcept { std::free (memory); }
 void operator delete[] (void* memory) noexcept { std::free (memory); }
 void operator delete (void* memory, std::size_t) noexcept { std::free (memory); }
 void operator delete[] (void* memory, std::size_t) noexcept { std::free (memory); }
+void operator delete (void* memory, const std::nothrow_t&) noexcept { ::operator delete (memory); }
+void operator delete[] (void* memory, const std::nothrow_t&) noexcept {
+  ::operator delete[] (memory);
+}
 
 namespace {
   using row = std::vector<std::int8_t>;

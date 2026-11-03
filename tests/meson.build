@@ -92,7 +92,11 @@ test('antichains/rank stats compiled out', rank_stats_off_exe)
 
 sharing_allocation_exe = executable('sharing-antichain-allocation',
   'sharing-antichain-allocation.cc', dependencies: [posets_dep])
-test('antichains/sharing allocation failures', sharing_allocation_exe)
+# Keep fixture hooks active; Memcheck still tracks their underlying libc allocations.
+sharing_allocation_env = environment()
+sharing_allocation_env.append('VALGRIND_OPTS',
+  '--soname-synonyms=somalloc=nouserintercepts', separator: ' ')
+test('antichains/sharing allocation failures', sharing_allocation_exe, env: sharing_allocation_env)
 
 # Keep the14-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
