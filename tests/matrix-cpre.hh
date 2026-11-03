@@ -367,9 +367,10 @@ namespace matrix_cpre {
         result["cpre_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
       }
       std::set<logical> actual;
-      if (not frontier)
+      const auto& checked_frontier = frontier;
+      if (not checked_frontier.has_value ())
         throw std::runtime_error ("missing replay frontier");
-      const auto& completed = frontier.value ();
+      const auto& completed = checked_frontier.value ();
       for (const auto& value : completed)
         require (actual.insert (matrix_check::unpack (value)).second, "duplicate replay maximum");
       require (actual == expected and completed.size () == expected.size (),
