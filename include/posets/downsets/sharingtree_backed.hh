@@ -34,9 +34,10 @@ namespace posets::downsets {
       }
 
       [[nodiscard]] const std::vector<V>& ensure_materialized () const {
-        if (not mat)
-          mat = forest ? forest->get_all (root) : std::vector<V> {};
-        return *mat;
+        const auto& materialized = mat;
+        if (materialized.has_value ())
+          return materialized.value ();
+        return mat.emplace (forest ? forest->get_all (root) : std::vector<V> {});
       }
 
       size_t canonical_root (size_t candidate) {
