@@ -19,6 +19,24 @@ Due to our use of `std::experimental` we prefer `libstdc++` thus `g++`. Even on 
 recommend installing `g++` say via Homebrew. Set `CXX` to your newly installed `g++`
 before setting up the build with `meson`.
 
+## SIMD widths
+
+`SIMD_IS_MAX=0` uses the compatible ABI (128-bit on x86-64), while
+`SIMD_IS_MAX=1` retains the library's maximum fixed lane count. The additive
+`SIMD_IS_NATIVE=1` explicitly takes precedence and uses the compiler target's
+native lane count. Defaults and existing callers retain their previous meaning.
+These are compile-time choices; use the same target flags for width comparisons.
+`downset-matrix-{compatible,native,max} --metadata` reports the actual lane counts.
+The native and max modes may instantiate the same vector type and should then be
+reported as aliases rather than independent treatments.
+
+Standalone matrix tests retain `-march=native` by default. CI runs the complete
+suite natively and prints each mode's actual widths. Its separate Valgrind
+build sets `-Dtest_native_isa=false` and explicit x86-64/generic compiler flags;
+compatible/native/max then refer to that portable compiler target, not the host
+widths. This test-only option does not change library or benchmark defaults.
+Valgrind follows replay subprocesses; both lanes run the complete semantic suite.
+
 ## Citing
 If you use this library for your academic work, please cite the following paper
 ```

@@ -2,12 +2,13 @@ name: CI
 on: [push]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Match the last passing toolchain; ubuntu-latest now selects Ubuntu 26.
+    runs-on: ubuntu-24.04
     steps:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get -y install zsh git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config libglib2.0-dev libffi-dev autoconf automake libtool bison flex valgrind clang-format clang-tidy
+        sudo apt-get -y install zsh git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config libglib2.0-dev libffi-dev autoconf automake libtool bison flex valgrind clang-format-18 clang-tidy-18
         sudo pip install --upgrade meson
     - name: Checkout repository and submodules
       uses: actions/checkout@v5
@@ -15,14 +16,28 @@ jobs:
         submodules: recursive
     - name: Test that everything is tidy
       run: |
-        clang-tidy tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20 || exit 1
-        .github/run-clang-format.py -r include || exit 1
+        clang-tidy-18 tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20 || exit 1
+        .github/run-clang-format.py --clang-format-executable clang-format-18 -r include || exit 1
     - name: Setup configuration
       run: |
         CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug
     - name: Compile everything
       run: |
         cd build && meson compile
-    - name: Run test
+    - name: Run all tests at native hardware widths
       run: |
-        cd build && meson test --num-processes 1 --timeout-multiplier 2 --wrap='valgrind --error-exitcode=18 --exit-on-first-error=yes'
+        for mode in compatible native max; do
+          build/tests/downset-matrix-$mode --metadata
+        done
+        meson test -C build --no-rebuild --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+    - name: Build portable instrumentation tests
+      run: |
+        CXXFLAGS="-DDIMENSION=100 -march=x86-64 -mtune=generic" meson setup build-valgrind --buildtype debug -Dtest_native_isa=false
+        meson compile -C build-valgrind
+    - name: Run portable Valgrind coverage
+      run: |
+        for mode in compatible native max; do
+          build-valgrind/tests/downset-matrix-$mode --metadata
+        done
+        # Trace children so the Python replay checks' C++ processes are covered.
+        meson test -C build-valgrind --no-rebuild --num-processes 1 --timeout-multiplier 10 --print-errorlogs --wrap='valgrind --trace-children=yes --error-exitcode=18 --exit-on-first-error=yes'

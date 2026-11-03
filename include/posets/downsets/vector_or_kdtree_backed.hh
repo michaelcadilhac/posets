@@ -10,7 +10,9 @@
 #include <posets/downsets/vector_backed.hh>
 
 // FIXME? the theory says it should be (exp (dim) < m)
-#define KD_THRESH(M, D) ((D) * 2 < (M))
+#ifndef KD_THRESH
+# define KD_THRESH(M, D) ((D) * 2 < (M))
+#endif
 
 #ifdef AC_DATA
 # define data_do(acts...) \

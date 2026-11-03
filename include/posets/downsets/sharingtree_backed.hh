@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/reduce.hh>
 #include <posets/utils/sharingforest.hh>
 
 namespace posets::downsets {
@@ -28,14 +29,22 @@ namespace posets::downsets {
 
       [[nodiscard]] std::vector<V>& ensure_materialized () {
         if (not mat)
-          mat = forest->get_all (root);
+          mat = forest ? forest->get_all (root) : std::vector<V> {};
         return *mat;
       }
 
       [[nodiscard]] const std::vector<V>& ensure_materialized () const {
-        if (not mat)
-          mat = forest->get_all (root);
-        return *mat;
+        const auto& materialized = mat;
+        if (materialized.has_value ())
+          return materialized.value ();
+        return mat.emplace (forest ? forest->get_all (root) : std::vector<V> {});
+      }
+
+      size_t canonical_root (size_t candidate) {
+        // Node simulation only removes whole subtrees; individual dominated
+        // paths can remain. Store the exact maxima, not just a reduced view.
+        auto maxima = utils::reduce_to_maxima (forest->get_all (candidate));
+        return forest->add_vectors (std::move (maxima), false);
       }
 
       void init_forest (size_t dimkey) {
@@ -67,9 +76,12 @@ namespace posets::downsets {
       sharingtree_backed& operator= (const sharingtree_backed&) = delete;
       sharingtree_backed& operator= (sharingtree_backed&&) = default;
 
-      sharingtree_backed (std::vector<V>&& elements) noexcept {
-        init_forest (elements.begin ()->size ());
-        this->root = this->forest->add_vectors (std::move (elements));
+      sharingtree_backed (std::vector<V>&& elements) {
+        auto maxima = utils::reduce_to_maxima (std::move (elements));
+        if (maxima.empty ())
+          return;
+        init_forest (maxima.front ().size ());
+        this->root = this->forest->add_vectors (std::move (maxima), false);
       }
 
       sharingtree_backed (V&& v) {
@@ -79,6 +91,8 @@ namespace posets::downsets {
       }
 
       [[nodiscard]] size_t size () const {
+        if (not forest)
+          return 0;
         if (not size_c)
           size_c = forest->count_vectors (root);
         return *size_c;
@@ -91,20 +105,35 @@ namespace posets::downsets {
       [[nodiscard]] const auto& get_backing_vector () const { return ensure_materialized (); }
 
       [[nodiscard]] bool contains (const V& v) const {
-        return this->forest->covers_vector (this->root, v);
+        return forest and this->forest->covers_vector (this->root, v);
       }
 
       // Union in place
       void union_with (sharingtree_backed&& other) {
+        if (this == &other or not other.forest)
+          return;
+        if (not forest) {
+          *this = std::move (other);
+          return;
+        }
         assert (forest == other.forest);
-        this->root = this->forest->st_union (this->root, other.root);
+        const auto canonical = canonical_root (forest->st_union (root, other.root));
+        root = canonical;
         invalidate_caches ();
       }
 
       // Intersection in place
       void intersect_with (const sharingtree_backed& other) {
+        if (not forest or this == &other)
+          return;
+        if (not other.forest) {
+          forest.reset ();
+          invalidate_caches ();
+          return;
+        }
         assert (forest == other.forest);
-        this->root = this->forest->st_intersect (this->root, other.root);
+        const auto canonical = canonical_root (forest->st_intersect (root, other.root));
+        root = canonical;
         invalidate_caches ();
       }
 

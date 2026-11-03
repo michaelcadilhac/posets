@@ -16,7 +16,7 @@ namespace posets::downsets {
 
       skiplist_backed (V&& v) { insert (std::move (v)); }
 
-      skiplist_backed (std::vector<V>&& elements) noexcept {
+      skiplist_backed (std::vector<V>&& elements) {
         assert (not elements.empty ());
         for (auto&& e : elements)
           insert (std::move (e));
