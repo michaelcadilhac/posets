@@ -245,8 +245,10 @@ namespace matrix_cpre {
       CALLGRIND_START_INSTRUMENTATION;
       work ();
       CALLGRIND_STOP_INSTRUMENTATION;
-      result[key] += std::chrono::duration<double> (std::chrono::steady_clock::now () - wall).count ();
-      result[key + "_cpu"] += double (std::clock () - cpu) / CLOCKS_PER_SEC;
+      const auto wall_end = std::chrono::steady_clock::now ();
+      const auto cpu_end = std::clock ();
+      result[key] += std::chrono::duration<double> (wall_end - wall).count ();
+      result[key + "_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
     };
     require (rounds > 0, "zero replay rounds");
     if (input.membership) {
@@ -318,8 +320,10 @@ namespace matrix_cpre {
       }
       if (!verify_only) {
         if (!detail) { CALLGRIND_STOP_INSTRUMENTATION; }
-        result["cpre"] += std::chrono::duration<double> (std::chrono::steady_clock::now () - start).count ();
-        result["cpre_cpu"] += double (std::clock () - cpu) / CLOCKS_PER_SEC;
+        const auto wall_end = std::chrono::steady_clock::now ();
+        const auto cpu_end = std::clock ();
+        result["cpre"] += std::chrono::duration<double> (wall_end - start).count ();
+        result["cpre_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
       }
       std::set<logical> actual;
       for (const auto& value : *frontier)
