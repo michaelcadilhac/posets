@@ -654,6 +654,12 @@ namespace posets::utils {
       }
 
       [[nodiscard]] std::vector<V> get_all (std::optional<size_t> root = {}) const {
+        if (dim == 0) {
+          std::vector<V> result;
+          if (not layers[0].empty ())
+            result.emplace_back (0U);
+          return result;
+        }
         // Stack with tuples (layer, node id, child id)
         get_all_stack.clear ();
 
@@ -776,9 +782,13 @@ namespace posets::utils {
 #endif
       }
 
-      size_t st_union (size_t root1, size_t root2) { return node_union (root1, root2, 0); }
+      size_t st_union (size_t root1, size_t root2) {
+        return dim == 0 ? root1 : node_union (root1, root2, 0);
+      }
 
       size_t st_intersect (size_t root1, size_t root2) {
+        if (dim == 0)
+          return root1;
         auto cache_res = cached_inter[0].find (std::make_pair (root1, root2));
         if (cache_res != cached_inter[0].end ())
           return cache_res->second;
@@ -882,6 +892,8 @@ namespace posets::utils {
        * exponentially faster than this.
        */
       bool covers_vector (size_t root, const V& covered, bool strict = false) {
+        if (dim == 0)
+          return not strict;
         // Stack with tuples (layer, node id, strictness, child id)
         covers_stack.clear ();
         // Visited cache (reused across calls)

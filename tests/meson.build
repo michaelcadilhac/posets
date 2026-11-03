@@ -115,6 +115,9 @@ foreach mode : ['compatible', 'native', 'max']
   tail_exe = executable('simd-tail-' + mode, 'simd-tail-check.cc',
                        dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/packed Boolean tails/' + mode, tail_exe)
+  sharing_antichain_exe = executable('sharing-antichain-' + mode, 'sharing-antichain.cc',
+    dependencies: [posets_dep], cpp_args: matrix_args)
+  test('antichains/sharing backends/' + mode, sharing_antichain_exe)
 endforeach
 
 native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
