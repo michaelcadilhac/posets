@@ -1,0 +1,2 @@
+option('test_native_isa', type: 'boolean', value: true,
+       description: 'Compile SIMD matrix tests for the host ISA; disable for portable instrumentation builds')

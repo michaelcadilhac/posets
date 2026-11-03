@@ -97,9 +97,12 @@ test('antichains/sharing allocation failures', sharing_allocation_exe)
 # Keep the14-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 foreach mode : ['compatible', 'native', 'max']
-  matrix_args = ['-DPOSETS_MATRIX_ONLY', '-march=native',
+  matrix_args = ['-DPOSETS_MATRIX_ONLY',
                  '-DSIMD_IS_MAX=' + (mode == 'max' ? '1' : '0'),
                  '-DSIMD_IS_NATIVE=' + (mode == 'native' ? '1' : '0')]
+  if get_option('test_native_isa')
+    matrix_args += ['-march=native']
+  endif
   matrix_exe = executable('downset-matrix-' + mode, 'downset-bm.cc',
                           dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/vector semantics/' + mode, matrix_exe,

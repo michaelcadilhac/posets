@@ -30,6 +30,13 @@ These are compile-time choices; use the same target flags for width comparisons.
 The native and max modes may instantiate the same vector type and should then be
 reported as aliases rather than independent treatments.
 
+Standalone matrix tests retain `-march=native` by default. CI runs the complete
+suite natively and prints each mode's actual widths. Its separate Valgrind
+build sets `-Dtest_native_isa=false` and explicit x86-64/generic compiler flags;
+compatible/native/max then refer to that portable compiler target, not the host
+widths. This test-only option does not change library or benchmark defaults.
+Valgrind follows replay subprocesses; both lanes run the complete semantic suite.
+
 ## Citing
 If you use this library for your academic work, please cite the following paper
 ```
