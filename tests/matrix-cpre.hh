@@ -21,7 +21,8 @@ namespace matrix_cpre {
   inline int64_t integer (const std::string& text) {
     int64_t value;
     const auto [end, error] = std::from_chars (text.data (), text.data () + text.size (), value);
-    require (error == std::errc {} && end == text.data () + text.size (), "invalid trace integer");
+    require (error == std::errc {} and end == text.data () + text.size (),
+             "invalid trace integer");
     return value;
   }
   inline std::vector<std::string> fields (const std::string& line) {
@@ -29,7 +30,7 @@ namespace matrix_cpre {
     std::vector<std::string> result;
     for (std::string field; std::getline (stream, field, '\t');)
       result.push_back (field);
-    if (!line.empty () && line.back () == '\t')
+    if (not line.empty () and line.back () == '\t')
       result.emplace_back ();
     return result;
   }
@@ -67,19 +68,20 @@ namespace matrix_cpre {
     std::map<std::string, std::string> metadata;
     for (size_t i = 0; i < names.size (); ++i)
       require (metadata.emplace (names[i], values[i]).second, "duplicate metadata key");
-    require (!std::getline (meta, line), "multiple trace metadata rows");
+    require (not std::getline (meta, line), "multiple trace metadata rows");
     require (integer (metadata.at ("schema_version")) == 3, "unsupported trace directory schema");
     const auto dimension = integer (metadata.at ("states"));
     const auto numeric = integer (metadata.at ("bool_threshold"));
     const auto initial = integer (metadata.at ("init_state"));
-    require (dimension > 0 && numeric >= 0 && numeric <= dimension && initial >= 0 && initial < dimension,
+    require (dimension > 0 and numeric >= 0 and numeric <= dimension and initial >= 0 and
+                 initial < dimension,
              "invalid trace dimension/Boolean suffix/initial state");
     result.dimension = size_t (dimension);
     result.numeric = size_t (numeric);
     result.initial = size_t (initial);
 
     auto input = complete_file (path);
-    require (bool (std::getline (input, line)) && line.starts_with ("# "), "missing CPre header");
+    require (bool (std::getline (input, line)) and line.starts_with ("# "), "missing CPre header");
     std::map<std::string, int64_t> header;
     std::istringstream words (line.substr (2));
     for (std::string word; words >> word;) {
@@ -88,8 +90,10 @@ namespace matrix_cpre {
       const auto name = word.substr (0, equal);
       if (name == "origin") {
         result.origin = word.substr (equal + 1);
-        require (result.origin == "picker" || result.origin == "picker-pq" || result.origin == "initial", "unknown query origin");
-        require (!(words >> word), "trailing contains metadata");
+        require (result.origin == "picker" or result.origin == "picker-pq" or
+                     result.origin == "initial",
+                 "unknown query origin");
+        require (not(words >> word), "trailing contains metadata");
         break;
       }
       if (name == "input")
@@ -97,31 +101,35 @@ namespace matrix_cpre {
       require (header.emplace (name, integer (word.substr (equal + 1))).second, "duplicate CPre header key");
     }
     const auto bound = header.at ("k");
-    require (bound > 0 && bound <= 127, "trace bound exceeds signed8-bit domain");
+    require (bound > 0 and bound <= 127, "trace bound exceeds signed8-bit domain");
     result.k = int (bound);
     if (header.at ("schema_version") == 1) {
       result.membership = true;
-      require (header.size () == 8 && !result.origin.empty () && header.at ("maxima") >= 0 &&
-               (header.at ("expected") == 0 || header.at ("expected") == 1), "malformed contains header");
+      require (header.size () == 8 and not result.origin.empty () and header.at ("maxima") >= 0 and
+                   (header.at ("expected") == 0 or header.at ("expected") == 1),
+               "malformed contains header");
       result.expected_answer = header.at ("expected") != 0;
-      const auto ordinal = header.at ("ordinal"), hits = header.at ("hits");
+      const auto ordinal = header.at ("ordinal");
+      const auto hits = header.at ("hits");
       size_t bin = 0;
       for (const auto mark : {16, 64, 256, 1024, 4096, 16384})
         bin += header.at ("maxima") >= mark;
-      require (header.at ("loop") >= 0 && header.at ("bin") == int64_t (bin) &&
-               ordinal > 0 && hits >= 0 && hits <= ordinal &&
-               (result.expected_answer ? hits > 0 : hits < ordinal), "inconsistent query ordinal/bin/hits");
-      require (bool (std::getline (input, line)) && line == "[query]", "missing query section");
+      require (header.at ("loop") >= 0 and header.at ("bin") == int64_t (bin) and ordinal > 0 and
+                   hits >= 0 and hits <= ordinal and
+                   (result.expected_answer ? hits > 0 : hits < ordinal),
+               "inconsistent query ordinal/bin/hits");
+      require (bool (std::getline (input, line)) and line == "[query]", "missing query section");
       require (bool (std::getline (input, line)), "missing query rank");
       for (const auto& value : fields (line)) {
         const auto coordinate = integer (value);
         // Actual forward queries can exceed zero in the Boolean suffix: those
         // are valid membership misses, not values to coerce into packed bits.
-        require (coordinate >= -1 && coordinate <= result.k, "query out of rank bounds");
+        require (coordinate >= -1 and coordinate <= result.k, "query out of rank bounds");
         result.query.push_back (int (coordinate));
       }
       require (result.query.size () == result.dimension, "query dimension mismatch");
-      require (bool (std::getline (input, line)) && line == "[generators]", "missing generator section");
+      require (bool (std::getline (input, line)) and line == "[generators]",
+               "missing generator section");
       bool ended = false;
       while (std::getline (input, line)) {
         if (line == "[end]") { ended = true; break; }
@@ -130,20 +138,24 @@ namespace matrix_cpre {
         require (columns.size () == result.dimension, "generator dimension mismatch");
         for (size_t i = 0; i < columns.size (); ++i) {
           const auto coordinate = integer (columns[i]);
-          require (coordinate >= -1 && coordinate <= (i < result.numeric ? result.k - 1 : 0), "generator out of numeric/Boolean bounds");
+          require (coordinate >= -1 and coordinate <= (i < result.numeric ? result.k - 1 : 0),
+                   "generator out of numeric/Boolean bounds");
           rank.push_back (int (coordinate));
         }
         result.before.push_back (std::move (rank));
       }
-      require (ended && !std::getline (input, line) && result.before.size () == size_t (header.at ("maxima")), "incomplete/trailing query trace");
-      const bool answer = std::any_of (result.before.begin (), result.before.end (), [&] (const auto& value) {
+      require (ended and not std::getline (input, line) and
+                   result.before.size () == size_t (header.at ("maxima")),
+               "incomplete/trailing query trace");
+      const bool answer = std::ranges::any_of (result.before, [&] (const auto& value) {
         return matrix_check::below (result.query, value);
       });
       require (answer == result.expected_answer, "source contains answer disagrees with scalar oracle");
       return result;
     }
-    require (header.size () == 5 && header.at ("schema_version") == 2 && header.at ("loop") >= 0 &&
-             header.at ("before") > 0 && header.at ("actions") >= 0,
+    require (header.size () == 5 and header.at ("schema_version") == 2 and
+                 header.at ("loop") >= 0 and header.at ("before") > 0 and
+                 header.at ("actions") >= 0,
              "unsupported or empty CPre trace");
     int section = 0;
     int64_t after_count = -1;
@@ -160,32 +172,39 @@ namespace matrix_cpre {
         require (after_count >= 0, "negative after count");
       }
       else if (line.starts_with ("action\t")) {
-        require (section == 2 && integer (line.substr (7)) == int (result.actions.size ()), "action index gap");
+        require (section == 2 and integer (line.substr (7)) == int (result.actions.size ()),
+                 "action index gap");
         result.actions.emplace_back ();
       }
       else {
         const auto columns = fields (line);
         if (section == 2) {
-          require (!result.actions.empty () && columns.size () == 3, "malformed action edge");
-          const auto destination = integer (columns[0]), source = integer (columns[1]), increment = integer (columns[2]);
-          require (destination >= 0 && destination < dimension && source >= 0 && source < dimension &&
-                   (increment == 0 || increment == 1), "action edge out of bounds");
+          require (not result.actions.empty () and columns.size () == 3, "malformed action edge");
+          const auto destination = integer (columns[0]);
+          const auto source = integer (columns[1]);
+          const auto increment = integer (columns[2]);
+          require (destination >= 0 and destination < dimension and source >= 0 and
+                       source < dimension and (increment == 0 or increment == 1),
+                   "action edge out of bounds");
           result.actions.back ().emplace_back (size_t (destination), size_t (source), increment);
         }
         else {
-          require ((section == 1 || section == 3) && columns.size () == result.dimension, "malformed rank row");
+          require ((section == 1 or section == 3) and columns.size () == result.dimension,
+                   "malformed rank row");
           logical rank;
           for (size_t i = 0; i < columns.size (); ++i) {
             const auto value = integer (columns[i]);
-            require (value >= -1 && value <= (i < result.numeric ? result.k - 1 : 0), "rank outside numeric/Boolean domain");
+            require (value >= -1 and value <= (i < result.numeric ? result.k - 1 : 0),
+                     "rank outside numeric/Boolean domain");
             rank.push_back (int (value));
           }
           (section == 1 ? result.before : result.after).push_back (std::move (rank));
         }
       }
     }
-    require (section == 3 && result.before.size () == size_t (header.at ("before")) &&
-             result.actions.size () == size_t (header.at ("actions")) && result.after.size () == size_t (after_count),
+    require (section == 3 and result.before.size () == size_t (header.at ("before")) and
+                 result.actions.size () == size_t (header.at ("actions")) and
+                 result.after.size () == size_t (after_count),
              "incomplete CPre trace");
     return result;
   }
@@ -198,7 +217,7 @@ namespace matrix_cpre {
     return image;
   }
   inline void insert (region& result, logical value) {
-    if (std::any_of (result.begin (), result.end (), [&] (const auto& v) { return matrix_check::below (value, v); }))
+    if (std::ranges::any_of (result, [&] (const auto& v) { return matrix_check::below (value, v); }))
       return;
     std::erase_if (result, [&] (const auto& v) { return matrix_check::below (v, value); });
     result.push_back (std::move (value));
@@ -206,7 +225,8 @@ namespace matrix_cpre {
   inline void reference (const trace& input) {
     // Production retains its explicit bottom accumulator when no output action
     // exists. Empty actions are distinct from an empty region/zero dimension.
-    region preimages {logical (input.dimension, -1)}, expected;
+    region preimages {logical (input.dimension, -1)};
+    region expected;
     for (const auto& edges : input.actions)
       for (const auto& value : input.before)
         insert (preimages, predecessor (value, edges, input));
@@ -222,7 +242,7 @@ namespace matrix_cpre {
   }
   inline void validate_source (const trace& input) {
     require (matrix_check::maxima (input.before).size () == input.before.size (), "noncanonical source generators");
-    if (!input.membership) {
+    if (not input.membership) {
       require (matrix_check::maxima (input.after).size () == input.after.size (), "noncanonical source result");
       reference (input);
     }
@@ -231,14 +251,16 @@ namespace matrix_cpre {
   std::map<std::string, double> run (const std::filesystem::path& path, size_t rounds, bool verify_only, bool detail,
                                     bool source_verified = false) {
     const auto input = load (path);
-    if (verify_only && !source_verified)
+    if (verify_only and not source_verified)
       validate_source (input);
     posets::vectors::bool_threshold = posets::vectors::bitset_threshold = input.numeric;
     using V = typename S::value_type;
     std::map<std::string, double> result;
     const auto timed = [&] (const std::string& key, auto work) {
-      if (verify_only || (!detail && (key == "apply" || key == "union" || key == "intersection"))) {
-        work (); return;
+      if (verify_only or
+          (not detail and (key == "apply" or key == "union" or key == "intersection"))) {
+        work ();
+        return;
       }
       const auto wall = std::chrono::steady_clock::now ();
       const auto cpu = std::clock ();
@@ -262,7 +284,7 @@ namespace matrix_cpre {
         std::optional<S> rebuilt;
         timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.before)); });
       }
-      if (!verify_only) {
+      if (not verify_only) {
         result["rounds"] = double (rounds);
         result["dimension"] = double (input.dimension);
         result["boolean_tail"] = double (input.dimension - input.numeric);
@@ -272,7 +294,8 @@ namespace matrix_cpre {
       }
       return result;
     }
-    posets::utils::vector_mm<typename V::value_type> reset (input.dimension, 0), image;
+    posets::utils::vector_mm<typename V::value_type> reset (input.dimension, 0);
+    posets::utils::vector_mm<typename V::value_type> image;
     std::fill (reset.begin (), reset.begin () + input.numeric, input.k - 1);
     image.reserve (input.dimension);
     const std::set<logical> expected (input.after.begin (), input.after.end ());
@@ -283,10 +306,11 @@ namespace matrix_cpre {
       timed ("build", [&] { frontier.emplace (matrix_check::build<S> (input.before)); });
       std::chrono::steady_clock::time_point start;
       std::clock_t cpu = 0;
-      if (!verify_only) {
+      if (not verify_only) {
         start = std::chrono::steady_clock::now ();
         cpu = std::clock ();
-        if (!detail) { CALLGRIND_START_INSTRUMENTATION; }
+        if (not detail)
+          CALLGRIND_START_INSTRUMENTATION;
       }
       {
         // Production constructs the bottom accumulator before replacing it
@@ -318,8 +342,9 @@ namespace matrix_cpre {
         }
         timed ("intersection", [&] { frontier->intersect_with (std::move (*combined)); });
       }
-      if (!verify_only) {
-        if (!detail) { CALLGRIND_STOP_INSTRUMENTATION; }
+      if (not verify_only) {
+        if (not detail)
+          CALLGRIND_STOP_INSTRUMENTATION;
         const auto wall_end = std::chrono::steady_clock::now ();
         const auto cpu_end = std::clock ();
         result["cpre"] += std::chrono::duration<double> (wall_end - start).count ();
@@ -328,18 +353,19 @@ namespace matrix_cpre {
       std::set<logical> actual;
       for (const auto& value : *frontier)
         require (actual.insert (matrix_check::unpack (value)).second, "duplicate replay maximum");
-      require (actual == expected && frontier->size () == expected.size (), "backend CPre result disagrees with source");
+      require (actual == expected and frontier->size () == expected.size (),
+               "backend CPre result disagrees with source");
       logical initial (input.dimension, -1);
       initial[input.initial] = 0;
       bool answer = false;
       timed ("contains", [&] { answer = frontier->contains (matrix_check::vector<V> (initial)); });
-      require (answer == std::any_of (input.after.begin (), input.after.end (), [&] (const auto& v) {
+      require (answer == std::ranges::any_of (input.after, [&] (const auto& v) {
         return matrix_check::below (initial, v);
       }), "replayed initial-state membership disagrees with scalar oracle");
       std::optional<S> rebuilt;
       timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.after)); });
     }
-    if (!verify_only) {
+    if (not verify_only) {
       result["rounds"] = double (rounds);
       result["detail"] = detail;
       result["dimension"] = double (input.dimension);

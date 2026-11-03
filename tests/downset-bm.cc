@@ -524,7 +524,7 @@ int main (int argc, char* argv[]) {
   }
 
   if (check_case == "trace-source") {
-    matrix_check::require (!trace_file.empty (), "trace-source requires --trace");
+    matrix_check::require (not trace_file.empty (), "trace-source requires --trace");
     matrix_cpre::validate_source (matrix_cpre::load (trace_file));
     std::cout << "[TRACE SOURCE OK]\n";
     return 0;
@@ -549,9 +549,10 @@ int main (int argc, char* argv[]) {
   for (auto&& da : downarg | std::ranges::views::split (',') |
                        std::ranges::views::transform (to_string_view))
     for (const auto& k : std::views::keys (tests))
-      if (da == "all" or ((!trace_file.empty () || !check_case.empty ())
-            ? k.substr (0, k.find ('<')) == "posets::downsets::"s + std::string (da)
-            : k.starts_with ("posets::downsets::"s + std::string (da)))) {
+      if (da == "all" or
+          ((not trace_file.empty () or not check_case.empty ())
+               ? k.substr (0, k.find ('<')) == "posets::downsets::"s + std::string (da)
+               : k.starts_with ("posets::downsets::"s + std::string (da)))) {
         auto sub = k.substr (0, k.find ('<'));
         if (std::ranges::find (downs.begin (), downs.end (), sub) == downs.end ())
           downs.push_back (sub);
