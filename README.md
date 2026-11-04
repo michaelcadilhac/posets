@@ -100,8 +100,12 @@ then move generators and publish with non-throwing swaps. Even projected pointer
 into the old trie stay valid until that final step. Vectors with potentially
 throwing moves use `copy()` instead. Projections must select values without
 mutating them; repeated references to the same movable source are not supported.
-The temporary replacement increases peak rebuild memory (old and new storage
-coexist) and adds a source-pointer array to avoid copying ordinary vectors.
+During a rebuild, old and replacement storage coexist, with a temporary
+source-pointer array to avoid copying ordinary vectors. Colors are globally
+unique across layers, so the query cache needs only two generation stamps per
+color, without multiplying its size again by the vector dimension. Even debug
+antichain validation runs before publication, so throwing comparisons preserve
+the same guarantees.
 
 Empty-set algebra is supported; nonempty zero-dimensional sharingtrie inputs
 remain outside the contract. SIMD arrays and vector storage use C++20 owning

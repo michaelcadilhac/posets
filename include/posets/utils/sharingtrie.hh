@@ -49,13 +49,10 @@ namespace posets::utils {
       std::unique_ptr<st_node[]> bin_tree;
       std::vector<V> vector_set;
 
-      // Generation-stamp cache for dominates(): avoids allocating hash sets on
-      // every call.  After color_as_dfa() runs, dominates_stamp has size
-      // dim * (nxt_color * 2); entry [depth * nxt_color*2 + strict_color] holds
-      // the generation when that (depth, strict_color) pair was last seen.
-      // dominates() bumps dominates_gen on entry; on the rare unsigned wrap to 0
-      // the stamp array is cleared and the generation restarted at 1.
-      int nxt_color {0};
+      // Colors are globally unique across layers, so (color, strictness)
+      // already identifies a query state without a redundant depth dimension.
+      // Each entry holds the last generation that visited it. Unsigned wrap
+      // clears the table before restarting at generation 1.
       mutable std::vector<unsigned> dominates_stamp;
       mutable unsigned dominates_gen {0};
       mutable std::vector<std::tuple<int, short, bool>> dominates_stack;
@@ -216,15 +213,14 @@ namespace posets::utils {
           }
         }
 
-        // Now, per layer (in bottom-up fashion) we use a hash table to assign
-        // "colors" to the nodes based on their label and the colors of their
-        // children. Both the key vector and the map are hoisted out of the
-        // inner loop to reuse their heap allocations across iterations.
+        // Color equal suffix languages bottom-up. Assign each color at its
+        // first signature, avoiding a separate vector of indices per class.
+        // Reuse signature scratch and hash buckets between layers.
         int nxt_color = 0;
         signature_type k;
-        std::unordered_map<signature_type, std::vector<int>, signature_hash> colors2indices;
+        std::unordered_map<signature_type, int, signature_hash> colors;
         for (int i = this->dim - 1; i >= 0; i--) {
-          colors2indices.clear ();
+          colors.clear ();
           for (const int idx : layer[i]) {
             st_node* cur = this->bin_tree.get () + idx;
             k.clear ();
@@ -235,24 +231,13 @@ namespace posets::utils {
               k.push_back (cur->color);
               son_idx = cur->bro;
             }
-            colors2indices[k].push_back (idx);
-          }
-          // Every node in this layer is ready to get its equivalence-class
-          // color
-          for (const auto& [key, idces] : colors2indices) {
-            for (const int idx : idces) {
-              st_node* cur = this->bin_tree.get () + idx;
-              cur->color = nxt_color;
-            }
-            nxt_color += 1;
+            const auto [entry, inserted] = colors.try_emplace (k, nxt_color);
+            this->bin_tree[idx].color = entry->second;
+            nxt_color += static_cast<int> (inserted);
           }
         }
         // Set up the generation-stamp cache and DFS stack for dominates()
-        this->nxt_color = nxt_color;
-        const size_t stride = static_cast<size_t> (nxt_color) * 2;
-        if (this->dim > this->dominates_stamp.max_size () / stride)
-          throw std::length_error ("sharingtrie query cache capacity exceeded");
-        this->dominates_stamp.assign (this->dim * stride, 0U);
+        this->dominates_stamp.assign (static_cast<size_t> (nxt_color) * 2, 0U);
         this->dominates_gen = 0U;
         this->dominates_stack.reserve (this->dim);
       }
@@ -306,7 +291,7 @@ namespace posets::utils {
         // decreasing label order)
         this->to_trie ();
 
-        // finally, we proceed bottom-up to merge language equivalent nodes
+        // Color equivalent suffix languages and prepare the query caches.
         this->color_as_dfa ();
       }
 
@@ -369,7 +354,6 @@ namespace posets::utils {
         swap (root, other.root);
         swap (bin_tree, other.bin_tree);
         swap (vector_set, other.vector_set);
-        swap (nxt_color, other.nxt_color);
         swap (dominates_stamp, other.dominates_stamp);
         swap (dominates_gen, other.dominates_gen);
         swap (dominates_stack, other.dominates_stack);
@@ -395,7 +379,6 @@ namespace posets::utils {
           std::ranges::fill (this->dominates_stamp.begin (), this->dominates_stamp.end (), 0U);
           ++this->dominates_gen;
         }
-        const size_t sc_stride = static_cast<size_t> (this->nxt_color) * 2;
 
         // DFS: reuse the member stack (capacity already reserved to dim).
         auto& to_visit = this->dominates_stack;
@@ -444,9 +427,9 @@ namespace posets::utils {
               // before actually checking this subtree, we check if we've
               // visited an equivalent one (using the generation-stamp cache)
               // and otherwise mark it for the future; skipping = go to sibling
-              const size_t strict_color = static_cast<size_t> (cur->color) * 2 + new_strict;
-              const size_t depth = to_visit.size ();
-              unsigned& stamp = this->dominates_stamp[(depth * sc_stride) + strict_color];
+              const size_t strict_color =
+                  static_cast<size_t> (cur->color) * 2 + static_cast<size_t> (new_strict);
+              unsigned& stamp = this->dominates_stamp[strict_color];
               if (stamp == this->dominates_gen) {
                 if (cur->bro > -1)
                   to_visit.emplace_back (cur->bro, 0, loc_strict);
