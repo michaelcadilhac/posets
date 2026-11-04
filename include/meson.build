@@ -23,6 +23,7 @@ header_files = [
   'posets/downsets/vector_backed_one_dim_split_intersection_only.hh',
   'posets/downsets/vector_or_kdtree_backed.hh',
   'posets/downsets.hh',
+  'posets/utils/antichain.hh',
   'posets/utils/cst.hh',
   'posets/utils/bboxtree.hh',
   'posets/utils/comptrie.hh',

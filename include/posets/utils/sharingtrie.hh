@@ -16,6 +16,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 
 namespace posets::utils {
 
@@ -520,16 +521,7 @@ namespace posets::utils {
 
       [[nodiscard]] auto& get_backing_vector () { return vector_set; }
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = this->begin (); it != this->end (); ++it) {
-          for (auto it2 = it + 1; it2 != this->end (); ++it2) {
-            auto po = it->partial_order (*it2);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
       [[nodiscard]] bool operator== (const sharingtrie& other) const {
         return this->vector_set == other.vector_set;
       }

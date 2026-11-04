@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/reduce.hh>
 #include <posets/utils/sharingtrie.hh>
 
@@ -32,8 +33,8 @@ namespace posets::downsets {
 
       void reset_trie (std::vector<V>&& elements) {
         auto antichain = utils::reduce_to_maxima (std::move (elements));
+        assert (utils::is_antichain (antichain));
         this->trie.relabel_trie (std::move (antichain));
-        assert (this->trie.is_antichain ());
       }
 
     public:
@@ -99,8 +100,10 @@ namespace posets::downsets {
 
         // ready to rebuild the tree now
         assert (not result.empty ());
+        // Even debug validation can throw for a user-defined Vector. Do it
+        // while projected sources still belong to the unchanged operands.
+        assert (utils::is_antichain (result, proj ()));
         this->trie.relabel_trie (std::move (result), proj ());
-        assert (this->trie.is_antichain ());
       }
 
       // Intersection in place

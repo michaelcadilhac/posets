@@ -254,6 +254,10 @@ namespace {
         base::operator= (checked (value));
         return *this;
       }
+      auto partial_order (const throwing_move& other) const {
+        allocation_failure::charge ();
+        return base::partial_order (other);
+      }
       throwing_move copy () const { return throwing_move (base::copy ()); }
       throwing_move meet (const throwing_move& other) const {
         return throwing_move (base::meet (other));
@@ -303,9 +307,11 @@ int main () {
     test<posets::vectors::simd_vector_backed<std::int8_t>> ("SIMD dynamic");
     test<posets::vectors::simd_array_backed<std::int8_t, 129>> ("SIMD embedded");
     test<posets::vectors::simd_array_ptr_backed<std::int8_t, 129>> ("SIMD pointer");
+    test<posets::vectors::simd_array_backed<std::int16_t, 129>> ("SIMD int16 embedded");
     projections<throwing_move> ();
-    std::cout << "throwing move aliased relabel injected_sites=" << sweep<throwing_move> (5)
-              << " PASS\n";
+    for (int operation : {5, 6, 7})
+      std::cout << "throwing value operation=" << operation
+                << " injected_sites=" << sweep<throwing_move> (operation) << " PASS\n";
     using block = posets::utils::simd_traits<std::int8_t>::fssimd;
     try {
       allocations_left = 0;
@@ -320,6 +326,11 @@ int main () {
     allocations_left = 0;
     array.reset ();
     allocations_left = -1;
+    require (allocation_failure::largest_failed_alignment >=
+                 alignof (posets::vectors::simd_array_backed<std::int16_t, 129>),
+             "wide aligned allocation failure was not injected");
+    std::cout << "largest_failed_alignment=" << allocation_failure::largest_failed_alignment
+              << '\n';
     require (allocation_failure::aligned_failures > 0, "aligned failure was not injected");
     require (allocation_failure::aligned_attempts > 0, "aligned allocation injection not reached");
   } catch (const std::exception& error) {

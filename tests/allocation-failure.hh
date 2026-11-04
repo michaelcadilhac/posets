@@ -8,6 +8,7 @@ namespace allocation_failure {
   inline long allocations_left = -1;
   inline long aligned_attempts = 0;
   inline long aligned_failures = 0;
+  inline std::size_t largest_failed_alignment = 0;
 
   inline void charge () {
     if (allocations_left == 0)
@@ -53,8 +54,11 @@ void operator delete[] (void* memory, const std::nothrow_t&) noexcept {
 // vectors use C++17 over-aligned new even on portable, non-AVX targets.
 void* operator new (std::size_t bytes, std::align_val_t alignment) {
   ++allocation_failure::aligned_attempts;
-  if (allocations_left == 0)
+  if (allocations_left == 0) {
     ++allocation_failure::aligned_failures;
+    if (static_cast<std::size_t> (alignment) > allocation_failure::largest_failed_alignment)
+      allocation_failure::largest_failed_alignment = static_cast<std::size_t> (alignment);
+  }
   allocation_failure::charge ();
   void* memory = nullptr;
   if (posix_memalign (&memory, static_cast<std::size_t> (alignment), bytes ? bytes : 1) == 0)
