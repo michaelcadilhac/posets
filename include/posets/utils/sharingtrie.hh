@@ -46,7 +46,9 @@ namespace posets::utils {
           int son;
           int bro;
       };
-      std::unique_ptr<st_node[]> bin_tree;
+      // Runtime-sized storage, initialized by build_nodes rather than zero-filled.
+      using node_array = st_node[];  // NOLINT(modernize-avoid-c-arrays)
+      std::unique_ptr<node_array> bin_tree;
       std::vector<V> vector_set;
 
       // Colors are globally unique across layers, so (color, strictness)
@@ -70,7 +72,7 @@ namespace posets::utils {
       // so that they form a single set of siblings
       void string_children (const std::vector<int>& nodes, size_t start, size_t end) {
         // we fetch the first sibling, if there is one
-        st_node* cur = this->bin_tree.get () + nodes[start];
+        const st_node* cur = this->bin_tree.get () + nodes[start];
         if (cur->son == -1)
           return;
         st_node* last = this->bin_tree.get () + cur->son;
@@ -105,7 +107,7 @@ namespace posets::utils {
             // we are going down, so look for a son and push it into the
             // stack; before that, we also push back the current node but in
             // mode=right so that when we come back we move to its sibling
-            st_node* cur = this->bin_tree.get () + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             if (cur->son > -1) {
               to_visit.emplace_back (idx, 2);
               to_visit.emplace_back (cur->son, 0);
@@ -114,7 +116,7 @@ namespace posets::utils {
           else if (mode == 2) {
             // we are going right, so look for a sibling and push it into the
             // stack in mode=down
-            st_node* cur = this->bin_tree.get () + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             if (cur->bro > -1)
               to_visit.emplace_back (cur->bro, 1);
           }
@@ -179,7 +181,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree.get () + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // base case: reached the bottom layer
           if (cur->son == -1) {
@@ -222,7 +224,7 @@ namespace posets::utils {
         for (int i = this->dim - 1; i >= 0; i--) {
           colors.clear ();
           for (const int idx : layer[i]) {
-            st_node* cur = this->bin_tree.get () + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             k.clear ();
             k.push_back (cur->label);
             int son_idx = cur->son;
@@ -253,7 +255,7 @@ namespace posets::utils {
         // Node links use int indices. Check before multiplying or allocating.
         if (this->dim > static_cast<size_t> (std::numeric_limits<int>::max ()) / elements.size ())
           throw std::length_error ("sharingtrie node index capacity exceeded");
-        this->bin_tree = std::make_unique_for_overwrite<st_node[]> (this->dim * elements.size ());
+        this->bin_tree = std::make_unique_for_overwrite<node_array> (this->dim * elements.size ());
         this->root = 0;
 
         // creating linear trees with their roots being siblings
@@ -337,7 +339,7 @@ namespace posets::utils {
       sharingtrie (size_t dim) : dim (dim) {}
       sharingtrie (size_t dim, size_t initsize)
         : dim (dim),
-          bin_tree (std::make_unique_for_overwrite<st_node[]> (initsize)) {}
+          bin_tree (std::make_unique_for_overwrite<node_array> (initsize)) {}
       sharingtrie (const sharingtrie&) = delete;
       sharingtrie (sharingtrie&& other) noexcept { swap (other); }
       sharingtrie& operator= (sharingtrie&& other) noexcept {
@@ -390,7 +392,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction, loc_strict] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree.get () + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // if we're already going right, we need to push its
           // sibling and start by going down from there with the same local
@@ -428,7 +430,7 @@ namespace posets::utils {
               // visited an equivalent one (using the generation-stamp cache)
               // and otherwise mark it for the future; skipping = go to sibling
               const size_t strict_color =
-                  static_cast<size_t> (cur->color) * 2 + static_cast<size_t> (new_strict);
+                  (static_cast<size_t> (cur->color) * 2) + static_cast<size_t> (new_strict);
               unsigned& stamp = this->dominates_stamp[strict_color];
               if (stamp == this->dominates_gen) {
                 if (cur->bro > -1)
@@ -462,7 +464,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree.get () + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // base case: reached the bottom layer
           if (cur->son == -1) {

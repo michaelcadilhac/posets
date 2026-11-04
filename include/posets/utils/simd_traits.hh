@@ -17,7 +17,7 @@ namespace posets::utils {
 #endif
 
       static constexpr auto simds_for (size_t k) {
-        return k / simd_size + static_cast<size_t> (k % simd_size != 0);
+        return (k / simd_size) + static_cast<size_t> (k % simd_size != 0);
       }
 
       using fssimd = std::experimental::fixed_size_simd<Elt, simd_size>;

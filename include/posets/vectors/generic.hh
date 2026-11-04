@@ -33,7 +33,7 @@ namespace posets::vectors {
       }();
 
       static constexpr size_t blocks_for (size_t nelts) {
-        return nelts / items_per_block + static_cast<size_t> (nelts % items_per_block != 0);
+        return (nelts / items_per_block) + static_cast<size_t> (nelts % items_per_block != 0);
       }
 
     private:

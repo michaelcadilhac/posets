@@ -267,7 +267,7 @@ namespace posets::vectors {
       static constexpr size_t bits_per_word = 64;
 
       [[nodiscard]] static constexpr size_t words_for (size_t bits) {
-        return bits / bits_per_word + static_cast<size_t> (bits % bits_per_word != 0);
+        return (bits / bits_per_word) + static_cast<size_t> (bits % bits_per_word != 0);
       }
 
       [[nodiscard]] static constexpr size_t word_for (size_t bit) { return bit / bits_per_word; }
