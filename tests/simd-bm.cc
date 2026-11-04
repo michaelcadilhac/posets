@@ -118,16 +118,17 @@ int main (int argc, char* argv[]) {
     usage (argv[0]);
 
   auto implem = std::string ("posets::downsets::") + argv[1]
-    + "<posets::vectors::" + argv[2] + (argv[2][strlen (argv[2]) - 1] == '>' ? " " : "") + ">";
+    + "<posets::vectors::" + argv[2] + ">";
 
-  try {
-    posets::vectors::bool_threshold = 128;
-    posets::vectors::bitset_threshold = 128;
-    auto& tests = test_list<void>::list;
-    tests[implem] ();
-  } catch (std::bad_function_call& e) {
-    std::cout << "error: no such implem: " << implem << std::endl;
+  posets::vectors::bool_threshold = 128;
+  posets::vectors::bitset_threshold = 128;
+  const auto& tests = test_list<void>::list;
+  const auto implementation = tests.find (implem);
+  if (implementation == tests.end ()) {
+    std::cerr << "error: no such implem: " << implem << '\n';
+    return 1;
   }
+  implementation->second ();
 
   return 0;
 }
