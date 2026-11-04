@@ -1,6 +1,6 @@
 #pragma once
 
-// https://stackoverflow.com/questions/8456236/how-is-a-vectors-data-aligned
+// Scalar transfer buffers aligned to the selected SIMD block alignment.
 
 #include <boost/align/aligned_allocator.hpp>
 

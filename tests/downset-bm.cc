@@ -465,6 +465,8 @@ int main (int argc, char* argv[]) {
                   << ",\"native_lanes\":" << std::experimental::simd_size_v<test_value_type,
                        std::experimental::simd_abi::native<test_value_type>>
                   << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
+                  << ",\"block_bytes\":" << sizeof (typename traits::fssimd)
+                  << ",\"width_selector\":" << POSETS_SIMD_WIDTH
                   << ",\"alignment\":" << traits::memory_alignment_v
 #ifdef NDEBUG
                   << ",\"ndebug\":true"

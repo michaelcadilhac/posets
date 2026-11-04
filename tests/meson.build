@@ -72,6 +72,8 @@ test('antichains/vectors random d128', downsetbm_d128_exe,
              '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2,bitset_tail=32' ])
 test('antichains/vectors simd benchmark', simdbm_exe,
      args : ['vector_backed', 'simd_array_backed_sum_fixed<test_value_type>'])
+test('benchmarks/reject unknown SIMD implementation', simdbm_exe,
+     args: ['vector_backed', 'unknown'], should_fail: true)
 test('antichains/vectors implementations', tests_exe, args : ['all', 'all'])
 test('antichains/vectors kdtests', kdtests_exe)
 test('antichains/vectors sttests', sttests_exe)
@@ -98,12 +100,11 @@ sharing_allocation_env.append('VALGRIND_OPTS',
   '--soname-synonyms=somalloc=nouserintercepts', separator: ' ')
 test('antichains/sharing allocation failures', sharing_allocation_exe, env: sharing_allocation_env)
 
-# Keep the14-backend matrix on the two dynamic vector representations. Synthetic
+# Keep the 14-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 foreach mode : ['compatible', 'native', 'max']
   matrix_args = ['-DPOSETS_MATRIX_ONLY',
-                 '-DSIMD_IS_MAX=' + (mode == 'max' ? '1' : '0'),
-                 '-DSIMD_IS_NATIVE=' + (mode == 'native' ? '1' : '0')]
+                 '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()]
   if get_option('test_native_isa')
     matrix_args += ['-march=native']
   endif
@@ -122,6 +123,10 @@ foreach mode : ['compatible', 'native', 'max']
   tail_exe = executable('simd-tail-' + mode, 'simd-tail-check.cc',
                        dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/packed Boolean tails/' + mode, tail_exe)
+  width_exe = executable('simd-width-' + mode, 'simd-width-check.cc',
+    dependencies: [posets_dep], cpp_args: matrix_args +
+      ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()])
+  test('matrix/SIMD width and storage/' + mode, width_exe)
   sharing_antichain_exe = executable('sharing-antichain-' + mode, 'sharing-antichain.cc',
     dependencies: [posets_dep], cpp_args: matrix_args)
   test('antichains/sharing backends/' + mode, sharing_antichain_exe)
@@ -130,3 +135,26 @@ endforeach
 native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
   dependencies: [posets_dep], cpp_args: ['-DSIMD_IS_NATIVE=1', '-DSIMD_IS_MAX=1'])
 test('matrix/native overrides legacy max', native_precedence_exe)
+
+# Exercise defaults and every legacy setting independently of the new selector.
+legacy_modes = [
+  ['default', [], 'NATIVE'],
+  ['legacy-max-off', ['-DSIMD_IS_MAX=0'], 'NATIVE'],
+  ['legacy-max-false', ['-DSIMD_IS_MAX=false'], 'NATIVE'],
+  ['legacy-native-off', ['-DSIMD_IS_NATIVE=0'], 'COMPATIBLE'],
+  ['legacy-both-off', ['-DSIMD_IS_NATIVE=0', '-DSIMD_IS_MAX=0'], 'COMPATIBLE'],
+  ['legacy-native', ['-DSIMD_IS_NATIVE=true'], 'NATIVE'],
+  ['legacy-max', ['-DSIMD_IS_MAX=1'], 'MAX'],
+  ['legacy-max-native-off', ['-DSIMD_IS_NATIVE=0', '-DSIMD_IS_MAX=1'], 'MAX'],
+  ['explicit-overrides-legacy', ['-DPOSETS_SIMD_WIDTH=0', '-DSIMD_IS_NATIVE=1',
+                               '-DSIMD_IS_MAX=1'], 'COMPATIBLE'],
+]
+foreach mode : legacy_modes
+  mode_args = mode[1] + ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode[2]]
+  if get_option('test_native_isa')
+    mode_args += ['-march=native']
+  endif
+  width_exe = executable('simd-width-' + mode[0], 'simd-width-check.cc',
+    dependencies: [posets_dep], cpp_args: mode_args)
+  test('matrix/SIMD selector/' + mode[0], width_exe)
+endforeach

@@ -8,6 +8,29 @@
 # define POSETS_COMPILE_ALL_COMPONENTS (!POSETS_CONFIGURED)
 #endif
 
+// Compile-time SIMD lane selection. An explicit selector overrides legacy aliases.
+#define POSETS_SIMD_WIDTH_COMPATIBLE 0
+#define POSETS_SIMD_WIDTH_NATIVE 1
+#define POSETS_SIMD_WIDTH_MAX 2
+
+#ifndef POSETS_SIMD_WIDTH
+# if defined(SIMD_IS_NATIVE) && SIMD_IS_NATIVE
+#  define POSETS_SIMD_WIDTH POSETS_SIMD_WIDTH_NATIVE
+# elif defined(SIMD_IS_MAX) && SIMD_IS_MAX
+#  define POSETS_SIMD_WIDTH POSETS_SIMD_WIDTH_MAX
+# elif defined(SIMD_IS_NATIVE)
+#  define POSETS_SIMD_WIDTH POSETS_SIMD_WIDTH_COMPATIBLE
+# else
+// In particular, SIMD_IS_MAX=0 alone leaves the native default enabled.
+#  define POSETS_SIMD_WIDTH POSETS_SIMD_WIDTH_NATIVE
+# endif
+#endif
+
+#if POSETS_SIMD_WIDTH != POSETS_SIMD_WIDTH_COMPATIBLE && \
+    POSETS_SIMD_WIDTH != POSETS_SIMD_WIDTH_NATIVE && POSETS_SIMD_WIDTH != POSETS_SIMD_WIDTH_MAX
+# error "POSETS_SIMD_WIDTH must be COMPATIBLE (0), NATIVE (1), or MAX (2)"
+#endif
+
 #ifndef POSETS_ITEMS_PER_BLOCK
 # define POSETS_ITEMS_PER_BLOCK 8
 #endif

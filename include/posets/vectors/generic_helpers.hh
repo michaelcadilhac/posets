@@ -1,7 +1,5 @@
 #pragma once
 
-#include <boost/pool/object_pool.hpp>
-
 namespace posets::vectors {
   template <typename T>
   concept HasData = requires (T t) {
@@ -15,7 +13,7 @@ namespace posets::vectors {
     { new std::experimental::simd (t[0]) } -> std::same_as<typename T::value_type*>;
   };
 
-  /// Conditional member when has_sum is set in @a simd_array_backed_.
+  /// Optional cached sum for generic vectors.
   template <bool HasSum>
   struct sum_member {
       int sum = 0;
@@ -24,7 +22,7 @@ namespace posets::vectors {
   template <>
   struct sum_member<false> {};
 
-  /// Conditional member when embeds_data is unset in @a simd_array_backed_.
+  /// C++20 new/delete respect Data's alignment, including embedded SIMD arrays.
   template <typename Data>
   struct basic_malloc {
       static Data* construct () { return new Data (); }
@@ -33,7 +31,6 @@ namespace posets::vectors {
 
   template <bool EmbedsData, typename Data>
   struct malloc_member {
-      // static inline boost::object_pool<Data> malloc {8192};
       static inline basic_malloc<Data> malloc;
   };
 

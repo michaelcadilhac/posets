@@ -25,10 +25,15 @@ namespace posets::vectors {
       using value_type = block_type::value_type;
       static const auto uses_simd = [] () { return IsDataSimd<Data>; }();
 
-      static const auto items_per_block = sizeof (block_type) / sizeof (value_type);
+      static constexpr auto items_per_block = [] () {
+        if constexpr (uses_simd)
+          return block_type::size ();
+        else
+          return std::tuple_size_v<block_type>;
+      }();
 
       static constexpr size_t blocks_for (size_t nelts) {
-        return (nelts + items_per_block - 1) / items_per_block;
+        return nelts / items_per_block + (nelts % items_per_block != 0);
       }
 
     private:

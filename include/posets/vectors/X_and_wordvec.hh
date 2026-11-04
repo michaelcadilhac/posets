@@ -81,7 +81,17 @@ namespace posets::vectors {
         return x_and_wordvec (k, bool_count, x.copy (), std::move (b), sum);
       }
 
-      x_and_wordvec& operator= (x_and_wordvec&& other) = default;
+      x_and_wordvec& operator= (x_and_wordvec&& other) noexcept (
+          std::is_nothrow_move_assignable_v<X>) {
+        if (this != &other) {
+          k = other.k;
+          x = std::move (other.x);
+          bools = std::move (other.bools);
+          sum = other.sum;
+          bool_count = other.bool_count;
+        }
+        return *this;
+      }
 
       x_and_wordvec& operator= (const x_and_wordvec& other) = delete;
 
