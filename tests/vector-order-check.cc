@@ -48,7 +48,15 @@ void check_type () {
   check<posets::vectors::simd_array_ptr_backed<T, 65>> ();
 }
 
+struct scalar_block : std::array<int, 8> {
+    auto operator<=> (const scalar_block&) const = default;
+};
+
 int main () {
+  // generic<Data> also accepts scalar blocks without a tuple_size specialization.
+  using custom = posets::vectors::generic<std::vector<scalar_block>, false, true>;
+  static_assert (posets::Vector<custom>);
+  check<custom> ();
   check_type<std::int8_t> ();
   check_type<std::int16_t> ();
   check_type<std::int32_t> ();

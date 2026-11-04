@@ -29,11 +29,11 @@ namespace posets::vectors {
         if constexpr (uses_simd)
           return block_type::size ();
         else
-          return std::tuple_size_v<block_type>;
+          return sizeof (block_type) / sizeof (value_type);
       }();
 
       static constexpr size_t blocks_for (size_t nelts) {
-        return nelts / items_per_block + (nelts % items_per_block != 0);
+        return nelts / items_per_block + static_cast<size_t> (nelts % items_per_block != 0);
       }
 
     private:
