@@ -158,3 +158,10 @@ foreach mode : legacy_modes
     dependencies: [posets_dep], cpp_args: mode_args)
   test('matrix/SIMD selector/' + mode[0], width_exe)
 endforeach
+
+# Max mode forces over-aligned SIMD allocation even on the portable SSE target.
+sharingtrie_allocation_exe = executable('sharingtrie-allocation',
+  'sharingtrie-allocation.cc', dependencies: [posets_dep],
+  cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
+test('antichains/sharingtrie allocation failures', sharingtrie_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)

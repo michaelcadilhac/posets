@@ -85,3 +85,26 @@ If you use this library for your academic work, please cite the following paper
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
+
+## Sharingtrie allocation failures
+
+`sharingtrie_backed` construction propagates allocation errors. Its rvalue
+construction input may be consumed by antichain reduction if construction fails;
+retry construction with fresh input. Completed objects always own their storage.
+
+`utils::sharingtrie::relabel_trie`, and downset union/intersection, provide the
+strong exception guarantee: on failure, both operands' generators and membership
+remain unchanged and can be queried, retried, moved or destroyed. Rebuilds prepare
+an owning node array, colors, query caches and reserved vector storage separately,
+then move generators and publish with non-throwing swaps. Even projected pointers
+into the old trie stay valid until that final step. Vectors with potentially
+throwing moves use `copy()` instead. Projections must select values without
+mutating them; repeated references to the same movable source are not supported.
+The temporary replacement increases peak rebuild memory (old and new storage
+coexist) and adds a source-pointer array to avoid copying ordinary vectors.
+
+Empty-set algebra is supported; nonempty zero-dimensional sharingtrie inputs
+remain outside the contract. SIMD arrays and vector storage use C++20 owning
+allocation with the element type's alignment. Allocation sweeps in
+`sharingtrie-allocation` cover early and late build/cache failures, aliased
+relabels, both algebra operations, aligned allocations and retry/destruction.
