@@ -1,6 +1,6 @@
 tests_exe = executable ('tests', 'tests.cc',
                         dependencies : [posets_dep ],
-                        c_args : '-O0' )  # Deactivate optimization, otherwise it takes ages.
+                        cpp_args : '-O0' )  # Deactivate optimization, otherwise it takes ages.
 
 kdtests_exe = executable ('kdtests', 'kdtests.cc',
                           dependencies : [posets_dep ])
@@ -14,12 +14,17 @@ csttests_exe = executable ('csttests', 'csttests.cc',
 simdbm_exe = executable ('simd-bm', 'simd-bm.cc',
                          dependencies : [posets_dep ])
 
+# Exercise the real benchmark kernel without a quadratic 16K-item workload
+# in debug/Memcheck. The standalone benchmark retains its full default size.
+simdbm_smoke_exe = executable('simd-bm-smoke', 'simd-bm.cc',
+  dependencies: [posets_dep], cpp_args: ['-DPOSETS_SIMD_BM_ITEMS=256'])
+
 downsetbm_exe = executable ('downset-bm', 'downset-bm.cc',
                             dependencies : [posets_dep ])
 
 downsetbm_d128_exe = executable ('downset-bm-d128', 'downset-bm.cc',
                                  dependencies : [posets_dep ],
-                                 cpp_args : '-DDIMENSION=128')
+                                 cpp_args : ['-UDIMENSION', '-DDIMENSION=128'])
 
 reducetests_exe = executable ('reducetests', 'reducetests.cc',
                               dependencies : [posets_dep ])
@@ -70,7 +75,7 @@ test('antichains/vectors random', downsetbm_exe,
 test('antichains/vectors random d128', downsetbm_d128_exe,
      args : ['all', 'all',
              '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2,bitset_tail=32' ])
-test('antichains/vectors simd benchmark', simdbm_exe,
+test('antichains/vectors simd benchmark', simdbm_smoke_exe,
      args : ['vector_backed', 'simd_array_backed_sum_fixed<test_value_type>'])
 test('benchmarks/reject unknown SIMD implementation', simdbm_exe,
      args: ['vector_backed', 'unknown'], should_fail: true)

@@ -18,9 +18,13 @@
 
 #include "test_maker.hh"
 
+// This benchmark uses 64 coordinates independently of downset-bm.
+#undef DIMENSION
 #define DIMENSION 64
 #define ROUNDS 3
-#define NITEMS (1 << 14)
+#ifndef POSETS_SIMD_BM_ITEMS
+# define POSETS_SIMD_BM_ITEMS (1 << 14)
+#endif
 #define MAXVAL 3
 
 size_t posets::vectors::bool_threshold = 2 * DIMENSION;
@@ -53,7 +57,7 @@ struct test_t : public generic_test<void> {
         sw.start ();
         SetType set (VType (random_vector<value_type> ()));
 
-        for (size_t i = 0; i < NITEMS; ++i)
+        for (size_t i = 0; i < POSETS_SIMD_BM_ITEMS; ++i)
           set.insert (VType (random_vector<value_type> ()));
         sizes += set.size ();
         // stop clock
