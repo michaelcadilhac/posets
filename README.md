@@ -15,9 +15,19 @@ applications:
 * Antichain-based temporal synthesis (from LTL specifications)
 
 ## Compilation
-Due to our use of `std::experimental` we prefer `libstdc++` thus `g++`. Even on OSX, we
-recommend installing `g++` say via Homebrew. Set `CXX` to your newly installed `g++`
-before setting up the build with `meson`.
+The library requires `std::experimental::simd`, provided by GCC's `libstdc++`.
+On macOS, install Homebrew GCC rather than using Apple Clang's `libc++`:
+
+```sh
+brew install gcc@15 meson ninja
+CXX="$(brew --prefix gcc@15)/bin/g++-15" CXXFLAGS="-DDIMENSION=100" \
+  meson setup build --buildtype debug
+meson compile -C build -j1
+meson test -C build --no-rebuild --num-processes 1 --print-errorlogs
+```
+
+See [issue #1](https://github.com/michaelcadilhac/posets/issues/1) for the
+original macOS toolchain diagnosis.
 
 ## SIMD widths
 
@@ -33,7 +43,16 @@ For example, `-march=native` on AVX2 hardware or `-mavx2` selects 32-byte
 blocks for int8/int16/int32/int64; `-mavx512f -mavx512bw` selects 64-byte blocks.
 The default target without ISA flags may still use 16-byte blocks. There is no
 runtime CPU dispatch: compile for the machines on which the program will run.
-Use the same selector and target flags in every translation unit.
+All vectorization in the library goes through `std::experimental::simd`.
+
+**ABI/layout requirement:** block width and alignment follow the compilation
+target selected by compiler flags, not the build host. All translation units
+linking posets types must use the same `POSETS_SIMD_WIDTH` (or legacy selectors)
+and target flags. Mixing them can violate the One Definition Rule (ODR), change
+object layout and silently corrupt data. There is no general link-time guard:
+this header-only library has no compiled ABI anchor, and a lane count alone
+cannot detect every target-dependent layout difference. Keep these options in
+shared build settings, including for libraries that expose posets types.
 
 An explicit `POSETS_SIMD_WIDTH` overrides the documented legacy aliases:
 `SIMD_IS_NATIVE=1` selects native even with `SIMD_IS_MAX=1`; otherwise
@@ -51,12 +70,21 @@ single hardware register. Storage uses lane counts rather than assumed byte
 sizes, scalar input loads are element-aligned, and C++20 allocators/new respect
 SIMD over-alignment (including arrays of embedded SIMD objects).
 
-Standalone matrix tests retain `-march=native` by default. CI runs the complete
-suite natively and prints each mode's actual widths. Its separate Valgrind
-build sets `-Dtest_native_isa=false` and explicit x86-64/generic compiler flags;
-compatible/native/max then refer to that portable compiler target, not the host
-widths. This test-only option does not change library or benchmark defaults.
-Valgrind follows replay subprocesses; both lanes run the complete semantic suite.
+Standalone matrix tests add `-march=native` by default on x86; other targets
+keep the compiler's default target without extra ISA flags. This test-only
+option does not change library or benchmark defaults. CI runs independent
+Linux x86-64 and macOS arm64 jobs, each printing all three modes' metadata:
+
+* Linux retains the native matrix suite and the portable Valgrind suite (with
+  `-Dtest_native_isa=false` and `-march=x86-64 -mtune=generic`). Valgrind follows
+  replay subprocesses.
+* A separate Linux baseline suite uses `-Dtest_native_isa=false` with **no
+  `-march` or `-m` flags**, exercising 128-bit compatible/native blocks.
+* macOS arm64 uses Homebrew `gcc@15`, debug, `-DDIMENSION=100`, and default
+  test options. Compatible/native use 128-bit NEON blocks. Max mode uses GCC's
+  maximum fixed lane count and can span multiple hardware registers, including
+  on baseline x86. All tests, including POSIX allocation-failure sweeps, run on
+  macOS; no Valgrind or platform skips are needed.
 
 ## Citing
 If you use this library for your academic work, please cite the following paper

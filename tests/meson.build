@@ -107,12 +107,20 @@ test('antichains/sharing allocation failures', sharing_allocation_exe, env: shar
 
 # Keep the 14-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
+# GCC on Darwin/arm64 does not accept -march=native. Keep that flag on x86,
+# where it exercises wider registers; other targets use their compiler default.
+matrix_target_args = []
+if get_option('test_native_isa')
+  if host_machine.cpu_family() in ['x86', 'x86_64']
+    matrix_target_args = ['-march=native']
+  else
+    message('SIMD matrix uses the default compilation target (no extra ISA flags)')
+  endif
+endif
+
 foreach mode : ['compatible', 'native', 'max']
   matrix_args = ['-DPOSETS_MATRIX_ONLY',
-                 '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()]
-  if get_option('test_native_isa')
-    matrix_args += ['-march=native']
-  endif
+                 '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args
   matrix_exe = executable('downset-matrix-' + mode, 'downset-bm.cc',
                           dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/vector semantics/' + mode, matrix_exe,
@@ -158,10 +166,7 @@ legacy_modes = [
                                '-DSIMD_IS_MAX=1'], 'COMPATIBLE'],
 ]
 foreach mode : legacy_modes
-  mode_args = mode[1] + ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode[2]]
-  if get_option('test_native_isa')
-    mode_args += ['-march=native']
-  endif
+  mode_args = mode[1] + ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode[2]] + matrix_target_args
   width_exe = executable('simd-width-' + mode[0], 'simd-width-check.cc',
     dependencies: [posets_dep], cpp_args: mode_args)
   test('matrix/SIMD selector/' + mode[0], width_exe)

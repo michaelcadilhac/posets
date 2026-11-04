@@ -41,3 +41,57 @@ jobs:
         done
         # Trace children so the Python replay checks' C++ processes are covered.
         meson test -C build-valgrind --no-rebuild --num-processes 1 --timeout-multiplier 10 --print-errorlogs --wrap='valgrind --trace-children=yes --error-exitcode=18 --exit-on-first-error=yes'
+
+  baseline:
+    name: Linux x86-64 baseline (no ISA flags)
+    runs-on: ubuntu-24.04
+    env:
+      TMPDIR: ${{ github.workspace }}/build-tmp
+    steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v5
+      with:
+        submodules: recursive
+    - name: Install packages
+      run: |
+        mkdir -p "$TMPDIR"
+        sudo apt-get update
+        sudo apt-get -y install g++ meson ninja-build
+    - name: Build baseline without target flags
+      run: |
+        CXX=g++ CXXFLAGS="-DDIMENSION=100" meson setup build-baseline --buildtype debug -Dtest_native_isa=false
+        meson compile -C build-baseline -j1
+    - name: Report baseline widths and run the full suite
+      run: |
+        for mode in compatible native max; do
+          build-baseline/tests/downset-matrix-$mode --metadata
+        done
+        meson test -C build-baseline --no-rebuild --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+
+  macos-arm64:
+    name: macOS arm64 (GCC 15)
+    runs-on: macos-15
+    env:
+      TMPDIR: ${{ github.workspace }}/build-tmp
+    steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v5
+      with:
+        submodules: recursive
+    - name: Install GCC and build tools
+      run: |
+        mkdir -p "$TMPDIR"
+        test "$(uname -m)" = arm64
+        brew install gcc@15 meson ninja
+        echo "CXX=$(brew --prefix gcc@15)/bin/g++-15" >> "$GITHUB_ENV"
+    - name: Build with libstdc++ and default test options
+      run: |
+        "$CXX" --version
+        CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug
+        meson compile -C build -j1
+    - name: Report arm64 widths and run the full suite
+      run: |
+        for mode in compatible native max; do
+          build/tests/downset-matrix-$mode --metadata
+        done
+        meson test -C build --no-rebuild --num-processes 1 --timeout-multiplier 2 --print-errorlogs

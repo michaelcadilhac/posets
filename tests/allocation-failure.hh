@@ -1,6 +1,8 @@
 #pragma once
 
 // Keep hooks enabled under Memcheck with somalloc=nouserintercepts (tests/meson.build).
+// Standard replaceable C++ allocation functions plus POSIX posix_memalign work
+// on both Linux and macOS; these hooks do not use glibc internals or interposition.
 #include <cstdlib>
 #include <new>
 
