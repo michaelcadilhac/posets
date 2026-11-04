@@ -63,7 +63,7 @@ namespace posets::utils {
 
           size_t operator() (const st_node& k) const {
             size_t res = std::hash<typename V::value_type> () (k.label);
-            size_t* children = f->child_buffer + k.cbuffer_offset;
+            const size_t* children = f->child_buffer + k.cbuffer_offset;
             for (size_t i = 0; i < k.numchild; i++)
               res ^= std::hash<size_t> () (children[i]) << (i + 1);
             return res;
@@ -79,8 +79,8 @@ namespace posets::utils {
           bool operator() (const st_node& lhs, const st_node& rhs) const {
             if (lhs.label != rhs.label or lhs.numchild != rhs.numchild)
               return false;
-            size_t* lhs_children = f->child_buffer + lhs.cbuffer_offset;
-            size_t* rhs_children = f->child_buffer + rhs.cbuffer_offset;
+            const size_t* lhs_children = f->child_buffer + lhs.cbuffer_offset;
+            const size_t* rhs_children = f->child_buffer + rhs.cbuffer_offset;
             for (size_t i = 0; i < lhs.numchild; i++)
               if (lhs_children[i] != rhs_children[i])
                 return false;
@@ -170,8 +170,8 @@ namespace posets::utils {
         // If the node is in the last layer, we just check the labels
         if (layidx == this->dim)
           return n1.label >= n2.label;
-        size_t* n1_children = child_buffer + n1.cbuffer_offset;
-        size_t* n2_children = child_buffer + n2.cbuffer_offset;
+        const size_t* n1_children = child_buffer + n1.cbuffer_offset;
+        const size_t* n2_children = child_buffer + n2.cbuffer_offset;
         if (n1.label < n2.label or layers[layidx + 1][n1_children[0]].label <
                                        layers[layidx + 1][n2_children[n2.numchild - 1]].label) {
           // If the label of n1 is too small or its largest child is already smaller than n2's
@@ -242,8 +242,8 @@ namespace posets::utils {
             else {
               const st_node c1_node = layers[layidx + 1][n1_children[c1]];
               const st_node c2_node = layers[layidx + 1][n2_children[c2]];
-              size_t* c1_children = child_buffer + c1_node.cbuffer_offset;
-              size_t* c2_children = child_buffer + c2_node.cbuffer_offset;
+              const size_t* c1_children = child_buffer + c1_node.cbuffer_offset;
+              const size_t* c2_children = child_buffer + c2_node.cbuffer_offset;
               // In some cases, we can eliminate the subtree altogether
               const bool can_eliminate =
                   c1_node.label < c2_node.label or
@@ -350,7 +350,7 @@ namespace posets::utils {
       }
 
       void add_son_if_not_simulated (size_t node, size_t son_layer, st_node& father) {
-        size_t* siblings = child_buffer + father.cbuffer_offset;
+        const size_t* siblings = child_buffer + father.cbuffer_offset;
         for (size_t s = 0; s < father.numchild; s++)
           if (simulates (siblings[s], node, son_layer))
             return;
@@ -394,7 +394,7 @@ namespace posets::utils {
       }
 
       bool is_simulated (size_t nodeidx, st_node& father, size_t destination_layer) {
-        size_t* siblings = child_buffer + father.cbuffer_offset;
+        const size_t* siblings = child_buffer + father.cbuffer_offset;
         for (size_t s = 0; s < father.numchild; s++)
           if (simulates (siblings[s], nodeidx, destination_layer))
             return true;
@@ -468,8 +468,8 @@ namespace posets::utils {
             // necessary
           }
           else if (layer < this->dim) {
-            size_t* node_s_children = child_buffer + node_s.cbuffer_offset;
-            size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
+            const size_t* node_s_children = child_buffer + node_s.cbuffer_offset;
+            const size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
 
             // Case 1: One node is "done"
             // We add the existing node (including all its sons!) to the node
@@ -623,7 +623,7 @@ namespace posets::utils {
                   build_node (vecs, i, j, current_layer + 1, element_vec, check_sim);
               bool found = false;
               if (check_sim) {
-                size_t* current_children = child_buffer + new_node.cbuffer_offset;
+                const size_t* current_children = child_buffer + new_node.cbuffer_offset;
                 for (size_t s = 0; s < new_node.numchild; s++) {
                   if (simulates (current_children[s], new_son, current_layer + 1)) {
                     found = true;
@@ -665,7 +665,7 @@ namespace posets::utils {
 
         if (root) {
           const st_node& root_node = layers[0][root.value ()];
-          size_t* first_children = child_buffer + root_node.cbuffer_offset;
+          const size_t* first_children = child_buffer + root_node.cbuffer_offset;
           for (size_t c = 0; c < root_node.numchild; c++)
             get_all_stack.emplace_back (1, first_children[c], 0);
         }
@@ -695,7 +695,7 @@ namespace posets::utils {
           else {  // recursive case
             // Either we're done with this node and we just mark it as visited or
             // we need to keep it and we add it's next son
-            size_t* children = child_buffer + parent.cbuffer_offset;
+            const size_t* children = child_buffer + parent.cbuffer_offset;
             if (child < parent.numchild) {
               get_all_stack.emplace_back (lay, node, child + 1);
               get_all_stack.emplace_back (lay + 1, children[child], 0);
@@ -806,8 +806,8 @@ namespace posets::utils {
         // We are ready to start a stack-simulated DFS of the synchronized-product
         // of the trees
         assert (root_nod_e1.numchild > 0 and root_nod_e2.numchild > 0);
-        size_t* root1_children = child_buffer + root_nod_e1.cbuffer_offset;
-        size_t* root2_children = child_buffer + root_nod_e2.cbuffer_offset;
+        const size_t* root1_children = child_buffer + root_nod_e1.cbuffer_offset;
+        const size_t* root2_children = child_buffer + root_nod_e2.cbuffer_offset;
         for (size_t c_1 = 1; c_1 <= root_nod_e1.numchild; c_1++) {
           for (size_t c_2 = 1; c_2 <= root_nod_e2.numchild; c_2++) {
             st_intersect_stack.push_back ({root1_children[root_nod_e1.numchild - c_1], 0,
@@ -862,8 +862,8 @@ namespace posets::utils {
             // level and to go deeper in the tree if needed
           }
           else if (layer < this->dim) {
-            size_t* node_s_children = child_buffer + node_s.cbuffer_offset;
-            size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
+            const size_t* node_s_children = child_buffer + node_s.cbuffer_offset;
+            const size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
 
             if (c_t < node_t.numchild)
               st_intersect_stack.emplace_back (n_s, c_s, n_t, c_t + 1, layer);
@@ -903,7 +903,7 @@ namespace posets::utils {
         // Add all roots at dimension 0 such that their labels cover the first
         // component of the given vector
         const st_node& root_node = layers[0][root];
-        size_t* root_children = child_buffer + root_node.cbuffer_offset;
+        const size_t* root_children = child_buffer + root_node.cbuffer_offset;
         for (size_t i = 0; i < root_node.numchild; i++) {
           assert (root_children[i] < layers[1].size ());
           if (covered[0] <= layers[1][root_children[i]].label) {
@@ -953,7 +953,7 @@ namespace posets::utils {
             // Either we're done with this node and we just mark it as visited or
             // we need to keep it and we add it's next son
             assert (child < parent.numchild);
-            size_t* children = child_buffer + parent.cbuffer_offset;
+            const size_t* children = child_buffer + parent.cbuffer_offset;
             const size_t c = child;
             auto child_node = layers[lay + 1][children[c]];
             // early exit if the largest child is smaller

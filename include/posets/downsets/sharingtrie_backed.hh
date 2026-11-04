@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/reduce.hh>
 #include <posets/utils/sharingtrie.hh>
 
@@ -17,7 +18,6 @@ namespace posets::downsets {
   template <Vector V>
   std::ostream& operator<< (std::ostream& os, const sharingtrie_backed<V>& f);
 
-  // Finally the actual class definition
   template <Vector V>
   class sharingtrie_backed {
     private:
@@ -31,10 +31,10 @@ namespace posets::downsets {
           V&& operator() (V*&& pv) { return std::move (*pv); }
       };
 
-      void reset_trie (std::vector<V>&& elements) noexcept {
+      void reset_trie (std::vector<V>&& elements) {
         auto antichain = utils::reduce_to_maxima (std::move (elements));
+        assert (utils::is_antichain (antichain));
         this->trie.relabel_trie (std::move (antichain));
-        assert (this->trie.is_antichain ());
       }
 
     public:
@@ -42,9 +42,7 @@ namespace posets::downsets {
 
       sharingtrie_backed () = delete;
 
-      sharingtrie_backed (std::vector<V>&& elements) noexcept {
-        reset_trie (std::move (elements));
-      }
+      sharingtrie_backed (std::vector<V>&& elements) { reset_trie (std::move (elements)); }
 
       sharingtrie_backed (V&& e) : trie (std::array<V, 1> {std::move (e)}) {}
 
@@ -67,9 +65,11 @@ namespace posets::downsets {
 
       [[nodiscard]] bool contains (const V& v) const { return this->trie.dominates (v); }
 
+      // Union/intersection provide the strong guarantee for both operands:
+      // build and allocate before publishing or moving any aliased generators.
       // Union in place
       void union_with (sharingtrie_backed&& other) {
-        if (other.size () == 0)
+        if (this == &other or other.size () == 0)
           return;
         if (this->size () == 0) {
           this->trie = std::move (other.trie);
@@ -100,13 +100,15 @@ namespace posets::downsets {
 
         // ready to rebuild the tree now
         assert (not result.empty ());
+        // Even debug validation can throw for a user-defined Vector. Do it
+        // while projected sources still belong to the unchanged operands.
+        assert (utils::is_antichain (result, proj ()));
         this->trie.relabel_trie (std::move (result), proj ());
-        assert (this->trie.is_antichain ());
       }
 
       // Intersection in place
       void intersect_with (const sharingtrie_backed& other) {
-        if (this->size () == 0)
+        if (this == &other or this->size () == 0)
           return;
         if (other.size () == 0) {
           reset_trie (std::vector<V> {});
@@ -131,12 +133,12 @@ namespace posets::downsets {
               intersection.push_back (x.meet (y));
 
           // If x wasn't in the set of meets, dominated is false and
-          // the set of minima is different than what is in this->trie
+          // the set of maxima is different than what is in this->trie
           smaller_set or_eq not dominated;
         }
 
         // We can skip building trees and all if this->trie is the antichain
-        // of minimal elements
+        // of maximal elements
         if (not smaller_set)
           return;
 

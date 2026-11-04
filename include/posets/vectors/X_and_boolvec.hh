@@ -16,7 +16,11 @@ namespace posets::vectors {
     public:
       using value_type = typename X::value_type;
 
-      x_and_boolvec (size_t k) : k {k}, x {std::min (bool_threshold, k)}, sum {0} {}
+      x_and_boolvec (size_t k)
+        : k {k},
+          x {std::min (bool_threshold, k)},
+          bools (k - std::min (bool_threshold, k), false),
+          sum {0} {}
 
       x_and_boolvec (std::span<const value_type> v)
         : k {v.size ()},
@@ -61,12 +65,21 @@ namespace posets::vectors {
         return x_and_boolvec (k, x.copy (), std::move (b), sum);
       }
 
-      x_and_boolvec& operator= (x_and_boolvec&& other) = default;
+      x_and_boolvec& operator= (x_and_boolvec&& other) noexcept (
+          std::is_nothrow_move_assignable_v<X>) {
+        if (this != &other) {
+          k = other.k;
+          x = std::move (other.x);
+          bools = std::move (other.bools);
+          sum = other.sum;
+        }
+        return *this;
+      }
 
       x_and_boolvec& operator= (const x_and_boolvec& other) = delete;
 
       void to_vector (std::span<value_type> v) const {
-        x.to_vector (std::span (v.data (), bool_threshold));
+        x.to_vector (std::span (v.data (), std::min (bool_threshold, k)));
         for (size_t i = bool_threshold; i < k; ++i)
           v[i] = static_cast<int> (bools[i - bool_threshold]) - 1;
       }

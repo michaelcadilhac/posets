@@ -1,3 +1,4 @@
+#include "allocation-failure.hh"
 #include <type_traits>
 
 #include <algorithm>
@@ -11,44 +12,6 @@
 
 #include <posets/downsets/sharingtree_backed.hh>
 #include <posets/vectors.hh>
-
-namespace {
-  long allocations_left = -1;
-}
-
-void* operator new (std::size_t bytes) {
-  if (allocations_left == 0)
-    throw std::bad_alloc ();
-  if (allocations_left > 0)
-    --allocations_left;
-  if (void* memory = std::malloc (bytes ? bytes : 1))
-    return memory;
-  throw std::bad_alloc ();
-}
-
-void* operator new[] (std::size_t bytes) { return ::operator new (bytes); }
-void* operator new (std::size_t bytes, const std::nothrow_t&) noexcept {
-  try {
-    return ::operator new (bytes);
-  } catch (...) {
-    return nullptr;
-  }
-}
-void* operator new[] (std::size_t bytes, const std::nothrow_t&) noexcept {
-  try {
-    return ::operator new[] (bytes);
-  } catch (...) {
-    return nullptr;
-  }
-}
-void operator delete (void* memory) noexcept { std::free (memory); }
-void operator delete[] (void* memory) noexcept { std::free (memory); }
-void operator delete (void* memory, std::size_t) noexcept { std::free (memory); }
-void operator delete[] (void* memory, std::size_t) noexcept { std::free (memory); }
-void operator delete (void* memory, const std::nothrow_t&) noexcept { ::operator delete (memory); }
-void operator delete[] (void* memory, const std::nothrow_t&) noexcept {
-  ::operator delete[] (memory);
-}
 
 namespace {
   using row = std::vector<std::int8_t>;

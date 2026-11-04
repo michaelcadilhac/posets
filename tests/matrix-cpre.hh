@@ -1,6 +1,7 @@
 #pragma once
 
 #include "matrix-check.hh"
+#include <type_traits>
 
 #include <charconv>
 #include <chrono>
@@ -9,9 +10,9 @@
 #include <filesystem>
 #include <fstream>
 #include <map>
-#include <optional>
 #include <sstream>
 #include <tuple>
+#include <utility>
 
 namespace matrix_cpre {
   using matrix_check::logical;
@@ -117,8 +118,8 @@ namespace matrix_cpre {
       size_t bin = 0;
       for (const auto mark : {16, 64, 256, 1024, 4096, 16384})
         bin += size_t (header.at ("maxima") >= mark);
-      require (header.at ("loop") >= 0 and header.at ("bin") == int64_t (bin) and ordinal > 0 and
-                   hits >= 0 and hits <= ordinal and
+      require (header.at ("loop") >= 0 and std::cmp_equal (header.at ("bin"), bin) and
+                   ordinal > 0 and hits >= 0 and hits <= ordinal and
                    (result.expected_answer ? hits > 0 : hits < ordinal),
                "inconsistent query ordinal/bin/hits");
       require (bool (std::getline (input, line)) and line == "[query]", "missing query section");
@@ -273,31 +274,39 @@ namespace matrix_cpre {
     const auto timed = [&] (const std::string& key, auto work) {
       if (verify_only or
           (not detail and (key == "apply" or key == "union" or key == "intersection"))) {
-        work ();
-        return;
+        return work ();
       }
       const auto wall = std::chrono::steady_clock::now ();
       const auto cpu = std::clock ();
       CALLGRIND_START_INSTRUMENTATION;
-      work ();
-      CALLGRIND_STOP_INSTRUMENTATION;
-      const auto wall_end = std::chrono::steady_clock::now ();
-      const auto cpu_end = std::clock ();
-      result[key] += std::chrono::duration<double> (wall_end - wall).count ();
-      result[key + "_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
+      const auto finish = [&] {
+        CALLGRIND_STOP_INSTRUMENTATION;
+        const auto wall_end = std::chrono::steady_clock::now ();
+        const auto cpu_end = std::clock ();
+        result[key] += std::chrono::duration<double> (wall_end - wall).count ();
+        result[key + "_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
+      };
+      if constexpr (std::is_void_v<decltype (work ())>) {
+        work ();
+        finish ();
+      }
+      else {
+        auto produced = work ();
+        finish ();
+        return produced;
+      }
     };
     require (rounds > 0, "zero replay rounds");
     if (input.membership) {
       for (size_t round = 0; round < rounds; ++round) {
-        std::optional<S> region;
-        timed ("build", [&] { region.emplace (matrix_check::build<S> (input.before)); });
+        auto region = timed ("build", [&] { return matrix_check::build<S> (input.before); });
         const auto query = matrix_check::vector<vector_type> (input.query);
         bool answer = false;
-        timed ("contains", [&] { answer = region->contains (query); });
+        timed ("contains", [&] { answer = region.contains (query); });
         require (answer == input.expected_answer,
                  "backend contains answer disagrees with source/scalar oracle");
-        std::optional<S> rebuilt;
-        timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.before)); });
+        [[maybe_unused]] auto rebuilt =
+            timed ("rebuild", [&] { return matrix_check::build<S> (input.before); });
       }
       if (not verify_only) {
         result["rounds"] = double (rounds);
@@ -317,8 +326,7 @@ namespace matrix_cpre {
     require (expected.size () == input.after.size (), "duplicate source maxima");
 
     for (size_t round = 0; round < rounds; ++round) {
-      std::optional<S> frontier;
-      timed ("build", [&] { frontier.emplace (matrix_check::build<S> (input.before)); });
+      auto frontier = timed ("build", [&] { return matrix_check::build<S> (input.before); });
       std::chrono::steady_clock::time_point start;
       std::clock_t cpu = 0;
       if (not verify_only) {
@@ -332,13 +340,11 @@ namespace matrix_cpre {
         // with the first mapped set. Include its construction and all CPre
         // temporary destructors, as the production scoped timer does.
         posets::utils::vector_mm<typename vector_type::value_type> bottom (input.dimension, -1);
-        std::optional<S> combined;
-        combined.emplace (vector_type (bottom));
+        S combined {vector_type (bottom)};
         bool first = true;
         for (const auto& edges : input.actions) {
-          std::optional<S> mapped;
-          timed ("apply", [&] {
-            mapped.emplace (frontier->apply ([&] (const vector_type& value) {
+          auto mapped = timed ("apply", [&] {
+            return frontier.apply ([&] (const vector_type& value) {
               // Match the production actioner's retained reset/output scratch;
               // do not add an unpack/allocation per maximum to the measured map.
               image = reset;
@@ -347,16 +353,16 @@ namespace matrix_cpre {
                   image[source] = std::min (int (image[source]),
                                             std::max (-1, int (value[destination]) - increment));
               return vector_type (std::span<const typename vector_type::value_type> (image));
-            }));
+            });
           });
           if (first) {
             combined = std::move (mapped);
             first = false;
           }
           else
-            timed ("union", [&] { combined->union_with (std::move (*mapped)); });
+            timed ("union", [&] { combined.union_with (std::move (mapped)); });
         }
-        timed ("intersection", [&] { frontier->intersect_with (std::move (*combined)); });
+        timed ("intersection", [&] { frontier.intersect_with (std::move (combined)); });
       }
       if (not verify_only) {
         if (not detail)
@@ -367,10 +373,7 @@ namespace matrix_cpre {
         result["cpre_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
       }
       std::set<logical> actual;
-      const auto& checked_frontier = frontier;
-      if (not checked_frontier.has_value ())
-        throw std::runtime_error ("missing replay frontier");
-      const auto& completed = checked_frontier.value ();
+      const auto& completed = frontier;
       for (const auto& value : completed)
         require (actual.insert (matrix_check::unpack (value)).second, "duplicate replay maximum");
       require (actual == expected and completed.size () == expected.size (),
@@ -384,8 +387,8 @@ namespace matrix_cpre {
                              input.after,
                              [&] (const auto& v) { return matrix_check::below (initial, v); }),
                "replayed initial-state membership disagrees with scalar oracle");
-      std::optional<S> rebuilt;
-      timed ("rebuild", [&] { rebuilt.emplace (matrix_check::build<S> (input.after)); });
+      [[maybe_unused]] auto rebuilt =
+          timed ("rebuild", [&] { return matrix_check::build<S> (input.after); });
     }
     if (not verify_only) {
       result["rounds"] = double (rounds);

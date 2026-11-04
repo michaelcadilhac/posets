@@ -81,7 +81,17 @@ namespace posets::vectors {
         return x_and_wordvec (k, bool_count, x.copy (), std::move (b), sum);
       }
 
-      x_and_wordvec& operator= (x_and_wordvec&& other) = default;
+      x_and_wordvec& operator= (x_and_wordvec&& other) noexcept (
+          std::is_nothrow_move_assignable_v<X>) {
+        if (this != &other) {
+          k = other.k;
+          x = std::move (other.x);
+          bools = std::move (other.bools);
+          sum = other.sum;
+          bool_count = other.bool_count;
+        }
+        return *this;
+      }
 
       x_and_wordvec& operator= (const x_and_wordvec& other) = delete;
 
@@ -257,7 +267,7 @@ namespace posets::vectors {
       static constexpr size_t bits_per_word = 64;
 
       [[nodiscard]] static constexpr size_t words_for (size_t bits) {
-        return bits / bits_per_word + static_cast<size_t> (bits % bits_per_word != 0);
+        return (bits / bits_per_word) + static_cast<size_t> (bits % bits_per_word != 0);
       }
 
       [[nodiscard]] static constexpr size_t word_for (size_t bit) { return bit / bits_per_word; }

@@ -9,6 +9,7 @@
 #include <cassert>
 #include <span>
 #include <memory>
+#include <new>
 #include <ostream>
 #include <set>
 #include <vector>
@@ -439,7 +440,7 @@ namespace {
 }
 
 // NOLINTBEGIN(bugprone-exception-escape)
-int main (int argc, char* argv[]) {
+int main (int argc, char* argv[]) try {
   const char* prog = argv[0];
 
   register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
@@ -465,6 +466,8 @@ int main (int argc, char* argv[]) {
                   << ",\"native_lanes\":" << std::experimental::simd_size_v<test_value_type,
                        std::experimental::simd_abi::native<test_value_type>>
                   << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
+                  << ",\"block_bytes\":" << sizeof (typename traits::fssimd)
+                  << ",\"width_selector\":" << POSETS_SIMD_WIDTH
                   << ",\"alignment\":" << traits::memory_alignment_v
 #ifdef NDEBUG
                   << ",\"ndebug\":true"
@@ -587,5 +590,12 @@ int main (int argc, char* argv[]) {
       std::cout << "  - " << test.first << ": " << test.second << "\n";
   }
   return 0;
+} catch (const std::bad_alloc& error) {
+  // A resource failure must not count as successful malformed-input rejection.
+  std::cerr << "allocation failure: " << error.what () << '\n';
+  return 2;
+} catch (const std::exception& error) {
+  std::cerr << "error: " << error.what () << '\n';
+  return 1;
 }
 // NOLINTEND(bugprone-exception-escape)

@@ -1,16 +1,22 @@
 #pragma once
 
+#include <type_traits>
 #include <unordered_map>
 
 #include <algorithm>
 #include <boost/functional/hash.hpp>
 #include <cassert>
 #include <iostream>
+#include <limits>
+#include <memory>
 #include <ranges>
+#include <stdexcept>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 
 namespace posets::utils {
 
@@ -40,25 +46,24 @@ namespace posets::utils {
           int son;
           int bro;
       };
-      st_node* bin_tree;
-      size_t bt_size {0};
+      // Runtime-sized storage, initialized by build_nodes rather than zero-filled.
+      using node_array = st_node[];  // NOLINT(modernize-avoid-c-arrays)
+      std::unique_ptr<node_array> bin_tree;
       std::vector<V> vector_set;
 
-      // Generation-stamp cache for dominates(): avoids allocating hash sets on
-      // every call.  After color_as_dfa() runs, dominates_stamp has size
-      // dim * (nxt_color * 2); entry [depth * nxt_color*2 + strict_color] holds
-      // the generation when that (depth, strict_color) pair was last seen.
-      // dominates() bumps dominates_gen on entry; on the rare unsigned wrap to 0
-      // the stamp array is cleared and the generation restarted at 1.
-      int nxt_color {0};
+      // Colors are globally unique across layers, so (color, strictness)
+      // already identifies a query state without a redundant depth dimension.
+      // Each entry holds the last generation that visited it. Unsigned wrap
+      // clears the table before restarting at generation 1.
       mutable std::vector<unsigned> dominates_stamp;
       mutable unsigned dominates_gen {0};
       mutable std::vector<std::tuple<int, short, bool>> dominates_stack;
 
       // We need to compare subtrees (assuming the trie construction
       // has been applied)
-      struct intvec_hash {
-          std::size_t operator() (const std::vector<int>& v) const {
+      using signature_type = std::vector<std::common_type_t<typename V::value_type, int>>;
+      struct signature_hash {
+          std::size_t operator() (const signature_type& v) const {
             return boost::hash_range (v.begin (), v.end ());
           }
       };
@@ -67,17 +72,17 @@ namespace posets::utils {
       // so that they form a single set of siblings
       void string_children (const std::vector<int>& nodes, size_t start, size_t end) {
         // we fetch the first sibling, if there is one
-        st_node* cur = this->bin_tree + nodes[start];
+        const st_node* cur = this->bin_tree.get () + nodes[start];
         if (cur->son == -1)
           return;
-        st_node* last = this->bin_tree + cur->son;
+        st_node* last = this->bin_tree.get () + cur->son;
         // now, for all remaining nodes we
         // (1) get to the last sibling
         // (2) link to the next first sibling and
         for (size_t i = start + 1; i < end; i++) {
           while (last->bro > -1)
-            last = this->bin_tree + last->bro;
-          cur = this->bin_tree + nodes[i];
+            last = this->bin_tree.get () + last->bro;
+          cur = this->bin_tree.get () + nodes[i];
           assert (cur->son > -1);
           last->bro = cur->son;
         }
@@ -102,7 +107,7 @@ namespace posets::utils {
             // we are going down, so look for a son and push it into the
             // stack; before that, we also push back the current node but in
             // mode=right so that when we come back we move to its sibling
-            st_node* cur = this->bin_tree + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             if (cur->son > -1) {
               to_visit.emplace_back (idx, 2);
               to_visit.emplace_back (cur->son, 0);
@@ -111,7 +116,7 @@ namespace posets::utils {
           else if (mode == 2) {
             // we are going right, so look for a sibling and push it into the
             // stack in mode=down
-            st_node* cur = this->bin_tree + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             if (cur->bro > -1)
               to_visit.emplace_back (cur->bro, 1);
           }
@@ -141,7 +146,7 @@ namespace posets::utils {
                 head = sibs[i];
               else
                 prev->bro = sibs[i];
-              prev = this->bin_tree + sibs[i];
+              prev = this->bin_tree.get () + sibs[i];
               i = j;
             }
             prev->bro = -1;
@@ -149,7 +154,7 @@ namespace posets::utils {
             if (not to_visit.empty ()) {
               const auto [idx_parent, mode_parent] = to_visit.back ();
               assert (mode_parent == 2);  // went down already, next time right
-              st_node* parent = this->bin_tree + idx_parent;
+              st_node* parent = this->bin_tree.get () + idx_parent;
               parent->son = head;
             }
             else
@@ -176,7 +181,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // base case: reached the bottom layer
           if (cur->son == -1) {
@@ -210,92 +215,58 @@ namespace posets::utils {
           }
         }
 
-        // Now, per layer (in bottom-up fashion) we use a hash table to assign
-        // "colors" to the nodes based on their label and the colors of their
-        // children. Both the key vector and the map are hoisted out of the
-        // inner loop to reuse their heap allocations across iterations.
+        // Color equal suffix languages bottom-up. Assign each color at its
+        // first signature, avoiding a separate vector of indices per class.
+        // Reuse signature scratch and hash buckets between layers.
         int nxt_color = 0;
-        std::vector<int> k;
-        std::unordered_map<std::vector<int>, std::vector<int>, intvec_hash> colors2indices;
+        signature_type k;
+        std::unordered_map<signature_type, int, signature_hash> colors;
         for (int i = this->dim - 1; i >= 0; i--) {
-          colors2indices.clear ();
+          colors.clear ();
           for (const int idx : layer[i]) {
-            st_node* cur = this->bin_tree + idx;
+            const st_node* cur = this->bin_tree.get () + idx;
             k.clear ();
             k.push_back (cur->label);
             int son_idx = cur->son;
             while (son_idx > -1) {
-              cur = this->bin_tree + son_idx;
+              cur = this->bin_tree.get () + son_idx;
               k.push_back (cur->color);
               son_idx = cur->bro;
             }
-            colors2indices[k].push_back (idx);
-          }
-          // Every node in this layer is ready to get its equivalence-class
-          // color
-          for (const auto& [key, idces] : colors2indices) {
-            for (const int idx : idces) {
-              st_node* cur = this->bin_tree + idx;
-              cur->color = nxt_color;
-            }
-            nxt_color += 1;
+            const auto [entry, inserted] = colors.try_emplace (k, nxt_color);
+            this->bin_tree[idx].color = entry->second;
+            nxt_color += static_cast<int> (inserted);
           }
         }
         // Set up the generation-stamp cache and DFS stack for dominates()
-        this->nxt_color = nxt_color;
-        this->dominates_stamp.assign (this->dim * (static_cast<size_t> (nxt_color) * 2), 0U);
+        this->dominates_stamp.assign (static_cast<size_t> (nxt_color) * 2, 0U);
         this->dominates_gen = 0U;
         this->dominates_stack.reserve (this->dim);
       }
 
-    public:
-      template <std::ranges::input_range R, class Proj = std::identity>
-      void relabel_trie (R&& elements, Proj proj = {}) {
-        if (elements.empty ()) {
-          this->dim = 0;
-          this->root = -1;
-          this->vector_set.clear ();
-          this->nxt_color = 0;
-          this->dominates_stamp.clear ();
-          this->dominates_gen = 0U;
-          this->dominates_stack.clear ();
+      // Build only unpublished state. Values stay untouched until all node,
+      // coloring and query-cache allocations have succeeded.
+      template <class R, class Proj>
+      void build_nodes (const R& elements, Proj proj) {
+        if (elements.empty ())
           return;
-        }
-
-        this->dim = (proj (*elements.begin ()).size ());
-
-        // sanity checks
-        assert (elements.size () > 0);
+        this->dim = proj (*elements.begin ()).size ();
         assert (this->dim > 0);
-
-        // allocating memory
-        if (this->bin_tree == nullptr) {
-          this->bt_size = this->dim * elements.size ();
-          this->bin_tree = new st_node[bt_size];
-        }
-        else if (this->bt_size < this->dim * elements.size ()) {
-          delete[] this->bin_tree;
-          this->bt_size = this->dim * elements.size ();
-          this->bin_tree = new st_node[bt_size];
-        }
-
+        // Node links use int indices. Check before multiplying or allocating.
+        if (this->dim > static_cast<size_t> (std::numeric_limits<int>::max ()) / elements.size ())
+          throw std::length_error ("sharingtrie node index capacity exceeded");
+        this->bin_tree = std::make_unique_for_overwrite<node_array> (this->dim * elements.size ());
         this->root = 0;
-
-        // moving the given elements to the internal data structure
-        std::vector<V> newset;
-        newset.reserve (elements.size ());
-        for (auto&& e : elements | std::views::reverse)
-          newset.push_back (proj (std::move (e)));
-        this->vector_set = std::move (newset);
-        // WARNING: avoid using elements from here onward
 
         // creating linear trees with their roots being siblings
         int idx = 0;
         st_node* prev_root = nullptr;
-        for (const auto& e : this->vector_set) {
+        for (const auto& element : elements) {
+          const auto& e = proj (element);
+          assert (e.size () == this->dim);
           bool first_comp = true;
           st_node* prev_node;
-          st_node* cur_node = this->bin_tree + idx;
+          st_node* cur_node = this->bin_tree.get () + idx;
           for (size_t c = 0; c < e.size (); c++) {
             cur_node->label = e[c];
             cur_node->bro = -1;
@@ -310,7 +281,7 @@ namespace posets::utils {
               prev_root = cur_node;
               first_comp = false;
             }
-            else  // there is a previous component, so we make this one its sibling
+            else  // Link consecutive components as parent and child.
               prev_node->son = idx;
             prev_node = cur_node;
             idx += 1;
@@ -322,54 +293,72 @@ namespace posets::utils {
         // decreasing label order)
         this->to_trie ();
 
-        // finally, we proceed bottom-up to merge language equivalent nodes
+        // Color equivalent suffix languages and prepare the query caches.
         this->color_as_dfa ();
       }
 
+    public:
+      // Strong guarantee for this trie, including aliased projected values.
+      // Projection must only select values, without modifying them. External
+      // inputs are moved only after every potentially throwing build step; for
+      // throwing vector moves (or value-returning projections) we use copy().
       template <std::ranges::input_range R, class Proj = std::identity>
-      sharingtrie (R&& elements, Proj proj = {}) : bin_tree (nullptr) {
+      void relabel_trie (R&& elements, Proj proj = {}) {
+        sharingtrie replacement;
+        replacement.vector_set.reserve (elements.size ());
+        using projected_type =
+            std::invoke_result_t<Proj&, std::ranges::range_rvalue_reference_t<R>>;
+        if constexpr (std::is_same_v<projected_type, V&&> and
+                      std::is_nothrow_move_constructible_v<V>) {
+          // Resolve all projections before moving any values. This also makes
+          // late projection/traversal failures safe when sources alias *this.
+          std::vector<V*> sources;
+          sources.reserve (elements.size ());
+          for (auto&& e : elements | std::views::reverse) {
+            auto&& value = proj (std::move (e));
+            sources.push_back (std::addressof (value));
+          }
+          replacement.build_nodes (sources, [] (const V* value) -> const V& { return *value; });
+          for (auto* value : sources)
+            replacement.vector_set.push_back (std::move (*value));
+        }
+        else {
+          for (auto&& e : elements | std::views::reverse)
+            replacement.vector_set.push_back (proj (std::move (e)).copy ());
+          replacement.build_nodes (replacement.vector_set, std::identity {});
+        }
+        swap (replacement);
+      }
+
+      template <std::ranges::input_range R, class Proj = std::identity>
+      sharingtrie (R&& elements, Proj proj = {}) {
         relabel_trie (std::forward<R> (elements), proj);
       }
 
-      sharingtrie () : bin_tree (nullptr) {}
-      sharingtrie (size_t dim) : dim (dim), bin_tree (nullptr) {}
-      sharingtrie (size_t dim, size_t initsize) : dim (dim) {
-        this->bin_tree = new st_node[initsize];
-      }
-      sharingtrie (const sharingtrie& other) = delete;
-      sharingtrie (sharingtrie&& other) noexcept
-        : dim (other.dim),
-          root (other.root),
-          bin_tree (other.bin_tree),
-          bt_size (other.bt_size),
-          vector_set (std::move (other.vector_set)),
-          nxt_color (other.nxt_color),
-          dominates_stamp (std::move (other.dominates_stamp)),
-          dominates_gen (other.dominates_gen),
-          dominates_stack (std::move (other.dominates_stack)) {
-        other.bin_tree = nullptr;
-      }
-      ~sharingtrie () { delete[] this->bin_tree; }
+      sharingtrie () = default;
+      sharingtrie (size_t dim) : dim (dim) {}
+      sharingtrie (size_t dim, size_t initsize)
+        : dim (dim),
+          bin_tree (std::make_unique_for_overwrite<node_array> (initsize)) {}
+      sharingtrie (const sharingtrie&) = delete;
+      sharingtrie (sharingtrie&& other) noexcept { swap (other); }
       sharingtrie& operator= (sharingtrie&& other) noexcept {
-        this->dim = other.dim;
-        this->root = other.root;
-        this->bt_size = other.bt_size;
-        this->vector_set = std::move (other.vector_set);
-        this->nxt_color = other.nxt_color;
-        this->dominates_stamp = std::move (other.dominates_stamp);
-        this->dominates_gen = other.dominates_gen;
-        this->dominates_stack = std::move (other.dominates_stack);
-        // WARNING: 3 variable follows to make the whole thing safe for
-        // self-assignment
-        st_node* temp_tree = other.bin_tree;
-        other.bin_tree = nullptr;
-        // NOTE: this must be here, after having a local copy of the other
-        // tree and before moving it to here, because of self-assignment
-        // safety!
-        delete[] this->bin_tree;
-        // we now copy things here and return
-        this->bin_tree = temp_tree;
+        if (this != &other) {
+          sharingtrie replacement (std::move (other));
+          swap (replacement);
+        }
         return *this;
+      }
+
+      void swap (sharingtrie& other) noexcept {
+        using std::swap;
+        swap (dim, other.dim);
+        swap (root, other.root);
+        swap (bin_tree, other.bin_tree);
+        swap (vector_set, other.vector_set);
+        swap (dominates_stamp, other.dominates_stamp);
+        swap (dominates_gen, other.dominates_gen);
+        swap (dominates_stack, other.dominates_stack);
       }
 
       // Check, for a given vector, whether some vector in this sharingtrie
@@ -382,7 +371,7 @@ namespace posets::utils {
 
         // This is essentially going to be a DFS where we check for domination
         // at each level/dimension and stopping when it does not hold (recall
-        // we have ordered things in increasing fashion, so no need to look at
+        // we have ordered labels in decreasing fashion, so no need to look at
         // the right subtrees afterwards). To speed things up, we keep track
         // of visited colors and strictness per level.
 
@@ -392,7 +381,6 @@ namespace posets::utils {
           std::ranges::fill (this->dominates_stamp.begin (), this->dominates_stamp.end (), 0U);
           ++this->dominates_gen;
         }
-        const int sc_stride = this->nxt_color * 2;
 
         // DFS: reuse the member stack (capacity already reserved to dim).
         auto& to_visit = this->dominates_stack;
@@ -404,7 +392,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction, loc_strict] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // if we're already going right, we need to push its
           // sibling and start by going down from there with the same local
@@ -441,9 +429,9 @@ namespace posets::utils {
               // before actually checking this subtree, we check if we've
               // visited an equivalent one (using the generation-stamp cache)
               // and otherwise mark it for the future; skipping = go to sibling
-              const int strict_color = (cur->color << 1) + (new_strict ? 1 : 0);
-              const size_t depth = to_visit.size ();
-              unsigned& stamp = this->dominates_stamp[(depth * sc_stride) + strict_color];
+              const size_t strict_color =
+                  (static_cast<size_t> (cur->color) * 2) + static_cast<size_t> (new_strict);
+              unsigned& stamp = this->dominates_stamp[strict_color];
               if (stamp == this->dominates_gen) {
                 if (cur->bro > -1)
                   to_visit.emplace_back (cur->bro, 0, loc_strict);
@@ -476,7 +464,7 @@ namespace posets::utils {
           assert (to_visit.size () <= this->dim);
           const auto [idx, direction] = to_visit.back ();
           to_visit.pop_back ();
-          st_node* cur = this->bin_tree + idx;
+          const st_node* cur = this->bin_tree.get () + idx;
 
           // base case: reached the bottom layer
           if (cur->son == -1) {
@@ -518,16 +506,7 @@ namespace posets::utils {
 
       [[nodiscard]] auto& get_backing_vector () { return vector_set; }
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = this->begin (); it != this->end (); ++it) {
-          for (auto it2 = it + 1; it2 != this->end (); ++it2) {
-            auto po = it->partial_order (*it2);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
       [[nodiscard]] bool operator== (const sharingtrie& other) const {
         return this->vector_set == other.vector_set;
       }

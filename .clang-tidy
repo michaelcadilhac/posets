@@ -1,5 +1,6 @@
 # -*- yaml -*-
 --- 
+# Keep the established pragma-once header policy with newer clang-tidy versions.
 Checks: >
   -*,
   abseil-*,
@@ -17,6 +18,7 @@ Checks: >
   performance-*,
   readability-*,
   portability-*,
+  -portability-avoid-pragma-once,
   -readability-magic-numbers,
   -readability-braces-around-statements,
   -readability-inconsistent-declaration-parameter-name,

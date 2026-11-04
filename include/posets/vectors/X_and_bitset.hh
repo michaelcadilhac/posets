@@ -72,7 +72,7 @@ namespace posets::vectors {
       x_and_bitset& operator= (const x_and_bitset& other) = delete;
 
       void to_vector (std::span<value_type> v) const {
-        x.to_vector (std::span (v.data (), bitset_threshold));
+        x.to_vector (std::span (v.data (), std::min (bitset_threshold, k)));
         for (size_t i = bitset_threshold; i < k; ++i)
           v[i] = bools[i - bitset_threshold] - 1;
       }

@@ -1,2 +1,2 @@
 option('test_native_isa', type: 'boolean', value: true,
-       description: 'Compile SIMD matrix tests for the host ISA; disable for portable instrumentation builds')
+       description: 'Add -march=native to x86 SIMD matrix tests; other targets keep compiler defaults. Disable for baseline/instrumentation builds')

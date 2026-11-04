@@ -4,7 +4,6 @@
 import json
 from pathlib import Path
 import resource
-import signal
 import subprocess
 import sys
 import tempfile
@@ -18,9 +17,9 @@ def run(binary, path, backend="vector_backed", vector="simd_vector_backed", ok=T
     command = [binary, "--trace", str(path), "--check=" + ("trace-source" if source else "trace"),
                backend, vector + "<test_value_type>"]
     result = subprocess.run(command, capture_output=True, text=True, timeout=10, preexec_fn=no_core)
-    # Malformed inputs throw (SIGABRT) or return 1. Tool/ISA/memory failures,
-    # including Valgrind's error-exitcode=18, are never successful rejections.
-    allowed = (0,) if ok else (1, -signal.SIGABRT)
+    # Validation failures return 1. Resource failures (2), signals and
+    # Valgrind's error-exitcode=18 must never count as successful rejections.
+    allowed = (0,) if ok else (1,)
     assert result.returncode in allowed, (command, result.returncode, result.stdout, result.stderr)
     if ok and not source:
         expected = f"[--] running tests for posets::downsets::{backend}<posets::vectors::{vector}<test_value_type>>"
