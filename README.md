@@ -45,14 +45,8 @@ The default target without ISA flags may still use 16-byte blocks. There is no
 runtime CPU dispatch: compile for the machines on which the program will run.
 All vectorization in the library goes through `std::experimental::simd`.
 
-**ABI/layout requirement:** block width and alignment follow the compilation
-target selected by compiler flags, not the build host. All translation units
-linking posets types must use the same `POSETS_SIMD_WIDTH` (or legacy selectors)
-and target flags. Mixing them can violate the One Definition Rule (ODR), change
-object layout and silently corrupt data. There is no general link-time guard:
-this header-only library has no compiled ABI anchor, and a lane count alone
-cannot detect every target-dependent layout difference. Keep these options in
-shared build settings, including for libraries that expose posets types.
+Width follows the compiler's target flags; build all translation units that share
+posets types with the same flags.
 
 An explicit `POSETS_SIMD_WIDTH` overrides the documented legacy aliases:
 `SIMD_IS_NATIVE=1` selects native even with `SIMD_IS_MAX=1`; otherwise
