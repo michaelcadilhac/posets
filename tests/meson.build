@@ -127,6 +127,9 @@ foreach mode : ['compatible', 'native', 'max']
     dependencies: [posets_dep], cpp_args: matrix_args +
       ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()])
   test('matrix/SIMD width and storage/' + mode, width_exe)
+  order_exe = executable('vector-order-' + mode, 'vector-order-check.cc',
+    dependencies: [posets_dep], cpp_args: matrix_args)
+  test('matrix/full-range signed order/' + mode, order_exe)
   sharing_antichain_exe = executable('sharing-antichain-' + mode, 'sharing-antichain.cc',
     dependencies: [posets_dep], cpp_args: matrix_args)
   test('antichains/sharing backends/' + mode, sharing_antichain_exe)

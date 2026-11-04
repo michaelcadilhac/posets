@@ -27,17 +27,13 @@ namespace posets::vectors {
           }
           else {
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[(up_to * Vec::items_per_block) + i] -
-                          rhs[(up_to * Vec::items_per_block) + i];
-              bgeq = bgeq and (diff >= 0);
-              bleq = bleq and (diff <= 0);
+              const auto left = lhs.data ()[up_to][i];
+              const auto right = rhs.data ()[up_to][i];
+              bgeq = bgeq and (left >= right);
+              bleq = bleq and (left <= right);
             }
           }
 
-          // An alternative way:
-          // auto diff = lhs.data ()[up_to] - rhs.data ()[up_to];
-          // bgeq = bgeq and (std::experimental::reduce (diff, std::bit_or ()) >= 0);
-          // bleq = bleq and (std::experimental::reduce (-diff, std::bit_or ()) >= 0);
           if (not bgeq)
             has_bgeq = true;
           if (not bleq)
@@ -59,9 +55,9 @@ namespace posets::vectors {
             bgeq = bgeq and (std::experimental::all_of (lhs.data ()[up_to] >= rhs.data ()[up_to]));
           else
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[(up_to * Vec::items_per_block) + i] -
-                          rhs[(up_to * Vec::items_per_block) + i];
-              bgeq = bgeq and (diff >= 0);
+              const auto left = lhs.data ()[up_to][i];
+              const auto right = rhs.data ()[up_to][i];
+              bgeq = bgeq and (left >= right);
             }
 
           if (not bgeq)
@@ -80,9 +76,9 @@ namespace posets::vectors {
             bleq = bleq and (std::experimental::all_of (lhs.data ()[up_to] <= rhs.data ()[up_to]));
           else
             for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              auto diff = lhs[(up_to * Vec::items_per_block) + i] -
-                          rhs[(up_to * Vec::items_per_block) + i];
-              bleq = bleq and (diff <= 0);
+              const auto left = lhs.data ()[up_to][i];
+              const auto right = rhs.data ()[up_to][i];
+              bleq = bleq and (left <= right);
             }
 
           if (not bleq)

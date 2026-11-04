@@ -217,13 +217,12 @@ namespace posets::vectors {
       bool operator< (const generic& rhs) const {
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd) {
-            auto lhs_lt_rhs = data ()[i] < rhs.data ()[i];
-            auto rhs_lt_lhs = rhs.data ()[i] < data ()[i];
-            auto p1 = find_first_set (lhs_lt_rhs);
-            auto p2 = find_first_set (rhs_lt_lhs);
-            if (p1 == p2)
+            const auto different = data ()[i] != rhs.data ()[i];
+            if (std::experimental::none_of (different))
               continue;
-            return (p1 < p2);
+            // find_first_set has a nonempty-mask precondition.
+            const auto first = std::experimental::find_first_set (different);
+            return data ()[i][first] < rhs.data ()[i][first];
           }
           else {
             // This is the lexicographical order.
