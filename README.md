@@ -134,3 +134,134 @@ remain outside the contract. SIMD arrays and vector storage use C++20 owning
 allocation with the element type's alignment. Allocation sweeps in
 `sharingtrie-allocation` cover early and late build/cache failures, aliased
 relabels, both algebra operations, aligned allocations and retry/destruction.
+
+## Experimental blocked trie and layout controls
+
+`utils::block_sharingtrie<V, B = 8, Simd = true, Cache = true>` and
+`downsets::block_sharingtrie_backed<V, B, Simd, Cache>` are additive experiments.
+The downset has the same construction, membership, apply, union and intersection
+interface as `sharingtrie_backed`. The umbrella-header switch is
+`POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED`; existing solver/backend defaults
+are unchanged. Utility rebuilds use the existing sharingtrie's publish-after-build
+transaction, including aliased projections and the throwing-move copy fallback.
+The utility accepts empty collections, rejects nonempty zero-dimensional inputs
+and dimension mismatches with `std::invalid_argument`, and empties moved sources.
+Downset inputs must have a common positive dimension, as for the existing trie.
+Query scratch is retained and mutable, so concurrent queries on one instance need
+external synchronization, as with the existing sharingtrie and kd-tree.
+
+Each node holds a contiguous child range and a consecutive block of `B` packed
+labels. Groups are lexicographically descending; a failed later coordinate does
+not prune later incomparable siblings. Strictness owed carries across blocks.
+Only active coordinates are compared, including a scalar final partial chunk;
+zero-filled storage padding never supplies strictness. Query packing reads the
+public coordinate interface, so generic vectors and Boolean wrappers need no
+contiguous-storage promise. Its cost is included in every query.
+
+`Simd=false` selects a coordinate loop (the compiler may still auto-vectorize it).
+`Simd=true` uses `experimental/simd` with `min(B, selected SIMD lanes)` lanes;
+`B` is independent of hardware width. Exact signatures include depth, the full
+block and **all** ordered child colors. Globally unique colors index `2*C`
+generation stamps, including strictness owed. `Cache=false` is a separate control
+with the same blocked shape and comparisons. Wide blocks can increase the root's
+branch count and scan cost; no universal speedup is assumed.
+
+These independent compile-time controls default to `0`:
+
+| Control | Experiment | Cost or limit |
+|---|---|---|
+| `POSETS_SHARINGTRIE_COMPACT_NODES` | Copy reachable nodes into an exact-sized array before coloring | The original array and compact array coexist during rebuild |
+| `POSETS_KDTREE_NARROW_INDICES` | Use checked `uint32_t` leaf indices | At most `UINT32_MAX` input vectors; split axes and signed label values retain their domains |
+| `POSETS_COMPTRIE_SIMD_PATHS` | Compare compressed paths with the same bounded-load SIMD helper | Pack the complete permuted query once per call, including early rejections |
+
+Define configuration macros consistently across translation units. These controls
+change layouts or inline code and must not differ within one program. Node sizes
+and retention depend on element type, ABI and fixture; the diagnostics report the
+actual instantiated sizes. Across-sibling tiled SIMD, kd-tree traversal/leaf-bucket
+changes and contiguous generator-payload slabs remain design candidates. This
+experiment does not implement or establish benefits for those changes.
+
+The common kd-tree query code also fixes a pre-existing correctness issue found by
+the independent oracle: with maxima `(0,4),(1,3),(2,2),(3,1),(4,0)`, a non-strict
+query `(2,3)` previously returned true. Splitting an already-credited axis from
+an equal bound to a greater bound credited it twice. Non-strict crossings now
+require `old < query <= new`; strict crossings require `old <= query < new`.
+Comparisons against upstream `71918d6e113f33b9986968d9ae9c8ae5ea49ff27` should
+state that all candidate/control builds include this common correctness fix.
+
+## Reproducing the synthetic layout experiment
+
+Build correctness with assertions, and use release builds for timing. The native
+ISA option applies the same target flags to every layout/control executable.
+For a portable comparison use `-Dtest_native_isa=false` consistently instead.
+
+```sh
+meson setup build-debug --buildtype=debug -Dtest_native_isa=true
+meson compile -C build-debug -j2
+meson test -C build-debug --no-rebuild -j2 --print-errorlogs
+
+meson setup build-release --buildtype=release -Dtest_native_isa=true -Db_lto=true -Db_lto_threads=1
+meson compile -C build-release -j2 layout-bm-baseline layout-bm-trie-compact \
+  layout-bm-kd-narrow layout-bm-comp-simd layout-memory-baseline \
+  layout-memory-trie-compact layout-memory-kd-narrow layout-memory-comp-simd
+```
+
+`layout-bm-CONTROL BACKEND SHAPE DIM N QUERIES ROUNDS CHECK` emits one
+space-separated `key=value` record. Controls are `baseline`, `trie-compact`,
+`kd-narrow`, `comp-simd`; backend names are printed by invoking it without args.
+Shapes are `random`, `prefix`, `suffix`: binary `-1/0` equal-Hamming-weight
+antichains, with possible duplicate generators. Prefix/suffix fixtures hold half
+the coordinates fixed. Half the queries are stored generators, one quarter are
+random within-domain equal-weight vectors, and one quarter force an above-domain
+coordinate. Actual hits are reported. Wider alphabets, downset algebra and
+synthetic operation replay remain available through `downset-matrix-*`.
+
+```sh
+# Independent logical oracle outside the phase timers; not a performance sample.
+build-debug/tests/layout-memory-baseline b8simd suffix 65 128 128 1 1
+
+# Clean timing example; repeat across shapes, controls and independent runs.
+build-release/tests/layout-bm-baseline b8simd random 128 256 256 8 0
+build-release/tests/layout-bm-trie-compact trie prefix 128 256 256 8 0
+build-release/tests/layout-bm-kd-narrow kd random 128 256 256 8 0
+build-release/tests/layout-bm-comp-simd comp suffix 128 256 256 8 0
+```
+
+`build_ns` measures one index build from already-materialized input vectors.
+`query_ns` measures only repeated membership calls, including query
+packing/permutation and cache generations. Fixture generation, oracle validation,
+output and destruction are outside these phase timers. Whole-process `perf` or
+Callgrind counts include those other operations and have a different scope. Run
+profiles and timings after all builds have stopped, and do not mix debug timings
+with release samples. These fixtures and replay tests are synthetic; they are not
+captured Acacia workloads or evidence for a production-default selection.
+
+`storage()` reports known retained capacity bytes: object, node allocation,
+separate label allocation, generator objects, query scratch and stamp cache.
+Inline node labels are not counted twice. `logical_labels` counts active label
+bytes, excluding padded tail lanes; `separate_labels` counts the entire allocated
+label capacity. Reachable-node count and allocated capacity are distinct,
+including after kd-tree shrinking and moves. The per-instance comptrie view
+charges its shared permutation capacity; summing multiple instances can double
+count that shared allocation. Allocator metadata, opaque Vector-owned heap
+payloads and the static permutation registry are excluded from `known_retained`.
+`estimated_vector_payload_bytes` is separate: for this tool's scalar Vector it
+uses rounded block lengths and assumes no extra container capacity; it is not
+added to the known-byte total. Cache bytes describe software memoization storage,
+not hardware cache residency.
+
+Use `layout-memory-*` for allocation accounting. Only those executables replace
+C++ allocation functions; clean `layout-bm-*` binaries retain the normal allocator
+and report `heap_tracking=0`. The tracker counts requested live C++ heap payload
+(including array cookies), excluding its own headers/alignment, malloc metadata,
+direct malloc allocations, stacks and RSS. Logical fixture rows, materialized
+inputs and query vectors already exist at `heap_before`; `build_heap_peak` is the
+absolute live-byte peak during construction, and `build_extra_peak` subtracts that
+starting baseline. `heap_after` releases the caller's moved-from input buffer
+first, but still includes fixtures and queries: it is not index-only retention.
+The memory executable separately rebuilds an existing index and emits
+`rebuild_heap_before/peak/after`, `rebuild_extra_peak` and allocation counts, so
+coexisting old/new index storage is visible. Those rebuilds are outside the phase
+timers and absent from the clean executable. `query_allocations=0` is checked over
+the post-build query window. Do not use instrumented allocation-build timings as
+clean performance results.

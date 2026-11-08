@@ -44,6 +44,7 @@ namespace posets::downsets {
 
     public:
       using value_type = V;
+      [[nodiscard]] auto storage () const { return tree.storage (); }
 
       kdtree_backed () = delete;
 

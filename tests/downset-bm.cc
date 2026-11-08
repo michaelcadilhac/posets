@@ -167,6 +167,11 @@ struct test_t : public generic_test<result_t> {
 
     result_t operator() () override {
       result_t res;
+      if constexpr (requires { SetType::block_size; }) {
+        std::cout << "[block] B=" << SetType::block_size
+                  << " comparison=" << (SetType::uses_simd ? "simd" : "coordinate-loop")
+                  << " cache=" << SetType::uses_cache << " query_packing=included\n";
+      }
       if (not trace_file.empty ()) {
         matrix_check::require (check_case.empty () or check_case == "trace" or check_case == "replay", "unknown trace check");
         return matrix_cpre::run<SetType> (trace_file, params["rounds"], not check_case.empty (), params["detail"] != 0,
@@ -387,6 +392,26 @@ VECTOR_TYPES (
 
 #endif
 
+// Give template controls distinct names in the existing benchmark registry.
+template <class V, size_t B, bool Simd, bool Cache>
+struct set_name<posets::downsets::block_sharingtrie_backed<V, B, Simd, Cache>> {
+    static std::string get () {
+      if constexpr (B == 8 and Simd and Cache)
+        return "posets::downsets::block_sharingtrie_backed";
+      return "posets::downsets::block_sharingtrie_b" + std::to_string (B) +
+             (Simd ? "_simd" : "_scalar") + (Cache ? "" : "_nocache");
+    }
+};
+namespace {
+  template <class V> using block_b1_scalar = posets::downsets::block_sharingtrie_backed<V, 1, false>;
+  template <class V> using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
+  template <class V> using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
+  template <class V> using block_b8_scalar = posets::downsets::block_sharingtrie_backed<V, 8, false>;
+  template <class V> using block_b16_scalar = posets::downsets::block_sharingtrie_backed<V, 16, false>;
+  template <class V> using block_b16_simd = posets::downsets::block_sharingtrie_backed<V, 16>;
+  template <class V> using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
+}
+
 using set_types = template_type_list<
   posets::downsets::bboxtree_backed,
   posets::downsets::comptrie_backed,
@@ -400,6 +425,16 @@ using set_types = template_type_list<
   posets::downsets::sharingtree_backed,
   posets::downsets::simple_sharingtree_backed,
   posets::downsets::sharingtrie_backed,
+  posets::downsets::block_sharingtrie_backed,
+#ifdef POSETS_MATRIX_ONLY
+  block_b1_scalar,
+  block_b4_scalar,
+  block_b4_simd,
+  block_b8_scalar,
+  block_b16_scalar,
+  block_b16_simd,
+  block_b8_nocache,
+#endif
   posets::downsets::skiplist_backed,
   posets::downsets::cst_backed
   >;

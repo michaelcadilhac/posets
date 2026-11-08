@@ -50,22 +50,23 @@ static std::set<std::string> set_names, vector_names;
 
 
 #define get_vector_name(V) std::string {vector_name<V>::str}
-#define get_set_name(S)                                                 \
-  ([] () -> std::string {                                               \
-    int _;                                                              \
-    char* s = abi::__cxa_demangle (typeid(S).name (), 0, 0, &_);        \
-    const std::string ret (s);                                          \
-    free (s);                                                           \
-    return ret.substr (0, ret.find_first_of ('<'));                     \
-    }) ()
+template <typename S>
+struct set_name {
+    static std::string get () {
+      int status;
+      char* name = abi::__cxa_demangle (typeid(S).name (), nullptr, nullptr, &status);
+      const std::string result (name);
+      free (name);
+      return result.substr (0, result.find_first_of ('<'));
+    }
+};
+#define get_set_name(S) set_name<S>::get ()
 
 template <typename S>
-struct full_name;
-
-template <template <typename> typename S, typename V>
-struct full_name<S<V>> {
+struct full_name {
     static auto get () {
-      return get_set_name (S<V>) + "<" + get_vector_name (V) + ">";
+      using V = typename S::value_type;
+      return get_set_name (S) + "<" + get_vector_name (V) + ">";
     }
 };
 #define get_full_name(S) full_name<S>::get ()
@@ -77,7 +78,7 @@ struct full_name<S<V>> {
 
 namespace posets::downsets {
   template <typename VecType>
-  struct all {};
+  struct all { using value_type = VecType; };
 }
 
 namespace posets::vectors {

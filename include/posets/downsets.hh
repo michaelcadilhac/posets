@@ -4,6 +4,9 @@
 #include <posets/config.hh>
 #include <posets/vectors.hh>
 
+#if POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED
+# include <posets/downsets/block_sharingtrie_backed.hh>
+#endif
 #if POSETS_ENABLE_DOWNSET_BBOXTREE_BACKED
 # include <posets/downsets/bboxtree_backed.hh>
 #endif

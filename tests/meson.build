@@ -178,3 +178,38 @@ sharingtrie_allocation_exe = executable('sharingtrie-allocation',
   cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
 test('antichains/sharingtrie allocation failures', sharingtrie_allocation_exe,
   env: sharing_allocation_env, timeout: 120)
+
+block_allocation_exe = executable('block-sharingtrie-allocation',
+  'sharingtrie-allocation.cc', dependencies: [posets_dep],
+  cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX', '-DPOSETS_TEST_BLOCK_SHARINGTRIE'])
+test('antichains/block sharingtrie allocation failures', block_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)
+foreach mode : ['compatible', 'native', 'max']
+  block_exe = executable('block-sharingtrie-' + mode, 'block-sharingtrie.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args)
+  test('antichains/block sharingtrie/' + mode, block_exe, timeout: 120)
+endforeach
+
+layout_controls = [
+  ['baseline', []],
+  ['trie-compact', ['-DPOSETS_SHARINGTRIE_COMPACT_NODES=1']],
+  ['kd-narrow', ['-DPOSETS_KDTREE_NARROW_INDICES=1']],
+  ['comp-simd', ['-DPOSETS_COMPTRIE_SIMD_PATHS=1']],
+]
+foreach control : layout_controls
+  layout_exe = executable('layout-check-' + control[0], 'layout-check.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args)
+  test('layout/oracle and accounting/' + control[0], layout_exe)
+  layout_bm = executable('layout-bm-' + control[0], 'layout-bm.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args)
+  layout_memory = executable('layout-memory-' + control[0], 'layout-bm.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args + ['-DPOSETS_TRACK_ALLOCATIONS=1'])
+  test('layout/memory and shape oracles/' + control[0], find_program('python3'),
+    args: [meson.current_source_dir() / 'layout-smoke.py', layout_memory], timeout: 120)
+endforeach
+compact_allocation_exe = executable('sharingtrie-compact-allocation',
+  'sharingtrie-allocation.cc', dependencies: [posets_dep],
+  cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX', '-DPOSETS_SHARINGTRIE_COMPACT_NODES=1'])
+test('layout/sharingtrie compact allocation failures', compact_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)

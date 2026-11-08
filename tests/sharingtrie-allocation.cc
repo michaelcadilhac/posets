@@ -10,6 +10,15 @@
 #include <vector>
 
 #include <posets/downsets/sharingtrie_backed.hh>
+#include <posets/downsets/block_sharingtrie_backed.hh>
+
+#ifdef POSETS_TEST_BLOCK_SHARINGTRIE
+template <class V> using tested_downset = posets::downsets::block_sharingtrie_backed<V, 4>;
+template <class V> using tested_trie = posets::utils::block_sharingtrie<V, 4>;
+#else
+template <class V> using tested_downset = posets::downsets::sharingtrie_backed<V>;
+template <class V> using tested_trie = posets::utils::sharingtrie<V>;
+#endif
 #include <posets/vectors.hh>
 
 namespace {
@@ -95,8 +104,8 @@ namespace {
   // and both dominates caches) has thrown once. Retry with the SAME operands.
   template <class V>
   long sweep (int operation) {
-    using D = posets::downsets::sharingtrie_backed<V>;
-    using T = posets::utils::sharingtrie<V>;
+    using D = tested_downset<V>;
+    using T = tested_trie<V>;
     static_assert (not std::is_nothrow_constructible_v<D, std::vector<V>&&>);
     static_assert (std::is_nothrow_move_constructible_v<T>);
     static_assert (std::is_nothrow_move_assignable_v<T>);
@@ -203,7 +212,7 @@ namespace {
 
   template <class V>
   void projections () {
-    using T = posets::utils::sharingtrie<V>;
+    using T = tested_trie<V>;
     auto trie = T (values<V> (original));
     std::vector<V*> aliases;
     for (auto& value : trie)
@@ -277,8 +286,8 @@ namespace {
                 << " PASS\n";
     // Empty algebra, source reuse and self-move/rebuild are allocation-free where
     // possible, and must leave destruction safe after a successful transaction.
-    using D = posets::downsets::sharingtrie_backed<V>;
-    using T = posets::utils::sharingtrie<V>;
+    using D = tested_downset<V>;
+    using T = tested_trie<V>;
     auto subject = matrix_check::build<D> (original);
     auto empty = matrix_check::build<D> ({});
     allocations_left = 0;
