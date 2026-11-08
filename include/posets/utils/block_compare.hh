@@ -15,13 +15,13 @@ namespace posets::utils {
         const simd b (value + i, std::experimental::element_aligned);
         if (std::experimental::any_of (a < b))
           return false;
-        owe_strict and_eq std::experimental::all_of (a == b);
+        owe_strict = owe_strict and std::experimental::all_of (a == b);
       }
     }
     for (; i < count; ++i) {
       if (label[i] < value[i])
         return false;
-      owe_strict and_eq label[i] == value[i];
+      owe_strict = owe_strict and label[i] == value[i];
     }
     return true;
   }

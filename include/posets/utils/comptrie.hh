@@ -26,7 +26,6 @@ namespace posets::utils {
           uint32_t label_len;
           int32_t son;
           int32_t bro;
-          int32_t color;
       };
 
       std::vector<V> vector_set;
@@ -103,7 +102,7 @@ namespace posets::utils {
           const uint32_t label_off = label_pool.size ();
           for (uint32_t offset = 0; offset < span; ++offset)
             label_pool.push_back (vector_set[order[group_begin]][(*perm)[depth + offset]]);
-          nodes.push_back ({label_off, span, -1, -1, -1});
+          nodes.push_back ({label_off, span, -1, -1});
           if (first == -1)
             first = current;
           if (previous != -1)
@@ -117,26 +116,6 @@ namespace posets::utils {
         return first;
       }
       // NOLINTEND(misc-no-recursion)
-
-      void color_as_dfa () {
-        // Equal compressed suffixes receive equal colors.  The color is only
-        // metadata for generation-stamped query caches and diagnostics; node
-        // identity remains its stable vector index.
-        std::map<std::vector<int64_t>, int32_t> colors;
-        int32_t next_color = 0;
-        for (size_t reverse = nodes.size (); reverse > 0; --reverse) {
-          auto& current = nodes[reverse - 1];
-          std::vector<int64_t> signature;
-          signature.reserve (current.label_len + 2);
-          for (uint32_t i = 0; i < current.label_len; ++i)
-            signature.push_back (label_pool[current.label_off + i]);
-          signature.push_back (current.son < 0 ? -1 : nodes[current.son].color);
-          auto [it, inserted] = colors.emplace (std::move (signature), next_color);
-          current.color = it->second;
-          if (inserted)
-            ++next_color;
-        }
-      }
 
     public:
       comptrie () = default;
@@ -163,8 +142,8 @@ namespace posets::utils {
           return false;
         });
         root = build_level (order, 0, order.size (), 0);
-        color_as_dfa ();
-        dominates_stack.reserve (nodes.size ());
+        // One deferred sibling per coordinate bounds the query stack.
+        dominates_stack.reserve (std::min (nodes.size (), perm->size ()));
 #if POSETS_COMPTRIE_SIMD_PATHS
         packed_query.resize (perm->size ());
 #endif
