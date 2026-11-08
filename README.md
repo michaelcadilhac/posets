@@ -177,9 +177,32 @@ These independent compile-time controls default to `0`:
 Define configuration macros consistently across translation units. These controls
 change layouts or inline code and must not differ within one program. Node sizes
 and retention depend on element type, ABI and fixture; the diagnostics report the
-actual instantiated sizes. Across-sibling tiled SIMD, kd-tree traversal/leaf-bucket
-changes and contiguous generator-payload slabs remain design candidates. This
-experiment does not implement or establish benefits for those changes.
+actual instantiated sizes. Across-sibling tiled SIMD and contiguous
+generator-payload slabs remain design candidates. The separate lazy bucket KD
+backend and its fractional-cascading control are described below.
+
+The existing kd-tree now allocates a complete-heap envelope of
+`2 * bit_ceil(n) - 1` nodes for nonempty input, with checked size arithmetic.
+This nearly halves its previous allocation at powers of two; other sizes save
+one slot. Relabeling reuses the actual allocated capacity, including after a
+shrink followed by growth. It retains that high-water allocation until object
+replacement or destruction; `storage()` reports the retained capacity.
+
+Compressed tries no longer construct unused suffix colors or store a color in
+every node. Their four 32-bit node fields occupy 16 bytes, and traversal scratch
+reserves at most one pending sibling per coordinate. The shared block comparison
+helper stops computing equality reductions once a query has satisfied strictness.
+
+Sharing-tree query memoization uses packed 32-bit generation/strictness stamps
+instead of clearing and refilling hash maps. Warm queries reuse their storage;
+newly visited or growing layers may allocate. Each visited layer needs a stamp
+slot for every historical node, and vector capacity may exceed that count.
+Interned forest nodes and child spans still live as long as the shared forest;
+this change does not reclaim historical roots. The same change fixes child-buffer
+growth for large spans, child-hash shifts beyond the word width, and a union
+draft's lifetime.
+These changes require measured whole-operation and memory comparisons; none
+implies a universal speedup.
 
 The common kd-tree query code also fixes a pre-existing correctness issue found by
 the independent oracle: with maxima `(0,4),(1,3),(2,2),(3,1),(4,0)`, a non-strict
