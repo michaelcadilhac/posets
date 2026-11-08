@@ -7,6 +7,7 @@
 #include <random>
 #include <string>
 
+#include <posets/downsets/lazy_kdtree_backed.hh>
 #include <posets/utils/block_sharingtrie.hh>
 #include <posets/utils/comptrie.hh>
 #include <posets/utils/kdtree.hh>
@@ -52,16 +53,23 @@ namespace {
         probes[i][random () % dim] = 1;  // Guaranteed miss, including shared shapes.
     auto input = materialize (rows);
     auto queries = materialize (probes);
-    T trie;
     const size_t heap_before = allocation_tracking::live;
     allocation_tracking::reset_peak ();
     const auto start = clock_type::now ();
-    if constexpr (requires { trie.relabel_trie (std::move (input)); })
-      trie.relabel_trie (std::move (input));
-    else if constexpr (requires { trie.relabel_tree (std::move (input)); })
-      trie.relabel_tree (std::move (input));
-    else
-      trie.assign_and_build (std::move (input));
+    T trie = [&] {
+      if constexpr (std::is_default_constructible_v<T>) {
+        T result;
+        if constexpr (requires { result.relabel_trie (std::move (input)); })
+          result.relabel_trie (std::move (input));
+        else if constexpr (requires { result.relabel_tree (std::move (input)); })
+          result.relabel_tree (std::move (input));
+        else
+          result.assign_and_build (std::move (input));
+        return result;
+      }
+      else
+        return T (std::move (input));
+    }();
     const auto built = clock_type::now ();
     const auto build_peak = allocation_tracking::peak;
     const auto build_allocations = allocation_tracking::count;
@@ -93,8 +101,10 @@ namespace {
       trie.relabel_trie (std::move (replacement));
     else if constexpr (requires { trie.relabel_tree (std::move (replacement)); })
       trie.relabel_tree (std::move (replacement));
-    else
+    else if constexpr (requires { trie.assign_and_build (std::move (replacement)); })
       trie.assign_and_build (std::move (replacement));
+    else
+      trie = T (std::move (replacement));
     const auto rebuild_peak = allocation_tracking::peak;
     const auto rebuild_allocations = allocation_tracking::count;
     std::vector<V> {}.swap (replacement);
@@ -117,10 +127,14 @@ namespace {
       std::cout << " B=" << T::block_size
                 << " comparison=" << (T::uses_simd ? "simd" : "coordinate-loop")
                 << " memo=" << T::uses_cache;
+    if constexpr (requires { T::uses_cascade; })
+      std::cout << " cascade=" << T::uses_cascade << " filter_coordinate=0"
+                << " leaf_size=" << trie.rebuild_policy ().leaf_size;
     if constexpr (requires { trie.root_branches (); })
       std::cout << " root_children=" << trie.root_branches ();
     std::cout << ' ' << trie.storage () << " estimated_vector_payload_bytes="
-              << count * V::blocks_for (dim) * sizeof (V::block_type)
+              << trie.size () * V::blocks_for (dim) * sizeof (V::block_type)
+              << " retained_generators=" << trie.size ()
               << " heap_tracking=" << POSETS_TRACK_ALLOCATIONS;
 #if POSETS_TRACK_ALLOCATIONS
     require (query_allocations == 0, "post-build queries allocated");
@@ -152,7 +166,7 @@ int main (int argc, char** argv) try {
   if (argc != 8) {
     std::cerr << "usage: layout-bm BACKEND random|prefix|suffix DIM N QUERIES ROUNDS CHECK(0|1)\n"
               << "backends: kd trie comp b1scalar b4scalar b4simd b8scalar b8simd b16scalar "
-                 "b16simd b8nocache\n";
+                 "b16simd b8nocache lazy-fc lazy-search\n";
     return 1;
   }
   const std::string backend = argv[1], kind = argv[2];
@@ -166,6 +180,8 @@ int main (int argc, char** argv) try {
     run<__VA_ARGS__> (backend, kind, dim, count, queries, rounds, check); \
     return 0;                                                             \
   }
+  RUN ("lazy-fc", posets::downsets::lazy_kdtree_backed<V, true>)
+  RUN ("lazy-search", posets::downsets::lazy_kdtree_backed<V, false>)
   RUN ("kd", posets::utils::kdtree<V>)
   RUN ("trie", posets::utils::sharingtrie<V>)
   RUN ("comp", posets::utils::comptrie<V>)

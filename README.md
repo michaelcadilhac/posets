@@ -265,3 +265,94 @@ coexisting old/new index storage is visible. Those rebuilds are outside the phas
 timers and absent from the clean executable. `query_allocations=0` is checked over
 the post-build query window. Do not use instrumented allocation-build timings as
 clean performance results.
+
+## Lazy bucket KD with fractional cascading
+
+`downsets::lazy_kdtree_backed<V, Cascade = true>` is an additive experimental
+backend; `false` is the matched independent-search control. Enable the umbrella
+header with `POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED`. Existing defaults do not
+select it. The backend owns one dense vector of live maximal generators and a
+frozen bucket KD index plus a pending insertion buffer. It does not retain copied
+historical generator payloads. Leaves resolve stable IDs through an ID-to-dense-
+slot map. Swap-erasure updates both maps; retired IDs are never reused within an
+epoch. Rebuilding publishes new geometry, catalogs and densely renumbered maps
+together. Exact live descendant counts prune wholly retired subtrees, and retired
+payloads are never accessed. Split geometry and copied filter keys remain frozen
+between rebuilds; deletion makes their bounds conservative.
+
+All leaf buckets are sorted on the same fixed filter coordinate, currently **0**.
+Internal augmented catalogs merge every second entry (positions 1, 3, 5, ...) from
+both child catalogs. Each entry stores lower-bound bridges into both children.
+One binary search at the root propagates to a child with at most one predecessor
+correction, including empty catalogs, end positions and duplicate keys. For
+membership, the root uses `lower_bound(q[0])` and correction `previous >= q[0]`;
+for reporting points dominated by an insertion it uses `upper_bound(q[0])` and
+correction `previous > q[0]`. Both bridge types remain **lower bounds of the next
+parent key**. No `q+1` arithmetic or key sentinel is used. Full Vector partial
+orders decide dominance and strictness: a strict dominator may have an equal
+filter coordinate. Generic vector storage remains opaque; SIMD-backed vectors
+supply SIMD through their existing partial-order implementation.
+
+An internal catalog is sampled: its end position **never** proves the subtree
+empty. Only geometry, exact live counts and exact leaf bounds prune. Balanced
+bucket trees give a geometric sum of catalog lengths below twice the point
+count; retained capacities and bridge/map bytes are reported separately.
+`Cascade=false` keeps the same geometry, bucket order and point comparisons,
+omits all internal catalogs/bridges, and binary-searches each visited leaf. An
+assertion-enabled fixture visits 32 leaves and checks one root search versus 32
+independent leaf searches, with identical leaf visits/comparisons. This proves
+the search work removed, not an end-to-end speedup.
+
+`lazy_kdtree_policy` can be passed after either construction input. Defaults are
+leaf size 16, minimum indexed set/buffer sizes 32, buffer fraction 0.25 and dead-ID
+fraction 0.25. The buffer trigger grows proportionally to live size; tiny sets
+stay buffer-only. Physical pending tombstones count toward maintenance, so
+repeated dominating inserts do not accumulate unbounded retired IDs. Fractions
+must be finite, with `0 < buffer_fraction <= 1` and `0 <= dead_fraction < 1`.
+The optional `max_index_bytes` trigger counts frozen index and ID-buffer/map
+capacity when dead history can be reclaimed; it is a maintenance trigger, not a
+hard process-memory limit. Thresholds are heuristics, with no amortized runtime
+claim. Coordinate 0 and default bucket sizes are controls to measure, not claimed
+optimal choices. An explicit `rebuild()` resets the ID epoch without changing the
+represented set.
+
+A failed insertion preserves logical generators and membership. Earlier
+successful reserves can change capacities and invalidate iterator addresses.
+Each insertion stages allocations and throwing copies before committing its
+logical update. The fast path requires both nothrow move construction and move
+assignment; otherwise survivors are copied into unpublished storage. Whole union
+is incremental and provides the **basic** guarantee: earlier accepted insertions
+remain if a later one throws. Its RHS stays unchanged until success, then becomes
+empty. Apply and intersection stream into fresh epochs; intersection publishes
+only a complete result. Empty sets and safe moved-from reuse are supported;
+nonempty zero-dimensional inputs and inconsistent dimensions are rejected.
+Iteration and `get_backing_vector()` expose the dense live generators. As for
+existing indexed backends, arbitrary external generator edits invalidate the
+index and antichain invariants: use `clear()` or reassignment instead.
+`rebuild()` preserves generators rather than normalizing arbitrary edits; its
+input must already retain common positive dimensions and a canonical antichain. Mutations
+invalidate iterators and must not race with queries. Optional statistics also
+need synchronization if queries share an instance.
+
+The non-owning `utils::bucket_kdtree<V, Cascade>` utility exposes the frozen
+index for independent testing. Its rebuild input IDs must be unique; its caller
+keeps each live payload valid and supplies consistent access/live predicates.
+`retire(id)` is idempotent. No ID may acquire another payload without rebuilding
+all geometry and catalogs. The utility ID-to-leaf map scales with the supplied
+ID span; the owning backend freezes densely renumbered IDs. `check_bridges(key, upper)` checks exact cascaded
+positions against independent standard-library searches.
+
+Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
+collect query/node/leaf visits, full comparisons, binary searches and bridge
+corrections. Index query counts exclude requests answered by the pending
+buffer; pending comparison counts include membership and retirement checks.
+Default builds compile the increments and counter storage out.
+`storage()` reports actual node/key/bridge/ID-map capacities, pending/live/retired
+counts and rebuild/compaction counts. Known retained bytes include generator
+objects but exclude opaque Vector-owned heap payloads and allocator overhead.
+The existing layout tool adds `lazy-fc` and `lazy-search`; its memory variants
+retain the same construction/replacement peak accounting. The downset matrix
+adds `lazy_kdtree_backed` and `lazy_kdtree_uncascaded`, including existing
+contains/CPre operation replay. Allocation-failure tests cover resetting and
+non-resetting insertion, full rebuild, apply, intersection, partial union,
+throwing Vector moves/comparisons, allocation-free ordinary queries and moves.

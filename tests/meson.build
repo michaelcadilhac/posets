@@ -214,3 +214,14 @@ compact_allocation_exe = executable('sharingtrie-compact-allocation',
   cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX', '-DPOSETS_SHARINGTRIE_COMPACT_NODES=1'])
 test('layout/sharingtrie compact allocation failures', compact_allocation_exe,
   env: sharing_allocation_env, timeout: 120)
+
+foreach mode : ['compatible', 'native', 'max']
+  lazy_kd_exe = executable('lazy-kdtree-' + mode, 'lazy-kdtree.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_LAZY_KDTREE_STATS=1'] + matrix_target_args)
+  test('antichains/lazy KD oracle and FC/' + mode, lazy_kd_exe, timeout: 120)
+endforeach
+lazy_allocation_exe = executable('lazy-kdtree-allocation', 'lazy-kdtree-allocation.cc',
+  dependencies: [posets_dep], cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
+test('antichains/lazy KD allocation failures', lazy_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)

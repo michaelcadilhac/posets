@@ -5,8 +5,9 @@ import sys
 
 for shape in ('random', 'prefix', 'suffix'):
     for backend in ('kd', 'trie', 'comp', 'b1scalar', 'b4scalar', 'b4simd',
-                    'b8scalar', 'b8simd', 'b16scalar', 'b16simd', 'b8nocache'):
-        result = subprocess.run([sys.argv[1], backend, shape, '33', '31', '24', '2', '1'],
+                    'b8scalar', 'b8simd', 'b16scalar', 'b16simd', 'b8nocache', 'lazy-fc', 'lazy-search'):
+        result = subprocess.run([sys.argv[1], backend, shape, '33',
+                                 '65' if backend.startswith('lazy') else '31', '24', '2', '1'],
                                 capture_output=True, text=True, check=True, timeout=15)
         fields = dict(pair.split('=', 1) for pair in result.stdout.split())
         assert fields['heap_tracking'] == '1', fields

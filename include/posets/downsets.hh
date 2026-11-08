@@ -22,6 +22,9 @@
 #if POSETS_ENABLE_DOWNSET_FULL_SET
 # include <posets/downsets/full_set.hh>
 #endif
+#if POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED
+# include <posets/downsets/lazy_kdtree_backed.hh>
+#endif
 #if POSETS_ENABLE_DOWNSET_KDTREE_BACKED
 # include <posets/downsets/kdtree_backed.hh>
 #endif

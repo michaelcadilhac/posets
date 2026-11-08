@@ -402,7 +402,16 @@ struct set_name<posets::downsets::block_sharingtrie_backed<V, B, Simd, Cache>> {
              (Simd ? "_simd" : "_scalar") + (Cache ? "" : "_nocache");
     }
 };
+template <class V, bool Cascade>
+struct set_name<posets::downsets::lazy_kdtree_backed<V, Cascade>> {
+    static std::string get () {
+      return Cascade ? "posets::downsets::lazy_kdtree_backed"
+                     : "posets::downsets::lazy_kdtree_uncascaded";
+    }
+};
 namespace {
+  template <class V> using lazy_kd_cascaded = posets::downsets::lazy_kdtree_backed<V, true>;
+  template <class V> using lazy_kd_uncascaded = posets::downsets::lazy_kdtree_backed<V, false>;
   template <class V> using block_b1_scalar = posets::downsets::block_sharingtrie_backed<V, 1, false>;
   template <class V> using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
   template <class V> using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
@@ -417,6 +426,8 @@ using set_types = template_type_list<
   posets::downsets::bboxtree_backed,
   posets::downsets::comptrie_backed,
   posets::downsets::kdtree_backed,
+  lazy_kd_cascaded,
+  lazy_kd_uncascaded,
   posets::downsets::vector_or_kdtree_backed,
   posets::downsets::vector_backed,
   posets::downsets::rank_bucketed_vector_backed,

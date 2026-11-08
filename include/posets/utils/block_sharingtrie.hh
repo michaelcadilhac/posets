@@ -23,6 +23,10 @@
 
 namespace posets::utils {
   // Experimental fixed consecutive blocks. SIMD width and block size are independent.
+  // Queries seek a stored vector >= the query componentwise; strict additionally
+  // requires an unequal coordinate. Signed -1 is an ordinary component value.
+  // Packing, DFS scratch and generation stamps are mutable: queries on one
+  // instance require external synchronization; they must not race with rebuilds.
   template <Vector V, size_t B = 8, bool Simd = true, bool Cache = true>
   class block_sharingtrie {
       static_assert (B > 0);
