@@ -239,16 +239,19 @@ namespace {
   }
   void policy_and_contracts () {
     using S = posets::downsets::lazy_kdtree_backed<scalar_vector>;
-    for (const double invalid : {-1.0, 1.0, std::numeric_limits<double>::infinity (),
-                                 std::numeric_limits<double>::quiet_NaN ()}) {
-      auto policy = posets::downsets::lazy_kdtree_policy {};
-      policy.dead_fraction = invalid;
-      try {
-        S bad (std::vector<scalar_vector> {}, policy);
-        require (false, "bad policy accepted");
-      } catch (const std::invalid_argument&) {
+    for (const bool buffer : {false, true})
+      for (const double invalid :
+           {-1.0, buffer ? 0.0 : 1.0, std::numeric_limits<double>::infinity (),
+            -std::numeric_limits<double>::infinity (), std::numeric_limits<double>::quiet_NaN (),
+            -std::numeric_limits<double>::quiet_NaN ()}) {
+        auto policy = posets::downsets::lazy_kdtree_policy {};
+        (buffer ? policy.buffer_fraction : policy.dead_fraction) = invalid;
+        try {
+          S bad (std::vector<scalar_vector> {}, policy);
+          require (false, "bad policy accepted");
+        } catch (const std::invalid_argument&) {
+        }
       }
-    }
     S empty (std::vector<scalar_vector> {});
     require (not empty.contains (vector<scalar_vector> ({})), "empty query contract");
     try {

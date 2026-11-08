@@ -3,9 +3,11 @@
 #include <type_traits>
 
 #include <algorithm>
+#include <bit>
 #include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <limits>
 #include <numeric>
 #include <ostream>
 #include <stdexcept>
@@ -46,10 +48,26 @@ namespace posets::downsets {
 #endif
 
       lazy_kdtree_backed (lazy_kdtree_policy settings, empty_tag) : policy (settings) {}
+      template <class Float>
+      [[nodiscard]] static bool finite_fraction (Float value) {
+        // Fast-math may assume finite inputs during floating-point classification.
+        // Inspect binary64's exponent without a floating operation.
+        if constexpr (std::numeric_limits<Float>::is_iec559 and
+                      std::numeric_limits<Float>::digits == 53 and
+                      std::numeric_limits<Float>::radix == 2 and
+                      std::numeric_limits<Float>::max_exponent == 1024 and
+                      sizeof (Float) == sizeof (uint64_t)) {
+          constexpr uint64_t exponent = UINT64_C (0x7ff0000000000000);
+          return (std::bit_cast<uint64_t> (value) & exponent) != exponent;
+        }
+        else {
+          return std::isfinite (value);
+        }
+      }
       static void validate (const lazy_kdtree_policy& settings) {
         if (settings.leaf_size == 0 or settings.min_index_size == 0 or settings.min_buffer == 0 or
-            not std::isfinite (settings.buffer_fraction) or settings.buffer_fraction <= 0 or
-            settings.buffer_fraction > 1 or not std::isfinite (settings.dead_fraction) or
+            not finite_fraction (settings.buffer_fraction) or settings.buffer_fraction <= 0 or
+            settings.buffer_fraction > 1 or not finite_fraction (settings.dead_fraction) or
             settings.dead_fraction < 0 or settings.dead_fraction >= 1)
           throw std::invalid_argument ("invalid lazy_kdtree rebuild policy");
       }
