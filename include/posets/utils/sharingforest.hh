@@ -67,8 +67,9 @@ namespace posets::utils {
           size_t operator() (const st_node& k) const {
             size_t res = std::hash<typename V::value_type> () (k.label);
             const size_t* children = f->child_buffer + k.cbuffer_offset;
+            // Fixed unsigned shifts are defined at any fanout; equality checks full signatures.
             for (size_t i = 0; i < k.numchild; i++)
-              boost::hash_combine (res, children[i]);
+              res ^= children[i] + size_t {0x9e3779b9U} + (res << 6) + (res >> 2);
             return res;
           }
       };
