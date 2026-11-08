@@ -28,7 +28,7 @@ namespace {
       trie.assign_and_build (values (rows));
   }
   template <class T>
-  void oracle (const region& rows, const region& probes) {
+  void oracle (const region& rows, const region& probes, size_t minimum_colors = 0) {
     T trie;
     build (trie, rows);
     for (const auto& raw : probes)
@@ -51,6 +51,9 @@ namespace {
     require (usage.node_capacity >= usage.reachable_nodes, "capacity below reachable count");
     require (usage.known_retained_bytes () >= usage.node_storage_bytes,
              "retained accounting underflow");
+    if (minimum_colors != 0)
+      require (usage.cache_bytes >= minimum_colors * 2 * sizeof (unsigned),
+               "stamp capacity below distinct suffix language count");
 #if POSETS_SHARINGTRIE_COMPACT_NODES
     if constexpr (std::is_same_v<T, posets::utils::sharingtrie<vector_type>>)
       require (usage.node_capacity == usage.reachable_nodes, "trie did not compact exactly");
@@ -61,6 +64,14 @@ int main () try {
   // A repeated split from equality to greater must not credit an axis twice.
   oracle<posets::utils::kdtree<vector_type>> ({{0, 4}, {1, 3}, {2, 2}, {3, 1}, {4, 0}},
                                               {{2, 3}, {2, 2}, {1, 1}});
+  // Identical labels at different depths are distinct query states.
+  oracle<posets::utils::sharingtrie<vector_type>> ({logical (25, 0)}, {logical (25, 0)}, 25);
+  // Equal suffixes share colors, but every outgoing branch participates in equality.
+  oracle<posets::utils::sharingtrie<vector_type>> ({{3, 1, 2}, {2, 1, 2}}, {{1, 1, 2}, {3, 1, 2}},
+                                                   4);
+  oracle<posets::utils::sharingtrie<vector_type>> (
+      {{3, 1, 2, 0}, {3, 1, 1, 2}, {2, 1, 2, 0}, {2, 1, 1, 3}},
+      {{1, 1, 1, 3}, {2, 1, 1, 3}, {3, 1, 1, 3}}, 10);
   const posets::utils::comptrie<vector_type> default_comp;
   require (not default_comp.dominates (vector<vector_type> ({-1})), "default comptrie membership");
   // A reserved tree has allocation but no live nodes or labels.

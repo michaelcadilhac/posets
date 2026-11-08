@@ -3,16 +3,13 @@
 #include <type_traits>
 
 #include <algorithm>
-#include <array>
 #include <cassert>
 #include <cstdint>
 #include <limits>
-#include <map>
 #include <memory>
 #include <numeric>
 #include <ranges>
 #include <stdexcept>
-#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -109,7 +106,8 @@ namespace posets::utils {
             }
             const index_type index = nodes.size ();
             nodes.push_back ({0, 0, 0});
-            depths.push_back (depth);
+            if constexpr (Cache)
+              depths.push_back (depth);
             logical_labels += count;
             for (size_t d = 0; d < B; ++d)
               labels.push_back (d < count ? (*values[order[i]])[depth + d] : value_type {0});
@@ -128,23 +126,44 @@ namespace posets::utils {
         }
 
         if constexpr (Cache) {
-          // Include every outgoing branch and depth: equal first children alone
-          // do not imply equal suffix languages. Map equality resolves all keys.
-          using signature = std::tuple<size_t, std::array<value_type, B>, std::vector<index_type>>;
-          std::map<signature, index_type> colors;
+          // Reuse input-order storage to group nodes by depth, children before parents.
+          order.resize (nodes.size ());
+          std::iota (order.begin (), order.end (), 0);  // NOLINT(boost-use-ranges)
+          std::ranges::sort (
+              order, [&depths] (size_t lhs, size_t rhs) { return depths[lhs] > depths[rhs]; });
+          const auto signature_less = [this] (size_t lhs, size_t rhs) {
+            for (size_t d = 0; d < B; ++d) {
+              const auto left = labels[(lhs * B) + d];
+              const auto right = labels[(rhs * B) + d];
+              if (left != right)
+                return left < right;
+            }
+            const auto& left = nodes[lhs];
+            const auto& right = nodes[rhs];
+            for (index_type c = 0; c < std::min (left.child_count, right.child_count); ++c) {
+              const auto lc = nodes[left.first_child + c].color;
+              const auto rc = nodes[right.first_child + c].color;
+              if (lc != rc)
+                return lc < rc;
+            }
+            return left.child_count < right.child_count;
+          };
           index_type next_color = 0;
-          for (size_t i = nodes.size (); i-- > 0;) {
-            std::array<value_type, B> label;
-            std::copy_n (labels.data () + (i * B), B, label.begin ());
-            std::vector<index_type> children;
-            const auto& current = nodes[i];
-            children.reserve (current.child_count);
-            for (index_type c = 0; c < current.child_count; ++c)
-              children.push_back (nodes[current.first_child + c].color);
-            const auto [entry, inserted] = colors.try_emplace (
-                signature {depths[i], label, std::move (children)}, next_color);
-            nodes[i].color = entry->second;
-            next_color += static_cast<index_type> (inserted);
+          for (size_t begin = 0; begin < order.size ();) {
+            size_t end = begin + 1;
+            while (end < order.size () and depths[order[end]] == depths[order[begin]])
+              ++end;
+            // All child colors are complete; own colors do not affect comparisons.
+            std::sort (order.begin () + static_cast<std::ptrdiff_t> (begin),
+                       order.begin () + static_cast<std::ptrdiff_t> (end), signature_less);
+            index_type color = next_color++;
+            nodes[order[begin]].color = color;
+            for (size_t i = begin + 1; i < end; ++i) {
+              if (signature_less (order[i - 1], order[i]))
+                color = next_color++;
+              nodes[order[i]].color = color;
+            }
+            begin = end;
           }
           stamps.assign (size_t {2} * next_color, 0U);
         }

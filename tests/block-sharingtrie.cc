@@ -66,6 +66,12 @@ namespace {
       T tail (values<V> ({logical (dim, -1)}));
       require (tail.dominates (equal) and not tail.dominates (equal, true),
                "tail created strictness");
+      if constexpr (Cache)
+        require (
+            tail.storage ().cache_bytes >= 2 * ((dim / B) + (dim % B != 0)) * sizeof (unsigned),
+            "stamp capacity below number of block depths");
+      else
+        require (tail.storage ().cache_bytes == 0, "uncached trie retained color stamps");
       T moved (std::move (trie));
       require (trie.empty () and not trie.dominates (equal), "moved source not empty");
       auto* self = &moved;
