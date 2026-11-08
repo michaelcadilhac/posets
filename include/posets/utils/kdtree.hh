@@ -76,7 +76,13 @@ namespace posets::utils {
       }
 
       static size_t tree_capacity (size_t element_count) {
-        return size_t {4} * std::bit_floor (element_count);
+        if (element_count == 0)
+          return 0;
+        if (element_count > (std::numeric_limits<size_t>::max () / 2) + 1)
+          throw std::length_error ("kdtree node capacity exceeded");
+        // Floor/ceil subtree sizes need at most ceil(log2(n)) levels below the root.
+        const size_t leaves = std::bit_ceil (element_count);
+        return leaves + (leaves - 1);
       }
 
       // NOLINTBEGIN(misc-no-recursion)
@@ -219,10 +225,6 @@ namespace posets::utils {
         assert (this->dim > 0);
         assert (this->dim <= std::numeric_limits<axis_type>::max ());
 
-        // Let n be the size of vector_set, the no. of leaves in the tree is
-        // 2^{floor(lg(n)) + 1}, so this times 2 is the size of the full
-        // binary tree we will be labelling
-        const size_t oldsize = tree_capacity (this->vector_set.size ());
         const size_t tsize = tree_capacity (elements.size ());
 
         // moving the given elements to the internal data structure
@@ -241,9 +243,11 @@ namespace posets::utils {
         // NOLINTBEGIN(boost-use-ranges)
         std::iota (points.begin (), points.end (), 0);
         // NOLINTEND(boost-use-ranges)
-        if (this->tree == nullptr or oldsize < tsize) {
+        if (this->tree == nullptr or this->allocated_nodes < tsize) {
+          // Keep destruction safe on allocation failure; relabel has already moved values.
+          auto* replacement = new kdtree_node[tsize];
           delete[] this->tree;
-          this->tree = new kdtree_node[tsize];
+          this->tree = replacement;
           this->allocated_nodes = tsize;
         }
         recursive_build (0, points.begin (), points.end (), points.size (), 0);

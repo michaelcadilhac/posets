@@ -225,3 +225,8 @@ lazy_allocation_exe = executable('lazy-kdtree-allocation', 'lazy-kdtree-allocati
   dependencies: [posets_dep], cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
 test('antichains/lazy KD allocation failures', lazy_allocation_exe,
   env: sharing_allocation_env, timeout: 120)
+
+forest_kd_layout_exe = executable('forest-kd-layout', 'forest-kd-layout.cc',
+  dependencies: [posets_dep])
+test('layout/forest cache and KD capacity', forest_kd_layout_exe,
+  env: sharing_allocation_env, timeout: 120)

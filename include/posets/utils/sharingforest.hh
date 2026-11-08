@@ -6,10 +6,13 @@
 #include <boost/functional/hash.hpp>
 #include <cassert>
 #include <cstdint>
+#include <cstring>
 #include <iostream>
+#include <limits>
 #include <numeric>
 #include <optional>
 #include <ranges>
+#include <stdexcept>
 #include <tuple>
 #include <vector>
 
@@ -65,7 +68,7 @@ namespace posets::utils {
             size_t res = std::hash<typename V::value_type> () (k.label);
             const size_t* children = f->child_buffer + k.cbuffer_offset;
             for (size_t i = 0; i < k.numchild; i++)
-              res ^= std::hash<size_t> () (children[i]) << (i + 1);
+              boost::hash_combine (res, children[i]);
             return res;
           }
       };
@@ -110,7 +113,9 @@ namespace posets::utils {
       std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> node_union_stack;
       std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> st_intersect_stack;
       std::vector<std::tuple<size_t, size_t, bool, size_t>> covers_stack;
-      std::vector<std::unordered_map<size_t, bool>> covers_visited;
+      // The low bit records owed strictness; remaining bits identify the query.
+      std::vector<std::vector<uint32_t>> covers_visited;
+      uint32_t covers_generation {0};
       mutable std::vector<std::tuple<size_t, size_t, size_t>> get_all_stack;
       mutable std::vector<std::unordered_map<size_t, size_t>> count_cache;
       mutable std::vector<std::tuple<size_t, size_t, bool>> count_stack;
@@ -126,6 +131,7 @@ namespace posets::utils {
           cached_inter.emplace_back ();
         }
         covers_visited.resize (dim + 1);
+        covers_generation = 0;
         count_cache.resize (dim + 1);
 
         cbuffer_size = SHARINGFOREST_INIT_LAYER_SIZE * SHARINGFOREST_INIT_MAX_CHILDREN;
@@ -379,12 +385,17 @@ namespace posets::utils {
         return existing_node->second;
       }
 
-      size_t add_children (int num_child) {
-        // Double the child buffer if it is full
-        if (cbuffer_nxt + num_child >= cbuffer_size) {
-          auto* new_buffer = new size_t[cbuffer_size * 2];
-          std::memcpy (new_buffer, child_buffer, cbuffer_size * sizeof (size_t));
-          cbuffer_size *= 2;
+      size_t add_children (size_t num_child) {
+        const size_t max_children = std::numeric_limits<size_t>::max () / sizeof (size_t);
+        if (num_child > max_children - cbuffer_nxt)
+          throw std::length_error ("sharingforest child buffer capacity exceeded");
+        const size_t required = cbuffer_nxt + num_child;
+        if (required > cbuffer_size) {
+          const size_t doubled = cbuffer_size > max_children / 2 ? max_children : cbuffer_size * 2;
+          const size_t capacity = std::max (required, doubled);
+          auto* new_buffer = new size_t[capacity];
+          std::memcpy (new_buffer, child_buffer, cbuffer_nxt * sizeof (size_t));
+          cbuffer_size = capacity;
           delete[] child_buffer;
           child_buffer = new_buffer;
         }
@@ -444,7 +455,8 @@ namespace posets::utils {
             // Not found, so draft a node up
             st_node draft_node {node_s.label, 0};
             if (layer < this->dim)
-              draft_node.cbuffer_offset = add_children (node_s.numchild + node_t.numchild);
+              draft_node.cbuffer_offset =
+                  add_children (size_t {node_s.numchild} + node_t.numchild);
             layers[layer].push_back (draft_node);
           }
 
@@ -458,8 +470,9 @@ namespace posets::utils {
             // The very first thing to do is to check whether our draft of node is
             // not a repetition of something in the table already!
             auto& father = layers[layer - 1].back ();
+            auto completed_node = under_construction;
             layers[layer].pop_back ();
-            auto [union_res, domd] = add_if_not_simulated (under_construction, layer, father);
+            auto [union_res, domd] = add_if_not_simulated (completed_node, layer, father);
             cached_union[layer][std::make_pair (n_s, n_t)] = union_res;
             if (not domd)
               add_son (father, layer, union_res);
@@ -524,7 +537,7 @@ namespace posets::utils {
         st_node new_node {std::min (node_s.label, node_t.label), 0};
         // We haven't reached the bottom of the tree, we need to add children
         if (destination_layer < this->dim) {
-          new_node.cbuffer_offset = add_children (node_s.numchild + node_t.numchild);
+          new_node.cbuffer_offset = add_children (size_t {node_s.numchild} + node_t.numchild);
 
           size_t* node_s_children = child_buffer + node_s.cbuffer_offset;
           size_t* node_t_children = child_buffer + node_t.cbuffer_offset;
@@ -800,8 +813,9 @@ namespace posets::utils {
         // we'll clean later
         const st_node root_nod_e1 = layers[0][root1];
         const st_node root_nod_e2 = layers[0][root2];
-        layers[0].emplace_back (static_cast<typename V::value_type> (-1), 0,
-                                add_children (root_nod_e1.numchild + root_nod_e2.numchild));
+        layers[0].emplace_back (
+            static_cast<typename V::value_type> (-1), 0,
+            add_children (size_t {root_nod_e1.numchild} + root_nod_e2.numchild));
 
         // We are ready to start a stack-simulated DFS of the synchronized-product
         // of the trees
@@ -841,7 +855,8 @@ namespace posets::utils {
             // Not found, so draft a node up
             st_node draft_node {std::min (node_s.label, node_t.label), 0};
             if (layer < this->dim)
-              draft_node.cbuffer_offset = add_children (node_s.numchild + node_t.numchild);
+              draft_node.cbuffer_offset =
+                  add_children (size_t {node_s.numchild} + node_t.numchild);
             layers[layer].push_back (draft_node);
           }
 
@@ -896,9 +911,13 @@ namespace posets::utils {
           return not strict;
         // Stack with tuples (layer, node id, strictness, child id)
         covers_stack.clear ();
-        // Visited cache (reused across calls)
-        for (auto& m : covers_visited)
-          m.clear ();
+        // Clear only on generation wrap, avoiding per-visited-node allocations.
+        covers_generation += uint32_t {2};
+        if (covers_generation == 0) {
+          for (auto& stamps : covers_visited)
+            std::ranges::fill (stamps, uint32_t {0});
+          covers_generation = 2;
+        }
 
         // Add all roots at dimension 0 such that their labels cover the first
         // component of the given vector
@@ -920,25 +939,22 @@ namespace posets::utils {
           // if this node has been visited, it means this node is useless
           // NOTE: this works only because we are doing a DFS and not a BFS
           if (child == 0) {
-            auto res = covers_visited[lay].find (node);
+            auto& stamps = covers_visited[lay];
+            if (stamps.size () < layers[lay].size ())
+              stamps.resize (layers[lay].size (), 0);
+            uint32_t& stamp = stamps[node];
             // if we visited with strictness then we can safely exit only if
             // we come back with strictness prev_strict -> owe_strict, i.e.
             // not prev_strict or owe_strict
-            if (res != covers_visited[lay].end ()) {
-              if ((not res->second) or owe_strict) {
+            if ((stamp & ~uint32_t {1}) == covers_generation) {
+              if ((stamp & uint32_t {1}) == 0 or owe_strict) {
 #ifndef NDEBUG
                 std::cout << "Avoided node in covers check, DFS cache helps.\n";
 #endif
                 continue;
               }
-              // we conjoin with previous result if any to make sure we have
-              // more early exits based on implication condition above
-              covers_visited[lay][node] = res->second and owe_strict;
             }
-            else {
-              // no early exit? then mark the node as visited and keep going
-              covers_visited[lay][node] = owe_strict;
-            }
+            stamp = covers_generation | static_cast<uint32_t> (owe_strict);
           }
           const auto parent = layers[lay][node];
 
