@@ -137,6 +137,66 @@ namespace {
     }
   }
   template <bool Cascade>
+  void preflight_construction () {
+    using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
+    const std::array fixtures {
+        region (65, logical {1, 1, -1}),
+        region {{-1, -1, -1}, {0, 0, -1}, {1, 1, 0}, {2, 2, 0}, {2, 2, 0}},
+        region {{2, 2, 0}, {1, 1, 0}, {0, 0, -1}, {-1, -1, -1}},
+        region {{4, 4, 0}, {3, 0, -1}, {0, 3, 0}, {4, 4, 0}},
+        region {{0, 0, -1}, {1, 1, -1}, {1, 1, -1}, {2, 2, 0}, {3, 0, 0}, {4, 4, 0}},
+        region {{0, 0, -1}, {1, 1, -1}, {1, 1, -1}, {2, 2, 0}, {3, 0, 0}}};
+    for (size_t which = 0; which < fixtures.size (); ++which)
+      for (const size_t min_index : {size_t {1}, size_t {32}}) {
+        const auto& rows = fixtures[which];
+        posets::downsets::lazy_kdtree_policy policy;
+        policy.min_index_size = min_index;
+        policy.bulk_scan_limit = 100;
+        std::vector<scalar_vector> input;
+        for (const auto& row : rows)
+          input.push_back (vector<scalar_vector> (row));
+        S subject (std::move (input), policy);
+        observe (subject, rows, rows);
+        const size_t retained = maxima (rows).size ();
+        require (subject.size () == retained and subject.storage ().created_ids == retained and
+                     subject.storage ().compactions == 1 and
+                     subject.storage ().rebuilds == (retained >= min_index ? 1U : 0U),
+                 "preflight/fallback staged intermediate epochs");
+#if POSETS_LAZY_KDTREE_STATS
+        // Late incomparable pairs need four preflight tests, then either five
+        // coverage tests with a final dominator, or six while retaining both maxima.
+        const size_t comparisons = which < 4 ? rows.size () - 1 : (which == 4 ? 9 : 10);
+        require (subject.storage ().bulk_comparisons == comparisons,
+                 "preflight/fallback comparison count is incorrect");
+#endif
+      }
+  }
+  template <class T, bool Cascade>
+  void wide_preflight () {
+    using V = posets::vectors::vector_backed<T>;
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    const T low = std::numeric_limits<T>::min ();
+    const T high = std::numeric_limits<T>::max ();
+    const std::array<std::array<T, 2>, 4> rows {
+        {{low, low}, {low, high}, {high, high}, {high, high}}};
+    std::vector<V> input;
+    for (const auto& row : rows)
+      input.emplace_back (std::span<const T> (row));
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.min_index_size = 1;
+    S subject (std::move (input), policy);
+    const V maximum {std::span<const T> (rows.back ())};
+    const V lesser {std::span<const T> (rows[1])};
+    require (subject.size () == 1 and (*subject.begin ())[0] == high and
+                 (*subject.begin ())[1] == high and subject.contains (maximum) and
+                 not subject.dominates (maximum, true) and subject.dominates (lesser, true),
+             "full-width preflight dominance/strictness is incorrect");
+#if POSETS_LAZY_KDTREE_STATS
+    require (subject.storage ().bulk_comparisons == rows.size () - 1,
+             "full-width preflight was not linear");
+#endif
+  }
+  template <bool Cascade>
   void bulk_statistics () {
     using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
     posets::downsets::lazy_kdtree_policy policy;
@@ -150,19 +210,19 @@ namespace {
     require (subject.storage ().bulk_scan_limit == policy.bulk_scan_limit,
              "storage omitted the selected constructor cutoff");
 #if POSETS_LAZY_KDTREE_STATS
-    // In lexicographic order these six rows require 0+1+2+2+3+1 coverage tests.
-    require (subject.storage ().bulk_comparisons == 9 and
+    // One incomparable preflight test, then 0+1+2+2+3+1 sorted coverage tests.
+    require (subject.storage ().bulk_comparisons == 10 and
                  subject.query_statistics ().comparisons == 0 and
                  subject.query_statistics ().pending_comparisons == 0,
              "bulk coverage work was omitted or conflated with indexed queries");
     require (subject.contains (vector<scalar_vector> ({2, 1})), "counter fixture membership");
-    require (subject.storage ().bulk_comparisons == 9,
+    require (subject.storage ().bulk_comparisons == 10,
              "membership changed construction comparison accounting");
     S moved (std::move (subject));
-    require (moved.storage ().bulk_comparisons == 9 and subject.storage ().bulk_comparisons == 0,
+    require (moved.storage ().bulk_comparisons == 10 and subject.storage ().bulk_comparisons == 0,
              "move lost or duplicated construction counters");
     moved.rebuild ();
-    require (moved.storage ().bulk_comparisons == 9,
+    require (moved.storage ().bulk_comparisons == 10,
              "frozen-index replacement reset construction comparison accounting");
     moved.reset_query_statistics ();
     require (moved.storage ().bulk_comparisons == 0,
@@ -425,6 +485,14 @@ namespace {
   }
 }
 int main () try {
+  preflight_construction<true> ();
+  preflight_construction<false> ();
+  wide_preflight<int16_t, true> ();
+  wide_preflight<int32_t, true> ();
+  wide_preflight<int64_t, true> ();
+  wide_preflight<int16_t, false> ();
+  wide_preflight<int32_t, false> ();
+  wide_preflight<int64_t, false> ();
   bulk_statistics<true> ();
   bulk_statistics<false> ();
   bulk_construction<scalar_vector, true> ();

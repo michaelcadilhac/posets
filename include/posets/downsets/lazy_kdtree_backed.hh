@@ -191,42 +191,65 @@ namespace posets::downsets {
           return;
         }
 
-        // Descending lexicographic order puts every possible strict dominator
-        // before its candidate, without sums or assumptions about V::operator<.
-        // Ties retain the first original duplicate deterministically.
-        std::vector<size_t> order (values.size ());
-        // Keep this C++20 utility independent of an additional Boost header.
-        std::iota (order.begin (), order.end (), 0);  // NOLINT(boost-use-ranges)
-        std::ranges::sort (order, [&] (size_t lhs, size_t rhs) {
-          const V& a = values[lhs];
-          const V& b = values[rhs];
-          for (size_t d = 0; d < dimension; ++d) {
-            const auto left = a[d];
-            const auto right = b[d];
-            if (left != right)
-              return left > right;
-          }
-          return lhs < rhs;
-        });
-        size_t kept = 0;
-        for (const auto candidate : order) {
-          const V& value = values[candidate];
-          bool covered = false;
-          for (size_t i = 0; i < kept; ++i) {
+        // A representative dominating all visited rows needs no sort scratch.
+        // Never consume payloads here: an incomparable row requires the full path.
+        size_t representative = 0;
+        size_t next = 1;
+        for (; next < values.size (); ++next) {
 #if POSETS_LAZY_KDTREE_STATS
-            ++bulk_comparisons;
+          ++bulk_comparisons;
 #endif
-            if (value.partial_order (values[order[i]]).leq ()) {
-              covered = true;
-              break;
-            }
-          }
-          if (not covered)
-            order[kept++] = candidate;  // Only overwrite already visited slots.
+          const V& value = values[next];
+          auto relation = value.partial_order (values[representative]);
+          if (relation.leq ())
+            continue;  // Equality retains the first original duplicate.
+          if (relation.geq ())
+            representative = next;
+          else
+            break;
         }
-        order.resize (kept);
-        rebuild_from (kept, dimension, [&] (id_type id) -> const V& { return values[order[id]]; });
-        maxima.reserve (kept);
+        std::vector<size_t> order;
+        if (next == values.size ()) {
+          order.push_back (representative);
+        }
+        else {
+          // Lexicographic descent puts every strict dominator before its
+          // candidate, without sums or assumptions about V::operator<.
+          order.resize (values.size ());
+          // Keep this C++20 utility independent of an additional Boost header.
+          std::iota (order.begin (), order.end (), 0);  // NOLINT(boost-use-ranges)
+          std::ranges::sort (order, [&] (size_t lhs, size_t rhs) {
+            const V& a = values[lhs];
+            const V& b = values[rhs];
+            for (size_t d = 0; d < dimension; ++d) {
+              const auto left = a[d];
+              const auto right = b[d];
+              if (left != right)
+                return left > right;
+            }
+            return lhs < rhs;
+          });
+          size_t kept = 0;
+          for (const auto candidate : order) {
+            const V& value = values[candidate];
+            bool covered = false;
+            for (size_t i = 0; i < kept; ++i) {
+#if POSETS_LAZY_KDTREE_STATS
+              ++bulk_comparisons;
+#endif
+              if (value.partial_order (values[order[i]]).leq ()) {
+                covered = true;
+                break;
+              }
+            }
+            if (not covered)
+              order[kept++] = candidate;  // Only overwrite already visited slots.
+          }
+          order.resize (kept);
+        }
+        rebuild_from (order.size (), dimension,
+                      [&] (id_type id) -> const V& { return values[order[id]]; });
+        maxima.reserve (order.size ());
         // The nothrow path has no allocations/comparisons after consumption starts.
         // Throwing moves use the same input-preserving copy path as insert().
         for (const auto original : order)

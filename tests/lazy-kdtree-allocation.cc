@@ -32,9 +32,17 @@ namespace {
     expected.insert (expected.end (), rhs.begin (), rhs.end ());
     expected.push_back (expected.front ());
     expected.push_back ({-1, -1, -1});
+    if (mode == 3 or mode == 4)
+      expected = {{-1, -1, -1}, {0, 0, -1}, {1, 1, 0}, {1, 1, 0}, {2, 2, 0}};
+    else if (mode == 5)
+      expected = region (8, logical {1, 1, -1});
+    else if (mode == 6)
+      expected = {{0, 0, -1}, {1, 1, -1}, {1, 1, -1}, {2, 2, 0}, {3, 0, 0}, {4, 4, 0}};
     posets::downsets::lazy_kdtree_policy policy;
     policy.leaf_size = 2;
     policy.min_index_size = mode == 0 ? 1000 : 3;
+    if (mode == 4)
+      policy.min_index_size = 1;
     policy.min_buffer = 4;
     policy.bulk_scan_limit = mode == 2 ? 0 : 4096;
     for (long fail = 0; fail < 2048; ++fail) {
@@ -211,7 +219,7 @@ namespace {
   static_assert (posets::Vector<throwing_move>);
   template <class V, bool Cascade>
   void test () {
-    for (int mode = 0; mode < 3; ++mode)
+    for (int mode = 0; mode < 7; ++mode)
       std::cout << "cascade=" << Cascade << " construction_mode=" << mode
                 << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";
     for (int operation = 0; operation < 6; ++operation)

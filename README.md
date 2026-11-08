@@ -344,8 +344,12 @@ optimal choices. An explicit `rebuild()` resets the ID epoch without changing th
 represented set.
 
 Vector-input construction validates all dimensions before consuming payloads.
-Up to `bulk_scan_limit` inputs (default 4096), it sorts indices in descending
-coordinate lexicographic order and scans retained maxima for coverage. A later
+Up to `bulk_scan_limit` inputs (default 4096), it first looks for one representative
+dominating all rows visited so far. Covered/equal rows preserve it; a strict
+dominator replaces it. If this completes, only that row is staged, avoiding full
+sort scratch for dominance chains, duplicates, or a dominant row followed by a
+covered cloud. An incomparable row falls back to sorting all original indices in
+descending coordinate lexicographic order and scanning retained maxima. A later
 candidate cannot dominate an earlier retained maximum; duplicates are covered.
 This uses no coordinate sums or Vector total-order operator, including for
 full-width signed values. It then stages dense maps and one frozen index (or a
@@ -388,8 +392,8 @@ Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
 collect query/node/leaf visits, full comparisons, binary searches and bridge
 corrections. Index query counts exclude requests answered by the pending
 buffer; pending comparison counts include membership and retirement checks.
-`storage().bulk_comparisons` separately counts coverage partial-order calls in
-bulk construction, including duplicate rejection; it excludes the coordinate
+`storage().bulk_comparisons` separately counts preflight and coverage partial-order
+calls in bulk construction, including duplicate rejection; it excludes the coordinate
 comparisons used for lexicographic sorting. Frozen index counters restart on
 index replacement, whereas pending and bulk comparison counters persist until
 `reset_query_statistics()` (which clears all three) or object clearing/replacement.
