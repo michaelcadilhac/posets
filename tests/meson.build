@@ -206,7 +206,8 @@ foreach control : layout_controls
   layout_memory = executable('layout-memory-' + control[0], 'layout-bm.cc',
     dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args + ['-DPOSETS_TRACK_ALLOCATIONS=1'])
   test('layout/memory and shape oracles/' + control[0], find_program('python3'),
-    args: [meson.current_source_dir() / 'layout-smoke.py', layout_memory], timeout: 120)
+    args: [meson.current_source_dir() / 'layout-smoke.py', layout_memory],
+    env: sharing_allocation_env, timeout: 120)
 endforeach
 compact_allocation_exe = executable('sharingtrie-compact-allocation',
   'sharingtrie-allocation.cc', dependencies: [posets_dep],

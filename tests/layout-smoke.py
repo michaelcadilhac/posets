@@ -10,6 +10,7 @@ for shape in ('random', 'prefix', 'suffix'):
                                 capture_output=True, text=True, check=True, timeout=15)
         fields = dict(pair.split('=', 1) for pair in result.stdout.split())
         assert fields['heap_tracking'] == '1', fields
+        assert int(fields['build_allocations']) > 0, fields
         assert fields['checked'] == '1' and fields['query_allocations'] == '0', fields
         assert int(fields['build_heap_peak']) >= int(fields['heap_before']), fields
         assert int(fields['rebuild_heap_peak']) >= int(fields['rebuild_heap_before']), fields

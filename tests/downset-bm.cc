@@ -407,6 +407,7 @@ namespace {
   template <class V> using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
   template <class V> using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
   template <class V> using block_b8_scalar = posets::downsets::block_sharingtrie_backed<V, 8, false>;
+  template <class V> using block_b8_simd = posets::downsets::block_sharingtrie_backed<V, 8>;
   template <class V> using block_b16_scalar = posets::downsets::block_sharingtrie_backed<V, 16, false>;
   template <class V> using block_b16_simd = posets::downsets::block_sharingtrie_backed<V, 16>;
   template <class V> using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
@@ -425,7 +426,7 @@ using set_types = template_type_list<
   posets::downsets::sharingtree_backed,
   posets::downsets::simple_sharingtree_backed,
   posets::downsets::sharingtrie_backed,
-  posets::downsets::block_sharingtrie_backed,
+  block_b8_simd,
 #ifdef POSETS_MATRIX_ONLY
   block_b1_scalar,
   block_b4_scalar,

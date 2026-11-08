@@ -65,8 +65,8 @@ struct set_name {
 template <typename S>
 struct full_name {
     static auto get () {
-      using V = typename S::value_type;
-      return get_set_name (S) + "<" + get_vector_name (V) + ">";
+      using value_type = typename S::value_type;
+      return get_set_name (S) + "<" + get_vector_name (value_type) + ">";
     }
 };
 #define get_full_name(S) full_name<S>::get ()
