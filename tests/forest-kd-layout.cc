@@ -1,11 +1,13 @@
 #include "allocation-failure.hh"
 #include "matrix-check.hh"
+#include <type_traits>
 
 #include <array>
 #include <bit>
 #include <iostream>
 #include <limits>
 
+#include <posets/downsets/simple_sharingtree_backed.hh>
 #include <posets/utils/kdtree.hh>
 #include <posets/utils/sharingforest.hh>
 #include <posets/vectors.hh>
@@ -16,6 +18,8 @@ namespace {
   using matrix_check::require;
   using V = posets::vectors::vector_backed<int16_t>;
   using forest_type = posets::utils::sharingforest<V>;
+  using simple_tree = posets::downsets::simple_sharingtree_backed<V>;
+  static_assert (not std::is_nothrow_constructible_v<simple_tree, std::vector<V>&&>);
 
   std::vector<V> values (const region& rows) {
     std::vector<V> result;
@@ -177,6 +181,27 @@ namespace {
       require (threw, "KD rebuild allocation failure not injected");
     }
   }
+
+  void simple_tree_failure () {
+    const region rows {{3, 1, 2}};
+    const simple_tree keeper (values (rows));
+    auto input = values (rows);
+    bool propagated = false;
+    try {
+      // A live same-dimension forest makes the first allocation occur inside reset_tree.
+      allocations_left = 0;
+      simple_tree failed (std::move (input));
+    } catch (const std::bad_alloc&) {
+      propagated = true;
+    }
+    allocations_left = -1;
+    require (propagated, "simple sharing tree allocation failure did not propagate");
+    // This early failure precedes forest insertion; no general rebuild rollback is promised.
+    const auto query = matrix_check::vector<V> (rows.front ());
+    require (keeper.size () == 1 and keeper.contains (query), "live shared tree changed");
+    const simple_tree retry (values (rows));
+    require (retry.size () == 1 and retry.contains (query), "simple tree retry failed");
+  }
 }
 
 int main () try {
@@ -184,7 +209,9 @@ int main () try {
   shared_suffixes ();
   union_lifecycle ();
   kd_capacity ();
-  std::cout << "forest query cache, wide spans, union lifecycle and KD capacity PASS\n";
+  simple_tree_failure ();
+  std::cout
+      << "forest cache, spans, union, KD capacity and simple tree failure propagation PASS\n";
 } catch (const std::exception& error) {
   std::cerr << error.what () << '\n';
   return 1;

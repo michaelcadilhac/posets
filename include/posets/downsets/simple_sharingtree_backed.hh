@@ -43,7 +43,7 @@ namespace posets::downsets {
 
       // Code borrowed from kdtree_backed, same idea as there
       // to keep the antichain of max elements only
-      void reset_tree (std::vector<V>&& elements) noexcept {
+      void reset_tree (std::vector<V>&& elements) {
         this->vector_set = utils::reduce_to_maxima (std::move (elements));
         std::vector<V> antichain;
         antichain.reserve (this->vector_set.size ());
@@ -73,7 +73,7 @@ namespace posets::downsets {
       simple_sharingtree_backed& operator= (const simple_sharingtree_backed&) = delete;
       simple_sharingtree_backed& operator= (simple_sharingtree_backed&&) = default;
 
-      simple_sharingtree_backed (std::vector<V>&& elements) noexcept {
+      simple_sharingtree_backed (std::vector<V>&& elements) {
         init_forest (elements.begin ()->size ());
         reset_tree (std::move (elements));
         assert (this->is_antichain ());
