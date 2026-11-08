@@ -48,27 +48,33 @@ namespace posets::downsets {
 #endif
 
       lazy_kdtree_backed (lazy_kdtree_policy settings, empty_tag) : policy (settings) {}
-      template <class Float>
-      [[nodiscard]] static bool finite_fraction (Float value) {
-        // Fast-math may assume finite inputs during floating-point classification.
-        // Inspect binary64's exponent without a floating operation.
+      template <bool Buffer, class Float>
+      [[nodiscard]] static bool valid_fraction (Float value) {
+        // Integer ordering validates the complete binary64 interval even when
+        // fast-math assumes finite inputs or treats subnormals as signed zero.
         if constexpr (std::numeric_limits<Float>::is_iec559 and
                       std::numeric_limits<Float>::digits == 53 and
                       std::numeric_limits<Float>::radix == 2 and
                       std::numeric_limits<Float>::max_exponent == 1024 and
                       sizeof (Float) == sizeof (uint64_t)) {
-          constexpr uint64_t exponent = UINT64_C (0x7ff0000000000000);
-          return (std::bit_cast<uint64_t> (value) & exponent) != exponent;
+          constexpr uint64_t one = UINT64_C (0x3ff0000000000000);
+          constexpr uint64_t negative_zero = UINT64_C (0x8000000000000000);
+          const auto bits = std::bit_cast<uint64_t> (value);
+          if constexpr (Buffer)
+            return bits > 0 and bits <= one;
+          else
+            return bits < one or bits == negative_zero;
         }
         else {
-          return std::isfinite (value);
+          // Other representations retain the compiler's floating-point rules.
+          return std::isfinite (value) and
+                 (Buffer ? value > 0 and value <= 1 : value >= 0 and value < 1);
         }
       }
       static void validate (const lazy_kdtree_policy& settings) {
         if (settings.leaf_size == 0 or settings.min_index_size == 0 or settings.min_buffer == 0 or
-            not finite_fraction (settings.buffer_fraction) or settings.buffer_fraction <= 0 or
-            settings.buffer_fraction > 1 or not finite_fraction (settings.dead_fraction) or
-            settings.dead_fraction < 0 or settings.dead_fraction >= 1)
+            not valid_fraction<true> (settings.buffer_fraction) or
+            not valid_fraction<false> (settings.dead_fraction))
           throw std::invalid_argument ("invalid lazy_kdtree rebuild policy");
       }
       template <class T>

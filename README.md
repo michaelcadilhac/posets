@@ -328,10 +328,14 @@ the search work removed, not an end-to-end speedup.
 
 `lazy_kdtree_policy` can be passed after either construction input. Defaults are
 leaf size 16, minimum indexed set/buffer sizes 32, buffer fraction 0.25 and dead-ID
-fraction 0.25. The buffer trigger grows proportionally to live size; tiny sets
+fraction 0.25. The buffer fraction must be in `(0,1]`, and the dead fraction in
+`[0,1)` (either signed zero is accepted for the latter). Binary64 policy validation
+uses integer bit ordering, including for subnormals, infinities and NaNs, so
+`-Ofast` cannot change these accepted intervals. Other floating representations
+use standard classification/comparisons and inherit the compiler's floating-point
+assumptions. The buffer trigger grows proportionally to live size; tiny sets
 stay buffer-only. Physical pending tombstones count toward maintenance, so
-repeated dominating inserts do not accumulate unbounded retired IDs. Fractions
-must be finite, with `0 < buffer_fraction <= 1` and `0 <= dead_fraction < 1`.
+repeated dominating inserts do not accumulate unbounded retired IDs.
 The optional `max_index_bytes` trigger counts frozen index and ID-buffer/map
 capacity when dead history can be reclaimed; it is a maintenance trigger, not a
 hard process-memory limit. Thresholds are heuristics, with no amortized runtime
