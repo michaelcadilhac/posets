@@ -105,7 +105,7 @@ sharing_allocation_env.append('VALGRIND_OPTS',
   '--soname-synonyms=somalloc=nouserintercepts', separator: ' ')
 test('antichains/sharing allocation failures', sharing_allocation_exe, env: sharing_allocation_env)
 
-# Keep the 14-backend matrix on the two dynamic vector representations. Synthetic
+# Keep the 24-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 # GCC on Darwin/arm64 does not accept -march=native. Keep that flag on x86,
 # where it exercises wider registers; other targets use their compiler default.
