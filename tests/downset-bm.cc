@@ -422,9 +422,6 @@ namespace {
   template <class V> using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
 }
 
-#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)
-using set_types = template_type_list<POSETS_MATRIX_BACKEND>;
-#else
 using set_types = template_type_list<
   posets::downsets::bboxtree_backed,
   posets::downsets::comptrie_backed,
@@ -453,7 +450,6 @@ using set_types = template_type_list<
   posets::downsets::skiplist_backed,
   posets::downsets::cst_backed
   >;
-#endif
 
 
 namespace {
@@ -494,7 +490,11 @@ namespace {
 int main (int argc, char* argv[]) try {
   const char* prog = argv[0];
 
+#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)
+  register_maker<false, POSETS_MATRIX_BACKEND> ((vector_types*) nullptr);
+#else
   register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
+#endif
 
   while (true) {
     const int c = getopt_long (argc, argv, "hmc:s:t:vp:", LONG_OPTIONS.data (), nullptr);

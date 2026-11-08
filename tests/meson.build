@@ -148,6 +148,15 @@ foreach mode : ['compatible', 'native', 'max']
   test('antichains/sharing backends/' + mode, sharing_antichain_exe)
 endforeach
 
+selected_kd_matrix_exe = executable('downset-matrix-kd-selected', 'downset-bm.cc',
+  dependencies: [posets_dep], cpp_args: ['-DPOSETS_MATRIX_ONLY',
+    '-DPOSETS_MATRIX_BACKEND=posets::downsets::kdtree_backed',
+    '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE'] + matrix_target_args)
+foreach vector : ['vector_backed', 'simd_vector_backed']
+  test('matrix/single-backend registration/' + vector, selected_kd_matrix_exe,
+    args: ['--check=nonempty', 'kdtree_backed', vector + '<test_value_type>'])
+endforeach
+
 native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
   dependencies: [posets_dep], cpp_args: ['-DSIMD_IS_NATIVE=1', '-DSIMD_IS_MAX=1'])
 test('matrix/native overrides legacy max', native_precedence_exe)
