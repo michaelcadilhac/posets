@@ -26,6 +26,58 @@ namespace {
     return result;
   }
   template <class V, bool Cascade>
+  long construction_sweep (int mode) {
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    auto expected = original ();
+    expected.insert (expected.end (), rhs.begin (), rhs.end ());
+    expected.push_back (expected.front ());
+    expected.push_back ({-1, -1, -1});
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.leaf_size = 2;
+    policy.min_index_size = mode == 0 ? 1000 : 3;
+    policy.min_buffer = 4;
+    policy.bulk_scan_limit = mode == 2 ? 0 : 4096;
+    for (long fail = 0; fail < 2048; ++fail) {
+      struct reset {
+          ~reset () { allocations_left = -1; }
+      } guard;
+      std::vector<V> input;
+      const auto restore_input = [&] {
+        input.clear ();
+        for (const auto& row : expected)
+          input.push_back (vector<V> (row));
+      };
+      restore_input ();
+      std::optional<S> result;
+      bool threw = false;
+      try {
+        allocations_left = fail;
+        result.emplace (std::move (input), policy);
+      } catch (const std::bad_alloc&) {
+        threw = true;
+      }
+      allocations_left = -1;
+      require (input.size () == expected.size (), "constructor stole the input container");
+      if (threw) {
+        if (mode != 2 or
+            not(std::is_nothrow_move_constructible_v<V> and std::is_nothrow_move_assignable_v<V>))
+          for (size_t i = 0; i < input.size (); ++i)
+            require (unpack (input[i]) == expected[i], "bulk failure consumed constructor input");
+        // The indexed fallback retains its earlier-input consumption contract.
+        restore_input ();
+        result.emplace (std::move (input), policy);
+      }
+      check (*result, expected, expected);
+      if (mode != 2)
+        require (result->storage ().created_ids == result->size () and
+                     result->storage ().compactions == 1,
+                 "bulk constructor retained intermediate epochs");
+      if (not threw)
+        return fail;
+    }
+    throw std::runtime_error ("lazy constructor allocation sweep did not finish");
+  }
+  template <class V, bool Cascade>
   long sweep (int operation) {
     using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
     posets::downsets::lazy_kdtree_policy policy;
@@ -141,6 +193,13 @@ namespace {
         allocation_failure::charge ();
         return base::partial_order (other);
       }
+      auto operator[] (size_t coordinate) const {
+        allocation_failure::charge ();
+        return base::operator[] (coordinate);
+      }
+      bool operator< (const throwing_move&) const {
+        throw std::logic_error ("Vector total order must not be used by lazy construction");
+      }
       throwing_move copy () const { return throwing_move (base::copy ()); }
       throwing_move meet (const throwing_move& other) const {
         return throwing_move (base::meet (other));
@@ -152,6 +211,9 @@ namespace {
   static_assert (posets::Vector<throwing_move>);
   template <class V, bool Cascade>
   void test () {
+    for (int mode = 0; mode < 3; ++mode)
+      std::cout << "cascade=" << Cascade << " construction_mode=" << mode
+                << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";
     for (int operation = 0; operation < 6; ++operation)
       std::cout << "cascade=" << Cascade << " operation=" << operation
                 << " injected_sites=" << sweep<V, Cascade> (operation) << " PASS\n";

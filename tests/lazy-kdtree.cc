@@ -1,7 +1,9 @@
 #include "matrix-check.hh"
 
+#include <array>
 #include <cstdint>
 #include <iostream>
+#include <limits>
 #include <optional>
 #include <random>
 #include <set>
@@ -32,6 +34,140 @@ namespace {
           wanted, [&] (const auto& old) { return raw != old and below (raw, old); });
       require (actual.dominates (q, true) == strict, "incorrect strict lazy dominance");
     }
+  }
+  template <class V, bool Cascade>
+  void bulk_construction () {
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    std::mt19937 random (73);
+    for (const size_t dim : {1U, 2U, 3U, 7U, 17U, 33U, 65U, 129U}) {
+      posets::vectors::bool_threshold = posets::vectors::bitset_threshold = dim / 2;
+      region rows;
+      for (size_t i = 0; i < 80; ++i) {
+        logical row (dim);
+        for (size_t d = 0; d < dim; ++d)
+          row[d] = d < dim / 2 ? static_cast<int> (random () % 7) - 3
+                               : static_cast<int> (random () % 2) - 1;
+        rows.push_back (std::move (row));
+      }
+      rows.push_back (rows[5]);
+      logical bottom (dim, -1);
+      std::fill_n (bottom.begin (), dim / 2, -4);
+      rows.push_back (bottom);
+      auto queries = rows;
+      queries.emplace_back (dim, 0);
+      for (int permutation = 0; permutation < 3; ++permutation) {
+        if (permutation == 1)
+          std::ranges::reverse (rows);
+        else if (permutation == 2)
+          std::shuffle (rows.begin (), rows.end (), random);
+        for (const size_t limit : {size_t {0}, rows.size () - 1, rows.size (), rows.size () + 1}) {
+          posets::downsets::lazy_kdtree_policy policy;
+          policy.min_index_size = 3;
+          policy.min_buffer = 4;
+          policy.leaf_size = 2;
+          policy.bulk_scan_limit = limit;
+          std::vector<V> input;
+          for (const auto& row : rows)
+            input.push_back (vector<V> (row));
+          S subject (std::move (input), policy);
+          require (input.size () == rows.size (), "constructor stole the input container");
+          observe (subject, rows, queries);
+          if (limit >= rows.size ()) {
+            const auto stats = subject.storage ();
+            require (stats.created_ids == subject.size () and stats.retired_ids == 0 and
+                         stats.compactions == 1,
+                     "bulk constructor retained history or staged repeatedly");
+            require (
+                stats.rebuilds == static_cast<size_t> (subject.size () >= policy.min_index_size),
+                "bulk constructor ignored the frozen-index size threshold");
+          }
+        }
+      }
+    }
+  }
+
+  template <class T, bool Cascade>
+  void wide_bulk_construction () {
+    using V = posets::vectors::vector_backed<T>;
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    using row_type = std::array<T, 2>;
+    const T low = std::numeric_limits<T>::min ();
+    const T high = std::numeric_limits<T>::max ();
+    const auto near_low = static_cast<T> (low + 1);
+    const auto near_high = static_cast<T> (high - 1);
+    std::vector<row_type> rows {{low, high},      {high, low},           {0, 0},
+                                {low, low},       {high, near_high},     {high, near_high},
+                                {near_low, high}, {near_high, near_high}};
+    const auto below = [] (const row_type& a, const row_type& b) {
+      return a[0] <= b[0] and a[1] <= b[1];
+    };
+    std::set<row_type> wanted;
+    for (const auto& row : rows)
+      if (std::ranges::none_of (
+              rows, [&] (const auto& other) { return row != other and below (row, other); }))
+        wanted.insert (row);
+    for (int permutation = 0; permutation < 2; ++permutation) {
+      std::ranges::reverse (rows);
+      for (const size_t limit : {size_t {0}, rows.size ()}) {
+        posets::downsets::lazy_kdtree_policy policy;
+        policy.min_index_size = policy.leaf_size = 1;
+        policy.bulk_scan_limit = limit;
+        std::vector<V> input;
+        for (const auto& row : rows)
+          input.emplace_back (std::span<const T> (row));
+        S subject (std::move (input), policy);
+        std::set<row_type> seen;
+        for (const auto& value : subject)
+          seen.insert ({value[0], value[1]});
+        require (seen == wanted and subject.size () == wanted.size (),
+                 "full-width signed bulk reduction is incorrect");
+        auto queries = rows;
+        queries.push_back ({high, high});
+        for (const auto& query : queries) {
+          const V value {std::span<const T> (query)};
+          const bool ordinary =
+              std::ranges::any_of (rows, [&] (const auto& old) { return below (query, old); });
+          const bool strict = std::ranges::any_of (
+              rows, [&] (const auto& old) { return query != old and below (query, old); });
+          require (
+              subject.dominates (value) == ordinary and subject.dominates (value, true) == strict,
+              "full-width signed constructor membership is incorrect");
+        }
+      }
+    }
+  }
+  template <bool Cascade>
+  void bulk_statistics () {
+    using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.min_index_size = 2;
+    policy.leaf_size = 1;
+    policy.bulk_scan_limit = 100;
+    std::vector<scalar_vector> input;
+    for (const auto& row : region {{3, 0}, {2, 1}, {2, 1}, {1, 2}, {0, 3}, {0, 0}})
+      input.push_back (vector<scalar_vector> (row));
+    S subject (std::move (input), policy);
+    require (subject.storage ().bulk_scan_limit == policy.bulk_scan_limit,
+             "storage omitted the selected constructor cutoff");
+#if POSETS_LAZY_KDTREE_STATS
+    // In lexicographic order these six rows require 0+1+2+2+3+1 coverage tests.
+    require (subject.storage ().bulk_comparisons == 9 and
+                 subject.query_statistics ().comparisons == 0 and
+                 subject.query_statistics ().pending_comparisons == 0,
+             "bulk coverage work was omitted or conflated with indexed queries");
+    require (subject.contains (vector<scalar_vector> ({2, 1})), "counter fixture membership");
+    require (subject.storage ().bulk_comparisons == 9,
+             "membership changed construction comparison accounting");
+    S moved (std::move (subject));
+    require (moved.storage ().bulk_comparisons == 9 and subject.storage ().bulk_comparisons == 0,
+             "move lost or duplicated construction counters");
+    moved.rebuild ();
+    require (moved.storage ().bulk_comparisons == 9,
+             "frozen-index replacement reset construction comparison accounting");
+    moved.reset_query_statistics ();
+    require (moved.storage ().bulk_comparisons == 0,
+             "statistics reset omitted construction comparisons");
+#endif
   }
   template <class V, bool Cascade>
   void random_algebra () {
@@ -269,9 +405,40 @@ namespace {
     empty.get_backing_vector ().clear ();
     empty.insert (vector<scalar_vector> ({1, 1, 1}));
     observe (empty, {{1, 1, 1}}, {{1, 1, 1}, {2, 2, 2}});
+    for (const size_t limit : {size_t {0}, size_t {100}})
+      for (const auto& rows : {region {{1, 1}, {0}}, region {{1, 1}, {}}, region {{}, {1, 1}}}) {
+        posets::downsets::lazy_kdtree_policy policy;
+        policy.bulk_scan_limit = limit;
+        std::vector<scalar_vector> input;
+        for (const auto& row : rows)
+          input.push_back (vector<scalar_vector> (row));
+        try {
+          S invalid (std::move (input), policy);
+          require (false, "constructor accepted inconsistent/zero dimensions");
+        } catch (const std::invalid_argument&) {
+        }
+        require (input.size () == rows.size (),
+                 "dimension validation consumed the input container");
+        for (size_t i = 0; i < input.size (); ++i)
+          require (unpack (input[i]) == rows[i], "dimension validation consumed an input");
+      }
   }
 }
 int main () try {
+  bulk_statistics<true> ();
+  bulk_statistics<false> ();
+  bulk_construction<scalar_vector, true> ();
+  bulk_construction<scalar_vector, false> ();
+  bulk_construction<posets::vectors::simd_vector_backed<int8_t>, true> ();
+  bulk_construction<posets::vectors::simd_vector_backed<int8_t>, false> ();
+  bulk_construction<posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<int8_t>, 3>,
+                    true> ();
+  wide_bulk_construction<int16_t, true> ();
+  wide_bulk_construction<int32_t, true> ();
+  wide_bulk_construction<int64_t, true> ();
+  wide_bulk_construction<int16_t, false> ();
+  wide_bulk_construction<int32_t, false> ();
+  wide_bulk_construction<int64_t, false> ();
   random_algebra<scalar_vector, true> ();
   random_algebra<scalar_vector, false> ();
   random_algebra<posets::vectors::simd_vector_backed<int8_t>, true> ();

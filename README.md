@@ -343,6 +343,21 @@ claim. Coordinate 0 and default bucket sizes are controls to measure, not claime
 optimal choices. An explicit `rebuild()` resets the ID epoch without changing the
 represented set.
 
+Vector-input construction validates all dimensions before consuming payloads.
+Up to `bulk_scan_limit` inputs (default 4096), it sorts indices in descending
+coordinate lexicographic order and scans retained maxima for coverage. A later
+candidate cannot dominate an earlier retained maximum; duplicates are covered.
+This uses no coordinate sums or Vector total-order operator, including for
+full-width signed values. It then stages dense maps and one frozen index (or a
+pending buffer below `min_index_size`) before moving final survivors. Allocation
+or comparison failure in this path leaves the input payloads unchanged; throwing
+moves retain the copy fallback. The input vector container itself is not stolen
+or cleared. Larger inputs use indexed insertion, whose construction can consume
+earlier inputs before a later failure; setting `bulk_scan_limit=0` forces that
+control. The scan has quadratic worst-case comparison work: 4096 is an initial
+heuristic, not a measured universal crossover. Apply and intersection keep their
+streaming reducers to limit transient payload storage.
+
 A failed insertion preserves logical generators and membership. Earlier
 successful reserves can change capacities and invalidate iterator addresses.
 Each insertion stages allocations and throwing copies before committing its
@@ -373,6 +388,17 @@ Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
 collect query/node/leaf visits, full comparisons, binary searches and bridge
 corrections. Index query counts exclude requests answered by the pending
 buffer; pending comparison counts include membership and retirement checks.
+`storage().bulk_comparisons` separately counts coverage partial-order calls in
+bulk construction, including duplicate rejection; it excludes the coordinate
+comparisons used for lexicographic sorting. Frozen index counters restart on
+index replacement, whereas pending and bulk comparison counters persist until
+`reset_query_statistics()` (which clears all three) or object clearing/replacement.
+Successful intersection installs the counters of its fresh streaming result. Use a
+Vector-level partial-order counter for total construction work across paths;
+query counters cannot recover work discarded by intermediate index replacements.
+Reset statistics after construction to measure later query phases. Storage output records
+`bulk_scan_limit`, `query_stats_enabled`, and `bulk_comparisons` for provenance;
+zero bulk comparisons with statistics disabled do not mean no scan work occurred.
 Default builds compile the increments and counter storage out.
 `storage()` reports actual node/key/bridge/ID-map capacities, pending/live/retired
 counts and rebuild/compaction counts. Known retained bytes include generator

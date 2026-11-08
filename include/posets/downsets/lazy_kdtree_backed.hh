@@ -24,7 +24,8 @@ namespace posets::downsets {
       size_t min_buffer {32};
       double buffer_fraction {0.25};
       double dead_fraction {0.25};
-      size_t max_index_bytes {0};  // Maintenance trigger, not a hard allocation limit.
+      size_t max_index_bytes {0};     // Maintenance trigger, not a hard allocation limit.
+      size_t bulk_scan_limit {4096};  // Larger inputs use indexed insertion; 0 forces it.
   };
 
   // Experimental dense antichain plus a frozen, lazily deleted bucket index.
@@ -37,6 +38,8 @@ namespace posets::downsets {
       using index_type = utils::bucket_kdtree<V, Cascade>;
       using id_type = index_type::id_type;
       static constexpr id_type none = index_type::none;
+      static constexpr bool safe_moves =
+          std::is_nothrow_move_constructible_v<V> and std::is_nothrow_move_assignable_v<V>;
       struct empty_tag {};
       lazy_kdtree_policy policy;
       std::vector<V> maxima;
@@ -45,6 +48,7 @@ namespace posets::downsets {
       size_t rebuild_count {0}, compact_count {0};
 #if POSETS_LAZY_KDTREE_STATS
       mutable uint64_t pending_comparisons {0};
+      mutable uint64_t bulk_comparisons {0};
 #endif
 
       lazy_kdtree_backed (lazy_kdtree_policy settings, empty_tag) : policy (settings) {}
@@ -83,6 +87,26 @@ namespace posets::downsets {
           throw std::length_error ("lazy_kdtree vector capacity exceeded");
         if (needed > values.capacity ())
           values.reserve (std::min (values.max_size (), needed + (needed / 2)));
+      }
+      template <class Get>
+      void rebuild_from (size_t count, size_t dimension, const Get& get) {
+        if (count > static_cast<size_t> (none) / 2)
+          throw std::length_error ("lazy_kdtree ID capacity exceeded");
+        std::vector<id_type> dense (count);
+        std::iota (dense.begin (), dense.end (), 0);
+        auto positions = dense;
+        std::vector<id_type> buffer;
+        index_type replacement;
+        if (count >= policy.min_index_size)
+          replacement.rebuild (dense, dimension, policy.leaf_size, get);
+        else
+          buffer = dense;
+        index.swap (replacement);
+        id_at_slot.swap (dense);
+        slot_of_id.swap (positions);
+        pending.swap (buffer);
+        ++compact_count;
+        rebuild_count += index.frozen_size () != 0;
       }
       [[nodiscard]] bool live (id_type id) const {
         return id < slot_of_id.size () and slot_of_id[id] != none;
@@ -128,6 +152,8 @@ namespace posets::downsets {
           index_type::statistics frozen;
           size_t live, created_ids, pending_slots, pending_live, retired_ids;
           size_t generator_object_bytes, map_bytes, known_retained_bytes, rebuilds, compactions;
+          size_t bulk_scan_limit;
+          uint64_t bulk_comparisons;
           friend std::ostream& operator<< (std::ostream& os, const statistics& s) {
             return os << "live=" << s.live << " created_ids=" << s.created_ids
                       << " pending_slots=" << s.pending_slots << " pending_live=" << s.pending_live
@@ -140,7 +166,10 @@ namespace posets::downsets {
                       << " generator_objects=" << s.generator_object_bytes
                       << " map_bytes=" << s.map_bytes
                       << " known_retained=" << s.known_retained_bytes << " rebuilds=" << s.rebuilds
-                      << " compactions=" << s.compactions;
+                      << " compactions=" << s.compactions
+                      << " bulk_scan_limit=" << s.bulk_scan_limit
+                      << " query_stats_enabled=" << POSETS_LAZY_KDTREE_STATS
+                      << " bulk_comparisons=" << s.bulk_comparisons;
           }
       };
 
@@ -148,8 +177,63 @@ namespace posets::downsets {
       explicit lazy_kdtree_backed (std::vector<V>&& values, lazy_kdtree_policy settings = {})
         : lazy_kdtree_backed (settings, empty_tag {}) {
         validate (policy);
-        for (auto& value : values)
-          insert (std::move (value));
+        if (values.empty ())
+          return;
+        const size_t dimension = values.front ().size ();
+        if (dimension == 0)
+          throw std::invalid_argument ("lazy_kdtree requires nonzero dimension");
+        for (const auto& value : values)
+          if (value.size () != dimension)
+            throw std::invalid_argument ("lazy_kdtree dimension mismatch");
+        if (values.size () > policy.bulk_scan_limit) {
+          for (auto& value : values)
+            insert (std::move (value));
+          return;
+        }
+
+        // Descending lexicographic order puts every possible strict dominator
+        // before its candidate, without sums or assumptions about V::operator<.
+        // Ties retain the first original duplicate deterministically.
+        std::vector<size_t> order (values.size ());
+        // Keep this C++20 utility independent of an additional Boost header.
+        std::iota (order.begin (), order.end (), 0);  // NOLINT(boost-use-ranges)
+        std::ranges::sort (order, [&] (size_t lhs, size_t rhs) {
+          const V& a = values[lhs];
+          const V& b = values[rhs];
+          for (size_t d = 0; d < dimension; ++d) {
+            const auto left = a[d];
+            const auto right = b[d];
+            if (left != right)
+              return left > right;
+          }
+          return lhs < rhs;
+        });
+        size_t kept = 0;
+        for (const auto candidate : order) {
+          const V& value = values[candidate];
+          bool covered = false;
+          for (size_t i = 0; i < kept; ++i) {
+#if POSETS_LAZY_KDTREE_STATS
+            ++bulk_comparisons;
+#endif
+            if (value.partial_order (values[order[i]]).leq ()) {
+              covered = true;
+              break;
+            }
+          }
+          if (not covered)
+            order[kept++] = candidate;  // Only overwrite already visited slots.
+        }
+        order.resize (kept);
+        rebuild_from (kept, dimension, [&] (id_type id) -> const V& { return values[order[id]]; });
+        maxima.reserve (kept);
+        // The nothrow path has no allocations/comparisons after consumption starts.
+        // Throwing moves use the same input-preserving copy path as insert().
+        for (const auto original : order)
+          if constexpr (safe_moves)
+            maxima.push_back (std::move (values[original]));
+          else
+            maxima.push_back (std::as_const (values)[original].copy ());
       }
       explicit lazy_kdtree_backed (V&& value, lazy_kdtree_policy settings = {})
         : lazy_kdtree_backed (settings, empty_tag {}) {
@@ -179,6 +263,7 @@ namespace posets::downsets {
         swap (compact_count, other.compact_count);
 #if POSETS_LAZY_KDTREE_STATS
         swap (pending_comparisons, other.pending_comparisons);
+        swap (bulk_comparisons, other.bulk_comparisons);
 #endif
       }
       void clear () noexcept {
@@ -242,8 +327,6 @@ namespace posets::downsets {
           retired_pending += id >= index.frozen_size ();
         const size_t buffer = maxima.size () - index.live_size () + 1 - retired_pending;
         const bool reset = should_rebuild (final_size, slot_of_id.size () + 1, buffer);
-        constexpr bool safe_moves =
-            std::is_nothrow_move_constructible_v<V> and std::is_nothrow_move_assignable_v<V>;
         std::vector<id_type> order;
         std::vector<id_type> positions;
         if (reset or not safe_moves) {
@@ -331,22 +414,8 @@ namespace posets::downsets {
           clear ();
           return;
         }
-        std::vector<id_type> dense (maxima.size ());
-        std::iota (dense.begin (), dense.end (), 0);
-        auto positions = dense;
-        std::vector<id_type> buffer;
-        index_type replacement;
-        if (maxima.size () >= policy.min_index_size)
-          replacement.rebuild (dense, maxima.front ().size (), policy.leaf_size,
-                               [this] (id_type id) -> const V& { return maxima[id]; });
-        else
-          buffer = dense;
-        index.swap (replacement);
-        id_at_slot.swap (dense);
-        slot_of_id.swap (positions);
-        pending.swap (buffer);
-        ++compact_count;
-        rebuild_count += index.frozen_size () != 0;
+        rebuild_from (maxima.size (), maxima.front ().size (),
+                      [this] (id_type id) -> const V& { return maxima[id]; });
       }
       // Whole union is incremental/basic: earlier accepted insertions remain if
       // a later one throws. RHS stays unchanged until success, then becomes empty.
@@ -387,6 +456,7 @@ namespace posets::downsets {
         index.reset_query_statistics ();
 #if POSETS_LAZY_KDTREE_STATS
         pending_comparisons = 0;
+        bulk_comparisons = 0;
 #endif
       }
       [[nodiscard]] statistics storage () const {
@@ -395,6 +465,11 @@ namespace posets::downsets {
         const size_t maps =
             (id_at_slot.capacity () + slot_of_id.capacity () + pending.capacity ()) *
             sizeof (id_type);
+#if POSETS_LAZY_KDTREE_STATS
+        const auto bulk_count = bulk_comparisons;
+#else
+        constexpr uint64_t bulk_count = 0;
+#endif
         return {frozen,
                 maxima.size (),
                 slot_of_id.size (),
@@ -405,7 +480,9 @@ namespace posets::downsets {
                 maps,
                 sizeof (*this) + frozen.bytes () - sizeof (index_type) + objects + maps,
                 rebuild_count,
-                compact_count};
+                compact_count,
+                policy.bulk_scan_limit,
+                bulk_count};
       }
       [[nodiscard]] const auto& rebuild_policy () const { return policy; }
       [[nodiscard]] auto size () const { return maxima.size (); }
