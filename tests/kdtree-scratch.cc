@@ -75,12 +75,12 @@ namespace {
     }
   }
 
-  enum class failure { none, coordinate, order, comparison };
-  failure active_failure = failure::none;
+  enum class FAILURE { NONE, COORDINATE, ORDER, COMPARISON };
+  FAILURE active_failure = FAILURE::NONE;
   long calls_left = -1;
   struct query_failure {};
 
-  void charge (failure operation) {
+  void charge (FAILURE operation) {
     if (active_failure == operation and calls_left-- == 0)
       throw query_failure {};
   }
@@ -92,11 +92,11 @@ namespace {
       struct order {
           inner_order inner;
           bool leq () {
-            charge (failure::comparison);
+            charge (FAILURE::COMPARISON);
             return inner.leq ();
           }
           bool geq () {
-            charge (failure::comparison);
+            charge (FAILURE::COMPARISON);
             return inner.geq ();
           }
       };
@@ -108,11 +108,11 @@ namespace {
       throwing_vector (throwing_vector&&) = default;
       throwing_vector& operator= (throwing_vector&&) = default;
       auto operator[] (size_t coordinate) const {
-        charge (failure::coordinate);
+        charge (FAILURE::COORDINATE);
         return base::operator[] (coordinate);
       }
       auto partial_order (const throwing_vector& other) const {
-        charge (failure::order);
+        charge (FAILURE::ORDER);
         return order {base::partial_order (other)};
       }
       throwing_vector copy () const { return throwing_vector (base::copy ()); }
@@ -129,7 +129,7 @@ namespace {
     const auto rows = ladder ();
     posets::utils::kdtree<throwing_vector> tree (values<throwing_vector> (rows));
     const auto query = matrix_check::vector<throwing_vector> ({8, 8, 0, 0, 0, 0, 0});
-    for (const auto operation : {failure::coordinate, failure::order, failure::comparison})
+    for (const auto operation : {FAILURE::COORDINATE, FAILURE::ORDER, FAILURE::COMPARISON})
       for (bool strict : {false, true}) {
         bool complete = false;
         for (long fail = 0; fail < 512; ++fail) {
@@ -142,7 +142,7 @@ namespace {
           } catch (const query_failure&) {
             threw = true;
           }
-          active_failure = failure::none;
+          active_failure = FAILURE::NONE;
           check (tree, rows);
           if (not threw) {
             require (found == not strict, "KD injected query changed its result");
