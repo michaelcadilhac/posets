@@ -197,11 +197,11 @@ namespace posets::utils {
         // if we got here, we need to check on the right recursively
         const bool r_succ =
             recursive_dominates (v, strict, (2 * node_idx) + 2, lbounds, still_to_dom);
+        lbounds[node->axis] = old_bound;
         if (r_succ)
           return true;
 
         // all that's left is to check on the left recursively, if pertinent
-        lbounds[node->axis] = old_bound;
         if (v[node->axis] > node->location or
             (v[node->axis] == node->location and node->clean_split)) {
           return false;
@@ -327,10 +327,13 @@ namespace posets::utils {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
-        // lbounds_cache is a mutable member pre-sized to dim in relabel_tree(),
-        // so no heap allocation is needed here.
-        std::ranges::fill (this->lbounds_cache, std::nullopt);
-        return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
+        // Traversal restores bounds on normal exits; throwing Vector operations may not.
+        try {
+          return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
+        } catch (...) {
+          std::ranges::fill (this->lbounds_cache, std::nullopt);
+          throw;
+        }
       }
 
       [[nodiscard]] bool is_antichain () const {

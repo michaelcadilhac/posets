@@ -243,6 +243,13 @@ forest_kd_layout_exe = executable('forest-kd-layout', 'forest-kd-layout.cc',
 test('layout/forest cache and KD capacity', forest_kd_layout_exe,
   env: sharing_allocation_env, timeout: 120)
 
+foreach mode : ['baseline', 'narrow']
+  kd_scratch_args = mode == 'narrow' ? ['-DPOSETS_KDTREE_NARROW_INDICES=1'] : []
+  kd_scratch_exe = executable('kdtree-scratch-' + mode, 'kdtree-scratch.cc',
+    dependencies: [posets_dep], cpp_args: kd_scratch_args)
+  test('layout/KD scratch restoration/' + mode, kd_scratch_exe)
+endforeach
+
 foreach mode : ['compatible', 'native', 'max']
   ranked_default_exe = executable('rank-bucketed-' + mode, 'rank-bucketed.cc',
     dependencies: [posets_dep], cpp_args:
