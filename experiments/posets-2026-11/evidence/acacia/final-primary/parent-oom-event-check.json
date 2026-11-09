@@ -1,0 +1,96 @@
+{
+  "status": "pass",
+  "scope": "Parent read-only independent sidecar/raw-label join; no rescore or rerun",
+  "artifact_sha256": "a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69",
+  "sidecars": 15,
+  "native_rows": 22860,
+  "oom_kill_observed_rows": 70,
+  "native_MEMOUT": 25,
+  "native_TIMEOUT_with_oom_kill": 45,
+  "same_seven_instances": [
+    "prioritized_arbiter_enc_pb_13_pe_.ltl",
+    "prioritized_arbiter_enc_pb_14_pe_.ltl",
+    "prioritized_arbiter_enc_pb_15_pe_.ltl",
+    "simple_arbiter_enc_pb_13_pe_.ltl",
+    "simple_arbiter_enc_pb_14_pe_.ltl",
+    "simple_arbiter_enc_pb_15_pe_.ltl",
+    "simple_arbiter_enc_pb_16_pe_.ltl"
+  ],
+  "per_arm": {
+    "anchor-e167": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "candidate-default": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "kd": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "kd-narrow": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "trie": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 3,
+      "native_TIMEOUT": 4
+    },
+    "trie-compact": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "comp": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "comp-simd": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block8": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block8-uncached": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block16": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 6,
+      "native_TIMEOUT": 1
+    },
+    "lazy-fc": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "lazy-search": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "sharingtree": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "simple-sharingtree": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "spec": {
+    "command": [
+      "/usr/bin/flock",
+      "--nonblock",
+      "/tmp/acacia-posets-benchmark-1000.lock",
+      "/usr/bin/python3",
+      "-B",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/package-draft-v2/test_refresh_package.py"
+    ],
+    "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+    "timeout": 120
+  },
+  "spec_sha256": "95e1e6ba58d523202d5c00c94c8a56ae70fb21914e6c491249ec9aaea665b5fe",
+  "helper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+  "benchlib_sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "environment_overrides": {
+    "ACACIA_CAMPAIGN_SCOPE_GUARD": "scoped-task:3325135",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "result": {
+    "stdout": "",
+    "stderr": "",
+    "returncode": 0,
+    "seconds": 0.16443918808363378,
+    "timed_out": false,
+    "stdout_bytes": 0,
+    "stderr_bytes": 103,
+    "resource_limited": false,
+    "memory_peak_bytes": 16662528,
+    "scope_unit": "acacia-posets-setup-3325135-d2b6a11e0a81.scope",
+    "max_process_rss_bytes": 27402240,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-3325135-d2b6a11e0a81.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 0.076666
+  },
+  "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/package-final-checks-v1/updater-fixtures-record.log",
+  "log_sha256": "f96363f8d8dff4c4abed7197c63606ead0bd955ea4259bdcb5fb6f47dbe53992"
+}

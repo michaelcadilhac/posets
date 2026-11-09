@@ -1,0 +1,22 @@
+{
+  "status": "static text/hash preparation only; no target import, parse/compile/test, projection or TRACE/profile workload executed",
+  "preserved_v1_manifest_sha256": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598",
+  "sole_correction": "PROFILE-PROJECTION-01 complete emitted schema and lexical numeric/type/range validation",
+  "cpp_unchanged": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2/rank-profile.cc",
+    "sha256": "04ee80861141c4e26d39c3e25939379d43d5f5ca006dd8748839338130e5a4cc"
+  },
+  "phase_schema_text_equals_actual_Cpp_keys": 42,
+  "independent_positive_fixture_equals_all_Cpp_phase_keys": true,
+  "projection_function_and_main_bytes_unchanged": true,
+  "numeric_policy": "canonical ASCII unsigned64 or signed64; explicit positive sizeof/alignment and literal flags/enums/null",
+  "preserved_boundaries": [
+    "nonzero phase/cleanup deltas accepted",
+    "no entry==exit or backend counter relationships",
+    "has_result0 descriptors unavailable even for nonzero placeholders",
+    "same allowed operation names and exact3/4 ROI sequences",
+    "all204 projection rows/192specs/12unprofiled behavior unchanged"
+  ],
+  "test_sources": "complete42-key fixture, every emitted key missing, noninteger/negative/overflow, signed64 bounds, null/index, flags/text/duplicate/extra, operation-name-only policy; unexecuted",
+  "runtime_release": "still required separately after exact V2 review"
+}

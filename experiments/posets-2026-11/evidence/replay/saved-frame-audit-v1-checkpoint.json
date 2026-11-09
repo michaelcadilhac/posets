@@ -1,0 +1,138 @@
+{
+  "status": "structural-only audit and complete-frame derivations frozen for exact review; no launch",
+  "counts": {
+    "final_named_tsv": 191,
+    "complete_frames": 189,
+    "incomplete_frames": 2,
+    "complete_frames_from_timeout_captures": 87,
+    "partial": 0,
+    "skipped": 0
+  },
+  "scope": "Complete saved framing is only eligibility; unchanged source/parser/backend qualification remains mandatory. Heldout performance stays sealed. Original stopped largerTRAIN is diagnostic/unpooled.",
+  "files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/audit-saved-frame-completeness.py",
+      "sha256": "53195ee5af1bbfbb2db078ce91d23ccc9dec08b4a19de8c04e78f5b407cf6d88"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1-spec.json",
+      "sha256": "82e0f15e73398f0ca20830094ac68c9cf8aebe89e240384b6dbf3173c7a6b526"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1-record.json",
+      "sha256": "aae1970b01509b87c8bafb7b6f20e377f5dac12fd78e26782ab0ee11a9d7fbac"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1-record.log",
+      "sha256": "c83eccb6aca83cede0d56bcb14b1f819637bb40840a9fd1dfd865fd7aadcd0c7"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/check-saved-frame-audit-fixtures.py",
+      "sha256": "bfa81b9d1221851d29d45aba591641628cf1f9f41946412250b736ff98ab1038"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-fixtures-check-spec.json",
+      "sha256": "0c0ff9d06a989f2a0c3d06a63fae768dee91e8cf18cfb62d37ea2edd7c7a360d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-fixtures-check-record.json",
+      "sha256": "4497b17326cc79f2b7c86e5f5b3666da670aa2eeeec424f3eadec9c41bad2f6e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-fixtures-check-record.log",
+      "sha256": "ce713427299887fac3d38b70543e8a0264d7d25e5581ce9b154ae880f13f698e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/inventory.json",
+      "sha256": "e71f0fdfc7bdd1b32e435e64493110331c5e5ed33f6352618b27af3aa56380d0"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plan-derivations.json",
+      "sha256": "216c913f9556d6a7580b46de12cedda8d337a7b2c76e2961276a1121bb968a6a"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/excluded-inputs.json",
+      "sha256": "eca240cd24e224c107b11af3c60398e3fbfdd3391090fdd1771cd369ec00e544"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/eligibility-context.json",
+      "sha256": "ce556c03c34ae4ad7539afe0624bc6b2c04e0f9b4b3d0496cc13a0501717f67c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/final-paired-plan-derivation.json",
+      "sha256": "cf95f494ef0116445d9b68836638b57074c8db62a67c466586652477a341bf20"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/capture-frame-publication-audit.json",
+      "sha256": "363f08aaa80dcb58de8890c91f6a392212e402898d541a081561d8789c15fb17"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/larger-TRAIN-original-partial-summary.json",
+      "sha256": "63726e7630dc760f4416feb0ca3cd4073cde31f465b6d9893d1ef9fb13befd55"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/large-TRAIN-source-rejection-record.json",
+      "sha256": "873f546914842c42b9b5ab70d1c94d30955653de30e3bf3a9983c8785670602a"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-TRAIN-digest.txt",
+      "sha256": "62ef2313293022a961ca71967dccc44cc9bad2e896c5576f21116eadf85becd6"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-eligible-stop-on-correctness-plan.json",
+      "sha256": "7380acb89ad973df07a3e3b9a3fab3ffa03636343e1691c01d3913217a2f5340"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-plan.json",
+      "sha256": "398df2bd17ff1b7657688c9dc016d11a89e4ca6bc7f25997ba002cc0ef546ac9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plans/initial-heldout-complete-frame-traces.json",
+      "sha256": "a0d1d7efa5512ea93171289da3ce7911494dfa2b004507641c04cecb80399ad0"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plans/initial-train-complete-frame-traces.json",
+      "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plans/large-frontier-heldout-complete-frame-traces.json",
+      "sha256": "442cb09bd1125f370d1ae6d01828f644351ff22681fa2c4d9f600abde08140f6"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plans/large-frontier-train-complete-frame-traces.json",
+      "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair0-baseline-spec.json",
+      "sha256": "35495ad5757f445d651d28821819fd298c666544896e6e5ac51036973e3f8cca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair0-optimized-spec.json",
+      "sha256": "8386d2ba760c1683fe869ace57c9df921369a75d60afb6a6923743961cf23ffb"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair1-optimized-spec.json",
+      "sha256": "8dbb6a101a5af86d42c030ca384402021125eb2bc24158f50b21a2506ffd2f53"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair1-baseline-spec.json",
+      "sha256": "116aa3ee3953df331f94b6e7e7aa608030abda4b78d86120a5e9416ca966cf69"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair2-baseline-spec.json",
+      "sha256": "c745d5bfc9249ac8469bbe5ade79d939ab9bc9c3a8ca0afed3c167b688ef8681"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-pair2-optimized-spec.json",
+      "sha256": "05dc5865492a5c25d4abaca8ed0f6f14e37a109f8c8c6aa0b6d3b27ed38e7cfe"
+    }
+  ],
+  "fresh_larger_TRAIN_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-eligible-stop-on-correctness-plan.json",
+    "sha256": "7380acb89ad973df07a3e3b9a3fab3ffa03636343e1691c01d3913217a2f5340"
+  },
+  "replacements": 0,
+  "repairs": 0,
+  "cap_changes": 0,
+  "semantic_or_performance_execution_during_audit": 0
+}

@@ -1,0 +1,80 @@
+{
+  "status": "PASS: all six recorded fields match the initial checkpoint in all five original checkouts",
+  "checked_utc": "2026-11-09T21:29:43.133969+00:00",
+  "scope": "HEAD, status, NUL-delimited index entries, binary HEAD diff and tracked file bytes; does not compare ignored/untracked file bytes",
+  "repositories": [
+    {
+      "id": "acacia-main",
+      "matches": {
+        "head": true,
+        "status": true,
+        "index_entries_sha256": true,
+        "diff_sha256": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "id": "acacia-posets-subproject",
+      "matches": {
+        "head": true,
+        "status": true,
+        "index_entries_sha256": true,
+        "diff_sha256": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "id": "acacia-tlsf-subproject",
+      "matches": {
+        "head": true,
+        "status": true,
+        "index_entries_sha256": true,
+        "diff_sha256": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "id": "acacia-nested-sym-worktree",
+      "matches": {
+        "head": true,
+        "status": true,
+        "index_entries_sha256": true,
+        "diff_sha256": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "id": "acacia-nested-sym-tlsf-subproject",
+      "matches": {
+        "head": true,
+        "status": true,
+        "index_entries_sha256": true,
+        "diff_sha256": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    }
+  ],
+  "raw_checkpoint_included": false,
+  "raw_status_and_WIP_filenames_included": false,
+  "input_bindings": {
+    "initial_snapshot_sha256": "37c415a8e5c96ab42c73754d49870404a9e4d36ec2b74e3960b68571e4a9f6b6",
+    "checker_sha256": "2702534c704bfc58a906dc84f45511f7ea7c0861e2f4101dccf11c2bc9e59ea4",
+    "scoped_record_sha256": "566ed81ccc2ea837ba986578b63e8d132d4078845cd01e0c04e4f195f4c8d1b3",
+    "private_raw_result_sha256": "8f7367877c2624595af29671d4f1ec8916771acfa0ee519186b1540b0227e4f2"
+  },
+  "execution": {
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "exit_code": 0,
+    "seconds": 0.915895938873291,
+    "scope_unit": "acacia-posets-setup-3322412-a556559fb11c.scope",
+    "timed_out": false,
+    "resource_limited": false
+  },
+  "limits": "Read-only comparison of HEAD,status,index,binary HEAD diff,tracked content/count; ignored and untracked file bytes are not compared. Raw before/current status text stays private."
+}

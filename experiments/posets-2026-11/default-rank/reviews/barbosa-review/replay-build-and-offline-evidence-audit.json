@@ -1,0 +1,79 @@
+{
+  "status": "APPROVE saved original-build and corrected synthetic-offline evidence scope; actual runtime metadata/maps/pilots remain separate pending gates",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "scope": "Read-only saved metadata/source review, SHA256 checks and Git status/object reads only. No target import, test, helper/ELF invocation, probe, compiler, solver or timing executed by reviewer.",
+  "exact_inputs": {
+    "work/default-optimization/replay-builds/STATUS.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/STATUS.json",
+      "sha256": "751411a80fd6f61d66224199c4ef7ddbae9849aa2f70643728dba7de05fba5f0"
+    },
+    "work/default-optimization/replay-builds/BUILD-COMPLETE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/BUILD-COMPLETE.json",
+      "sha256": "660642305b4d55806b6cf92c8bedfa7ac9457f1f9a326dea44baab5e36798a7f"
+    },
+    "work/default-optimization/replay-builds/compiler-context-comparison.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/compiler-context-comparison.json",
+      "sha256": "7119f74cda71b08fd979b0b1150e1e3d2a7a191b4dcd74782ef08096ec163286"
+    },
+    "work/default-optimization/replay-builds/release-and-preflight.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/release-and-preflight.json",
+      "sha256": "f57c1811567bbf40b48dffc4b0b54d19ade0cabd8bf57ec5a0a316a9ce58fd24"
+    },
+    "work/default-optimization/replay-builds/helper-offline-v2/OFFLINE-COMPLETE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/helper-offline-v2/OFFLINE-COMPLETE.json",
+      "sha256": "dbf682861ecd6ee4ed3481d04123a88f7bd66e74f6b5c6b282dbb861adda08d8"
+    },
+    "work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/OFFLINE-COMPLETE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/OFFLINE-COMPLETE.json",
+      "sha256": "043d2ea3826a20db423c592a18f4b574545b4056929e7459489c74f5fcd7f1ba"
+    },
+    "work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/authorization.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/authorization.json",
+      "sha256": "51207301d8a6447c2ca98b3c45491326fe867b818c4b1989d69c0d54130b0f03"
+    },
+    "work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/interpreter-pytest-identity.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/interpreter-pytest-identity.json",
+      "sha256": "b17a56d555a6b32d7e26d4c1f4efe16f3183153c9e6082d4614099c8769976a4"
+    },
+    "work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/pytest-record.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-builds/helper-offline-v2-python313-attempt2/pytest-record.json",
+      "sha256": "544aa9b54f6e480f7e7f62268fffd946b2ca61655002ceabc4d88bef2db27e91"
+    },
+    "work/default-optimization/tools-v2/source-manifest.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/source-manifest.json",
+      "sha256": "1bed75101980b497a4e6da477424f3610589dd6026d53f45afd2456441180e75"
+    }
+  },
+  "binding_checks": {
+    "unique_current_file_bindings_verified": 61,
+    "all_match": true,
+    "reviewed_helper_manifest": "1bed75101980b497a4e6da477424f3610589dd6026d53f45afd2456441180e75",
+    "approved_core_manifest": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+    "both_sources_current_clean_and_kernel_hashes_match": true,
+    "baseline_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "candidate_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+    "production_only_net_delta": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "other_net_changes": "Three bounded tests/build files, as approved in coreV3. Source/Git/common directories remain inside isolated_deps."
+  },
+  "build_context": "Saved raw and normalized matrix commands match across baseline/candidate and the source-bound originalcc anchor. Actual recipe is GCC16.2.1/C++20/release/O3/LTO1/-march=native/NDEBUG, with COMPATIBLE/NATIVE/MAX selectors, same link arguments and same Meson options. Compiler/optimization/ISA/LTO/width/selector tokens are retained during source/build-root normalization. Matrix argv contains no POSETS_RANK_STATS definition and no backend selector; these are original full24 targets, not the selected2-entry map.",
+  "build_execution": "Four setup/build spec/records and their logs/helper bindings match; successful0exits,8G/no-swap,no timeout/resource-limit/OOM. Builds use-j1. All six BUILD-COMPLETE executable SHA256s still match after offline checks and at audit time. This checks retained bytes only; no ABI/runtime metadata or semantic ELF invocation is inferred.",
+  "offline": {
+    "preserved_first_attempt": "/usr/bin/python3: No module named pytest, exit1 before collection/target import. It remains a failed sequence with separate bindings; it is not a test failure or a passed run.",
+    "corrected_separate_attempt": "Bound installed /usr/bin/python3.13 version3.13.15, pytest9.0.3, optimize0, bytecode disabled. Explicit root release, unchanged reviewed tool bytes, exact test file and --noconftest/no-cacheprovider arguments.",
+    "collected_and_passed": 129,
+    "pytest_reported_seconds": 4.01,
+    "scope_seconds": 4.373480003094301,
+    "scope_peak_bytes": 175824896,
+    "resources": "8G/no-swap,return0,no timeout/resource limit or OOM events.",
+    "independent_scheduler_reference": "ACACIA_POSETS_PRE_MAP_DRIVER points to bound original b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf reference, so legacy all-pass/censored parity does not silently compare only current driver.",
+    "scope_limit": "Synthetic ELF/Ninja/context fixtures, real temporary Git authority fixtures, canonical argv/reported seed and refreshed writer-context negatives.129passes establish this offline suite only; not actual ELF ABI/CLI/semantic or timing evidence."
+  },
+  "findings": [],
+  "claims_not_established": [
+    "Runtime metadata/source-oracle/native=max ABI proof for these new six originals.",
+    "Actual source-bound anchor freezer outputs, selected2-entry maps or semantic pilots.",
+    "Replay/Acacia solver performance, a production default improvement, or tool-lint/full remoteCI completion."
+  ],
+  "interpretation": "STATUS and the bound BUILD/OFFLINE completion records accurately separate executed and pending work. No source/context/coverage overclaim found in this scope. Future maps/pilots are owned by benchmark and were not duplicated.",
+  "attribution": "Independent evidence validation; no new originated defect or additional reviewer runtime coverage."
+}

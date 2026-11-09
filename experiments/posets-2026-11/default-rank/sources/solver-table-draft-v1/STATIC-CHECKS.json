@@ -1,0 +1,30 @@
+{
+  "scope": "Source/documentation/diff/hash preparation only; no target import, tests, helper execution, workload, compilation, profiling or table derivation",
+  "original_phase_one_deriver_unchanged_sha256": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c",
+  "future_campaign_results_read": false,
+  "new_actual_result_or_manifest_or_binary_hash_invented": false,
+  "actual_sources": [
+    "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "30e66853832d98bcfaada296d892157b95a8150d"
+  ],
+  "fixed_labels": [
+    "baseline-default",
+    "optimized-default"
+  ],
+  "comparator": "baseline-default",
+  "required_cases_per_arm": 1524,
+  "required_native_rows": 3048,
+  "required_scored_rows": 3048,
+  "cap_s": 17,
+  "unsolved_PAR2_s": 34,
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "primary_flags": "",
+  "script_imported_or_executed": false,
+  "six_synthetic_test_methods": "DRAFTED, NOT EXECUTED",
+  "runtime_syntax_and_style_validation": "PENDING explicit owner/lane release",
+  "completed_campaign_and_approved_frozen_hash": "PENDING; no runnable campaign spec generated",
+  "final_saved_row_review": "PENDING after derivation",
+  "existing_implementation_reuse": "Future execution imports only exact hash-verified scope_memory.py with bytecode disabled; no duplicate memory statistic estimator",
+  "event_audit_policy": "All memory join keys; raw/scored sidecars equal; missing events explicit; integer uint64 counters; no relabeling/rescoring; row counts distinct from counter sums"
+}

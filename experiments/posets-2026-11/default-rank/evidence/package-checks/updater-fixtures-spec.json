@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/usr/bin/flock",
+    "--nonblock",
+    "/tmp/acacia-posets-benchmark-1000.lock",
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/package-draft-v2/test_refresh_package.py"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "timeout": 120
+}

@@ -1,0 +1,36 @@
+{
+  "scope": "Completed phase-one15-arm campaign; new default optimization absent; original raw data and scores unchanged",
+  "reviewed_report_draft_sha256": "ead4a0291ae049e14a2dd4021eb2a96264a74f519b5055d40b5b753c172e25d0",
+  "publication_report_changes": "Only pending-review status replaced with completed-review/publication locator and parent-verification note",
+  "copies": {
+    "solver-comparison.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.json",
+      "sha256": "27df181d4c2262154adba7eebae907925fb69c2016b4371af442d92ed67ba6b7"
+    },
+    "solver-comparison.csv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.csv",
+      "sha256": "108329ec96193b4c6072b774a1ab57cf0b366fa915b075b8b06fdb7918a4d604"
+    },
+    "oom-event-observations.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-oom-event-observations.json",
+      "sha256": "a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69"
+    },
+    "parent-oom-event-check.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/parent-oom-event-check.json",
+      "sha256": "9102db8ab2568a80ac062ee3377e55e23d9997477f21b4196d17f161cdd24f86"
+    },
+    "audit-nbjorner.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-primary-final-audit.json",
+      "sha256": "bb5208a02768834c3042ccf81155d7f744e642e2332535fe847610fd24420cbd"
+    },
+    "audit-barbosa.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/barbosa-review/phase-one-final-results-audit.json",
+      "sha256": "8d8eabaa341339d5ab07f2987b6f63a992b1239529f4b92971766026c5036669"
+    },
+    "summary.json": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/summary.json",
+      "sha256": "2bd0a88d55a0ad611f7cdcac7372f25f8b807bedb2cf47946133c2f499ad0b04"
+    }
+  },
+  "report_sha256": "ceb297146f70396e55e8a4f5bef2b70b2196d54f673edc9300fae174a3691003"
+}

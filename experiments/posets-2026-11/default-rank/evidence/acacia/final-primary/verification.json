@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "archive": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/default-native-evidence.tar.gz",
+  "archive_sha256": "5f7e7a96ba2381d0d28d83e369e92c3b477b2e5302b624f85f45526147b145f0",
+  "archive_bytes": 349264,
+  "data_members": 4,
+  "total_members": 6,
+  "source_bytes": 2949937,
+  "rows": {
+    "native": 3048,
+    "memory_sidecar": 3048
+  },
+  "plan_sha256": "dc3cd44451678a01e782a60c60186f16a9dca2ed8d53eb5e8318e024bdc5443b",
+  "script_sha256": "a50096bd42fed0da0bdc8e65676b81b432b5e528c85e9c92c9ce500fe2248046",
+  "members": {
+    "raw/baseline-default.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv",
+      "sha256": "e76a24d423b2376d950336f92ccf19de138e25fb95620a94400e9e2f7ef1b0a4",
+      "size": 591385,
+      "arm": "baseline-default",
+      "kind": "native"
+    },
+    "raw/baseline-default.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv.memory.tsv",
+      "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6",
+      "size": 882037,
+      "arm": "baseline-default",
+      "kind": "memory_sidecar"
+    },
+    "raw/optimized-default.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv",
+      "sha256": "9d2389a2a242e7f782a6f7b9fe27c46b88f769e6733d4c2a484c28497401a380",
+      "size": 592933,
+      "arm": "optimized-default",
+      "kind": "native"
+    },
+    "raw/optimized-default.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv.memory.tsv",
+      "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099",
+      "size": 883582,
+      "arm": "optimized-default",
+      "kind": "memory_sidecar"
+    }
+  },
+  "verification": "Fresh extraction, exact bytes/SHA256/size/rows/identities; no source mutation"
+}

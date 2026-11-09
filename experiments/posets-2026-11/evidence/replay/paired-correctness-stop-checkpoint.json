@@ -1,0 +1,38 @@
+{
+  "status": "bounded mocked first-invocation rejection check passes; no performance command launched",
+  "files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay-stop-on-correctness.py",
+      "sha256": "aa41c98deb2bda5293c53e54496c90b5678652f4e87c7835c12fecaf1969f661"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/check-paired-correctness-stop.py",
+      "sha256": "f5a47f30ea9da09e7c0a359b39e9b29f54ead6171a94eb01e0d0387455f01456"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop.patch",
+      "sha256": "eb27f4f3b0a0386f810ff96473fb3e53a313d49f72404b055cfdedfc9b40fb43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-derivation.json",
+      "sha256": "48062fce197a0e72bb7650e2b139787472106b843ec4c7cb56529622f0331066"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-check-record.json",
+      "sha256": "0301e0dd4a798a184d5b60131774391e131f05f32a9a10e977fbdcdfbfe73050"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-check-record.log",
+      "sha256": "cca9a5a1418b67ba75eb9196bfa9d9afff5782d35c3f67131a1c15c80bc4e6a5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-stop-on-correctness-plan.json",
+      "sha256": "1e6c1d8250930a5196c38ffd3884f08cc878c634628418c75276fc1a805ea16b"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-stop-on-correctness-plan.json",
+      "sha256": "e2319ca63c82813d2ad1e7e63316170ff2011b4cf0cfeb17c30a701aa10a59bf"
+    }
+  ],
+  "scope": "post-invocation stop policy only; old controller/plans unchanged; derived plans change only orchestrator binding"
+}

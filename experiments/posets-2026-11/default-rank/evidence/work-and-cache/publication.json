@@ -1,0 +1,78 @@
+{
+  "created_utc": "2026-11-09T18:56:57.498331+00:00",
+  "status": "Intermediate complete work/heap/PMU companion; separate full-solver follow-up pending",
+  "production_candidate": "30e66853832d98bcfaada296d892157b95a8150d",
+  "files": [
+    {
+      "path": "report.txt",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-profile-report.txt",
+      "sha256": "ab66559a5b83c029555db183b3fecc1142b08c9b8161bb1db0f28d87d4afb8e2",
+      "bytes": 5707,
+      "kind": "derived report"
+    },
+    {
+      "path": "work-interpretation.txt",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/lemire/profile-work-heap-interpretation-v1.txt",
+      "sha256": "4e207c1023be5f3bc599bc89d6af7fb15d2083f59dbca7afd7bdb8c27234e8cb",
+      "bytes": 8088,
+      "kind": "exact copy"
+    },
+    {
+      "path": "work-pairs.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/lemire/profile-work-heap-data-v1.json",
+      "sha256": "1c9da3c037cb8e0a9c9e8143673eb5fc94b8ce3fbba7be5f5232a0ec7b9f161e",
+      "bytes": 998115,
+      "kind": "exact copy"
+    },
+    {
+      "path": "memory-review.txt",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/biere/heap-work-v2-interpretation.txt",
+      "sha256": "c821eebb76e7ff5b7c61bd25d34ec282bb45d0be4966d7b3a88767c468a921c2",
+      "bytes": 7656,
+      "kind": "exact copy"
+    },
+    {
+      "path": "memory-review-data.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/biere/heap-work-v2-data.json",
+      "sha256": "b76db463536a031be9d9f20de4d8dbf7d0d2bdfaa2faa8336d41a22a48ce48b2",
+      "bytes": 61306,
+      "kind": "exact copy"
+    },
+    {
+      "path": "pmu-interpretation.txt",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/lemire/pmu-counter-interpretation-v1.txt",
+      "sha256": "4768bff2f3ac3c4edd50ba5fb14aee05ea66ec67288c198768f74553d316ead8",
+      "bytes": 7657,
+      "kind": "exact copy"
+    },
+    {
+      "path": "pmu-pairs.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/lemire/pmu-counter-data-v1.json",
+      "sha256": "af099eb5248e6b1ab26d3f64bbb53a7c9b4cda21a175db33ce9d32a31413639e",
+      "bytes": 106076,
+      "kind": "exact copy"
+    },
+    {
+      "path": "profile-completion.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-execution-v2/COMPLETION.json",
+      "sha256": "64b83bb5ac50ca6a67beff8c1255985933ac8c81aa87039836a48113a04cf2ee",
+      "bytes": 255026,
+      "kind": "exact copy"
+    },
+    {
+      "path": "pmu-completion.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/MEASUREMENTS-COMPLETE.json",
+      "sha256": "6870bc76b9e2410d38a423b7911056a907971a6cb672144145915324aa939b8c",
+      "bytes": 46384,
+      "kind": "exact copy"
+    },
+    {
+      "path": "pmu-summary.json",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/MEASUREMENT-SUMMARY.json",
+      "sha256": "5f61cf57a3eed51b9c1d6c1e83545cb638eb7cc622576a036864d34f4b6af8df",
+      "bytes": 922,
+      "kind": "exact copy"
+    }
+  ],
+  "limits": "No workload rerun for publication; instrumented clocks not used; old clean timing regressions retained; local captured inputs/binaries remain external evidence."
+}

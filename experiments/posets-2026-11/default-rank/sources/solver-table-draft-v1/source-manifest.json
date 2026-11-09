@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN SOURCE-ONLY DRAFT; no execution/acceptance of future campaign implied",
+  "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "25a2f7e1c11ebfe58007a9cb78523e7b30983ba47e4d20dee265a16e9a512b66",
+      "bytes": 5049
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "965602167895eb59ceac39e3b53827c1dce97a9d9da599de19f7c0af87320562",
+      "bytes": 1513
+    },
+    {
+      "path": "changes.patch",
+      "sha256": "95096d0607621aff6e54b9c56134edc01fb745c577af7a1cfb0d88bf1e842129",
+      "bytes": 20085
+    },
+    {
+      "path": "make-default-table.py",
+      "sha256": "327057a0834d5856a2851f72e0835b6f9222eeed6dff994cb970f5ff69cfda94",
+      "bytes": 19748
+    },
+    {
+      "path": "test_default_table.py",
+      "sha256": "747d7dc0e6065bd0b25e83810907d12b56138a7182c544b9d16d0aad1935400b",
+      "bytes": 6176
+    }
+  ],
+  "unchanged_basis_and_schema_references": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/make-final-table.py",
+      "sha256": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c",
+      "bytes": 8298
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+      "bytes": 29274
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+      "bytes": 16248
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/cactus-report.py",
+      "sha256": "9929471d26f69a44b05b2737e28c9f1d0a1e0a330c40c5ec4e46842c65c2aad1",
+      "bytes": 84398
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2",
+      "bytes": 104041
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/acacia-complete-1524-2026-11-09/oom-event-observations.json",
+      "sha256": "a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69",
+      "bytes": 19940
+    }
+  ],
+  "pending": [
+    "Independent source review",
+    "Authorized synthetic fixture/syntax/style checks",
+    "Completed 3048-row campaign, final bindings and approved frozen hash",
+    "Future derivation and independent saved-row audit"
+  ],
+  "future_result_paths_or_hashes": null
+}

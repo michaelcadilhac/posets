@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer",
+  "decision": "Accept exact completed two-arm evidence and negative observed result; no solver-level benefit or non-regression claim is supported by this campaign",
+  "bindings": {
+    "handoff": "work/default-optimization/final-primary-execution-v3/FINAL-HANDOFF.json",
+    "handoff_sha256": "cf9c9d6e8c028ea2139ac0f37b72299bf1c814009ef600c7f352dd19921b9fd7",
+    "frozen_sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb",
+    "invariance_sha256": "3a8c65130e68489d41342f4e9bbf13a916c97c5eb8a3deed532c5a51f64dc106",
+    "table_sha256": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf",
+    "CSV_sha256": "d1f3289bf37a67f01ec243c3786926e2da08e4a45b86c65fe19196922ca3ae07",
+    "OOM_audit_sha256": "89387f76a85b67a47635fd356884a8634dca414bfe0de91b1966c9cc3a67f092",
+    "completion_sha256": "a6832195b2675fa3faaeb43c768b8441341c2516ae4bc4c1116f566047f16314",
+    "independent_recalculation": "work/review-probes/default-final-outcome-independent-recalculation.json",
+    "independent_recalculation_sha256": "5246af236b08e17f96d6c06c06f9a8ae5bc1446f8af00316364d6dc8e18a55fe"
+  },
+  "result": {
+    "baseline": {
+      "label": "baseline-default",
+      "posets": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "solved": 1369,
+      "PAR2_s": "5926.874862",
+      "REALIZABLE": 629,
+      "UNREALIZABLE": 740,
+      "native_TIMEOUT": 155
+    },
+    "optimized": {
+      "label": "optimized-default",
+      "posets": "30e66853832d98bcfaada296d892157b95a8150d",
+      "solved": 1368,
+      "PAR2_s": "5943.112131",
+      "REALIZABLE": 629,
+      "UNREALIZABLE": 739,
+      "native_TIMEOUT": 156
+    },
+    "gains": [],
+    "losses": [
+      "robot_repair5.ltl"
+    ],
+    "PAR2_delta_s": "16.237269",
+    "PAR2_delta_percent": "0.2739600371372612410508715570"
+  },
+  "lost_case": {
+    "instance": "robot_repair5.ltl",
+    "baseline": {
+      "native_result": "UNREALIZABLE",
+      "wall_seconds": "16.28706081188284",
+      "exit_code": "1",
+      "timed_out": "false"
+    },
+    "optimized": {
+      "native_result": "TIMEOUT",
+      "wall_seconds": "17.11799132404849",
+      "exit_code": "124",
+      "timed_out": "true",
+      "resource_reason": "timeout"
+    },
+    "verified": "Both complete native records equal the bound handoff. This is an actual solver/native timeout, not a decisive-overrun scoring transform. Both receive the prescribed17/34 strict scoring without relabeling."
+  },
+  "independent_saved_row_checks": [
+    "All41 handoff bindings match sizes/hashes. All final-table input bindings and JSON/CSV/completion digests match, and CSV field values agree with JSON, including structured counts.",
+    "Exactly1524unique frozen-list case identities per arm across native/scored/memory-sidecar rows. All native treatment fields match the approved labels/binary hashes/Acacia86dd/shipping preset/empty flags/17s/8G/noSwap/noaffinity/noquota/collect-rusage treatment.",
+    "Decimal arithmetic independently recomputes solved sets and exact PAR2 from native wall strings:5926.87486230046488440 and5943.11213087430223904; delta16.23726857383735464 rounds to16.237269. Only decisive measured wall<=17 counts solved; each native TIMEOUT costs34. No wall-cap overrun exists and raw/scored bytes are identical.",
+    "No opposite decisive answer across the two arms. Campaign summary is usable with zero collected/expected-status conflicts. Its exact unchanged reporter/input/corpus bindings are retained; this is not an independent solver proof or a fresh corpus-truth authority.",
+    "Independently joined all3048 memory sidecars on every original invocation key. Scope/RSS source/reason/value rules validate all rows, medians/maxima independently match table, and all3048 finite nonnegative CPU observations sum exactly to14005.477029/14001.094425 seconds.",
+    "All3048 event records have cgroup provenance, empty missing reason and nonnegative integer counters. Every recorded counter is zero, so0nativeMEMOUT/0OOM/0OOM-kill counts have full coverage;311nativeTIMEOUT rows remain TIMEOUT. All TIMEOUT rows have exit124,timed_out=true,resource_reason=timeout.",
+    "All96 saved invocation records match the complete48-batch frozen label order, successful native-controller exits, completed counts and log hashes. Every saved batch list equals the exact seeded frozen schedule.",
+    "Automatic frozen/summary/text/progress copies equal the summary-only outputs byte-for-byte. The accepted closing invariance checker/rc0 record binds14981files,19approved checkpoint bindings and1211prior phase-one files, with actual role sources/git status/libraries unchanged. This review rehashed the41direct bindings and table inputs; it does not claim to independently rehash the entire14981file map.",
+    "Cheap categorical phase-one candidate-default cross-check covers2737shared decisive observations and finds zero opposite answers. Phase-one bytes/scores remain separate and are not pooled or relabeled."
+  ],
+  "source_treatment": "Same reconstructed Acacia86dd plus measured integration patch, compatible128 default ranks, matching source/dependency revisions and compiler settings, statistics disabled. The only production Posets source delta is the ranked-container header. Independently built private Rust archives differ in bytes, so this does not establish byte-identical non-rank binaries or isolate a small solver timing change to that header.",
+  "interpretation_limits": [
+    "Report the observed loss/+0.274%PAR2 rather than presenting the positive clean/PMU results as a whole-solver improvement. The sole lost case is a time-budget threshold observation, not a wrong-answer mismatch.",
+    "No repeated campaign/noise floor/significance or causal attribution follows from one run. Do not tune, rerun selected cases, drop the loss, adjust the cap, upgrade outcomes from other campaigns, or infer universal slowdown. None was performed in this review.",
+    "Lower aggregate CPU and tiny peak/median differences do not override the observed solved/PAR2 result or establish allocator-memory savings. Requested-heap profiles remain a separate treatment.",
+    "Original/WIP final closing proof and final package/publication remain root-owned closeout work; this outcome approval does not substitute for them."
+  ],
+  "findings": [],
+  "reviewer_actions": "Saved-data parsing/hashing/arithmetic and source/record inspection only; no solver/compiler/test/profile/helper execution or new measurements.",
+  "attribution": "Independent validation of owner-executed negative campaign and pre-reviewed deriver; no new algorithm defect or unique performance discovery."
+}

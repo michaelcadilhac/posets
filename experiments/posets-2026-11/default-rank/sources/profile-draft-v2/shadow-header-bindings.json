@@ -1,0 +1,24 @@
+[
+  {
+    "role": "baseline",
+    "revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "original_path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "relative_path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "original_sha256": "346a917307ea3ae818968b426f672489a54ad7ac61403fa91ae10b83a4dad064",
+    "overlay_path": "overlays/baseline/include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "overlay_sha256": "560da3c70468e5ae9641cb16252d2f991bcf5dd25f15dace435cf43a09ce1fcb",
+    "overlay_patch_sha256": "b1467f761cb75ee46d59cafbbc4b97d1dc267dd2f62b5433a259437eb9922274",
+    "status": "profiling-only shadow header; never applied to original/clean source"
+  },
+  {
+    "role": "candidate",
+    "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+    "original_path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "relative_path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "original_sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+    "overlay_path": "overlays/candidate/include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "overlay_sha256": "c24fae547faf344a3b2629e3e182991bd9d14fc58354e589ecb621e2dc887460",
+    "overlay_patch_sha256": "669cfeba4683865ad16a7908fd6f621603e76f01e19bb96bbc6ecfda630266e7",
+    "status": "profiling-only shadow header; never applied to original/clean source"
+  }
+]

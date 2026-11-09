@@ -1,0 +1,395 @@
+diff --git v1/run-paired-replay.py v2/run-paired-replay.py
+--- v1/run-paired-replay.py
++++ v2/run-paired-replay.py
+@@ -85,6 +85,7 @@
+                     assert report['provenance']['inventory'] == contract.INVENTORY
+                     assert report['provenance']['rank_source_role'] == variant['rank_source_role']
+                     assert report['treatment']['backends'] == [contract.RANK]
++                    contract.check_report_seed(report, run)
+                     assert report['semantic_caps'] == {'source_timeout': 30, 'check_timeout': 2}
+                     assert report['treatment']['case_timeout'] == 2
+                 if variant.get('binary_map'):
+diff --git v1/run-paired-replay-stop-on-correctness.py v2/run-paired-replay-stop-on-correctness.py
+--- v1/run-paired-replay-stop-on-correctness.py
++++ v2/run-paired-replay-stop-on-correctness.py
+@@ -89,6 +89,7 @@
+                     assert report['provenance']['inventory'] == contract.INVENTORY
+                     assert report['provenance']['rank_source_role'] == variant['rank_source_role']
+                     assert report['treatment']['backends'] == [contract.RANK]
++                    contract.check_report_seed(report, run)
+                     assert report['semantic_caps'] == {'source_timeout': 30, 'check_timeout': 2}
+                     assert report['treatment']['case_timeout'] == 2
+                 if variant.get('binary_map'):
+diff --git v1/test_posets_matrix.py v2/test_posets_matrix.py
+--- v1/test_posets_matrix.py
++++ v2/test_posets_matrix.py
+@@ -236,7 +236,8 @@
+ 
+ 
+ @pytest.mark.parametrize("mutation", ["none", "candidate-map-opt-in", "candidate-role", "candidate-header",
+-                                     "plan-opt-in", "invocation-opt-in", "seed"])
++                                     "plan-opt-in", "invocation-opt-in", "seed", "seed-equals",
++                                     "seed-abbreviation", "source-equals", "map-equals", "output-abbreviation"])
+ def test_paired_rank_contract_checks_both_sides_before_invocation(tmp_path, monkeypatch, mutation):
+     source, base, revision, manifest, git = source_contract_fixture(tmp_path, monkeypatch)
+     baseline = source.parent / "baseline"
+@@ -290,6 +291,19 @@
+         command.remove("--rank-only")
+     elif mutation == "seed":
+         command[command.index("--seed") + 1] = "260618"
++    elif mutation == "seed-equals":
++        command.append("--seed=7")
++    elif mutation == "seed-abbreviation":
++        command.extend(["--see", "7"])
++    elif mutation == "source-equals":
++        command.append("--source-dir=/other/source")
++    elif mutation == "map-equals":
++        command.append("--binary-map=/other/map.json")
++    elif mutation == "output-abbreviation":
++        command.extend(["--out", "/other/output"])
++    spec_path = tmp_path / "current-invocation.json"
++    spec_path.write_text(json.dumps(spec))
++    run["spec"] = bind(spec_path)  # Current invocation hash cannot authorize a hidden effective override.
+     path.write_text(json.dumps(candidate))
+     variants["optimized"]["binary_map"] = bind(path)  # Refresh outer binding, retain source authority.
+     if mutation == "none":
+@@ -297,6 +311,133 @@
+     else:
+         with pytest.raises(ValueError):
+             contract.check_plan_run(plan, run, spec, variants["baseline"])
++
++
++@pytest.mark.parametrize("extra", [
++    ["--seed=7"], ["--see", "7"], ["--seed", "7"],
++    ["--source-dir=/other/source"], ["--source-d", "/other/source"],
++    ["--binary-map=/other/map.json"], ["--binary-m", "/other/map.json"],
++    ["--build-dir=/other/build"], ["--build-d", "/other/build"],
++    ["--trace-plan=/other/traces.json"], ["--trace-p", "/other/traces.json"],
++    ["--output=/other/output"], ["--out", "/other/output"],
++    ["--case-timeout=99"], ["--rounds=2"], ["--repetitions=2"],
++    ["--memory-max=64G"], ["--backends=comptrie_backed"],
++    ["--rank-on"], ["--meas"], ["--measure"], ["--"],
++])
++def test_selected_command_rejects_effective_argparse_overrides(extra):
++    command = rank_command()
++    assert M.contract.check_command(command)["--seed"] == "260617"
++    with pytest.raises(ValueError):
++        M.contract.check_command(command + extra)
++
++
++@pytest.mark.parametrize("seed", [260618, 260617.0, True, None, "260617"])
++def test_actual_report_seed_must_match_declared_integer(tmp_path, seed):
++    run = {"seed": 260617}
++    report = {"treatment": {"seed": 260617}}
++    M.contract.check_report_seed(report, run)
++    report["treatment"]["seed"] = seed
++    path = tmp_path / "report.json"
++    path.write_text(json.dumps(report))
++    with pytest.raises(ValueError, match="report seed"):
++        M.contract.check_report_seed(json.loads(path.read_text()), run)
++    report["treatment"].pop("seed")
++    with pytest.raises(ValueError, match="report seed"):
++        M.contract.check_report_seed(report, run)
++
++
++def paired_writer_fixture(tmp_path, monkeypatch):
++    """Real source-authority checks; synthetic saved writer metadata, no ELF/build runs."""
++    loader = importlib.util.spec_from_file_location("rank_paired_writer_fixture", TOOLS / "prepare-paired-replay.py")
++    writer = importlib.util.module_from_spec(loader)
++    loader.loader.exec_module(writer)
++    source, base, revision, manifest, _ = source_contract_fixture(tmp_path, monkeypatch)
++    baseline = source.parent / "baseline"
++    shutil.copytree(source, baseline)
++    subprocess.run(["git", "-C", str(baseline), "checkout", "--detach", base], check=True,
++                   capture_output=True)
++    monkeypatch.setattr(writer, "REPO", M.contract.REPO)
++    monkeypatch.setattr(writer, "load_tool", lambda _: M)  # Reuse actual normalization, not a mocked result.
++    bind = lambda p: {"path": str(p), "sha256": M.sha(p)}
++    library = tmp_path / "fixture-runtime.so"
++    library.write_text("synthetic saved runtime context; never loaded\n")
++    maps, documents, anchors, records = {}, {}, {}, {}
++    for label, role, tree, pin in [("baseline", "baseline", baseline, base),
++                                   ("optimized", "candidate", source, revision)]:
++        build = source.parent / (label + "-writer-build")
++        (build / "tests").mkdir(parents=True)
++        modes = {}
++        records[label] = {}
++        binaries = []
++        for mode in M.MODES:
++            binary = build / "tests" / ("downset-matrix-" + mode)
++            binary.write_bytes(b"synthetic writer binding; not an ELF")
++            output = "tests/downset-matrix-" + mode + ".p/downset-bm.cc.o"
++            compiler = {"directory": str(build), "file": str(tree / "tests/downset-bm.cc"),
++                        "output": output, "arguments": ["c++", "-O3", "-flto", "-std=c++20",
++                        "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_" + mode.upper(),
++                        "-I" + str(tree / "include"), "-c", str(tree / "tests/downset-bm.cc"), "-o", output]}
++            modes[mode] = {"compiler": "synthetic fixture compiler", "simd_type": "fixture-vector",
++                "selected_lanes": 16 if mode == "compatible" else 64,
++                "alignment": 16 if mode == "compatible" else 64, "element_bytes": 1,
++                "block_bytes": 16 if mode == "compatible" else 64, "compatible_lanes": 16,
++                "native_lanes": 64, "max_fixed_lanes": 64, "hybrid_policy": "fixture-policy",
++                "backends": sorted(M.BACKENDS), "compiler_command": compiler,
++                "libraries": [bind(library)], "binary": str(binary), "binary_sha256": M.sha(binary)}
++            if mode == "max":
++                continue
++            linker = {"directory": str(build), "output": "tests/downset-matrix-" + mode,
++                      "arguments": ["c++", "-O3", "-flto", "-o", "tests/downset-matrix-" + mode, output]}
++            record_path = tmp_path / (label + "-" + mode + "-writer-record.json")
++            record_path.write_text(json.dumps({"template_compiler_command": compiler,
++                                              "template_linker_command": linker}))
++            records[label][mode] = record_path
++            binaries.append({"mode": mode, "backend": M.contract.RANK, "build_record": bind(record_path)})
++        anchor_path = tmp_path / (label + "-writer-anchor.json")
++        anchor = {"posets_source_dir": str(tree), "posets_revision": pin, "rank_anchor": True,
++                  "rank_source_role": role, "rank_source_manifest": bind(manifest), "modes": modes}
++        anchor_path.write_text(json.dumps(anchor))
++        path = tmp_path / (label + "-writer-map.json")
++        metadata = {"schema_version": 1, "kind": "posets-per-backend-binaries",
++                    "inventory": M.contract.INVENTORY, "rank_source_role": role,
++                    "rank_source_manifest": bind(manifest), "rank_contract": bind(Path(M.contract.__file__).resolve()),
++                    "base_revision": base, "source_revision": pin, "source_dir": str(tree),
++                    "anchor_provenance": bind(anchor_path), "binaries": binaries,
++                    "source_oracle_binary": bind(Path(modes["compatible"]["binary"]))}
++        path.write_text(json.dumps(metadata))
++        maps[label], documents[label], anchors[label] = path, metadata, anchor_path
++    return writer, maps, documents, anchors, records
++
++
++@pytest.mark.parametrize("mutation", ["none", "link-template", "runtime-libraries"])
++def test_paired_writer_compares_actual_selected_contexts(tmp_path, monkeypatch, mutation):
++    writer, maps, documents, anchors, records = paired_writer_fixture(tmp_path, monkeypatch)
++    result = writer.mapped_variants(maps["baseline"], maps["optimized"], True)
++    assert set(result) == {"baseline", "optimized"}
++    assert result["optimized"]["rank_source_role"] == "candidate"
++    if mutation == "none":
++        return
++    candidate = documents["optimized"]
++    previous_map_binding = writer.binding(maps["optimized"])
++    if mutation == "link-template":
++        record_path = records["optimized"]["compatible"]
++        record = json.loads(record_path.read_text())
++        record["template_linker_command"]["arguments"].append("-Wl,--as-needed")
++        record_path.write_text(json.dumps(record))
++        candidate["binaries"][0]["build_record"] = writer.binding(record_path)
++    else:
++        library = tmp_path / "different-fixture-runtime.so"
++        library.write_text("different synthetic runtime library context\n")
++        anchor_path = anchors["optimized"]
++        anchor = json.loads(anchor_path.read_text())
++        for mode in M.MODES:
++            anchor["modes"][mode]["libraries"] = [writer.binding(library)]
++        anchor_path.write_text(json.dumps(anchor))
++        candidate["anchor_provenance"] = writer.binding(anchor_path)
++    maps["optimized"].write_text(json.dumps(candidate))
++    assert writer.binding(maps["optimized"]) != previous_map_binding
++    with pytest.raises(AssertionError, match="contexts differ"):
++        writer.mapped_variants(maps["baseline"], maps["optimized"], True)
+ 
+ 
+ def test_selected_builder_inventory_keeps_full48_default():
+diff --git v1/rank_contract.py v2/rank_contract.py
+--- v1/rank_contract.py
++++ v2/rank_contract.py
+@@ -14,8 +14,8 @@
+ INVENTORY = 'rank-compatible-native'
+ BASE = '789bf99346d41a30f1b454ff58385b6f8a2961a9'
+ PRODUCTION = 'cc058ca96ebc667f727ea2f0c2360b77d60192d3'
+-APPROVED_MANIFEST = '394519c471fe98c6f7363bd1913a644b2c11eca4a62a71ad6b6b4f740900a970'
+-APPROVED_PATCH = '0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60'
++APPROVED_MANIFEST = '93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02'
++APPROVED_PATCH = '889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d'
+ CHANGES = {'include/posets/downsets/rank_bucketed_vector_backed.hh',
+            'tests/rank-stats.cc', 'tests/meson.build', 'tests/rank-bucketed.cc'}
+ 
+@@ -101,25 +101,40 @@
+ 
+ 
+ def check_command(command, driver=DRIVER):
++    """Accept one canonical argv; argparse aliases/last-value overrides cannot hide."""
+     require(len(command) > 2 and command[1] == '-B' and Path(command[2]) == driver,
+             'Selected replay invokes the wrong driver')
+-    for option, value in [('--source-timeout', '30'), ('--check-timeout', '2'),
+-                          ('--case-timeout', '2'), ('--rounds', '1'),
+-                          ('--repetitions', '1'), ('--memory-max', '8G')]:
+-        index = command.index(option) if command.count(option) == 1 else -1
+-        require(index >= 0 and index + 1 < len(command) and command[index + 1] == value,
+-                'Selected replay protocol changed: ' + option)
+-    for option in ('--binary-map', '--source-dir', '--build-dir', '--trace-plan', '--output', '--seed'):
+-        index = command.index(option) if command.count(option) == 1 else -1
+-        require(index >= 0 and index + 1 < len(command) and not command[index + 1].startswith('--'),
+-                'Missing/duplicate selected replay argument: ' + option)
+-    require(command.count('--rank-only') == 1 and command.count('--measure') == 1 and
+-            '--detail' not in command and command.count('--backends') == 1,
+-            'Selected replay requires explicit clean rank-only flags')
+-    index = command.index('--backends')
+-    require(index + 1 < len(command) and command[index + 1] == RANK and
+-            (index + 2 == len(command) or command[index + 2].startswith('--')),
+-            'Selected replay backend set is not rank alone')
++    fixed = {'--source-timeout': '30', '--check-timeout': '2', '--case-timeout': '2',
++             '--rounds': '1', '--repetitions': '1', '--memory-max': '8G', '--backends': RANK}
++    valued = set(fixed) | {'--binary-map', '--source-dir', '--build-dir', '--trace-plan',
++                           '--output', '--seed'}
++    flags = {'--rank-only', '--measure'}
++    values, index = {}, 3
++    while index < len(command):
++        option = command[index]
++        require(option in valued | flags, 'Noncanonical selected replay option: ' + option)
++        require(option not in values, 'Duplicate selected replay option: ' + option)
++        if option in flags:
++            values[option] = True
++            index += 1
++        else:
++            require(index + 1 < len(command) and command[index + 1] and
++                    not command[index + 1].startswith('-'),
++                    'Missing selected replay value: ' + option)
++            values[option] = command[index + 1]
++            index += 2
++    require(set(values) == valued | flags, 'Missing selected replay argument')
++    for option, value in fixed.items():
++        require(values[option] == value, 'Selected replay protocol changed: ' + option)
++    require(re.fullmatch(r'[0-9]+', values['--seed']), 'Noncanonical selected replay seed')
++    return values
++
++
++def check_report_seed(report, run):
++    """Bind the driver's actual reported shuffle seed, without coercing JSON types."""
++    seed = report.get('treatment', {}).get('seed')
++    require(type(seed) is int and type(run['seed']) is int and seed == run['seed'],
++            'Selected report seed differs from declared run')
+ 
+ 
+ def clean_flags(arguments):
+@@ -143,7 +158,7 @@
+     require(plan['backends'] == [RANK] and set(plan['variants']) == {'baseline', 'optimized'} and
+             plan['source_revisions'] == {name: value['revision'] for name, value in plan['variants'].items()},
+             'Selected paired inventory/revisions differ')
+-    check_command(spec['command'])
++    effective = check_command(spec['command'])
+     require(variant == plan['variants'][run['variant']], 'Selected current variant differs')
+     for label, declared in plan['variants'].items():
+         role = 'baseline' if label == 'baseline' else 'candidate'
+@@ -164,5 +179,5 @@
+                 '--output': run['output'], '--seed': str(260617 + run['pair'])}
+     require(run['seed'] == 260617 + run['pair'], 'Selected pair seed changed')
+     for option, value in expected.items():
+-        require(spec['command'][spec['command'].index(option) + 1] == value,
++        require(effective[option] == value,
+                 'Selected invocation/plan differs: ' + option)
+diff --git v1/README.md v2/README.md
+--- v1/README.md
++++ v2/README.md
+@@ -1,4 +1,4 @@
+-# Selected-rank replay tools — static draft, not executed
++# Selected-rank replay tools V2 — static correction draft, not executed
+ 
+ These are task-owned copies for the prospective default-rank follow-up. Original
+ Acacia, nested WIP, phase-one scripts/sources/ELFs and captured results are never
+@@ -6,9 +6,11 @@
+ prepare it. No source clone, build, map, measured revision, anchor or result was
+ manufactured. `source-manifest.json` inventories actual tool source files only.
+ 
+-Root must release the host lane, finish the phase-one summary/binding audit and
+-complete the candidate's assertion/exception/Memcheck/style gates before any
+-build or replay below. Both reviewers must review this exact helper snapshot.
++Core V3 now has completed local assertion/exception/Memcheck/owned-file style
++gates and independent approval; its actual CI18 gate is still pending. This
++helper V2 snapshot is source-only and still needs both reviews, a separate
++explicit runtime release, offline integrity checks and actual build/ELF pilots
++before replay. Phase-one completion does not authorize those runs.
+ Writing a plan or reading these commands is not permission to execute them.
+ 
+ ## Narrow opt-in
+@@ -30,9 +32,9 @@
+ It records each actual clean Git HEAD and an explicit `baseline`/`candidate`
+ source role, with common base `789bf99346d41a30f1b454ff58385b6f8a2961a9`.
+ 
+-`rank_contract.py` pins the currently reviewed candidate source manifest
+-`394519c471fe98c6f7363bd1913a644b2c11eca4a62a71ad6b6b4f740900a970`
+-and patch `0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60`.
++`rank_contract.py` pins the independently approved Core V3 source manifest
++`93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02`
++and patch `889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d`.
+ Baseline HEAD must be exactly789. Candidate's net changed paths/bytes must be
+ the reviewed rank header and three bounded test/build files. Kernel, CLI,
+ registration and oracle helper bytes remain789. The base include tree must be
+@@ -40,7 +42,12 @@
+ claim that candidate headers are unchanged. Source/Git/common directories must
+ resolve inside the isolated Acacia `_deps`, and approved source files are regular.
+ 
+-If runtime/style fixes require a new candidate freeze, root and reviewers must
++Root committed the identical reviewed Core V3 bytes as the actual source revision
++`30e66853832d98bcfaada296d892157b95a8150d` after the saved gates; baseline
++remains789. This pin is source evidence, not a release build/map/ELF claim. Those
++artifacts still require the later scoped, matched build and pilot sequence.
++
++If later runtime/style fixes require another candidate freeze, root and reviewers must
+ approve a new source-manifest binding and update this explicit policy. Refreshing
+ untrusted map/record/source hashes alone cannot enroll different source bytes.
+ This policy is deliberately experiment-specific, not a general subset API.
+@@ -72,6 +79,36 @@
+ hook is added here. A future instrumented pass needs separately reviewed sources
+ and truthful noexcept-move/size traits, not a loophole in this clean-source policy.
+ 
++
++## Corrections from preserved helper V1
++
++The original `../tools/` bytes remain intact. `v1-to-v2.patch` exposes every
++correction; `changes.patch` retains the full delta from the original phase-one
++sources. `v1-snapshot.json` and `original-sources.json` preserve both levels of
++source/dependency authority. Neither is a build/map/result manifest.
++
++Selected paired invocations now accept one explicit canonical option schema:
++each required full option occurs exactly once with one value (or an exact flag),
++no extra positional tokens, equals-form aliases or abbreviations. This closes
++Nbjorner's appended `--seed=7` counterexample and equivalent source/map/output
++path overrides before launch. The parsed values, rather than another literal
++index lookup, are compared with the plan. Both controllers also require the
++actual JSON report seed to be an integer equal to the declared run seed.
++
++Offline sources add canonical/effective-option negatives, refreshed invocation
++bindings and strict reported-seed negatives. Direct paired-writer fixtures first
++accept two matching contexts, then independently change a selected linker flag
++or runtime library context and refresh all affected child/outer bindings; each
++must reach the final cross-variant context guard. These fixtures use real temporary
++source-authority Git identities but synthetic saved compiler/library metadata;
++they do not execute a compiler, ELF, replay or controller main. The latter
++controller call sites are reviewed statically; their common reported-seed guard
++is exercised directly. Actual scoped pilots remain required.
++
++No C++ source/kernel, replay function, scheduling, flags, metrics, cap, censor
++policy or default full48 path changed for this correction. No helper source was
++imported, collected, compiled, linted or executed while preparing V2.
++
+ ## Dependencies and future sequence
+ 
+ `original-sources.json` records every copied source's original hash and the
+@@ -81,11 +118,13 @@
+ copy/rebuild any original dependency tree. All executable steps belong in the
+ existing 8G/no-swap wrapper, serially, with no concurrent build/profile/timing.
+ 
+-1. Follow the reviewed `../validation-plan/` in fresh baseline/candidate source
+-   roots under isolated `_deps`. Verify actual Git/common directories. Finish
+-   correctness/exception/portable-memory/style gates and source correction review.
+-2. Keep baseline detached at789. After approval, commit only the four candidate
+-   patch paths locally; obtain its actual Git HEAD. Never invent that revision
++1. Preserve the completed `../validation-results-v2/` and `../validation-results-v3/`
++   evidence and approved `../candidate-draft-v3/` source freeze. The existing fresh
++   baseline/candidate roots are under isolated `_deps`; verify their actual clean
++   Git/common directories and exact reviewed bytes again before any build.
++2. Keep baseline detached at789. Root owns committing only the four approved
++   candidate paths and reporting the actual Git HEAD. Read that actual pin; never
++   invent a revision
+    or call789 "cc". No selector overlay is applied again. Keep all source/build
+    and failure evidence in fresh paths, including any revised approval.
+ 3. Configure matched clean release `build-replay-release` trees inside both
+@@ -135,7 +174,9 @@
+ missing/extra/duplicate/backend/width/source cases with refreshed bindings,
+ singleton/runtime-width mismatch, effective compiler flags/ISA changes,
+ source-authority refresh rejection, symlinks, clean-stat definitions and both
+-variant maps/plan/invocation/caps/seeds before the first paired invocation.
++variant maps/plan/invocation/caps/seeds before the first paired invocation, including
++noncanonical effective option overrides and actual reported integer seeds. Direct
++writer context coverage is described above.
+ 
+ Loader tests use clearly synthetic ELF/Ninja observations to exercise the
+ unchanged downstream proof chain; their source-policy stub is isolated from

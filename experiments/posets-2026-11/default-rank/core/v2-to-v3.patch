@@ -1,0 +1,536 @@
+--- v2/include/posets/downsets/rank_bucketed_vector_backed.hh
++++ v3/include/posets/downsets/rank_bucketed_vector_backed.hh
+@@ -1,11 +1,12 @@
+ #pragma once
++
++#include <type_traits>
+ 
+ #include <algorithm>
+ #include <cassert>
+ #include <cstdint>
+ #include <iostream>
+ #include <limits>
+-#include <type_traits>
+ #include <vector>
+ 
+ #include <posets/concepts.hh>
+@@ -57,24 +58,31 @@
+       }
+ 
+       static bool exact_rank_domain (const V& v) {
+-        using coordinate_type = typename V::value_type;
++        using coordinate_type = V::value_type;
+         if constexpr (std::is_integral_v<coordinate_type> and
+-                      std::numeric_limits<coordinate_type>::digits <= std::numeric_limits<rank_t>::digits) {
+-          if constexpr (std::numeric_limits<coordinate_type>::digits == std::numeric_limits<rank_t>::digits)
++                      std::numeric_limits<coordinate_type>::digits <=
++                          std::numeric_limits<rank_t>::digits) {
++          if constexpr (std::numeric_limits<coordinate_type>::digits ==
++                        std::numeric_limits<rank_t>::digits) {
+             return v.size () <= 1;
+-          else
+-            return v.size () <= static_cast<std::uint64_t> (std::numeric_limits<rank_t>::max ()) /
+-                                    (std::uint64_t {1} << std::numeric_limits<coordinate_type>::digits);
+-        }
+-        else
++          }
++          else {
++            return v.size () <=
++                   static_cast<std::uint64_t> (std::numeric_limits<rank_t>::max ()) /
++                       (std::uint64_t {1} << std::numeric_limits<coordinate_type>::digits);
++          }
++        }
++        else {
+           return false;
++        }
+       }
+ 
+       template <typename T>
+       static void reserve_growing (std::vector<T>& values, size_t required) {
+         if (required > values.capacity ()) {
+           const size_t capacity = values.capacity ();
+-          const size_t grown = capacity > values.max_size () / 2 ? values.max_size () : capacity * 2;
++          const size_t grown =
++              capacity > values.max_size () / 2 ? values.max_size () : capacity * 2;
+           values.reserve (std::max (required, grown));
+         }
+       }
+@@ -119,11 +127,11 @@
+         bool mutated = false;
+         try {
+           size_t write = first_removed;
+-          size_t removed_before = first_removed < first_possible_dominator;
++          auto removed_before = static_cast<size_t> (first_removed < first_possible_dominator);
+           for (size_t read = first_removed + 1; read < stop; ++read) {
+             POSETS_RANK_STAT_ADD (partial_order_calls, 1);
+             if (v.partial_order (vector_set[read]).geq ()) {
+-              removed_before += read < first_possible_dominator;
++              removed_before += static_cast<size_t> (read < first_possible_dominator);
+               POSETS_RANK_STAT_ADD (existing_elements_removed, 1);
+               continue;
+             }
+@@ -147,7 +155,8 @@
+           }
+           const size_t pos = first_possible_dominator - removed_before;
+           mutated = true;
+-          vector_set.insert (vector_set.begin () + static_cast<std::ptrdiff_t> (pos), std::move (v));
++          vector_set.insert (vector_set.begin () + static_cast<std::ptrdiff_t> (pos),
++                             std::move (v));
+           ranks.insert (ranks.begin () + static_cast<std::ptrdiff_t> (pos), rv);
+         } catch (...) {
+           // A custom comparison may throw after compaction started. Keep both
+@@ -171,8 +180,9 @@
+           }
+         }
+ 
+-        if constexpr (safe_moves)
++        if constexpr (safe_moves) {
+           insert_accepted (std::move (v), rv, first_possible_dominator);
++        }
+         else {
+           // Throwing moves operate on copies, never on the live arrays.
+           self replacement;
+--- v2/tests/rank-bucketed.cc
++++ v3/tests/rank-bucketed.cc
+@@ -1,4 +1,5 @@
+ #include "allocation-failure.hh"
++#include <type_traits>
+ 
+ #include <algorithm>
+ #include <cstdint>
+@@ -8,7 +9,6 @@
+ #include <set>
+ #include <span>
+ #include <stdexcept>
+-#include <type_traits>
+ #include <utility>
+ #include <vector>
+ 
+@@ -21,9 +21,12 @@
+     if (not condition)
+       throw std::runtime_error (message);
+   }
+-  template <class T> using row = std::vector<T>;
+-  template <class T> using region = std::vector<row<T>>;
+-  template <class V> using downset = posets::downsets::rank_bucketed_vector_backed<V>;
++  template <class T>
++  using row = std::vector<T>;
++  template <class T>
++  using region = std::vector<row<T>>;
++  template <class V>
++  using downset = posets::downsets::rank_bucketed_vector_backed<V>;
+   template <class T>
+   bool below (const row<T>& a, const row<T>& b) {
+     require (a.size () == b.size (), "oracle dimension mismatch");
+@@ -66,9 +69,8 @@
+       require (seen.insert (unpack (value)).second, "duplicate ranked generator");
+     require (seen == maxima (expected) and seen.size () == actual.size (), "ranked maxima");
+     for (const auto& probe : probes) {
+-      const bool wanted = std::ranges::any_of (expected, [&] (const auto& old) {
+-        return below (probe, old);
+-      });
++      const bool wanted =
++          std::ranges::any_of (expected, [&] (const auto& old) { return below (probe, old); });
+       require (actual.contains (vector<V> (probe)) == wanted, "ranked membership");
+     }
+   }
+@@ -87,8 +89,9 @@
+ 
+   template <class V>
+   void differential () {
+-    using coordinate_type = typename V::value_type;
+-    std::mt19937 random (260619);
++    using coordinate_type = V::value_type;
++    // Reproducible differential fixture.
++    std::mt19937 random (260619);  // NOLINT(bugprone-random-generator-seed)
+     for (const size_t dim : {0U, 1U, 2U, 15U, 16U, 17U, 31U, 32U, 33U, 63U, 64U, 65U}) {
+       region<coordinate_type> values;
+       for (int n = 0; n < 20; ++n) {
+@@ -98,25 +101,27 @@
+         values.push_back (std::move (value));
+       }
+       values.push_back (values.front ());
+-      row<coordinate_type> extremes (dim), opposite (dim);
++      row<coordinate_type> extremes (dim);
++      row<coordinate_type> opposite (dim);
+       for (size_t i = 0; i < dim; ++i) {
+-        extremes[i] = i % 2 == 0 ? std::numeric_limits<coordinate_type>::min () : std::numeric_limits<coordinate_type>::max ();
+-        opposite[i] = i % 2 == 0 ? std::numeric_limits<coordinate_type>::max () : std::numeric_limits<coordinate_type>::min ();
++        extremes[i] = i % 2 == 0 ? std::numeric_limits<coordinate_type>::min ()
++                                 : std::numeric_limits<coordinate_type>::max ();
++        opposite[i] = i % 2 == 0 ? std::numeric_limits<coordinate_type>::max ()
++                                 : std::numeric_limits<coordinate_type>::min ();
+       }
+       values.push_back (std::move (extremes));
+       values.push_back (std::move (opposite));
+       auto subject = build<V> ({});
+       region<coordinate_type> prefix;
+       for (const auto& candidate : values) {
+-        const bool accepted = std::ranges::none_of (prefix, [&] (const auto& old) {
+-          return below (candidate, old);
+-        });
++        const bool accepted = std::ranges::none_of (
++            prefix, [&] (const auto& old) { return below (candidate, old); });
+         require (subject.insert (vector<V> (candidate)) == accepted, "ranked insert result");
+         prefix.push_back (candidate);
+         check (subject, prefix, {candidate, row<coordinate_type> (dim, coordinate_type {-1})});
+       }
+-      region<coordinate_type> a (values.begin (), values.begin () + 5);
+-      region<coordinate_type> b (values.begin () + 5, values.begin () + 10);
++      const region<coordinate_type> a (values.begin (), values.begin () + 5);
++      const region<coordinate_type> b (values.begin () + 5, values.begin () + 10);
+       auto joined = build<V> (a);
+       joined.union_with (build<V> (b));
+       auto union_rows = a;
+@@ -129,7 +134,8 @@
+       const auto transform = [&] (const V& value) {
+         auto raw = unpack (value);
+         for (size_t i = 0; i < raw.size (); ++i)
+-          raw[i] = i % 2 == 0 ? static_cast<coordinate_type> (-raw[i]) : static_cast<coordinate_type> (raw[i] - 1);
++          raw[i] = i % 2 == 0 ? static_cast<coordinate_type> (-raw[i])
++                              : static_cast<coordinate_type> (raw[i] - 1);
+         return vector<V> (raw);
+       };
+       for (const auto& value : maxima (a))
+@@ -141,10 +147,12 @@
+   void floating_and_wide () {
+     using floating_vector = posets::vectors::vector_backed<double>;
+     auto floating = build<floating_vector> ({{0.1, 0.0}});
+-    require (floating.insert (vector<floating_vector> ({0.2, 0.0})), "same-truncated-rank insertion rejected");
++    require (floating.insert (vector<floating_vector> ({0.2, 0.0})),
++             "same-truncated-rank insertion rejected");
+     check (floating, {{0.2, 0.0}}, {{0.1, 0.0}, {0.2, 0.0}, {0.3, 0.0}});
+     auto floating_tie = build<floating_vector> ({{0.1, 0.0}, {0.0, 0.2}});
+-    require (floating_tie.insert (vector<floating_vector> ({0.2, 0.0})), "floating tie victim rejected");
++    require (floating_tie.insert (vector<floating_vector> ({0.2, 0.0})),
++             "floating tie victim rejected");
+     check (floating_tie, {{0.2, 0.0}, {0.0, 0.2}}, {{0.1, 0.0}, {0.2, 0.0}, {0.0, 0.2}});
+     region<double> floating_order;
+     for (const auto& value : floating_tie)
+@@ -187,6 +195,7 @@
+         if (remaining > 0)
+           --remaining;
+       }
++
+     public:
+       using base::base;
+       static inline long copies_left = -1, orders_left = -1, moves_left = -1, reads_left = -1;
+@@ -196,35 +205,47 @@
+         coordinate_reads = 0;
+       }
+       watched (const watched&) = delete;
++      // The noexcept instantiation discards the throwing branch.
++      // NOLINTNEXTLINE(bugprone-exception-escape)
+       watched (watched&& other) noexcept (not ThrowMoves) : base (std::move (other)) {
+         if constexpr (ThrowMoves)
+           charge (moves_left);
+       }
++      // The noexcept instantiation discards the throwing branch.
++      // NOLINTNEXTLINE(bugprone-exception-escape)
+       watched& operator= (watched&& other) noexcept (not ThrowMoves) {
+         base::operator= (std::move (other));
+         if constexpr (ThrowMoves)
+           charge (moves_left);
+         return *this;
+       }
+-      auto operator[] (size_t i) const {
++      // Intercept the base API to inject read failures.
++      // NOLINTNEXTLINE(bugprone-derived-method-shadowing-base-method)
++      [[nodiscard]] auto operator[] (size_t i) const {
+         charge (reads_left);
+         ++coordinate_reads;
+         return base::operator[] (i);
+       }
+-      auto partial_order (const watched& other) const {
++      [[nodiscard]] auto partial_order (const watched& other) const {
+         charge (orders_left);
+         return base::partial_order (other);
+       }
+-      watched copy () const {
++      // Intercept the base API to inject copy failures.
++      // NOLINTNEXTLINE(bugprone-derived-method-shadowing-base-method)
++      [[nodiscard]] watched copy () const {
+         charge (copies_left);
+         return watched (base::copy ());
+       }
+-      watched meet (const watched& other) const { return watched (base::meet (other)); }
+-      watched join (const watched& other) const { return watched (base::join (other)); }
++      [[nodiscard]] watched meet (const watched& other) const {
++        return watched (base::meet (other));
++      }
++      [[nodiscard]] watched join (const watched& other) const {
++        return watched (base::join (other));
++      }
+   };
+   static_assert (posets::Vector<watched<false>> and posets::Vector<watched<true>>);
+-  static_assert (not std::is_nothrow_constructible_v<downset<watched<false>>,
+-                                                   std::vector<watched<false>>&&>);
++  static_assert (
++      not std::is_nothrow_constructible_v<downset<watched<false>>, std::vector<watched<false>>&&>);
+ 
+   template <bool ThrowMoves>
+   void covered_and_late () {
+@@ -240,10 +261,14 @@
+       subject.intersect_with (covering);
+       subject.intersect_with (subject);
+       subject.union_with (std::move (subject));
+-    } catch (...) { threw = true; }
++    } catch (...) {
++      threw = true;
++    }
+     allocations_left = -1;
+     vector_type::reset ();
+     require (not threw, "covered/self operation allocated or copied");
++    // Self-union must return before consuming its own generators.
++    // NOLINTNEXTLINE(bugprone-use-after-move)
+     require (subject.get_backing_vector ().capacity () == capacity, "covered capacity changed");
+     check (subject, rows, rows);
+     const auto* value = &subject.get_backing_vector ().front ();
+@@ -257,9 +282,13 @@
+         allocations_left = 0;
+       else
+         vector_type::copies_left = 0;
+-      try { subject.intersect_with (late_right); }
+-      catch (const std::bad_alloc&) { failed = failure == 0; }
+-      catch (const vector_error&) { failed = failure == 1; }
++      try {
++        subject.intersect_with (late_right);
++      } catch (const std::bad_alloc&) {
++        failed = failure == 0;
++      } catch (const vector_error&) {
++        failed = failure == 1;
++      }
+       allocations_left = -1;
+       vector_type::reset ();
+       require (failed, "late-changing intersection did not reach the copy/allocation sentinel");
+@@ -305,7 +334,8 @@
+ #ifdef POSETS_RANK_STATS
+     const auto covered = posets::utils::rank_stats_current ();
+     require (covered.contains_calls == left.size () and covered.insert_attempts == 0 and
+-                 covered.intersection_short_circuits == left.size (), "covered rank counters");
++                 covered.intersection_short_circuits == left.size (),
++             "covered rank counters");
+ #endif
+     auto restricted = build<vector_type> ({{4, 0}, {2, 2}});
+     vector_type::coordinate_reads = 0;
+@@ -317,8 +347,9 @@
+ #ifdef POSETS_RANK_STATS
+     const auto changed = posets::utils::rank_stats_current ();
+     require (changed.contains_calls == left_size, "changed containment scanned twice");
+-    require (changed.insert_attempts == changed.intersection_short_circuits +
+-                                           changed.intersection_pair_meets, "changed insert counters");
++    require (changed.insert_attempts ==
++                 changed.intersection_short_circuits + changed.intersection_pair_meets,
++             "changed insert counters");
+     require (vector_type::coordinate_reads == 2 * changed.intersection_pair_meets,
+              "unchanged intersection copies recomputed rank");
+ #endif
+@@ -331,7 +362,7 @@
+     for (size_t bit = 0; bit < pairs; ++bit) {
+       const auto value = (identity >> bit) & size_t {1};
+       result[2 * bit] = static_cast<std::int8_t> (value);
+-      result[2 * bit + 1] = static_cast<std::int8_t> (1 - value);
++      result[(2 * bit) + 1] = static_cast<std::int8_t> (1 - value);
+     }
+     return result;
+   }
+@@ -358,7 +389,8 @@
+   template <class V>
+   void allocation_failures () {
+     bool completed = false;
+-    bool first_growth_failed = false, second_growth_failed = false;
++    bool first_growth_failed = false;
++    bool second_growth_failed = false;
+     for (long fail = 0; fail < 32; ++fail) {
+       auto subject = build<V> ({});
+       auto candidate = vector<V> ({3, 3});
+@@ -366,7 +398,9 @@
+       try {
+         allocations_left = fail;
+         require (subject.insert (std::move (candidate)), "first insertion rejected");
+-      } catch (const std::bad_alloc&) { threw = true; }
++      } catch (const std::bad_alloc&) {
++        threw = true;
++      }
+       allocations_left = -1;
+       if (threw) {
+         first_growth_failed or_eq fail == 0;
+@@ -375,11 +409,17 @@
+           require (subject.get_backing_vector ().capacity () > 0,
+                    "second allocation failure preceded successful generator reserve");
+         check (subject, {}, {{3, 3}, {-1, -1}});
+-        require (unpack (candidate) == row<std::int8_t> ({3, 3}), "first growth failure consumed input");
++        // The preflight failure must preserve this rvalue.
++        // NOLINTNEXTLINE(bugprone-use-after-move)
++        require (unpack (candidate) == row<std::int8_t> ({3, 3}),
++                 "first growth failure consumed input");
+         require (subject.insert (std::move (candidate)), "first growth retry failed");
+       }
+       check (subject, {{3, 3}}, {{3, 3}, {4, 4}, {-1, -1}});
+-      if (not threw) { completed = true; break; }
++      if (not threw) {
++        completed = true;
++        break;
++      }
+     }
+     require (completed and first_growth_failed and second_growth_failed,
+              "both empty parallel-array allocation failures were not reached");
+@@ -395,19 +435,27 @@
+       try {
+         allocations_left = fail;
+         require (subject.insert (std::move (candidate)), "populated growth insertion rejected");
+-      } catch (const std::bad_alloc&) { threw = true; }
++      } catch (const std::bad_alloc&) {
++        threw = true;
++      }
+       allocations_left = -1;
+       if (threw) {
+         ++populated_failures;
+         check (subject, rows, rows);
++        // The preflight failure must preserve this rvalue.
++        // NOLINTNEXTLINE(bugprone-use-after-move)
+         require (unpack (candidate) == raw, "populated growth failure consumed input");
+         require (subject.insert (std::move (candidate)), "populated growth retry failed");
+       }
+       rows.push_back (raw);
+       check (subject, rows, rows);
+-      if (not threw) { completed = true; break; }
+-    }
+-    require (completed and populated_failures > 0, "populated generator growth failure was not reached");
++      if (not threw) {
++        completed = true;
++        break;
++      }
++    }
++    require (completed and populated_failures > 0,
++             "populated generator growth failure was not reached");
+ 
+     auto covered = build<V> ({});
+     const auto rows = fill_backing_capacity (covered);
+@@ -418,7 +466,9 @@
+     try {
+       allocations_left = 0;
+       require (covered.insert (std::move (top)), "covering insertion rejected");
+-    } catch (...) { threw = true; }
++    } catch (...) {
++      threw = true;
++    }
+     allocations_left = -1;
+     require (not threw and covered.get_backing_vector ().capacity () == capacity,
+              "covering insertion grew storage despite retiring generators");
+@@ -429,8 +479,10 @@
+     bool propagated = false;
+     try {
+       allocations_left = 0;
+-      downset<V> constructed (std::move (input));
+-    } catch (const std::bad_alloc&) { propagated = true; }
++      const downset<V> constructed (std::move (input));
++    } catch (const std::bad_alloc&) {
++      propagated = true;
++    }
+     allocations_left = -1;
+     require (propagated, "allocating constructor did not propagate bad_alloc");
+   }
+@@ -443,12 +495,16 @@
+       auto candidate = vector<vector_type> ({4, 8});
+       bool threw = false;
+       vector_type::orders_left = fail;
+-      try { subject.insert (std::move (candidate)); }
+-      catch (const vector_error&) { threw = true; }
++      try {
++        subject.insert (std::move (candidate));
++      } catch (const vector_error&) {
++        threw = true;
++      }
+       vector_type::reset ();
+       require (threw, "comparison injection did not trigger");
+-      if (fail < 5)
++      if (fail < 5) {
+         check (subject, rows, rows);
++      }
+       else {
+         check (subject, {}, rows);
+         require (subject.insert (vector<vector_type> ({1, 1})), "valid-empty result not reusable");
+@@ -458,15 +514,21 @@
+     auto rejected = build<vector_type> ({{10, 10}});
+     vector_type::reads_left = 0;
+     bool rank_threw = false;
+-    try { rejected.insert (vector<vector_type> ({1, 1})); }
+-    catch (const vector_error&) { rank_threw = true; }
++    try {
++      rejected.insert (vector<vector_type> ({1, 1}));
++    } catch (const vector_error&) {
++      rank_threw = true;
++    }
+     vector_type::reset ();
+     require (rank_threw, "rank-access injection");
+     check (rejected, {{10, 10}}, {{1, 1}, {10, 10}});
+     vector_type::orders_left = 0;
+     bool threw = false;
+-    try { rejected.insert (vector<vector_type> ({1, 1})); }
+-    catch (const vector_error&) { threw = true; }
++    try {
++      rejected.insert (vector<vector_type> ({1, 1}));
++    } catch (const vector_error&) {
++      threw = true;
++    }
+     vector_type::reset ();
+     require (threw, "rejection comparison injection");
+     check (rejected, {{10, 10}}, {{1, 1}, {10, 10}});
+@@ -481,10 +543,18 @@
+       for (long fail = 0; fail < 128; ++fail) {
+         auto subject = build<vector_type> (rows);
+         auto candidate = vector<vector_type> ({4, 8});
+-        (mode == 0 ? vector_type::copies_left : mode == 1 ? vector_type::moves_left : vector_type::orders_left) = fail;
++        if (mode == 0)
++          vector_type::copies_left = fail;
++        else if (mode == 1)
++          vector_type::moves_left = fail;
++        else
++          vector_type::orders_left = fail;
+         bool threw = false;
+-        try { subject.insert (std::move (candidate)); }
+-        catch (const vector_error&) { threw = true; }
++        try {
++          subject.insert (std::move (candidate));
++        } catch (const vector_error&) {
++          threw = true;
++        }
+         vector_type::reset ();
+         if (threw) {
+           ++failures;
+@@ -495,7 +565,10 @@
+         auto expected = rows;
+         expected.push_back ({4, 8});
+         check (subject, expected, expected);
+-        if (not threw) { completed = true; break; }
++        if (not threw) {
++          completed = true;
++          break;
++        }
+       }
+       require (completed and failures > 0, "throwing Vector sweep did not finish");
+     }
+@@ -513,7 +586,9 @@
+       try {
+         allocations_left = fail;
+         subject.insert (std::move (candidate));
+-      } catch (const std::bad_alloc&) { threw = true; }
++      } catch (const std::bad_alloc&) {
++        threw = true;
++      }
+       allocations_left = -1;
+       if (threw) {
+         ++failures;
+@@ -523,7 +598,10 @@
+       auto expected = rows;
+       expected.push_back ({4, 8});
+       check (subject, expected, expected);
+-      if (not threw) { completed = true; break; }
++      if (not threw) {
++        completed = true;
++        break;
++      }
+     }
+     require (completed and failures >= 3, "staging allocation sites not covered");
+   }

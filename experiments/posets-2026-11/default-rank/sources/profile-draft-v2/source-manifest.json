@@ -1,0 +1,97 @@
+{
+  "schema_version": 2,
+  "status": "source-only diagnostic V2; documentation correction only; no runtime approval/results",
+  "draft_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2",
+  "self_reference_rule": "Actual source/document/inventory files only; excludes itself; no fictitious build/ELF/map/qualification artifact",
+  "baseline_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "candidate_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+  "preserved_v1_manifest_sha256": "fb5d6803f06a0ab83c0019138cfd41d7093bc0c803008402254b37d588726596",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "04539cf4d16297e4082f8a8daa40dcd363d1b1fe0c6c28287349eb1a87aa63e2",
+      "bytes": 11141
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "d4bea6f95b7e0226dd8b58bee6c694d44e52fe79d834cc458d9bfbc161c3f65a",
+      "bytes": 1948
+    },
+    {
+      "path": "STATIC-NOTE.json",
+      "sha256": "e8e4ac7731163c99f336d0a5b8746d2984ac35614b682ea3391271f7230a5c90",
+      "bytes": 4052
+    },
+    {
+      "path": "allocation-profile.hh",
+      "sha256": "18e8b12537fb3feb44853f44ec0bfb3b772a05fc382e7e23d62ebff22b69aeeb",
+      "bytes": 4080
+    },
+    {
+      "path": "input-bindings.json",
+      "sha256": "60bb0c784cece33d9c032acc36502b84cdaaefeb564cc63fb741449b7f8deb93",
+      "bytes": 7524
+    },
+    {
+      "path": "overlays/baseline/include/posets/downsets/rank_bucketed_vector_backed.hh",
+      "sha256": "560da3c70468e5ae9641cb16252d2f991bcf5dd25f15dace435cf43a09ce1fcb",
+      "bytes": 6208
+    },
+    {
+      "path": "overlays/baseline.patch",
+      "sha256": "b1467f761cb75ee46d59cafbbc4b97d1dc267dd2f62b5433a259437eb9922274",
+      "bytes": 1409
+    },
+    {
+      "path": "overlays/candidate/include/posets/downsets/rank_bucketed_vector_backed.hh",
+      "sha256": "c24fae547faf344a3b2629e3e182991bd9d14fc58354e589ecb621e2dc887460",
+      "bytes": 12684
+    },
+    {
+      "path": "overlays/candidate.patch",
+      "sha256": "669cfeba4683865ad16a7908fd6f621603e76f01e19bb96bbc6ecfda630266e7",
+      "bytes": 2783
+    },
+    {
+      "path": "profile-plan.json",
+      "sha256": "d8da2999ff814a87c98288f0d36271015db6059a787ed60c0880844eb162dfd0",
+      "bytes": 3299
+    },
+    {
+      "path": "rank-profile-check.cc",
+      "sha256": "c1919b123c4b7b517936d2f4572f9e6200dc0273e6677d190a79507510a43094",
+      "bytes": 3397
+    },
+    {
+      "path": "rank-profile-counters.hh",
+      "sha256": "aeeeeb6813b26cea68434d2d14c7e3830cf0ba41caa235427d8fe3d2dbe3c1d2",
+      "bytes": 2281
+    },
+    {
+      "path": "rank-profile.cc",
+      "sha256": "04ee80861141c4e26d39c3e25939379d43d5f5ca006dd8748839338130e5a4cc",
+      "bytes": 13753
+    },
+    {
+      "path": "shadow-header-bindings.json",
+      "sha256": "e74aac0e91168046dfe26d8d8584d2a2f5b9ee97df2267e1691823039ee7f876",
+      "bytes": 1692
+    },
+    {
+      "path": "trace-plans/larger5-eligible.json",
+      "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9",
+      "bytes": 2889
+    },
+    {
+      "path": "trace-plans/standard12.json",
+      "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d",
+      "bytes": 7605
+    },
+    {
+      "path": "v1-to-v2.patch",
+      "sha256": "4c67ac07f8e198a7903385071a7362a1c90d8aa84f05f288d70e99f5f9a6b5b5",
+      "bytes": 6751
+    }
+  ],
+  "actual_profile_artifacts_present": false
+}

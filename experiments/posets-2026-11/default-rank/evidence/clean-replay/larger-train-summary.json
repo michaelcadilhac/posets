@@ -1,0 +1,1391 @@
+{
+  "scope": "train paired replay; selected-rank per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus 789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "ratio_definition": "optimized operation seconds / baseline operation seconds, matched by pair and exact trace/mode/backend/vector/metric; below 1 is faster",
+  "treatment": "three external paired repetitions in A/B,B/A,A/B order; rounds=1; seeds=260617,260618,260619; 8G/no swap; no allocation/statistics instrumentation",
+  "limits": [
+    "Three observations per cell, no significance claim or generalization beyond these frozen traces.",
+    "A zero baseline operation clock has no defined ratio; summary fails closed rather than inventing one.",
+    "Single-query contains clocks excluded; only whole-CPre, build and rebuild are summarized.",
+    "Process wall time includes parsing/checks/launch/cleanup and is not an operation clock.",
+    "Scope peak memory includes parsing/checks and is not retained storage or an allocation count.",
+    "Source-oracle timeout is not a backend correctness failure; unverified source cells remain censored.",
+    "Each cell represents a fresh replay operation, not continuous captured deletion history."
+  ],
+  "paired_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-large-train-plan.json",
+    "sha256": "6cfb4ec94f2b2f79d5bccf4af3f5c71d9fae132c60aae075103f2e000b578cdb"
+  },
+  "summarizer_sha256": "bbaefa4166d3c60cbbde7ced6a095a7c3c52379803335f2edbd499e60f65bf8a",
+  "evidence": [
+    {
+      "run": "default-rank-v3-large-train-pair0-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair0-baseline/report.json",
+      "report_sha256": "df352338c6082dade84a4425905581ae4797b98a934c2e82646b7b057311060f",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair0-baseline/build-source-binding.json",
+      "binding_sha256": "e10d472f980e6efabb8de28f143e23677fe8359afeb58421f4246a04cb6db012"
+    },
+    {
+      "run": "default-rank-v3-large-train-pair0-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair0-optimized/report.json",
+      "report_sha256": "5c9b3de5a7b152514848ff577eaca8936506514e36b4c7352eb6e9500ade1016",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair0-optimized/build-source-binding.json",
+      "binding_sha256": "ff4318f978f138f753937d0afe3c2c5d5ba5ca338874c86214d52fdbfbc5c1e9"
+    },
+    {
+      "run": "default-rank-v3-large-train-pair1-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair1-optimized/report.json",
+      "report_sha256": "8f32a0274ab1828db54bfb26edc5b8e31dd3e51173229045f53814587ebcade9",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair1-optimized/build-source-binding.json",
+      "binding_sha256": "4cf68840c3a779c995d7e73b471c786526b7ea639bf27f669b327cb7ae12b7c2"
+    },
+    {
+      "run": "default-rank-v3-large-train-pair1-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair1-baseline/report.json",
+      "report_sha256": "17d6002efdbd901e8b26dabad233854c805fb0b7c572bd957a2dd6f33b3063a6",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair1-baseline/build-source-binding.json",
+      "binding_sha256": "dbb34f1fd8f3e6ba25789d4dafea9616cb14f3ba8c665f1ee3a79d09b673c9a6"
+    },
+    {
+      "run": "default-rank-v3-large-train-pair2-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair2-baseline/report.json",
+      "report_sha256": "07821d704af93988fca2776eabe5aff241ee67ebc6cf05d33f2b82253d1a0a9a",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair2-baseline/build-source-binding.json",
+      "binding_sha256": "a500bb7eaca34fcdc69eb8d86ca75603681e93824b5be3f09cb6a4d2542d9355"
+    },
+    {
+      "run": "default-rank-v3-large-train-pair2-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair2-optimized/report.json",
+      "report_sha256": "1ae0f7e5c2a6b77bfadf0933b7f93c319889d285eb1bbbdb06e04665fdfbdd21",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair2-optimized/build-source-binding.json",
+      "binding_sha256": "de9cd77b33abbd2546514471ff98f4603ad859d2a31dbebea4257828f0b54aa4"
+    }
+  ],
+  "order_audit": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-large-train-order-audit.json",
+    "sha256": "09ab98700746714bac53afca6b0e504dca51d47b467dab965156c7b94edad9e3",
+    "rows": [
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 0
+      },
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 1
+      },
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 2
+      }
+    ]
+  },
+  "coverage": [
+    {
+      "run": "default-rank-v3-large-train-pair0-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28545024,
+      "oom_invocations": []
+    },
+    {
+      "run": "default-rank-v3-large-train-pair0-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28471296,
+      "oom_invocations": []
+    },
+    {
+      "run": "default-rank-v3-large-train-pair1-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28512256,
+      "oom_invocations": []
+    },
+    {
+      "run": "default-rank-v3-large-train-pair1-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28471296,
+      "oom_invocations": []
+    },
+    {
+      "run": "default-rank-v3-large-train-pair2-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28573696,
+      "oom_invocations": []
+    },
+    {
+      "run": "default-rank-v3-large-train-pair2-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28495872,
+      "oom_invocations": []
+    }
+  ],
+  "failure_rows": [],
+  "cells": [
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "cpre",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.101780325,
+          "optimized_seconds": 0.097147485,
+          "optimized_over_baseline": 0.9544819688874053
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.104430913,
+          "optimized_seconds": 0.098552219,
+          "optimized_over_baseline": 0.9437073388413256
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.101709988,
+          "optimized_seconds": 0.099271045,
+          "optimized_over_baseline": 0.9760206146125984
+        }
+      ],
+      "baseline_median_seconds": 0.101780325,
+      "optimized_median_seconds": 0.098552219,
+      "median_paired_optimized_over_baseline": 0.9544819688874053,
+      "paired_ratio_min": 0.9437073388413256,
+      "paired_ratio_max": 0.9760206146125984,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.152300387,
+          "optimized_seconds": 0.147145915,
+          "optimized_over_baseline": 0.9661558837667299
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.15589832,
+          "optimized_seconds": 0.149650443,
+          "optimized_over_baseline": 0.9599233846779105
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.151446612,
+          "optimized_seconds": 0.149106364,
+          "optimized_over_baseline": 0.984547373037305
+        }
+      ],
+      "baseline_median_seconds": 0.152300387,
+      "optimized_median_seconds": 0.149106364,
+      "median_paired_optimized_over_baseline": 0.9661558837667299,
+      "paired_ratio_min": 0.9599233846779105,
+      "paired_ratio_max": 0.984547373037305,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.042200211,
+          "optimized_seconds": 0.041525089,
+          "optimized_over_baseline": 0.9840019283315906
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.043398114,
+          "optimized_seconds": 0.041728247,
+          "optimized_over_baseline": 0.9615221297404768
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.042690609,
+          "optimized_seconds": 0.042151278,
+          "optimized_over_baseline": 0.9873665189456539
+        }
+      ],
+      "baseline_median_seconds": 0.042690609,
+      "optimized_median_seconds": 0.041728247,
+      "median_paired_optimized_over_baseline": 0.9840019283315906,
+      "paired_ratio_min": 0.9615221297404768,
+      "paired_ratio_max": 0.9873665189456539,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "cpre",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.081511496,
+          "optimized_seconds": 0.077895543,
+          "optimized_over_baseline": 0.9556387359152382
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.08474901,
+          "optimized_seconds": 0.077538931,
+          "optimized_over_baseline": 0.9149243277296101
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.084288483,
+          "optimized_seconds": 0.078427199,
+          "optimized_over_baseline": 0.9304616266495151
+        }
+      ],
+      "baseline_median_seconds": 0.084288483,
+      "optimized_median_seconds": 0.077895543,
+      "median_paired_optimized_over_baseline": 0.9304616266495151,
+      "paired_ratio_min": 0.9149243277296101,
+      "paired_ratio_max": 0.9556387359152382,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.104793805,
+          "optimized_seconds": 0.100346743,
+          "optimized_over_baseline": 0.957563693769875
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.108423303,
+          "optimized_seconds": 0.101883039,
+          "optimized_over_baseline": 0.9396784287230209
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.108517751,
+          "optimized_seconds": 0.102158245,
+          "optimized_over_baseline": 0.9413966292021662
+        }
+      ],
+      "baseline_median_seconds": 0.108423303,
+      "optimized_median_seconds": 0.101883039,
+      "median_paired_optimized_over_baseline": 0.9413966292021662,
+      "paired_ratio_min": 0.9396784287230209,
+      "paired_ratio_max": 0.957563693769875,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.028119373,
+          "optimized_seconds": 0.027069124,
+          "optimized_over_baseline": 0.9626503407455067
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.029244852,
+          "optimized_seconds": 0.026848011,
+          "optimized_over_baseline": 0.9180422933923551
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.029181831,
+          "optimized_seconds": 0.027321802,
+          "optimized_over_baseline": 0.9362607164711495
+        }
+      ],
+      "baseline_median_seconds": 0.029181831,
+      "optimized_median_seconds": 0.027069124,
+      "median_paired_optimized_over_baseline": 0.9362607164711495,
+      "paired_ratio_min": 0.9180422933923551,
+      "paired_ratio_max": 0.9626503407455067,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.146332523,
+          "optimized_seconds": 0.148465766,
+          "optimized_over_baseline": 1.014578051114447
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.154156567,
+          "optimized_seconds": 0.144209861,
+          "optimized_over_baseline": 0.9354765989307481
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.15063755,
+          "optimized_seconds": 0.151934264,
+          "optimized_over_baseline": 1.0086081723979181
+        }
+      ],
+      "baseline_median_seconds": 0.15063755,
+      "optimized_median_seconds": 0.148465766,
+      "median_paired_optimized_over_baseline": 1.0086081723979181,
+      "paired_ratio_min": 0.9354765989307481,
+      "paired_ratio_max": 1.014578051114447,
+      "pairs_optimized_faster": 1
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.14826749,
+          "optimized_seconds": 0.150782065,
+          "optimized_over_baseline": 1.0169597192209836
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.15529315,
+          "optimized_seconds": 0.145826835,
+          "optimized_over_baseline": 0.9390422887294128
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.154587714,
+          "optimized_seconds": 0.156221438,
+          "optimized_over_baseline": 1.0105682654703076
+        }
+      ],
+      "baseline_median_seconds": 0.154587714,
+      "optimized_median_seconds": 0.150782065,
+      "median_paired_optimized_over_baseline": 1.0105682654703076,
+      "paired_ratio_min": 0.9390422887294128,
+      "paired_ratio_max": 1.0169597192209836,
+      "pairs_optimized_faster": 1
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.103920798,
+          "optimized_seconds": 0.099382183,
+          "optimized_over_baseline": 0.9563262110439145
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.108843944,
+          "optimized_seconds": 0.100761794,
+          "optimized_over_baseline": 0.9257455242525942
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.108643649,
+          "optimized_seconds": 0.099104662,
+          "optimized_over_baseline": 0.9121993131876489
+        }
+      ],
+      "baseline_median_seconds": 0.108643649,
+      "optimized_median_seconds": 0.099382183,
+      "median_paired_optimized_over_baseline": 0.9257455242525942,
+      "paired_ratio_min": 0.9121993131876489,
+      "paired_ratio_max": 0.9563262110439145,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.105191626,
+          "optimized_seconds": 0.100331289,
+          "optimized_over_baseline": 0.9537954000254736
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.109733079,
+          "optimized_seconds": 0.101821338,
+          "optimized_over_baseline": 0.9279001275449493
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.109036957,
+          "optimized_seconds": 0.100009393,
+          "optimized_over_baseline": 0.917206383520039
+        }
+      ],
+      "baseline_median_seconds": 0.109036957,
+      "optimized_median_seconds": 0.100331289,
+      "median_paired_optimized_over_baseline": 0.9279001275449493,
+      "paired_ratio_min": 0.917206383520039,
+      "paired_ratio_max": 0.9537954000254736,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.147488634,
+          "optimized_seconds": 0.147144982,
+          "optimized_over_baseline": 0.9976699763861125
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.14854938,
+          "optimized_seconds": 0.14695745,
+          "optimized_over_baseline": 0.9892834961680754
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.154793681,
+          "optimized_seconds": 0.146241521,
+          "optimized_over_baseline": 0.9447512330945862
+        }
+      ],
+      "baseline_median_seconds": 0.14854938,
+      "optimized_median_seconds": 0.14695745,
+      "median_paired_optimized_over_baseline": 0.9892834961680754,
+      "paired_ratio_min": 0.9447512330945862,
+      "paired_ratio_max": 0.9976699763861125,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.148042565,
+          "optimized_seconds": 0.152012244,
+          "optimized_over_baseline": 1.026814443535209
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.150308959,
+          "optimized_seconds": 0.149423854,
+          "optimized_over_baseline": 0.9941114288470323
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.155629909,
+          "optimized_seconds": 0.147630699,
+          "optimized_over_baseline": 0.9486010751313875
+        }
+      ],
+      "baseline_median_seconds": 0.150308959,
+      "optimized_median_seconds": 0.149423854,
+      "median_paired_optimized_over_baseline": 0.9941114288470323,
+      "paired_ratio_min": 0.9486010751313875,
+      "paired_ratio_max": 1.026814443535209,
+      "pairs_optimized_faster": 2
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.106961345,
+          "optimized_seconds": 0.097960059,
+          "optimized_over_baseline": 0.9158454299541577
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.107297795,
+          "optimized_seconds": 0.099026675,
+          "optimized_over_baseline": 0.922914352527002
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.105983,
+          "optimized_seconds": 0.100528121,
+          "optimized_over_baseline": 0.9485306228357379
+        }
+      ],
+      "baseline_median_seconds": 0.106961345,
+      "optimized_median_seconds": 0.099026675,
+      "median_paired_optimized_over_baseline": 0.922914352527002,
+      "paired_ratio_min": 0.9158454299541577,
+      "paired_ratio_max": 0.9485306228357379,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.108596639,
+          "optimized_seconds": 0.098623,
+          "optimized_over_baseline": 0.9081588611595982
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.108628454,
+          "optimized_seconds": 0.099337975,
+          "optimized_over_baseline": 0.9144747194874006
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.107155947,
+          "optimized_seconds": 0.101502244,
+          "optimized_over_baseline": 0.9472385513050433
+        }
+      ],
+      "baseline_median_seconds": 0.108596639,
+      "optimized_median_seconds": 0.099337975,
+      "median_paired_optimized_over_baseline": 0.9144747194874006,
+      "paired_ratio_min": 0.9081588611595982,
+      "paired_ratio_max": 0.9472385513050433,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.066383988,
+          "optimized_seconds": 0.047857268,
+          "optimized_over_baseline": 0.7209158328963303
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.070882943,
+          "optimized_seconds": 0.048917563,
+          "optimized_over_baseline": 0.6901175505650209
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.070730185,
+          "optimized_seconds": 0.049793333,
+          "optimized_over_baseline": 0.7039898594920967
+        }
+      ],
+      "baseline_median_seconds": 0.070730185,
+      "optimized_median_seconds": 0.048917563,
+      "median_paired_optimized_over_baseline": 0.7039898594920967,
+      "paired_ratio_min": 0.6901175505650209,
+      "paired_ratio_max": 0.7209158328963303,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.068636847,
+          "optimized_seconds": 0.049503302,
+          "optimized_over_baseline": 0.7212350823749232
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.073604809,
+          "optimized_seconds": 0.05133775,
+          "optimized_over_baseline": 0.6974782041754909
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.072488043,
+          "optimized_seconds": 0.052416366,
+          "optimized_over_baseline": 0.7231036158611703
+        }
+      ],
+      "baseline_median_seconds": 0.072488043,
+      "optimized_median_seconds": 0.05133775,
+      "median_paired_optimized_over_baseline": 0.7212350823749232,
+      "paired_ratio_min": 0.6974782041754909,
+      "paired_ratio_max": 0.7231036158611703,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.092275985,
+          "optimized_seconds": 0.068087172,
+          "optimized_over_baseline": 0.7378644833756042
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.09700837,
+          "optimized_seconds": 0.068916915,
+          "optimized_over_baseline": 0.7104223584006205
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.094892879,
+          "optimized_seconds": 0.070118891,
+          "optimized_over_baseline": 0.7389267955501698
+        }
+      ],
+      "baseline_median_seconds": 0.094892879,
+      "optimized_median_seconds": 0.068916915,
+      "median_paired_optimized_over_baseline": 0.7378644833756042,
+      "paired_ratio_min": 0.7104223584006205,
+      "paired_ratio_max": 0.7389267955501698,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.095293687,
+          "optimized_seconds": 0.069307751,
+          "optimized_over_baseline": 0.7273068466749534
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.097960827,
+          "optimized_seconds": 0.071820738,
+          "optimized_over_baseline": 0.7331577345707789
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.097896018,
+          "optimized_seconds": 0.070991228,
+          "optimized_over_baseline": 0.7251697203863798
+        }
+      ],
+      "baseline_median_seconds": 0.097896018,
+      "optimized_median_seconds": 0.070991228,
+      "median_paired_optimized_over_baseline": 0.7273068466749534,
+      "paired_ratio_min": 0.7251697203863798,
+      "paired_ratio_max": 0.7331577345707789,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.068673672,
+          "optimized_seconds": 0.048796422,
+          "optimized_over_baseline": 0.7105550144457107
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.069469919,
+          "optimized_seconds": 0.049755496,
+          "optimized_over_baseline": 0.7162164101558834
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.070855208,
+          "optimized_seconds": 0.04923627,
+          "optimized_over_baseline": 0.6948856885721089
+        }
+      ],
+      "baseline_median_seconds": 0.069469919,
+      "optimized_median_seconds": 0.04923627,
+      "median_paired_optimized_over_baseline": 0.7105550144457107,
+      "paired_ratio_min": 0.6948856885721089,
+      "paired_ratio_max": 0.7162164101558834,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.071369935,
+          "optimized_seconds": 0.051137776,
+          "optimized_over_baseline": 0.7165170600197409
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.072290056,
+          "optimized_seconds": 0.051264921,
+          "optimized_over_baseline": 0.7091559176548431
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.073279386,
+          "optimized_seconds": 0.050426598,
+          "optimized_over_baseline": 0.6881416555537188
+        }
+      ],
+      "baseline_median_seconds": 0.072290056,
+      "optimized_median_seconds": 0.051137776,
+      "median_paired_optimized_over_baseline": 0.7091559176548431,
+      "paired_ratio_min": 0.6881416555537188,
+      "paired_ratio_max": 0.7165170600197409,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.093597578,
+          "optimized_seconds": 0.068516804,
+          "optimized_over_baseline": 0.7320360789677699
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.095083825,
+          "optimized_seconds": 0.069336303,
+          "optimized_over_baseline": 0.7292123870700407
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.094138046,
+          "optimized_seconds": 0.070906799,
+          "optimized_over_baseline": 0.7532214870914147
+        }
+      ],
+      "baseline_median_seconds": 0.094138046,
+      "optimized_median_seconds": 0.069336303,
+      "median_paired_optimized_over_baseline": 0.7320360789677699,
+      "paired_ratio_min": 0.7292123870700407,
+      "paired_ratio_max": 0.7532214870914147,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "backend": "rank_bucketed_vector_backed",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.094512307,
+          "optimized_seconds": 0.069177229,
+          "optimized_over_baseline": 0.7319388468636154
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.098054886,
+          "optimized_seconds": 0.071153211,
+          "optimized_over_baseline": 0.7256467668525972
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.095818854,
+          "optimized_seconds": 0.072676645,
+          "optimized_over_baseline": 0.7584795889961281
+        }
+      ],
+      "baseline_median_seconds": 0.095818854,
+      "optimized_median_seconds": 0.071153211,
+      "median_paired_optimized_over_baseline": 0.7319388468636154,
+      "paired_ratio_min": 0.7256467668525972,
+      "paired_ratio_max": 0.7584795889961281,
+      "pairs_optimized_faster": 3
+    }
+  ]
+}

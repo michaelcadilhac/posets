@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""Derive the fixed two-default comparison and audit kernel OOM events."""
+
+import argparse
+from collections import Counter
+import csv
+import hashlib
+import importlib.util
+import json
+import math
+import sys
+from pathlib import Path
+
+
+LABELS = ["baseline-default", "optimized-default"]
+PINS = {"baseline-default": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+        "optimized-default": "30e66853832d98bcfaada296d892157b95a8150d"}
+INSTANCES = 1524
+PRESET = "otf_sparse_formula_parity"
+ACACIA = "86dd487001dc75a3c1c0dfa9db50a9882a532db1"
+DECISIVE = {"REALIZABLE", "UNREALIZABLE"}
+CAMPAIGN_SHA256 = "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e"
+MEMORY_HELPER_SHA256 = "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90"
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    with Path(path).open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def read_binding(binding, columns=None):
+    path = Path(binding["path"])
+    require(sha(path) == binding["sha256"], f"Changed source: {path}")
+    with path.open(newline="") as stream:
+        reader = csv.DictReader(stream, delimiter="\t")
+        require(reader.fieldnames and len(set(reader.fieldnames)) == len(reader.fieldnames),
+                f"Missing or duplicate TSV columns: {path}")
+        require(columns is None or reader.fieldnames == columns, f"Wrong sidecar schema: {path}")
+        rows = list(reader)
+    require(all(None not in row and all(value is not None for value in row.values())
+                for row in rows), f"Malformed TSV row: {path}")
+    by_name = {row["instance"]: row for row in rows}
+    require(len(rows) == len(by_name) == 1524, f"Wrong coverage: {path}")
+    return by_name
+
+
+def load_memory_helper(manifest):
+    path = Path(manifest["repo"]) / "benchmarking/scope_memory.py"
+    require(manifest["implementation"].get(str(path)) == MEMORY_HELPER_SHA256
+            and sha(path) == MEMORY_HELPER_SHA256, "Changed memory-statistic implementation")
+    # Reuse the same provenance/denominator rules as the unchanged campaign.
+    sys.dont_write_bytecode = True
+    spec = importlib.util.spec_from_file_location("default_table_scope_memory", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def check_identity(raw, arm, manifest):
+    expected = {"solver_label": arm["label"], "cap_s": "17", "acacia_sha": arm["acacia_sha"],
+                "binary_sha256": arm["binary_sha256"], "flags": "", "preset": PRESET,
+                "memory_max": "8G", "memory_swap_max": "0", "collect_rusage": "true",
+                "allowed_cpus": manifest["allowed_cpus"] or "", "cpu_quota": manifest["cpu_quota"] or ""}
+    for name, row in raw.items():
+        require(all(row[key] == value for key, value in expected.items()),
+                f"Native treatment differs: {arm['label']}/{name}")
+        if row["result"] in DECISIVE:
+            require(row["exit_code"] == ("0" if row["result"] == "REALIZABLE" else "1"),
+                    f"Native answer/exit differ: {arm['label']}/{name}")
+
+
+def audit_events(label, raw, memory, keys):
+    require(raw.keys() == memory.keys(), f"Memory case identities differ: {label}")
+    observed, missing, observations = 0, [], []
+    events_by_outcome = Counter()
+    row_counts = Counter(oom=0, oom_kill=0)
+    counter_sums = Counter(oom=0, oom_kill=0)
+    for name, row in raw.items():
+        evidence = memory[name]
+        require(all(evidence[key] == row[key] for key in keys),
+                f"Memory invocation identity differs: {label}/{name}")
+        text = evidence["scope_memory_events"]
+        reason = evidence["scope_memory_events_missing_reason"]
+        if not text:
+            require(bool(reason), f"Missing event evidence without reason: {label}/{name}")
+            missing.append({"arm": label, "instance": name, "scope_unit": row["scope_unit"],
+                            "reason": reason})
+            continue
+        require(not reason and evidence["scope_memory_events_source"] == "cgroup-v2/memory.events"
+                and evidence["memory_cgroup"] and row["scope_unit"],
+                f"Invalid event provenance: {label}/{name}")
+        events = json.loads(text)
+        require(isinstance(events, dict) and {"oom", "oom_kill"} <= events.keys()
+                and all(type(value) is int and 0 <= value < 2**64 for value in events.values()),
+                f"Invalid kernel event counters: {label}/{name}")
+        observed += 1
+        for key in ("oom", "oom_kill"):
+            row_counts[key] += events[key] > 0
+            counter_sums[key] += events[key]
+        if events["oom_kill"]:
+            events_by_outcome[row["result"]] += 1
+        if events["oom"] or events["oom_kill"] or events.get("oom_group_kill", 0):
+            observations.append({"arm": label, "instance": name, "native_result": row["result"],
+                "run_index": row["run_index"], "scope_unit": row["scope_unit"],
+                "binary_sha256": row["binary_sha256"], "events": events,
+                "scope_memory_peak_bytes": row["scope_memory_peak_bytes"]})
+    return {"event_observed_rows": observed, "event_missing_rows": len(missing),
+            "all_event_rows_observed": observed == len(raw),
+            "event_missing_reasons": dict(Counter(row["reason"] for row in missing)),
+            "oom_observed_rows": row_counts["oom"], "oom_kill_observed_rows": row_counts["oom_kill"],
+            "sum_observed_kernel_counters": dict(counter_sums),
+            "native_MEMOUT": sum(row["result"] == "MEMOUT" for row in raw.values()),
+            "native_TIMEOUT": sum(row["result"] == "TIMEOUT" for row in raw.values()),
+            "native_MEMOUT_with_oom_kill": events_by_outcome["MEMOUT"],
+            "native_TIMEOUT_with_oom_kill": events_by_outcome["TIMEOUT"],
+            "native_outcomes_among_oom_kill_rows": dict(events_by_outcome)}, observations, missing
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("campaign", type=Path)
+    parser.add_argument("output", type=Path)
+    parser.add_argument("--frozen-sha256", required=True,
+                        help="Externally approved completed campaign frozen.json SHA256")
+    args = parser.parse_args()
+    root = args.campaign.resolve(strict=True)
+    require(sha(root / "frozen.json") == args.frozen_sha256, "Wrong approved frozen manifest")
+    stable = {str(root / name): sha(root / name)
+              for name in ("frozen.json", "progress.json", "summary.json")}
+    manifest = json.loads((root / "frozen.json").read_text())
+    progress = json.loads((root / "progress.json").read_text())
+    summary = json.loads((root / "summary.json").read_text())
+    require(progress["status"] == "complete", "Campaign is not complete")
+    require(progress["expected_per_arm"] == INSTANCES
+            and progress["completed"] == dict.fromkeys(LABELS, INSTANCES), "Incomplete progress coverage")
+    require(summary["usable"] and not summary["conflicts"], "Unresolved conflicts")
+    require(summary["frozen_manifest_sha256"] == sha(root / "frozen.json"), "Manifest changed")
+    require([arm["label"] for arm in manifest["arms"]] == LABELS, "Wrong arm inventory")
+    require(set(summary["series"]) == set(LABELS), "Wrong summary inventory")
+    require(manifest["baseline"] == LABELS[0], "Wrong primary comparator")
+    require(CAMPAIGN_SHA256 in manifest["implementation"].values(), "Changed campaign implementation")
+    require(summary["instances"] == INSTANCES and summary["cap_s"] == 17, "Wrong summary coverage/cap")
+    require(summary["corpus_sha256"] == manifest["corpus_sha256"], "Wrong summary truth corpus")
+    stable.update(manifest["implementation"])
+    stable.update({entry["path"]: entry["sha256"] for entry in manifest["inputs"].values()})
+    require(manifest["cap_s"] == 17 and manifest["memory_max"] == "8G"
+            and manifest["memory_swap_max"] == "0", "Wrong resource treatment")
+    require(all(arm["flags"] == "" for arm in manifest["arms"]), "Nonempty primary flags")
+    require(all(arm["preset"] == PRESET and arm["acacia_sha"] == ACACIA
+                and arm["source_pins"]["posets"] == PINS[arm["label"]]
+                for arm in manifest["arms"]), "Wrong preset or actual source pins")
+    helper = load_memory_helper(manifest)
+    list_binding = manifest["inputs"]["list"]
+    require(sha(list_binding["path"]) == list_binding["sha256"] == summary["list_sha256"],
+            "Changed campaign case list")
+    names = [line.strip() for line in Path(list_binding["path"]).read_text().splitlines()
+             if line.strip() and not line.lstrip().startswith("#")]
+    require(len(names) == len(set(names)) == INSTANCES, "Wrong frozen case-list coverage")
+    solved = {}
+    totals = {}
+    raw_by_arm = {}
+    truth = {}
+    event_audit, event_observations, event_missing = {}, [], []
+    memory_sources = {}
+    for label in LABELS:
+        entry = summary["series"][label]
+        source = summary["strict_wall_scoring"]["sources"][label]
+        for key in ("raw_memory", "scored_memory"):
+            require(source[key] is not None and sha(source[key]["path"]) == source[key]["sha256"],
+                    f"Missing or changed memory source: {label}/{key}")
+        raw = read_binding(source["raw"])
+        scored = read_binding(source["scored"])
+        require(raw.keys() == set(names), f"Wrong frozen case identities: {label}")
+        require(entry["frozen_arm"] == manifest["arms"][LABELS.index(label)]
+                and not entry["collected_conflicts"] and not entry["truth_conflict_instances"],
+                f"Changed arm or unresolved per-arm conflict: {label}")
+        check_identity(raw, entry["frozen_arm"], manifest)
+        raw_memory = read_binding(source["raw_memory"], helper.MEMORY_KEYS + helper.MEMORY_COLUMNS)
+        scored_memory = read_binding(source["scored_memory"], helper.MEMORY_KEYS + helper.MEMORY_COLUMNS)
+        require(raw_memory == scored_memory, f"Scoring changed memory evidence: {label}")
+        event_audit[label], observations, missing = audit_events(label, raw, raw_memory, helper.MEMORY_KEYS)
+        event_observations.extend(observations)
+        event_missing.extend(missing)
+        memory_sources[label] = {key: source[key] for key in ("raw_memory", "scored_memory")}
+        for statistic, column in (("scope", "scope_memory_peak_bytes"),
+                                  ("process_rss", "max_process_rss_bytes")):
+            values = [{**raw[name], **raw_memory[name]} for name in raw]
+            expected = helper.memory_statistic(values, column)
+            if expected["numerator"] != INSTANCES:
+                expected["max_bytes"] = expected["median_bytes"] = None
+            require(expected == entry["peak_memory"][statistic],
+                    f"Memory aggregate/provenance differs: {label}/{statistic}")
+        for binding in source.values():
+            if isinstance(binding, dict) and "path" in binding and "sha256" in binding:
+                stable[binding["path"]] = binding["sha256"]
+        require(raw.keys() == scored.keys(), f"Scoring identities differ: {label}")
+        if raw_by_arm:
+            require(raw.keys() == next(iter(raw_by_arm.values())).keys(), "Arm identities differ")
+        require(dict(Counter(row["result"] for row in raw.values())) == entry["native_outcomes"],
+                f"Native counts differ: {label}")
+        passed = set()
+        overrun_count = 0
+        total = 0.0
+        for name, row in raw.items():
+            seconds = float(row["seconds"])
+            require(math.isfinite(seconds) and seconds >= 0, f"Invalid time: {label}/{name}")
+            verdict = row["result"]
+            require(verdict in DECISIVE | {"TIMEOUT", "MEMOUT", "UNKNOWN", "ERROR", "CRASH", "SYFCO-FAIL"},
+                    f"Invalid native outcome: {label}/{name}")
+            if verdict in DECISIVE:
+                require(truth.get(name, verdict) == verdict, f"Opposite verdicts: {name}")
+                truth[name] = verdict
+            overrun = verdict in DECISIVE and seconds > 17
+            expected_scored = dict(row, result="TIMEOUT") if overrun else row
+            require(scored[name] == expected_scored, f"Unexpected scoring change: {label}/{name}")
+            overrun_count += overrun
+            if verdict in DECISIVE and seconds <= 17:
+                passed.add(name)
+                total += seconds
+            else:
+                total += 34
+        require(len(passed) == entry["solved"], f"Solved count differs: {label}")
+        require(abs(total - entry["par2_total_s"]) <= 0.00001, f"PAR2 differs: {label}")
+        require(overrun_count == len(entry["wall_cap_overruns"]), f"Overrun count differs: {label}")
+        require(dict(Counter(row["result"] for row in scored.values() if row["result"] not in DECISIVE))
+                == {key: value for key, value in entry["failure_subtypes"].items() if value},
+                f"Scored censor counts differ: {label}")
+        solved[label], totals[label], raw_by_arm[label] = passed, entry["par2_total_s"], raw
+    rows, comparisons = [], {}
+    for label in LABELS:
+        entry = summary["series"][label]
+        pairs = {}
+        for comparator in ["baseline-default"]:
+            pairs[comparator] = {
+                "gains": sorted(solved[label] - solved[comparator]),
+                "losses": sorted(solved[comparator] - solved[label]),
+                "par2_delta_s": round(totals[label] - totals[comparator], 6),
+            }
+        if label != "baseline-default":
+            existing = summary["candidate_vs_baseline"][label]
+            require(set(existing["gains"]) == set(pairs["baseline-default"]["gains"])
+                    and set(existing["losses"]) == set(pairs["baseline-default"]["losses"])
+                    and abs(existing["par2_delta_s"] - pairs["baseline-default"]["par2_delta_s"]) < 0.00001,
+                    f"Baseline comparator differs: {label}")
+        scope = entry["peak_memory"]["scope"]
+        cpu = entry["cpu"]
+        cpu_values = [float(row["cpu_seconds"]) for row in raw_by_arm[label].values()
+                      if row["cpu_seconds"]]
+        require(all(math.isfinite(value) and value >= 0 for value in cpu_values),
+                f"Invalid CPU observation: {label}")
+        require(len(cpu_values) == cpu["observed_rows"], f"CPU coverage differs: {label}")
+        if len(cpu_values) == 1524:
+            require(cpu["total_seconds"] is not None
+                    and abs(sum(cpu_values) - cpu["total_seconds"]) < 0.00001,
+                    f"CPU aggregate differs: {label}")
+        require(cpu["observed_rows"] == 1524 or cpu["total_seconds"] is None,
+                f"Partial CPU aggregate: {label}")
+        require(scope["numerator"] == 1524 or (scope["max_bytes"] is None and scope["median_bytes"] is None),
+                f"Partial memory aggregate: {label}")
+        rows.append({
+            "arm": label, "solved": len(solved[label]), "instances": 1524,
+            "par2_total_s": totals[label],
+            "baseline_gains": len(pairs["baseline-default"]["gains"]),
+            "baseline_losses": len(pairs["baseline-default"]["losses"]),
+            "baseline_par2_delta_s": pairs["baseline-default"]["par2_delta_s"],
+            "cpu_observed_rows": cpu["observed_rows"], "cpu_total_s": cpu["total_seconds"],
+            "scope_peak_observed_rows": scope["numerator"],
+            "scope_peak_max_bytes": scope["max_bytes"], "scope_peak_median_bytes": scope["median_bytes"],
+            "process_rss_observed_rows": entry["peak_memory"]["process_rss"]["numerator"],
+            "process_rss_max_bytes": entry["peak_memory"]["process_rss"]["max_bytes"],
+            "process_rss_median_bytes": entry["peak_memory"]["process_rss"]["median_bytes"],
+            "wall_cap_overruns": len(entry["wall_cap_overruns"]),
+            "native_outcomes": entry["native_outcomes"], "failure_subtypes": entry["failure_subtypes"],
+            "memory_events_observed_rows": event_audit[label]["event_observed_rows"],
+            "memory_events_missing_rows": event_audit[label]["event_missing_rows"],
+            "oom_kill_observed_rows": event_audit[label]["oom_kill_observed_rows"],
+            "native_TIMEOUT_with_oom_kill": event_audit[label]["native_TIMEOUT_with_oom_kill"],
+        })
+        comparisons[label] = pairs
+    out = args.output.resolve()
+    require(all(sha(path) == expected for path, expected in stable.items()), "Completed inputs changed during derivation")
+    out.mkdir(parents=True, exist_ok=False)
+    result = {
+        "scope": "One complete two-arm default campaign; strict measured-wall <=17 scoring; all unsolved cost34s. No significance claim.",
+        "summary": {"path": str(root / "summary.json"), "sha256": sha(root / "summary.json")},
+        "manifest": {"path": str(root / "frozen.json"), "sha256": sha(root / "frozen.json")},
+        "derivation_script_sha256": sha(__file__), "rows": rows, "comparisons": comparisons,
+        "source_pins": PINS, "memory_helper_sha256": MEMORY_HELPER_SHA256,
+        "progress": {"path": str(root / "progress.json"), "sha256": sha(root / "progress.json")},
+        "input_bindings": stable,
+    }
+    (out / "solver-comparison.json").write_text(json.dumps(result, indent=2) + "\n")
+    oom = {"scope": "Native invocation-row/kernel-counter audit; no outcome relabeling or PAR2 changes. Counter sums are not invocation counts. Missing event coverage is not evidence of zero OOM.",
+           "expected_rows": INSTANCES * len(LABELS), "per_arm": event_audit,
+           "event_observed_rows": sum(row["event_observed_rows"] for row in event_audit.values()),
+           "event_missing_rows": len(event_missing),
+           "all_event_rows_observed": not event_missing,
+           "native_MEMOUT_outcomes": sum(row["native_MEMOUT"] for row in event_audit.values()),
+           "native_TIMEOUT_outcomes": sum(row["native_TIMEOUT"] for row in event_audit.values()),
+           "oom_observed_rows": sum(row["oom_observed_rows"] for row in event_audit.values()),
+           "oom_kill_observed_rows": sum(row["oom_kill_observed_rows"] for row in event_audit.values()),
+           "sum_observed_kernel_counters": {key: sum(row["sum_observed_kernel_counters"][key]
+               for row in event_audit.values()) for key in ("oom", "oom_kill")},
+           "native_TIMEOUT_rows_with_oom_kill": sum(row["native_TIMEOUT_with_oom_kill"] for row in event_audit.values()),
+           "source_sidecars": memory_sources, "observations": event_observations,
+           "missing_observations": event_missing}
+    (out / "oom-event-observations.json").write_text(json.dumps(oom, indent=2) + "\n")
+    with (out / "solver-comparison.csv").open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: json.dumps(v, sort_keys=True) if isinstance(v, dict) else v for k, v in row.items()})
+    completion = {"status": "complete", "native_rows_verified": INSTANCES * len(LABELS),
+                  "scored_rows_verified": INSTANCES * len(LABELS), "outcomes_rescored_by_this_script": False,
+                  "outputs": {name: sha(out / name) for name in
+                              ("solver-comparison.json", "solver-comparison.csv", "oom-event-observations.json")}}
+    (out / "COMPLETION.json").write_text(json.dumps(completion, indent=2) + "\n")
+    print(f"Verified 3048 raw/scored rows, baseline comparison and kernel memory-event evidence; wrote {out}")
+
+
+if __name__ == "__main__":
+    main()

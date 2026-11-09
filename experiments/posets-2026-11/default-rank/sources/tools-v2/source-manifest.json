@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "status": "source-only helper V2 correction snapshot; runtime checks and performance authorization pending",
+  "self_reference_rule": "Inventories actual files here, omits itself; not an actual build/map/result manifest",
+  "preserved_v1_manifest_sha256": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "1b57d8a63639d4c6e828a6d88bd3e9642eab758e63e8c357a9c528eca46fff4f",
+      "bytes": 12370
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "e726ad070c759cde7b47eb0da170c91879f940fe3c1cfeaee7c5644aea9a1271",
+      "bytes": 3342
+    },
+    {
+      "path": "changes.patch",
+      "sha256": "21c43c9d5b6e6144c86e61c1323e46baea8dd331e31a3a9a46114aaa3ef571c9",
+      "bytes": 95178
+    },
+    {
+      "path": "freeze_replay.py",
+      "sha256": "0c3d4e0e92ed2a0f93c8316daf99667017f9e5265260bcf788a35d9c63f2519d",
+      "bytes": 5275
+    },
+    {
+      "path": "original-sources.json",
+      "sha256": "bdad34b7803a79d09df166973a7376d817b304b6fc8a24564075e213fb12f7d9",
+      "bytes": 3954
+    },
+    {
+      "path": "posets-matrix.py",
+      "sha256": "43654da981ba74ca060734c0a3f58fed94389e39fed9c0eb46357ccce60cc494",
+      "bytes": 59874
+    },
+    {
+      "path": "prepare-paired-replay.py",
+      "sha256": "39a6777c529d93faf7d084e0c08572b91a33d13230d2cc4a1435152bd6ea4ee0",
+      "bytes": 12560
+    },
+    {
+      "path": "prepare-per-backend-build.py",
+      "sha256": "acc2e283660ef224b5951e2d00c0418509725245e9d33e988db47e1beb2b2b25",
+      "bytes": 9736
+    },
+    {
+      "path": "rank_contract.py",
+      "sha256": "eaee95c1815edd91e6211d103fdbf166d823924601f545b3fb007a686b61d15a",
+      "bytes": 9989
+    },
+    {
+      "path": "run-paired-replay-stop-on-correctness.py",
+      "sha256": "18a0697f0247beb9811218677be2212821f24325776208ccb10f8bbfc927d5ea",
+      "bytes": 8576
+    },
+    {
+      "path": "run-paired-replay.py",
+      "sha256": "b31cb7fbed2ecf30dad65c2afd296fe5173c9b4b90df7c2f5619c28e4de0dee3",
+      "bytes": 7810
+    },
+    {
+      "path": "run-per-backend-build.py",
+      "sha256": "8ac7394a381792a5f0ce3ba90d4f818ad87eeddde802ae9afd28d9c4bebf1164",
+      "bytes": 10011
+    },
+    {
+      "path": "summarize-paired-replay.py",
+      "sha256": "bbaefa4166d3c60cbbde7ced6a095a7c3c52379803335f2edbd499e60f65bf8a",
+      "bytes": 10891
+    },
+    {
+      "path": "test_posets_matrix.py",
+      "sha256": "3a3239b946c2aba5f69c5fefe9f9d64ff2f141dcd4270039b5e6e164325f007e",
+      "bytes": 64877
+    },
+    {
+      "path": "v1-snapshot.json",
+      "sha256": "6d459fbfe8bca134761236db1a4dd15d84b7048db72f3a0904b16be7ea777392",
+      "bytes": 3167
+    },
+    {
+      "path": "v1-to-v2.patch",
+      "sha256": "190687c47a11ddc8e1c33bd11a5a9aebe2b868e9b4d7c7336809078d0b5ba28f",
+      "bytes": 23402
+    }
+  ],
+  "shared_support": "original-sources.json",
+  "approved_candidate_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+  "approved_candidate_patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+  "actual_measurement_artifacts_present": false,
+  "actual_candidate_revision_reported_by_root": "30e66853832d98bcfaada296d892157b95a8150d"
+}

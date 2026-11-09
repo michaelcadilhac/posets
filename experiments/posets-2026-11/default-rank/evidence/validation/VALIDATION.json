@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "status": "core correctness and owned-file local style gates passed; actual CI18 and performance/helper work pending",
+  "source": {
+    "draft_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/draft-manifest.json",
+    "draft_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+    "patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+    "v2_to_v3_patch_sha256": "4090f6eae3201b3e8d0c115e0ddc24cb718ffa5cde03b504ec06c98134c5f155",
+    "actual_candidate_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+    "baseline_commit": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "all4_source_bytes_match_snapshot": true
+  },
+  "versions": {
+    "gcc": "16.2.1",
+    "clang": "22.1.8",
+    "clang_tidy": "22.1.8",
+    "clang_format": "22.1.8",
+    "valgrind": "3.27.1",
+    "meson": "1.11.2"
+  },
+  "executed_plan": {
+    "original_stages": 67,
+    "skipped": [
+      "63-tidy22-candidate-benchmark"
+    ],
+    "skip_record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v2/63-candidate-full-benchmark-tidy-deviation.json",
+    "post_style_derivative_stages": 39,
+    "extra_scoped_format_invocations": 3
+  },
+  "gcc_assertion_enabled_tests": {
+    "passed": 9,
+    "scope_record": "11-gcc-native-tests-record.json",
+    "width_selectors": [
+      "compatible",
+      "native",
+      "max"
+    ],
+    "testlog": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/meson-logs/testlog.txt"
+  },
+  "clang_assertion_enabled_tests": {
+    "passed": 9,
+    "run_records": [
+      "14",
+      "16",
+      "18",
+      "20",
+      "22",
+      "24",
+      "26",
+      "28",
+      "30"
+    ],
+    "isa": "portable x86-64/generic",
+    "baseline_rank_stats_control_passed": true
+  },
+  "portable_memcheck": {
+    "passed": 3,
+    "errors": 0,
+    "live_exit_bytes": 0,
+    "allocation_free_pairs_per_mode": 75014,
+    "hooks": "--soname-synonyms=somalloc=nouserintercepts plus positive failure sentinels",
+    "records": [
+      "35-memcheck-compatible-record.json",
+      "36-memcheck-native-record.json",
+      "37-memcheck-max-record.json"
+    ]
+  },
+  "format": {
+    "baseline_include_pass": true,
+    "candidate_include_final_pass": true,
+    "candidate_tests_pass": true
+  },
+  "tidy": {
+    "owned_header_and_test_pass": true,
+    "record": "04-tidy22-owned-files-only-record.json",
+    "scope": "All configured checks; only header reporting filter narrowed to owned files. No check list or WarningsAsErrors change.",
+    "unchanged_baseline_full24": {
+      "returncode": 1,
+      "warnings_as_errors": 111,
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v2/61-tidy22-baseline-benchmark-record.json",
+      "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v2/61-tidy22-baseline-benchmark-record.log"
+    },
+    "candidate_fixture_full_filter": {
+      "returncode": 1,
+      "record": "03-tidy22-candidate-new-test-record.json",
+      "diagnostic_context": "57 diagnostics in byte-unchanged dependencies, plus2 then-outstanding header readability issues subsequently fixed before final targeted lint/reruns."
+    },
+    "actual_ci18": "unavailable locally; required on PR, not marked passed"
+  },
+  "resources": {
+    "wrapper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "serial_compile_j": 1,
+    "max_recorded_peak_bytes": 1987776512,
+    "oom_events": 0,
+    "timeouts": 0,
+    "direct_delegated_child_limit_verification": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v2/live-scope-limit-verification.json"
+  },
+  "preserved_failures": [
+    "sandbox-preflight-failure.json in v2",
+    "runner-path-preflight-failure.json and initial runner in v3",
+    "all original failed format/tidy records/logs",
+    "intermediate rank header before final2 readability fixes in v3"
+  ],
+  "unchanged_frozen_bindings": {
+    "candidate-draft-v2/draft.patch": "0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60",
+    "candidate-draft-v2/draft-manifest.json": "394519c471fe98c6f7363bd1913a644b2c11eca4a62a71ad6b6b4f740900a970",
+    "tools/source-manifest.json": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+    "tools/changes.patch": "535cb0a1187c84fae694e869f6e656ce5929c2ea1d97338ee78a488857a31937"
+  },
+  "not_executed": [
+    "replay",
+    "helper tests/imports",
+    "performance timings",
+    "profilers",
+    "broad whole suite"
+  ],
+  "lane": "all compiler/test/scope jobs complete; shared lock released"
+}

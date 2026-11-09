@@ -1,0 +1,228 @@
+{
+  "status": "pass",
+  "archive": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/primary-evidence-archive-20261109/phase-one-native-evidence.tar.gz",
+  "archive_sha256": "53ecde5845352ffcef89a3c438f7495ab7df5312ed675c282860d29a26b82fbd",
+  "archive_bytes": 2615862,
+  "data_members": 30,
+  "total_members": 32,
+  "source_bytes": 21778306,
+  "rows": {
+    "native": 22860,
+    "memory_sidecar": 22860
+  },
+  "plan_sha256": "d398b11be6fb836598cb64495f54fbac82caf858821ff3e9df52ab9923a40e34",
+  "script_sha256": "47d85ea4639c351119b1607542c3113385a782e192e0ef91b1ca3917f9c010f2",
+  "members": {
+    "raw/anchor-e167.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/anchor-e167.tsv",
+      "sha256": "ef25034f8d8c0831b797a4b76a5f705018a62ac3124e18d0be577d55f341d51c",
+      "size": 583185,
+      "arm": "anchor-e167",
+      "kind": "native"
+    },
+    "raw/anchor-e167.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/anchor-e167.tsv.memory.tsv",
+      "sha256": "d4b8ecb2ccb89f2a9041acd4ea16f61e8e994409575142af2c983b3024b81989",
+      "size": 873258,
+      "arm": "anchor-e167",
+      "kind": "memory_sidecar"
+    },
+    "raw/block16.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block16.tsv",
+      "sha256": "18ccb1f8e073645a75af948c5a2c97ccbc2473bd502376b37e5930d47eaf7b2f",
+      "size": 577059,
+      "arm": "block16",
+      "kind": "native"
+    },
+    "raw/block16.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block16.tsv.memory.tsv",
+      "sha256": "757266ac963409296152f96531651c37da87ec46655aa6e7718758c2ed5b5855",
+      "size": 867110,
+      "arm": "block16",
+      "kind": "memory_sidecar"
+    },
+    "raw/block8.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8.tsv",
+      "sha256": "79246b2413bfd5342003f1e6a871305fb2e912c3bee986ca7f2b7ed195a3d75e",
+      "size": 575611,
+      "arm": "block8",
+      "kind": "native"
+    },
+    "raw/block8.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8.tsv.memory.tsv",
+      "sha256": "a11f3d6fbae95f20a4d9ba2017a79dfb6846b3b54fcaaaa9ffae31f9466724fa",
+      "size": 865686,
+      "arm": "block8",
+      "kind": "memory_sidecar"
+    },
+    "raw/block8-uncached.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8-uncached.tsv",
+      "sha256": "97998674c8e2222e6d7ca674d792044683cbe88afc2e8ef557b3dcfc1aa05c70",
+      "size": 589326,
+      "arm": "block8-uncached",
+      "kind": "native"
+    },
+    "raw/block8-uncached.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8-uncached.tsv.memory.tsv",
+      "sha256": "bc609db461309e9a67a110592fc18a5d8ee04b2f3634e2c209e6a6ae17b6bc58",
+      "size": 879399,
+      "arm": "block8-uncached",
+      "kind": "memory_sidecar"
+    },
+    "raw/candidate-default.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/candidate-default.tsv",
+      "sha256": "f529e93b02d1444c1647560eeb6a221c9024f0c14e57eb72bff515f7cb081e7f",
+      "size": 592210,
+      "arm": "candidate-default",
+      "kind": "native"
+    },
+    "raw/candidate-default.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/candidate-default.tsv.memory.tsv",
+      "sha256": "fbbf1614f77485dd4700c159ea2cfecd1b4706993a4fe38e46d62423b6f4d910",
+      "size": 882154,
+      "arm": "candidate-default",
+      "kind": "memory_sidecar"
+    },
+    "raw/comp.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp.tsv",
+      "sha256": "80e72bf7955e2b92d15a0280dc5614178bfd04181ae0a11085996d1d4539af4e",
+      "size": 572557,
+      "arm": "comp",
+      "kind": "native"
+    },
+    "raw/comp.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp.tsv.memory.tsv",
+      "sha256": "adf93904f4faadce527ac13eb7d354ee5cf91deb55dcbeb80d0fb0a36b0a4b39",
+      "size": 862637,
+      "arm": "comp",
+      "kind": "memory_sidecar"
+    },
+    "raw/comp-simd.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp-simd.tsv",
+      "sha256": "51f0f54b1d29a8cf9421fc92a3dd23f18f2059e583108453aecb457cc1960a05",
+      "size": 580158,
+      "arm": "comp-simd",
+      "kind": "native"
+    },
+    "raw/comp-simd.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp-simd.tsv.memory.tsv",
+      "sha256": "d652cccc011ccaf97f1324d8a5f18f2abc6958fb9be52eea2f758ab99980c6ba",
+      "size": 870202,
+      "arm": "comp-simd",
+      "kind": "memory_sidecar"
+    },
+    "raw/kd.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd.tsv",
+      "sha256": "6ef6c3e91801e5a2b5d05f3a0296a76cf069beb0f6b86d4eda2688293dc6702e",
+      "size": 569449,
+      "arm": "kd",
+      "kind": "native"
+    },
+    "raw/kd.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd.tsv.memory.tsv",
+      "sha256": "84ade55ce3904f2497aba106f8bc05727b6ffcec1b642bed585e155b48814e64",
+      "size": 859464,
+      "arm": "kd",
+      "kind": "memory_sidecar"
+    },
+    "raw/kd-narrow.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd-narrow.tsv",
+      "sha256": "40ed42b4596fea3317bb9af106891b0b515a7cfa4bba15d5b1b1f0a9e0d083f2",
+      "size": 580066,
+      "arm": "kd-narrow",
+      "kind": "native"
+    },
+    "raw/kd-narrow.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd-narrow.tsv.memory.tsv",
+      "sha256": "73601d568885694945742ff3c3467973b8c70ca49a97f8cc29784a275e3cea50",
+      "size": 870047,
+      "arm": "kd-narrow",
+      "kind": "memory_sidecar"
+    },
+    "raw/lazy-fc.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-fc.tsv",
+      "sha256": "7e89a3b09f7617b3677da73f72e3e717882717acf82e6b11ff68d4ced2e850b7",
+      "size": 577053,
+      "arm": "lazy-fc",
+      "kind": "native"
+    },
+    "raw/lazy-fc.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-fc.tsv.memory.tsv",
+      "sha256": "b3c744c0bc54f9e3cd411063bde42a23e19c91ea68c7857cedfde9c57ee91126",
+      "size": 867065,
+      "arm": "lazy-fc",
+      "kind": "memory_sidecar"
+    },
+    "raw/lazy-search.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-search.tsv",
+      "sha256": "eedc5f36da12f5cb3e0c5e6f425e40a111eb0add15ca400cc54109e189582aa2",
+      "size": 583121,
+      "arm": "lazy-search",
+      "kind": "native"
+    },
+    "raw/lazy-search.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-search.tsv.memory.tsv",
+      "sha256": "19e0b55f0aad178560df97f1418ee22ae4004b49f119cd68802c71bc53aa3d68",
+      "size": 873138,
+      "arm": "lazy-search",
+      "kind": "memory_sidecar"
+    },
+    "raw/sharingtree.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/sharingtree.tsv",
+      "sha256": "1fcb90ee00fd0f6e757402a9dbf40e9b467939c2f976854d748ec7fb2ca7be2c",
+      "size": 583199,
+      "arm": "sharingtree",
+      "kind": "native"
+    },
+    "raw/sharingtree.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/sharingtree.tsv.memory.tsv",
+      "sha256": "2be163c5aac674785f495053f9dc9d9d71367b5a1ae7555eb8c2f1dfce04d4da",
+      "size": 873166,
+      "arm": "sharingtree",
+      "kind": "memory_sidecar"
+    },
+    "raw/simple-sharingtree.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/simple-sharingtree.tsv",
+      "sha256": "dde4d184e1cc752866023938e24b393e772eafdd755a680d2061c6d6de3722eb",
+      "size": 593875,
+      "arm": "simple-sharingtree",
+      "kind": "native"
+    },
+    "raw/simple-sharingtree.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/simple-sharingtree.tsv.memory.tsv",
+      "sha256": "5ba57e846f0ed09dfa8378e31e982aba0790d24e2c38d17e137792e1377944e6",
+      "size": 883923,
+      "arm": "simple-sharingtree",
+      "kind": "memory_sidecar"
+    },
+    "raw/trie.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie.tsv",
+      "sha256": "c14482105e673405ca70ebb8d668d912cebdea11525c754918a92252d56436db",
+      "size": 572343,
+      "arm": "trie",
+      "kind": "native"
+    },
+    "raw/trie.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie.tsv.memory.tsv",
+      "sha256": "caf60d667288ef7b729d12695f7d19b378ff751fe0f47b220f48f4da237c3c18",
+      "size": 862231,
+      "arm": "trie",
+      "kind": "memory_sidecar"
+    },
+    "raw/trie-compact.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie-compact.tsv",
+      "sha256": "019e58824b9a01a32391116beb4c64a6ae89808ee596440cbb7a82d74d4f8a99",
+      "size": 584751,
+      "arm": "trie-compact",
+      "kind": "native"
+    },
+    "raw/trie-compact.tsv.memory.tsv": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie-compact.tsv.memory.tsv",
+      "sha256": "d5e231a8114488bca28c60daf5ae3a4dc71fe1adb0b67537d48b4bdd4cec58a7",
+      "size": 874863,
+      "arm": "trie-compact",
+      "kind": "memory_sidecar"
+    }
+  },
+  "verification": "Fresh extraction, exact bytes/SHA256/size/rows/identities; no source mutation"
+}

@@ -1,0 +1,12 @@
+{
+  "arm": null,
+  "batch": 47,
+  "command": null,
+  "completed": {
+    "baseline-default": 1524,
+    "optimized-default": 1524
+  },
+  "expected_per_arm": 1524,
+  "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/logs/0047-optimized-default-49f9c930.log",
+  "status": "complete"
+}

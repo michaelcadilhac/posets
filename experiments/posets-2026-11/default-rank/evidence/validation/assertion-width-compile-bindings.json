@@ -1,0 +1,63 @@
+{
+  "source_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+  "gcc_build_type": "debug",
+  "b_ndebug": false,
+  "gcc_target_commands": [
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/concept-checks.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -MD -MQ tests/concept-checks.p/concept-checks.cc.o -MF tests/concept-checks.p/concept-checks.cc.o.d -o tests/concept-checks.p/concept-checks.cc.o -c ../../default-rank-candidate-789bf99/tests/concept-checks.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/concept-checks.cc",
+      "output": "tests/concept-checks.p/concept-checks.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/pruned-concept-checks.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -MD -MQ tests/pruned-concept-checks.p/pruned-concept-checks.cc.o -MF tests/pruned-concept-checks.p/pruned-concept-checks.cc.o.d -o tests/pruned-concept-checks.p/pruned-concept-checks.cc.o -c ../../default-rank-candidate-789bf99/tests/pruned-concept-checks.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/pruned-concept-checks.cc",
+      "output": "tests/pruned-concept-checks.p/pruned-concept-checks.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/pruned-vector-only-concept-checks.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -MD -MQ tests/pruned-vector-only-concept-checks.p/pruned-vector-only-concept-checks.cc.o -MF tests/pruned-vector-only-concept-checks.p/pruned-vector-only-concept-checks.cc.o.d -o tests/pruned-vector-only-concept-checks.p/pruned-vector-only-concept-checks.cc.o -c ../../default-rank-candidate-789bf99/tests/pruned-vector-only-concept-checks.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/pruned-vector-only-concept-checks.cc",
+      "output": "tests/pruned-vector-only-concept-checks.p/pruned-vector-only-concept-checks.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/rank-stats-on.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -DPOSETS_RANK_STATS -MD -MQ tests/rank-stats-on.p/rank-stats.cc.o -MF tests/rank-stats-on.p/rank-stats.cc.o.d -o tests/rank-stats-on.p/rank-stats.cc.o -c ../../default-rank-candidate-789bf99/tests/rank-stats.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/rank-stats.cc",
+      "output": "tests/rank-stats-on.p/rank-stats.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/rank-stats-off.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -MD -MQ tests/rank-stats-off.p/rank-stats.cc.o -MF tests/rank-stats-off.p/rank-stats.cc.o.d -o tests/rank-stats-off.p/rank-stats.cc.o -c ../../default-rank-candidate-789bf99/tests/rank-stats.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/rank-stats.cc",
+      "output": "tests/rank-stats-off.p/rank-stats.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/empty-downsets-test.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -MD -MQ tests/empty-downsets-test.p/empty-downsets.cc.o -MF tests/empty-downsets-test.p/empty-downsets.cc.o.d -o tests/empty-downsets-test.p/empty-downsets.cc.o -c ../../default-rank-candidate-789bf99/tests/empty-downsets.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/empty-downsets.cc",
+      "output": "tests/empty-downsets-test.p/empty-downsets.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/rank-bucketed-compatible.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE -DPOSETS_RANK_STATS -march=native -MD -MQ tests/rank-bucketed-compatible.p/rank-bucketed.cc.o -MF tests/rank-bucketed-compatible.p/rank-bucketed.cc.o.d -o tests/rank-bucketed-compatible.p/rank-bucketed.cc.o -c ../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "output": "tests/rank-bucketed-compatible.p/rank-bucketed.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/rank-bucketed-native.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_NATIVE -DPOSETS_RANK_STATS -march=native -MD -MQ tests/rank-bucketed-native.p/rank-bucketed.cc.o -MF tests/rank-bucketed-native.p/rank-bucketed.cc.o.d -o tests/rank-bucketed-native.p/rank-bucketed.cc.o -c ../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "output": "tests/rank-bucketed-native.p/rank-bucketed.cc.o"
+    },
+    {
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug",
+      "command": "/usr/bin/g++ -Itests/rank-bucketed-max.p -Itests -I../../default-rank-candidate-789bf99/tests -Iinclude -I../../default-rank-candidate-789bf99/include -I../../default-rank-candidate-789bf99/lib -fdiagnostics-color=always -D_GLIBCXX_ASSERTIONS=1 -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++20 -O0 -g -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -DDIMENSION=100 -UNDEBUG -DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX -DPOSETS_RANK_STATS -march=native -MD -MQ tests/rank-bucketed-max.p/rank-bucketed.cc.o -MF tests/rank-bucketed-max.p/rank-bucketed.cc.o.d -o tests/rank-bucketed-max.p/rank-bucketed.cc.o -c ../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "file": "../../default-rank-candidate-789bf99/tests/rank-bucketed.cc",
+      "output": "tests/rank-bucketed-max.p/rank-bucketed.cc.o"
+    }
+  ],
+  "gcc_test_native_isa": true,
+  "clang_note": "All9 direct Clang22 spec/records include -UNDEBUG and -march=x86-64 -mtune=generic. Native/max selectors are portable under those flags; no AVX512 Clang claim."
+}

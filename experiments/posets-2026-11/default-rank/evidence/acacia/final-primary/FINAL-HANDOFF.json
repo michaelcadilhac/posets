@@ -1,0 +1,411 @@
+{
+  "bindings": [
+    {
+      "bytes": 12526,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/FINAL-REVIEW-CHECKPOINT.json",
+      "sha256": "23b06573b1f3eb8ca63ca944fb7d66beade7941b4dc2446dfbfbcfb363561950"
+    },
+    {
+      "bytes": 813,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/ROOT-ACTUAL-FROZEN-ACCEPTANCE.json",
+      "sha256": "eee44df0ba343d63c595e6529ea3edeb14b3e828cb55a50fdd923ac0d051825a"
+    },
+    {
+      "bytes": 3063,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/ROOT-PRIMARY-RELEASE.json",
+      "sha256": "25a38c536562a44717f0d7593d0dee7b88f028a1dfe628c33f643fe039802899"
+    },
+    {
+      "bytes": 7067,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+      "sha256": "d8afd5b4b9e901581f017dd169eefb4675e84d4df782278cd7bd9aacf253dcc1"
+    },
+    {
+      "bytes": 45306,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/gate-summary-campaign.json",
+      "sha256": "3b4e10c39164be6e712ec694e68636a7ddd7ea3e991d4ace2d528d6625712743"
+    },
+    {
+      "bytes": 453,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/COMPLETION.json",
+      "sha256": "a6832195b2675fa3faaeb43c768b8441341c2516ae4bc4c1116f566047f16314"
+    },
+    {
+      "bytes": 2977,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/oom-event-observations.json",
+      "sha256": "89387f76a85b67a47635fd356884a8634dca414bfe0de91b1966c9cc3a67f092"
+    },
+    {
+      "bytes": 1062,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/solver-comparison.csv",
+      "sha256": "d1f3289bf37a67f01ec243c3786926e2da08e4a45b86c65fe19196922ca3ae07"
+    },
+    {
+      "bytes": 8615,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/solver-comparison.json",
+      "sha256": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf"
+    },
+    {
+      "bytes": 74548,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/frozen.json",
+      "sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb"
+    },
+    {
+      "bytes": 5525,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/host.json",
+      "sha256": "ec149a58d076b9d2e8cf3c98a614ce89cee432089acb97aa1787e060ba81054e"
+    },
+    {
+      "bytes": 168008,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/invocations.jsonl",
+      "sha256": "1b4fd162dc4944cc0ed577e498b69523da505621d9d7f1d1c304e7c989079d3a"
+    },
+    {
+      "bytes": 369,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/progress.json",
+      "sha256": "9d27b606dbb5cec20d01890d379dfa0be2dedf3cbb4a23941f038a7a3d84d280"
+    },
+    {
+      "bytes": 591385,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv",
+      "sha256": "e76a24d423b2376d950336f92ccf19de138e25fb95620a94400e9e2f7ef1b0a4"
+    },
+    {
+      "bytes": 882037,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv.memory.tsv",
+      "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6"
+    },
+    {
+      "bytes": 592933,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv",
+      "sha256": "9d2389a2a242e7f782a6f7b9fe27c46b88f769e6733d4c2a484c28497401a380"
+    },
+    {
+      "bytes": 883582,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv.memory.tsv",
+      "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099"
+    },
+    {
+      "bytes": 591385,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/baseline-default.tsv",
+      "sha256": "e76a24d423b2376d950336f92ccf19de138e25fb95620a94400e9e2f7ef1b0a4"
+    },
+    {
+      "bytes": 882037,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/baseline-default.tsv.memory.tsv",
+      "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6"
+    },
+    {
+      "bytes": 592933,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/optimized-default.tsv",
+      "sha256": "9d2389a2a242e7f782a6f7b9fe27c46b88f769e6733d4c2a484c28497401a380"
+    },
+    {
+      "bytes": 883582,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/optimized-default.tsv.memory.tsv",
+      "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099"
+    },
+    {
+      "bytes": 24914,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/summary.json",
+      "sha256": "495aad8b1f5101a90e4e96104dce9cfed946a924f71ca3ceab50fbfbef66a0a3"
+    },
+    {
+      "bytes": 1080,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/summary.txt",
+      "sha256": "1a2eafc613538142e1c5cae5b9b1ca5519d9248243e1fa3a24f142d9b6851387"
+    },
+    {
+      "bytes": 3567,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/APPROVAL-AND-EXECUTION.json",
+      "sha256": "99a8e54a96cf4767bdf7069e2b21770cf18164cfd8ec12fc458d4d9ca66a05ad"
+    },
+    {
+      "bytes": 4124966,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-INVARIANCE.json",
+      "sha256": "3a8c65130e68489d41342f4e9bbf13a916c97c5eb8a3deed532c5a51f64dc106"
+    },
+    {
+      "bytes": 3075,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/START-CHECKPOINT.json",
+      "sha256": "a53d36d40125ae5b17ff350b9fb3266c18cc732bcd6c4883b787329421df4bbe"
+    },
+    {
+      "bytes": 7996,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/check-final-invariance.py",
+      "sha256": "a1382af2ef82b7794fb6943c1269bf654f0b7e3c4287ec947d8040312cc083df"
+    },
+    {
+      "bytes": 3104,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-invariance-record.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "bytes": 2789,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-invariance-record.json",
+      "sha256": "953c281d0527573efea0451195713c63445c1e26de1ed30d78865c4c7fcc8d18"
+    },
+    {
+      "bytes": 788,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-invariance-record.log",
+      "sha256": "3072b2e9eca1eebe98fc966275d0f230d69617cd0c774bc9c542cff8bf5d4311"
+    },
+    {
+      "bytes": 526,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-invariance-spec.json",
+      "sha256": "89b1229118982ec26d88528c1680b1b4bc2f10361205bc056dade6974833f2d5"
+    },
+    {
+      "bytes": 3104,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-table-record.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "bytes": 3163,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-table-record.json",
+      "sha256": "3a88b37d2e707583037abe00971feb37241c66dfb9669cee934b2418c50bb18d"
+    },
+    {
+      "bytes": 219,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-table-record.log",
+      "sha256": "e8af74d3762ca6e1db7f096474b7274370bf016fe26fcde6eded14b67c67fda1"
+    },
+    {
+      "bytes": 884,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/final-table-spec.json",
+      "sha256": "f71336846b0cda1101ad19c71864d0e266be5e43170dd41eb5cad52f8addc2b2"
+    },
+    {
+      "bytes": 595,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/summary-only-record.json",
+      "sha256": "7ddc344bb5faffd15f984055fbbf4cd7746dd903cbd0edf048cea4ed90458c6f"
+    },
+    {
+      "bytes": 1560,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/summary-only-spec.json",
+      "sha256": "0e5d9e365f8d6d599fc0a87957aed751f456721e1eb8f5ebead72109cf0b8a77"
+    },
+    {
+      "bytes": 1080,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/summary-only.log",
+      "sha256": "1a2eafc613538142e1c5cae5b9b1ca5519d9248243e1fa3a24f142d9b6851387"
+    },
+    {
+      "bytes": 19748,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/make-default-table.py",
+      "sha256": "327057a0834d5856a2851f72e0835b6f9222eeed6dff994cb970f5ff69cfda94"
+    },
+    {
+      "bytes": 2932,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/source-manifest.json",
+      "sha256": "9e0f60012a012c86bebf087860723372076ce6decb505a0d5dca30da03ec06e8"
+    },
+    {
+      "bytes": 6176,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/test_default_table.py",
+      "sha256": "747d7dc0e6065bd0b25e83810907d12b56138a7182c544b9d16d0aad1935400b"
+    }
+  ],
+  "campaign": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+  "completed_utc": "2026-11-09T21:27:21.190701+00:00",
+  "coverage": {
+    "cpu": 3048,
+    "memory_events": 3048,
+    "memory_events_missing": 0,
+    "native_MEMOUT": 0,
+    "native_TIMEOUT": 311,
+    "native_TIMEOUT_with_oom_kill": 0,
+    "oom_kill_rows": 0,
+    "oom_rows": 0,
+    "process_rss": 3048,
+    "scope_memory_peak": 3048,
+    "truth_conflicts": 0,
+    "wall_cap_overruns": 0
+  },
+  "derived_table": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3",
+  "frozen_sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb",
+  "host_lock_available_at_release": true,
+  "invariance": {
+    "all_verified_file_manifest": {
+      "bytes": 4124966,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-INVARIANCE.json",
+      "sha256": "3a8c65130e68489d41342f4e9bbf13a916c97c5eb8a3deed532c5a51f64dc106"
+    },
+    "approved_checkpoint_bindings": 19,
+    "phase_one_files_rechecked": 1211,
+    "verified_files": 14981
+  },
+  "limitations": [
+    "One complete prospective campaign; no noise floor, repeat or significance claim.",
+    "Independent private Rust artifacts differ in bytes: source-treatment comparison, not isolated rank-header causal proof.",
+    "NO_VERBOSE smokes prove requested CLI routes, source/type/config bindings and verdicts; no observed route-frequency trace.",
+    "Phase-one15-arm and this follow-up remain distinct; earlier held-out replay was already seen."
+  ],
+  "lost_case": {
+    "baseline-default": {
+      "native": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "allowed_cpus": "",
+        "binary_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+        "cap_s": "17",
+        "collect_rusage": "true",
+        "cpu_quota": "",
+        "cpu_seconds": "80.904345",
+        "exit_code": "1",
+        "expectation_source": "none",
+        "flags": "",
+        "instance": "robot_repair5.ltl",
+        "max_process_rss_bytes": "860622848",
+        "memory_max": "8G",
+        "memory_swap_max": "0",
+        "preset": "otf_sparse_formula_parity",
+        "resource_reason": "",
+        "result": "UNREALIZABLE",
+        "run_index": "1453",
+        "scope_memory_peak_bytes": "2481463296",
+        "scope_unit": "acacia-syntcomp26-coverage-3278845-4953d5672153.scope",
+        "seconds": "16.28706081188284",
+        "solver_label": "baseline-default",
+        "stderr_bytes": "279",
+        "stdout_bytes": "13",
+        "timed_out": "false",
+        "timestamp_utc": "2026-11-09T21:15:02.956811Z",
+        "tlsf_file": "robot_repair5.tlsf",
+        "worker_records_dir": ""
+      },
+      "strict_par2_contribution_s": 16.28706081188284,
+      "strict_scored_result": "UNREALIZABLE"
+    },
+    "optimized-default": {
+      "native": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "allowed_cpus": "",
+        "binary_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af",
+        "cap_s": "17",
+        "collect_rusage": "true",
+        "cpu_quota": "",
+        "cpu_seconds": "84.905834",
+        "exit_code": "124",
+        "expectation_source": "none",
+        "flags": "",
+        "instance": "robot_repair5.ltl",
+        "max_process_rss_bytes": "860479488",
+        "memory_max": "8G",
+        "memory_swap_max": "0",
+        "preset": "otf_sparse_formula_parity",
+        "resource_reason": "timeout",
+        "result": "TIMEOUT",
+        "run_index": "1453",
+        "scope_memory_peak_bytes": "2580344832",
+        "scope_unit": "acacia-syntcomp26-coverage-3292225-54a5aa328099.scope",
+        "seconds": "17.11799132404849",
+        "solver_label": "optimized-default",
+        "stderr_bytes": "287",
+        "stdout_bytes": "0",
+        "timed_out": "true",
+        "timestamp_utc": "2026-11-09T21:17:25.670620Z",
+        "tlsf_file": "robot_repair5.tlsf",
+        "worker_records_dir": ""
+      },
+      "strict_par2_contribution_s": 34.0,
+      "strict_scored_result": "TIMEOUT"
+    }
+  },
+  "native_invocations": 96,
+  "no_further_measurement_or_tuning": true,
+  "order_and_commands_verified": true,
+  "original_WIP_closing_check": "Root-owned separate check; all phase-one measured input bindings rechecked unchanged.",
+  "paired_comparison": {
+    "gains": [],
+    "losses": [
+      "robot_repair5.ltl"
+    ],
+    "par2_delta_s": 16.237269
+  },
+  "results": [
+    {
+      "arm": "baseline-default",
+      "baseline_gains": 0,
+      "baseline_losses": 0,
+      "baseline_par2_delta_s": 0.0,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14005.477029,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 155,
+        "UNKNOWN": 0
+      },
+      "instances": 1524,
+      "memory_events_missing_rows": 0,
+      "memory_events_observed_rows": 1524,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 155,
+        "UNREALIZABLE": 740
+      },
+      "oom_kill_observed_rows": 0,
+      "par2_total_s": 5926.874862,
+      "process_rss_max_bytes": 3977629696,
+      "process_rss_median_bytes": 61794304.0,
+      "process_rss_observed_rows": 1524,
+      "scope_peak_max_bytes": 4244238336,
+      "scope_peak_median_bytes": 106885120.0,
+      "scope_peak_observed_rows": 1524,
+      "solved": 1369,
+      "wall_cap_overruns": 0
+    },
+    {
+      "arm": "optimized-default",
+      "baseline_gains": 0,
+      "baseline_losses": 1,
+      "baseline_par2_delta_s": 16.237269,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14001.094425,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 156,
+        "UNKNOWN": 0
+      },
+      "instances": 1524,
+      "memory_events_missing_rows": 0,
+      "memory_events_observed_rows": 1524,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "oom_kill_observed_rows": 0,
+      "par2_total_s": 5943.112131,
+      "process_rss_max_bytes": 3977637888,
+      "process_rss_median_bytes": 61624320.0,
+      "process_rss_observed_rows": 1524,
+      "scope_peak_max_bytes": 4237766656,
+      "scope_peak_median_bytes": 106244096.0,
+      "scope_peak_observed_rows": 1524,
+      "solved": 1368,
+      "wall_cap_overruns": 0
+    }
+  ],
+  "rows": 3048,
+  "rows_per_arm": 1524,
+  "schema_version": 1,
+  "status": "COMPLETE; immutable evidence ready for independent outcome review; heavy lane released",
+  "strict_scoring": "Measured wall <=17s decisive rows solved; all unsolved34s. No raw changes; no wall-cap overruns in this campaign. Lost optimized row is an actual native TIMEOUT, not a derived overrun.",
+  "summary_only_identical_to_automatic": true,
+  "unchanged_table_source_manifest": {
+    "bytes": 2932,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/source-manifest.json",
+    "sha256": "9e0f60012a012c86bebf087860723372076ce6decb505a0d5dca30da03ec06e8"
+  },
+  "wall_seconds_launch_to_complete_progress": 6712.011390447617
+}

@@ -1,0 +1,76 @@
+Held-out complete-frame subcohort:6 of6 originally selected traces; excluded incomplete stratum:none. Performance sealed until parent choice freeze. heldout paired replay; per-backend selector with original scalar+SIMD vectors; production bases 7c407128326583abbb137fd3832857ed506e20fb versus cc058ca96ebc667f727ea2f0c2360b77d60192d3
+6 matched runs, 1638.663s scoped wall total; widths128/512. AB/BA/AB, seeds260617-19, source/check/measure caps30/2/2s,8G/no swap.
+Counts: {"check": {"pass": 2286, "timeout": 306}, "measure": {"pass": 1524}, "source_oracle": {"pass": 36}}
+Metric coverage: 714/816 fully paired; 102 censored. All 306 nonpass rows preserved.
+Resources: all 4152 memory peaks valid, max 528125952 bytes; zero OOM. CPU coverage 4152/4152.
+Estimator: median of3 exact-pair FINAL/BASE operation ratios; <1 faster. Three observations, no significance claim.
+Descriptors are BEFORE cardinality. CPre reconstruction uses AFTER cardinality, not in-place maintenance. Full three-pair values and lifetimes in digestJSON.
+
+Trace0 robot_grid cpre: before_maxima=1024, after_maxima=2048, dimension=1074, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 1.0107 | 1.0001
+KD | 1.0025 | 1.0197
+lazy-FC | 1.1405 | 0.9597
+lazy-search | 1.1656 | 0.9542
+trie | 0.9427 | 0.9449
+comp | 0.9144 | 0.8960
+block8 cached | 1.1918 | 1.1877
+block8 uncached | 0.9599 | 0.9883
+sharingtree | 0.9867 | 0.9977
+simple-sharingtree | 0.7982 | 0.7869
+
+Trace1 workstation_resupply cpre: before_maxima=593, after_maxima=1111, dimension=169, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 0.9970 | 0.9922
+KD | CENSORED | CENSORED
+lazy-FC | 1.0417 | 1.0884
+lazy-search | 1.2863 | 1.0869
+trie | CENSORED | CENSORED
+comp | CENSORED | CENSORED
+block8 cached | CENSORED | CENSORED
+block8 uncached | CENSORED | CENSORED
+sharingtree | CENSORED | CENSORED
+simple-sharingtree | CENSORED | CENSORED
+
+Trace2 finding_nemo cpre: before_maxima=87, after_maxima=90, dimension=2763, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 0.9873 | 1.0228
+KD | 0.9925 | 0.9917
+lazy-FC | 0.9748 | 0.8884
+lazy-search | 0.9726 | 0.8867
+trie | 0.7594 | 0.7594
+comp | 0.9174 | 0.8433
+block8 cached | 0.7826 | 0.7783
+block8 uncached | 0.9937 | 0.9946
+sharingtree | CENSORED | CENSORED
+simple-sharingtree | 0.8086 | 0.7882
+
+Trace3 generalized_buffer cpre: before_maxima=368, after_maxima=326, dimension=91, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 1.0023 | 0.9948
+KD | 1.0131 | 1.0019
+lazy-FC | 0.6250 | 0.7200
+lazy-search | 0.6540 | 0.6996
+trie | 0.9773 | 1.0090
+comp | 1.0113 | 0.9746
+block8 cached | 0.9745 | 0.9924
+block8 uncached | 0.9759 | 0.9834
+sharingtree | 0.9748 | 0.9715
+simple-sharingtree | 0.8913 | 0.9265
+
+Trace4 robot_grid contains: before_maxima=1024, after_maxima=None, dimension=1074, source={'pass': 6}
+Trace5 fuzz-ancestry-888da8ae1c15a71d3895fe0bc21cc10a2ebc805b0bdca6843cb9085aa7775959 cpre: before_maxima=1, after_maxima=1, dimension=1, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 0.9839 | 0.9929
+KD | 1.0957 | 0.9144
+lazy-FC | 1.2053 | 1.4023
+lazy-search | 1.2111 | 1.1870
+trie | 0.9435 | 0.9062
+comp | 0.9679 | 0.8911
+block8 cached | 1.1093 | 0.9311
+block8 uncached | 0.8734 | 0.9690
+sharingtree | 1.0290 | 0.9656
+simple-sharingtree | 0.9682 | 0.8488
+
+All construction/reconstruction results and exact three-pair ratios retained in digestJSON; all24 backends/full failures retained in bound summary.
+Single-query contains clocks omitted; whole-process scope peaks are not retained storage or allocation counts. No tuning or full Acacia execution performed.

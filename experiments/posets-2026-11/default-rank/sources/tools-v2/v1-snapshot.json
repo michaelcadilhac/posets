@@ -1,0 +1,88 @@
+{
+  "scope": "Preserved helper V1 snapshot; source-only lineage, not actual artifact/result provenance",
+  "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools",
+  "source_manifest_sha256": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+  "changes_patch_sha256": "535cb0a1187c84fae694e869f6e656ce5929c2ea1d97338ee78a488857a31937",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "95b916295c885686b4788fbcb3add33b1d68f012ce242f15e2be74e0cb5e2510",
+      "bytes": 9829
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "feb873cdf6eefbad978c8fcb185afcf910ebb2a0904d9b26043040a459e00ddf",
+      "bytes": 2237
+    },
+    {
+      "path": "changes.patch",
+      "sha256": "535cb0a1187c84fae694e869f6e656ce5929c2ea1d97338ee78a488857a31937",
+      "bytes": 83611
+    },
+    {
+      "path": "freeze_replay.py",
+      "sha256": "0c3d4e0e92ed2a0f93c8316daf99667017f9e5265260bcf788a35d9c63f2519d",
+      "bytes": 5275
+    },
+    {
+      "path": "original-sources.json",
+      "sha256": "bdad34b7803a79d09df166973a7376d817b304b6fc8a24564075e213fb12f7d9",
+      "bytes": 3954
+    },
+    {
+      "path": "posets-matrix.py",
+      "sha256": "43654da981ba74ca060734c0a3f58fed94389e39fed9c0eb46357ccce60cc494",
+      "bytes": 59874
+    },
+    {
+      "path": "prepare-paired-replay.py",
+      "sha256": "39a6777c529d93faf7d084e0c08572b91a33d13230d2cc4a1435152bd6ea4ee0",
+      "bytes": 12560
+    },
+    {
+      "path": "prepare-per-backend-build.py",
+      "sha256": "acc2e283660ef224b5951e2d00c0418509725245e9d33e988db47e1beb2b2b25",
+      "bytes": 9736
+    },
+    {
+      "path": "rank_contract.py",
+      "sha256": "b03f1a4260693b688677b4209525856b66940155681f13c3abba97daa8b118ef",
+      "bytes": 9584
+    },
+    {
+      "path": "run-paired-replay-stop-on-correctness.py",
+      "sha256": "b39340cabdabc5444cd108b95f524053a627479a781ca41f03941920ee4aab0f",
+      "bytes": 8516
+    },
+    {
+      "path": "run-paired-replay.py",
+      "sha256": "93c8f5dd989257dc0e07a014c088851a0b1b810980f215aae2217413db9dbee1",
+      "bytes": 7750
+    },
+    {
+      "path": "run-per-backend-build.py",
+      "sha256": "8ac7394a381792a5f0ce3ba90d4f818ad87eeddde802ae9afd28d9c4bebf1164",
+      "bytes": 10011
+    },
+    {
+      "path": "summarize-paired-replay.py",
+      "sha256": "bbaefa4166d3c60cbbde7ced6a095a7c3c52379803335f2edbd499e60f65bf8a",
+      "bytes": 10891
+    },
+    {
+      "path": "test_posets_matrix.py",
+      "sha256": "43fa5811d12d71915305bfab69a308a9a68765821accd823e8a0db6f25e60f7b",
+      "bytes": 56533
+    }
+  ],
+  "audits": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/selected-rank-helper-static-audit.json",
+      "sha256": "4be46bd3e697c3d256c2e3e9747593189cd4a40a05749585b0526643e93d3660"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/barbosa-review/helper-static-audit-v1.json",
+      "sha256": "84686d1c127566e2588a7dc9fbb229a6cb3dedbe18233472ee5c79a18d1467b8"
+    }
+  ]
+}

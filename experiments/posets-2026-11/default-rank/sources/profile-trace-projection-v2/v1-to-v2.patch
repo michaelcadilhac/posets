@@ -1,0 +1,361 @@
+--- v1/project_profiles.py
++++ v2/project_profiles.py
+@@ -3,6 +3,7 @@
+ import hashlib
+ import json
+ from pathlib import Path
++import re
+ import subprocess
+ 
+ PHASE = Path(__file__).resolve().parent.parent
+@@ -39,45 +40,92 @@
+     return json.loads(path.read_text())
+ 
+ 
++PHASE_UNSIGNED = set("""
++size generator_capacity entry_live exit_live extra_peak allocations requested_bytes
++rank_started rank_completed rank_active_coordinates_planned rank_active_coordinates_completed
++vector_copy_attempts vector_move_constructions_completed vector_move_assignments_completed
++vector_base_adoptions_completed vector_partial_order_attempts vector_meet_attempts
++intersections_started intersections_completed intersections_noop intersections_changed
++last_intersection_left last_intersection_queries rank_contains_calls rank_partial_order_calls
++rank_insert_attempts rank_insert_rejected_dominated rank_existing_elements_removed
++rank_union_insertions rank_intersection_left_elements rank_intersection_short_circuits
++rank_intersection_pair_meets rank_apply_elements rank_peak_backing_size
++rank_bucket_rebuilds rank_bucket_rebuild_elements
++""".split())
++OPERATION_PHASES = {'constructor_only_caller_alive', 'contains', 'apply',
++                    'union_rhs_still_alive', 'intersection_rhs_still_alive'}
++ROI_SEQUENCES = (['build_normalized', 'contains', 'rebuild_normalized_first_alive'],
++                 ['build_normalized', 'cpre_after_rhs_destruction_net', 'contains',
++                  'rebuild_normalized_first_alive'])
++REASONS = {'not_called', 'incomplete', 'no_query', 'queried', 'self', 'empty_left', 'empty_right'}
++METADATA_UNSIGNED = {'dimension', 'numeric', 'before', 'actions', 'selected_lanes', 'element_bytes'}
++
++
++def number(value, signed=False, positive=False):
++    pattern = r'(?:0|-?[1-9][0-9]*)' if signed else r'(?:0|[1-9][0-9]*)'
++    require(len(value) <= 20 and re.fullmatch(pattern, value), 'Noninteger diagnostic token')
++    lower = -(1 << 63) if signed else int(positive)
++    upper = (1 << 63) - 1 if signed else (1 << 64) - 1
++    require(lower <= int(value) <= upper, 'Diagnostic integer outside emitted type range')
++
++
+ def accept_stdout(stdout, expected):
+     """Existing executor calls this only after successful scope/process acceptance."""
+     lines = stdout.splitlines()
+ 
+-    def fields(line):
++    def fields(line, keys):
+         words = [word.split('=', 1) for word in line.split()]
+         require(words and all(len(word) == 2 for word in words), 'Malformed diagnostic output')
+         parsed = dict(words)
+-        require(len(parsed) == len(words), 'Duplicate diagnostic field')
++        require(len(parsed) == len(words) and set(parsed) == keys,
++                'Duplicate, missing or unexpected diagnostic field')
+         return parsed
+ 
+     require(len(lines) >= 4, 'Incomplete diagnostic stdout')
+-    metadata, layout = fields(lines[0]), fields(lines[1])
++    metadata = fields(lines[0], METADATA_UNSIGNED |
++                      {'instrumented', 'clocks_discarded', 'vector', 'mode', 'width_selector'})
++    for key in METADATA_UNSIGNED:
++        number(metadata[key])
++    require(metadata['instrumented'] == metadata['clocks_discarded'] == '1' and
++            metadata['width_selector'] in ('0', '1') and
++            metadata['vector'] in ('vector_backed', 'simd_vector_backed') and
++            metadata['mode'] in ('operations', 'roi'), 'Invalid diagnostic metadata token')
+     require(metadata == {key: str(value) for key, value in expected['metadata'].items()},
+             'Diagnostic metadata does not match projected tuple')
+-    require(layout.get('move_construct_noexcept') == layout.get('move_assign_noexcept') == '1'
+-            and 'vector_bytes' in layout and 'vector_alignment' in layout,
++    layout = fields(lines[1], {'vector_bytes', 'vector_alignment', 'move_construct_noexcept',
++                              'move_assign_noexcept'})
++    number(layout['vector_bytes'], positive=True)
++    number(layout['vector_alignment'], positive=True)
++    require(layout['move_construct_noexcept'] == layout['move_assign_noexcept'] == '1',
+             'Missing shipping trait/layout record')
+-    cleanup = fields(lines[-1])
+-    require(cleanup.get('kernel_check') == 'pass' and 'after_kernel_cleanup_live' in cleanup
+-            and 'cleanup_live_delta' in cleanup, 'Missing completed kernel check')
+-    phases = [fields(line) for line in lines[2:-1]]
+-    require(phases and all(row.get('success') == '1' and row.get('has_result') in ('0', '1')
+-                           for row in phases), 'Failed/incomplete diagnostic phase')
+-    required = {'phase', 'size', 'generator_capacity', 'entry_live', 'exit_live', 'live_delta',
+-                'extra_peak', 'allocations', 'requested_bytes', 'rank_started', 'rank_completed'}
+-    require(all(required <= row.keys() for row in phases), 'Missing diagnostic counter/heap fields')
+-    if expected['roi_sequence'] is not None:
+-        require([row.get('phase') for row in phases] == expected['roi_sequence'],
++    cleanup = fields(lines[-1], {'kernel_check', 'after_kernel_cleanup_live', 'cleanup_live_delta'})
++    require(cleanup['kernel_check'] == 'pass', 'Missing completed kernel check')
++    number(cleanup['after_kernel_cleanup_live'])
++    number(cleanup['cleanup_live_delta'], signed=True)
++    keys = PHASE_UNSIGNED | {'phase', 'success', 'has_result', 'live_delta',
++                             'last_intersection_reason', 'last_intersection_first_failed_query'}
++    phases = [fields(line, keys) for line in lines[2:-1]]
++    require(phases, 'Missing diagnostic phases')
++    for row in phases:
++        for key in PHASE_UNSIGNED:
++            number(row[key])
++        number(row['live_delta'], signed=True)
++        require(row['success'] == '1' and row['has_result'] in ('0', '1'),
++                'Failed/incomplete diagnostic phase')
++        require(row['last_intersection_reason'] in REASONS, 'Invalid intersection reason')
++        if row['last_intersection_first_failed_query'] != 'null':
++            number(row['last_intersection_first_failed_query'])
++    if metadata['mode'] == 'roi':
++        require(expected['roi_sequence'] in ROI_SEQUENCES and
++                [row['phase'] for row in phases] == expected['roi_sequence'],
+                 'Diagnostic ROI sequence differs from original3/4 regions')
+     else:
+-        allowed = {'constructor_only_caller_alive', 'contains', 'apply',
+-                   'union_rhs_still_alive', 'intersection_rhs_still_alive'}
+-        require(all(row.get('phase') in allowed for row in phases), 'Wrong operation pass')
++        require(expected['roi_sequence'] is None and
++                all(row['phase'] in OPERATION_PHASES for row in phases), 'Wrong operation pass')
+     for row in phases:
+-        require('size' in row and 'generator_capacity' in row, 'Missing result descriptors')
+         if row['has_result'] == '0':
+             row['size'] = row['generator_capacity'] = None
+-        if row.get('last_intersection_first_failed_query') == 'null':
++        if row['last_intersection_first_failed_query'] == 'null':
+             row['last_intersection_first_failed_query'] = None
+     return {'metadata': metadata, 'layout': layout, 'phases': phases, 'cleanup': cleanup}
+ 
+--- v1/test_project_profiles.py
++++ v2/test_project_profiles.py
+@@ -1,45 +1,144 @@
+-"""Unexecuted offline content checks; synthetic text, no profile/spec generation."""
++"""Unexecuted schema checks; complete synthetic stdout, no spec/profile generation."""
+ import unittest
+ 
+ from project_profiles import accept_stdout
+ 
+ 
+ class ContentChecks(unittest.TestCase):
++    def encode(self, fields):
++        return ' '.join(f'{key}={value}' for key, value in fields.items())
++
++    def decode(self, line):
++        return dict(word.split('=', 1) for word in line.split())
++
+     def fixture(self):
+         metadata = {'instrumented': 1, 'clocks_discarded': 1, 'vector': 'simd_vector_backed',
+                     'mode': 'roi', 'dimension': 2, 'numeric': 1, 'before': 2, 'actions': 1,
+                     'selected_lanes': 16, 'width_selector': 0, 'element_bytes': 1}
+         sequence = ['build_normalized', 'cpre_after_rhs_destruction_net', 'contains',
+                     'rebuild_normalized_first_alive']
+-        lines = [' '.join(f'{key}={value}' for key, value in metadata.items()),
+-                 'vector_bytes=16 vector_alignment=8 move_construct_noexcept=1 move_assign_noexcept=1']
++        layout = {'vector_bytes': 16, 'vector_alignment': 8,
++                  'move_construct_noexcept': 1, 'move_assign_noexcept': 1}
++        # Independent explicit inventory of all42 emitted phase fields.
++        phase = {
++            'phase': '', 'success': 1, 'has_result': 0, 'size': 7, 'generator_capacity': 9,
++            'entry_live': 100, 'exit_live': 83, 'live_delta': -17, 'extra_peak': 30,
++            'allocations': 2, 'requested_bytes': 40,
++            'rank_started': 2, 'rank_completed': 2,
++            'rank_active_coordinates_planned': 4, 'rank_active_coordinates_completed': 4,
++            'vector_copy_attempts': 0, 'vector_move_constructions_completed': 0,
++            'vector_move_assignments_completed': 0, 'vector_base_adoptions_completed': 0,
++            'vector_partial_order_attempts': 0, 'vector_meet_attempts': 0,
++            'intersections_started': 0, 'intersections_completed': 0,
++            'intersections_noop': 0, 'intersections_changed': 0,
++            'last_intersection_left': 0, 'last_intersection_queries': 0,
++            'last_intersection_reason': 'not_called', 'last_intersection_first_failed_query': 'null',
++            'rank_contains_calls': 0, 'rank_partial_order_calls': 0, 'rank_insert_attempts': 0,
++            'rank_insert_rejected_dominated': 0, 'rank_existing_elements_removed': 0,
++            'rank_union_insertions': 0, 'rank_intersection_left_elements': 0,
++            'rank_intersection_short_circuits': 0, 'rank_intersection_pair_meets': 0,
++            'rank_apply_elements': 0, 'rank_peak_backing_size': 0,
++            'rank_bucket_rebuilds': 0, 'rank_bucket_rebuild_elements': 0,
++        }
++        lines = [self.encode(metadata), self.encode(layout)]
+         for name in sequence:
+-            lines.append(f'phase={name} success=1 has_result=0 size=0 generator_capacity=0 '
+-                         'entry_live=0 exit_live=0 live_delta=0 extra_peak=0 allocations=0 '
+-                         'requested_bytes=0 rank_started=0 rank_completed=0')
+-        lines.append('kernel_check=pass after_kernel_cleanup_live=0 cleanup_live_delta=0')
++            lines.append(self.encode({**phase, 'phase': name}))
++        lines.append('kernel_check=pass after_kernel_cleanup_live=37 cleanup_live_delta=11')
+         return lines, {'metadata': metadata, 'roi_sequence': sequence}
+ 
+-    def test_unavailable_descriptors_remain_null(self):
++    def accept(self, lines, expected):
++        return accept_stdout('\n'.join(lines) + '\n', expected)
++
++    def changed(self, original, row, key, value):
++        lines = list(original)
++        fields = self.decode(lines[row])
++        fields[key] = value
++        lines[row] = self.encode(fields)
++        return lines
++
++    def test_complete_schema_and_nonzero_deltas(self):
+         lines, expected = self.fixture()
+-        parsed = accept_stdout('\n'.join(lines) + '\n', expected)
++        parsed = self.accept(lines, expected)
+         self.assertIsNone(parsed['phases'][0]['size'])
+         self.assertIsNone(parsed['phases'][0]['generator_capacity'])
+-        self.assertEqual(parsed['phases'][0]['live_delta'], '0')
++        self.assertIsNone(parsed['phases'][0]['last_intersection_first_failed_query'])
++        self.assertEqual(parsed['phases'][0]['live_delta'], '-17')
++        self.assertEqual(parsed['cleanup']['cleanup_live_delta'], '11')
++        lines = self.changed(lines, 2, 'has_result', '1')
++        self.assertEqual(self.accept(lines, expected)['phases'][0]['size'], '7')
+ 
+-    def test_tuple_failure_and_roi_integrity(self):
++    def test_every_emitted_key_required(self):
+         original, expected = self.fixture()
+-        for mutation in ('tuple', 'phase', 'roi', 'kernel', 'counter'):
++        for index in (0, 1, 2, len(original) - 1):
++            for key in self.decode(original[index]):
++                lines = list(original)
++                fields = self.decode(lines[index])
++                fields.pop(key)
++                lines[index] = self.encode(fields)
++                with self.subTest(row=index, missing=key), self.assertRaises(ValueError):
++                    self.accept(lines, expected)
++
++    def test_unsigned_fields_reject_noninteger_negative_and_overflow(self):
++        original, expected = self.fixture()
++        non_unsigned = {'phase', 'success', 'has_result', 'live_delta',
++                        'last_intersection_reason', 'last_intersection_first_failed_query'}
++        phase_keys = set(self.decode(original[2])) - non_unsigned
++        groups = [(2, phase_keys), (1, {'vector_bytes', 'vector_alignment'}),
++                  (len(original) - 1, {'after_kernel_cleanup_live'})]
++        for index, keys in groups:
++            for key in keys:
++                for value in ('nan', '-1', '18446744073709551616'):
++                    with self.subTest(row=index, key=key, value=value), self.assertRaises(ValueError):
++                        self.accept(self.changed(original, index, key, value), expected)
++        for value in ('1.5', '1e3', '+1', '01', '', '\u0661'):
++            with self.subTest(value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 2, 'vector_copy_attempts', value), expected)
++        for key in ('vector_bytes', 'vector_alignment'):
++            with self.subTest(key=key), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 1, key, '0'), expected)
++
++    def test_signed_deltas_and_null_or_index(self):
++        original, expected = self.fixture()
++        for index, key in ((2, 'live_delta'), (len(original) - 1, 'cleanup_live_delta')):
++            for value in ('-9223372036854775808', '9223372036854775807', '-3', '8', '0'):
++                self.accept(self.changed(original, index, key, value), expected)
++            for value in ('-9223372036854775809', '9223372036854775808', 'nan', '1.5', '-0', '+1'):
++                with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                    self.accept(self.changed(original, index, key, value), expected)
++        for value in ('null', '0', '18446744073709551615'):
++            self.accept(self.changed(original, 2, 'last_intersection_first_failed_query', value), expected)
++        for value in ('NULL', '-1', '1.5', '18446744073709551616'):
++            with self.subTest(value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 2, 'last_intersection_first_failed_query', value), expected)
++        self.accept(self.changed(original, 2, 'rank_active_coordinates_completed', '18446744073709551615'), expected)
++
++    def test_text_flags_duplicate_extra_and_roi_integrity(self):
++        original, expected = self.fixture()
++        cases = [(0, 'mode', 'unknown'), (0, 'numeric', 'NaN'), (0, 'width_selector', '1.0'),
++                 (1, 'move_construct_noexcept', 'true'), (2, 'phase', 'unknown'),
++                 (2, 'success', '0'), (2, 'has_result', '2'),
++                 (2, 'last_intersection_reason', 'unknown'), (len(original) - 1, 'kernel_check', 'fail')]
++        for index, key, value in cases:
++            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, index, key, value), expected)
++        for suffix in (' rank_completed=2', ' unknown_counter=0'):
+             lines = list(original)
+-            if mutation == 'tuple':
+-                lines[0] = lines[0].replace('selected_lanes=16', 'selected_lanes=64')
+-            elif mutation == 'phase':
+-                lines[2] = lines[2].replace('success=1', 'success=0')
+-            elif mutation == 'roi':
+-                lines.pop(3)
+-            elif mutation == 'kernel':
+-                lines.pop()
+-            else:
+-                lines[2] = lines[2].replace(' requested_bytes=0', '')
+-            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+-                accept_stdout('\n'.join(lines) + '\n', expected)
++            lines[2] += suffix
++            with self.subTest(suffix=suffix), self.assertRaises(ValueError):
++                self.accept(lines, expected)
++        lines = list(original)
++        lines.pop(3)
++        with self.assertRaises(ValueError):
++            self.accept(lines, expected)
++
++    def test_operations_keeps_only_existing_phase_name_policy(self):
++        original, expected = self.fixture()
++        expected['metadata']['mode'] = 'operations'
++        expected['roi_sequence'] = None
++        # One synthetic phase proves the parser adds no operation-count/order rule.
++        for name in ('constructor_only_caller_alive', 'contains', 'apply',
++                     'union_rhs_still_alive', 'intersection_rhs_still_alive'):
++            row = self.decode(original[2])
++            row['phase'] = name
++            lines = [self.encode(expected['metadata']), original[1], self.encode(row), original[-1]]
++            self.accept(lines, expected)
+--- v1/README.md
++++ v2/README.md
+@@ -1,4 +1,4 @@
+-# Narrow profile projection — source only
++# Narrow profile projection V2 — schema correction, source only
+ 
+ `project_profiles.py` has not been imported or run. It projects only the exact
+ approved eligibility inventory80b5b223…17c7b8, accepted closure V4d097ccb5…e3a25,
+@@ -30,7 +30,7 @@
+ 
+ After root reviews this exact source, the existing owner may run its projection
+ through an approved8G/no-swap scope with a new absolute direct-child output path,
+-for example `work/default-optimization/profile-trace-specs-v1`. No such directory
++for example `work/default-optimization/profile-trace-specs-v2`. No such directory
+ or runnable workload spec has been created by this preparation. Output must be
+ fresh; every JSON write is exclusive. A failed partial projection is retained,
+ never overwritten. Generating specs does not authorize their execution.
+@@ -61,3 +61,30 @@
+ results. After separate release it can run under the existing scoped wrapper as
+ `python3 -B -m unittest discover -s THIS_DIRECTORY -p test_project_profiles.py`.
+ No import, syntax compile, test, projection, probe or profile was run in this task.
++
++## V2 correction
++
++The preserved V1 acceptor required only a subset of emitted fields and left most
++numeric strings unchecked. This version requires exact key sets for all11
++metadata,4 layout,42 phase and3 cleanup fields emitted by the frozen C++ source.
++Missing, duplicate and unexpected fields fail closed.
++
++Decimal tokens use the producer's canonical ASCII spelling: no fractions,
++exponents, plus signs, leading zeros, Unicode digits, NaN or infinity. Counts,
++active coordinates, descriptors and other size_t/uint64 fields use the accepted
++64-bit unsigned range. Both live-delta fields use signed64 bounds. Object sizeof
++and alignment are positive unsigned values. Success/instrumentation/trait flags,
++vector/pass/selector/kernel tokens and intersection reasons use explicit allowed
++values. The first-failed query is literal null or an unsigned64 index.
++
++Validation adds no counter-value relationships, entry/exit equality, inferred
++retention or new operation ordering/count rule. Nonzero positive/negative cleanup
++and phase deltas remain valid. Even nonzero has_result0 placeholders become null,
++while has_result1 descriptors remain available. All projection/input/argv/fresh
++output behavior is unchanged; the exact old-to-new source diff is preserved.
++
++The independent synthetic positive fixture now lists all42 phase fields. Sources
++cover removal of every emitted key, malformed/negative/overflow unsigned fields,
++signed64 boundaries, null-or-index, textual/flag/duplicate/extra failures and the
++unchanged allowed-operation policy. These tests have not been imported or run.
++The parser-only correction needs no C++ rebuild or artifact/eligibility change.
+--- v1/input-bindings.json
++++ v2/input-bindings.json
+@@ -173,5 +173,14 @@
+         }
+       ]
+     }
+-  ]
++  ],
++  "projection_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v2",
++  "preserved_v1": {
++    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v1/source-manifest.json",
++    "sha256": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598"
++  },
++  "correction_audit": {
++    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-projection-v1-static-audit.json",
++    "sha256": "333d125cb6b7f19f87487c479c3d34a874c481f21e3ad1d54ee73fb5d2c5f0e9"
++  }
+ }

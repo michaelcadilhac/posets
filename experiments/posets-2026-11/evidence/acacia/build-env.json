@@ -1,0 +1,7 @@
+{
+  "PKG_CONFIG_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig",
+  "LD_LIBRARY_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+  "CARGO_HOME": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/cargo",
+  "CARGO_NET_OFFLINE": "true",
+  "CARGO_BUILD_JOBS": "1"
+}

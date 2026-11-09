@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "status": "static parser-only V2 correction; not imported/tested/run; no workload specs created",
+  "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v2",
+  "preserved_v1_manifest_sha256": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "05871641ba28bc0b22a9e40c4ac70dbc16d6d2695a308a5640f476178382a9ab",
+      "bytes": 5555
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "56f16df13db8d3423b9d2ee5ee722dd549d25ad0e0fab629553cec67bb806dba",
+      "bytes": 1514
+    },
+    {
+      "path": "input-bindings.json",
+      "sha256": "9d22839687cd86fbaa37d0b9770dbfede0aba44254539eae7a9c4d166a7879da",
+      "bytes": 7949
+    },
+    {
+      "path": "project_profiles.py",
+      "sha256": "0f5c8019cc77f205f5e4442ac9970bec4213bd17d63140fccf4573173e3423b9",
+      "bytes": 13667
+    },
+    {
+      "path": "source.patch",
+      "sha256": "1307a23ddaf49cf15fb74171c34d0824b15a872c22884b0247088e513626eea4",
+      "bytes": 28244
+    },
+    {
+      "path": "stdout-schema.json",
+      "sha256": "e8b1721d17e271d0dd115f9d9f5c2c954f7a74443e7425a8e6e89cb9ac128c2a",
+      "bytes": 2139
+    },
+    {
+      "path": "test_project_profiles.py",
+      "sha256": "cb50e4f0fbc4096cefc540759925165fb53806c1c248390ef84cd7f30563c157",
+      "bytes": 8392
+    },
+    {
+      "path": "v1-to-v2.patch",
+      "sha256": "d38e61eb87adfbac956cba729c9f29add489fc4ef101b1a63ee8cce02f2e21ca",
+      "bytes": 21133
+    }
+  ],
+  "self_reference_rule": "Actual source/documentation only; omits itself; no projected spec/result manifest fabricated"
+}

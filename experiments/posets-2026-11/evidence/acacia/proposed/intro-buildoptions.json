@@ -1,0 +1,1071 @@
+[
+  {
+    "name": "auto_features",
+    "value": "auto",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Override value of all 'auto' features"
+  },
+  {
+    "name": "backend",
+    "value": "ninja",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "ninja",
+      "vs",
+      "vs2010",
+      "vs2012",
+      "vs2013",
+      "vs2015",
+      "vs2017",
+      "vs2019",
+      "vs2022",
+      "vs2026",
+      "xcode",
+      "none"
+    ],
+    "type": "combo",
+    "description": "Backend to use"
+  },
+  {
+    "name": "genvslite",
+    "value": "vs2022",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "vs2022",
+      "vs2026"
+    ],
+    "type": "combo",
+    "description": "Setup multiple buildtype-suffixed ninja-backend build directories, and a [builddir]_vs containing a Visual Studio meta-backend with multiple configurations that calls into them"
+  },
+  {
+    "name": "buildtype",
+    "value": "release",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "plain",
+      "debug",
+      "debugoptimized",
+      "release",
+      "minsize",
+      "custom"
+    ],
+    "type": "combo",
+    "description": "Build type to use"
+  },
+  {
+    "name": "debug",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Enable debug symbols and other information"
+  },
+  {
+    "name": "default_library",
+    "value": "shared",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "shared",
+      "static",
+      "both"
+    ],
+    "type": "combo",
+    "description": "Default library type"
+  },
+  {
+    "name": "default_both_libraries",
+    "value": "shared",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "shared",
+      "static",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Default library type for both_libraries"
+  },
+  {
+    "name": "install_umask",
+    "value": 18,
+    "section": "core",
+    "machine": "any",
+    "type": "integer",
+    "description": "Default umask to apply on permissions of installed files"
+  },
+  {
+    "name": "layout",
+    "value": "mirror",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "mirror",
+      "flat"
+    ],
+    "type": "combo",
+    "description": "Build directory layout"
+  },
+  {
+    "name": "optimization",
+    "value": "3",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "plain",
+      "0",
+      "g",
+      "1",
+      "2",
+      "3",
+      "s"
+    ],
+    "type": "combo",
+    "description": "Optimization level"
+  },
+  {
+    "name": "prefer_static",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Whether to try static linking before shared linking"
+  },
+  {
+    "name": "strip",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Strip targets on install"
+  },
+  {
+    "name": "unity",
+    "value": "off",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "on",
+      "off",
+      "subprojects"
+    ],
+    "type": "combo",
+    "description": "Unity build"
+  },
+  {
+    "name": "unity_size",
+    "value": 4,
+    "section": "core",
+    "machine": "any",
+    "type": "integer",
+    "description": "Unity block size"
+  },
+  {
+    "name": "warning_level",
+    "value": "1",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "everything"
+    ],
+    "type": "combo",
+    "description": "Compiler warning level to use"
+  },
+  {
+    "name": "werror",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Treat warnings as errors"
+  },
+  {
+    "name": "wrap_mode",
+    "value": "nodownload",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "default",
+      "nofallback",
+      "nodownload",
+      "forcefallback",
+      "nopromote"
+    ],
+    "type": "combo",
+    "description": "Wrap mode"
+  },
+  {
+    "name": "force_fallback_for",
+    "value": [],
+    "section": "core",
+    "machine": "any",
+    "type": "array",
+    "description": "Force fallback for those subprojects"
+  },
+  {
+    "name": "vsenv",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Activate Visual Studio environment"
+  },
+  {
+    "name": "os2_emxomf",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use OMF format on OS/2"
+  },
+  {
+    "name": "pkgconfig.relocatable",
+    "value": false,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Generate pkgconfig files as relocatable"
+  },
+  {
+    "name": "python.bytecompile",
+    "value": 0,
+    "section": "core",
+    "machine": "any",
+    "type": "integer",
+    "description": "Whether to compile bytecode"
+  },
+  {
+    "name": "python.install_env",
+    "value": "prefix",
+    "section": "core",
+    "machine": "any",
+    "choices": [
+      "auto",
+      "prefix",
+      "system",
+      "venv"
+    ],
+    "type": "combo",
+    "description": "Which python environment to install to"
+  },
+  {
+    "name": "python.platlibdir",
+    "value": "",
+    "section": "core",
+    "machine": "any",
+    "type": "string",
+    "description": "Directory for site-specific, platform-specific files."
+  },
+  {
+    "name": "python.purelibdir",
+    "value": "",
+    "section": "core",
+    "machine": "any",
+    "type": "string",
+    "description": "Directory for site-specific, non-platform-specific files."
+  },
+  {
+    "name": "python.allow_limited_api",
+    "value": true,
+    "section": "core",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Whether to allow use of the Python Limited API"
+  },
+  {
+    "name": "python.build_config",
+    "value": "",
+    "section": "core",
+    "machine": "any",
+    "type": "string",
+    "description": "Config file containing the build details for the target Python installation."
+  },
+  {
+    "name": "pkg_config_path",
+    "value": [
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig"
+    ],
+    "section": "core",
+    "machine": "host",
+    "type": "array",
+    "description": "List of additional paths for pkg-config to search"
+  },
+  {
+    "name": "cmake_prefix_path",
+    "value": [],
+    "section": "core",
+    "machine": "host",
+    "type": "array",
+    "description": "List of additional prefixes for cmake to search"
+  },
+  {
+    "name": "backend_max_links",
+    "value": 0,
+    "section": "backend",
+    "machine": "any",
+    "type": "integer",
+    "description": "Maximum number of linker processes to run or 0 for no limit"
+  },
+  {
+    "name": "b_colorout",
+    "value": "always",
+    "section": "base",
+    "machine": "any",
+    "choices": [
+      "auto",
+      "always",
+      "never"
+    ],
+    "type": "combo",
+    "description": "Use colored output"
+  },
+  {
+    "name": "b_staticpic",
+    "value": true,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build static libraries as position independent"
+  },
+  {
+    "name": "b_lundef",
+    "value": true,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use -Wl,--no-undefined when linking"
+  },
+  {
+    "name": "b_coverage",
+    "value": false,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Enable coverage tracking."
+  },
+  {
+    "name": "b_sanitize",
+    "value": [],
+    "section": "base",
+    "machine": "any",
+    "type": "array",
+    "description": "Code sanitizer to use"
+  },
+  {
+    "name": "b_thinlto_cache",
+    "value": false,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use LLVM ThinLTO caching for faster incremental builds"
+  },
+  {
+    "name": "b_asneeded",
+    "value": true,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use -Wl,--as-needed when linking"
+  },
+  {
+    "name": "b_pie",
+    "value": false,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build executables as position independent"
+  },
+  {
+    "name": "b_pgo",
+    "value": "off",
+    "section": "base",
+    "machine": "any",
+    "choices": [
+      "off",
+      "generate",
+      "use"
+    ],
+    "type": "combo",
+    "description": "Use profile guided optimization"
+  },
+  {
+    "name": "b_lto_threads",
+    "value": 1,
+    "section": "base",
+    "machine": "any",
+    "type": "integer",
+    "description": "Use multiple threads for Link Time Optimization"
+  },
+  {
+    "name": "b_pch",
+    "value": true,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use precompiled headers"
+  },
+  {
+    "name": "b_thinlto_cache_dir",
+    "value": "",
+    "section": "base",
+    "machine": "any",
+    "type": "string",
+    "description": "Directory to store ThinLTO cache objects"
+  },
+  {
+    "name": "b_ndebug",
+    "value": "true",
+    "section": "base",
+    "machine": "any",
+    "choices": [
+      "true",
+      "false",
+      "if-release"
+    ],
+    "type": "combo",
+    "description": "Disable asserts"
+  },
+  {
+    "name": "b_lto",
+    "value": true,
+    "section": "base",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use link time optimization"
+  },
+  {
+    "name": "c_args",
+    "value": [],
+    "section": "compiler",
+    "machine": "host",
+    "type": "array",
+    "description": "Extra arguments passed to the c compiler"
+  },
+  {
+    "name": "c_link_args",
+    "value": [],
+    "section": "compiler",
+    "machine": "host",
+    "type": "array",
+    "description": "Extra arguments passed to the c linker"
+  },
+  {
+    "name": "c_std",
+    "value": "none",
+    "section": "compiler",
+    "machine": "host",
+    "choices": [
+      "none",
+      "c89",
+      "c99",
+      "c11",
+      "c17",
+      "c18",
+      "c2x",
+      "c23",
+      "c2y",
+      "gnu89",
+      "gnu99",
+      "gnu11",
+      "gnu17",
+      "gnu18",
+      "gnu2x",
+      "gnu23",
+      "gnu2y"
+    ],
+    "type": "combo",
+    "description": "c language standard to use"
+  },
+  {
+    "name": "cpp_args",
+    "value": [],
+    "section": "compiler",
+    "machine": "host",
+    "type": "array",
+    "description": "Extra arguments passed to the cpp compiler"
+  },
+  {
+    "name": "cpp_link_args",
+    "value": [],
+    "section": "compiler",
+    "machine": "host",
+    "type": "array",
+    "description": "Extra arguments passed to the cpp linker"
+  },
+  {
+    "name": "cpp_std",
+    "value": "c++23",
+    "section": "compiler",
+    "machine": "host",
+    "choices": [
+      "none",
+      "c++98",
+      "c++03",
+      "c++11",
+      "c++14",
+      "c++17",
+      "c++1z",
+      "c++2a",
+      "c++20",
+      "c++23",
+      "c++26",
+      "gnu++98",
+      "gnu++03",
+      "gnu++11",
+      "gnu++14",
+      "gnu++17",
+      "gnu++1z",
+      "gnu++2a",
+      "gnu++20",
+      "gnu++23",
+      "gnu++26"
+    ],
+    "type": "combo",
+    "description": "cpp language standard to use"
+  },
+  {
+    "name": "cpp_eh",
+    "value": "default",
+    "section": "compiler",
+    "machine": "host",
+    "choices": [
+      "none",
+      "default",
+      "a",
+      "s",
+      "sc"
+    ],
+    "type": "combo",
+    "description": "C++ exception handling type."
+  },
+  {
+    "name": "cpp_rtti",
+    "value": true,
+    "section": "compiler",
+    "machine": "host",
+    "type": "boolean",
+    "description": "Enable RTTI"
+  },
+  {
+    "name": "cpp_debugstl",
+    "value": false,
+    "section": "compiler",
+    "machine": "host",
+    "type": "boolean",
+    "description": "STL debug mode"
+  },
+  {
+    "name": "cpp_importstd",
+    "value": "false",
+    "section": "compiler",
+    "machine": "host",
+    "choices": [
+      "false",
+      "true"
+    ],
+    "type": "combo",
+    "description": "Use #import std."
+  },
+  {
+    "name": "prefix",
+    "value": "/usr/local",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Installation prefix"
+  },
+  {
+    "name": "bindir",
+    "value": "bin",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Executable directory"
+  },
+  {
+    "name": "datadir",
+    "value": "share",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Data file directory"
+  },
+  {
+    "name": "includedir",
+    "value": "include",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Header file directory"
+  },
+  {
+    "name": "infodir",
+    "value": "share/info",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Info page directory"
+  },
+  {
+    "name": "libdir",
+    "value": "lib64",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Library directory"
+  },
+  {
+    "name": "licensedir",
+    "value": "",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Licenses directory"
+  },
+  {
+    "name": "libexecdir",
+    "value": "libexec",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Library executable directory"
+  },
+  {
+    "name": "localedir",
+    "value": "share/locale",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Locale data directory"
+  },
+  {
+    "name": "localstatedir",
+    "value": "/var/local",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Localstate data directory"
+  },
+  {
+    "name": "mandir",
+    "value": "share/man",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Manual page directory"
+  },
+  {
+    "name": "sbindir",
+    "value": "sbin",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "System executable directory"
+  },
+  {
+    "name": "sharedstatedir",
+    "value": "/var/local/lib",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Architecture-independent data directory"
+  },
+  {
+    "name": "sysconfdir",
+    "value": "etc",
+    "section": "directory",
+    "machine": "any",
+    "type": "string",
+    "description": "Sysconf data directory"
+  },
+  {
+    "name": "build_tests",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build the test suite"
+  },
+  {
+    "name": "build_python",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build the Python interface (requires swig)"
+  },
+  {
+    "name": "acacia_tlsf_corpus_dir",
+    "value": "",
+    "section": "user",
+    "machine": "any",
+    "type": "string",
+    "description": "Path to the directory produced by benchmarking/syntcomp-corpus.py materialize"
+  },
+  {
+    "name": "acacia_compiler_profile",
+    "value": "release",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "debug",
+      "release",
+      "lowmem"
+    ],
+    "type": "combo",
+    "description": "Extra compiler flags for Acacia local benchmarking profiles"
+  },
+  {
+    "name": "acacia_preset",
+    "value": "otf_sparse_formula_parity",
+    "section": "user",
+    "machine": "any",
+    "type": "string",
+    "description": "Named build configuration; empty for a hand-assembled configuration"
+  },
+  {
+    "name": "acacia_aut_preprocessor",
+    "value": "standard",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "surely_losing",
+      "standard"
+    ],
+    "type": "combo",
+    "description": "Compile-time automaton preprocessor selection"
+  },
+  {
+    "name": "acacia_ios_precomputer",
+    "value": "semantic_mona",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "standard",
+      "mona",
+      "semantic_mona"
+    ],
+    "type": "combo",
+    "description": "acacia_ios_precomputer"
+  },
+  {
+    "name": "acacia_input_picker",
+    "value": "critical",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "critical_pq",
+      "critical"
+    ],
+    "type": "combo",
+    "description": "acacia_input_picker"
+  },
+  {
+    "name": "acacia_translation_pref",
+    "value": "small",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "small",
+      "any"
+    ],
+    "type": "combo",
+    "description": "Spot translator postprocessor preference list for realizability checks"
+  },
+  {
+    "name": "acacia_bdd_max_increase",
+    "value": 4194304,
+    "section": "user",
+    "machine": "any",
+    "type": "integer",
+    "description": "Maximum BDD nodes added when the node table grows; 0 keeps Spot's default"
+  },
+  {
+    "name": "acacia_forced_output_contradiction",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Enable the forced-output contradiction checker in the decision-only syntactic bypass"
+  },
+  {
+    "name": "acacia_simd_is_max",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Legacy SIMD width: max fixed size if true, compatible ABI (128-bit on x86-64) if false"
+  },
+  {
+    "name": "acacia_simd_native",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Select hardware-native SIMD width; otherwise retain acacia_simd_is_max selection"
+  },
+  {
+    "name": "acacia_enable_diagnostics",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Compile compact Acacia phase diagnostics, gated at runtime by ACACIA_DIAG"
+  },
+  {
+    "name": "acacia_default_arms",
+    "value": "real:small:backward,unreal:formula:spot-guarded-sparse,unreal:automaton:forward,both:gr1-real-lift:oxidd,both:obligation:spot,both:parity:spot,both:parity:oxidd",
+    "section": "user",
+    "machine": "any",
+    "type": "string",
+    "description": "Default portfolio in --arms syntax; empty uses the historical default"
+  },
+  {
+    "name": "acacia_spot_guarded_backend",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Compile the explicitly selected Spot guarded-input safety-game backend"
+  },
+  {
+    "name": "acacia_spot_lazy_provider",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Compile the explicitly selected Spot TAA provider for real and formula-unreal workers"
+  },
+  {
+    "name": "acacia_forward_safety_solver",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Use the on-the-fly forward safety-game solver instead of the backward antichain fixed point"
+  },
+  {
+    "name": "acacia_enable_equivariant_solver",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Compile and enable the exact equivariant solver path"
+  },
+  {
+    "name": "acacia_vector_downset",
+    "value": "rank_bucketed_vector_backed",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "vector_backed",
+      "rank_bucketed_vector_backed"
+    ],
+    "type": "combo",
+    "description": "acacia_vector_downset"
+  },
+  {
+    "name": "acacia_posets_benchmarks",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build isolated Posets comparison executables with the selected solver preset"
+  },
+  {
+    "name": "posets:test_native_isa",
+    "value": true,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Add -march=native to x86 SIMD matrix tests; other targets keep compiler defaults. Disable for baseline/instrumentation builds"
+  },
+  {
+    "name": "tlsf-tools:cpu",
+    "value": "baseline",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "baseline",
+      "x86-64-v2",
+      "avx2",
+      "avx512",
+      "neon",
+      "native"
+    ],
+    "type": "combo",
+    "description": "Target CPU ISA for compiler auto-vectorization, including the portable word-array kernels. baseline = compiler default; x86-64-v2/avx2/avx512 = x86 SIMD; neon = AArch64 NEON; native = -march=native for this machine."
+  },
+  {
+    "name": "tlsf-tools:fuzz",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build libFuzzer targets with Clang, ASan and UBSan"
+  },
+  {
+    "name": "tlsf-tools:issue24_corpus",
+    "value": "",
+    "section": "user",
+    "machine": "any",
+    "type": "string",
+    "description": "Offline directory containing the five pinned issue-24 AAG files; enables serial corpus suites"
+  },
+  {
+    "name": "tlsf-tools:research_tools",
+    "value": false,
+    "section": "user",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Build decomposition, solver, bench, and template research CLIs"
+  },
+  {
+    "name": "tlsf-tools:sanitize",
+    "value": "none",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "none",
+      "address",
+      "undefined",
+      "address,undefined"
+    ],
+    "type": "combo",
+    "description": "Enable sanitizers (for development builds)"
+  },
+  {
+    "name": "yyjson:fast-fp-conv",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable custom floating-point number conversion"
+  },
+  {
+    "name": "yyjson:incr-reader",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable incremental reader"
+  },
+  {
+    "name": "yyjson:non-standard-json",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable non-standard JSON support"
+  },
+  {
+    "name": "yyjson:reader",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable JSON reader"
+  },
+  {
+    "name": "yyjson:unaligned-memory-access",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable explicit unaligned memory access"
+  },
+  {
+    "name": "yyjson:utf8-validation",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable UTF-8 validation"
+  },
+  {
+    "name": "yyjson:utils",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable JSON pointer, JSON patch, JSON merge patch"
+  },
+  {
+    "name": "yyjson:writer",
+    "value": "auto",
+    "section": "user",
+    "machine": "any",
+    "choices": [
+      "enabled",
+      "disabled",
+      "auto"
+    ],
+    "type": "combo",
+    "description": "Enable JSON writer"
+  },
+  {
+    "name": "errorlogs",
+    "value": true,
+    "section": "test",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Whether to print the logs from failing tests"
+  },
+  {
+    "name": "stdsplit",
+    "value": true,
+    "section": "test",
+    "machine": "any",
+    "type": "boolean",
+    "description": "Split stdout and stderr in test logs"
+  }
+]

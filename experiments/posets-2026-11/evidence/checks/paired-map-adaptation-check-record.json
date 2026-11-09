@@ -1,0 +1,51 @@
+{
+  "spec": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/check-paired-map-adaptation.py"
+    ],
+    "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+    "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "timeout": 60
+  },
+  "spec_sha256": "352ae4583d9200d84380c541505638074e34ccf614509c21010ed937323fea92",
+  "helper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+  "benchlib_sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "environment_overrides": {
+    "PKG_CONFIG_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig",
+    "LD_LIBRARY_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+    "CARGO_HOME": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/cargo",
+    "CARGO_NET_OFFLINE": "true",
+    "CARGO_BUILD_JOBS": "1",
+    "ACACIA_CAMPAIGN_SCOPE_GUARD": "scoped-task:3887593",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "result": {
+    "stdout": "",
+    "stderr": "",
+    "returncode": 0,
+    "seconds": 0.21481981803663075,
+    "timed_out": false,
+    "stdout_bytes": 198,
+    "stderr_bytes": 0,
+    "resource_limited": false,
+    "memory_peak_bytes": 22073344,
+    "scope_unit": "acacia-posets-setup-3887593-d4456dc34354.scope",
+    "max_process_rss_bytes": 33865728,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-3887593-d4456dc34354.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 0.118741
+  },
+  "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-map-adaptation-check-record.log",
+  "log_sha256": "a4258dd5d7e43443d72daff4935ef679a79529f85309e3e2eac082ff89890ac5"
+}

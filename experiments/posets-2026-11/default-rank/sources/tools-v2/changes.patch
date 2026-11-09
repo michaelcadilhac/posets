@@ -1,0 +1,1601 @@
+diff --git a/prepare-per-backend-build.py b/prepare-per-backend-build.py
+--- a/prepare-per-backend-build.py
++++ b/prepare-per-backend-build.py
+@@ -11,7 +11,8 @@
+ import subprocess
+ 
+ HERE = Path(__file__).resolve().parent
+-REPO = HERE.parent / 'acacia-posets-eval'
++import rank_contract as contract
++REPO = contract.REPO
+ ALIASES = {
+     'lazy_kdtree_backed': 'lazy_kd_cascaded', 'lazy_kdtree_uncascaded': 'lazy_kd_uncascaded',
+     'block_sharingtrie_backed': 'block_b8_simd',
+@@ -79,7 +80,10 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--source', type=Path, required=True)
+     parser.add_argument('--base-revision', required=True)
+-    parser.add_argument('--selector-overlay', type=Path, required=True)
++    parser.add_argument('--selector-overlay', type=Path)
++    parser.add_argument('--rank-only', action='store_true')
++    parser.add_argument('--rank-source-role', choices=['baseline', 'candidate'])
++    parser.add_argument('--rank-source-manifest', type=Path)
+     parser.add_argument('--anchor-provenance', type=Path, required=True)
+     parser.add_argument('--output', type=Path, required=True)
+     args = parser.parse_args()
+@@ -87,19 +91,33 @@
+     output = args.output.resolve()
+     assert source.is_relative_to(REPO / '_deps') and output.is_relative_to(source / 'build-replay-release')
+     assert re.fullmatch(r'[0-9a-f]{40}', args.base_revision)
+-    overlay = args.selector_overlay.resolve(strict=True)
+     anchor_path = args.anchor_provenance.resolve(strict=True)
+     anchor = json.loads(anchor_path.read_text())
+     anchor = anchor.get('provenance', anchor)
+-    assert anchor['posets_revision'] == args.base_revision
+     backends = check_anchor(anchor)
+-    assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=source)
+-    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=source, text=True).strip()
+-    changed = subprocess.check_output(['git', 'diff', '--name-only', args.base_revision, revision], cwd=source, text=True)
+-    assert changed.splitlines() == ['tests/downset-bm.cc'], changed
+-    patch = subprocess.check_output(['git', 'diff', '--binary', '--full-index', '--no-ext-diff', args.base_revision,
+-                                     revision, '--', 'tests/downset-bm.cc'], cwd=source)
+-    assert patch == overlay.read_bytes(), 'Measurement source differs from the exact approved selector patch'
++    revision = subprocess.check_output(['git', '--no-optional-locks', 'rev-parse', 'HEAD'], cwd=source, text=True).strip()
++    if args.rank_only:
++        assert args.selector_overlay is None and args.rank_source_manifest is not None
++        contract.validate_source(source, args.base_revision, revision, args.rank_source_role,
++                                 args.rank_source_manifest)
++        assert anchor['posets_revision'] == revision and Path(anchor['posets_source_dir']).resolve() == source
++        assert anchor.get('rank_anchor') is True and anchor.get('rank_source_role') == args.rank_source_role
++        assert anchor.get('rank_source_manifest') == bind(args.rank_source_manifest.resolve(strict=True))
++        backends = [contract.RANK]
++        source_fields = {'inventory': contract.INVENTORY, 'rank_source_role': args.rank_source_role,
++                         'rank_source_manifest': bind(args.rank_source_manifest.resolve(strict=True)),
++                         'rank_contract': bind(Path(contract.__file__).resolve())}
++    else:
++        assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=source)
++        assert args.selector_overlay is not None and args.rank_source_role is None and args.rank_source_manifest is None
++        overlay = args.selector_overlay.resolve(strict=True)
++        assert anchor['posets_revision'] == args.base_revision
++        changed = subprocess.check_output(['git', 'diff', '--name-only', args.base_revision, revision], cwd=source, text=True)
++        assert changed.splitlines() == ['tests/downset-bm.cc'], changed
++        patch = subprocess.check_output(['git', 'diff', '--binary', '--full-index', '--no-ext-diff', args.base_revision,
++                                         revision, '--', 'tests/downset-bm.cc'], cwd=source)
++        assert patch == overlay.read_bytes(), 'Measurement source differs from the exact approved selector patch'
++        source_fields = {'selector_overlay': bind(overlay)}
+     build = source / 'build-replay-release'
+     commands_path = build / 'compile_commands.json'
+     commands = json.loads(commands_path.read_text())
+@@ -114,6 +132,8 @@
+         template = matches[0]
+         assert Path(template['directory']).resolve() == build
+         compiler = argv(template)
++        if args.rank_only:
++            contract.clean_flags(compiler)
+         raw = subprocess.check_output(['ninja', '-C', str(build), '-t', 'commands',
+                                        f'tests/downset-matrix-{mode}'], text=True)
+         ninja_commands = [shlex.split(line) for line in raw.splitlines() if line.strip()]
+@@ -148,13 +168,13 @@
+                          'build_record': str(output / 'records' / f'{stem}-build.json'),
+                          **command_objects, 'stages': stages})
+     plan = {'schema_version': 1, 'kind': 'posets-selector-build-plan', 'base_revision': args.base_revision,
+-            'source_revision': revision, 'source_dir': str(source), 'selector_overlay': bind(overlay),
++            'source_revision': revision, 'source_dir': str(source), **source_fields,
+             'anchor_provenance': bind(anchor_path), 'compile_commands': bind(commands_path),
+             'source_oracle_binary': {'path': anchor['modes']['compatible']['binary'],
+                                      'sha256': anchor['modes']['compatible']['binary_sha256']},
+             'aliases': {'max': 'native'}, 'backend_order': backends,
+             'generator': bind(Path(__file__).resolve()), 'rows': rows}
+-    assert len(rows) == 48
++    assert len(rows) == (2 if args.rank_only else 48)
+     write_new(output / 'build-plan.json', plan)
+     print(output / 'build-plan.json')
+ 
+diff --git a/run-per-backend-build.py b/run-per-backend-build.py
+--- a/run-per-backend-build.py
++++ b/run-per-backend-build.py
+@@ -14,6 +14,8 @@
+ sys.dont_write_bytecode = True
+ HERE = Path(__file__).resolve().parent
+ sys.path.insert(0, str(HERE))
++import rank_contract as contract
++sys.path.insert(0, str(contract.SUPPORT))
+ import campaign
+ _spec = importlib.util.spec_from_file_location('selector_prepare', HERE / 'prepare-per-backend-build.py')
+ prepare = importlib.util.module_from_spec(_spec)
+@@ -86,32 +88,40 @@
+ def expected_record(plan, row):
+     return {'schema_version': 1, 'kind': 'posets-selector-build',
+             **{name: plan[name] for name in ('base_revision', 'source_revision', 'source_dir', 'compile_commands')},
+-            'selector_overlay_sha256': plan['selector_overlay']['sha256'],
++            **contract.source_fields(plan),
+             **{name: row[name] for name in ('mode', 'backend', 'compiler_command', 'linker_command',
+                                            'template_compiler_command', 'template_linker_command')}}
+ 
+ 
+-def check_inventory(plan):
+-    order = sorted(prepare.BACKENDS)
++def check_inventory(plan, rank_only=False):
++    order = contract.check_cells(plan, 'rows', rank_only, prepare.BACKENDS)
++    total = 2 if rank_only else 48
+     assert plan['backend_order'] == order
+     assert [(row['mode'], row['backend']) for row in plan['rows']] == [
+         (mode, backend) for mode in ('compatible', 'native') for backend in order]
+     for field in ('binary', 'build_record'):
+-        assert len({row[field] for row in plan['rows']}) == 48
+-    assert len({row['compiler_command']['output'] for row in plan['rows']}) == 48
++        assert len({row[field] for row in plan['rows']}) == total
++    assert len({row['compiler_command']['output'] for row in plan['rows']}) == total
+ 
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('plan', type=Path)
+     parser.add_argument('--backend', help='Build pilot backend only; final map still requires all48 cells')
++    parser.add_argument('--rank-only', action='store_true')
+     args = parser.parse_args()
+     plan_path = args.plan.resolve(strict=True)
+     plan = json.loads(plan_path.read_text())
+-    check_inventory(plan)
++    check_inventory(plan, args.rank_only)
++    total = 2 if args.rank_only else 48
+     assert args.backend is None or args.backend in plan['backend_order']
+-    for name in ('generator', 'selector_overlay', 'anchor_provenance', 'compile_commands'):
++    source_names = ('rank_source_manifest', 'rank_contract') if args.rank_only else ('selector_overlay',)
++    for name in ('generator', 'anchor_provenance', 'compile_commands') + source_names:
+         verify(plan[name])
++    if args.rank_only:
++        assert plan['rank_contract'] == binding(Path(contract.__file__).resolve())
++        contract.validate_source(Path(plan['source_dir']), plan['base_revision'], plan['source_revision'],
++                                 plan['rank_source_role'], Path(plan['rank_source_manifest']['path']))
+     assert subprocess.check_output(['git', '-C', plan['source_dir'], 'rev-parse', 'HEAD'], text=True).strip() == plan['source_revision']
+     assert not subprocess.check_output(['git', '-C', plan['source_dir'], 'status', '--porcelain'])
+     compiler_templates = json.loads(Path(plan['compile_commands']['path']).read_text())
+@@ -143,7 +153,7 @@
+                 verify(plan['compile_commands'])
+                 record = fresh_attempt(Path(stage['record']))
+                 print(f"{row['mode']} {row['backend']} {stage['stage']}", flush=True)
+-                subprocess.run([sys.executable, '-B', str(HERE / 'scoped_task.py'),
++                subprocess.run([sys.executable, '-B', str(contract.SUPPORT / 'scoped_task.py'),
+                                 stage['spec']['path'], str(record)], check=True)
+                 invocations.append({'stage': stage['stage'], **binding(record)})
+             payload = {**expected_record(plan, row), 'binary_sha256': binding(Path(row['binary']))['sha256'],
+@@ -155,9 +165,9 @@
+                               'binary_sha256': payload['binary_sha256']}), flush=True)
+         completed = [row for row in plan['rows'] if Path(row['build_record']).is_file()]
+         campaign.atomic_json(plan_path.with_name('build-progress.json'),
+-                             {'status': 'complete' if len(completed) == 48 else 'pilot_complete',
+-                              'completed': len(completed), 'total': 48})
+-        if len(completed) == 48:
++                             {'status': 'complete' if len(completed) == total else 'pilot_complete',
++                              'completed': len(completed), 'total': total})
++        if len(completed) == total:
+             entries = []
+             for row in plan['rows']:
+                 record = json.loads(Path(row['build_record']).read_text())
+@@ -167,14 +177,16 @@
+                                 'build_record': binding(Path(row['build_record']))})
+             binary_map = {'schema_version': 1, 'kind': 'posets-per-backend-binaries',
+                           **{name: plan[name] for name in ('base_revision', 'source_revision', 'source_dir',
+-                             'selector_overlay', 'anchor_provenance', 'source_oracle_binary', 'aliases')},
++                             'anchor_provenance', 'source_oracle_binary', 'aliases') + source_names},
++                          **({'inventory': contract.INVENTORY, 'rank_source_role': plan['rank_source_role']}
++                             if args.rank_only else {}),
+                           'binaries': entries}
+             path = plan_path.with_name('binary-map.json')
+             if path.exists():
+                 assert json.loads(path.read_text()) == binary_map
+             else:
+                 campaign.atomic_json(path, binary_map)
+-            print('Complete48-cell map: ' + str(path), flush=True)
++            print(f'Complete{total}-cell map: ' + str(path), flush=True)
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/prepare-paired-replay.py b/prepare-paired-replay.py
+--- a/prepare-paired-replay.py
++++ b/prepare-paired-replay.py
+@@ -10,11 +10,12 @@
+ import sys
+ 
+ sys.dont_write_bytecode = True
+-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'acacia-posets-eval/benchmarking'))
++sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / 'acacia-posets-eval/benchmarking'))
+ from benchlib import load_tool
+ 
+ HERE = Path(__file__).resolve().parent
+-REPO = HERE.parent / 'acacia-posets-eval'
++import rank_contract as contract
++REPO = contract.REPO
+ BASELINE = REPO / '_deps/replay-baseline-7c40712'
+ 
+ 
+@@ -53,7 +54,7 @@
+ 
+ 
+ def anchor_context(anchor):
+-    M = load_tool('benchmarking/posets-matrix.py')
++    M = load_tool(str(HERE / 'posets-matrix.py'))
+     source = Path(anchor.get('posets_source_dir') or anchor['frozen_source_clone']).resolve(strict=True)
+     fields = ('compiler', 'simd_type', 'selected_lanes', 'alignment', 'element_bytes',
+               'block_bytes', 'compatible_lanes', 'native_lanes', 'max_fixed_lanes', 'hybrid_policy')
+@@ -63,7 +64,7 @@
+             for mode, row in anchor['modes'].items()]
+ 
+ 
+-def mapped_variants(baseline_map, candidate_map):
++def mapped_variants(baseline_map, candidate_map, rank_only=False):
+     result, contexts = {}, []
+     for label, path in [('baseline', baseline_map), ('optimized', candidate_map)]:
+         path = path.resolve(strict=True)
+@@ -76,12 +77,41 @@
+         assert binding(anchor_path) == metadata['anchor_provenance']
+         anchor = json.loads(anchor_path.read_text())
+         anchor = anchor.get('provenance', anchor)
+-        contexts.append(anchor_context(anchor))
++        context = anchor_context(anchor)
+         backends = anchor['modes']['compatible']['backends']
+         assert len(backends) == 24 and backends == sorted(set(backends))
+-        assert metadata['base_revision'] == anchor['posets_revision']
++        selected = contract.backends(metadata, rank_only, backends)
++        if rank_only:
++            contract.check_cells(metadata, 'binaries', True, backends)
++            role = 'baseline' if label == 'baseline' else 'candidate'
++            assert metadata['rank_source_role'] == role
++            assert binding(Path(metadata['rank_source_manifest']['path'])) == metadata['rank_source_manifest']
++            assert metadata['rank_contract'] == binding(Path(contract.__file__).resolve())
++            contract.validate_source(source, metadata['base_revision'], metadata['source_revision'],
++                                     role, Path(metadata['rank_source_manifest']['path']))
++            assert anchor['posets_revision'] == metadata['source_revision']
++            assert Path(anchor['posets_source_dir']).resolve() == source
++            assert anchor.get('rank_anchor') is True and anchor.get('rank_source_role') == role
++            assert anchor.get('rank_source_manifest') == metadata['rank_source_manifest']
++            matrix = load_tool(str(HERE / 'posets-matrix.py'))
++            links = []
++            for entry in metadata['binaries']:
++                record_path = Path(entry['build_record']['path'])
++                assert binding(record_path) == entry['build_record']
++                record = json.loads(record_path.read_text())
++                compiler = record['template_compiler_command']
++                directory = Path(compiler['directory']).resolve(strict=True)
++                links.append((entry['mode'], matrix.normalized_command(
++                    record['template_linker_command'], source, directory,
++                    matrix.command_path(compiler, compiler['output']))))
++            for row in anchor['modes'].values():
++                contract.clean_flags(matrix.command_args(row['compiler_command']))
++            context = (context, links, [anchor['modes'][mode]['libraries'] for mode in ('compatible', 'native', 'max')])
++        else:
++            assert metadata['base_revision'] == anchor['posets_revision']
++        contexts.append(context)
+         assert [(row['mode'], row['backend']) for row in metadata['binaries']] == [
+-            (mode, backend) for mode in ('compatible', 'native') for backend in backends]
++            (mode, backend) for mode in ('compatible', 'native') for backend in selected]
+         oracle = Path(metadata['source_oracle_binary']['path']).resolve(strict=True)
+         assert binding(oracle) == metadata['source_oracle_binary']
+         assert str(oracle) == anchor['modes']['compatible']['binary']
+@@ -89,23 +119,25 @@
+         result[label] = {'build': str(oracle.parent.parent), 'source': str(source),
+                          'revision': metadata['source_revision'],
+                          'production_base_revision': metadata['base_revision'],
++                         **({'rank_source_role': metadata['rank_source_role']} if rank_only else {}),
+                          'binary_map': binding(path), 'manifest': binding(path)}
+     assert contexts[0] == contexts[1], 'Baseline/candidate compiler, flags or width contexts differ'
+     return result
+ 
+ 
+-def prepare(candidate, traces, prefix, baseline_map=None, candidate_map=None):
++def prepare(candidate, traces, prefix, baseline_map=None, candidate_map=None, rank_only=False, template_path=None):
+     assert re.fullmatch(r'[a-z0-9][a-z0-9-]*', prefix), 'Use a fresh lowercase/hyphen prefix'
+     assert bool(baseline_map) == bool(candidate_map)
+     assert (candidate is not None) != bool(candidate_map), 'Choose combined artifacts or both binary maps'
+-    variants = mapped_variants(baseline_map, candidate_map) if candidate_map else combined_variants(candidate)
++    assert not rank_only or (candidate is None and baseline_map and candidate_map and template_path)
++    variants = mapped_variants(baseline_map, candidate_map, rank_only) if candidate_map else combined_variants(candidate)
+     trace_rows = json.loads(traces.read_text())['traces']
+     splits = {row['split'] for row in trace_rows}
+     assert len(splits) == 1 and splits <= {'train', 'heldout'}
+     split, = splits
+     assert len({row['path'] for row in trace_rows}) == len(trace_rows) > 0
+-    driver = binding(REPO / 'benchmarking/posets-matrix.py')
+-    template_path = HERE / 'pair0-baseline-spec.json'
++    driver = binding(HERE / 'posets-matrix.py')
++    template_path = (template_path or contract.SUPPORT / 'pair0-baseline-spec.json').resolve(strict=True)
+     template = json.loads(template_path.read_text())
+     runs, specs = [], []
+     order = [(0, 'baseline'), (0, 'optimized'), (1, 'optimized'),
+@@ -117,12 +149,18 @@
+         assert not output.exists(), f'Existing raw evidence must not be overwritten: {output}'
+         spec = json.loads(json.dumps(template))
+         command = spec['command']
++        command[2] = driver['path']
+         for option, value in [('--build-dir', variant['build']), ('--source-dir', variant['source']),
+                               ('--trace-plan', str(traces)), ('--output', str(output)),
+                               ('--seed', str(260617 + pair))]:
+             command[command.index(option) + 1] = value
+         if variant.get('binary_map'):
+             command += ['--binary-map', variant['binary_map']['path']]
++        if rank_only:
++            assert '--rank-only' not in command and '--backends' not in command
++            command += ['--rank-only', '--backends', contract.RANK]
++            contract.check_command(command)
++            spec['inventory'] = contract.INVENTORY
+         spec.update({'pair': pair, 'variant': variant_name, 'driver': driver,
+                      'trace_plan': binding(traces), 'source_revision': variant['revision'],
+                      'production_base_revision': variant['production_base_revision'],
+@@ -139,10 +177,17 @@
+     for run, (path, spec) in zip(runs, specs):
+         write_new(path, spec)
+         run['spec'] = binding(path)
+-    treatment = 'per-backend selector with original scalar+SIMD vectors' if candidate_map else 'combined24'
++    treatment = ('selected-rank per-backend selector with original scalar+SIMD vectors' if rank_only else
++                 'per-backend selector with original scalar+SIMD vectors' if candidate_map else 'combined24')
+     plan = {'schema_version': 1, 'scope': f"{split} paired replay; {treatment}; production bases {variants['baseline']['production_base_revision']} versus {variants['optimized']['production_base_revision']}",
+             'compilation_treatment': treatment,
+-            'split': split, 'driver': driver, 'orchestrator': binding(HERE / 'run-paired-replay.py'),
++            'split': split, 'driver': driver,
++            'orchestrator': binding(HERE / ('run-paired-replay-stop-on-correctness.py' if rank_only else 'run-paired-replay.py')),
++            **({'inventory': contract.INVENTORY, 'backends': [contract.RANK],
++                'rank_contract': binding(Path(contract.__file__).resolve()),
++                'source_revisions': {name: value['revision'] for name, value in variants.items()},
++                'cohort_note': 'Previously observed TRAIN/heldout labels are seen evaluation data.'}
++               if rank_only else {}),
+             'trace_plan': binding(traces), 'variants': variants, 'runs': runs,
+             'method': 'A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained',
+             'plan_writer': binding(Path(__file__)), 'template': binding(template_path),
+@@ -158,9 +203,11 @@
+     parser.add_argument('--candidate-map', type=Path)
+     parser.add_argument('--trace-plan', type=Path, required=True)
+     parser.add_argument('--prefix', required=True)
++    parser.add_argument('--rank-only', action='store_true')
++    parser.add_argument('--template', type=Path)
+     args = parser.parse_args()
+     print(prepare(args.candidate_build, args.trace_plan.resolve(strict=True), args.prefix,
+-                  args.baseline_map, args.candidate_map))
++                  args.baseline_map, args.candidate_map, args.rank_only, args.template))
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/run-paired-replay.py b/run-paired-replay.py
+--- a/run-paired-replay.py
++++ b/run-paired-replay.py
+@@ -14,8 +14,10 @@
+ sys.dont_write_bytecode = True
+ HERE = Path(__file__).resolve().parent
+ sys.path.insert(0, str(HERE))
++import rank_contract as contract
++sys.path.insert(0, str(contract.SUPPORT))
+ import campaign
+-sys.path.insert(0, str(HERE.parent / 'acacia-posets-eval/benchmarking'))
++sys.path.insert(0, str(contract.REPO / 'benchmarking'))
+ from benchlib import HostSampler
+ 
+ 
+@@ -56,6 +58,7 @@
+                 spec = json.loads(Path(run['spec']['path']).read_text())
+                 verify(spec['frozen_build_source_manifest'])
+                 variant = plan['variants'][run['variant']]
++                contract.check_plan_run(plan, run, spec, variant)
+                 assert spec['source_revision'] == variant['revision']
+                 if variant.get('binary_map'):
+                     verify(variant['binary_map'])
+@@ -72,12 +75,19 @@
+                 campaign.atomic_json(prefix.with_name(prefix.name + '-progress.json'),
+                                      {'status': 'running', 'current': run['id'], 'completed': completed})
+                 print('Starting ' + run['id'], flush=True)
+-                subprocess.run([sys.executable, '-B', str(HERE / 'scoped_task.py'),
++                subprocess.run([sys.executable, '-B', str(contract.SUPPORT / 'scoped_task.py'),
+                                 run['spec']['path'], run['record']], check=True)
+                 report_path = output / 'report.json'
+                 report = json.loads(report_path.read_text())
+                 assert report['provenance']['posets_revision'] == variant['revision']
+                 assert report['provenance']['posets_dirty'] == ''
++                if plan.get('inventory') == contract.INVENTORY:
++                    assert report['provenance']['inventory'] == contract.INVENTORY
++                    assert report['provenance']['rank_source_role'] == variant['rank_source_role']
++                    assert report['treatment']['backends'] == [contract.RANK]
++                    contract.check_report_seed(report, run)
++                    assert report['semantic_caps'] == {'source_timeout': 30, 'check_timeout': 2}
++                    assert report['treatment']['case_timeout'] == 2
+                 if variant.get('binary_map'):
+                     assert report['provenance']['binary_map'] == variant['binary_map']
+                     assert report['provenance']['base_revision'] == variant['production_base_revision']
+diff --git a/run-paired-replay-stop-on-correctness.py b/run-paired-replay-stop-on-correctness.py
+--- a/run-paired-replay-stop-on-correctness.py
++++ b/run-paired-replay-stop-on-correctness.py
+@@ -14,8 +14,10 @@
+ sys.dont_write_bytecode = True
+ HERE = Path(__file__).resolve().parent
+ sys.path.insert(0, str(HERE))
++import rank_contract as contract
++sys.path.insert(0, str(contract.SUPPORT))
+ import campaign
+-sys.path.insert(0, str(HERE.parent / 'acacia-posets-eval/benchmarking'))
++sys.path.insert(0, str(contract.REPO / 'benchmarking'))
+ from benchlib import HostSampler
+ 
+ 
+@@ -60,6 +62,7 @@
+                 spec = json.loads(Path(run['spec']['path']).read_text())
+                 verify(spec['frozen_build_source_manifest'])
+                 variant = plan['variants'][run['variant']]
++                contract.check_plan_run(plan, run, spec, variant)
+                 assert spec['source_revision'] == variant['revision']
+                 if variant.get('binary_map'):
+                     verify(variant['binary_map'])
+@@ -76,12 +79,19 @@
+                 campaign.atomic_json(prefix.with_name(prefix.name + '-progress.json'),
+                                      {'status': 'running', 'current': run['id'], 'completed': completed})
+                 print('Starting ' + run['id'], flush=True)
+-                subprocess.run([sys.executable, '-B', str(HERE / 'scoped_task.py'),
++                subprocess.run([sys.executable, '-B', str(contract.SUPPORT / 'scoped_task.py'),
+                                 run['spec']['path'], run['record']], check=True)
+                 report_path = output / 'report.json'
+                 report = json.loads(report_path.read_text())
+                 assert report['provenance']['posets_revision'] == variant['revision']
+                 assert report['provenance']['posets_dirty'] == ''
++                if plan.get('inventory') == contract.INVENTORY:
++                    assert report['provenance']['inventory'] == contract.INVENTORY
++                    assert report['provenance']['rank_source_role'] == variant['rank_source_role']
++                    assert report['treatment']['backends'] == [contract.RANK]
++                    contract.check_report_seed(report, run)
++                    assert report['semantic_caps'] == {'source_timeout': 30, 'check_timeout': 2}
++                    assert report['treatment']['case_timeout'] == 2
+                 if variant.get('binary_map'):
+                     assert report['provenance']['binary_map'] == variant['binary_map']
+                     assert report['provenance']['base_revision'] == variant['production_base_revision']
+diff --git a/summarize-paired-replay.py b/summarize-paired-replay.py
+--- a/summarize-paired-replay.py
++++ b/summarize-paired-replay.py
+@@ -11,6 +11,7 @@
+ import statistics
+ 
+ HERE = Path(__file__).resolve().parent
++import rank_contract as contract
+ 
+ 
+ def sha(path):
+@@ -84,7 +85,10 @@
+     assert len(audits) == 3
+     assert all(row['common_relative_order_equal'] for row in audits)
+     backends = plan.get('backends') or sorted({k[2] for k in data[0, 'baseline']['check']})
+-    assert len(backends) == 24
++    if plan.get('inventory') == contract.INVENTORY:
++        assert backends == [contract.RANK]
++    else:
++        assert plan.get('inventory') in (None, 'full48') and len(backends) == 24
+     cells = []
+     for trace in traces:
+         metrics = ('cpre', 'build', 'rebuild') if trace['kind'] == 'cpre' else ('build', 'rebuild')
+@@ -128,7 +132,7 @@
+                             'pairs_optimized_faster': sum(value < 1 for value in ratios),
+                         })
+                     cells.append(cell)
+-    assert len(cells) == sum(3 if trace['kind'] == 'cpre' else 2 for trace in traces) * 2 * 24
++    assert len(cells) == sum(3 if trace['kind'] == 'cpre' else 2 for trace in traces) * 2 * len(backends)
+     counts = collections.Counter(row['status'] for row in cells)
+     result = {
+         'scope': plan['scope'],
+diff --git a/posets-matrix.py b/posets-matrix.py
+--- a/posets-matrix.py
++++ b/posets-matrix.py
+@@ -16,9 +16,12 @@
+ import shlex
+ import subprocess
+ 
++import sys
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++import rank_contract as contract
++ROOT = contract.REPO
++sys.path.insert(0, str(ROOT / 'benchmarking'))
+ from benchlib import RunResult, campaign_scope_guard, classify_run, run_systemd_scope
+-
+-ROOT = Path(__file__).resolve().parents[1]
+ SCHEDULER_REFERENCE_SHA256 = "b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf"
+ MODES = ("compatible", "native", "max")
+ CASES = ("vectors", "nonempty", "empty", "zero")
+@@ -294,6 +297,8 @@
+     for mode in executable_entries(metadata):
+         command = mode["compiler_command"]
+         flags = command.get("arguments") or shlex.split(command["command"])
++        if metadata.get("inventory") == contract.INVENTORY:
++            contract.clean_flags(flags)
+         optimization = [flag for flag in flags if re.fullmatch(r"-O(?:[0-3sgz]|fast)", flag)]
+         require(mode.get("ndebug") is True and mode.get("stdlib_assertions") is False and
+                 optimization and optimization[-1] in ("-O3", "-Ofast") and
+@@ -508,6 +513,13 @@
+     rows = [row for row in plan["rows"] if (row["mode"], row["backend"]) == (record["mode"], record["backend"])]
+     require(len(rows) == 1, "Missing/duplicate build plan row")
+     row = rows[0]
++    if record.get("inventory") == contract.INVENTORY:
++        contract.check_cells(plan, "rows", True, BACKENDS)
++        require(all(record.get(key) == value for key, value in contract.source_fields(plan).items()),
++                "Selected build plan/record contract differs")
++        bound_file(plan["rank_source_manifest"], bound)
++        require(bound_file(plan["rank_contract"], bound) == Path(contract.__file__).resolve(),
++                "Selected build used another source contract")
+     names = ("compiler_command", "linker_command", "template_compiler_command", "template_linker_command")
+     require(all(row[name] == record[name] for name in names), "Build plan argv differs from build record")
+     require([item["stage"] for item in row["stages"]] == ["compile", "link"] and
+@@ -558,26 +570,46 @@
+                            capture_output=True).returncode == 0, "Declared selector overlay does not match source")
+ 
+ 
+-def backend_provenance(build, output, source, map_path):
+-    bound = {str(map_path): sha(regular(map_path))}
++def backend_provenance(build, output, source, map_path, rank_only=False):
++    bound = {str(map_path): sha(regular(map_path)),
++             str(Path(contract.__file__).resolve()): sha(Path(contract.__file__).resolve())}
+     plan = json.loads(map_path.read_text())
+     require(type(plan.get("schema_version")) is int and plan["schema_version"] == 1 and plan.get("kind") == "posets-per-backend-binaries",
+             "Unsupported per-backend map schema")
+     require(all(isinstance(plan.get(key), str) and re.fullmatch(r"[0-9a-f]{40}", plan[key])
+                 for key in ("base_revision", "source_revision")), "Invalid map source pins")
++    selected_backends = set(contract.backends(plan, rank_only, BACKENDS))
++    if rank_only:
++        contract.check_cells(plan, "binaries", True, BACKENDS)
+     declared_source = Path(plan["source_dir"])
+     require(declared_source.is_absolute() and (source is None or source.resolve() == declared_source.resolve()),
+             "Binary map/source directory mismatch")
+     source = declared_source.resolve()
+-    overlay = bound_file(plan["selector_overlay"], bound)
+-    selector_source(source, plan["base_revision"], plan["source_revision"], overlay)
++    if rank_only:
++        approved = bound_file(plan["rank_source_manifest"], bound)
++        require(bound_file(plan["rank_contract"], bound) == Path(contract.__file__).resolve(),
++                "Selected map used another source contract")
++        source_proof = contract.validate_source(source, plan["base_revision"], plan["source_revision"],
++                                                plan["rank_source_role"], approved)
++        source_binding = {key: plan[key] for key in
++                          ("inventory", "rank_source_role", "rank_source_manifest", "rank_contract")}
++        source_binding.update(source_proof)
++    else:
++        overlay = bound_file(plan["selector_overlay"], bound)
++        selector_source(source, plan["base_revision"], plan["source_revision"], overlay)
++        source_binding = {"selector_overlay": plan["selector_overlay"]}
+     anchor_path = bound_file(plan["anchor_provenance"], bound)
+     anchor = json.loads(anchor_path.read_text())
+     anchor = anchor.get("provenance", anchor)
+-    require(anchor["posets_revision"] == plan["base_revision"] and not anchor["posets_dirty"],
++    require(anchor["posets_revision"] == plan["source_revision" if rank_only else "base_revision"] and not anchor["posets_dirty"],
+             "Binary map does not match the frozen anchor source pin")
+     anchor_source = Path(anchor["posets_source_dir"])
+     require(anchor_source.is_absolute(), "Anchor source must be explicit")
++    if rank_only:
++        require(anchor_source.resolve() == source, "Selected anchor must use the actual same source revision/tree")
++        require(anchor.get("rank_anchor") is True and anchor.get("rank_source_role") == plan["rank_source_role"] and
++                anchor.get("rank_source_manifest") == plan["rank_source_manifest"],
++                "Selected map does not match its explicit actual-revision rank anchor")
+     for name, expected_hash in anchor["source_sha256"].items():
+         file = regular(anchor_source / name)
+         require(sha(file) == expected_hash, "Frozen anchor source changed")
+@@ -614,7 +646,7 @@
+ 
+     for item in plan["binaries"]:
+         mode, backend = item["mode"], item["backend"]
+-        require(mode in entries and backend in BACKENDS and backend not in entries[mode],
++        require(mode in entries and backend in selected_backends and backend not in entries[mode],
+                 "Duplicate/unknown per-backend map entry")
+         binary = Path(item["binary"])
+         require(binary.is_absolute() and sha(regular(binary)) == item["binary_sha256"], "Mapped binary hash mismatch")
+@@ -624,7 +656,7 @@
+                 all(record.get(key) == value for key, value in {
+                     "mode": mode, "backend": backend, "base_revision": plan["base_revision"],
+                     "source_revision": plan["source_revision"], "source_dir": str(source),
+-                    "selector_overlay_sha256": plan["selector_overlay"]["sha256"],
++                    **contract.source_fields(plan),
+                     "binary_sha256": item["binary_sha256"]}.items()), "Build record/map source identity mismatch")
+         db_path = bound_file(record["compile_commands"], bound)
+         commands = json.loads(db_path.read_text())
+@@ -666,22 +698,28 @@
+                 "Mapped ELF width/compiler/runtime proof differs from anchor")
+         entries[mode][backend] = {**actual, "compiler_command": command, "linker_command": link,
+                                   "build_record": {"path": str(record_path), "sha256": sha(record_path)}}
+-    require(all(set(rows) == BACKENDS for rows in entries.values()), "Missing per-backend map entries")
++    require(all(set(rows) == selected_backends for rows in entries.values()), "Missing per-backend map entries")
+     modes = {mode: {key: value for key, value in probes[mode].items()
+                     if key not in {"binary", "binary_sha256", "libraries", "compiler_command"}} for mode in MODES}
++    if rank_only:
++        for entry in modes.values():
++            entry["backends"] = [contract.RANK]
+     return source, {"modes": modes, "aliases": {"compatible": "compatible", "native": "native", "max": "native"},
+                     "backend_binaries": entries, "alias_probes": probes, "source_oracle": probes["compatible"],
+                     "bound_files_sha256": bound, "binary_map": {"path": str(map_path), "sha256": sha(map_path)},
+-                    "base_revision": plan["base_revision"], "selector_overlay": plan["selector_overlay"],
++                    "base_revision": plan["base_revision"], **source_binding,
+                     "treatment": "per-backend selector; identical original replay kernels/timers"}
+ 
+ 
+-def provenance(build, output, source=None, binary_map=None):
++def provenance(build, output, source=None, binary_map=None, rank_only=False):
+     if binary_map is not None:
+-        source, extra = backend_provenance(build, output, source, binary_map)
++        source, extra = (backend_provenance(build, output, source, binary_map, True) if rank_only else
++                         backend_provenance(build, output, source, binary_map))
+         modes, aliases = extra["modes"], extra["aliases"]
+     else:
+-        extra = {}
++        require(not rank_only, "Selected rank requires a binary map")
++        extra = {"bound_files_sha256": {str(Path(contract.__file__).resolve()):
++                                        sha(Path(contract.__file__).resolve())}}
+         modes, aliases = combined_provenance(build, output)
+     source = (source or ROOT / "subprojects/posets").resolve()
+     names = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+@@ -731,6 +769,8 @@
+                         help="Frozen Posets source used by this build (default: subprojects/posets)")
+     parser.add_argument("--binary-map", type=Path,
+                         help="Hash-bound per-backend ELFs with original combined source oracle and proven width alias")
++    parser.add_argument("--rank-only", action="store_true",
++                        help="Explicit reviewed789 rank-only map; default still requires full48")
+     parser.add_argument("--output", type=Path, required=True)
+     parser.add_argument("--case-timeout", type=float, default=15)
+     parser.add_argument("--check-timeout", type=float, help="Separate backend correctness cap; defaults to --case-timeout")
+@@ -748,6 +788,11 @@
+     no_core()
+     args.check_timeout = args.case_timeout if args.check_timeout is None else args.check_timeout
+     args.source_timeout = args.check_timeout if args.source_timeout is None else args.source_timeout
++    if args.rank_only:
++        require(args.binary_map and args.backends == [contract.RANK] and
++                (args.source_timeout, args.check_timeout, args.case_timeout) == (30, 2, 2) and
++                args.rounds == args.repetitions == 1 and args.memory_max == "8G" and not args.detail,
++                "Selected rank requires exact backend and unchanged30/2/2 clean protocol")
+     require(all(math.isfinite(cap) and cap > 0 for cap in (args.case_timeout, args.check_timeout, args.source_timeout)) and
+             args.rounds > 0 and args.repetitions > 0, "Positive finite timeout/rounds/repetitions required")
+     require(not args.measure or args.trace_plan, "Timing requires a fixed actual-trace plan")
+@@ -764,7 +809,8 @@
+     require(subprocess.run(["git", "check-ignore", "-q", str(output)], cwd=ROOT).returncode == 0,
+             "Raw matrix evidence must start in an ignored output directory")
+     output.mkdir(parents=True)
+-    metadata = provenance(build, output, args.source_dir, args.binary_map)
++    metadata = (provenance(build, output, args.source_dir, args.binary_map, True) if args.rank_only else
++                provenance(build, output, args.source_dir, args.binary_map))
+     if args.measure:
+         measurement_build(metadata)
+     trace_source = None
+@@ -776,6 +822,8 @@
+         scope = "Instrumented operation diagnosis" if args.detail else "Clean whole-CPre / sampled actual-query replay" if args.measure else "Actual-trace correctness only"
+         if args.binary_map:
+             scope = "Supplemental per-backend registry-instantiation treatment: " + scope
++        if args.rank_only:
++            scope = "Selected rank / matched789 source experiment: " + scope
+         report = {"scope": scope,
+                   "provenance": metadata, "inputs_sha256": sha(output / "inputs.json"),
+                   "measurement_order_sha256": sha(output / "measurement-order.json") if args.measure else None,
+@@ -830,7 +878,8 @@
+                                  "logs_sha256": logs,
+                                  "output_identity_verified": identity})
+     unchanged(metadata)
+-    report = {"scope": ("Supplemental per-backend registry-instantiation treatment: " if args.binary_map else "") + "Semantic screen only; no operation timings sampled",
++    report = {"scope": ("Selected rank / matched789 source experiment: " if args.rank_only else "") +
++                       ("Supplemental per-backend registry-instantiation treatment: " if args.binary_map else "") + "Semantic screen only; no operation timings sampled",
+               "cases": "empty downset, zero-dimensional singleton and all-minus-one bottom are distinct",
+               "policy": "Every rejection/crash/timeout is retained. Constructor preconditions, empty results and zero-dimensional domains stay distinct; actual-trace eligibility is checked separately.",
+               "provenance": metadata, "rows": rows,
+diff --git a/test_posets_matrix.py b/test_posets_matrix.py
+--- a/test_posets_matrix.py
++++ b/test_posets_matrix.py
+@@ -1,6 +1,7 @@
+ """Integrity checks for the offline Posets matrix; never launch a benchmark."""
+ 
+ import importlib.util
++import copy
+ from contextlib import nullcontext
+ import hashlib
+ import json
+@@ -13,11 +14,456 @@
+ 
+ import pytest
+ 
+-BENCHMARKING = Path(__file__).resolve().parents[2] / "benchmarking"
++TOOLS = Path(__file__).resolve().parent
++BENCHMARKING = TOOLS.parent.parent / "acacia-posets-eval/benchmarking"
++sys.path.insert(0, str(TOOLS))
+ sys.path.insert(0, str(BENCHMARKING))
+-SPEC = importlib.util.spec_from_file_location("posets_matrix", BENCHMARKING / "posets-matrix.py")
++SPEC = importlib.util.spec_from_file_location("posets_matrix", TOOLS / "posets-matrix.py")
+ M = importlib.util.module_from_spec(SPEC)
+ SPEC.loader.exec_module(M)
++
++
++def ranked_map_fixture(tmp_path, monkeypatch):
++    """Synthetic ELF observations only; source policy is tested separately below."""
++    path, plan, output, observed, library, ninja = binary_map_fixture(tmp_path, monkeypatch)
++    source = Path(plan["source_dir"])
++    approved = tmp_path / "fixture-approval.json"
++    approved.write_text("fixture authority; never measurement evidence\n")
++    bind = lambda p: {"path": str(p), "sha256": M.sha(p)}
++    plan.update(inventory=M.contract.INVENTORY, rank_source_role="baseline",
++                rank_source_manifest=bind(approved), rank_contract=bind(Path(M.contract.__file__).resolve()))
++    plan.pop("selector_overlay")
++    plan["binaries"] = [row for row in plan["binaries"] if row["backend"] == M.contract.RANK]
++    proof_path = Path(plan["anchor_provenance"]["path"])
++    proof = json.loads(proof_path.read_text())
++    anchor = proof["provenance"]
++    anchor.update(posets_revision=plan["source_revision"], posets_source_dir=str(source),
++                  rank_anchor=True, rank_source_role="baseline", rank_source_manifest=bind(approved))
++    anchor["source_sha256"] = {name: M.sha(source / name) for name in anchor["source_sha256"]}
++    commands = json.loads((source / "build/compile_commands.json").read_text())
++    for mode in M.MODES:
++        anchor["modes"][mode]["compiler_command"] = next(
++            row for row in commands if row["output"] == f"tests/downset-matrix-{mode}.p/downset-bm.cc.o")
++    proof_path.write_text(json.dumps(proof))
++    plan["anchor_provenance"] = bind(proof_path)
++    build_path = Path(json.loads(Path(plan["binaries"][0]["build_record"]["path"]).read_text())["build_plan"]["path"])
++    build = json.loads(build_path.read_text())
++    build.update({key: plan[key] for key in ("inventory", "rank_source_role", "rank_source_manifest", "rank_contract")})
++    build["rows"] = [row for row in build["rows"] if row["backend"] == M.contract.RANK]
++    build_path.write_text(json.dumps(build))
++    for entry in plan["binaries"]:
++        record_path = Path(entry["build_record"]["path"])
++        record = json.loads(record_path.read_text())
++        record.update(M.contract.source_fields(plan))
++        record.pop("selector_overlay_sha256")
++        record["build_plan"] = bind(build_path)
++        record_path.write_text(json.dumps(record))
++        entry["build_record"] = bind(record_path)
++    path.write_text(json.dumps(plan))
++    expected = (source, plan["base_revision"], plan["source_revision"], "baseline", approved)
++
++    def source_policy(*values):
++        M.require(values == expected, "Fixture source identity changed")
++        return {"production_reference_revision": M.contract.PRODUCTION, "baseline_headers_cc_equivalent": True}
++
++    monkeypatch.setattr(M.contract, "validate_source", source_policy)
++    return path, plan, output, observed, library, ninja
++
++
++def ranked_load(path, plan, output, enabled=True):
++    return M.backend_provenance(Path(plan["source_oracle_binary"]["path"]).parent.parent,
++                                output, None, path, enabled)[1]
++
++
++def test_selected_map_requires_explicit_flag_and_real_singletons(tmp_path, monkeypatch):
++    path, plan, output, _, _, _ = ranked_map_fixture(tmp_path, monkeypatch)
++    with pytest.raises(ValueError, match="requires --rank-only"):
++        ranked_load(path, plan, output, False)
++    result = ranked_load(path, plan, output)
++    assert all(set(rows) == {M.contract.RANK} for rows in result["backend_binaries"].values())
++    assert all(row["backends"] == [M.contract.RANK] for row in result["modes"].values())
++    assert all(row["backends"] == sorted(M.BACKENDS) for row in result["alias_probes"].values())
++    assert result["source_oracle"]["binary"] == plan["source_oracle_binary"]["path"]
++
++
++@pytest.mark.parametrize("mutation", ["missing", "extra", "duplicate", "wrong-backend", "wrong-width",
++                                     "wrong-source", "singleton", "runtime-width", "compile-flag", "ISA-template"])
++def test_selected_map_refreshed_hash_negatives(tmp_path, monkeypatch, mutation):
++    path, plan, output, observed, _, _ = ranked_map_fixture(tmp_path, monkeypatch)
++    entry = plan["binaries"][0]
++    if mutation == "missing":
++        plan["binaries"].pop()
++    elif mutation in ("extra", "duplicate"):
++        added = copy.deepcopy(entry)
++        if mutation == "extra":
++            added["backend"] = "comptrie_backed"
++        plan["binaries"].append(added)
++    elif mutation == "wrong-backend":
++        entry["backend"] = "comptrie_backed"
++    elif mutation == "wrong-width":
++        entry["mode"] = "max"
++    elif mutation == "wrong-source":
++        wrong = tmp_path / "other-source"
++        wrong.mkdir()
++        plan["source_dir"] = str(wrong)
++    elif mutation == "singleton":
++        observed[entry["binary"]]["backends"] = ["comptrie_backed"]
++    elif mutation == "runtime-width":
++        observed[entry["binary"]]["width_selector"] = 1
++    else:
++        record_path = Path(entry["build_record"]["path"])
++        record = json.loads(record_path.read_text())
++        flag = "-O0" if mutation == "compile-flag" else "-mavx2"
++        record["compiler_command"]["arguments"].append(flag)
++        if mutation == "ISA-template":
++            record["template_compiler_command"]["arguments"].append(flag)
++            database = Path(record["compile_commands"]["path"])
++            commands = json.loads(database.read_text())
++            commands = [record["template_compiler_command"] if row["output"] ==
++                        record["template_compiler_command"]["output"] else row for row in commands]
++            database.write_text(json.dumps(commands))
++        resync_build_record(plan, entry, record)
++    path.write_text(json.dumps(plan))  # Outer hash and all modified child bindings are current.
++    with pytest.raises(ValueError):
++        ranked_load(path, plan, output)
++
++
++def source_contract_fixture(tmp_path, monkeypatch):
++    """Real temporary Git IDs, synthetic approved bytes; no compiler/ELF runs."""
++    contract = M.contract
++    repo = tmp_path / "repo"
++    source = repo / "_deps/source"
++    source.mkdir(parents=True)
++    kernels = ("tests/downset-bm.cc", "tests/matrix-cpre.hh", "tests/matrix-check.hh", "tests/test_maker.hh")
++    for name in set(kernels) | (contract.CHANGES - {"tests/rank-bucketed.cc"}):
++        p = source / name
++        p.parent.mkdir(parents=True, exist_ok=True)
++        p.write_text("base fixture " + name + "\n")
++
++    def git(*args):
++        return subprocess.check_output(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
++                                        *args], cwd=source).decode().strip()
++
++    git("init", "-q")
++    git("add", ".")
++    git("commit", "-qm", "fixture base")
++    base = git("rev-parse", "HEAD")
++    monkeypatch.setattr(contract, "REPO", repo)
++    monkeypatch.setattr(contract, "BASE", base)
++    monkeypatch.setattr(contract, "PRODUCTION", base)
++    patch_hash = "d" * 64
++    monkeypatch.setattr(contract, "APPROVED_PATCH", patch_hash)
++    for name in contract.CHANGES:
++        p = source / name
++        p.parent.mkdir(parents=True, exist_ok=True)
++        p.write_text("approved fixture " + name + "\n")
++    git("add", ".")
++    git("commit", "-qm", "fixture approved candidate")
++    revision = git("rev-parse", "HEAD")
++    manifest = tmp_path / "approved.json"
++    manifest.write_text(json.dumps({"baseline_commit": base, "patch_sha256": patch_hash,
++        "files": [{"path": name, "sha256": M.sha(source / name)} for name in sorted(contract.CHANGES)]}))
++    monkeypatch.setattr(contract, "APPROVED_MANIFEST", M.sha(manifest))
++    return source, base, revision, manifest, git
++
++
++@pytest.mark.parametrize("mutation", ["header", "kernel", "extra-file", "refreshed-approval", "wrong-base", "wrong-role", "symlink"])
++def test_rank_source_rejects_refreshed_wrong_sources(tmp_path, monkeypatch, mutation):
++    source, base, revision, manifest, git = source_contract_fixture(tmp_path, monkeypatch)
++    M.contract.validate_source(source, base, revision, "candidate", manifest)
++    role = "candidate"
++    if mutation == "wrong-base":
++        base = "0" * 40
++    elif mutation == "wrong-role":
++        role = "baseline"
++    else:
++        name = ("tests/downset-bm.cc" if mutation == "kernel" else "unapproved.hh" if mutation == "extra-file"
++                else "include/posets/downsets/rank_bucketed_vector_backed.hh")
++        if mutation == "symlink":
++            target = tmp_path / "unchanged-header-bytes.hh"
++            target.write_bytes((source / name).read_bytes())
++            (source / name).unlink()
++            (source / name).symlink_to(target)
++        else:
++            (source / name).write_text("changed after approval\n")
++        git("add", ".")
++        git("commit", "-qm", "fixture changed source, current hashes")
++        revision = git("rev-parse", "HEAD")
++        if mutation == "refreshed-approval":
++            value = json.loads(manifest.read_text())
++            for item in value["files"]:
++                item["sha256"] = M.sha(source / item["path"])
++            manifest.write_text(json.dumps(value))
++    with pytest.raises(ValueError):
++        M.contract.validate_source(source, base, revision, role, manifest)
++
++
++@pytest.mark.parametrize("arguments", [["-DPOSETS_RANK_STATS"], ["-DPOSETS_RANK_STATS=0"],
++                                       ["-D", "POSETS_RANK_STATS=1"]])
++def test_clean_selected_build_rejects_enabled_statistics(arguments):
++    with pytest.raises(ValueError):
++        M.contract.clean_flags(arguments)
++
++
++def rank_command():
++    return [sys.executable, "-B", str(M.contract.DRIVER), "--build-dir", "/fixture/build",
++            "--source-dir", "/fixture/source", "--trace-plan", "/fixture/traces.json",
++            "--output", "/fixture/output", "--binary-map", "/fixture/map.json", "--measure",
++            "--rounds", "1", "--repetitions", "1", "--seed", "260617", "--source-timeout", "30",
++            "--check-timeout", "2", "--case-timeout", "2", "--memory-max", "8G",
++            "--rank-only", "--backends", M.contract.RANK]
++
++
++@pytest.mark.parametrize("mutation", ["opt-in", "backends", "source-cap", "check-cap", "timing-cap",
++                                     "duplicate-map", "detail"])
++def test_selected_invocation_protocol_negatives(mutation):
++    command = rank_command()
++    M.contract.check_command(command)
++    if mutation == "opt-in":
++        command.remove("--rank-only")
++    elif mutation == "backends":
++        command.append("comptrie_backed")
++    elif mutation == "duplicate-map":
++        command.extend(["--binary-map", "/other/map.json"])
++    elif mutation == "detail":
++        command.append("--detail")
++    else:
++        option = {"source-cap": "--source-timeout", "check-cap": "--check-timeout",
++                  "timing-cap": "--case-timeout"}[mutation]
++        command[command.index(option) + 1] = "99"
++    with pytest.raises(ValueError):
++        M.contract.check_command(command)
++
++
++@pytest.mark.parametrize("mutation", ["none", "candidate-map-opt-in", "candidate-role", "candidate-header",
++                                     "plan-opt-in", "invocation-opt-in", "seed", "seed-equals",
++                                     "seed-abbreviation", "source-equals", "map-equals", "output-abbreviation"])
++def test_paired_rank_contract_checks_both_sides_before_invocation(tmp_path, monkeypatch, mutation):
++    source, base, revision, manifest, git = source_contract_fixture(tmp_path, monkeypatch)
++    baseline = source.parent / "baseline"
++    shutil.copytree(source, baseline)
++    subprocess.run(["git", "-C", str(baseline), "checkout", "--detach", base], check=True,
++                   capture_output=True)
++    contract = M.contract
++    bind = lambda p: {"path": str(p), "sha256": M.sha(p)}
++    variants, documents = {}, {}
++    for label, role, tree, pin in [("baseline", "baseline", baseline, base),
++                                   ("optimized", "candidate", source, revision)]:
++        path = tmp_path / (label + "-map.json")
++        metadata = {"inventory": contract.INVENTORY, "rank_source_role": role,
++                    "rank_source_manifest": bind(manifest), "rank_contract": bind(Path(contract.__file__).resolve()),
++                    "source_dir": str(tree), "source_revision": pin, "base_revision": base,
++                    "binaries": [{"mode": mode, "backend": contract.RANK} for mode in ("compatible", "native")]}
++        path.write_text(json.dumps(metadata))
++        documents[label] = (path, metadata)
++        variants[label] = {"rank_source_role": role, "revision": pin, "source": str(tree),
++                           "build": str(tree / "fixture-build"), "binary_map": bind(path)}
++    trace = tmp_path / "traces.json"
++    trace.write_text("fixture trace-plan bytes; no workload\n")
++    plan = {"inventory": contract.INVENTORY, "backends": [contract.RANK], "variants": variants,
++            "source_revisions": {name: value["revision"] for name, value in variants.items()},
++            "rank_contract": bind(Path(contract.__file__).resolve()), "driver": bind(contract.DRIVER),
++            "trace_plan": bind(trace)}
++    run = {"variant": "baseline", "pair": 0, "seed": 260617, "output": str(tmp_path / "output")}
++    command = rank_command()
++    for option, value in [("--build-dir", variants["baseline"]["build"]),
++                          ("--source-dir", str(baseline)), ("--trace-plan", str(trace)),
++                          ("--binary-map", variants["baseline"]["binary_map"]["path"]),
++                          ("--output", run["output"])]:
++        command[command.index(option) + 1] = value
++    spec = {"inventory": contract.INVENTORY, "driver": plan["driver"], "command": command}
++    contract.check_plan_run(plan, run, spec, variants["baseline"])
++    path, candidate = documents["optimized"]
++    if mutation == "candidate-map-opt-in":
++        candidate.pop("inventory")
++    elif mutation == "candidate-role":
++        candidate["rank_source_role"] = variants["optimized"]["rank_source_role"] = "baseline"
++    elif mutation == "candidate-header":
++        (source / "include/posets/downsets/rank_bucketed_vector_backed.hh").write_text("unapproved\n")
++        git("add", ".")
++        git("commit", "-qm", "fixture altered candidate")
++        pin = git("rev-parse", "HEAD")
++        candidate["source_revision"] = variants["optimized"]["revision"] = pin
++        plan["source_revisions"]["optimized"] = pin
++    elif mutation == "plan-opt-in":
++        plan.pop("inventory")
++    elif mutation == "invocation-opt-in":
++        command.remove("--rank-only")
++    elif mutation == "seed":
++        command[command.index("--seed") + 1] = "260618"
++    elif mutation == "seed-equals":
++        command.append("--seed=7")
++    elif mutation == "seed-abbreviation":
++        command.extend(["--see", "7"])
++    elif mutation == "source-equals":
++        command.append("--source-dir=/other/source")
++    elif mutation == "map-equals":
++        command.append("--binary-map=/other/map.json")
++    elif mutation == "output-abbreviation":
++        command.extend(["--out", "/other/output"])
++    spec_path = tmp_path / "current-invocation.json"
++    spec_path.write_text(json.dumps(spec))
++    run["spec"] = bind(spec_path)  # Current invocation hash cannot authorize a hidden effective override.
++    path.write_text(json.dumps(candidate))
++    variants["optimized"]["binary_map"] = bind(path)  # Refresh outer binding, retain source authority.
++    if mutation == "none":
++        contract.check_plan_run(plan, run, spec, variants["baseline"])
++    else:
++        with pytest.raises(ValueError):
++            contract.check_plan_run(plan, run, spec, variants["baseline"])
++
++
++@pytest.mark.parametrize("extra", [
++    ["--seed=7"], ["--see", "7"], ["--seed", "7"],
++    ["--source-dir=/other/source"], ["--source-d", "/other/source"],
++    ["--binary-map=/other/map.json"], ["--binary-m", "/other/map.json"],
++    ["--build-dir=/other/build"], ["--build-d", "/other/build"],
++    ["--trace-plan=/other/traces.json"], ["--trace-p", "/other/traces.json"],
++    ["--output=/other/output"], ["--out", "/other/output"],
++    ["--case-timeout=99"], ["--rounds=2"], ["--repetitions=2"],
++    ["--memory-max=64G"], ["--backends=comptrie_backed"],
++    ["--rank-on"], ["--meas"], ["--measure"], ["--"],
++])
++def test_selected_command_rejects_effective_argparse_overrides(extra):
++    command = rank_command()
++    assert M.contract.check_command(command)["--seed"] == "260617"
++    with pytest.raises(ValueError):
++        M.contract.check_command(command + extra)
++
++
++@pytest.mark.parametrize("seed", [260618, 260617.0, True, None, "260617"])
++def test_actual_report_seed_must_match_declared_integer(tmp_path, seed):
++    run = {"seed": 260617}
++    report = {"treatment": {"seed": 260617}}
++    M.contract.check_report_seed(report, run)
++    report["treatment"]["seed"] = seed
++    path = tmp_path / "report.json"
++    path.write_text(json.dumps(report))
++    with pytest.raises(ValueError, match="report seed"):
++        M.contract.check_report_seed(json.loads(path.read_text()), run)
++    report["treatment"].pop("seed")
++    with pytest.raises(ValueError, match="report seed"):
++        M.contract.check_report_seed(report, run)
++
++
++def paired_writer_fixture(tmp_path, monkeypatch):
++    """Real source-authority checks; synthetic saved writer metadata, no ELF/build runs."""
++    loader = importlib.util.spec_from_file_location("rank_paired_writer_fixture", TOOLS / "prepare-paired-replay.py")
++    writer = importlib.util.module_from_spec(loader)
++    loader.loader.exec_module(writer)
++    source, base, revision, manifest, _ = source_contract_fixture(tmp_path, monkeypatch)
++    baseline = source.parent / "baseline"
++    shutil.copytree(source, baseline)
++    subprocess.run(["git", "-C", str(baseline), "checkout", "--detach", base], check=True,
++                   capture_output=True)
++    monkeypatch.setattr(writer, "REPO", M.contract.REPO)
++    monkeypatch.setattr(writer, "load_tool", lambda _: M)  # Reuse actual normalization, not a mocked result.
++    bind = lambda p: {"path": str(p), "sha256": M.sha(p)}
++    library = tmp_path / "fixture-runtime.so"
++    library.write_text("synthetic saved runtime context; never loaded\n")
++    maps, documents, anchors, records = {}, {}, {}, {}
++    for label, role, tree, pin in [("baseline", "baseline", baseline, base),
++                                   ("optimized", "candidate", source, revision)]:
++        build = source.parent / (label + "-writer-build")
++        (build / "tests").mkdir(parents=True)
++        modes = {}
++        records[label] = {}
++        binaries = []
++        for mode in M.MODES:
++            binary = build / "tests" / ("downset-matrix-" + mode)
++            binary.write_bytes(b"synthetic writer binding; not an ELF")
++            output = "tests/downset-matrix-" + mode + ".p/downset-bm.cc.o"
++            compiler = {"directory": str(build), "file": str(tree / "tests/downset-bm.cc"),
++                        "output": output, "arguments": ["c++", "-O3", "-flto", "-std=c++20",
++                        "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_" + mode.upper(),
++                        "-I" + str(tree / "include"), "-c", str(tree / "tests/downset-bm.cc"), "-o", output]}
++            modes[mode] = {"compiler": "synthetic fixture compiler", "simd_type": "fixture-vector",
++                "selected_lanes": 16 if mode == "compatible" else 64,
++                "alignment": 16 if mode == "compatible" else 64, "element_bytes": 1,
++                "block_bytes": 16 if mode == "compatible" else 64, "compatible_lanes": 16,
++                "native_lanes": 64, "max_fixed_lanes": 64, "hybrid_policy": "fixture-policy",
++                "backends": sorted(M.BACKENDS), "compiler_command": compiler,
++                "libraries": [bind(library)], "binary": str(binary), "binary_sha256": M.sha(binary)}
++            if mode == "max":
++                continue
++            linker = {"directory": str(build), "output": "tests/downset-matrix-" + mode,
++                      "arguments": ["c++", "-O3", "-flto", "-o", "tests/downset-matrix-" + mode, output]}
++            record_path = tmp_path / (label + "-" + mode + "-writer-record.json")
++            record_path.write_text(json.dumps({"template_compiler_command": compiler,
++                                              "template_linker_command": linker}))
++            records[label][mode] = record_path
++            binaries.append({"mode": mode, "backend": M.contract.RANK, "build_record": bind(record_path)})
++        anchor_path = tmp_path / (label + "-writer-anchor.json")
++        anchor = {"posets_source_dir": str(tree), "posets_revision": pin, "rank_anchor": True,
++                  "rank_source_role": role, "rank_source_manifest": bind(manifest), "modes": modes}
++        anchor_path.write_text(json.dumps(anchor))
++        path = tmp_path / (label + "-writer-map.json")
++        metadata = {"schema_version": 1, "kind": "posets-per-backend-binaries",
++                    "inventory": M.contract.INVENTORY, "rank_source_role": role,
++                    "rank_source_manifest": bind(manifest), "rank_contract": bind(Path(M.contract.__file__).resolve()),
++                    "base_revision": base, "source_revision": pin, "source_dir": str(tree),
++                    "anchor_provenance": bind(anchor_path), "binaries": binaries,
++                    "source_oracle_binary": bind(Path(modes["compatible"]["binary"]))}
++        path.write_text(json.dumps(metadata))
++        maps[label], documents[label], anchors[label] = path, metadata, anchor_path
++    return writer, maps, documents, anchors, records
++
++
++@pytest.mark.parametrize("mutation", ["none", "link-template", "runtime-libraries"])
++def test_paired_writer_compares_actual_selected_contexts(tmp_path, monkeypatch, mutation):
++    writer, maps, documents, anchors, records = paired_writer_fixture(tmp_path, monkeypatch)
++    result = writer.mapped_variants(maps["baseline"], maps["optimized"], True)
++    assert set(result) == {"baseline", "optimized"}
++    assert result["optimized"]["rank_source_role"] == "candidate"
++    if mutation == "none":
++        return
++    candidate = documents["optimized"]
++    previous_map_binding = writer.binding(maps["optimized"])
++    if mutation == "link-template":
++        record_path = records["optimized"]["compatible"]
++        record = json.loads(record_path.read_text())
++        record["template_linker_command"]["arguments"].append("-Wl,--as-needed")
++        record_path.write_text(json.dumps(record))
++        candidate["binaries"][0]["build_record"] = writer.binding(record_path)
++    else:
++        library = tmp_path / "different-fixture-runtime.so"
++        library.write_text("different synthetic runtime library context\n")
++        anchor_path = anchors["optimized"]
++        anchor = json.loads(anchor_path.read_text())
++        for mode in M.MODES:
++            anchor["modes"][mode]["libraries"] = [writer.binding(library)]
++        anchor_path.write_text(json.dumps(anchor))
++        candidate["anchor_provenance"] = writer.binding(anchor_path)
++    maps["optimized"].write_text(json.dumps(candidate))
++    assert writer.binding(maps["optimized"]) != previous_map_binding
++    with pytest.raises(AssertionError, match="contexts differ"):
++        writer.mapped_variants(maps["baseline"], maps["optimized"], True)
++
++
++def test_selected_builder_inventory_keeps_full48_default():
++    loader = importlib.util.spec_from_file_location("rank_build_fixture", TOOLS / "run-per-backend-build.py")
++    builder = importlib.util.module_from_spec(loader)
++    loader.loader.exec_module(builder)
++    selected = {"inventory": M.contract.INVENTORY, "backend_order": [M.contract.RANK],
++                "rows": [{"mode": mode, "backend": M.contract.RANK, "binary": mode + ".elf",
++                          "build_record": mode + ".json", "compiler_command": {"output": mode + ".o"}}
++                         for mode in ("compatible", "native")]}
++    with pytest.raises(ValueError):
++        builder.check_inventory(selected)
++    builder.check_inventory(selected, True)
++    complete = {"backend_order": sorted(M.BACKENDS),
++                "rows": [{"mode": mode, "backend": backend, "binary": mode + backend + ".elf",
++                          "build_record": mode + backend + ".json",
++                          "compiler_command": {"output": mode + backend + ".o"}}
++                         for mode in ("compatible", "native") for backend in sorted(M.BACKENDS)]}
++    builder.check_inventory(complete)
++    complete["rows"].pop()
++    with pytest.raises(ValueError):
++        builder.check_inventory(complete)
++    missing = copy.deepcopy(selected)
++    missing["rows"].pop()
++    with pytest.raises(ValueError):
++        builder.check_inventory(missing, True)
+ 
+ 
+ def test_unchanged_checks_the_declared_frozen_source(tmp_path):
+diff --git a/freeze_replay.py b/freeze_replay.py
+--- a/freeze_replay.py
++++ b/freeze_replay.py
+@@ -1,5 +1,7 @@
+ #!/usr/bin/env python3
+ """Freeze and validate three release replay binaries from an immutable source."""
++if not __debug__:
++    raise SystemExit('Validation requires Python without -O/PYTHONOPTIMIZE')
+ import argparse
+ import json
+ import os
+@@ -9,7 +11,9 @@
+ import sys
+ 
+ sys.dont_write_bytecode = True
+-ROOT = Path(__file__).resolve().parent.parent / "acacia-posets-eval"
++HERE = Path(__file__).resolve().parent
++import rank_contract as contract
++ROOT = contract.REPO
+ SOURCE = ROOT.parent / "posets-preopt-baseline"
+ OUTPUT = ROOT / "_deps/replay-baseline-7c40712"
+ sys.path.insert(0, str(ROOT / "benchmarking"))
+@@ -21,12 +25,23 @@
+     parser.add_argument("--source", type=Path, default=SOURCE)
+     parser.add_argument("--output", type=Path, default=OUTPUT)
+     parser.add_argument("--revision", default="7c407128326583abbb137fd3832857ed506e20fb")
++    parser.add_argument("--rank-only", action="store_true",
++                        help="Full24 anchor for the explicit reviewed ranked experiment")
++    parser.add_argument("--rank-source-role", choices=["baseline", "candidate"])
++    parser.add_argument("--rank-source-manifest", type=Path)
+     args = parser.parse_args()
+     source, output = args.source.resolve(), args.output.resolve()
+     build = source / "build-replay-release"
+-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip()
++    revision = subprocess.check_output(["git", "--no-optional-locks", "rev-parse", "HEAD"], cwd=source, text=True).strip()
+     assert revision == args.revision
+-    assert not subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True)
++    if args.rank_only:
++        assert args.rank_source_manifest is not None
++        assert output.is_relative_to(ROOT / '_deps') and output != OUTPUT and not output.is_relative_to(source)
++        contract.validate_source(source, contract.BASE, revision, args.rank_source_role,
++                                 args.rank_source_manifest)
++    else:
++        assert args.rank_source_role is None and args.rank_source_manifest is None
++        assert not subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True)
+     assert not output.exists(), "Do not overwrite frozen artifacts"
+     (output / "tests").mkdir(parents=True)
+     for mode in ("compatible", "native", "max"):
+@@ -36,9 +51,17 @@
+         target = output / name
+         target.parent.mkdir(exist_ok=True)
+         shutil.copy2(build / name, target)
+-    M = load_tool("benchmarking/posets-matrix.py")
++    M = load_tool(str(HERE / "posets-matrix.py"))
+     metadata = M.provenance(output, output, source)
+     M.measurement_build(metadata)
++    if args.rank_only:
++        for mode in metadata["modes"].values():
++            contract.clean_flags(M.command_args(mode["compiler_command"]))
++        metadata.update({"rank_anchor": True, "rank_source_role": args.rank_source_role,
++                         "rank_source_manifest": contract.binding(args.rank_source_manifest),
++                         "rank_contract": contract.binding(Path(contract.__file__).resolve()),
++                         "production_reference_revision": contract.PRODUCTION,
++                         "baseline_headers_cc_equivalent": True})
+     assert len(M.BACKENDS) == 24
+     assert all(set(mode["backends"]) == M.BACKENDS and len(mode["backends"]) == 24
+                for mode in metadata["modes"].values())
+@@ -51,7 +74,7 @@
+         actual_source = (Path(command["directory"]) / command["file"]).resolve()
+         assert actual_source == source / "tests/downset-bm.cc", "Compiler source differs from frozen source"
+         assert M.sha(actual_source) == metadata["source_sha256"]["tests/downset-bm.cc"]
+-    if revision != "7c407128326583abbb137fd3832857ed506e20fb":
++    if not args.rank_only and revision != "7c407128326583abbb137fd3832857ed506e20fb":
+         baseline = json.loads((OUTPUT / "provenance.json").read_text())
+         assert all(row["compiler_command"]["command"] == baseline["modes"][name]["compiler_command"]["command"]
+                    for name, row in metadata["modes"].items()), "Baseline/optimized compiler flags differ"
+diff --git a/rank_contract.py b/rank_contract.py
+--- /dev/null
++++ b/rank_contract.py
+@@ -0,0 +1,183 @@
++"""Experiment-specific inventory/source rules; no measurement or mutation."""
++import hashlib
++import json
++from pathlib import Path
++import re
++import subprocess
++
++HERE = Path(__file__).resolve().parent
++WORK = HERE.parent.parent
++REPO = WORK / 'acacia-posets-eval'
++SUPPORT = WORK / 'acacia-campaign'
++DRIVER = HERE / 'posets-matrix.py'
++RANK = 'rank_bucketed_vector_backed'
++INVENTORY = 'rank-compatible-native'
++BASE = '789bf99346d41a30f1b454ff58385b6f8a2961a9'
++PRODUCTION = 'cc058ca96ebc667f727ea2f0c2360b77d60192d3'
++APPROVED_MANIFEST = '93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02'
++APPROVED_PATCH = '889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d'
++CHANGES = {'include/posets/downsets/rank_bucketed_vector_backed.hh',
++           'tests/rank-stats.cc', 'tests/meson.build', 'tests/rank-bucketed.cc'}
++
++
++def require(value, message):
++    if not value:
++        raise ValueError(message)
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def binding(path):
++    path = Path(path).resolve(strict=True)
++    return {'path': str(path), 'sha256': sha(path)}
++
++
++def backends(document, rank_only, complete):
++    if rank_only:
++        require(document.get('inventory') == INVENTORY, 'Explicit rank inventory required')
++        return [RANK]
++    require(document.get('inventory') in (None, 'full48'), 'Rank map requires --rank-only')
++    return sorted(complete)
++
++
++def check_cells(document, key, rank_only, complete):
++    order = backends(document, rank_only, complete)
++    require([(r['mode'], r['backend']) for r in document[key]] ==
++            [(mode, backend) for mode in ('compatible', 'native') for backend in order],
++            'Missing/extra/duplicate/wrong-width/backend inventory')
++    return order
++
++
++def source_fields(document):
++    if document.get('inventory') == INVENTORY:
++        return {'inventory': INVENTORY, 'rank_source_role': document['rank_source_role'],
++                'rank_source_manifest_sha256': document['rank_source_manifest']['sha256'],
++                'rank_contract_sha256': document['rank_contract']['sha256']}
++    return {'selector_overlay_sha256': document['selector_overlay']['sha256']}
++
++
++def validate_source(source, base, revision, role, manifest):
++    source, manifest = Path(source).resolve(strict=True), Path(manifest)
++    require(source.is_relative_to(REPO / '_deps'), 'Rank source must stay inside isolated _deps')
++    require(base == BASE and role in ('baseline', 'candidate') and
++            re.fullmatch(r'[0-9a-f]{40}', revision), 'Invalid ranked source role/base/revision')
++    require(manifest.is_absolute() and manifest.is_file() and not manifest.is_symlink() and
++            sha(manifest) == APPROVED_MANIFEST, 'Unapproved ranked source manifest')
++    approved = json.loads(manifest.read_text())
++    require(approved['baseline_commit'] == BASE and approved['patch_sha256'] == APPROVED_PATCH,
++            'Rank approval base/patch changed')
++
++    def git(*args):
++        return subprocess.check_output(['git', '--no-optional-locks', *args], cwd=source)
++
++    require(git('rev-parse', 'HEAD').decode().strip() == revision and
++            not git('status', '--porcelain'), 'Rank source pin/cleanliness mismatch')
++    git_dir = Path(git('rev-parse', '--absolute-git-dir').decode().strip()).resolve(strict=True)
++    common = Path(git('rev-parse', '--git-common-dir').decode().strip())
++    common = (common if common.is_absolute() else source / common).resolve(strict=True)
++    require(git_dir.is_relative_to(REPO / '_deps') and common.is_relative_to(REPO / '_deps'),
++            'Rank Git/common directories escape isolated _deps')
++    require(not git('diff', '--name-only', PRODUCTION, BASE, '--', 'include'),
++            'Public789 headers are not cc-equivalent')
++    changes = set(git('diff', '--name-only', BASE, revision).decode().splitlines())
++    if role == 'baseline':
++        require(revision == BASE and not changes, 'Rank baseline must be exact public789')
++    else:
++        require(changes == CHANGES, 'Rank candidate changes more than the reviewed overlay')
++        expected = {row['path']: row['sha256'] for row in approved['files'] if row['path'] in CHANGES}
++        require(set(expected) == CHANGES, 'Incomplete rank approval source inventory')
++        for name, digest in expected.items():
++            path = source / name
++            require(path.is_file() and not path.is_symlink() and sha(path) == digest,
++                    'Rank candidate bytes/type differ from approval')
++    for name in ('tests/downset-bm.cc', 'tests/matrix-cpre.hh', 'tests/matrix-check.hh',
++                 'tests/test_maker.hh'):
++        path = source / name
++        require(path.is_file() and not path.is_symlink() and path.read_bytes() == git('show', BASE + ':' + name),
++                'Original replay kernel/CLI/vector registration changed')
++    return {'production_reference_revision': PRODUCTION, 'baseline_headers_cc_equivalent': True}
++
++
++def check_command(command, driver=DRIVER):
++    """Accept one canonical argv; argparse aliases/last-value overrides cannot hide."""
++    require(len(command) > 2 and command[1] == '-B' and Path(command[2]) == driver,
++            'Selected replay invokes the wrong driver')
++    fixed = {'--source-timeout': '30', '--check-timeout': '2', '--case-timeout': '2',
++             '--rounds': '1', '--repetitions': '1', '--memory-max': '8G', '--backends': RANK}
++    valued = set(fixed) | {'--binary-map', '--source-dir', '--build-dir', '--trace-plan',
++                           '--output', '--seed'}
++    flags = {'--rank-only', '--measure'}
++    values, index = {}, 3
++    while index < len(command):
++        option = command[index]
++        require(option in valued | flags, 'Noncanonical selected replay option: ' + option)
++        require(option not in values, 'Duplicate selected replay option: ' + option)
++        if option in flags:
++            values[option] = True
++            index += 1
++        else:
++            require(index + 1 < len(command) and command[index + 1] and
++                    not command[index + 1].startswith('-'),
++                    'Missing selected replay value: ' + option)
++            values[option] = command[index + 1]
++            index += 2
++    require(set(values) == valued | flags, 'Missing selected replay argument')
++    for option, value in fixed.items():
++        require(values[option] == value, 'Selected replay protocol changed: ' + option)
++    require(re.fullmatch(r'[0-9]+', values['--seed']), 'Noncanonical selected replay seed')
++    return values
++
++
++def check_report_seed(report, run):
++    """Bind the driver's actual reported shuffle seed, without coercing JSON types."""
++    seed = report.get('treatment', {}).get('seed')
++    require(type(seed) is int and type(run['seed']) is int and seed == run['seed'],
++            'Selected report seed differs from declared run')
++
++
++def clean_flags(arguments):
++    require(not any(arg.startswith('-DPOSETS_RANK_STATS') or
++                    (arg == '-D' and i + 1 < len(arguments) and
++                     arguments[i + 1].startswith('POSETS_RANK_STATS'))
++                    for i, arg in enumerate(arguments)), 'Clean replay must leave rank statistics undefined')
++
++
++def check_plan_run(plan, run, spec, variant):
++    if plan.get('inventory') != INVENTORY:
++        require(plan.get('inventory') in (None, 'full48') and spec.get('inventory') is None and
++                '--rank-only' not in spec['command'], 'Rank invocation requires an explicit rank plan')
++        if variant.get('binary_map'):
++            metadata = json.loads(Path(variant['binary_map']['path']).read_text())
++            require(metadata.get('inventory') != INVENTORY, 'Rank map requires an explicit rank plan')
++        return
++    require(plan['rank_contract'] == binding(Path(__file__).resolve()) and
++            plan['driver'] == binding(DRIVER) and spec['driver'] == plan['driver'] and
++            spec.get('inventory') == INVENTORY, 'Selected plan/invocation/helper mismatch')
++    require(plan['backends'] == [RANK] and set(plan['variants']) == {'baseline', 'optimized'} and
++            plan['source_revisions'] == {name: value['revision'] for name, value in plan['variants'].items()},
++            'Selected paired inventory/revisions differ')
++    effective = check_command(spec['command'])
++    require(variant == plan['variants'][run['variant']], 'Selected current variant differs')
++    for label, declared in plan['variants'].items():
++        role = 'baseline' if label == 'baseline' else 'candidate'
++        require(declared['rank_source_role'] == role, 'Selected pair source role differs')
++        require(binding(declared['binary_map']['path']) == declared['binary_map'], 'Selected map changed')
++        metadata = json.loads(Path(declared['binary_map']['path']).read_text())
++        check_cells(metadata, 'binaries', True, ())
++        require(metadata['rank_contract'] == binding(Path(__file__).resolve()) and
++                binding(metadata['rank_source_manifest']['path']) == metadata['rank_source_manifest'],
++                'Selected map contract/approval binding differs')
++        require(metadata['rank_source_role'] == role and metadata['source_revision'] == declared['revision'] and
++                metadata['base_revision'] == BASE and metadata['source_dir'] == declared['source'],
++                'Selected variant/map source mismatch')
++        validate_source(Path(declared['source']), BASE, declared['revision'], role,
++                        Path(metadata['rank_source_manifest']['path']))
++    expected = {'--binary-map': variant['binary_map']['path'], '--source-dir': variant['source'],
++                '--build-dir': variant['build'], '--trace-plan': plan['trace_plan']['path'],
++                '--output': run['output'], '--seed': str(260617 + run['pair'])}
++    require(run['seed'] == 260617 + run['pair'], 'Selected pair seed changed')
++    for option, value in expected.items():
++        require(effective[option] == value,
++                'Selected invocation/plan differs: ' + option)
+diff --git a/README.md b/README.md
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,192 @@
++# Selected-rank replay tools V2 — static correction draft, not executed
++
++These are task-owned copies for the prospective default-rank follow-up. Original
++Acacia, nested WIP, phase-one scripts/sources/ELFs and captured results are never
++edited by this draft. No copied/new helper or test was imported or executed to
++prepare it. No source clone, build, map, measured revision, anchor or result was
++manufactured. `source-manifest.json` inventories actual tool source files only.
++
++Core V3 now has completed local assertion/exception/Memcheck/owned-file style
++gates and independent approval; its actual CI18 gate is still pending. This
++helper V2 snapshot is source-only and still needs both reviews, a separate
++explicit runtime release, offline integrity checks and actual build/ELF pilots
++before replay. Phase-one completion does not authorize those runs.
++Writing a plan or reading these commands is not permission to execute them.
++
++## Narrow opt-in
++
++Without `--rank-only`, generator/runner/loader inventory remains the original
++exact 48 entries: all24 backends × compatible/native. Legacy selector-overlay
++source checks remain on that branch. The default combined path also remains.
++
++With `--rank-only`, build plans and maps declare
++`inventory="rank-compatible-native"`, exactly two ordered entries for
++`rank_bucketed_vector_backed`, compatible then native. The builder, loader,
++paired writer, plan, both variant maps and every replay invocation must agree
++explicitly. The original two `VECTOR_TYPES` remain in each singleton ELF.
++Scalar qualification runs once; clean timing retains the two effective SIMD
++widths. Max is an alias only after the existing actual full-probe proof.
++
++Public789 already contains the corrected V2 selector registration. Selected mode
++therefore does **not** invent a selector-only source commit or an applied overlay.
++It records each actual clean Git HEAD and an explicit `baseline`/`candidate`
++source role, with common base `789bf99346d41a30f1b454ff58385b6f8a2961a9`.
++
++`rank_contract.py` pins the independently approved Core V3 source manifest
++`93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02`
++and patch `889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d`.
++Baseline HEAD must be exactly789. Candidate's net changed paths/bytes must be
++the reviewed rank header and three bounded test/build files. Kernel, CLI,
++registration and oracle helper bytes remain789. The base include tree must be
++byte-equivalent to productioncc; this is a proof about the baseline, not a
++claim that candidate headers are unchanged. Source/Git/common directories must
++resolve inside the isolated Acacia `_deps`, and approved source files are regular.
++
++Root committed the identical reviewed Core V3 bytes as the actual source revision
++`30e66853832d98bcfaada296d892157b95a8150d` after the saved gates; baseline
++remains789. This pin is source evidence, not a release build/map/ELF claim. Those
++artifacts still require the later scoped, matched build and pilot sequence.
++
++If later runtime/style fixes require another candidate freeze, root and reviewers must
++approve a new source-manifest binding and update this explicit policy. Refreshing
++untrusted map/record/source hashes alone cannot enroll different source bytes.
++This policy is deliberately experiment-specific, not a general subset API.
++
++## Retained proof boundaries
++
++The copied loader still checks real ELF magic, actual singleton backend metadata,
++selected width, SIMD type/size/alignment, compiler, runtime libraries and emitted
++comparison-kernel instruction hash. It inspects the original compatible/native/
++max probes and proves native=max; it never creates a fake max ELF or full24 map.
++
++All original compile/link template normalization and effective argv checks,
++Ninja/database bindings, real scoped compile/link invocation/spec/log/helper
++bindings and memory limits remain. Cross-variant checks retain compiler/width
++context and additionally compare selected link templates and runtime-library
++contexts. The source oracle is the original combined-compatible ELF built for
++that **actual** source revision. Historical7c/cc ELFs are not relabelled.
++
++The replay function/kernel/timers are unchanged. Clean selected invocations keep
++source/check/timing caps30/2/2 seconds, rounds/repetitions1, 8G/no swap, AB/BA/AB
++and seeds260617–19. Both controllers preserve source cleanliness, no-overwrite,
++shared host lock/scope refusal, common-cell order auditing and all failure/censor
++evidence. Selected plans use the stop-on-correctness controller directly.
++The summarizer changes only the declared backend cardinality on the opt-in path;
++pairing, ratios, missing data and censor treatment are retained.
++
++`POSETS_RANK_STATS` must be undefined in clean selected builds; defining it as0
++still enables instrumentation and is rejected. No profiling wrapper or timing
++hook is added here. A future instrumented pass needs separately reviewed sources
++and truthful noexcept-move/size traits, not a loophole in this clean-source policy.
++
++
++## Corrections from preserved helper V1
++
++The original `../tools/` bytes remain intact. `v1-to-v2.patch` exposes every
++correction; `changes.patch` retains the full delta from the original phase-one
++sources. `v1-snapshot.json` and `original-sources.json` preserve both levels of
++source/dependency authority. Neither is a build/map/result manifest.
++
++Selected paired invocations now accept one explicit canonical option schema:
++each required full option occurs exactly once with one value (or an exact flag),
++no extra positional tokens, equals-form aliases or abbreviations. This closes
++Nbjorner's appended `--seed=7` counterexample and equivalent source/map/output
++path overrides before launch. The parsed values, rather than another literal
++index lookup, are compared with the plan. Both controllers also require the
++actual JSON report seed to be an integer equal to the declared run seed.
++
++Offline sources add canonical/effective-option negatives, refreshed invocation
++bindings and strict reported-seed negatives. Direct paired-writer fixtures first
++accept two matching contexts, then independently change a selected linker flag
++or runtime library context and refresh all affected child/outer bindings; each
++must reach the final cross-variant context guard. These fixtures use real temporary
++source-authority Git identities but synthetic saved compiler/library metadata;
++they do not execute a compiler, ELF, replay or controller main. The latter
++controller call sites are reviewed statically; their common reported-seed guard
++is exercised directly. Actual scoped pilots remain required.
++
++No C++ source/kernel, replay function, scheduling, flags, metrics, cap, censor
++policy or default full48 path changed for this correction. No helper source was
++imported, collected, compiled, linted or executed while preparing V2.
++
++## Dependencies and future sequence
++
++`original-sources.json` records every copied source's original hash and the
++unchanged shared dependencies. `campaign.py`, `scoped_task.py`, `benchlib.py`
++and `scope_memory.py` are referenced at their existing task-owned locations.
++The tools use the existing isolated Acacia as cwd/support provider; they do not
++copy/rebuild any original dependency tree. All executable steps belong in the
++existing 8G/no-swap wrapper, serially, with no concurrent build/profile/timing.
++
++1. Preserve the completed `../validation-results-v2/` and `../validation-results-v3/`
++   evidence and approved `../candidate-draft-v3/` source freeze. The existing fresh
++   baseline/candidate roots are under isolated `_deps`; verify their actual clean
++   Git/common directories and exact reviewed bytes again before any build.
++2. Keep baseline detached at789. Root owns committing only the four approved
++   candidate paths and reporting the actual Git HEAD. Read that actual pin; never
++   invent a revision
++   or call789 "cc". No selector overlay is applied again. Keep all source/build
++   and failure evidence in fresh paths, including any revised approval.
++3. Configure matched clean release `build-replay-release` trees inside both
++   sources using the same recorded O3-or-Ofast/LTO/native-ISA recipe and compiler.
++   Build the three **original full24** matrix targets at `-j1`. Do not reuse the
++   debug validation environment or enable rank statistics.
++4. For each role, call the copied `freeze_replay.py --rank-only --source SOURCE
++   --revision ACTUAL_HEAD --rank-source-role ROLE --rank-source-manifest APPROVAL
++   --output NEW_ANCHOR`. Outputs must be fresh isolated `_deps` directories,
++   separate from source and historical7c output. They contain actual three full24
++   probes and actual-revision provenance, not a two-entry map. Selected mode
++   avoids the legacy historical7c comparison; paired fairness is proved below.
++5. Call `prepare-per-backend-build.py --rank-only --source SOURCE --base-revision
++   789bf99346d41a30f1b454ff58385b6f8a2961a9 --rank-source-role ROLE
++   --rank-source-manifest APPROVAL --anchor-provenance NEW_ANCHOR/provenance.json
++   --output SOURCE/build-replay-release/NEW_SELECTED_DIRECTORY`, then
++   `run-per-backend-build.py --rank-only ACTUAL_BUILD_PLAN`. Only two real ELFs
++   per side are required. No map is emitted before both successful compile/link
++   records exist and validate.
++6. Perform actual loader/semantic pilots before timing. Use the copied driver
++   with `--rank-only --backends rank_bucketed_vector_backed`, each actual map,
++   source and anchor, fixed trace plan and explicit30/2/2 caps, rounds/repetitions1
++   and 8G. Run correctness without `--measure` first, retain failures, verify
++   runtime backend/width metadata and confirm all source/ABI/build evidence.
++7. Create a fresh scoped command template (explicit future `--template` input);
++   retain the original30/2/2 caps, both vector flavors, rounds/repetitions1 and
++   clean flags. Do not rewrite the old phase-one template or its bindings.
++   `prepare-paired-replay.py --rank-only --template NEW_TEMPLATE --baseline-map
++   BASELINE_MAP --candidate-map CANDIDATE_MAP --trace-plan DECLARED_PLAN --prefix
++   FRESH_PREFIX` checks both actual source roles, all2-entry inventories and
++   cross-variant contexts, then writes six bound specs and a stop-controller plan.
++8. Root freezes/reviews actual artifacts and assigns the timing lane. Execute
++   the copied stop controller and summarizer only then. Standard12 and larger5
++   eligible TRAIN are already seen data. Prior held-out names also remain seen
++   regression/replication data, never fresh validation. No solver campaign,
++   corpus adaptation, hardware-counter run or production default change is
++   authorized by these helper sources.
++
++The commands above use metavariables for artifacts that do not exist yet. The
++helpers derive actual revisions, metadata and binary identities when executed;
++this directory intentionally contains no example measurement map with fake data.
++
++## Offline checks drafted, not run
++
++The copied `test_posets_matrix.py` retains the existing full48 integrity,
++source/parser/dispatch/scheduler tests. New tests cover the explicit opt-in,
++missing/extra/duplicate/backend/width/source cases with refreshed bindings,
++singleton/runtime-width mismatch, effective compiler flags/ISA changes,
++source-authority refresh rejection, symlinks, clean-stat definitions and both
++variant maps/plan/invocation/caps/seeds before the first paired invocation, including
++noncanonical effective option overrides and actual reported integer seeds. Direct
++writer context coverage is described above.
++
++Loader tests use clearly synthetic ELF/Ninja observations to exercise the
++unchanged downstream proof chain; their source-policy stub is isolated from
++separate tests of the real source validator using temporary Git identities and
++a deliberately synthetic test authority. They are not real build/metadata
++evidence. Actual scoped build/ELF/pilot gates remain mandatory after source review.
++
++After explicit release, run the file through an existing scoped spec with a
++local installed pytest, `python -B -m pytest --noconftest -p no:cacheprovider`,
++and the exact file path. Set the preserved pre-map driver reference environment
++for legacy parity checks. Run configured static lint separately; retain first
++failures/new attempt records. No test collection/import, syntax compilation,
++lint, helper, Git-fixture model, compiler or benchmark was run for this draft.

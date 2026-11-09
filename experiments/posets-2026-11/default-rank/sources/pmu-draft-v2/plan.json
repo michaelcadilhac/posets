@@ -1,0 +1,145 @@
+{
+  "status": "source-only conditional readiness; no build, check or PMU execution authorized",
+  "sources": {
+    "baseline": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "candidate": "30e66853832d98bcfaada296d892157b95a8150d"
+  },
+  "acceptance_gate": "Root first interprets actual work/heap evidence, then reviews/freezes concrete PMU build/run bindings and releases an exclusive lane.",
+  "payload": "original posets::vectors::simd_vector_backed<int8_t>; original scalar+SIMD VECTOR_TYPES remain instantiated in every full CLI ELF",
+  "cells": [
+    {
+      "name": "collector-cpre-compatible",
+      "trace_plan_index": 0,
+      "width": "compatible",
+      "phase": "cpre",
+      "region": 1,
+      "dimension": 523,
+      "maxima": 256
+    },
+    {
+      "name": "collector-cpre-native",
+      "trace_plan_index": 0,
+      "width": "native",
+      "phase": "cpre",
+      "region": 1,
+      "dimension": 523,
+      "maxima": 256
+    },
+    {
+      "name": "rr552-build-compatible",
+      "trace_plan_index": 1,
+      "width": "compatible",
+      "phase": "build",
+      "region": 0,
+      "dimension": 453,
+      "maxima": 552
+    },
+    {
+      "name": "rr552-build-native",
+      "trace_plan_index": 1,
+      "width": "native",
+      "phase": "build",
+      "region": 0,
+      "dimension": 453,
+      "maxima": 552
+    }
+  ],
+  "trace_plan": {
+    "path": "work/acacia-campaign/initial-train-traces.json",
+    "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d",
+    "qualification": "new actual789/30e clean source/backend qualification from tools-v2/default-rank-v3-train-plan.json; old phase-one oracle statuses are not reused"
+  },
+  "schedule": {
+    "serial_builds": 4,
+    "metadata_checks": 4,
+    "backend_checks": 8,
+    "pmu_calls": 24,
+    "repetitions": 3,
+    "pair_order": [
+      "baseline/candidate",
+      "candidate/baseline",
+      "baseline/candidate"
+    ],
+    "case_shuffle_seeds": [
+      260617,
+      260618,
+      260619
+    ],
+    "rounds": 1,
+    "detail": false,
+    "affinity": "exactly CPU2, taskset and in-process assertion, no fallback; separate treatment from clean replay"
+  },
+  "resources": {
+    "wrapper": "work/acacia-campaign/scoped_task.py -> existing run_systemd_scope",
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "serial": true,
+    "proposed_pmu_and_backend_check_timeout_seconds": 17,
+    "proposed_build_timeout_seconds": 180,
+    "timeout_note": "Root approval/frozen specs required; these diagnostic caps do not replace clean replay/solver caps."
+  },
+  "build": {
+    "entry_source": "rank-pmu.cc",
+    "private_cli": "downset-bm-pmu.cc",
+    "original_library_headers": true,
+    "original_matrix_kernel": true,
+    "original_cli_registry_and_two_vector_flavors": true,
+    "rank_overlay": false,
+    "measured_vector_or_set": false,
+    "compiler_flags": "exact saved selected-rank compile/link argv including O3,LTO1,DNDEBUG,march=native and compatible/native width selector; only private source/include and output/dependency destinations change",
+    "rank_stats": "must remain undefined, including no =0 definition",
+    "allocation_hooks": "off",
+    "annotations_or_global_flag_tuning": false
+  },
+  "events": [
+    {
+      "name": "cycles",
+      "type": 0,
+      "config": 0
+    },
+    {
+      "name": "instructions",
+      "type": 0,
+      "config": 1
+    },
+    {
+      "name": "l1d_read_miss",
+      "type": 3,
+      "config": 65536
+    },
+    {
+      "name": "llc_read_miss",
+      "type": 3,
+      "config": 65538
+    }
+  ],
+  "attributes": {
+    "pid": 0,
+    "cpu": -1,
+    "inherit": 0,
+    "exclude_kernel": 1,
+    "exclude_hv": 1,
+    "leader_disabled": 1,
+    "leader_pinned": 1,
+    "read_format": 15,
+    "fd_flag": "PERF_FLAG_FD_CLOEXEC"
+  },
+  "roi": {
+    "total_calls": 4,
+    "selected_calls": 1,
+    "parser_and_oracle": "outside",
+    "build": "coordinate/V staging plus constructor; staging destroyed, returned set alive at stop",
+    "cpre": "bottom accumulator, apply/union/intersection and mapped/combined temporaries destroyed; frontier alive at stop",
+    "group_read_and_logging": "after selected group disable",
+    "cache_state": "natural prior process work; no flush or cold-cache claim"
+  },
+  "acceptance": {
+    "semantic_and_roi": "process exit0, rank_pmu_kernel_exit0, rank_pmu_roi_valid1, exact selected/total/captured regions and expected dimensions/width/registry; reject bad source/backend results",
+    "core_events": "pmu_core_usable1 plus ok group, raw cycles/instructions available, enabled==running>0, valid raw IDs/read size",
+    "cache_events": "use only matched available cache events; unsupported/denied/multiplexed/missing remain explicit, never zero or scaled",
+    "timing": "original clock output retained as raw diagnostic output only; never used as clean timing",
+    "estimators": "retain all3 raw paired opt/base ratios, median paired ratio and ratio of separate variant medians separately",
+    "failures": "retain all source/compile/metadata/check/ROI/event/resource/timeout failures and partial logs; no event retry or additional workload sweep"
+  },
+  "controller": "not supplied or scheduled by this source draft; use existing scoped spec mechanism after independent review and explicit activation"
+}

@@ -1,0 +1,94 @@
+{
+  "status": "Independent saved-row recalculation passed",
+  "handoff_sha256": "cf9c9d6e8c028ea2139ac0f37b72299bf1c814009ef600c7f352dd19921b9fd7",
+  "handoff_bindings_verified": 41,
+  "table_sha256": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf",
+  "per_arm": {
+    "baseline-default": {
+      "rows": 1524,
+      "solved": 1369,
+      "PAR2_exact_s": "5926.87486230046488440",
+      "PAR2_rounded6_s": "5926.874862",
+      "CPU_s": "14005.477029",
+      "outcomes": {
+        "UNREALIZABLE": 740,
+        "REALIZABLE": 629,
+        "TIMEOUT": 155
+      },
+      "overruns": 0,
+      "scope_observed_rows": 1524,
+      "RSS_observed_rows": 1524,
+      "scope_max_bytes": 4244238336,
+      "scope_median_bytes": 106885120.0,
+      "RSS_max_bytes": 3977629696,
+      "RSS_median_bytes": 61794304.0,
+      "event_observed_rows": 1524,
+      "oom_rows": 0,
+      "oom_kill_rows": 0,
+      "kernel_event_sums": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      }
+    },
+    "optimized-default": {
+      "rows": 1524,
+      "solved": 1368,
+      "PAR2_exact_s": "5943.11213087430223904",
+      "PAR2_rounded6_s": "5943.112131",
+      "CPU_s": "14001.094425",
+      "outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "overruns": 0,
+      "scope_observed_rows": 1524,
+      "RSS_observed_rows": 1524,
+      "scope_max_bytes": 4237766656,
+      "scope_median_bytes": 106244096.0,
+      "RSS_max_bytes": 3977637888,
+      "RSS_median_bytes": 61624320.0,
+      "event_observed_rows": 1524,
+      "oom_rows": 0,
+      "oom_kill_rows": 0,
+      "kernel_event_sums": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0,
+        "sock_throttled": 0
+      }
+    }
+  },
+  "gains": [],
+  "losses": [
+    "robot_repair5.ltl"
+  ],
+  "PAR2_delta_exact_s": "16.23726857383735464",
+  "PAR2_delta_rounded6_s": "16.237269",
+  "PAR2_delta_percent": "0.2739600371372612410508715570",
+  "lost_case_penalty_delta_s": "17.71293918811716",
+  "decisive_cross_arm_conflicts": [],
+  "phase_one_consistency_only": {
+    "source": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/candidate-default.tsv",
+      "sha256": "f529e93b02d1444c1647560eeb6a221c9024f0c14e57eb72bff515f7cb081e7f"
+    },
+    "shared_decisive_observations_checked": 2737,
+    "opposites": [],
+    "pooled": false,
+    "relabelled": false
+  },
+  "all96_saved_invocation_order_logs_and_batch_lists_verified": true,
+  "automatic_vs_summary_only_frozen_summary_progress_bytes_equal": true,
+  "invariance_count_recorded": 14981,
+  "table_CSV_JSON_completion_match": true,
+  "measurements_run": false
+}

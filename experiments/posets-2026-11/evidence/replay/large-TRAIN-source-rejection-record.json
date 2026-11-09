@@ -1,0 +1,75 @@
+{
+  "source_report": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-large-train/paired-per-backend-v2-large-train-pair0-baseline/report.json",
+    "sha256": "7ada75ff9ce8fb0f7c3d5012d48d9ed07db25ee6d0d1c44e291743dfafb987f0"
+  },
+  "row_index": 219,
+  "source_invocation_row": {
+    "command": [
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712/tests/downset-matrix-compatible",
+      "--trace",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/cpre-7.tsv",
+      "--check=trace-source"
+    ],
+    "log_prefix": "source-3",
+    "logs_sha256": {
+      "stderr_sha256": "03b51ed8dd16fb2eaa05dfbec6df7d2892007d3397ffcf2a2e22f26ff471a678",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "phase": "source_oracle",
+    "process": {
+      "cpu_seconds": 0.002064,
+      "max_process_rss_bytes": 13598720,
+      "max_process_rss_missing_reason": "",
+      "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+      "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-3955643-af4fe0b223c7.scope/invocation",
+      "memory_oom_group": "false",
+      "memory_peak_bytes": 552960,
+      "resource_limited": false,
+      "returncode": 1,
+      "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+      "scope_memory_events_missing_reason": "",
+      "scope_memory_events_source": "cgroup-v2/memory.events",
+      "scope_memory_peak_missing_reason": "",
+      "scope_memory_peak_source": "cgroup-v2/memory.peak",
+      "scope_unit": "acacia-posets-3955643-af4fe0b223c7.scope",
+      "seconds": 0.09094023401848972,
+      "stderr_bytes": 28,
+      "stdout_bytes": 0,
+      "timed_out": false
+    },
+    "status": "rejected",
+    "trace": 3
+  },
+  "trace": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/cpre-7.tsv",
+    "sha256": "a877d668d1b8be1e12c0655410d2ef832ee478e2cc3c456740c8ce4e62f6ec72"
+  },
+  "capture_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/invocation.json",
+    "sha256": "433c83fd19dcd184c937b09a6e44fc362687c056a56d0d66d44b505c1ff53d6a"
+  },
+  "capture_classification": "TIMEOUT",
+  "capture_result": {
+    "returncode": 124,
+    "seconds": 17.04854393203277,
+    "timed_out": true,
+    "stdout_bytes": 0,
+    "stderr_bytes": 88626,
+    "resource_limited": false,
+    "memory_peak_bytes": 24600576,
+    "scope_unit": "acacia-posets-capture-3681767-4701d892f03c.scope",
+    "max_process_rss_bytes": 28684288,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-capture-3681767-4701d892f03c.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 16.958459
+  },
+  "note": "Exact row extracted without rewriting report; original source/parser invocation failed before semantic work."
+}

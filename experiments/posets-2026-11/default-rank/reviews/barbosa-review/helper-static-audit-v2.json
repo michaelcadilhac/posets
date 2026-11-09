@@ -1,0 +1,109 @@
+{
+  "status": "APPROVE exact helperV2 static corrections; separate offline/style/actual build-map-pilot/runtime authorization gates remain pending",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "scope": "Independent PM/DEV correction review of the complete V1\u2192V2 diff and relevant unchanged guards. No target module import, target parse/syntax compilation, collection, test/model/helper call, compiler, lint, formatter, profiler, solver or timing. Only small saved sources/metadata, hashes and read-only Git object/diff inspections.",
+  "exact_inputs": {
+    "source-manifest.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/source-manifest.json",
+      "sha256": "1bed75101980b497a4e6da477424f3610589dd6026d53f45afd2456441180e75"
+    },
+    "v1-to-v2.patch": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/v1-to-v2.patch",
+      "sha256": "190687c47a11ddc8e1c33bd11a5a9aebe2b868e9b4d7c7336809078d0b5ba28f"
+    },
+    "changes.patch": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/changes.patch",
+      "sha256": "21c43c9d5b6e6144c86e61c1323e46baea8dd331e31a3a9a46114aaa3ef571c9"
+    },
+    "rank_contract.py": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/rank_contract.py",
+      "sha256": "eaee95c1815edd91e6211d103fdbf166d823924601f545b3fb007a686b61d15a"
+    },
+    "test_posets_matrix.py": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/test_posets_matrix.py",
+      "sha256": "3a3239b946c2aba5f69c5fefe9f9d64ff2f141dcd4270039b5e6e164325f007e"
+    },
+    "run-paired-replay.py": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/run-paired-replay.py",
+      "sha256": "b31cb7fbed2ecf30dad65c2afd296fe5173c9b4b90df7c2f5619c28e4de0dee3"
+    },
+    "run-paired-replay-stop-on-correctness.py": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/run-paired-replay-stop-on-correctness.py",
+      "sha256": "18a0697f0247beb9811218677be2212821f24325776208ccb10f8bbfc927d5ea"
+    },
+    "README.md": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/README.md",
+      "sha256": "1b57d8a63639d4c6e828a6d88bd3e9642eab758e63e8c357a9c528eca46fff4f"
+    },
+    "v1-snapshot.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/v1-snapshot.json",
+      "sha256": "6d459fbfe8bca134761236db1a4dd15d84b7048db72f3a0904b16be7ea777392"
+    }
+  },
+  "integrity": {
+    "source_original_V1_and_prior_audit_binding_entries_checked": 45,
+    "all45_match": true,
+    "preserved_V1_manifest_separately_matches": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+    "unchanged_files_from_V1": [
+      "prepare-per-backend-build.py",
+      "run-per-backend-build.py",
+      "prepare-paired-replay.py",
+      "summarize-paired-replay.py",
+      "posets-matrix.py",
+      "freeze_replay.py"
+    ],
+    "all_original_and_shared_dependencies_match": true,
+    "prior_audit": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/barbosa-review/helper-static-audit-v1.json",
+      "sha256": "84686d1c127566e2588a7dc9fbb229a6cb3dedbe18233472ee5c79a18d1467b8",
+      "preserved": true
+    }
+  },
+  "resolved_findings": [
+    {
+      "id": "H01",
+      "prior_rank": "mortal / effective-argv protocol binding",
+      "origin": "Nbjorner; independent correction validation by Barbosa",
+      "assessment": "Resolved statically. check_command consumes every argument after interpreter/-B/driver using one exact required schema. Unknown full/equal-form/abbreviated options, duplicates, extra positional values, missing values and -- separator fail. Fixed protocol/backend values are exact, seed canonical digits, and the returned effective values drive plan/source/map/output/seed comparisons. No literal-first-token ambiguity remains for accepted argv.",
+      "controllers": "Both normal and stop-on-correctness controllers call check_report_seed in the selected inventory post-report block. It requires type(actual_seed) is int and type(run_seed) is int, with equality, rejecting bool/float/string/missing/wrong values. It is supplemental to pre-run canonical checking, not a replacement for it.",
+      "test_source": "Direct canonical positives and appended equals/abbreviation/repeated full option/extra flag/separator negatives; paired contract source includes current invocation binding then hidden-override negatives; strict JSON report integer-seed positive and malformed/missing cases. Drafted only, not executed."
+    },
+    {
+      "id": "H02",
+      "prior_rank": "venial / direct selected writer link/runtime-context test coverage",
+      "origin": "Barbosa coverage request; implemented by coder",
+      "assessment": "Resolved statically. Each test begins by accepting actual mapped_variants over matching baseline/candidate contexts. Link mutation appends a selected linker flag and refreshes child build-record/map bytes; runtime mutation independently changes all candidate anchor-mode library contexts and refreshes anchor/map bytes. Each must reach AssertionError matching the final contexts-differ guard. Earlier source/binding errors cannot satisfy that message, and a previous successful call prevents always-reject fixtures from counting as coverage.",
+      "honest_mock_scope": "Real temporary Git source-authority checks with deliberately synthetic test approval; synthetic saved compiler/library/oracle file metadata only. Source-policy loader mocks remain separate. No ELF/compiler/replay/controller-main execution is performed by these writer fixtures. README states this explicitly."
+    }
+  ],
+  "approved_source_authority": {
+    "manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/draft-manifest.json",
+      "sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02"
+    },
+    "patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+    "actual_published_commit": "30e66853832d98bcfaada296d892157b95a8150d",
+    "all4_committed_files_and_only4_net_changed_paths_match_V3": true,
+    "check_basis": "Read-only Git object bytes/diff against789; not a build or ELF observation. Runtime source validation still enforces clean actual HEAD, isolated source/Git/common roots, exact four approved path bytes and original789 replay/kernel/registration files. Updating ordinary map/record hashes cannot enroll changed source authority."
+  },
+  "retained_guards": [
+    "Full48/default combined driver path and selected generator/runner/loader/writer byte logic unchanged fromV1. Both controllers only add the selected-inventory reported-seed call.",
+    "Full24 actual-revision anchor and compatible source oracle remain distinct from the selected2-entry singleton map; no historical revision relabelling or synthetic max ELF introduced.",
+    "Real ELF/singleton metadata, ABI/type/size/alignment/selected-lane/compiler/runtime/kernel-byte proofs; actual native=max and distinct effective width checks; exact compile/link templates, Ninja/database and successful bound scoped invocation records remain.",
+    "Matched cross-variant compiler/width/link/runtime context guards remain. Clean rank statistics must be undefined; no wrapper/profiling hooks added.",
+    "AB/BA/AB, exact30/2/2caps,8G/no-swap,rounds/repetitions1,seeds260617\u201319,host-lock/scope refusal,no-overwrite,common-cell order audit and source/binary immutability checks remain.",
+    "Source/check/measure rejected or malformed rows halt with preserved raw evidence; ordinary timeout/resource-limit/source-unverified remain retained/censored. Summarizer metric pairing/ratios/missing-memory/zero-clock handling unchanged.",
+    "Seen TRAIN/prior held-out labels remain explicitly seen replication/regression data; no timing, fresh validation, solver or production-default-change claim from this snapshot."
+  ],
+  "new_findings": [],
+  "gates_still_required": [
+    "Explicit root runtime lane release; source-only approval is not a run authorization.",
+    "Scoped offline full48+selected integrity/negative suite and configured tool lint; preserve first failures. Any correction produces a new reviewed snapshot/binding.",
+    "Fresh matched clean actual-source anchors and two-cell maps with complete scoped compile/link/ELF metadata/ABI/source-oracle evidence.",
+    "Actual semantic/source/backend pilots and frozen plan/spec/cap/map/context review before any replay timing.",
+    "Actual core CI18 remains pending, separate from this helper static correction review."
+  ],
+  "claims_not_made": "No target syntax/collection/import or test pass, actual anchor/map/ELF/release build, runtime-controller coverage or performance result is established by this audit. Successful source review does not certify correctness.",
+  "attribution": "H01 stays Nbjorner-origin; H02 stays Barbosa-origin coverage request rather than a demonstrated wrong-result defect. ThisV2review is correction validation; no new originated defect claimed."
+}

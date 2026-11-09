@@ -1,0 +1,224 @@
+{
+  "arms": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "sha256": "d8afd5b4b9e901581f017dd169eefb4675e84d4df782278cd7bd9aacf253dcc1"
+  },
+  "bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.json",
+      "sha256": "b522c51c84f21e4045716c390f4811d7146f968937e09b45ca8cce80441e4288"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.log",
+      "sha256": "7302d4fbeb8987acd6b4eadd37abe9201708cb3e64deb94b9970f508dbb1b266"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.json",
+      "sha256": "1e3ba2dff046b52338cda1b169299d114d72aae534a43ff6fb2a2ef15f6f0c9f"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.log",
+      "sha256": "a3b0e304dda7627de30aa6f5f2908878cceb367d6819f67246764dc58c9e520d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/prepare-final-package.json",
+      "sha256": "116ae562adca402f0c2e1389be242dfa88292cbf3352115f30e273c8d1edee8c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/solver-table-offline-tests.json",
+      "sha256": "09dc0dc18d963d5d1391746cbf3697c86cf67b7ea4b81a4863522be4e9a8b520"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/specs/final-campaign-dry-run.json",
+      "sha256": "2a9bb46000e69a86c06b652d89a52759cd5f1e70be403ec028d87e54c209e098"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/specs/final-campaign-selfcheck.json",
+      "sha256": "8ca2397f791578467588bea5cf2142191956ab8d3edc019bf8ae6eb0a4133516"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/REVIEW-CHECKPOINT-CAMPAIGN.json",
+      "sha256": "345641a4fe93b50ec66164c2f4d155b960b610869d03a1e1871fcebef5d37ceb"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+      "sha256": "d8afd5b4b9e901581f017dd169eefb4675e84d4df782278cd7bd9aacf253dcc1"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-schema-correction.patch",
+      "sha256": "5fda01fa5f801f363cf99c3db0bdb44cf3c92b7c604fd7227ebb43adaf777fd5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/baseline-default-provenance.json",
+      "sha256": "fa0fe5b26935b5c225279824840425126189273dfc1602f5bd6a60a01056b006"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/campaign-schema-derivation.json",
+      "sha256": "6a6cc625cd613b12c4c23eb054aea2bf125961bc34e2614460c1a99a254e7e6d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/gate-summary-campaign.json",
+      "sha256": "3b4e10c39164be6e712ec694e68636a7ddd7ea3e991d4ace2d528d6625712743"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/optimized-default-provenance.json",
+      "sha256": "ddf036b24d3193cbbfd93d2cf3a9456ee6543c2e1f9fa1442bda55190db44e80"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/production-header-proof.json",
+      "sha256": "12cd547e1d4ab2c1f3f026f38bc1944a3be0551518ba7e58c13385527bdae429"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/prepare-acacia-final-package-v3.py",
+      "sha256": "5005cfee17c309aba1ef5872c5e7718e81743c2781b8204731fe1a137038cefa"
+    }
+  ],
+  "command_after_rootrelease": [
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "exact_twoarm_dryrun": {
+    "helper": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    "log": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.log",
+      "sha256": "7302d4fbeb8987acd6b4eadd37abe9201708cb3e64deb94b9970f508dbb1b266"
+    },
+    "record": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-dry-run.json",
+      "sha256": "b522c51c84f21e4045716c390f4811d7146f968937e09b45ca8cce80441e4288"
+    },
+    "resources": {
+      "cpu_seconds": 0.17504899999999998,
+      "max_process_rss_bytes": 33062912,
+      "max_process_rss_missing_reason": "",
+      "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+      "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2466285-aadb60acdbd8.scope/invocation",
+      "memory_oom_group": "false",
+      "memory_peak_bytes": 22130688,
+      "resource_limited": false,
+      "returncode": 0,
+      "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+      "scope_memory_events_missing_reason": "",
+      "scope_memory_events_source": "cgroup-v2/memory.events",
+      "scope_memory_peak_missing_reason": "",
+      "scope_memory_peak_source": "cgroup-v2/memory.peak",
+      "scope_unit": "acacia-posets-setup-2466285-aadb60acdbd8.scope",
+      "seconds": 0.2648386370856315,
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stdout": "",
+      "stdout_bytes": 11592,
+      "timed_out": false
+    },
+    "spec": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/specs/final-campaign-dry-run.json",
+      "sha256": "2a9bb46000e69a86c06b652d89a52759cd5f1e70be403ec028d87e54c209e098"
+    }
+  },
+  "exact_universe": {
+    "CPU_quota": null,
+    "affinity": null,
+    "baseline": "baseline-default",
+    "batch_size": 32,
+    "cap_seconds": 17,
+    "flags": [
+      "",
+      ""
+    ],
+    "instances_per_arm": 1524,
+    "labels": [
+      "baseline-default",
+      "optimized-default"
+    ],
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "posets": [
+      "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "30e66853832d98bcfaada296d892157b95a8150d"
+    ],
+    "rows": 3048,
+    "seed": 260617
+  },
+  "explicit_schema_diff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-schema-correction.patch",
+    "sha256": "5fda01fa5f801f363cf99c3db0bdb44cf3c92b7c604fd7227ebb43adaf777fd5"
+  },
+  "gate_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/gate-summary-campaign.json",
+    "sha256": "3b4e10c39164be6e712ec694e68636a7ddd7ea3e991d4ace2d528d6625712743"
+  },
+  "official_output_absent": true,
+  "primary_launch_authorized": false,
+  "schema_correction": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/campaign-schema-derivation.json",
+    "sha256": "6a6cc625cd613b12c4c23eb054aea2bf125961bc34e2614460c1a99a254e7e6d"
+  },
+  "selfcheck": {
+    "helper": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    "log": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.log",
+      "sha256": "a3b0e304dda7627de30aa6f5f2908878cceb367d6819f67246764dc58c9e520d"
+    },
+    "record": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/records/final-campaign-selfcheck.json",
+      "sha256": "1e3ba2dff046b52338cda1b169299d114d72aae534a43ff6fb2a2ef15f6f0c9f"
+    },
+    "resources": {
+      "cpu_seconds": 1.051714,
+      "max_process_rss_bytes": 51519488,
+      "max_process_rss_missing_reason": "",
+      "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+      "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2466228-8934e5d3cecd.scope/invocation",
+      "memory_oom_group": "false",
+      "memory_peak_bytes": 50593792,
+      "resource_limited": false,
+      "returncode": 0,
+      "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+      "scope_memory_events_missing_reason": "",
+      "scope_memory_events_source": "cgroup-v2/memory.events",
+      "scope_memory_peak_missing_reason": "",
+      "scope_memory_peak_source": "cgroup-v2/memory.peak",
+      "scope_unit": "acacia-posets-setup-2466228-8934e5d3cecd.scope",
+      "seconds": 1.2173414810094982,
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stdout": "",
+      "stdout_bytes": 222,
+      "timed_out": false
+    },
+    "spec": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-build-gates-v3/specs/final-campaign-selfcheck.json",
+      "sha256": "8ca2397f791578467588bea5cf2142191956ab8d3edc019bf8ae6eb0a4133516"
+    }
+  },
+  "status": "FINAL proposed/pending-root-freeze; allgates/selfcheck/dryrun complete; no officialfreeze orprimarycalls",
+  "superseded_draft": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/REVIEW-CHECKPOINT.json",
+    "sha256": "3c86ff23cfe4bd4fe629c567a644fb8d35f7fd620084b376ddb94760a691276b"
+  },
+  "superseded_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms.json",
+    "sha256": "e48f3e621812731a782b8ff1b70fa218d726645d8c2f9b9ba065b5fe75d65a72"
+  }
+}

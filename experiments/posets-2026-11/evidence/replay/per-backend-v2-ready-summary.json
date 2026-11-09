@@ -1,0 +1,59 @@
+{
+  "status": "all96_built_full_maps_accepted_all96_semantic_fixtures_pass",
+  "pins": [
+    {
+      "label": "baseline",
+      "production_base_revision": "7c407128326583abbb137fd3832857ed506e20fb",
+      "measurement_revision": "6bc77ccf5d113edcdc62d9128bb6628565f19c7d",
+      "ELFs": 48,
+      "scope_compile_link_calls": 96,
+      "wall_seconds": 499.5465691671707,
+      "cpu_seconds": 487.59749899999997,
+      "valid_memory_peaks": 96,
+      "max_scope_peak_bytes": 596930560,
+      "oom_events": 0,
+      "raw_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712/build-replay-release/per-backend/binary-map.json",
+        "sha256": "e94420c674957956916c30552cef8b2ed3d14a8eb1f4bc90b4423ee95b658b32"
+      }
+    },
+    {
+      "label": "final",
+      "production_base_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "measurement_revision": "c03dfb076b4321a60a9dca728e2cfee0050cb40b",
+      "ELFs": 48,
+      "scope_compile_link_calls": 96,
+      "wall_seconds": 524.0920693961671,
+      "cpu_seconds": 512.112581,
+      "valid_memory_peaks": 96,
+      "max_scope_peak_bytes": 598212608,
+      "oom_events": 0,
+      "raw_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca/build-replay-release/per-backend/binary-map.json",
+        "sha256": "77483a967d6299dad9b9850e973f300d4d96465f1bd52b1531ba0c8ec8a5c877"
+      }
+    }
+  ],
+  "full_validation": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-full-validation/summary.json",
+    "sha256": "a1b44c383e57058573276affd4f90b00b27b002e05dd5cd656459074315da046"
+  },
+  "semantic_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-semantics-summary.json",
+    "sha256": "44a1e5314754f584a013ecd02b0800000f8b7cdafebbc9ba6d29ca6366c69013"
+  },
+  "adaptation_check": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-map-adaptation-check-record.json",
+    "sha256": "f50026c06301a2c6121f1d0020d648ca8e87368657c3808f7b02ff357f8e5823"
+  },
+  "TRAIN_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-plan.json",
+    "sha256": "e044c1c80b395f090f9a0bcbf85188016ca4f6768c61d45e314c656fd5af8576"
+  },
+  "larger_TRAIN_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-plan.json",
+    "sha256": "414bcc2319a62e08e6757daa0e582df6a6b81c10dd4122657d36a18a2da06cb6"
+  },
+  "performance_commands": 0,
+  "note": "Includes four reused KD pilot cells. Original/failure/combined evidence and plans unchanged; baseline full map uses separate documented explicit-report-anchor derivation."
+}

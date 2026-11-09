@@ -1,0 +1,179 @@
+Default-rank clean replay v3: bounded interpretation of saved TRAIN data
+
+No workload, build, test, profile, PMU, corpus generation or production edit was
+performed for this review. Source interpretation is baseline789 -> rank-only
+candidate30e; the previously reviewed ABI, selected-backend context and semantic
+qualification are accepted here, not re-executed. Both requested summary hashes
+match exactly. Raw three-pair seconds in the adjacent TSVs recompute every ratio
+and paired median exactly (80 fully paired metric cells, 6 source-censored).
+The owner reports192 successful clean measurement invocations and0 OOMs.
+Full-arbiter CPre source timeout remains censored; its validated contains/build
+traces are separate. All observations are previously seen TRAIN, not fresh held-out.
+
+Estimator discipline:
+- P = median of three matched optimized/baseline ratios.
+- V = optimized variant median / baseline variant median; the displayed ms
+  columns are those separate variant medians. P need not equal V.
+- Below1 is faster. Do not pair median-ms endpoints with P as its arithmetic.
+  Standard collector compatible rebuild is the clearest warning: medians
+  .248341 -> .254329ms give V1.0241, but P.8774; ratios .8585/.8774/1.3733.
+- There are only3 observations, one round each; no significance or general
+  workload estimate is justified. Tiny cells remain disclosed rather than used
+  to claim meaningful percentage gains. Rebuild is a second fresh constructor;
+  CPre rebuild uses the captured after-frontier, not necessarily the input N.
+
+Merits and repeatability:
+Compatible128:
+  Whole-CPre P improves in7/8 qualified cells;5/8 improve in every pair. No
+  compatible metric cell is slower in all3 pairs. The evidence is strongest on
+  RR552 (.9328-.9514; P.9475; medians5.810257 ->5.435595ms), largeRR4588
+  (.9437-.9760; P.9545;101.780325 ->98.552219ms), and the high-dimensional
+  singleton06 (.7215-.8914; P.7676;1.133417 ->.883374ms). Load-balancer/AMBA
+  CPre also improve in all3 pairs, although their absolute windows are smaller.
+  Collector CPre improves in2/3 (.7891/.8227/1.0469); P.8227 is promising but
+  is not an all-pair gain. The two tiny fuzz CPre cells add little decision weight.
+  Build improves by P in12/16 and rebuild in13/16. Full-arbiter construction is
+  substantial and repeatable: N1009 buildP.6957 and rebuildP.7280; N6446
+  buildP.7040/.7106 and rebuildP.7212/.7092 across the two query traces, all3
+  pairs faster. These are constructor results, not verified full-arbiter CPre.
+  RR552 build is a retained regression: P1.0777,V1.0910,2.297161 ->2.506221ms;
+  .9681 in the third pair prevents calling it uniform. Its rebuilt after-frontier
+  improves all3. LargeRR contains traceL1 is near-flat/mixed with P1.0086 build,
+  P1.0106 rebuild even though both separate median endpoints decrease. L2 is
+  near-flat to mildly favorable. Do not collapse these into a universal build win.
+
+Native512:
+  All11 larger-cohort metric cells improve in all3 pairs, including largeRR CPre
+  P.9305 and full-arbiter constructors roughly .727-.738. RR552 CPre is also
+  consistently faster (.9031-.9627,P.9473). This prevents describing native as
+  generally regressed.
+  Native collector CPre is the important counterexample: medians.946003 ->
+  1.136374ms,V1.2012,P1.1910, ratios1.2057/1.1910/.8880. The same trace's build
+  (P1.1512) and rebuild(P1.3116) reverse in pair2 too. Baseline CPre stays near
+  .94-.96ms while the optimized values are1.136/1.140/.840ms; this is a real
+  recorded regression with limited repeatability, not a proven uniform cost.
+  Slow pairs occur in both A/B and B/A order. Separately, captured-contains
+  collector build/rebuild improve all3 at the same stated N/d; equal N/d alone
+  does not prove identical coordinates/order or establish a compiler explanation.
+  Six native build cells regress in all3 pairs: load-balancer,06 and the four
+  tiny singleton fuzz/query traces. Load-balancer is8.964 ->9.669us(P1.0964);
+ 06 is12.058 ->15.224us(P1.2513); singleton builds are roughly3-4 ->4-5us
+  (P1.3665/1.4180/1.4115/1.3790). These repeated small absolute costs must stay
+  visible. Tiny CPre S8/S9 and rebuild S8/S9/S10 are also slower all3, but their
+  microsecond/sub-microsecond windows do not carry the weight of the larger
+  improvements. No correctness or OOM defect is demonstrated by these timings.
+
+What the separate work/heap companion should settle before any new patch:
+1. Constructor/public-insert rank_of still scans each input on both sides.
+   Expect identical constructor rank call/active-coordinate totals. Thus do not
+   attribute full-arbiter constructor gains to cached union/intersection ranks.
+   PO attempts, actual removed generators, completed relocation moves and
+   accepted-insert behavior should distinguish skipped equal-rank eviction and
+   avoided full-tail compaction from the changed paired reserve policy.
+2. CPre: measure apply, union and intersection separately. Union should avoid
+   RHS reranking; intersection stored/copy rank reuse should remove those scans.
+   Apply still ranks mapped values and supplies an insertion/control phase.
+   Record actual no-op status and first failed query; only observed covered
+   intersections justify claiming zero output copies/allocations. Changed
+   intersections may still allocate meets and replay the covered prefix.
+3. Compare allocation count/requested bytes/extra peak as well as copied/moved
+   vectors. New paired reserves can trade capacity/retained bytes for fewer
+   reallocations, so fewer allocations is not automatically less memory.
+   Constructor-only caller storage is still alive; use normalized build/rebuild
+   and whole-CPre lifetimes for retained/net deltas. Private rank capacity is not
+   inferred. Per-operation and whole-ROI passes are independent, and contains
+   temporary-query lifetimes differ between those two passes as already reviewed.
+4. Algorithm-level rank/PO counts should be reconciled across widths on the same
+   trace. Equal counts would not imply equal instructions or touched bytes:
+   SIMD padding, scan lengths, allocator/layout and generated loops remain
+   possible mechanisms, not measured explanations. Instrumentation changes
+   code generation and is not a clean timing or cache-miss measurement.
+
+Bounded follow-up recommendation:
+Proceed with the already approved work/heap companion first. The clean evidence
+merits the separately qualified actual-default17s solver comparison; it does not
+establish a universal improvement or require a speculative production patch.
+Root decides solver scheduling/acceptance and all seen-data caveats remain.
+
+A small predeclared hardware/code-generation companion is warranted if work
+counts do not explain the width-specific collector/RR costs. Freeze4 cells:
+collector whole-CPre compatible+native, RR552 build compatible+native. On the
+unchanged matched clean sources/driver/global flags,3 external A/B,B/A,A/B pairs
+mean24 PMU calls; no matrix expansion, flags/annotations or code rescue.
+Use existing phase boundaries with parser/oracle outside, stats/hooks off, fixed
+affinity and grouped user-only cycles/instructions plus supported cache events.
+Keep raw encodings/counts/IDs/enabled/running/unsupported statuses; do not infer
+cache improvements from allocation reductions. Inspect those selected-rank
+hot loops/call boundaries and text sizes only to resolve actual counter findings,
+especially accepted-insert/staging elimination and rank-scan/control overhead.
+The prior rejected generic-constructor/factory annotations stay rejected. No
+hardware/code-generation conclusion is drawn from the current saved timings.
+
+Complete compatible128 table (S=standard,L=larger; all paired cells):
+cohort trace metric base_median_ms opt_median_ms P V pair0/pair1/pair2 direction
+S	0	cpre	0.874469	0.734073	0.8227	0.8394	0.7891/0.8227/1.0469	mixed
+S	0	build	0.250537	0.226252	0.9202	0.9031	0.8408/0.9202/1.0146	mixed
+S	0	rebuild	0.248341	0.254329	0.8774	1.0241	0.8585/0.8774/1.3733	mixed
+S	1	cpre	5.810257	5.435595	0.9475	0.9355	0.9514/0.9328/0.9475	all-better
+S	1	build	2.297161	2.506221	1.0777	1.0910	1.1220/1.0777/0.9681	mixed
+S	1	rebuild	1.726634	1.624981	0.9384	0.9411	0.9384/0.9179/0.9907	all-better
+S	3	cpre	0.046753	0.041435	0.8917	0.8863	0.8610/0.8917/0.8963	all-better
+S	3	build	0.006808	0.006251	0.9105	0.9182	0.7582/1.0621/0.9105	mixed
+S	3	rebuild	0.003546	0.003210	0.9052	0.9052	0.8842/0.9315/0.9052	all-better
+S	4	cpre	0.035344	0.030769	0.8612	0.8706	0.8612/0.9183/0.7778	all-better
+S	4	build	0.006859	0.006044	0.8746	0.8812	0.8746/0.8812/0.7672	all-better
+S	4	rebuild	0.002983	0.002334	0.7824	0.7824	0.7754/0.8169/0.7824	all-better
+S	5	cpre	1.133417	0.883374	0.7676	0.7794	0.8914/0.7215/0.7676	all-better
+S	5	build	0.012092	0.011845	0.9739	0.9796	1.0251/0.9739/0.9544	mixed
+S	5	rebuild	0.309723	0.289017	0.9165	0.9331	0.9633/0.9086/0.9165	all-better
+S	6	build	0.223221	0.200123	0.8937	0.8965	0.8965/0.8937/0.8785	all-better
+S	6	rebuild	0.233255	0.200971	0.8616	0.8616	0.8623/0.8081/0.8616	all-better
+S	7	build	1.671492	1.185092	0.6957	0.7090	0.6944/0.7198/0.6957	all-better
+S	7	rebuild	1.649826	1.190094	0.7280	0.7213	0.7314/0.7280/0.6828	all-better
+S	8	cpre	0.002765	0.002764	1.0347	0.9996	1.0347/0.9070/1.1965	mixed
+S	8	build	0.002956	0.003243	0.9812	1.0971	0.9080/1.2595/0.9812	mixed
+S	8	rebuild	0.000286	0.000277	0.9441	0.9685	0.9340/0.9893/0.9441	all-better
+S	9	cpre	0.002429	0.002056	0.8979	0.8464	1.0468/0.8979/0.8316	mixed
+S	9	build	0.002627	0.002708	1.0693	1.0308	0.8342/1.1743/1.0693	mixed
+S	9	rebuild	0.000307	0.000300	0.9772	0.9772	1.0478/0.9772/0.9030	mixed
+S	10	build	0.003555	0.003285	0.9952	0.9241	1.0087/0.9241/0.9952	mixed
+S	10	rebuild	0.000298	0.000301	1.0067	1.0101	0.9348/1.0067/1.0767	mixed
+S	11	build	0.003537	0.003279	1.0362	0.9271	0.8751/1.0362/1.0400	mixed
+S	11	rebuild	0.000299	0.000313	1.0830	1.0468	0.9732/1.0830/1.0882	mixed
+L	0	cpre	101.780325	98.552219	0.9545	0.9683	0.9545/0.9437/0.9760	all-better
+L	0	build	152.300387	149.106364	0.9662	0.9790	0.9662/0.9599/0.9845	all-better
+L	0	rebuild	42.690609	41.728247	0.9840	0.9775	0.9840/0.9615/0.9874	all-better
+L	1	build	150.637550	148.465766	1.0086	0.9856	1.0146/0.9355/1.0086	mixed
+L	1	rebuild	154.587714	150.782065	1.0106	0.9754	1.0170/0.9390/1.0106	mixed
+L	2	build	148.549380	146.957450	0.9893	0.9893	0.9977/0.9893/0.9448	all-better
+L	2	rebuild	150.308959	149.423854	0.9941	0.9941	1.0268/0.9941/0.9486	mixed
+L	3	build	70.730185	48.917563	0.7040	0.6916	0.7209/0.6901/0.7040	all-better
+L	3	rebuild	72.488043	51.337750	0.7212	0.7082	0.7212/0.6975/0.7231	all-better
+L	4	build	69.469919	49.236270	0.7106	0.7087	0.7106/0.7162/0.6949	all-better
+L	4	rebuild	72.290056	51.137776	0.7092	0.7074	0.7165/0.7092/0.6881	all-better
+
+All native512 cells with P>1 (complete regression inventory):
+cohort trace metric base_median_ms opt_median_ms P V pair0/pair1/pair2 direction
+S	0	cpre	0.946003	1.136374	1.1910	1.2012	1.2057/1.1910/0.8880	mixed
+S	0	build	0.308815	0.361036	1.1512	1.1691	1.2363/1.1512/0.9611	mixed
+S	0	rebuild	0.280286	0.361692	1.3116	1.2904	1.3116/1.5111/0.9480	mixed
+S	3	build	0.008964	0.009669	1.0964	1.0786	1.1114/1.0964/1.0228	all-worse
+S	5	build	0.012058	0.015224	1.2513	1.2626	1.2402/1.2513/1.4924	all-worse
+S	8	cpre	0.002780	0.003098	1.1144	1.1144	1.0396/1.2526/1.1144	all-worse
+S	8	build	0.003460	0.004728	1.3665	1.3665	1.3665/1.8845/1.3491	all-worse
+S	8	rebuild	0.000339	0.000354	1.0501	1.0442	1.0501/1.0085/1.0831	all-worse
+S	9	cpre	0.002282	0.002500	1.1141	1.0955	1.3786/1.0500/1.1141	all-worse
+S	9	build	0.003139	0.004576	1.4180	1.4578	1.8624/1.4180/1.3269	all-worse
+S	9	rebuild	0.000384	0.000391	1.0262	1.0182	1.0156/1.0725/1.0262	all-worse
+S	10	build	0.003424	0.005104	1.4115	1.4907	1.4115/1.2541/1.7655	all-worse
+S	10	rebuild	0.000414	0.000416	1.0149	1.0048	1.0299/1.0149/1.0048	all-worse
+S	11	build	0.003586	0.005020	1.3790	1.3999	1.5166/1.3790/1.3374	all-worse
+
+Provenance:
+standard-train-summary.json SHA256 ca7d2e0c2c0c97ee29f712721fd6ca315ae250d1a41ade3a674437e4e6be9465
+larger-train-summary.json SHA256 67aa0d81f1aaebd378bd8ea6a350acb987d1ff7fd7f66aa9c9219dbc27184711
+standard-train-cells.tsv SHA25630e164df6c52d69e2b0c41652a2f067b73d8f54e094d220741ffc58ed48de54f
+larger-train-cells.tsv SHA2568939c4ce1dceefe0f3cc54d0327f1fb139c66dda46b9d1c9c4c2f060d4083b61
+All input paths are under work/default-optimization/clean-replay-results-v3/.
+Derived clean-replay-v3-interpretation-data.json retains all80 paired cells,
+all6 censored cells, all3 raw second/ratio pairs, both estimators and direction counts.

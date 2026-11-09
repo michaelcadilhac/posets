@@ -1,0 +1,120 @@
+{
+  "schema_version": 2,
+  "status": "source-only conditional readiness; not compiled/imported/executed; no runtime artifacts",
+  "baseline_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "candidate_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+  "activation": "Only after actual work/heap interpretation, independent exact-source review, concrete matched build/run freeze and root exclusive-lane release.",
+  "files": {
+    "README.txt": "55abf3068e5d420a95b49a257b0a4e1cddb1e0180c5429bdb67da02f130be238",
+    "STATIC-CHECKS.json": "bbf51a159f583efb65f222c175a6b9d13a52f577707251f854d238c350fc970f",
+    "cli-observation.patch": "8031c6829620b3cd1a38d5655fb02b24436ba9aceec9e9443938d32ae0e0ff4c",
+    "downset-bm-pmu.cc": "c59bc1e97b49eceb7f59b24f98b8b02f87c6ee81dd33fbc90eba216f7dcdfae8",
+    "plan.json": "e6c7ccea1236789e36b3f68a0e85549f5bc886f66648a77c65299fb962af8a14",
+    "rank-pmu-hooks.hh": "5a6ca0e6c9fd34a63f4e35d07d2fed687f358a8f5c76042aff50dd395ca99cac",
+    "rank-pmu.cc": "dfdfcdb5f4c2dfc0e4feb42c2f6aa4b794112efdc3c424788971a4109c626242",
+    "v1-to-v2.patch": "fb2fe7ca0206fc2c11d061343aeb30c77356faa8080cdbe6ad5fcaf4f4618e74"
+  },
+  "origins": [
+    {
+      "path": "work/default-optimization/lemire/pmu-feasibility-static-v1.txt",
+      "sha256": "25fc60413a9d283f72787314a67990a79edb7153df7705d862444d6f041822ad",
+      "use": "approved readiness design"
+    },
+    {
+      "path": "work/lemire/final-cc058ca-v1/probes/phase-pmu-profile.cc",
+      "sha256": "4298c7a5ca960d03e7c9a1b53249d8ff2965ce2ce8b9a54b40f86df760f12387",
+      "use": "event_state and pmu_group copied verbatim; original selector/lifecycle adapted only"
+    },
+    {
+      "path": "work/lemire/final-cc058ca-v1/probes/run_pmu_profile.py",
+      "sha256": "1aba6fe262384fdbbfc6c960ad3d3df7e1ae210ee1df9e1648106471c9d8eb90",
+      "use": "future raw-record/parser/pair-order reuse reference, not imported/copied/executed here"
+    },
+    {
+      "path": "work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/tests/downset-bm.cc",
+      "sha256": "65e1fccc1a7d91b37f5fb72d0d46900b147e32272b77fa44fbebb7ed46f50aa9",
+      "use": "private CLI copy with only exact two-hunk observational patch"
+    },
+    {
+      "path": "work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/tests/downset-bm.cc",
+      "sha256": "65e1fccc1a7d91b37f5fb72d0d46900b147e32272b77fa44fbebb7ed46f50aa9",
+      "use": "byte-identical counterpart; shared private CLI used for both roles"
+    },
+    {
+      "path": "work/default-optimization/tools-v2/default-rank-v3-train-plan.json",
+      "sha256": "dad182529e3cb748345094766cde7e59d14a9ee3a62613630855d9c62ee176a3",
+      "use": "actual789/30e source and independent qualification/recipe bindings"
+    },
+    {
+      "path": "work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "use": "future unchanged8G/no-swap scope owner; not imported"
+    },
+    {
+      "path": "work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+      "use": "future unchanged scoped resource implementation; not imported"
+    }
+  ],
+  "clean_recipe_records": [
+    {
+      "role": "baseline",
+      "width": "compatible",
+      "path": "work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+      "sha256": "4e88786c3fcae1394ee2aafa03ac6cd331b8a3ff0de8dcb9576cbf14b26e31be"
+    },
+    {
+      "role": "baseline",
+      "width": "native",
+      "path": "work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+      "sha256": "0840864375f002eea7cb1be460b1b6bb76ee42b52d61bf72dd04c86a8847bda8"
+    },
+    {
+      "role": "candidate",
+      "width": "compatible",
+      "path": "work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+      "sha256": "e495c69ad90eaf2cedf9deba51747c37114cb1bafe52898f6d45959b69d9ec6e"
+    },
+    {
+      "role": "candidate",
+      "width": "native",
+      "path": "work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+      "sha256": "544d17f33ae66e19c1c8514246d3668b3096ba09850edeeb8741fdd250efd90b"
+    }
+  ],
+  "unchanged_shared_inputs": [
+    {
+      "relative_source_path": "tests/matrix-cpre.hh",
+      "sha256": "ec80bfbee63b2e483769a34ebbcaface6c2fb368d1789deed59cc6047e55a18f",
+      "both_roles": true,
+      "copied_or_modified": false
+    },
+    {
+      "relative_source_path": "tests/matrix-check.hh",
+      "sha256": "9d1f910391ad1c2bf26796315fab629b2ec9d012dc5e78150b1600f71ef82069",
+      "both_roles": true,
+      "copied_or_modified": false
+    },
+    {
+      "relative_source_path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+      "role": "baseline",
+      "sha256": "346a917307ea3ae818968b426f672489a54ad7ac61403fa91ae10b83a4dad064",
+      "copied_or_modified": false
+    },
+    {
+      "relative_source_path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+      "role": "candidate",
+      "sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+      "copied_or_modified": false
+    }
+  ],
+  "static_assertions": {
+    "inverse_cli_patch_restores_original_exact_bytes": true,
+    "pmu_event_control_slice_verbatim": true,
+    "only_listed_private_directory_written": true
+  },
+  "no_runtime_outputs": true,
+  "manifest_excludes": "self; no fictitious ELF/object/dependency/source-qualification/PMU/runtime hashes",
+  "preserved_v1_manifest_sha256": "ca19ef93dc40829204a4443651f2050f8df750ab6fddacfde6cc8de2e098f66e",
+  "revision_scope": "Documentation-only evidence-attribution correction from Biere review; all C++/plan/input hashes unchanged."
+}

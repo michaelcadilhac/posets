@@ -1,0 +1,525 @@
+{
+  "status": "source-only recipes; no commands executed",
+  "recipes": [
+    {
+      "key": "baseline-compatible",
+      "role": "baseline",
+      "width": "compatible",
+      "source_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99",
+      "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "template": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+        "sha256": "4e88786c3fcae1394ee2aafa03ac6cd331b8a3ff0de8dcb9576cbf14b26e31be"
+      },
+      "compile": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2",
+          "-Itests/downset-matrix-compatible.p",
+          "-Itests",
+          "-I../tests",
+          "-Iinclude",
+          "-I../include",
+          "-I../lib",
+          "-flto=1",
+          "-fdiagnostics-color=always",
+          "-DNDEBUG",
+          "-D_FILE_OFFSET_BITS=64",
+          "-Wall",
+          "-Winvalid-pch",
+          "-std=c++20",
+          "-O3",
+          "-ftrack-macro-expansion=0",
+          "-fno-diagnostics-show-caret",
+          "-fconcepts-diagnostics-depth=2",
+          "-DPOSETS_MATRIX_ONLY",
+          "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE",
+          "-march=native",
+          "-MD",
+          "-MQ",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o",
+          "-MF",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o.d",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o",
+          "-c",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc",
+          "-DPOSETS_MATRIX_BACKEND=posets::downsets::rank_bucketed_vector_backed"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-compatible-compile.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-compatible-compile-record.json"
+      },
+      "link": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o",
+          "-flto=1",
+          "-Wl,--as-needed",
+          "-Wl,--no-undefined",
+          "-Wl,-O1"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-compatible-link.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-compatible-link-record.json"
+      },
+      "transformations": [
+        {
+          "stage": "compile",
+          "original_index": 23,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 25,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o.d",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o.d"
+        },
+        {
+          "stage": "compile",
+          "original_index": 27,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 29,
+          "before": "../tests/downset-bm.cc",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc"
+        },
+        {
+          "stage": "compile",
+          "operation": "insert",
+          "new_index": 1,
+          "after": "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2"
+        },
+        {
+          "stage": "link",
+          "original_index": 2,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu"
+        },
+        {
+          "stage": "link",
+          "original_index": 3,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o"
+        }
+      ],
+      "all_other_argument_bytes_unchanged": true,
+      "future_artifacts": {
+        "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible",
+        "object": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "dependency": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu.o.d",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "ELF": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "runtime_libraries": null,
+        "compiler_identity": null
+      }
+    },
+    {
+      "key": "baseline-native",
+      "role": "baseline",
+      "width": "native",
+      "source_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99",
+      "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "template": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+        "sha256": "0840864375f002eea7cb1be460b1b6bb76ee42b52d61bf72dd04c86a8847bda8"
+      },
+      "compile": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2",
+          "-Itests/downset-matrix-native.p",
+          "-Itests",
+          "-I../tests",
+          "-Iinclude",
+          "-I../include",
+          "-I../lib",
+          "-flto=1",
+          "-fdiagnostics-color=always",
+          "-DNDEBUG",
+          "-D_FILE_OFFSET_BITS=64",
+          "-Wall",
+          "-Winvalid-pch",
+          "-std=c++20",
+          "-O3",
+          "-ftrack-macro-expansion=0",
+          "-fno-diagnostics-show-caret",
+          "-fconcepts-diagnostics-depth=2",
+          "-DPOSETS_MATRIX_ONLY",
+          "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_NATIVE",
+          "-march=native",
+          "-MD",
+          "-MQ",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o",
+          "-MF",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o.d",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o",
+          "-c",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc",
+          "-DPOSETS_MATRIX_BACKEND=posets::downsets::rank_bucketed_vector_backed"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-native-compile.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-native-compile-record.json"
+      },
+      "link": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o",
+          "-flto=1",
+          "-Wl,--as-needed",
+          "-Wl,--no-undefined",
+          "-Wl,-O1"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-native-link.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-native-link-record.json"
+      },
+      "transformations": [
+        {
+          "stage": "compile",
+          "original_index": 23,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 25,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o.d",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o.d"
+        },
+        {
+          "stage": "compile",
+          "original_index": 27,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 29,
+          "before": "../tests/downset-bm.cc",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc"
+        },
+        {
+          "stage": "compile",
+          "operation": "insert",
+          "new_index": 1,
+          "after": "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2"
+        },
+        {
+          "stage": "link",
+          "original_index": 2,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu"
+        },
+        {
+          "stage": "link",
+          "original_index": 3,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o"
+        }
+      ],
+      "all_other_argument_bytes_unchanged": true,
+      "future_artifacts": {
+        "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native",
+        "object": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "dependency": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu.o.d",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "ELF": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "runtime_libraries": null,
+        "compiler_identity": null
+      }
+    },
+    {
+      "key": "candidate-compatible",
+      "role": "candidate",
+      "width": "compatible",
+      "source_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+      "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+      "template": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+        "sha256": "e495c69ad90eaf2cedf9deba51747c37114cb1bafe52898f6d45959b69d9ec6e"
+      },
+      "compile": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2",
+          "-Itests/downset-matrix-compatible.p",
+          "-Itests",
+          "-I../tests",
+          "-Iinclude",
+          "-I../include",
+          "-I../lib",
+          "-flto=1",
+          "-fdiagnostics-color=always",
+          "-DNDEBUG",
+          "-D_FILE_OFFSET_BITS=64",
+          "-Wall",
+          "-Winvalid-pch",
+          "-std=c++20",
+          "-O3",
+          "-ftrack-macro-expansion=0",
+          "-fno-diagnostics-show-caret",
+          "-fconcepts-diagnostics-depth=2",
+          "-DPOSETS_MATRIX_ONLY",
+          "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE",
+          "-march=native",
+          "-MD",
+          "-MQ",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o",
+          "-MF",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o.d",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o",
+          "-c",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc",
+          "-DPOSETS_MATRIX_BACKEND=posets::downsets::rank_bucketed_vector_backed"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-compatible-compile.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-compatible-compile-record.json"
+      },
+      "link": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o",
+          "-flto=1",
+          "-Wl,--as-needed",
+          "-Wl,--no-undefined",
+          "-Wl,-O1"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-compatible-link.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-compatible-link-record.json"
+      },
+      "transformations": [
+        {
+          "stage": "compile",
+          "original_index": 23,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 25,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o.d",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o.d"
+        },
+        {
+          "stage": "compile",
+          "original_index": 27,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 29,
+          "before": "../tests/downset-bm.cc",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc"
+        },
+        {
+          "stage": "compile",
+          "operation": "insert",
+          "new_index": 1,
+          "after": "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2"
+        },
+        {
+          "stage": "link",
+          "original_index": 2,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu"
+        },
+        {
+          "stage": "link",
+          "original_index": 3,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/compatible-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o"
+        }
+      ],
+      "all_other_argument_bytes_unchanged": true,
+      "future_artifacts": {
+        "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible",
+        "object": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "dependency": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu.o.d",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "ELF": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "runtime_libraries": null,
+        "compiler_identity": null
+      }
+    },
+    {
+      "key": "candidate-native",
+      "role": "candidate",
+      "width": "native",
+      "source_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+      "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+      "template": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+        "sha256": "544d17f33ae66e19c1c8514246d3668b3096ba09850edeeb8741fdd250efd90b"
+      },
+      "compile": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2",
+          "-Itests/downset-matrix-native.p",
+          "-Itests",
+          "-I../tests",
+          "-Iinclude",
+          "-I../include",
+          "-I../lib",
+          "-flto=1",
+          "-fdiagnostics-color=always",
+          "-DNDEBUG",
+          "-D_FILE_OFFSET_BITS=64",
+          "-Wall",
+          "-Winvalid-pch",
+          "-std=c++20",
+          "-O3",
+          "-ftrack-macro-expansion=0",
+          "-fno-diagnostics-show-caret",
+          "-fconcepts-diagnostics-depth=2",
+          "-DPOSETS_MATRIX_ONLY",
+          "-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_NATIVE",
+          "-march=native",
+          "-MD",
+          "-MQ",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o",
+          "-MF",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o.d",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o",
+          "-c",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc",
+          "-DPOSETS_MATRIX_BACKEND=posets::downsets::rank_bucketed_vector_backed"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-native-compile.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-native-compile-record.json"
+      },
+      "link": {
+        "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release",
+        "argv": [
+          "c++",
+          "-o",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu",
+          "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o",
+          "-flto=1",
+          "-Wl,--as-needed",
+          "-Wl,--no-undefined",
+          "-Wl,-O1"
+        ],
+        "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-native-link.json",
+        "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-native-link-record.json"
+      },
+      "transformations": [
+        {
+          "stage": "compile",
+          "original_index": 23,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 25,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o.d",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o.d"
+        },
+        {
+          "stage": "compile",
+          "original_index": 27,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o"
+        },
+        {
+          "stage": "compile",
+          "original_index": 29,
+          "before": "../tests/downset-bm.cc",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/rank-pmu.cc"
+        },
+        {
+          "stage": "compile",
+          "operation": "insert",
+          "new_index": 1,
+          "after": "-I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2"
+        },
+        {
+          "stage": "link",
+          "original_index": 2,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu"
+        },
+        {
+          "stage": "link",
+          "original_index": 3,
+          "before": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/native-rank_bucketed_vector_backed.o",
+          "after": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o"
+        }
+      ],
+      "all_other_argument_bytes_unchanged": true,
+      "future_artifacts": {
+        "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native",
+        "object": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "dependency": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu.o.d",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "ELF": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu",
+          "sha256": null,
+          "status": "pending_not_built"
+        },
+        "runtime_libraries": null,
+        "compiler_identity": null
+      }
+    }
+  ]
+}

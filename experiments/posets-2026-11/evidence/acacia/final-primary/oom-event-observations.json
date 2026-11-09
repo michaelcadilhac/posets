@@ -1,0 +1,712 @@
+{
+  "scope": "Saved native memory-event evidence; labels and PAR2 scoring unchanged. Invocation-row count, not number of killed processes.",
+  "native_MEMOUT_outcomes": 25,
+  "oom_kill_observed_rows": 70,
+  "native_TIMEOUT_rows_with_oom_kill": 45,
+  "per_arm": {
+    "anchor-e167": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "candidate-default": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "kd": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "kd-narrow": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "trie": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 3,
+      "native_TIMEOUT": 4
+    },
+    "trie-compact": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "comp": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "comp-simd": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block8": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block8-uncached": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    },
+    "block16": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 6,
+      "native_TIMEOUT": 1
+    },
+    "lazy-fc": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "lazy-search": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "sharingtree": {
+      "oom_kill_observed_rows": 0,
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 0
+    },
+    "simple-sharingtree": {
+      "oom_kill_observed_rows": 7,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 5
+    }
+  },
+  "source_sidecars": {
+    "anchor-e167": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/anchor-e167.tsv.memory.tsv",
+      "sha256": "d4b8ecb2ccb89f2a9041acd4ea16f61e8e994409575142af2c983b3024b81989"
+    },
+    "candidate-default": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/candidate-default.tsv.memory.tsv",
+      "sha256": "fbbf1614f77485dd4700c159ea2cfecd1b4706993a4fe38e46d62423b6f4d910"
+    },
+    "kd": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd.tsv.memory.tsv",
+      "sha256": "84ade55ce3904f2497aba106f8bc05727b6ffcec1b642bed585e155b48814e64"
+    },
+    "kd-narrow": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/kd-narrow.tsv.memory.tsv",
+      "sha256": "73601d568885694945742ff3c3467973b8c70ca49a97f8cc29784a275e3cea50"
+    },
+    "trie": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie.tsv.memory.tsv",
+      "sha256": "caf60d667288ef7b729d12695f7d19b378ff751fe0f47b220f48f4da237c3c18"
+    },
+    "trie-compact": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/trie-compact.tsv.memory.tsv",
+      "sha256": "d5e231a8114488bca28c60daf5ae3a4dc71fe1adb0b67537d48b4bdd4cec58a7"
+    },
+    "comp": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp.tsv.memory.tsv",
+      "sha256": "adf93904f4faadce527ac13eb7d354ee5cf91deb55dcbeb80d0fb0a36b0a4b39"
+    },
+    "comp-simd": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/comp-simd.tsv.memory.tsv",
+      "sha256": "d652cccc011ccaf97f1324d8a5f18f2abc6958fb9be52eea2f758ab99980c6ba"
+    },
+    "block8": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8.tsv.memory.tsv",
+      "sha256": "a11f3d6fbae95f20a4d9ba2017a79dfb6846b3b54fcaaaa9ffae31f9466724fa"
+    },
+    "block8-uncached": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block8-uncached.tsv.memory.tsv",
+      "sha256": "bc609db461309e9a67a110592fc18a5d8ee04b2f3634e2c209e6a6ae17b6bc58"
+    },
+    "block16": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/block16.tsv.memory.tsv",
+      "sha256": "757266ac963409296152f96531651c37da87ec46655aa6e7718758c2ed5b5855"
+    },
+    "lazy-fc": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-fc.tsv.memory.tsv",
+      "sha256": "b3c744c0bc54f9e3cd411063bde42a23e19c91ea68c7857cedfde9c57ee91126"
+    },
+    "lazy-search": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/lazy-search.tsv.memory.tsv",
+      "sha256": "19e0b55f0aad178560df97f1418ee22ae4004b49f119cd68802c71bc53aa3d68"
+    },
+    "sharingtree": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/sharingtree.tsv.memory.tsv",
+      "sha256": "2be163c5aac674785f495053f9dc9d9d71367b5a1ae7555eb8c2f1dfce04d4da"
+    },
+    "simple-sharingtree": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/raw/simple-sharingtree.tsv.memory.tsv",
+      "sha256": "5ba57e846f0ed09dfa8378e31e982aba0790d24e2c38d17e137792e1377944e6"
+    }
+  },
+  "observations": [
+    {
+      "arm": "kd",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 2,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 2,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 14,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "kd-narrow",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 3,
+      "oom": 3,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 3,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 5,
+      "oom": 8,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 11,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 2,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "trie-compact",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 3,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 3,
+      "oom": 5,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 3,
+      "oom": 5,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 3,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 3,
+      "oom": 5,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 5,
+      "oom": 9,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "comp-simd",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 5,
+      "oom": 17,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 2,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 2,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block8-uncached",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 3,
+      "oom": 5,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 3,
+      "oom": 3,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "block16",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 5,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 6,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 1,
+      "oom": 1,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 7,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "result": "TIMEOUT",
+      "oom_kill": 2,
+      "oom": 4,
+      "peak_bytes": 8589934592
+    },
+    {
+      "arm": "simple-sharingtree",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "result": "MEMOUT",
+      "oom_kill": 4,
+      "oom": 14,
+      "peak_bytes": 8589934592
+    }
+  ],
+  "row_arithmetic_audit": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-primary-independent-row-arithmetic.json",
+    "sha256": "29d53a958fcae37a8148480119541de0cd2c2e5bd4a1e5b052b617258ec50223"
+  },
+  "attribution": "This reviewer independently identified the native-outcome versus OOM-event distinction during the final saved-row audit. The owner supplied and froze the native observations; no rerun or relabelling occurred."
+}

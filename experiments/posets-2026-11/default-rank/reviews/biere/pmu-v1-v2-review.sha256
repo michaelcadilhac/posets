@@ -1,0 +1,11 @@
+f7c189d2275394a2b499c956aa6c9e5050ff68247ddfcff27169d0acbacd753f  work/default-optimization/biere/pmu-v1-static-review.txt
+ca19ef93dc40829204a4443651f2050f8df750ab6fddacfde6cc8de2e098f66e  work/default-optimization/pmu-draft-v1/source-manifest.json
+dfdfcdb5f4c2dfc0e4feb42c2f6aa4b794112efdc3c424788971a4109c626242  work/default-optimization/pmu-draft-v1/rank-pmu.cc
+5a6ca0e6c9fd34a63f4e35d07d2fed687f358a8f5c76042aff50dd395ca99cac  work/default-optimization/pmu-draft-v1/rank-pmu-hooks.hh
+c59bc1e97b49eceb7f59b24f98b8b02f87c6ee81dd33fbc90eba216f7dcdfae8  work/default-optimization/pmu-draft-v1/downset-bm-pmu.cc
+8031c6829620b3cd1a38d5655fb02b24436ba9aceec9e9443938d32ae0e0ff4c  work/default-optimization/pmu-draft-v1/cli-observation.patch
+e6c7ccea1236789e36b3f68a0e85549f5bc886f66648a77c65299fb962af8a14  work/default-optimization/pmu-draft-v1/plan.json
+0379bd336017b8c214421377a1d7118aac5cd6316ebfc0b6e0984155e3709915  work/default-optimization/pmu-draft-v2/source-manifest.json
+bbf51a159f583efb65f222c175a6b9d13a52f577707251f854d238c350fc970f  work/default-optimization/pmu-draft-v2/STATIC-CHECKS.json
+55abf3068e5d420a95b49a257b0a4e1cddb1e0180c5429bdb67da02f130be238  work/default-optimization/pmu-draft-v2/README.txt
+fb2fe7ca0206fc2c11d061343aeb30c77356faa8080cdbe6ad5fcaf4f4618e74  work/default-optimization/pmu-draft-v2/v1-to-v2.patch

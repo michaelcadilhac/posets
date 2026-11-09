@@ -1,0 +1,32 @@
+{
+  "CPU_seconds_sum": 0.45470999999999995,
+  "OOM": 0,
+  "all_events_available": 24,
+  "calls": 24,
+  "completion": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/MEASUREMENTS-COMPLETE.json",
+    "sha256": "6870bc76b9e2410d38a423b7911056a907971a6cb672144145915324aa939b8c"
+  },
+  "core_usable": 24,
+  "event_counts_present": 96,
+  "event_status_counts": {
+    "read": 96
+  },
+  "final_invariance": {
+    "checked_closure_files": 1290,
+    "release_bindings": 4
+  },
+  "group_status_counts": {
+    "ok": 24
+  },
+  "max_scope_peak_bytes": 4960256,
+  "resource_coverage": [
+    24,
+    24
+  ],
+  "scaled_or_zero_filled": false,
+  "scope_seconds_sum": 2.998556566424668,
+  "status": "all24 original PMU calls completed; no production tuning; clocks discarded",
+  "timeouts": 0,
+  "unsupported_denied_multiplexed_statuses_preserved": true
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "requested_model_effort": "GPT-6.1 Sol xhigh",
+  "status": "Scoped v3 core/source correction and saved executed gates approved; no new semantic defect or remaining core blocker found. This is not full CI approval, helper approval, performance authorization or a speed claim.",
+  "exact_source": {
+    "draft.patch": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+    "v2-to-v3.patch": "4090f6eae3201b3e8d0c115e0ddc24cb718ffa5cde03b504ec06c98134c5f155",
+    "draft-manifest.json": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+    "SUMMARY.txt": "5bab8f84b23a549ea71bfb4693c3c2221e7e2c9dd3e5a7098e8f3f2801de093c",
+    "include/posets/downsets/rank_bucketed_vector_backed.hh": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+    "tests/rank-bucketed.cc": "932b411a54247a42153024ee6c4b779bdde04d469e45a0f8be7989369a5c3d7b",
+    "tests/rank-stats.cc": "14fab172b40981aca6b283a1809463ff69aa6888d7237ec1ab4313ef95f4a393",
+    "tests/meson.build": "dfed6368d6434cd9c213438f3f42426c577c463e0c237dd246db36e94e74afae"
+  },
+  "exact_gate_evidence": {
+    "VALIDATION.json": "6e30adef99d8ecc7844463e85921a0d16972f8d4a27aec41c0cef30bd9d4ceb4",
+    "VALIDATION.txt": "4bd2b2352dd280d49df550645858de426168ecb3de81513f2c0a452f73cb13d4",
+    "evidence-inventory.json": "835788f8577588cbb35e17d26234158d915b552369bef88d3be98a5e4ef7bfa9",
+    "assertion-width-compile-bindings.json": "e36c44aefd2e5415b9ed75d4e68b22b392ee0e4fa18dc969ba8b256e587553db",
+    "rerun-plan.json": "2084632c545e0a5d32e89c1414705ba6ee46e5c7f0c75265057913bc0ef1b701",
+    "executed-stages.jsonl": "c2acad56fd350913169d8c8666cc8ff196e3601c21fc85ebc099acc798a6478a",
+    "runner-path-preflight-failure.json": "5aa5643fa7c5f50ad7d2cc292d92b124e61f1021c45fd0dd28c510d26ff0cc3b"
+  },
+  "baseline_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "source_diff_assessment": [
+    "Read the complete exposed v2-to-v3 diff. Omitted typename is permitted in the C++20 type-only alias context; braces retain the original if/else nesting; size_t(bool) casts retain the same0/1 values and auto infers size_t; include movement and wrapping do not change the control/data flow.",
+    "Test const/attributes, separated declarations, expression parentheses and ternary-to-if fault selection preserve the actual values, oracle expectations, exception budgets, counters and test paths. No assertion, expected result, positive fault guard or allocation sentinel was removed or relaxed.",
+    "Exact test-local NOLINTs explain deterministic RNG; watched base API interception; a throwing move charge discarded in noexcept(false/true) constexpr branches as appropriate; self-union and preserved-input observations after std::move. No production NOLINT or configuration/check-list/WarningsAsErrors weakening was introduced.",
+    "Previous v2 semantic and exception assessment remains applicable. In particular, late custom comparison after live compaction has valid-empty basic guarantee, not generic strong rollback. Incoming rvalues/RHS may be consumed under the documented conditions; rank cast/sum domain prerequisites remain."
+  ],
+  "binding_checks": {
+    "hash_size_and_spec_bindings_checked": 242,
+    "mismatches": [],
+    "scope": "Entire final evidence inventory including external compile databases/ELFs, four frozen/current candidate files,39 derivative stage specs and corresponding record equality, log/helper hashes and scope metadata. All v2 inventoried bytes remain unchanged.",
+    "config_source_equality": ".clang-tidy,.clang-format, top-level meson.build and allocation-failure.hh match the clean baseline.",
+    "source_status": "Saved baseline status is empty; candidate status has exactly three approved modified tracked paths plus new rank-bucketed.cc. Current four file hashes match v3 snapshot."
+  },
+  "executed_gate_acceptance": {
+    "gcc": {
+      "version": "16.2.1",
+      "passed": 9,
+      "testlog": "Fresh default-rank-validation-v3/build-gcc-debug/meson-logs/testlog.json: nine OK/returncode0, including three fixture PASS lines.",
+      "assertions": "debug,b_ndebug=false,-UNDEBUG, -O0/-g and _GLIBCXX_ASSERTIONS in actual commands",
+      "widths": "compatible/native/max selectors all appear in their corresponding actual target commands, with -march=native and test_native_isa=true."
+    },
+    "clang": {
+      "version": "22.1.8",
+      "candidate_runs_passed": 9,
+      "compile_run_records_checked": 18,
+      "flags": "Explicit clang++-22, C++20/libstdc++,-O0,-g,-UNDEBUG,-march=x86-64,-mtune=generic; three new selectors, stats on/off, empty and three concept checks. Baseline rank-stats control passed in v2.",
+      "width_limit": "These are three compile-time selector controls; no claim of three distinct effective hardware widths in the portable configuration."
+    },
+    "memcheck": {
+      "version": "3.27.1",
+      "passed": 3,
+      "allocs_and_frees_each": 75014,
+      "combined_allocs_and_frees": 225042,
+      "errors": 0,
+      "live_exit_bytes": 0,
+      "records": [
+        "35-memcheck-compatible-record.json",
+        "36-memcheck-native-record.json",
+        "37-memcheck-max-record.json"
+      ],
+      "portable_proof": "Actual GCC portable compile databases have x86-64/generic, test_native_isa=false and no -march=native, assertions remain enabled. All three run logs print the oracle/allocation PASS line and zero-error/no-leak summary.",
+      "positive_hook_proof": "somalloc=nouserintercepts is present. Source-bound tests require both empty-array failure sites, nonzero populated/staged failures and successful retries; inert allocation interception cannot satisfy those guards. Covering insertion is tested at observed full capacity with allocations forbidden; floating victim/survivor iteration expectation and exception boundary tests execute in the same fixture."
+    },
+    "format": "Baseline recursive include formatting passed; final candidate includes and changed tests pass. Final40 include check is separately preserved after formatting corrections.",
+    "tidy_owned": "Final configured local22 owned-header/new-test run exits0. Only diagnostic reporting header filter is scoped to the owned files; check list and WarningsAsErrors remain configured. This is explicitly an owned-file result."
+  },
+  "retained_style_failures_and_limits": {
+    "baseline_full24": "Unchanged baseline full24 benchmark tidy22 exits1 with111 warnings-as-errors; full421-second record/log remain in validation-results-v2/61-*. It is not marked passed.",
+    "candidate_full24": "Skipped by explicit root decision after the baseline/toolchain failure. No claim that this gate passed.",
+    "full_fixture_attempt": "Retained v3/03 log contains59 errors:57 byte-unchanged dependency diagnostics and two owned-header diagnostics (braces and modernize-use-auto) fixed before final owned lint and fresh runtime reruns. The57 dependencies were filtered from the scoped owned-file result, not declared repaired.",
+    "CI18": "Unavailable locally and still required on PR. Local22 passing owned-file checks is not CI18 equivalence.",
+    "breadth": "No whole test suite was run/claimed; accepted evidence is nine targeted GCC tests, nine targeted portable Clang tests and three portable Memchecks."
+  },
+  "resource_and_preservation": {
+    "scoped_records_inspected_across_v2_v3": 109,
+    "timeout_or_resource_limit_or_oom_events": 0,
+    "max_recorded_scope_peak_bytes": 1987776512,
+    "all39_derivative_stages_have_cpu_and_peak": true,
+    "limits": "Unchanged scoped_task.py SHA9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43 uses8G/no swap; saved delegated invocation-child verification records memory.max8589934592 and memory.swap.max0. Parent observer infinity does not override the child bound.",
+    "serial": "Compile-j1/direct one compiler and serial tests;9GCC test calls use --no-rebuild --num-processes1.",
+    "no_overwrite": "Separate v3 artifact/build/results roots preserve prior v2 gates. Original failed format/tidy records, sandbox preflight, derivative-runner wrong-plan assertion and intermediate header are retained. Derivative runner checks spec/helper hashes and fresh json/log/helper paths before running each chosen stage; all final records remain bound.",
+    "no_historical_source_changes": "V2 source snapshot and helperv1 source manifest/patch retain exact reviewed hashes; this review did not mutate them, main Posets, original Acacia or frozen phase-one sources."
+  },
+  "remaining_actionable_core_blockers": [],
+  "future_scope": [
+    "The newly approved source authority is exact v3 manifest93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02 and its four source hashes. Future clean source commit/map must bind actual revision and those exact approved bytes; arbitrary refreshed hashes remain unacceptable.",
+    "Selected-rank helperv2 is out of scope here and still needs its own frozen review and offline/runtime gates. The helperv1 protocol finding remains historical and is not waived by core approval.",
+    "No performance/replay/profile has been executed for the new default core. Performance hypotheses and generic staging costs remain unvalidated; fresh authorization/freeze applies before measurement."
+  ],
+  "review_execution_limit": "Reviewer performed saved-source/diff/record/metadata/log reads and hashes only; no compiler, test, model, formatter, lint, helper import/execution, profiler or timing was run.",
+  "attribution": "Coder authored/fixed v3 and executed the gates. This reviewer independently checked the correction equivalence, precise failure scopes and saved bindings; no new defect discovery claimed."
+}

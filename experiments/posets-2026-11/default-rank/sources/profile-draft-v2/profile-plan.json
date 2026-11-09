@@ -1,0 +1,66 @@
+{
+  "status": "prospective profiling-only source plan; no run/build authorization",
+  "cohorts": [
+    {
+      "name": "standard12",
+      "original": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+      "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d",
+      "exact_copy": "trace-plans/standard12.json",
+      "trace_count": 12,
+      "status": "already seen TRAIN; actual pin-specific source/backend qualification still required before profiling"
+    },
+    {
+      "name": "larger5-eligible",
+      "original": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1/plans/large-frontier-train-complete-frame-traces.json",
+      "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9",
+      "exact_copy": "trace-plans/larger5-eligible.json",
+      "trace_count": 5,
+      "status": "already seen TRAIN; actual pin-specific source/backend qualification still required before profiling"
+    }
+  ],
+  "sources": {
+    "baseline": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "candidate": "30e66853832d98bcfaada296d892157b95a8150d"
+  },
+  "backend": "rank_bucketed_vector_backed",
+  "cells_per_trace_per_variant": [
+    {
+      "width": "compatible",
+      "vector": "vector_backed"
+    },
+    {
+      "width": "compatible",
+      "vector": "simd_vector_backed"
+    },
+    {
+      "width": "native",
+      "vector": "simd_vector_backed"
+    }
+  ],
+  "passes": [
+    "operations",
+    "roi"
+  ],
+  "rounds": 1,
+  "clean_measurements": false,
+  "instrumented_clock_values": "discarded; never emitted or used as performance or PMU evidence",
+  "proposed_resources": {
+    "wrapper": "unchanged scoped_task.py",
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "serial_j": 1,
+    "profile_case_timeout_seconds": 30,
+    "timeout_note": "Separate instrumented cap proposed for root approval; never replace clean30/2/2 caps."
+  },
+  "eligibility": "Before generating any runnable profile spec, enforce actual-pin clean source-oracle AND exact backend/vector/width clean qualification, plus trace/capture/source/library identities. Keep all17 identities; unqualified/censored rows stay explicitly unprofiled. A30s profile success never upgrades clean30/2/2 censorship; paired profiles require both qualified/successful sides.",
+  "failures": "Preserve stdout/stderr/spec/helper/binary/dependency hashes plus resource/returncode outcomes. Missing/incomplete rows stay missing, never zeros. All captured kernel or oracle rejections halt review.",
+  "derived_controls": "deferred; only add a few previously recorded frontiers if actual counters require clarification; no fresh held-out claim",
+  "pending": [
+    "Lemire/Biere and parent exact draft review",
+    "Explicit release after benchmark owner yields lane",
+    "Compile/assertion trait/positive-hook/selfcheck gates under existing wrapper",
+    "Actual dependency/compile/link/ELF/library and pin-specific qualification binding freeze",
+    "Profile-only run-spec approval and exclusive serial execution"
+  ],
+  "draft_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2"
+}

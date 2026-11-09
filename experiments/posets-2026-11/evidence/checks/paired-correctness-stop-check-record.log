@@ -1,0 +1,1 @@
+PASS: rejected source/check/measure stops before next invocation; ordinary timeout/OOM/unverified retained; report, binding and fatal rows preserved. Real child calls:0.

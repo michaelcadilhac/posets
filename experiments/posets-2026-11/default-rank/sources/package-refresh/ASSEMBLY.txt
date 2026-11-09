@@ -1,0 +1,58 @@
+Final V3 is a SOURCE-ONLY package proposal. No package apply, commit, push or
+new workload was performed by this assembly. Root authorizes application only
+after the exact final delta/privacy/source review. All required outcome-stage
+inputs are complete; data pending is empty and ready_for_apply=true is not a
+substitute for that explicit authorization.
+
+The actual package's 121 old exact copies remain unchanged. All 118 V2 planned
+entries are preserved. The additions bind completed validation/CI, clean replay,
+work/heap/PMU, final two-arm solver evidence, verified numerical archive, compact
+original-WIP proof, hardware context, final reports and frozen reviewer ledgers.
+Earlier statuses remain historical exact bytes, not silently rewritten.
+
+The observed two-arm result is negative: baseline 1,369 solves/PAR2 5,926.874862 s versus
+optimized 1,368 solves/PAR2 5,943.112131 s, zero gains and one loss robot_repair5.ltl. The
+actual native timeout is retained. No solver-level benefit, general slowdown,
+rank-only causal conclusion or new backend selection is claimed. Source/dependency
+matches do not establish identical independently built private Rust artifact bytes.
+NO_VERBOSE smokes supply requested-route/type/config/verdict bindings, not route
+frequency traces. Both campaigns and the seen-data component studies stay separate.
+
+Privacy/minimization is explicit: the original summary stays external unchanged;
+summary-without-host-details.json omits ONLY /cpu_host and has separate projection
+provenance. The exact frozen manifest has only LD_LIBRARY_PATH in /environment,
+as approved. Environment references in provenance are path/hash-only; full env,
+full host, raw original before/current statuses, WIP payloads, corpora, caches and
+ELFs are not added. The final proof is match-only for five repositories/six fields and
+excludes ignored/untracked byte contents. Historical copies remain untouched.
+
+The 4.1 MB final invariance manifest is locator/hash-only; compact handoff/audits
+retain its 14,981-file scope. The one existing reviewed large addition remains the
+998,115-byte full paired work data; the general 500 KB cap is unchanged. The new
+349,264-byte numerical archive is individually approved by exact identity and was
+already created/fresh-extraction-verified by root under the 8G/no-swap wrapper.
+The updater copies those verified bytes; it creates/extracts no archive.
+
+refresh-package.py and test_refresh_package.py are byte-identical to V2. Root
+ran all five fixtures after the benchmark, under the shared lock and 8G/no swap: OK,
+zero exit/OOM/timeout. Exact record/spec/log are allowlisted. No extra validation
+layer or duplicate workload was introduced. Static assembly checks cover exact
+origins, JSON, safe/unique destinations, old metadata, privacy and checksums.
+
+After final review and explicit root application approval, use the existing
+scoped wrapper and this hash-bound command with a fresh task-owned backup:
+
+python3 -B ABS_V3/refresh-package.py --allowlist ABS_V3/allowlist.json --allowlist-sha256 EXACT_APPROVED_ALLOWLIST_SHA256 --backup ABS_FRESH_TASK_WORK_BACKUP --apply
+
+The updater validates all inputs before mutation, backs up eight small derived
+metadata/documents, exclusively creates additions, preserves/rechecks every old
+copy, and refreshes inventory/SHA256SUMS. It never imports copied workload helpers
+or launches builds/experiments/network/archive operations. A post-backup failure
+stops publication; preserve the attempt and inspect a fresh recovery plan.
+
+Do not run the historical packaged source recipes in place against old absolute
+paths. Recreate an isolated authorized task layout with separately reviewed
+bindings. Raw traces/builds/ELFs/full private closures remain external evidence;
+absolute locators are not download URLs. Source-manifest/checksum bindings here
+freeze the proposal; later exact package review/application records remain
+separate from frozen outcome-stage ledgers.

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Conditional PMU concrete-plan readiness approved statically; no actionable gap found. Readiness is not PMU/build activation, artifact acceptance or a result.",
+  "exact_inputs": {
+    "source-manifest.json": "2e72016b0d8358395ad0b329bb6b981695f0420889e51dc8f40c855badab8c5c",
+    "recipe-diff.json": "f256b709470f327e6dc1a05fdc1d31c73ae4389c210d75602a2e6bddaf63693c",
+    "build-recipes.json": "ee63caa611a7c116dad8544a2669b5a29a5d42aaa23bbdb455b61a22c4f6e6bb",
+    "argv.json": "8ac7e45a5bdcfa2fd98b27811c172344ddc39582315e3fa05faf03f79c63059a",
+    "schedule.json": "1ae256827bced2a3d61c9be4f5a562483b6d14c9fa2bebc772cf612f7b7cbaa1",
+    "evidence-bindings.json": "a06a037f055a8c3de82887ba8374992c61b5e9006cdc3815fc0d90687d3a76e4",
+    "README.txt": "b2dcb92f4356e4ac9ec5f3e32f9de66c23fd6a2f92c73864d024faa307ad2aca"
+  },
+  "scope": "Bounded operational plan review only; prior Biere/root PMU C++ source approval inherited, not re-audited. No target import, build, test, permission probe, PMU call, solver or workload execution.",
+  "checked": {
+    "hash_bindings": 130,
+    "mismatches": [],
+    "exact_inverse_compile_link_comparisons": 8,
+    "recipes": 4,
+    "compile_link_specs": 8,
+    "metadata_commands": 4,
+    "backend_checks": 8,
+    "PMU_calls": 24,
+    "qualified_role_width_trace_cells": 8,
+    "future_artifact_root_absent": true,
+    "future_results_root_absent": true,
+    "future_runtime_records_existing": 0
+  },
+  "assessment": [
+    "Four fixed cells remain collector CPre at compatible/native and RR552 construction at compatible/native, using only original SIMD payload. Actual789/30e source roles, selected-rank compile records, eligible exact trace/capture/meta identities and all four qualification observations are bound; profile ELFs are not promoted as PMU evidence.",
+    "Inverse transforms restore all four actual clean compiler/link argv exactly. Only private TU/include and fresh object/dependency/ELF destinations differ; cwd,O3,NDEBUG,LTO1,native ISA,width and rank selector remain. No rank/allocation stats, profile overlay, Vector wrapper or algorithm/global flag change is introduced by the plan.",
+    "All runtime specs use tasksetCPU2, explicit PMU check/measure and build/CPre environment, original CLI arguments, rounds1/detail0, isolated cwd and saved environment. The17s scope caps are explicit; unchanged wrapper enforces8G/no swap. No new scheduler or affinity fallback is introduced.",
+    "Schedule has eight build/link stages, four metadata calls, eight exact backend checks and24 measurements. AB/BA/AB role order, seeds260617-19 and declared four-case permutations match every concrete command. No extra cells, adaptive rerandomization or retry sweep is supplied.",
+    "Both original Vector registrations remain source-bound. Metadata literal original_vector_flavors marker is explicitly not independent inventory proof; actual backend/width/expected Vector checks are still future gates.",
+    "Future compiler/object/dependency/ELF/library/CPU/event evidence stays null/pending. Owner must freeze a separate actual artifact closure, accept metadata/backend/ROI evidence and attach closure identity before measurement. Pending plan hashes are not edited in place or fabricated.",
+    "Actual work/heap interpretation and root exclusive-lane release remain activation conditions. Sole benchmark owner must hold the existing shared lock throughout serial scope execution; scoped_task itself does not acquire it.",
+    "Acceptance keeps kernel/ROI/CPU/phase/region evidence separate from event usability. Expected total4/selected1 captures, core group/read IDs, enabled==running>0 and matched available cache events are assessed from actual outputs. Denied/unsupported/multiplexed/missing/timeout evidence remains explicit, with no zero-fill, scaling or rescue retries.",
+    "PMU raw paired ratios, median paired ratio and ratio of separate medians remain separate estimators. Original clock stdout is diagnostic only; no clean-clock, cold-cache, allocator-byte-to-cache or fresh-heldout claim is authorized."
+  ],
+  "remaining_actionable_blockers": [],
+  "future_gates": [
+    "Actual work/heap-based root activation and exclusive lane ownership.",
+    "Fresh output creation, actual matched build/depfile/ELF/library/compiler closure and CPU/event identity validation.",
+    "All metadata/backend/ROI checks before accepting the fixed24 PMU observations; preserve all failures/missing fields."
+  ],
+  "limits": "All observations in this audit are source/spec/binding checks; no PMU capability, permission, event availability, successful future compilation or measurement is established."
+}

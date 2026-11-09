@@ -1,0 +1,471 @@
+--- /dev/null
++++ b/project_profiles.py
+@@ -0,0 +1,228 @@
++"""Project the exact approved saved eligibility inventory; never execute profiles."""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import re
++import subprocess
++
++PHASE = Path(__file__).resolve().parent.parent
++REPO = PHASE.parent / 'acacia-posets-eval'
++INVENTORY = PHASE / 'profile-gate-results-v2/eligibility-inventory.json'
++INVENTORY_SHA = '80b5b22324661bd0af8835f5f275326c4844ca188d2498239d2abb9cbe17c7b8'
++CLOSURE = PHASE / 'profile-gate-results-v2/actual-artifact-closure.json'
++CLOSURE_SHA = 'd097ccb5d0fc311293f2ebb91f2a5f942ec9241e8ce04848373247a7976e3a25'
++APPROVAL = PHASE.parent / 'review-probes/profile-v2-eligibility-static-audit.json'
++APPROVAL_SHA = 'd308dfd8f21dc75f1e3cfb8d59b1d8989491e0d9d4159beca7ee7c5273d2a9ba'
++WRAPPER = PHASE.parent / 'acacia-campaign/scoped_task.py'
++WRAPPER_SHA = '9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43'
++ENVIRONMENT = PHASE / 'profile-gate-plan-v2/environments/shipping.json'
++ENVIRONMENT_SHA = '434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035'
++PINS = {'baseline': '789bf99346d41a30f1b454ff58385b6f8a2961a9',
++        'candidate': '30e66853832d98bcfaada296d892157b95a8150d'}
++
++
++def require(condition, message):
++    if not condition:
++        raise ValueError(message)
++
++
++def sha(path):
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def binding(path):
++    return {'path': str(path), 'sha256': sha(path)}
++
++
++def load_bound(path, expected):
++    require(sha(path) == expected, 'Changed approved input: ' + str(path))
++    return json.loads(path.read_text())
++
++
++PHASE_UNSIGNED = set("""
++size generator_capacity entry_live exit_live extra_peak allocations requested_bytes
++rank_started rank_completed rank_active_coordinates_planned rank_active_coordinates_completed
++vector_copy_attempts vector_move_constructions_completed vector_move_assignments_completed
++vector_base_adoptions_completed vector_partial_order_attempts vector_meet_attempts
++intersections_started intersections_completed intersections_noop intersections_changed
++last_intersection_left last_intersection_queries rank_contains_calls rank_partial_order_calls
++rank_insert_attempts rank_insert_rejected_dominated rank_existing_elements_removed
++rank_union_insertions rank_intersection_left_elements rank_intersection_short_circuits
++rank_intersection_pair_meets rank_apply_elements rank_peak_backing_size
++rank_bucket_rebuilds rank_bucket_rebuild_elements
++""".split())
++OPERATION_PHASES = {'constructor_only_caller_alive', 'contains', 'apply',
++                    'union_rhs_still_alive', 'intersection_rhs_still_alive'}
++ROI_SEQUENCES = (['build_normalized', 'contains', 'rebuild_normalized_first_alive'],
++                 ['build_normalized', 'cpre_after_rhs_destruction_net', 'contains',
++                  'rebuild_normalized_first_alive'])
++REASONS = {'not_called', 'incomplete', 'no_query', 'queried', 'self', 'empty_left', 'empty_right'}
++METADATA_UNSIGNED = {'dimension', 'numeric', 'before', 'actions', 'selected_lanes', 'element_bytes'}
++
++
++def number(value, signed=False, positive=False):
++    pattern = r'(?:0|-?[1-9][0-9]*)' if signed else r'(?:0|[1-9][0-9]*)'
++    require(len(value) <= 20 and re.fullmatch(pattern, value), 'Noninteger diagnostic token')
++    lower = -(1 << 63) if signed else int(positive)
++    upper = (1 << 63) - 1 if signed else (1 << 64) - 1
++    require(lower <= int(value) <= upper, 'Diagnostic integer outside emitted type range')
++
++
++def accept_stdout(stdout, expected):
++    """Existing executor calls this only after successful scope/process acceptance."""
++    lines = stdout.splitlines()
++
++    def fields(line, keys):
++        words = [word.split('=', 1) for word in line.split()]
++        require(words and all(len(word) == 2 for word in words), 'Malformed diagnostic output')
++        parsed = dict(words)
++        require(len(parsed) == len(words) and set(parsed) == keys,
++                'Duplicate, missing or unexpected diagnostic field')
++        return parsed
++
++    require(len(lines) >= 4, 'Incomplete diagnostic stdout')
++    metadata = fields(lines[0], METADATA_UNSIGNED |
++                      {'instrumented', 'clocks_discarded', 'vector', 'mode', 'width_selector'})
++    for key in METADATA_UNSIGNED:
++        number(metadata[key])
++    require(metadata['instrumented'] == metadata['clocks_discarded'] == '1' and
++            metadata['width_selector'] in ('0', '1') and
++            metadata['vector'] in ('vector_backed', 'simd_vector_backed') and
++            metadata['mode'] in ('operations', 'roi'), 'Invalid diagnostic metadata token')
++    require(metadata == {key: str(value) for key, value in expected['metadata'].items()},
++            'Diagnostic metadata does not match projected tuple')
++    layout = fields(lines[1], {'vector_bytes', 'vector_alignment', 'move_construct_noexcept',
++                              'move_assign_noexcept'})
++    number(layout['vector_bytes'], positive=True)
++    number(layout['vector_alignment'], positive=True)
++    require(layout['move_construct_noexcept'] == layout['move_assign_noexcept'] == '1',
++            'Missing shipping trait/layout record')
++    cleanup = fields(lines[-1], {'kernel_check', 'after_kernel_cleanup_live', 'cleanup_live_delta'})
++    require(cleanup['kernel_check'] == 'pass', 'Missing completed kernel check')
++    number(cleanup['after_kernel_cleanup_live'])
++    number(cleanup['cleanup_live_delta'], signed=True)
++    keys = PHASE_UNSIGNED | {'phase', 'success', 'has_result', 'live_delta',
++                             'last_intersection_reason', 'last_intersection_first_failed_query'}
++    phases = [fields(line, keys) for line in lines[2:-1]]
++    require(phases, 'Missing diagnostic phases')
++    for row in phases:
++        for key in PHASE_UNSIGNED:
++            number(row[key])
++        number(row['live_delta'], signed=True)
++        require(row['success'] == '1' and row['has_result'] in ('0', '1'),
++                'Failed/incomplete diagnostic phase')
++        require(row['last_intersection_reason'] in REASONS, 'Invalid intersection reason')
++        if row['last_intersection_first_failed_query'] != 'null':
++            number(row['last_intersection_first_failed_query'])
++    if metadata['mode'] == 'roi':
++        require(expected['roi_sequence'] in ROI_SEQUENCES and
++                [row['phase'] for row in phases] == expected['roi_sequence'],
++                'Diagnostic ROI sequence differs from original3/4 regions')
++    else:
++        require(expected['roi_sequence'] is None and
++                all(row['phase'] in OPERATION_PHASES for row in phases), 'Wrong operation pass')
++    for row in phases:
++        if row['has_result'] == '0':
++            row['size'] = row['generator_capacity'] = None
++        if row['last_intersection_first_failed_query'] == 'null':
++            row['last_intersection_first_failed_query'] = None
++    return {'metadata': metadata, 'layout': layout, 'phases': phases, 'cleanup': cleanup}
++
++
++def project(output):
++    inventory = load_bound(INVENTORY, INVENTORY_SHA)
++    closure = load_bound(CLOSURE, CLOSURE_SHA)
++    load_bound(APPROVAL, APPROVAL_SHA)
++    require(inventory['artifact_closure'] == binding(CLOSURE), 'Eligibility closure differs')
++    require(sha(WRAPPER) == WRAPPER_SHA and sha(ENVIRONMENT) == ENVIRONMENT_SHA,
++            'Original wrapper/environment changed')
++    checked = dict(closure['checked_file_sha256'])
++    for path, digest in inventory['checked_file_sha256'].items():
++        require(path not in checked or checked[path] == digest, 'Conflicting checked identity')
++        checked[path] = digest
++    for path, digest in checked.items():
++        require(sha(path) == digest, 'Checked source/trace/artifact/library changed: ' + path)
++    for role, pin in PINS.items():
++        source = Path(closure['source_roles'][role]['source'])
++        require(closure['source_roles'][role]['revision'] == pin and
++                source.resolve(strict=True).is_relative_to(REPO / '_deps'), 'Wrong source role')
++        git = ['git', '--no-optional-locks', '-C', str(source)]
++        require(subprocess.check_output(git + ['rev-parse', 'HEAD'], text=True).strip() == pin
++                and not subprocess.check_output(git + ['status', '--porcelain'], text=True),
++                'Source revision/cleanliness changed')
++    artifacts = {(row['role'], row['mode']): row for row in closure['artifacts'] if row['unit'] == 'profile'}
++    require(len(artifacts) == 4 and set(artifacts) == {(role, mode) for role in PINS
++            for mode in ('compatible', 'native')}, 'Accepted four-profile-ELF inventory differs')
++    for artifact in artifacts.values():
++        require(sha(artifact['ELF']['path']) == artifact['ELF']['sha256'], 'Profile ELF changed')
++        for row in artifact['dependencies'] + artifact['runtime_libraries']:
++            require(str(Path(row['path']).resolve(strict=True)) == row['realpath']
++                    and sha(row['path']) == row['sha256'], 'Accepted dependency/library changed')
++    traces = {row['identity_sha256']: row for row in inventory['traces']}
++    cells = {row['cell_index']: row for row in inventory['cells']}
++    require(len(traces) == 17 and len(cells) == 102 and len(inventory['pass_inventory']) == 204,
++            'Approved eligibility inventory differs')
++    rows, specs = [], []
++    for number, original in enumerate(inventory['pass_inventory']):
++        row, cell = dict(original), cells[original['cell_index']]
++        trace = traces[row['trace_identity_sha256']]
++        require(all(row[key] == cell[key] for key in
++                    ('role', 'mode', 'vector', 'eligible', 'trace_identity_sha256'))
++                and cell['source_revision'] == PINS[row['role']]
++                and cell['instrumented_ELF'] == artifacts[row['role'], row['mode']]['ELF']
++                and row['pass'] in ('operations', 'roi'), 'Projection cell identity differs')
++        require(sha(trace['path']) == trace['sha256'], 'Qualified trace changed')
++        row.update(reason=cell['reason'], clean_measurement_statuses=cell['clean_measurement_statuses'],
++                   source_revision=cell['source_revision'], cohort=cell['cohort'],
++                   instrumented_ELF=cell['instrumented_ELF'],
++                   trace={'path': trace['path'], 'sha256': trace['sha256']})
++        if row['eligible']:
++            require(len(cell['observations']) == 4 and all(obs['source_status'] == obs['check_status'] == 'pass'
++                    for obs in cell['observations']), 'Cell lacks four passing qualifications')
++            stem = f"{number:03d}-{row['role']}-{row['mode']}-{row['vector']}-{row['pass']}"
++            path = output / 'specs' / (stem + '.json')
++            sequence = ['build_normalized', 'contains', 'rebuild_normalized_first_alive']
++            if trace['kind'] == 'cpre':
++                sequence.insert(1, 'cpre_after_rhs_destruction_net')
++            expected = {'metadata': {'instrumented': 1, 'clocks_discarded': 1, 'vector': row['vector'],
++                'mode': row['pass'], 'dimension': trace['features']['dimension'],
++                'numeric': trace['features']['numeric_prefix'], 'before': trace['features']['maxima'],
++                'actions': int(trace['header']['actions']) if trace['kind'] == 'cpre' else 0,
++                'selected_lanes': cell['width_lanes'], 'width_selector': 0 if row['mode'] == 'compatible' else 1,
++                'element_bytes': 1}, 'roi_sequence': sequence if row['pass'] == 'roi' else None}
++            spec = {'command': [cell['instrumented_ELF']['path'], trace['path'], row['vector'], row['pass']],
++                    'cwd': str(REPO), 'environment_file': str(ENVIRONMENT), 'timeout': 30,
++                    'expected_exit_codes': [0]}
++            row.update(status='planned_instrumented_not_executed', record=str(output / 'results' / (stem + '.json')),
++                       expected_stdout=expected)
++            specs.append((path, spec, row))
++        rows.append(row)
++    require(sum(row['eligible'] for row in rows) == 192 and len(specs) == 192,
++            'Eligible/unprofiled projection counts differ')
++    require(output.is_absolute() and output.resolve().is_relative_to(PHASE) and
++            not output.exists() and not output.is_symlink(), 'Fresh task-owned output required')
++    output.mkdir()
++    (output / 'specs').mkdir()
++    for path, spec, row in specs:
++        with path.open('x') as stream:
++            stream.write(json.dumps(spec, indent=2) + '\n')
++        row['spec'] = binding(path)
++        row['wrapper_argv'] = ['/usr/bin/python3', '-B', str(WRAPPER), str(path), row['record']]
++    plan = {'status': 'projected only; execution needs separate owner release',
++            'eligibility_inventory': binding(INVENTORY), 'accepted_closure': binding(CLOSURE),
++            'eligibility_approval': binding(APPROVAL), 'projector': binding(Path(__file__).resolve()),
++            'wrapper': binding(WRAPPER), 'environment': binding(ENVIRONMENT),
++            'profile_artifacts': [{'role': role, 'mode': mode, 'ELF': artifact['ELF'],
++                                   'runtime_libraries': artifact['runtime_libraries']}
++                                  for (role, mode), artifact in artifacts.items()],
++            'rows': rows, 'counts': {'pass_rows': 204, 'runnable_specs': 192, 'unprofiled': 12},
++            'interpretation': 'Instrumented counters/heap only; clean statuses/censors remain unchanged. has_result=0 descriptors are unavailable.'}
++    with (output / 'plan.json').open('x') as stream:
++        stream.write(json.dumps(plan, indent=2) + '\n')
++
++
++if __name__ == '__main__':
++    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
++    parser.add_argument('output', type=Path)
++    project(parser.parse_args().output)
+--- /dev/null
++++ b/test_project_profiles.py
+@@ -0,0 +1,144 @@
++"""Unexecuted schema checks; complete synthetic stdout, no spec/profile generation."""
++import unittest
++
++from project_profiles import accept_stdout
++
++
++class ContentChecks(unittest.TestCase):
++    def encode(self, fields):
++        return ' '.join(f'{key}={value}' for key, value in fields.items())
++
++    def decode(self, line):
++        return dict(word.split('=', 1) for word in line.split())
++
++    def fixture(self):
++        metadata = {'instrumented': 1, 'clocks_discarded': 1, 'vector': 'simd_vector_backed',
++                    'mode': 'roi', 'dimension': 2, 'numeric': 1, 'before': 2, 'actions': 1,
++                    'selected_lanes': 16, 'width_selector': 0, 'element_bytes': 1}
++        sequence = ['build_normalized', 'cpre_after_rhs_destruction_net', 'contains',
++                    'rebuild_normalized_first_alive']
++        layout = {'vector_bytes': 16, 'vector_alignment': 8,
++                  'move_construct_noexcept': 1, 'move_assign_noexcept': 1}
++        # Independent explicit inventory of all42 emitted phase fields.
++        phase = {
++            'phase': '', 'success': 1, 'has_result': 0, 'size': 7, 'generator_capacity': 9,
++            'entry_live': 100, 'exit_live': 83, 'live_delta': -17, 'extra_peak': 30,
++            'allocations': 2, 'requested_bytes': 40,
++            'rank_started': 2, 'rank_completed': 2,
++            'rank_active_coordinates_planned': 4, 'rank_active_coordinates_completed': 4,
++            'vector_copy_attempts': 0, 'vector_move_constructions_completed': 0,
++            'vector_move_assignments_completed': 0, 'vector_base_adoptions_completed': 0,
++            'vector_partial_order_attempts': 0, 'vector_meet_attempts': 0,
++            'intersections_started': 0, 'intersections_completed': 0,
++            'intersections_noop': 0, 'intersections_changed': 0,
++            'last_intersection_left': 0, 'last_intersection_queries': 0,
++            'last_intersection_reason': 'not_called', 'last_intersection_first_failed_query': 'null',
++            'rank_contains_calls': 0, 'rank_partial_order_calls': 0, 'rank_insert_attempts': 0,
++            'rank_insert_rejected_dominated': 0, 'rank_existing_elements_removed': 0,
++            'rank_union_insertions': 0, 'rank_intersection_left_elements': 0,
++            'rank_intersection_short_circuits': 0, 'rank_intersection_pair_meets': 0,
++            'rank_apply_elements': 0, 'rank_peak_backing_size': 0,
++            'rank_bucket_rebuilds': 0, 'rank_bucket_rebuild_elements': 0,
++        }
++        lines = [self.encode(metadata), self.encode(layout)]
++        for name in sequence:
++            lines.append(self.encode({**phase, 'phase': name}))
++        lines.append('kernel_check=pass after_kernel_cleanup_live=37 cleanup_live_delta=11')
++        return lines, {'metadata': metadata, 'roi_sequence': sequence}
++
++    def accept(self, lines, expected):
++        return accept_stdout('\n'.join(lines) + '\n', expected)
++
++    def changed(self, original, row, key, value):
++        lines = list(original)
++        fields = self.decode(lines[row])
++        fields[key] = value
++        lines[row] = self.encode(fields)
++        return lines
++
++    def test_complete_schema_and_nonzero_deltas(self):
++        lines, expected = self.fixture()
++        parsed = self.accept(lines, expected)
++        self.assertIsNone(parsed['phases'][0]['size'])
++        self.assertIsNone(parsed['phases'][0]['generator_capacity'])
++        self.assertIsNone(parsed['phases'][0]['last_intersection_first_failed_query'])
++        self.assertEqual(parsed['phases'][0]['live_delta'], '-17')
++        self.assertEqual(parsed['cleanup']['cleanup_live_delta'], '11')
++        lines = self.changed(lines, 2, 'has_result', '1')
++        self.assertEqual(self.accept(lines, expected)['phases'][0]['size'], '7')
++
++    def test_every_emitted_key_required(self):
++        original, expected = self.fixture()
++        for index in (0, 1, 2, len(original) - 1):
++            for key in self.decode(original[index]):
++                lines = list(original)
++                fields = self.decode(lines[index])
++                fields.pop(key)
++                lines[index] = self.encode(fields)
++                with self.subTest(row=index, missing=key), self.assertRaises(ValueError):
++                    self.accept(lines, expected)
++
++    def test_unsigned_fields_reject_noninteger_negative_and_overflow(self):
++        original, expected = self.fixture()
++        non_unsigned = {'phase', 'success', 'has_result', 'live_delta',
++                        'last_intersection_reason', 'last_intersection_first_failed_query'}
++        phase_keys = set(self.decode(original[2])) - non_unsigned
++        groups = [(2, phase_keys), (1, {'vector_bytes', 'vector_alignment'}),
++                  (len(original) - 1, {'after_kernel_cleanup_live'})]
++        for index, keys in groups:
++            for key in keys:
++                for value in ('nan', '-1', '18446744073709551616'):
++                    with self.subTest(row=index, key=key, value=value), self.assertRaises(ValueError):
++                        self.accept(self.changed(original, index, key, value), expected)
++        for value in ('1.5', '1e3', '+1', '01', '', '\u0661'):
++            with self.subTest(value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 2, 'vector_copy_attempts', value), expected)
++        for key in ('vector_bytes', 'vector_alignment'):
++            with self.subTest(key=key), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 1, key, '0'), expected)
++
++    def test_signed_deltas_and_null_or_index(self):
++        original, expected = self.fixture()
++        for index, key in ((2, 'live_delta'), (len(original) - 1, 'cleanup_live_delta')):
++            for value in ('-9223372036854775808', '9223372036854775807', '-3', '8', '0'):
++                self.accept(self.changed(original, index, key, value), expected)
++            for value in ('-9223372036854775809', '9223372036854775808', 'nan', '1.5', '-0', '+1'):
++                with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                    self.accept(self.changed(original, index, key, value), expected)
++        for value in ('null', '0', '18446744073709551615'):
++            self.accept(self.changed(original, 2, 'last_intersection_first_failed_query', value), expected)
++        for value in ('NULL', '-1', '1.5', '18446744073709551616'):
++            with self.subTest(value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, 2, 'last_intersection_first_failed_query', value), expected)
++        self.accept(self.changed(original, 2, 'rank_active_coordinates_completed', '18446744073709551615'), expected)
++
++    def test_text_flags_duplicate_extra_and_roi_integrity(self):
++        original, expected = self.fixture()
++        cases = [(0, 'mode', 'unknown'), (0, 'numeric', 'NaN'), (0, 'width_selector', '1.0'),
++                 (1, 'move_construct_noexcept', 'true'), (2, 'phase', 'unknown'),
++                 (2, 'success', '0'), (2, 'has_result', '2'),
++                 (2, 'last_intersection_reason', 'unknown'), (len(original) - 1, 'kernel_check', 'fail')]
++        for index, key, value in cases:
++            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
++                self.accept(self.changed(original, index, key, value), expected)
++        for suffix in (' rank_completed=2', ' unknown_counter=0'):
++            lines = list(original)
++            lines[2] += suffix
++            with self.subTest(suffix=suffix), self.assertRaises(ValueError):
++                self.accept(lines, expected)
++        lines = list(original)
++        lines.pop(3)
++        with self.assertRaises(ValueError):
++            self.accept(lines, expected)
++
++    def test_operations_keeps_only_existing_phase_name_policy(self):
++        original, expected = self.fixture()
++        expected['metadata']['mode'] = 'operations'
++        expected['roi_sequence'] = None
++        # One synthetic phase proves the parser adds no operation-count/order rule.
++        for name in ('constructor_only_caller_alive', 'contains', 'apply',
++                     'union_rhs_still_alive', 'intersection_rhs_still_alive'):
++            row = self.decode(original[2])
++            row['phase'] = name
++            lines = [self.encode(expected['metadata']), original[1], self.encode(row), original[-1]]
++            self.accept(lines, expected)
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,90 @@
++# Narrow profile projection V2 — schema correction, source only
++
++`project_profiles.py` has not been imported or run. It projects only the exact
++approved eligibility inventory80b5b223…17c7b8, accepted closure V4d097ccb5…e3a25,
++and Nb eligibility approvald308dfd8…d2a9ba. No qualification algorithm, scheduler,
++new measurement, library/PIE assumption or dependency-cardinality rule is added.
++
++The writer rechecks their hashes and the accepted checked-file/source/ELF/trace/
++dependency/library identities before creating output. Actual source HEADs must
++remain clean789/30e. It selects the four already accepted profile ELFs; it does
++not rebuild or probe them. Repeated dependency records are allowed. ELF type is
++accepted through its existing bound identity, without inferring PIE.
++
++All204 pass rows remain in the projected plan, with their original eligibility,
++reason and clean measurement statuses. Exactly192 eligible rows receive specs;
++the12 qualification-censored rows have no spec, record or runnable argv. Four
++source/exact-cell qualification observations are required for each eligible row.
++No clean measurement censor or metric is recomputed or upgraded.
++
++The actual C++ program requires `argc==4`:
++
++```text
++PROFILE_ELF ABSOLUTE_TRACE vector_backed|simd_vector_backed operations|roi
++```
++
++The generated specs use that form, the unchanged original scoped_task wrapper,
++isolated Acacia cwd, bound shipping environment and30s cap. Its existing wrapper
++enforces8GiB/no swap. This is instrumented counters/heap evidence; C++ clocks are
++discarded and remain separate from clean timing/censorship.
++
++After root reviews this exact source, the existing owner may run its projection
++through an approved8G/no-swap scope with a new absolute direct-child output path,
++for example `work/default-optimization/profile-trace-specs-v2`. No such directory
++or runnable workload spec has been created by this preparation. Output must be
++fresh; every JSON write is exclusive. A failed partial projection is retained,
++never overwritten. Generating specs does not authorize their execution.
++
++The projected plan binds this writer, the exact inventory/approval/closure,
++wrapper/environment, actual profile ELF/library identities and each trace.
++The execution owner must verify those bindings before each existing-wrapper
++invocation and after the batch; refuse existing record/log/helper sidecars,
++hold the shared host lane lock and keep runs serial. No executor is added here.
++
++For a completed scope, require actual rc0, no timeout/resource limit/OOM, correct
++argv/cwd/environment/helper and preserved stdout/stderr/resource records first.
++Then call `accept_stdout(stdout, row['expected_stdout'])`. It requires exact
++tuple metadata (including actual selector0/1 and16/64 context lanes), shipping
++move-trait record, all successful phases/counter fields, a final kernel pass,
++and the exact original3-region contains or4-region CPre ROI sequence. Operations
++mode accepts only its existing per-call phase names. Scalar's context lane field
++is the program's selected SIMD context, not a claim of scalar SIMD instructions.
++
++Returned phase descriptors with `has_result=0` have `size` and
++`generator_capacity` set to null, not zero retention. The first-failed-query null
++is also preserved as null. Other work/heap values keep their original scope and
++meaning; no absolute retained-backend estimate or instrumented clock ratio is
++invented. Any malformed/failed/partial output is retained and stops for review.
++
++`test_project_profiles.py` contains small synthetic stdout positive/negative
++checks only. It does not generate specs, invoke ELFs or represent actual profile
++results. After separate release it can run under the existing scoped wrapper as
++`python3 -B -m unittest discover -s THIS_DIRECTORY -p test_project_profiles.py`.
++No import, syntax compile, test, projection, probe or profile was run in this task.
++
++## V2 correction
++
++The preserved V1 acceptor required only a subset of emitted fields and left most
++numeric strings unchecked. This version requires exact key sets for all11
++metadata,4 layout,42 phase and3 cleanup fields emitted by the frozen C++ source.
++Missing, duplicate and unexpected fields fail closed.
++
++Decimal tokens use the producer's canonical ASCII spelling: no fractions,
++exponents, plus signs, leading zeros, Unicode digits, NaN or infinity. Counts,
++active coordinates, descriptors and other size_t/uint64 fields use the accepted
++64-bit unsigned range. Both live-delta fields use signed64 bounds. Object sizeof
++and alignment are positive unsigned values. Success/instrumentation/trait flags,
++vector/pass/selector/kernel tokens and intersection reasons use explicit allowed
++values. The first-failed query is literal null or an unsigned64 index.
++
++Validation adds no counter-value relationships, entry/exit equality, inferred
++retention or new operation ordering/count rule. Nonzero positive/negative cleanup
++and phase deltas remain valid. Even nonzero has_result0 placeholders become null,
++while has_result1 descriptors remain available. All projection/input/argv/fresh
++output behavior is unchanged; the exact old-to-new source diff is preserved.
++
++The independent synthetic positive fixture now lists all42 phase fields. Sources
++cover removal of every emitted key, malformed/negative/overflow unsigned fields,
++signed64 boundaries, null-or-index, textual/flag/duplicate/extra failures and the
++unchanged allowed-operation policy. These tests have not been imported or run.
++The parser-only correction needs no C++ rebuild or artifact/eligibility change.

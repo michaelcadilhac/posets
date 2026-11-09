@@ -1,0 +1,21 @@
+{
+  "status": "final outcome-stage exact snapshots; later package audit records remain separate",
+  "created_utc": "2026-11-09T21:36:15.839600+00:00",
+  "files": [
+    {
+      "role": "nbjorner",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/nbjorner-contribution-ledger.json",
+      "snapshot": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-reviewer-snapshots/nbjorner-contribution-ledger.json",
+      "sha256": "3714351bb240b3289ee75cd207fd1cdff472cbe0de39e5ba65c889906042f703",
+      "bytes": 81701
+    },
+    {
+      "role": "barbosa",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/barbosa-review/contribution-ledger.json",
+      "snapshot": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-reviewer-snapshots/barbosa-contribution-ledger.json",
+      "sha256": "9fef44ebb0e443bf30d28929debc59b676ed07c17e212747c556c0c32ccfbde5",
+      "bytes": 80802
+    }
+  ],
+  "attribution": "Skill-guided agents, not personal researcher participation; assignments differ and evidence shared; no controlled ranking or reliable comparative cost/time totals."
+}

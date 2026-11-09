@@ -1,0 +1,48 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+    "--build-dir",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712",
+    "--source-dir",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets-preopt-baseline",
+    "--trace-plan",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+    "--measure",
+    "--rounds",
+    "1",
+    "--repetitions",
+    "1",
+    "--seed",
+    "260617",
+    "--source-timeout",
+    "30",
+    "--check-timeout",
+    "2",
+    "--case-timeout",
+    "2",
+    "--memory-max",
+    "8G",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-cachepass-train/pair0-baseline"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+  "timeout": 7200,
+  "pair": 0,
+  "variant": "baseline",
+  "driver": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+    "sha256": "b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf"
+  },
+  "trace_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+    "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+  },
+  "frozen_build_source_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712/provenance.json",
+    "sha256": "1dd1d5af3802c26d0cda30608ef8de1a049cb4e552c20fc1ed9bd202da673e9b"
+  },
+  "source_revision": "7c407128326583abbb137fd3832857ed506e20fb"
+}

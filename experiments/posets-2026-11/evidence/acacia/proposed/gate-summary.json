@@ -1,0 +1,34 @@
+{
+  "status": "proposed/pending-root-freeze",
+  "checks": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/checks-summary.json",
+    "sha256": "d6c003c1c4bb7926dcce1e91b91497f59d7fc54ee1d18cb22f3e1dfe5fdcb0f4"
+  },
+  "provenance": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+    "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+  },
+  "arms": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/arms.json",
+    "sha256": "904edcd5739b273b7e932a5ec34f3546da6409d3e0ec3ace536a7e810e22f6cd"
+  },
+  "exact15_empty_primary_flags_validated": true,
+  "baseline_pristine_anchor": true,
+  "source_patch_and_pins_verified": true,
+  "build_tests_authoritatively_true": true,
+  "unit87_version1_Boolean112_CLI45_passed": true,
+  "distinct_scoped_setup_build_check_calls": 57,
+  "memory_peak_coverage": {
+    "valid": 57,
+    "total": 57,
+    "max_bytes": 1499787264
+  },
+  "cpu_coverage": {
+    "valid": 57,
+    "total": 57,
+    "sum_seconds": 1360.28043
+  },
+  "oom_count": 0,
+  "current_binaries_still_in_build_locations_not_officially_frozen": true,
+  "official_freeze_dryrun_and_primary_launch_not_started": true
+}

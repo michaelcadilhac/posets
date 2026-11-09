@@ -1,0 +1,100 @@
+Seen TRAIN only; actual789 baseline versus30e candidate. Tiers remain separate.
+Ratio=median of3 MATCHED optimized/base ratios; below1 favors candidate. Separate baseline/candidate medians are descriptive and their quotient is a different estimator. Raw three-pair seconds/ratios and all statuses remain in the adjacent authoritative cells.tsv/summary.json.
+Compatible128(16signed-char lanes) is primary; native512(64lanes) is companion. Stars mean observed median paired ratio>1, not statistical significance.
+before/recorded_after are captured generator cardinalities. BUILD constructs BEFORE. CPre REBUILD constructs AFTER with computed frontier and verification live; membership REBUILD constructs BEFORE again with original region/query live. Neither is in-place maintenance.
+Standard12 retains cpre6 trace2 source30s timeout; larger5of6 excludes incomplete cpre7 ORIGINALid3/fourthrow, with original failed epoch unpooled. No repairs/retries/cap changes.
+
+standard-train: 58/64 paired metrics;6source-censored;132timingpass;402executed;0OOM
+trace/instance | kind | before/recorded_after,D | width | metric | baseline median ms | candidate median ms | median matched ratio | raw ratios0,1,2 | status
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 128 | cpre | 0.874469 | 0.734073 | 0.822664 | 0.789117,0.822664,1.046863 | paired
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 128 | build | 0.250537 | 0.226252 | 0.920202 | 0.840775,0.920202,1.014573 | paired
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 128 | rebuild | 0.248341 | 0.254329 | 0.877447 | 0.858517,0.877447,1.373308 | paired
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 512 | cpre | 0.946003 | 1.136374 | 1.190987 * | 1.205748,1.190987,0.888049 | paired
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 512 | build | 0.308815 | 0.361036 | 1.151248 * | 1.236261,1.151248,0.961124 | paired
+0/collector_v1_pb_9_pe_.ltl | cpre | 256/257,D523 | 512 | rebuild | 0.280286 | 0.361692 | 1.311647 * | 1.311647,1.511142,0.947953 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 128 | cpre | 5.810257 | 5.435595 | 0.947519 | 0.951402,0.932760,0.947519 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 128 | build | 2.297161 | 2.506221 | 1.077665 * | 1.121985,1.077665,0.968078 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 128 | rebuild | 1.726634 | 1.624981 | 0.938409 | 0.938409,0.917941,0.990683 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 512 | cpre | 4.887648 | 4.457412 | 0.947341 | 0.947341,0.903077,0.962690 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 512 | build | 1.723345 | 1.517685 | 0.880662 | 0.870113,0.880662,1.018604 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | cpre | 552/414,D453 | 512 | rebuild | 1.037833 | 0.953891 | 0.915933 | 0.902144,0.920056,0.915933 | paired
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 128 | cpre | -- | -- | -- | --,--,-- | censored
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 128 | build | -- | -- | -- | --,--,-- | censored
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 128 | rebuild | -- | -- | -- | --,--,-- | censored
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 512 | cpre | -- | -- | -- | --,--,-- | censored
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 512 | build | -- | -- | -- | --,--,-- | censored
+2/full_arbiter_enc_pb_8_pe_.ltl | cpre | 1009/6446,D43 | 512 | rebuild | -- | -- | -- | --,--,-- | censored
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 128 | cpre | 0.046753 | 0.041435 | 0.891746 | 0.860958,0.891746,0.896349 | paired
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 128 | build | 0.006808 | 0.006251 | 0.910546 | 0.758156,1.062068,0.910546 | paired
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 128 | rebuild | 0.003546 | 0.003210 | 0.905245 | 0.884231,0.931499,0.905245 | paired
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 512 | cpre | 0.059565 | 0.055477 | 0.925669 | 0.962207,0.900495,0.925669 | paired
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 512 | build | 0.008964 | 0.009669 | 1.096383 * | 1.111446,1.096383,1.022764 | paired
+3/load_balancer_pb_4_pe_.ltl | cpre | 17/20,D29 | 512 | rebuild | 0.004366 | 0.003814 | 0.873568 | 0.845840,0.873568,0.931407 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 128 | cpre | 0.035344 | 0.030769 | 0.861193 | 0.861193,0.918344,0.777840 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 128 | build | 0.006859 | 0.006044 | 0.874611 | 0.874611,0.881178,0.767216 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 128 | rebuild | 0.002983 | 0.002334 | 0.782434 | 0.775360,0.816940,0.782434 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 512 | cpre | 0.048204 | 0.046246 | 0.963032 | 0.859099,0.963032,0.995223 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 512 | build | 0.009322 | 0.009208 | 0.963313 | 1.207016,0.933780,0.963313 | paired
+4/amba_decomposed_arbiter_pb_4_pe_.ltl | cpre | 16/16,D24 | 512 | rebuild | 0.003143 | 0.002710 | 0.862234 | 0.862234,0.817815,0.888500 | paired
+5/06.ltl | cpre | 1/25,D13609 | 128 | cpre | 1.133417 | 0.883374 | 0.767578 | 0.891444,0.721541,0.767578 | paired
+5/06.ltl | cpre | 1/25,D13609 | 128 | build | 0.012092 | 0.011845 | 0.973868 | 1.025058,0.973868,0.954395 | paired
+5/06.ltl | cpre | 1/25,D13609 | 128 | rebuild | 0.309723 | 0.289017 | 0.916519 | 0.963283,0.908612,0.916519 | paired
+5/06.ltl | cpre | 1/25,D13609 | 512 | cpre | 1.039264 | 0.846291 | 0.816440 | 0.816440,0.814318,0.831306 | paired
+5/06.ltl | cpre | 1/25,D13609 | 512 | build | 0.012058 | 0.015224 | 1.251285 * | 1.240244,1.251285,1.492386 | paired
+5/06.ltl | cpre | 1/25,D13609 | 512 | rebuild | 0.293362 | 0.289700 | 0.964427 | 0.964427,0.959024,0.999448 | paired
+6/collector_v1_pb_9_pe_.ltl | contains | 256/256,D523 | 128 | build | 0.223221 | 0.200123 | 0.893660 | 0.896524,0.893660,0.878450 | paired
+6/collector_v1_pb_9_pe_.ltl | contains | 256/256,D523 | 128 | rebuild | 0.233255 | 0.200971 | 0.861594 | 0.862290,0.808082,0.861594 | paired
+6/collector_v1_pb_9_pe_.ltl | contains | 256/256,D523 | 512 | build | 0.272119 | 0.228127 | 0.849356 | 0.849356,0.860644,0.838335 | paired
+6/collector_v1_pb_9_pe_.ltl | contains | 256/256,D523 | 512 | rebuild | 0.265033 | 0.221495 | 0.823701 | 0.823701,0.843473,0.819760 | paired
+7/full_arbiter_enc_pb_8_pe_.ltl | contains | 1009/1009,D43 | 128 | build | 1.671492 | 1.185092 | 0.695653 | 0.694432,0.719822,0.695653 | paired
+7/full_arbiter_enc_pb_8_pe_.ltl | contains | 1009/1009,D43 | 128 | rebuild | 1.649826 | 1.190094 | 0.728034 | 0.731416,0.728034,0.682753 | paired
+7/full_arbiter_enc_pb_8_pe_.ltl | contains | 1009/1009,D43 | 512 | build | 2.367377 | 1.725910 | 0.729039 | 0.721587,0.737504,0.729039 | paired
+7/full_arbiter_enc_pb_8_pe_.ltl | contains | 1009/1009,D43 | 512 | rebuild | 2.343551 | 1.738916 | 0.742000 | 0.745506,0.742000,0.737973 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 128 | cpre | 0.002765 | 0.002764 | 1.034720 * | 1.034720,0.907026,1.196537 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 128 | build | 0.002956 | 0.003243 | 0.981241 | 0.907984,1.259534,0.981241 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 128 | rebuild | 0.000286 | 0.000277 | 0.944056 | 0.933993,0.989286,0.944056 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 512 | cpre | 0.002780 | 0.003098 | 1.114388 * | 1.039617,1.252635,1.114388 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 512 | build | 0.003460 | 0.004728 | 1.366474 * | 1.366474,1.884474,1.349119 | paired
+8/roundtrip-9cfd2bcc24e38f41cdc2bbc02bf0983564083631a2a1571ce78ada30343d7397-original | cpre | 1/1,D4 | 512 | rebuild | 0.000339 | 0.000354 | 1.050147 * | 1.050147,1.008547,1.083077 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 128 | cpre | 0.002429 | 0.002056 | 0.897900 | 1.046843,0.897900,0.831575 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 128 | build | 0.002627 | 0.002708 | 1.069281 * | 0.834239,1.174328,1.069281 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 128 | rebuild | 0.000307 | 0.000300 | 0.977199 | 1.047782,0.977199,0.903030 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 512 | cpre | 0.002282 | 0.002500 | 1.114082 * | 1.378556,1.049956,1.114082 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 512 | build | 0.003139 | 0.004576 | 1.417968 * | 1.862434,1.417968,1.326885 | paired
+9/dpa-61f5875218577ab3988c821989c822e517a3fa2f6d723418f1c8d20924eae5b3-infinite-companion | cpre | 1/1,D6 | 512 | rebuild | 0.000384 | 0.000391 | 1.026247 * | 1.015625,1.072539,1.026247 | paired
+10/roundtrip-67c3acb691362c701d6d8278532234a49f0b577c5c35b05245f9112501a1fda7-infinite-companion | contains | 1/1,D1 | 128 | build | 0.003555 | 0.003285 | 0.995198 | 1.008712,0.924051,0.995198 | paired
+10/roundtrip-67c3acb691362c701d6d8278532234a49f0b577c5c35b05245f9112501a1fda7-infinite-companion | contains | 1/1,D1 | 128 | rebuild | 0.000298 | 0.000301 | 1.006711 * | 0.934783,1.006711,1.076655 | paired
+10/roundtrip-67c3acb691362c701d6d8278532234a49f0b577c5c35b05245f9112501a1fda7-infinite-companion | contains | 1/1,D1 | 512 | build | 0.003424 | 0.005104 | 1.411507 * | 1.411507,1.254054,1.765484 | paired
+10/roundtrip-67c3acb691362c701d6d8278532234a49f0b577c5c35b05245f9112501a1fda7-infinite-companion | contains | 1/1,D1 | 512 | rebuild | 0.000414 | 0.000416 | 1.014888 * | 1.029885,1.014888,1.004831 | paired
+11/dpa-f9d836abf9cbf551c846a30679b224a5c12976a67935592161e09019c7f58a6a-original | contains | 1/1,D10 | 128 | build | 0.003537 | 0.003279 | 1.036189 * | 0.875100,1.036189,1.040000 | paired
+11/dpa-f9d836abf9cbf551c846a30679b224a5c12976a67935592161e09019c7f58a6a-original | contains | 1/1,D10 | 128 | rebuild | 0.000299 | 0.000313 | 1.083045 * | 0.973244,1.083045,1.088235 | paired
+11/dpa-f9d836abf9cbf551c846a30679b224a5c12976a67935592161e09019c7f58a6a-original | contains | 1/1,D10 | 512 | build | 0.003586 | 0.005020 | 1.378964 * | 1.516616,1.378964,1.337423 | paired
+11/dpa-f9d836abf9cbf551c846a30679b224a5c12976a67935592161e09019c7f58a6a-original | contains | 1/1,D10 | 512 | rebuild | 0.000443 | 0.000430 | 0.970655 | 0.970655,0.869658,0.990783 | paired
+
+larger-train: 22/22 paired metrics;60timingpass;180executed;0OOM
+trace/instance | kind | before/recorded_after,D | width | metric | baseline median ms | candidate median ms | median matched ratio | raw ratios0,1,2 | status
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 128 | cpre | 101.780325 | 98.552219 | 0.954482 | 0.954482,0.943707,0.976021 | paired
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 128 | build | 152.300387 | 149.106364 | 0.966156 | 0.966156,0.959923,0.984547 | paired
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 128 | rebuild | 42.690609 | 41.728247 | 0.984002 | 0.984002,0.961522,0.987367 | paired
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 512 | cpre | 84.288483 | 77.895543 | 0.930462 | 0.955639,0.914924,0.930462 | paired
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 512 | build | 108.423303 | 101.883039 | 0.941397 | 0.957564,0.939678,0.941397 | paired
+0/round_robin_arbiter_pb_4_pe_.ltl | cpre | 4588/2294,D453 | 512 | rebuild | 29.181831 | 27.069124 | 0.936261 | 0.962650,0.918042,0.936261 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 128 | build | 150.637550 | 148.465766 | 1.008608 * | 1.014578,0.935477,1.008608 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 128 | rebuild | 154.587714 | 150.782065 | 1.010568 * | 1.016960,0.939042,1.010568 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 512 | build | 108.643649 | 99.382183 | 0.925746 | 0.956326,0.925746,0.912199 | paired
+1/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 512 | rebuild | 109.036957 | 100.331289 | 0.927900 | 0.953795,0.927900,0.917206 | paired
+2/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 128 | build | 148.549380 | 146.957450 | 0.989283 | 0.997670,0.989283,0.944751 | paired
+2/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 128 | rebuild | 150.308959 | 149.423854 | 0.994111 | 1.026814,0.994111,0.948601 | paired
+2/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 512 | build | 106.961345 | 99.026675 | 0.922914 | 0.915845,0.922914,0.948531 | paired
+2/round_robin_arbiter_pb_4_pe_.ltl | contains | 4588/4588,D453 | 512 | rebuild | 108.596639 | 99.337975 | 0.914475 | 0.908159,0.914475,0.947239 | paired
+3/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 128 | build | 70.730185 | 48.917563 | 0.703990 | 0.720916,0.690118,0.703990 | paired
+3/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 128 | rebuild | 72.488043 | 51.337750 | 0.721235 | 0.721235,0.697478,0.723104 | paired
+3/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 512 | build | 94.892879 | 68.916915 | 0.737864 | 0.737864,0.710422,0.738927 | paired
+3/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 512 | rebuild | 97.896018 | 70.991228 | 0.727307 | 0.727307,0.733158,0.725170 | paired
+4/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 128 | build | 69.469919 | 49.236270 | 0.710555 | 0.710555,0.716216,0.694886 | paired
+4/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 128 | rebuild | 72.290056 | 51.137776 | 0.709156 | 0.716517,0.709156,0.688142 | paired
+4/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 512 | build | 94.138046 | 69.336303 | 0.732036 | 0.732036,0.729212,0.753221 | paired
+4/full_arbiter_enc_pb_8_pe_.ltl | contains | 6446/6446,D43 | 512 | rebuild | 95.818854 | 71.153211 | 0.731939 | 0.731939,0.725647,0.758480 | paired
+
+Limits: three observations/cell; no significance/noise-floor claim; tiny fuzz clocks do not establish small speedups. Single-query contains clocks excluded. Process peaks/CPU include parse/check/launch, not retained allocation.
+The native512 collector whole-CPre regression and compatible128 round-robin552 construction regression remain in the table; no universal speedup claim.

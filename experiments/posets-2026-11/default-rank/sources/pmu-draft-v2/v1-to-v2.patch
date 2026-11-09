@@ -1,0 +1,23 @@
+--- v1/STATIC-CHECKS.json
++++ v2/STATIC-CHECKS.json
+@@ -14,7 +14,7 @@
+     "Verify new manifest/all input hashes and exact two-hunk CLI patch; reject unlisted dependency or production diff.",
+     "Review exact reused event/control slice and lifecycle including failed-region, unsupported-event and check-only paths.",
+     "Compile four matched stats-off source/width roles serially in the existing scope; save argv/cwd/compiler/link/dependency/ELF/library records.",
+-    "Run original --metadata on each ELF in mode=check: prove rank-only registry and both original vector flavors plus expected width; no region captures.",
++    "Run original --metadata on each ELF in mode=check: establish rank-only registry and expected width; no region captures. Both original vector instantiations are supported by the exact bound CLI source at lines374-375, not independently by --metadata or the literal original_vector_flavors=2 marker.",
+     "Bind the already reviewed actual-pin source-oracle/backend report chain and trace/meta/capture hashes for indices0/1.",
+     "Run8 independent original --check=replay backend checks in mode=check: kernel exit0, zero region/capture calls, actual rank/SIMD selection and exact source/header bindings.",
+     "Freeze/approve all32 check/measurement commands plus four metadata records and bounded resource specs before PMU execution.",
+--- v1/README.txt
++++ v2/README.txt
+@@ -49,3 +49,9 @@
+ Reused phase-one controls and original clean recipe hashes are in source-manifest.
+ The eight new backend checks must follow new789/30e source qualification, rather
+ than rely on the old phase-one oracle. Preserve all failed/partial/resource rows.
++
++V2 changes only the anticipated metadata-evidence wording. The original
++--metadata reports backend registry and width; both vector instantiations are
++supported by the bound CLI source. The original_vector_flavors=2 runtime marker
++is a literal and is not an independent vector-inventory probe. All C++ source
++and measurement-plan bytes remain identical to V1. V1 remains preserved.

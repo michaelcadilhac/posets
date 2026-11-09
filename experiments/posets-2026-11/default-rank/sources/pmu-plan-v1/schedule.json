@@ -1,0 +1,176 @@
+{
+  "status": "conditional source-only plan; no controller or execution",
+  "four_cells": [
+    {
+      "name": "collector-cpre-compatible",
+      "trace": 0,
+      "width": "compatible",
+      "phase": "cpre",
+      "region": 1
+    },
+    {
+      "name": "collector-cpre-native",
+      "trace": 0,
+      "width": "native",
+      "phase": "cpre",
+      "region": 1
+    },
+    {
+      "name": "rr552-build-compatible",
+      "trace": 1,
+      "width": "compatible",
+      "phase": "build",
+      "region": 0
+    },
+    {
+      "name": "rr552-build-native",
+      "trace": 1,
+      "width": "native",
+      "phase": "build",
+      "region": 0
+    }
+  ],
+  "case_permutations_by_declared_case_index": [
+    [
+      3,
+      0,
+      2,
+      1
+    ],
+    [
+      2,
+      1,
+      3,
+      0
+    ],
+    [
+      0,
+      3,
+      2,
+      1
+    ]
+  ],
+  "permutation_provenance": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/final-cc058ca-v1/results/run.json",
+    "sha256": "ea143da6d4a9696670aeac5960ff38dd6948fe6c70f4c1f2d9e580e3bc58539c",
+    "rule": "reuse the existing verified seed260617/260618/260619 four-case permutations by ordinal, mapping old manifest indices0/1/2/3 to the four newly declared case indices; no new randomizer or controller"
+  },
+  "pair_role_order": [
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ]
+  ],
+  "build_stage_order": [
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-compatible-compile.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-compatible-compile-record.json",
+      "require_previous_compile_success": false
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-compatible-link.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-compatible-link-record.json",
+      "require_previous_compile_success": true
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-native-compile.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-native-compile-record.json",
+      "require_previous_compile_success": false
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-baseline-native-link.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-baseline-native-link-record.json",
+      "require_previous_compile_success": true
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-compatible-compile.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-compatible-compile-record.json",
+      "require_previous_compile_success": false
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-compatible-link.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-compatible-link-record.json",
+      "require_previous_compile_success": true
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-native-compile.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-native-compile-record.json",
+      "require_previous_compile_success": false
+    },
+    {
+      "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/specs/build-candidate-native-link.json",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/build-candidate-native-link-record.json",
+      "require_previous_compile_success": true
+    }
+  ],
+  "runtime_command_order": [
+    "metadata-baseline-compatible",
+    "metadata-baseline-native",
+    "metadata-candidate-compatible",
+    "metadata-candidate-native",
+    "check-baseline-collector-cpre-compatible",
+    "check-candidate-collector-cpre-compatible",
+    "check-baseline-collector-cpre-native",
+    "check-candidate-collector-cpre-native",
+    "check-baseline-rr552-build-compatible",
+    "check-candidate-rr552-build-compatible",
+    "check-baseline-rr552-build-native",
+    "check-candidate-rr552-build-native",
+    "pmu-pair0-baseline-rr552-build-native",
+    "pmu-pair0-candidate-rr552-build-native",
+    "pmu-pair0-baseline-collector-cpre-compatible",
+    "pmu-pair0-candidate-collector-cpre-compatible",
+    "pmu-pair0-baseline-rr552-build-compatible",
+    "pmu-pair0-candidate-rr552-build-compatible",
+    "pmu-pair0-baseline-collector-cpre-native",
+    "pmu-pair0-candidate-collector-cpre-native",
+    "pmu-pair1-candidate-rr552-build-compatible",
+    "pmu-pair1-baseline-rr552-build-compatible",
+    "pmu-pair1-candidate-collector-cpre-native",
+    "pmu-pair1-baseline-collector-cpre-native",
+    "pmu-pair1-candidate-rr552-build-native",
+    "pmu-pair1-baseline-rr552-build-native",
+    "pmu-pair1-candidate-collector-cpre-compatible",
+    "pmu-pair1-baseline-collector-cpre-compatible",
+    "pmu-pair2-baseline-collector-cpre-compatible",
+    "pmu-pair2-candidate-collector-cpre-compatible",
+    "pmu-pair2-baseline-rr552-build-native",
+    "pmu-pair2-candidate-rr552-build-native",
+    "pmu-pair2-baseline-rr552-build-compatible",
+    "pmu-pair2-candidate-rr552-build-compatible",
+    "pmu-pair2-baseline-collector-cpre-native",
+    "pmu-pair2-candidate-collector-cpre-native"
+  ],
+  "counts": {
+    "build_recipes": 4,
+    "compile_link_specs": 8,
+    "metadata": 4,
+    "backend_checks": 8,
+    "measurement": 24
+  },
+  "host_lock": {
+    "existing_source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+    "expression": "/tmp/acacia-posets-benchmark-{os.getuid()}.lock",
+    "owner_requirement": "existing sole benchmark owner acquires and holds this same exclusive host lock for the entire authorized sequence; scoped_task does not itself acquire it"
+  },
+  "resources": {
+    "wrapper": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "runtime_affinity": "CPU2 exactly, separate from prior clean replay",
+    "serial": true
+  },
+  "activation": "root work/heap interpretation and approval, source/spec review and actual ELF/dependency/library freeze are required; drafting is not PMU activation",
+  "failure_policy": "stop on compiler/metadata/backend/ROI rejection; retain missing/unsupported/denied/multiplexed event statuses; no zero fill, scaling, event retries, extra cells or flags",
+  "results_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1",
+  "artifacts_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned"
+}

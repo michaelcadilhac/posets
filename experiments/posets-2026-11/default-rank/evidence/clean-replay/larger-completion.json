@@ -1,0 +1,20 @@
+{
+  "actual_argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/run-paired-replay-stop-on-correctness.py",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-large-train-plan.json"
+  ],
+  "completed_utc": "2026-11-09T17:06:34.480679+00:00",
+  "controller_returncode": 0,
+  "coverage_note": "5of6 largerTRAIN complete frames; originalid3/fourthrow cpre7 excluded, original diagnostic unpooled",
+  "session_id": 92662,
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/larger-train-summary.json",
+    "sha256": "67aa0d81f1aaebd378bd8ea6a350acb987d1ff7fd7f66aa9c9219dbc27184711"
+  },
+  "summary_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/larger-train-summary-record.json",
+    "sha256": "6c94d43049b9ec5ef5b19d11bf36312d30cf5bebe897d4720094d8fc279618cb"
+  }
+}

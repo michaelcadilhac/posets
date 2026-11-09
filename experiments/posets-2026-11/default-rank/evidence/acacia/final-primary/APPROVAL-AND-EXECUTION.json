@@ -1,0 +1,61 @@
+{
+  "actual_command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "affinity_or_quota_override": false,
+  "approvals": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-acacia-v3-final-pre-primary-audit.json",
+      "sha256": "8103b3d6d0ad5fa7e5355ef143f35fc6fa9353035f65decc830f31555cb63622"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/barbosa-review/acacia-final-two-arm-readiness-audit-v3.json",
+      "sha256": "0f60cd0fe1d6c8dc738d1091519c231ebfdabf15024c9d698347effda2ea67ae"
+    }
+  ],
+  "arms": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "sha256": "d8afd5b4b9e901581f017dd169eefb4675e84d4df782278cd7bd9aacf253dcc1"
+  },
+  "checkpoint": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/FINAL-REVIEW-CHECKPOINT.json",
+    "sha256": "23b06573b1f3eb8ca63ca944fb7d66beade7941b4dc2446dfbfbcfb363561950"
+  },
+  "controller_pid": 2470208,
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "sha256": "434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035"
+  },
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "1",
+    "CARGO_HOME": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/cargo",
+    "CARGO_NET_OFFLINE": "true",
+    "LD_LIBRARY_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+    "PKG_CONFIG_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "interpreter": {
+    "path": "/usr/bin/python3.14",
+    "sha256": "0d64bd6d66d68dac91cdadafc46e22d4f09f22bdc997aaae870f42865b024a3e"
+  },
+  "interpreter_note": "Approved unchanged script is0644; exactapproveddryrun Python-B prefix, unchanged script/argv; no chmod/source modification.",
+  "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+  "release": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/ROOT-PRIMARY-RELEASE.json",
+    "sha256": "25a38c536562a44717f0d7593d0dee7b88f028a1dfe628c33f643fe039802899"
+  },
+  "source_attribution_limit": "Independent private Rust artifacts: source-treatment comparison, not byte-identical nonrank executables.",
+  "started_utc": "2026-11-09T19:30:54.281293+00:00",
+  "status": "rootapproved exacttwoarm primary starting; no results yet"
+}

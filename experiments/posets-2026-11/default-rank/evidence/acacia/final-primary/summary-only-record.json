@@ -1,0 +1,9 @@
+{
+  "exit_code": 0,
+  "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/summary-only.log",
+  "log_sha256": "1a2eafc613538142e1c5cae5b9b1ca5519d9248243e1fa3a24f142d9b6851387",
+  "seconds": 0.6656240459997207,
+  "spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/summary-only-spec.json",
+  "spec_sha256": "0e5d9e365f8d6d599fc0a87957aed751f456721e1eb8f5ebead72109cf0b8a77",
+  "started_utc": "2026-11-09T21:23:22.603712+00:00"
+}

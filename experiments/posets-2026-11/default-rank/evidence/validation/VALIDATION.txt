@@ -1,0 +1,9 @@
+Final post-style source gates: 9 GCC debug/assertion tests, 9 portable Clang22 assertion tests, and 3 portable GCC positive-hook Memcheck oracle/allocation runs pass. Each Memcheck reports 0 errors, 0 live exit bytes and75,014 alloc/free pairs. Both rank statistics modes, empty and concept fixtures pass.
+
+Final owned-header/new-test configured Clang-tidy22 and formatting pass. Full unchanged-baseline24 tidy22 failed with111 warning-as-error diagnostics in7min; preserved verbatim. Per parent instruction candidate full24 sweep skipped. The full-filter new-fixture attempt retains byte-unchanged dependency diagnostics; final targeted lint changes only header reporting scope, keeps every configured check/error policy. Actual CI18 is unavailable locally and remains a required PR gate.
+
+Production algorithm/order/exception policy unchanged from reviewedv2: optional typename/readability braces/explicit bool casts and formatting. Test-only style/attributes/local exact-check annotations are exposed by candidate-draft-v3/v2-to-v3.patch. No test expectation or fault sentinel weakened.
+
+Every workload ran serially under unchanged scoped_task.py8GiB/no-swap; no OOM/timeouts. Initial sandbox bus denial and a derivative-runner wrong-plan-path assertion stopped before workload and are preserved separately. Fresh baseline independent clone remains clean. Candidate has only the3 tracked delta files and new rank-bucketed.cc. Old corev2/helperv1/main/frozen sources remain unchanged.
+
+No replay/helper execution, profile or timing performed. No broader whole-suite claim. Compiler/check lane released. See VALIDATION.json, exact rerun-plan/specs/records, assertion-width-compile-bindings.json and evidence-inventory.json.

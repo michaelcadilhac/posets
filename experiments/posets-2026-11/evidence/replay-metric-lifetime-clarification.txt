@@ -1,0 +1,21 @@
+Reporting clarification only; no code, plan, method or timing change.
+Source: Posets tests/matrix-cpre.hh, membership lines300-310 and CPre321-392.
+
+For an actual-contains trace, build constructs from recorded before generators.
+The recorded query then runs, and rebuild is a second fresh constructor from the
+same before generators while the first region and query remain alive.
+
+For a CPre trace, build constructs from before generators. The whole-CPre timer
+covers transformations/union/intersection and temporary destruction. Result
+verification and the initial-state membership check happen outside that timer.
+Rebuild then freshly constructs from recorded AFTER generators, while the
+computed frontier and verification scaffolding remain alive. Thus its input
+cardinality can differ from the trace's before/frontier cardinality.
+
+Neither replay rebuild field measures an in-place KD rebuild or isolated lazy
+maintenance. Allocation-profiler rebuild counters are separate quantities.
+The choice-freeze wording 'second fresh construction with first instance alive'
+is a high-level category; these per-kind details govern reporting. When exporting
+tables, label the trace descriptor as before_maxima and supply after_maxima or
+construction cardinality where available, especially for CPre rebuild rows.
+Preserve original raw schemas and filenames; add clarified derived labels.

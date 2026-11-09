@@ -1,0 +1,69 @@
+{
+  "arms": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "sha256": "d8afd5b4b9e901581f017dd169eefb4675e84d4df782278cd7bd9aacf253dcc1"
+  },
+  "checkpoint": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/FINAL-REVIEW-CHECKPOINT.json",
+    "sha256": "23b06573b1f3eb8ca63ca944fb7d66beade7941b4dc2446dfbfbcfb363561950"
+  },
+  "command": [
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "conditions": [
+    "unchanged campaign.py and scoped execution,8G/noSwap,strict17s,serial benchmark lock",
+    "record actual frozen.json SHA before accepting results; no changes to roles,flags,source,scoring,universe",
+    "no retuning/rescoring/retrying censored workloads; retain failures and missing evidence",
+    "independent private Rust artifacts mean source-treatment comparison,not byte-identical nonrank binaries",
+    "final summary-only,invariance,table and reviewer result checks required"
+  ],
+  "created_utc": "2026-11-09T19:28:59.906069+00:00",
+  "direct_bindings_checked": 19,
+  "exact_universe": {
+    "CPU_quota": null,
+    "affinity": null,
+    "baseline": "baseline-default",
+    "batch_size": 32,
+    "cap_seconds": 17,
+    "flags": [
+      "",
+      ""
+    ],
+    "instances_per_arm": 1524,
+    "labels": [
+      "baseline-default",
+      "optimized-default"
+    ],
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "posets": [
+      "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "30e66853832d98bcfaada296d892157b95a8150d"
+    ],
+    "rows": 3048,
+    "seed": 260617
+  },
+  "gate_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/gate-summary-campaign.json",
+    "sha256": "3b4e10c39164be6e712ec694e68636a7ddd7ea3e991d4ace2d528d6625712743"
+  },
+  "review_approvals": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-acacia-v3-final-pre-primary-audit.json",
+      "sha256": "8103b3d6d0ad5fa7e5355ef143f35fc6fa9353035f65decc830f31555cb63622"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/barbosa-review/acacia-final-two-arm-readiness-audit-v3.json",
+      "sha256": "0f60cd0fe1d6c8dc738d1091519c231ebfdabf15024c9d698347effda2ea67ae"
+    }
+  ],
+  "status": "ROOT RELEASED exact final two-arm primary; no measurement results yet"
+}

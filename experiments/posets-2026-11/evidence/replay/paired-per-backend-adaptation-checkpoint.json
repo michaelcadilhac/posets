@@ -1,0 +1,54 @@
+{
+  "status": "all96 real ELFs/full maps/semantic fixtures accepted; bounded adaptation checks pass; no performance commands",
+  "files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/prepare-paired-replay.py",
+      "sha256": "8a25583e70f23ff2d41bde8630a5547d1e24d09a6f8b82dac70e6861bdd2e2a9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay.py",
+      "sha256": "c0062ff177aff7422ccd1abdcf2f8f03519170b1332e5dec951bf173e1675fd9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/summarize-paired-replay.py",
+      "sha256": "6ed02cdfc2837cb562fd881e29fd59ef5134420a25944eebb7b001b48e439215"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/check-paired-map-adaptation.py",
+      "sha256": "cbe68d4fb56b1f8eabe8ab8f5e04438eef6f75087245c76fec1fca35185bdd9e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-adaptation.patch",
+      "sha256": "f5cad3c8b4960438c068c408eaaa58f9bdb366583d4b25b148da2e60659c64ca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-map-adaptation-check-record.json",
+      "sha256": "f50026c06301a2c6121f1d0020d648ca8e87368657c3808f7b02ff357f8e5823"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-map-adaptation-check-record.log",
+      "sha256": "a4258dd5d7e43443d72daff4935ef679a79529f85309e3e2eac082ff89890ac5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-ready-summary.json",
+      "sha256": "e0dfba733785c7ba44142acbe71a52a7d7f01e8bbbef211943a277eb67fe4ddf"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-full-validation/summary.json",
+      "sha256": "a1b44c383e57058573276affd4f90b00b27b002e05dd5cd656459074315da046"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-semantics-summary.json",
+      "sha256": "44a1e5314754f584a013ecd02b0800000f8b7cdafebbc9ba6d29ca6366c69013"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-plan.json",
+      "sha256": "e044c1c80b395f090f9a0bcbf85188016ca4f6768c61d45e314c656fd5af8576"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-plan.json",
+      "sha256": "414bcc2319a62e08e6757daa0e582df6a6b81c10dd4122657d36a18a2da06cb6"
+    }
+  ],
+  "scope": "map/base bindings plus None-safe timeout/missing-memory and cross-anchor compiler/width comparability only; schedules/caps/groups/kernels unchanged"
+}

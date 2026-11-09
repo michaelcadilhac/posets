@@ -1,0 +1,36 @@
+{
+  "plans": [
+    {
+      "original": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-plan.json",
+        "sha256": "e044c1c80b395f090f9a0bcbf85188016ca4f6768c61d45e314c656fd5af8576"
+      },
+      "supervised": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-stop-on-correctness-plan.json",
+        "sha256": "1e6c1d8250930a5196c38ffd3884f08cc878c634628418c75276fc1a805ea16b"
+      },
+      "only_changed_field": "orchestrator",
+      "specs_order_caps_maps_sources_unchanged": true
+    },
+    {
+      "original": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-plan.json",
+        "sha256": "414bcc2319a62e08e6757daa0e582df6a6b81c10dd4122657d36a18a2da06cb6"
+      },
+      "supervised": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-stop-on-correctness-plan.json",
+        "sha256": "e2319ca63c82813d2ad1e7e63316170ff2011b4cf0cfeb17c30a701aa10a59bf"
+      },
+      "only_changed_field": "orchestrator",
+      "specs_order_caps_maps_sources_unchanged": true
+    }
+  ],
+  "controller": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay-stop-on-correctness.py",
+    "sha256": "aa41c98deb2bda5293c53e54496c90b5678652f4e87c7835c12fecaf1969f661"
+  },
+  "diff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop.patch",
+    "sha256": "eb27f4f3b0a0386f810ff96473fb3e53a313d49f72404b055cfdedfc9b40fb43"
+  }
+}

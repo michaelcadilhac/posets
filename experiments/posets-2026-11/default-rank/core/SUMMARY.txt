@@ -1,0 +1,9 @@
+Supersedes reviewed source-only v2 after actual GCC/Clang/format/tidy gates.
+Only the isolated candidate clone and this new snapshot changed. V2, helper V1, main Posets and original/frozen Acacia sources remain unchanged.
+
+Production algorithm/order/exception boundaries are retained. Full v2-to-v3.patch exposes all readability, formatting and test-diagnostic changes. No production NOLINT or configured check changes.
+Test-local NOLINTs pin intentional deterministic RNG, self-union/input-preservation observations, intercepted base APIs and a constexpr-discarded throwing move branch. The move warning is a path-insensitive analyzer diagnostic: ThrowMoves=false gives noexcept(true) and discards charge(); ThrowMoves=true permits exceptions.
+
+Local22 baseline full24 tidy failed with111 diagnostics; its log is retained. Original fixture and post-style full-fixture attempts retain unchanged dependency diagnostics. Targeted configured owned-file lint passed using only a reporting header filter; CI18 unavailable locally and still required on PR.
+
+Runtime reruns and final validation/resource summary are recorded separately under validation-results-v3. No replay/profile/timing/helper test has run.
