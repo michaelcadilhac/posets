@@ -82,6 +82,26 @@ int main () {
   using posets::utils::rank_stats_current;
   using posets::utils::rank_stats_reset;
 
+  auto equal_rank = downset (vector (2, 0), vector (0, 2));
+  rank_stats_reset ();
+  assert (equal_rank.insert (vector (1, 1)));
+  assert (rank_stats_current ().insert_attempts == 1);
+  assert (rank_stats_current ().partial_order_calls == 2);
+  check (equal_rank, {{1, 1}, {0, 2}, {2, 0}});
+
+  auto bounded = downset (vector (4, -2), vector (2, 1), vector (0, 5));
+  rank_stats_reset ();
+  assert (bounded.insert (vector (3, 2)));
+  assert (rank_stats_current ().partial_order_calls == 3);
+  assert (rank_stats_current ().existing_elements_removed == 1);
+  check (bounded, {{4, -2}, {3, 2}, {0, 5}});
+  rank_stats_reset ();
+  bounded.intersect_with (bounded);
+  assert (rank_stats_current ().intersection_left_elements == bounded.size ());
+  assert (rank_stats_current ().intersection_short_circuits == bounded.size ());
+  assert (rank_stats_current ().contains_calls == 0);
+  assert (rank_stats_current ().insert_attempts == 0);
+
   // An antichain of two incomparable maxima, plus one element each of them
   // dominates, so insertion exercises both the reject and the evict path.
   rank_stats_reset ();

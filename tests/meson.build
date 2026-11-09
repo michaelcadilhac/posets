@@ -242,3 +242,11 @@ forest_kd_layout_exe = executable('forest-kd-layout', 'forest-kd-layout.cc',
   dependencies: [posets_dep])
 test('layout/forest cache and KD capacity', forest_kd_layout_exe,
   env: sharing_allocation_env, timeout: 120)
+
+foreach mode : ['compatible', 'native', 'max']
+  ranked_default_exe = executable('rank-bucketed-' + mode, 'rank-bucketed.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_RANK_STATS'] + matrix_target_args)
+  test('antichains/ranked default oracle and failures/' + mode, ranked_default_exe,
+    env: sharing_allocation_env, timeout: 120)
+endforeach
