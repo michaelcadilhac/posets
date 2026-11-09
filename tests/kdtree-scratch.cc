@@ -1,5 +1,7 @@
 #include "matrix-check.hh"
 
+#include <cstdint>
+#include <exception>
 #include <iostream>
 #include <utility>
 
@@ -31,7 +33,7 @@ namespace {
     probes.emplace_back (rows.front ().size (), -2);
     probes.emplace_back (rows.front ().size (), 20);
     for (int repeat = 0; repeat < 3; ++repeat)
-      for (bool strict : {false, true, false, true})
+      for (const bool strict : {false, true, false, true})
         for (const auto& raw : probes)
           require (tree.dominates (matrix_check::vector<V> (raw), strict) ==
                        covered (rows, raw, strict),
@@ -51,7 +53,7 @@ namespace {
     const region rows {{0, 4}, {1, 3}, {2, 2}, {3, 1}, {4, 0}};
     posets::utils::kdtree<V> tree (values<V> (rows));
     for (int repeat = 0; repeat < 3; ++repeat)
-      for (bool strict : {false, true}) {
+      for (const bool strict : {false, true}) {
         require (not tree.dominates (matrix_check::vector<V> ({2, 3}), strict),
                  "KD credited an axis twice");
         require (tree.dominates (matrix_check::vector<V> ({1, 1}), strict),
@@ -75,22 +77,27 @@ namespace {
     }
   }
 
-  enum class FAILURE { NONE, COORDINATE, ORDER, COMPARISON };
+  enum class FAILURE : std::uint8_t { NONE, COORDINATE, ORDER, COMPARISON };
   FAILURE active_failure = FAILURE::NONE;
   long calls_left = -1;
-  struct query_failure {};
+  struct query_failure : std::exception {};
 
   void charge (FAILURE operation) {
     if (active_failure == operation and calls_left-- == 0)
       throw query_failure {};
   }
 
+  // Fault injection and typed results intentionally replace the base operations.
+  // NOLINTBEGIN(bugprone-derived-method-shadowing-base-method)
   class throwing_vector : public posets::vectors::vector_backed<int16_t> {
       using base = posets::vectors::vector_backed<int16_t>;
       using inner_order =
           decltype (std::declval<const base&> ().partial_order (std::declval<const base&> ()));
-      struct order {
+      class order {
           inner_order inner;
+
+        public:
+          explicit order (inner_order&& value) : inner (std::move (value)) {}
           bool leq () {
             charge (FAILURE::COMPARISON);
             return inner.leq ();
@@ -107,22 +114,23 @@ namespace {
       throwing_vector (const throwing_vector&) = delete;
       throwing_vector (throwing_vector&&) = default;
       throwing_vector& operator= (throwing_vector&&) = default;
-      auto operator[] (size_t coordinate) const {
+      [[nodiscard]] auto operator[] (size_t coordinate) const {
         charge (FAILURE::COORDINATE);
         return base::operator[] (coordinate);
       }
-      auto partial_order (const throwing_vector& other) const {
+      [[nodiscard]] auto partial_order (const throwing_vector& other) const {
         charge (FAILURE::ORDER);
         return order {base::partial_order (other)};
       }
-      throwing_vector copy () const { return throwing_vector (base::copy ()); }
-      throwing_vector meet (const throwing_vector& other) const {
+      [[nodiscard]] throwing_vector copy () const { return throwing_vector (base::copy ()); }
+      [[nodiscard]] throwing_vector meet (const throwing_vector& other) const {
         return throwing_vector (base::meet (other));
       }
-      throwing_vector join (const throwing_vector& other) const {
+      [[nodiscard]] throwing_vector join (const throwing_vector& other) const {
         return throwing_vector (base::join (other));
       }
   };
+  // NOLINTEND(bugprone-derived-method-shadowing-base-method)
   static_assert (posets::Vector<throwing_vector>);
 
   void exception_recovery () {
@@ -130,7 +138,7 @@ namespace {
     posets::utils::kdtree<throwing_vector> tree (values<throwing_vector> (rows));
     const auto query = matrix_check::vector<throwing_vector> ({8, 8, 0, 0, 0, 0, 0});
     for (const auto operation : {FAILURE::COORDINATE, FAILURE::ORDER, FAILURE::COMPARISON})
-      for (bool strict : {false, true}) {
+      for (const bool strict : {false, true}) {
         bool complete = false;
         for (long fail = 0; fail < 512; ++fail) {
           bool threw = false;
