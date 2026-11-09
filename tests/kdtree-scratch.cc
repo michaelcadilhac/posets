@@ -97,7 +97,7 @@ namespace {
           inner_order inner;
 
         public:
-          explicit order (inner_order&& value) : inner (std::move (value)) {}
+          explicit order (inner_order&& value) : inner (value) {}
           bool leq () {
             charge (FAILURE::COMPARISON);
             return inner.leq ();
