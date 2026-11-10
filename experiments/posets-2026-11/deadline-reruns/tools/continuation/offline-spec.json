@@ -1,0 +1,6 @@
+{
+  "command": ["/usr/bin/python3", "-B", "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/test_continuation.py", "-v"],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "timeout": 120,
+  "expected_exit_codes": [0]
+}

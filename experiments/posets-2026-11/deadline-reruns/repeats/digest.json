@@ -1,0 +1,55 @@
+{
+  "status": "complete-not-pooled-with-historical-results",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/execution-v1/summary.json",
+    "sha256": "3b8cd817db19422118a1499e1fc4d03a7bb5b7105d7ef49acab4553819acae61"
+  },
+  "csv": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-results.csv",
+    "sha256": "54b4b67c3747d889db2d93933c6c52ec59b028c6ba134cfd4ccaa07a47c61db0"
+  },
+  "plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-plan.json",
+    "sha256": "cbbf2d215cf84c761b46c9fc5677529ec8c095d179ee84281e63152fd03f8fbc"
+  },
+  "native_rows": 450,
+  "memory_rows": 450,
+  "native_outcomes": {
+    "REALIZABLE": 155,
+    "TIMEOUT": 231,
+    "UNREALIZABLE": 64
+  },
+  "strict_solved_rows": 219,
+  "native_decisive_overruns": 0,
+  "truth_conflicts": 0,
+  "cells": 45,
+  "fully_uncensored_cells": 4,
+  "serious_solve_loss_cells": 27,
+  "serious_timing_loss_cells": 2,
+  "resources": {
+    "cpu_seconds": {
+      "aggregate": 31862.910036,
+      "total": 450,
+      "valid": 450
+    },
+    "max_process_rss_bytes": {
+      "aggregate": 4497088512,
+      "total": 450,
+      "valid": 450
+    },
+    "oom_events": {
+      "oom_kill_counter_sum": 0,
+      "oom_kill_observed_invocations": 0,
+      "total": 450,
+      "valid": 450
+    },
+    "scope_memory_peak_bytes": {
+      "aggregate": 5905948672,
+      "total": 450,
+      "valid": 450
+    }
+  },
+  "elapsed_to_last_native_CLI_end_s": 7040.320477962494,
+  "last_native_CLI_end_utc": "2026-11-10T08:17:56.320478+00:00",
+  "interpretation": "Historical comparisons screen repeatability only; same-backend matched attribution remains required. No automatic rollback or cross-cohort pooling."
+}

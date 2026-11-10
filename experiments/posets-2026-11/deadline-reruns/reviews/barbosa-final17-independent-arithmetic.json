@@ -1,0 +1,64 @@
+{
+  "scope": "Independent saved TSV arithmetic and complete3048 native/memory field joins; no target/helper code imported or executed. No actual future30s cohort/plan written by reviewer.",
+  "issues": [],
+  "summary_sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3",
+  "frozen_sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+  "input_list_sha256": "0226e5cd2cadc033544f0901bd900dd31dd7add813ef216558826468e0b7b5c7",
+  "stats": {
+    "anchor-e167": {
+      "rows": 1524,
+      "strict_solved": 1368,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "PAR2_unrounded_s": 5946.655226414325,
+      "CPU_sum_s": 14011.778712,
+      "max_process_RSS_bytes": 3976986624,
+      "max_whole_scope_peak_bytes": 4239486976,
+      "event_counter_sums": {
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "oom_kill_invocations": 0,
+      "decisive_overruns": 0,
+      "native_scored_bytes_identical": true,
+      "raw_sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+      "raw_memory_sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+    },
+    "lazy-fc": {
+      "rows": 1524,
+      "strict_solved": 1368,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "PAR2_unrounded_s": 5940.166345068719,
+      "CPU_sum_s": 13979.571882,
+      "max_process_RSS_bytes": 3977768960,
+      "max_whole_scope_peak_bytes": 4243906560,
+      "event_counter_sums": {
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "oom_kill_invocations": 0,
+      "decisive_overruns": 0,
+      "native_scored_bytes_identical": true,
+      "raw_sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+      "raw_memory_sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+    }
+  },
+  "candidate_minus_original_PAR2_s": -6.488881345605478,
+  "candidate_minus_original_percent": -0.10911816977017012,
+  "gains": [],
+  "losses": [],
+  "truth_conflicts": [],
+  "timeout_union_count": 156,
+  "timeout_sets_identical": true,
+  "hypothetical30_both_arm_calls": 312,
+  "audit_attempt_note": "Own first arithmetic attempt treated generated-list comment headers as instance names and stopped with KeyError before writing output. Corrected to the existing list convention: strip blanks and comments. This was an audit-script error, not a helper/data/solver defect."
+}

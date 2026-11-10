@@ -1,0 +1,103 @@
+{
+  "scope": "Deadline450repeat panel, source-only attribution controls and conditional30s driver; later final17/30campaign outcomes excluded",
+  "status": "Preparatory experience addendum for evidence package, not a new PR or publication action",
+  "reviewer": "Barbosa skill-guided agent, not actual researcher",
+  "previous_account": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/default-rank/reports/reviewer-experience-report.txt",
+    "sha256": "1c4ba80bec5ff7abd820ba39c5e6775d9830554eaf50663426ea4f3e6e3887cd",
+    "relation": "Supplement only; no rewrite or retroactive attribution change"
+  },
+  "addendum": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/deadline-review-experience-addendum-v1.txt",
+    "sha256": "ab3bd113d2050e60123e7b2afdc0bc3f39e2a4b8b8fe9544312754b7f8c9a537"
+  },
+  "rows": [
+    {
+      "id": "D01",
+      "category": "methodology clarification",
+      "origin": "Barbosa; root set the five-pair/serious-regression policy",
+      "contribution": "Require all five pairs uncensored for the timing decision; preserve censors and distinguish backend comparison from source-effect attribution.",
+      "implementation_or_execution": "Owner incorporated the gate; reviewers did not execute the measurements.",
+      "evidence": [
+        "reviews/barbosa-repeat-decision-design.json",
+        "reviews/nbjorner-repeat-driver-source-review-v3.json"
+      ],
+      "impact": "Avoid survivor-only timing median and unjustified performance rollback."
+    },
+    {
+      "id": "D02",
+      "category": "test-contract gap",
+      "origin": "Barbosa",
+      "contribution": "Forest map negative control conflicts with the production no-allocation sentinel; request separate semantic/fault fixture while preserving the production sentinel.",
+      "implementation_or_execution": "Coder prepared control-only fixture; Barbosa statically checked preservation and same-root positive failure/retry/eventual success.",
+      "evidence": [
+        "reviews/barbosa-attribution-controls-static-review.json",
+        "reviews/barbosa-matched-attribution-fixtures-static-audit.json",
+        "matched-attribution-preparation-v1/fixtures/forest-map-control.cc"
+      ],
+      "impact": "Prevent control test from stopping at an intentionally inapplicable performance assertion before exercising semantics.",
+      "limit": "No production forest defect or executed fixture pass is claimed by these source reviews."
+    },
+    {
+      "id": "D03",
+      "category": "shared independently originated source defect",
+      "origin": "Nbjorner and Barbosa independently",
+      "contribution": "Coverage CLI exit0 can accompany CRASH/ERROR, so followup30 accepted an error and produced complete. Barbosa also traced source17 usable-summary gap.",
+      "implementation_or_execution": "Coder added both-phase whitelist and explicit UNKNOWN policy; Nbjorner requested real-controller mock fixture; both reviewed V2; benchmark owner executed ten synthetic methods successfully.",
+      "evidence": [
+        "reviews/nbjorner-followup30-v1-static-review.json",
+        "reviews/barbosa-followup30-v1-static-audit.json",
+        "reviews/barbosa-followup30-v2-correction-audit.json",
+        "followup-30s-draft-v2/SOURCE-MANIFEST.json",
+        "records/followup30-offline-attempt1.log"
+      ],
+      "impact": "Errors stop with preserved evidence instead of appearing as ordinary completed censors.",
+      "limit": "The offline gate is synthetic, not real source qualification, systemd/solver coverage or actual30s execution."
+    },
+    {
+      "id": "N01",
+      "category": "Nbjorner-origin source defects",
+      "origin": "Nbjorner; not Barbosa",
+      "contribution": "450-runner omitted SIGTERM/SIGHUP cleanup and accepted malformed resource observations as valid coverage.",
+      "implementation_or_execution": "Benchmark owner implemented signal-to-SystemExit cleanup and numeric/resource guards with direct negatives.",
+      "evidence": [
+        "reviews/nbjorner-repeat-driver-source-review-v3.json"
+      ],
+      "impact": "Protect owner/child lifetime and prevent invalid resource aggregates."
+    },
+    {
+      "id": "M01",
+      "category": "static review miss caught by execution",
+      "origin": "Miss in Nbjorner static fixture review; executed offline gate exposed it",
+      "contribution": "Fixture glob selected memory.tsv as well as native JSON stand-in.",
+      "implementation_or_execution": "Benchmark owner diagnosed and corrected selector only; failed attempt preserved.",
+      "evidence": [
+        "reviews/nbjorner-fixture-selector-v4-delta-review.json"
+      ],
+      "impact": "Restored meaningful conflict-evidence assertions before target release.",
+      "limit": "Not a controller semantic failure, solver failure or corrupted measurement; not Barbosa discovery."
+    },
+    {
+      "id": "V01",
+      "category": "independent validation and evidence interpretation",
+      "origin": "Both reviewers; measurements by benchmark owner",
+      "contribution": "Completed repeat arithmetic, censoring and provenance checks; keep source/ELF/private-library and memory-definition limits explicit.",
+      "implementation_or_execution": "Barbosa recomputed45 cells from450 embedded observations plus40 representative raw/sidecar/record observations; Nbjorner checked full raw joins.",
+      "evidence": [
+        "reviews/barbosa-repeat-outcome-audit.json",
+        "reviews/barbosa-repeat-outcome-independent-check.json",
+        "reviews/nbjorner-repeat-final-outcome-review.json",
+        "reviews/nbjorner-repeat-independent-arithmetic.json"
+      ],
+      "impact": "Supports published repeatability claims and a bounded conditional investigation; no new defect or demonstrated source cause."
+    }
+  ],
+  "evidence_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1",
+  "limits": [
+    "No controlled skill ranking, personality inference or comparative time/cost claims",
+    "Distinct assignments and shared findings affect apparent contribution; origin, fix, execution and validation are separate",
+    "No researcher participation, new production code change, target execution or publication by this addendum",
+    "No live final campaign scores read; future final17/30outcomes remain outside this note"
+  ],
+  "attribution_uncertainty": "No disputed origin identified in these bounded saved reviews. The selector miss belongs to the static fixture review record; no claim that the other reviewer independently inspected or caught it. New results may require a later separately dated addendum."
+}

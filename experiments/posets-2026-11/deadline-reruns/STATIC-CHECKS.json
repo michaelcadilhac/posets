@@ -1,0 +1,38 @@
+{
+  "all_JSON_parsed": true,
+  "all_origin_bytes_rechecked": true,
+  "exact_copy_count": 86,
+  "explicit_projection_count": 9,
+  "final_outcome_reviews_included": true,
+  "final_package_review": {
+    "reviews": [
+      {
+        "package_path": "reviews/nbjorner-final-package-review.json",
+        "source": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final-publication-package-review.json",
+          "sha256": "18522407252980f904c6cdf99af923fdb14169642119718a3be51da9f84d4b0c"
+        }
+      },
+      {
+        "package_path": "reviews/barbosa-final-package-review.json",
+        "source": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final-publication-package-review.json",
+          "sha256": "898ccb94b45444bf5e5dea240bb9d998d5025e4d3e58cabf9f5975b155ce9f34"
+        }
+      }
+    ],
+    "status": "Completed: both independent V3 package reviews accepted"
+  },
+  "historical_assembly_record": {
+    "note": "The V3 pending-review statement describes assembly time; the later approvals below close it.",
+    "source": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/final-assembly-v3/deadline-reruns/STATIC-CHECKS.json",
+      "sha256": "66624a59d0563098f37b67d64f936d8b5e47398e1c94367b7d41040a8eaf8123"
+    }
+  },
+  "numerical_archive_fresh_extraction": true,
+  "old_packages_not_modified_by_this_writer": true,
+  "privacy_positive_allowlist": true,
+  "scope": "Bounded final evidence assembly only; no solver/test/build execution",
+  "sealing_scope": "Only append exact package-review records, update origins/status, and refresh inventory/checksums; no repeated numerical assembly or target tests."
+}

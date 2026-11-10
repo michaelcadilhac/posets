@@ -1,0 +1,65 @@
+{
+  "reviewer": "nbjorner-guided independent final17 numerical/outcome review",
+  "decision": "Accept the completed3048-row17s campaign, labelled table and owner closure. No numerical/provenance blocker found. No reliable performance winner established; actual30s targets remain subject to separate concrete-plan/root release.",
+  "bindings": {
+    "handoff_sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+    "summary_sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3",
+    "frozen_manifest_sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+    "table_sha256": "4192d346ad613f98225177c3281e841ae8a0951ce57344479f10181fca6023e7",
+    "digest_sha256": "30330cfd9f3fa9b7c58b4f801642b51503045b160eaa0716371b878564b4e679",
+    "invariance_sha256": "b9f8635349b656703c38b44412448615bf35cb06f344ffbba8bb1b574e625b81",
+    "independent_arithmetic": {
+      "path": "work/deadline-reruns-v1/reviews/nbjorner-final17-independent-arithmetic.json",
+      "sha256": "8d8f178dff4f751e087f6b0c4e7b5e9eb3eb552f705b2be93bdde537124b1c24"
+    },
+    "prior_preflight_review_sha256": "8021e95089e143e01bfbb20283542cd4021449b72f722e738fcce3e783da8842",
+    "prior_reuse_review_sha256": "6e25b324352f6e1e8d3d5b290b8e515f1b54d78e1e422e88d265df6768a47bf0"
+  },
+  "independent_checks": [
+    "Joined all3048 native rows to their memory sidecars by full native identity keys, checked common field equality and complete1524 unique case coverage per arm, and verified all raw/scored/sidecar bindings. Raw and strict-scored file bytes are identical because no decisive wall overruns occur.",
+    "Recomputed solved sets, native verdict/exit consistency,34s unsolved PAR2, CPU totals, RSS/scope maxima and medians, resource completeness and event counts directly from saved rows. Both arms agree on every decisive result; solved and timeout sets are identical.",
+    "Checked all96 native batch records against the48 frozen batch order and each actual command/input list/log hash: intended ELF/label,17s/8G/no-swap, empty flags, collect-rusage and conflict-stop treatment. Each arm reaches1524 exactly; these are fresh campaign rows rather than pooled historical observations.",
+    "Verified all17 direct handoff bindings plus eight data references, the two published table rows and byte-identical automatic/summary-only output. Independently rehashed all31 final input/helper/ELF/library/config/version bindings; every saved invariant match holds. This is the declared narrow authority, not a new full source-tree inventory."
+  ],
+  "outcomes": {
+    "per_arm_instances": 1524,
+    "per_arm_solved": 1368,
+    "per_arm_REALIZABLE": 629,
+    "per_arm_UNREALIZABLE": 739,
+    "per_arm_native_TIMEOUT": 156,
+    "candidate_gains": 0,
+    "candidate_losses": 0,
+    "anchor_PAR2_decimal": "5946.65522641432471894",
+    "lazyFC_PAR2_decimal": "5940.16634506871923785",
+    "lazy_minus_anchor_PAR2_decimal": "-6.48888134560548109",
+    "lazy_minus_anchor_PAR2_percent": "-0.1091181697701701857464852181",
+    "native_errors_MEMOUT_UNKNOWN": 0,
+    "decisive_conflicts": 0,
+    "decisive_wall_overruns": 0,
+    "kernel_OOM_event_or_kill_observations": 0,
+    "valid_CPU_RSS_scopepeak_event_rows": 3048
+  },
+  "resource_definitions": {
+    "anchor": {
+      "CPU_seconds": "14011.778712",
+      "maximum_reaped_process_RSS_bytes": 3976986624,
+      "maximum_whole_scope_peak_bytes": 4239486976
+    },
+    "lazyFC": {
+      "CPU_seconds": "13979.571882",
+      "maximum_reaped_process_RSS_bytes": 3977768960,
+      "maximum_whole_scope_peak_bytes": 4243906560
+    },
+    "limit": "CPU sums include solver parallelism. ProcessRSS is the maximum reaped process, while scope peak covers the whole cgroup. Neither measures retained backend heap or isolated data-structure allocations. No application memory improvement is established by these nearly equal maxima."
+  },
+  "reporting_limits": [
+    "Use explicitly labelled lazy-minus-anchor delta. Generic reporter new=anchor-e167 gives the reversed paired sign; candidate_vs_baseline and the saved labelled table correctly report negative6.488881s. This is an orientation caveat, not a detected reporting defect.",
+    "One unrepeated full-corpus comparison with no supplied noise floor, identical solved sets and approximately0.109percent PAR2 difference does not establish a reliable speed winner or justify a backend/default change. It also does not prove that the two implementations have identical performance.",
+    "Baseline remains genuine original Acacia86dd/Posetse167 ELF49cf; candidate remains genuine frozen cc058ca lazyFC ELF5dc. Relevant retained lazy headers are source-equivalent to current; the executable is not relabelled rebuilt-current. Whole-source/Vector/build/private Rust differences limit isolated-header causality.",
+    "Zero observed native errors and contradictions are bounded output checks, not formal solver soundness or exclusion of unreported worker failures under NO_VERBOSE. Do not pool these rows with previous15-arm/default/KD/repeat campaigns."
+  ],
+  "next30s": "Exactly156 shared nativeTIMEOUT cases qualify for the separately prepared symmetric two-arm union,312 future calls. Preserve all17s rows/scores and their1524 denominator. Actual30s plan, bindings, gate records and release remain separate; no30s outcomes or automatic target authority are inferred here.",
+  "findings": [],
+  "attribution": "Independent full saved-row validation of owner-reported results; no new implementation-defect discovery. Root owns selection/protocol and benchmark owner execution/closure. Existing immutable contribution ledgers are untouched.",
+  "execution": "Saved evidence reads and bounded standard-library arithmetic/hash checks only. No helper import/execution, tests, compiler, solver, profile, source modification or originalAcacia/WIP writes."
+}

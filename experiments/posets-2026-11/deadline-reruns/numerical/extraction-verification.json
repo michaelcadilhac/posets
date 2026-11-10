@@ -1,0 +1,32 @@
+{
+  "archive": {
+    "bytes": 599170,
+    "filename": "native-resource-evidence.tar.gz",
+    "sha256": "987cff73888acf29288bf52e4bddace378aadb778e743183199b990e34182e30"
+  },
+  "checksums_member_sha256": "dd19880d02cd5e71dab0d727fdfa74e9732625780558ee58151fac93c03f5b81",
+  "members": 14,
+  "memory_rows": 3820,
+  "native_rows": 3820,
+  "no_target_calls": true,
+  "source_manifest_sha256": "9a9c5e861a75de2bf18bc0d6df7b36deada6a676985b7b7f5d20f3ab3e19e65b",
+  "stage_rows": {
+    "conditional30": {
+      "memory": 312,
+      "native": 312
+    },
+    "final17": {
+      "memory": 3048,
+      "native": 3048
+    },
+    "forest": {
+      "memory": 10,
+      "native": 10
+    },
+    "repeats": {
+      "memory": 450,
+      "native": 450
+    }
+  },
+  "status": "Every fresh extracted member equals its authored numerical bytes"
+}

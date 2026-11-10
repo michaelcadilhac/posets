@@ -1,0 +1,107 @@
+{
+  "scope": "Small saved replay table/report read only; no live30s outcomes, imports of helper code, tests, binaries, profiles or large hash scans",
+  "conclusion": "Native width was measured and showed mixed workload-dependent observations. These results do not establish16 lanes as the fastest application default or support a universal wider-is-worse claim.",
+  "actual_lane_metadata": {
+    "element_bytes": 1,
+    "compatible": {"selected_lanes": 16, "block_bytes": 16, "alignment": 16, "width_selector": 0},
+    "native": {"selected_lanes": 64, "block_bytes": 64, "alignment": 64, "width_selector": 1},
+    "interpretation": "For signed-char coordinates these are128-bit versus512-bit selected vector blocks. Saved provenance aliases max to native on this host. Both compile contexts include -march=native, so compatible width does not mean native compiler ISA targeting was disabled.",
+    "checked_saved_reports": [
+      {
+        "path": "work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair0-baseline/report.json",
+        "saved_report_sha256": "f84a60e668d0ddbdec5fc3df221b0b3c15bb594a0a14b0990f0e0f873623bd90",
+        "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+        "metadata_path": "provenance.modes and provenance.backend_binaries"
+      },
+      {
+        "path": "work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-large-train/default-rank-v3-large-train-pair0-optimized/report.json",
+        "saved_report_sha256": "5c9b3de5a7b152514848ff577eaca8936506514e36b4c7352eb6e9500ade1016",
+        "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+        "metadata_path": "provenance.modes and provenance.backend_binaries"
+      },
+      {
+        "path": "work/acacia-posets-eval/_bm-logs.posets/default-rank-v3-train/default-rank-v3-train-pair0-optimized/report.json",
+        "saved_report_sha256": "487b57c7a1b0e5a92ebce37659d356a401326c2295bf91a77d17df8d80bf0221",
+        "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+        "metadata_path": "provenance.modes and provenance.backend_binaries"
+      }
+    ],
+    "binding_limit": "Report hashes above are their existing saved summary descriptors, not newly computed hashes or fresh ELF probes. Selected-lane/alignment/compiler-argv fields were read directly from the referenced completed reports."
+  },
+  "estimator": "For the same backend/source/vector/trace/metric, compare native_median_seconds to compatible_median_seconds. Each endpoint is a median of three observations. The ratios here are ratios of separate width medians, not the original median paired optimized/baseline source-change ratios. Source-change A/B alternation is not a separately designed cross-width paired experiment.",
+  "examples": [
+    {
+      "backend": "retained lazy-FC, oldlazy baseline arm",
+      "summary": "work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json",
+      "field": "baseline_median_seconds",
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "maxima": 4588,
+      "dimension": 453,
+      "metric": "whole captured CPre",
+      "compatible_seconds": 0.180500268,
+      "native_seconds": 0.137109857,
+      "native_over_compatible_approx": 0.75961
+    },
+    {
+      "backend": "retained lazy-FC, oldlazy baseline arm",
+      "summary": "work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json",
+      "field": "baseline_median_seconds",
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "maxima": 6446,
+      "dimension": 43,
+      "metric": "fresh construction of captured contains frontier, not single-query timing",
+      "compatible_seconds": 0.084582781,
+      "native_seconds": 0.099318678,
+      "native_over_compatible_approx": 1.174219
+    },
+    {
+      "backend": "optimized ranked default30e, optimized arm",
+      "summary": "outputs/default-replay-2026-11-09/larger-summary.json",
+      "field": "optimized_median_seconds",
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "maxima": 4588,
+      "dimension": 453,
+      "metric": "whole captured CPre",
+      "compatible_seconds": 0.098552219,
+      "native_seconds": 0.077895543,
+      "native_over_compatible_approx": 0.790399
+    },
+    {
+      "backend": "optimized ranked default30e, optimized arm",
+      "summary": "outputs/default-replay-2026-11-09/larger-summary.json",
+      "field": "optimized_median_seconds",
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "maxima": 6446,
+      "dimension": 43,
+      "metric": "fresh construction of captured contains frontier, not single-query timing",
+      "compatible_seconds": 0.048917563,
+      "native_seconds": 0.068916915,
+      "native_over_compatible_approx": 1.408838
+    },
+    {
+      "backend": "optimized ranked default30e, optimized arm",
+      "summary": "outputs/default-replay-2026-11-09/standard-summary.json",
+      "field": "optimized_median_seconds",
+      "trace": 0,
+      "instance": "collector_v1_pb_9_pe_.ltl",
+      "maxima": 256,
+      "dimension": 523,
+      "metric": "whole captured CPre",
+      "compatible_seconds": 0.000734073,
+      "native_seconds": 0.001136374,
+      "native_over_compatible_approx": 1.54804
+    }
+  ],
+  "limits": [
+    "These are three-observation, already-seen TRAIN replay operations, not a native-versus-compatible whole-Acacia campaign, a continuous deletion history, significance result or a reliable optimal-width selection experiment.",
+    "Existing compatible/native columns of source-change ratios answer how a proposed optimization changed each width. For example1.0573 versus1.0102 for compact catalogs does not itself compare native with compatible execution time. The explicit endpoint timing examples above do compare the same backend/source across widths.",
+    "Wider selected blocks also have different alignment/layout metadata. No CPU-frequency, cache-miss, padding or other causal explanation for individual width differences was measured here.",
+    "Current full Acacia evidence remains scoped to its actual16-lane configuration. A native application comparison would need both the chosen ranked reference and lazy candidate at the corresponding width, with truthful new artifact/protocol bindings; these replay observations do not change completed solver results."
+  ],
+  "default_policy_attribution": "Root independently checked that Posets already defaults POSETS_SIMD_WIDTH to native absent overrides. Acacia simd_native=false is a separate option; its base simd_is_max=true means that Boolean alone does not imply16 lanes. These measured shipping configurations explicitly resolved both flags false and kept16 lanes for baseline comparability. No evidence in the inspected replay reports records a new empirical decision that16 is universally fastest.",
+  "execution": "Read compact completed summaries and their referenced metadata only. No helper/model import, ELF execution/read, tests, profiles, fresh input/ELF hashes, live30s result inspection or protected-source mutation. Only this own note written."
+}

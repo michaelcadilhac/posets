@@ -1,0 +1,178 @@
+{
+  "reviewer": "Barbosa skill-guided subagent; not the actual researcher",
+  "scope": "Bounded static V1-to-V2 correction review only: native error acceptance in both phases, explicit UNKNOWN semantics, artifact-first STOP, direct negatives and mocked real controller fixture. No actual source campaign or cohort qualified.",
+  "verdict": "approve corrected source for subsequent scoped offline validation; not approval to select or execute a real cohort",
+  "source_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/SOURCE-MANIFEST.json",
+    "sha256": "bf038658dd2eed7925bfad33d62bb22ee921c4d2dc2792734de23447a861f1ef"
+  },
+  "bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/followup30.py",
+      "sha256": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb",
+      "bytes": 20990,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/test_followup30.py",
+      "sha256": "0057a0f126ac4608639761020bd368fe176bd115cd967dcf38fd82c29006df6f",
+      "bytes": 19308,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/README.txt",
+      "sha256": "3ecc43b918589d22153f67dfa9c807852768d04c0e507d98f1dfaa19256e3bc3",
+      "bytes": 8771,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/offline-tests-spec.json",
+      "sha256": "feb51b5bcfbc08df0ca25a3b70065310aa938a73ae676700419ac7bef18f837f",
+      "bytes": 503,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/V1-TO-V2.patch",
+      "sha256": "9416897f9cd54bdaf20985980bb21f8bc2bf9768507723cfed0c0bcc77b1b701",
+      "bytes": 16150,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft/followup30.py",
+      "sha256": "3b9f03bda8a96ada09ebaf65d9926b03d0cf3dfd402fe51d1d3f0371b4d92dde",
+      "bytes": 20759,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft/test_followup30.py",
+      "sha256": "5346932a5759af4683f481ed28448776d0afac65e981bd369158fd87cdeb38a1",
+      "bytes": 10486,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft/README.txt",
+      "sha256": "6bc9fe0e5decda05f1baedad8c5c4f96c7a084f2eae123764e1639874534030d",
+      "bytes": 7506,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft/offline-tests-spec.json",
+      "sha256": "c0318e9823c8497cb5ca9d2171bbfe8e55654e0355ff2d3774f46fa646f4f8b9",
+      "bytes": 500,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP-30S-POLICY.json",
+      "sha256": "7de1a321de6576633230203b5384bd5184aced781888ff47a21f52fc4e92632a",
+      "bytes": 1255,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat.py",
+      "sha256": "40ede28a3de13ebcf1361246ec1be42ded6e429b663d76f4e15ddf2cdc48dd85",
+      "bytes": 19420,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+      "bytes": 29274,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "bytes": 3104,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2",
+      "bytes": 104041,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+      "bytes": 52306,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+      "bytes": 16248,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-followup30-v1-static-review.json",
+      "sha256": "2c091244ba20c0ea8598a1e206ba1cd92b2aaa8761c01c9582c032be6ea9454a",
+      "bytes": 4731,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-v1-static-audit.json",
+      "sha256": "16cd558c4bcebc50417b1b13ae287c30998757ea1c014d88ab411a6ebd0cc112",
+      "bytes": 9282,
+      "matches_manifest": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft/SOURCE-MANIFEST.json",
+      "sha256": "8492b9a33509a03be19e3e9d4d2baa38c9a7af20f5c823acea5746c19f8bc2df",
+      "bytes": 3960,
+      "matches_manifest": true
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "DEADLINE-30-B01",
+      "original_severity": "mortal",
+      "status": "resolved in reviewed V2 source; runtime verification pending",
+      "origin": "Shared independent Nbjorner and Barbosa finding. Barbosa additionally traced source17 usable-summary acceptance.",
+      "evidence": [
+        "followup30.py:28 defines exact ordinary native outcome set",
+        "followup30.py:93 rejects other outcomes during source17 qualification",
+        "followup30.py:124 rejects other outcomes in followup30 before acceptance",
+        "README.txt:10-18 explicitly accepts UNKNOWN as unsolved, rejects error families and explains source usable-summary limit",
+        "followup30.py:326-347 preserves started/log/native files and completed record before row rejection; main:371-374 writes STOP and rethrows"
+      ],
+      "conclusion": "The source and follow-up whitelist now rejects CRASH, ERROR, AUDIT-ERROR, SYFCO-FAIL and any other unsupported native label. UNKNOWN is explicitly accepted unsolved and costs60 in the unchanged conditional report. Successful coverage-CLI exit no longer suffices to accept an error row."
+    }
+  ],
+  "fixture_review": [
+    {
+      "location": "test_followup30.py:97-112",
+      "conclusion": "Direct error-family negatives start with valid resource rows and require exact unsupported-outcome failure. Source case specifically has error in one arm and TIMEOUT in the other, preventing source error from entering cohort via the other arm. Positive UNKNOWN acceptance remains explicit."
+    },
+    {
+      "location": "test_followup30.py:205-341",
+      "conclusion": "Authored test enters actual main/execute with one case and two arms, while replacing source qualification, environment, coverage IO, sampler and Popen with synthetic objects. Real row/join/report/file/resume logic remains. Assertions cover both cap30 arms, completed-record reuse with no new calls, started-only refusal, CLI0 CRASH raw/record preservation and STOP, cancellation SystemExit cleanup via terminate/wait, no summary and subsequent partial refusal."
+    },
+    {
+      "location": "test_followup30.py:290-291; README.txt:76-88",
+      "limits": "This fixture does not validate real source/corpus qualification, ELF/runtime closure, actual coverage parser/sidecar schema, systemd scopes, process management, signal delivery or solver behavior. It is authored but unexecuted. Ten test methods are not ten passed tests."
+    }
+  ],
+  "unchanged_contracts": [
+    "Exactly completed final1524-per-arm originale167 versus selectedKD17s campaign required; historical450 repeat panel remains excluded",
+    "Union strict17 TIMEOUT selection, pureMEMOUT rule, both frozen arms, cap-only30 projection and alternating case order unchanged",
+    "Raw decisive over-cap truth and cross-phase contradictions unchanged",
+    "Conditional30 scoring unsolved60 and separate native/OOM measures unchanged; no pooling or17 rescore",
+    "Missing CPU/RSS/peak/event observations remain failure, not zero coverage"
+  ],
+  "other_driver_delta": "Only other driver change moves the identical interrupted(signum,_frame) body to module scope for the synthetic injection; __main__ still registers it for SIGTERM/SIGHUP. No timing, cap, cohort, scheduling or scoring change.",
+  "checks_actually_performed": [
+    "Read exact correction patch, changed source/docs, direct negatives and mocked controller fixture",
+    "Recomputed all19 declared file/origin/preserved-V1/review-basis hashes and sizes; all matched",
+    "Static hand-trace only; no helper import or code execution"
+  ],
+  "not_performed": [
+    "No imports, syntax compilation, offline fixture execution, helper calls, targets, compilers, tests, profiles or timing",
+    "No actual17s source campaign qualification, cohort selection,30s plan or execution release"
+  ],
+  "remaining_gates": [
+    "Scoped offline fixture execution after authorized host-lane release",
+    "Completed final1524-per-arm17s source/correctness/resource/provenance acceptance",
+    "Concrete cohort and exact cap-only command/source/ELF/runtime bindings review before30s release"
+  ],
+  "scope_limit": "Source-contract correction is closed. No performance, runtime, actual artifact or release claim is made; inspection is not a correctness proof."
+}

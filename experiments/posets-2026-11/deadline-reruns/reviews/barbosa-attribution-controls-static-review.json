@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "verdict": "Static source readiness with one test-contract documentation request; no header semantics/exception/lifetime blocker identified in complementary pass. Conditional attribution controls only, not applied/reverted/compiled or authorized for production.",
+  "skill": "inspector-barbosa; PM scope/contracts then changed source inspection",
+  "bindings": {
+    "manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/MANIFEST.json",
+      "sha256": "efd812bca7508607b6d732623107ad6296e2dc36f1c75c955e5ea5e042d2959e"
+    },
+    "base_revision": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+    "all11listed_files_hash_verified": true,
+    "controls": {
+      "rank-correctness-control": {
+        "before": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+        "after": "3d71e53fde59b1f19dff3cb2567c252fb1af7a4da1e582f4216dc840f1d4ee6f",
+        "patch": "2a95fe46c1fac90525b415fff2ba58c4aaf4fce0521eb453e7bac67e33ea237d"
+      },
+      "legacy-pre-scratch": {
+        "before": "b3618de120fb5fec89f339c21f9933abab02434e1dec1a8e4b17c77e94ef8173",
+        "after": "43a93dcbf80a863698c58c2faf0177c4e92757e0d9da2b058bdca4dd7fddaa53",
+        "patch": "a3aa2c2fe7eab0ce58466c21fd211e6924ae796b4dbaed5ffed9ec2f42a44c3b"
+      },
+      "forest-map-cache": {
+        "before": "67d6ce5584dc577b394a9b3a1e76c2c6c0db14df2055e33b5e0345da3799400a",
+        "after": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a",
+        "patch": "6f9591f03ae1d0beb89b950203b85af5b859b44c0a4412a3251f074f665a75ff"
+      }
+    },
+    "legacy_equals_aa61043_header": true
+  },
+  "findings": [
+    {
+      "id": "DEADLINE-B01",
+      "rank": "venial source-readiness/test-contract gap, not a semantic control defect",
+      "origin": "Barbosa complementary static review",
+      "file": "work/posets/tests/forest-kd-layout.cc",
+      "lines": [
+        50,
+        65
+      ],
+      "finding": "The forest cache negative control deliberately reallocates map nodes after eachclear; this conflicts with the same fixture warming then allocations_left=0. README explicitly identifies optimized rank sentinels but omits the analogous forest sentinel. An unchanged forest-kd-layout run will stop before useful span/shared-suffix/union coverage.",
+      "minimal_request": "Document that forest warmed-no-allocation block is an optimized stamp-cache sentinel. A future control-specific fixture should run every independent scalar oracle/strictness/span/shared-suffix/union/lifetime check with allocations enabled, plus map query allocation-failure/retry coverage. Keep production sentinel intact; do not disable the whole fixture or correctness assertions.",
+      "evidence": "covers_vector clears each unordered_map at controlsharingforest lines913\u2013914; first subsequentoperator[] nodeinsert requires allocation even when old bucket capacity survives. Test budget at forest-kd-layout:60 disallows it. Source hand-trace only; no runtime failure claimed.",
+      "status": "Sent root/coder; correction requested for future gate preparation, no source edits."
+    }
+  ],
+  "rank_contract_review": [
+    "Removes cached-rank contains/insert dispatch in algebra, exact-domain retirement narrowing, reused insertion boundary, and delayed first-miss intersection creation. Inclusive upper-rank retirement and lower_bound after erasure preserve floating/wide tie/victim/survivor behavior under unchanged representable-rank prerequisites.",
+    "First victim located before paired capacity reserves; paired arrays/ranks remain aligned. Nothrow moves retain preflight reserve guarantees (capacity/addresses may change on failure). Throwing moves operate on unpublishedcopies; custom late comparison failure clears both arrays only after mutation. No allocatingnoexcept reintroduced.",
+    "Eager intersections copy/meet only into private scratch, publish only if logicalchange; contained case discards scratch preserving lhsorder/capacity. Scratch can now allocate/copy/throw even on logicallyunchanged intersection by deliberate control treatment. Self/empty/RHS consumption contracts preserved.",
+    "README correctly excludes optimized-only rank counts/no-allocation/copy-free sentinels from control claims while retaining semantic/algebra/wide/float/order/capacity/positivefailure/retry coverage. This is a current-safety baseline, not exact789source or removal of every historically beneficial implementation choice."
+  ],
+  "legacy_contract_review": [
+    "Exactaa61043KDheader retains corrected repeated-axis predicate, checkedindices/capacity/growth/destruction and move behavior. It restores entry clear before everyquery; right-return scratch need not be clean after return/exception because nextquery clears it before use. New catch cleanup was needed by the no-entry-clear optimization, not a logical-state guarantee lost by this entry-clear control.",
+    "Current repeated-query/strictness/relabel/move/accessor-order-comparisonthrow followed byretry semantics remain appropriate. No capacity/narrow/Vector/ISA treatment changed."
+  ],
+  "forest_contract_review": [
+    "Only coverage memo representation/reset policy changes to per-query maps. Previous strictness=false makes any later revisit redundant; previousstrictness=true/newfalse continues and updatesfalse, matching stamp implication. DFS order and live node/path semantics remain unchanged.",
+    "No child hashing, checkedsize_tbuffer growth, completed union draft lifetime, wrapper constructors/noexcept or payload/Vector changes in thispatch. Query memo/stack may allocate/throw but nextqueryclears both; no conclusiveanswer manufactured onfailure.",
+    "Both sharingtree/simple-sharingtree share thisengine. Currentdefinedhash is retained on both sides; unsafe variable-shift hash is not restored. Optionalhashcomparison remains separate."
+  ],
+  "matched_control_limits": [
+    "No exact before-optimization effect can be inferred from different-backend historicalrank comparisons. These must become separate fresh source-authority/actualELF/gate-bound controls only if triggered by the fixedrepeat evidence.",
+    "CommonRust/static/runtime artifacts can reduce buildconfounding; onlyunchanged dependencies/objects whose includedsourcehashes match may be shared. Header-dependentC++objects must reflect the declared per-arm source. No blanket8builds or automaticproduction rollback authorized.",
+    "Owner/Nb later primarysemantic review and concrete performance-rollback/validation decision remain separate. All original/frozen source and results remain unchanged."
+  ],
+  "performed": "Read patch/control/header/test/README source, exact manifest11file hashes and baseline Gitobjects, plus exactaaheaderbyte comparison only. No patch application, helperimports, models/tests/targets/builds/profiles/timings or publication; notes only underdeadline reviews.",
+  "attribution": "New complementary finding limited to forest optimized-sentinel gate mismatch. Core controlsourcepreparedbycoder; no claimed empiricalregression/defect/discovery in the headers."
+}

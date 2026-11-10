@@ -1,0 +1,29 @@
+{
+  "reviewer": "nbjorner-guided independent actual-command and ODR review",
+  "verdict": "No blocker in the actual selected six compile/link specs. Suitable for root-authorized serial selected compilation/linking; not approval of yet-unbuilt artifacts or measurement.",
+  "bindings": {
+    "directory": "work/deadline-reruns-v1/forest-memoization-execution-v1",
+    "selected_specs_sha256": "16f9f74469fc56c9be50bfe1067b4dbd01ec79853d3fc86afd101f4f19889050",
+    "common_context_sha256": "ef8c28f2cd3e4b6d1a09c7371bb6c36d392570b6367d78a87bbd26b8486cc269",
+    "projector_sha256": "600aeb43d4b215e98095558537a94c4737059c7d27fe4de7e09eaa08bc7d3a6d",
+    "decision_sha256": "197ee66ba428e906448ea17a0d4400779ae26c98fb81b6369bf0a890065f8a21",
+    "current_overlay_sha256": "67d6ce5584dc577b394a9b3a1e76c2c6c0db14df2055e33b5e0345da3799400a",
+    "map_overlay_sha256": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a"
+  },
+  "independent_checks": [
+    "Verified the three supplied checkpoint/source hashes, all six spec hashes, and context bindings for compile database, build.ninja, generated config/version, configuration gate, dependency snapshot, decision and projector.",
+    "Each selected compile template is an actual row in the fresh compile database; saved Ninja commands contain exactly the bound link template. Independently reversed all six concrete argv projections to their actual templates. Only symmetric leading overlay include, private object include, output/dep operands, and the two selected link object/output paths differ.",
+    "Both sides compile the same solve_game_vector.cc and version.cc with sharingtree_backed, the same label/gate and unchanged O3/Ofast/native ISA/LTO/NO_VERBOSE/NDEBUG flags. Clean stats/instrumentation are not added. Actual overlay files match exact reviewed before/after header bytes.",
+    "All17 actual common/helper Acacia object rows are represented in the saved dependency evidence:13 shared core plus four helper libraries. The entire saved Ninja dependency snapshot contains no sharingforest.hh; neither do the per-object inventories. This discharges the selected changed-header reuse condition for these built objects rather than assuming the two-TU source split is sufficient.",
+    "The eight common static archives are the same link operands on both sides. Five thin archives record their external members:13 shared-core objects plus four one-object helper archives. The three non-thin libraries are common TLSF/yyjson/Rust inputs. Selected links retain exact order/grouping/flags and sibling src outputs preserve ORIGIN/rpath meaning.",
+    "The expected eight runtime libraries and explicit link-file bindings are recorded in the common context. The actual configuration gate reports105 matched options, matching generated config hash0ea192e63ba2c985a4f3eb42e985947b67817c8e0702895ab3283dcbdd85a824 and normal compatible shipping settings. Existing d363 metadata remains a reference, not a relabelled matched ELF."
+  ],
+  "findings": [],
+  "postcompile_items_already_required_by_plan": [
+    "Actual selected depfiles must resolve the intended overlay header in the solver TU, common headers elsewhere and no changed forest definition in version TU.",
+    "Verify actual output ELF/compiler/runtime closure, source treatment, unchanged common archives/external members and focused assertion/fault/Boolean/version/smoke/portable gates before freezing measurement inventory.",
+    "Complete controller offline gates, actual preparation/dry-run and concrete10-call plan review before target timing."
+  ],
+  "limits": "This review inspects saved actual metadata and source/spec bytes. It does not rerun Ninja/ar/compiler commands or independently rehash the large shared object/library payloads during the build owner's lane. Stored dependency and artifact evidence is bound; final unchanged/closure checks remain the owner's required postbuild gate. No production rollback or performance conclusion follows.",
+  "execution": "No target/helper import, test, compiler, ELF execution, profiling, timing or protected-source mutation. Only own work/reviews notes written."
+}

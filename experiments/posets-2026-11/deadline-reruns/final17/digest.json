@@ -1,0 +1,127 @@
+{
+  "status": "source17-complete-and-qualified",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/summary.json",
+    "sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3"
+  },
+  "frozen": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/frozen.json",
+    "sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801"
+  },
+  "data_files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+    }
+  ],
+  "native_rows": 3048,
+  "memory_rows": 3048,
+  "series": [
+    {
+      "label": "anchor-e167",
+      "rows": 1524,
+      "solved": 1368,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "PAR2_s": 5946.655226414325,
+      "reported_PAR2_s": 5946.655226,
+      "wall_cap_overruns": 0,
+      "cpu": {
+        "valid": 1524,
+        "total": 1524,
+        "sum_s": 14011.778712
+      },
+      "RSS": {
+        "valid": 1524,
+        "total": 1524,
+        "peak_bytes": 3976986624
+      },
+      "scope_peak": {
+        "valid": 1524,
+        "total": 1524,
+        "peak_bytes": 4239486976
+      },
+      "events": {
+        "valid": 1524,
+        "total": 1524,
+        "OOM_kill_invocations": 0,
+        "OOM_kill_counter_sum": 0
+      }
+    },
+    {
+      "label": "lazy-fc",
+      "rows": 1524,
+      "solved": 1368,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "PAR2_s": 5940.166345068719,
+      "reported_PAR2_s": 5940.166345,
+      "wall_cap_overruns": 0,
+      "cpu": {
+        "valid": 1524,
+        "total": 1524,
+        "sum_s": 13979.571882
+      },
+      "RSS": {
+        "valid": 1524,
+        "total": 1524,
+        "peak_bytes": 3977768960
+      },
+      "scope_peak": {
+        "valid": 1524,
+        "total": 1524,
+        "peak_bytes": 4243906560
+      },
+      "events": {
+        "valid": 1524,
+        "total": 1524,
+        "OOM_kill_invocations": 0,
+        "OOM_kill_counter_sum": 0
+      }
+    }
+  ],
+  "candidate": "lazy-fc",
+  "baseline": "anchor-e167",
+  "gains": [],
+  "losses": [],
+  "PAR2_delta_s": -6.488881345605478,
+  "PAR2_percent_delta": -0.10911816977017263,
+  "truth_conflicts": 0,
+  "summary_only_equivalence": "byte-identical",
+  "OOM_kill_invocations": 0,
+  "identity_limit": "Whole original configuration versus genuine frozen cc lazy-FC; source-equivalent retained implementation, not rebuilt current. Private Rust/static bytes and NO_VERBOSE attribution limits retained."
+}

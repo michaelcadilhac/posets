@@ -1,0 +1,42 @@
+{
+  "decision": "APPROVE the exact actual107-visit amendment and completed gates under root's bounded delegated authority. The owner may launch only after also binding Barbosa's independent actual-plan/signature approval and creating the exact delegated release. No new root launch ping is required once both approvals are present.",
+  "bindings": {
+    "actual_readiness": "b621ab75e082ae8894b3cc3c2196c7a9d49b4939ea1bf6b8f35c8a528a5b14d9",
+    "amendment": "f5570dc6159e811462ed2bb06dfc08749aa12059d0c4bc629f5c4b193ef996e2",
+    "root_delegated_authority": "c537ca50c8301cb2b524d507f42ce6427e15db52b841c71808d4f3bf4273f0b3",
+    "source_checkpoint": "3b8e48ab829d6ad0ff2e8109a086be468a9761b80bfa868a545a3acbf28c9c4c",
+    "nbjorner_source_review": "44033e0b0698486ea442bfe0012bc73fefa7f3bc783b4023eebf88013f565d62",
+    "barbosa_source_review": "724e31947122a9eec6dedb56c9b5ff3af717f555a62166f2094f7ba9b3c0a539",
+    "release_template": "d5262ee36f450286c25f0b9ba5997add0512ff1e1cc04776d1007474c4fce3d6",
+    "offline_record": "842fae3b31d963b0e02c6762b4febe313e4713651d7e35e03dcd0e78f1d3ce4d",
+    "prepare_record": "9f2972d1f5a99ddb4071b60fecbee8696c944eddbd3e9e1df9ef1b9ef9e20adf",
+    "original30_plan": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0",
+    "accepted_final17_handoff": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+    "exact_signature": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+  },
+  "independent_saved_artifact_checks": [
+    "Matched all14 readiness bindings and eight gate-artifact bindings. Both actual records bind the advertised spec/result/log/helper, exit0 without timeout/resource limit/OOM under8G/no-swap. Offline log explicitly reports eight tests and OK; elapsed scoped times0.7160917699802667s and1.0166402619797736s. No correction or target dry-run was required.",
+    "Independently rehashed205 original record/raw/memory triples (615 bindings). Every completed mapping remains in original order0..204 and equals the original plan visit. The originalERROR record and separate diagnostic remain exact; nativeERROR/time/exit/resource data are not replaced.",
+    "Independently compared every actual projected visit against original indices205..311. All107 native_cli arrays are identical except the two declared list/output operands; each adapter array has exactly the reviewed prefix and unchanged native CLI source hash. All case-list contents match original cases. The first is lazy-fc's R12 counterpart and the last is anchor-e167's original311 visit.",
+    "Every original suffix leg and new suffix leg was absent at review, as were new frozen.json and the actual release file. Preparation wrote only lists/amendment; no107 continuation solver call had started.",
+    "The direct owner command uses the reviewed controller --run exact amendment --release exact release path, task cwd and LD_LIBRARY_PATH equal to the original frozen environment. Its controller owns existing host/output locks, while unchanged native delegates own30s/8G/no-swap scopes. Original genuinee167 and frozencc lazy-FC treatment/context bindings are revalidated by the passed actual source_state/prefix preparation and again before execution. No rebuild or isolated-header causality is implied."
+  ],
+  "accepted_amendment_semantics": {
+    "carried_original_primary_rows": 205,
+    "new_original_visits": 107,
+    "composite_primary_rows": 312,
+    "cases_per_arm": 156,
+    "scored_diagnostic_observations": 0,
+    "native_error_preserved": "ERROR",
+    "accepted_library_category": "SPOT_ACCEPTANCE_LIMIT_32",
+    "unsolved_PAR2_seconds": 60,
+    "original_uncaptured_error": "Only exact original204 failed record plus separate diagnostic adjudication; no claim of recovered primary stderr.",
+    "new_error_recognition": "Exact complete1080-byte stderr/empty stdout and identity/resource/capture guards; unknown/mixed errors still artifact-first STOP.",
+    "pairing_limit": "102 uninterrupted prefix pairs; one pair across STOP/diagnostic/adjudication;53 uninterrupted suffix pairs. No uninterrupted156-pair or censored-error timing-ratio claim.",
+    "source17": "Original full17s results and scores remain unchanged; this is the conditional156-case follow-up."
+  },
+  "findings": [],
+  "release_boundary": "Bind this approval, independent Barbosa actual approval, delegated authority, exact source, gates and amendment in the new release before launch. Maximum107 new original visits, no retries, no changed binaries/Spot/config/flags/caps/environment. A material change, unexpected/unknown error, truth conflict or identity/resource failure must stop and wake root. Publication is not delegated.",
+  "execution": "Reviewer used only saved small JSON/source/log reads, independent standard-library hashes and direct projection comparisons. No helper import, tests, solver, build, profile, old artifact mutation or original Acacia/WIP write. This does not claim the107 pending targets or final composite outcome passed.",
+  "attribution": "Root authorized bounded continuation; coder authored controller/adapter/fixtures; benchmark executed the two passing gates and prepared actual amendment. This is independent source/gate/plan validation, not a new defect discovery or skill-superiority result."
+}

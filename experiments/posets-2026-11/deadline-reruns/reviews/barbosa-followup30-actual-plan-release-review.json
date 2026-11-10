@@ -1,0 +1,112 @@
+{
+  "reviewer": "Barbosa skill-guided agent, not actual researcher",
+  "scope": "Bounded exact actual30 preparation/cohort/command/source-contract review; reuses accepted final17 outcome and reviewedV2 source. No helper import, target call or execution approval beyond this exact plan assessment.",
+  "verdict": "approve exact prepared plan for root-controlled execution release; no concrete blocker found",
+  "issues": [],
+  "checkpoint": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-ACTUAL-PREPARATION-COMPLETE.json",
+    "sha256": "d04d6a36e1ab209a20e7266a2751edeed2bb00dd37c9cfad63c576e7d760668e"
+  },
+  "plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/plan.json",
+    "sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0"
+  },
+  "verified_checkpoint_bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/plan.json",
+      "sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-followup30-cohort.list",
+      "sha256": "969f6083137debf9a7117dd9bfe2cf99bd57279912e05461c66e6afe60be84de",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-17S-HANDOFF.json",
+      "sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-result-digest.json",
+      "sha256": "30330cfd9f3fa9b7c58b4f801642b51503045b160eaa0716371b878564b4e679",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/SOURCE-MANIFEST.json",
+      "sha256": "bf038658dd2eed7925bfad33d62bb22ee921c4d2dc2792734de23447a861f1ef",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/followup30-offline-attempt1.json",
+      "sha256": "e0c46f11b73ada8b431ebe0e5b3f29c51af459988099d2833174526a67192117",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/followup30-offline-attempt1.log",
+      "sha256": "ceea5e339bfb84b2653af263ee2fe0a0e2de2bfaed2f3efd00a6d42b42fde502",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-followup30-prepare-attempt1.json",
+      "sha256": "9b7ed1f8507b884e4c4332f3028fb5c3ff965ec81a60f66396c3e7a1862c5abc",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-followup30-prepare-attempt1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-followup30-prepare-attempt1.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/specs/final-kd-followup30-prepare.json",
+      "sha256": "7f4a3757c03f86314bd6e34485b7ad759064619e8ddc6aa39d1ca97e575d0d99",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final17-outcome-review.json",
+      "sha256": "022d0bff347542aa06b3d4e87d1b14bee1cf261f132f03b5be3879c82cdb21e8",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final17-outcome-closure-audit.json",
+      "sha256": "50e7a84ef2f91f082c66f368658d7710c04e3d93dd139eb39d185ddd3885a01d",
+      "matches": true
+    }
+  ],
+  "cohort_checks": {
+    "parent17": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1",
+    "same_manifest_and_frozen_arms": true,
+    "selected_cases": 156,
+    "unique_calls": 312,
+    "calls": 312,
+    "first_positions_per_arm": {
+      "anchor-e167": 78,
+      "lazy-fc": 78
+    },
+    "selection": "Exact source-list-order union of strict17TIMEOUT; actual two sets identical and all156 nativeTIMEOUT, no sourceMEMOUT/overrun/error. Every selected case visits both frozen arms once, adjacent with balanced alternating first positions.",
+    "truth17_entries": 1368,
+    "all_selected_scored17_TIME_OUT": "All312 selected source-arm cells remain TIMEOUT and are preserved; no source score is rewritten."
+  },
+  "commands": "All312 argv arrays independently reconstructed from the unchanged saved campaign.command literal without importing it. Each matches exactly except unique explicit --caps value17 becomes30 at recorded index16. No duplicate/equals alias or implicit cap. Preset/emptyflags/8G/noSwap/noaffinity/CPUquota/binary/map/source/helper paths remain frozen. Primary exact command/cwd/filtered environment match checkpoint; child cwd remains manifest isolated repo.",
+  "guard_retention": "Writer exact6cdc4851 matches approvedV2. Source17 and followup30 use ordinary-outcome whitelist; CRASH/ERROR/AUDIT-ERROR/SYFCO-FAIL or other errors stop with evidence preserved, UNKNOWN is explicit unsolved. Raw decisive truths including overruns are retained; opposite answers stop. Complete finite CPU/integerRSS/whole-scopepeak/kernel events and exact memory joins are mandatory. Missing resources cannot become fakezero. No fixture rerun required in this read-only pass.",
+  "bindings_scope": "Checkpoint13 metadata/plan/offline/preparation/review files plus writer/policy bytes checked here. Plan contains185 source-result/selectedTLSF/library bindings; actual scopedprepare and reviewed source qualify them, and execution rechecks all185 plus writer/policy/interpreter. Accepted final17 invariance covers actual source/ELF/library context. This reviewer does not repeat the fullcorpus/ELF/library/interpreter rehash or execute check helpers.",
+  "outputs_absent": true,
+  "scoring_and_interpretation": [
+    "156-case conditional seen-data cohort,312 solver calls,one fresh attempt per arm/case. This is not a new full1524-case30s campaign.",
+    "Native decisive measured<=30 is solved; every other accepted result costs60 in conditionalPAR2. Keep explicit lazy-minus-anchor orientation, native labels, OOM-positive invocations and kernel counter sums separate.",
+    "Original17 raw/scored/resource bytes and scores remain unchanged. Later30 observations do not replace17 outcomes or erase censors. No repeat variance/noise estimate or causal memoization/FC win follows.",
+    "Genuine originale167 versus frozencc lazy-FC source/integration/static/privateRust/LTO and NO_VERBOSE attribution limits remain. The candidate is not relabeled a new rebuilt currentHEAD."
+  ],
+  "release_limit": "This is a review approval for the exact plan111b5b54 and source6cdc4851 only. Root grants actual execution after both independent reviews; this note launches nothing and does not approve future outcomes or publication.",
+  "attribution": "Validation of the prepared cohort/commands and previously corrected source contracts; no new defect discovery. Shared original error-acceptance finding remains Nbjorner+Barbosa; owner implemented/executed gates.",
+  "checks_not_performed": [
+    "No target code imported, offline test/helper executed, compiler/build/probe/solver/profile/timing",
+    "No actual30 source/output result read or projected new workload created",
+    "No fullcorpus/library/ELF rehash or production source/publication change"
+  ]
+}

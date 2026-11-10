@@ -1,0 +1,63 @@
+{
+  "decision": "ACCEPT the exact completed conditional30-second outcome, preservation and handoff. No numerical or provenance blocker found. No additional experiments are requested or authorized; publication/package assembly remains parent-owned.",
+  "bindings": {
+    "final_handoff": "fcdd3e037095d115a930a2c2b06ec9390f1b8067054516d5505ee4bf1057ed3f",
+    "composite_summary": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f",
+    "independent_arithmetic": "9b47d7e1feeb4ec628831bf5ea5c39c0b6497a11889a1d6d7d37f03cd93474d5",
+    "composite_index": "f49385026479188d00ded8b1e8b75ea9cbb0f6051011e7be1e91a5d86733ae13",
+    "owner_result_digest": "f163c9939f97a591e567cb4233a6b2214a8800eb6f04d6cc559e3802444f49b1",
+    "owner_exact_scores": "7e41c7acd408b98be9e4358ee2a148e7d1df7fb4df4acd525fe2e7280a552bd8",
+    "owner_final_invariance": "bd68403d45c532c5e4db20ecc6eb56dccae69c10b75172c8d80ba00d60bdf2fa",
+    "summary_equivalence": "d6154a834f4f4e08f47f6dc2a32249749b3003e547f8172722a35b8e4fa5539c",
+    "redacted_original_preservation": "b384145970416f721ddf807784fd155ba80a0771434b5a6f4326aed6fb3fa4f4",
+    "accepted_final17_handoff": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+    "actual_plan_review": "accb1263956d27603858851aa6d89d6a3fd927818157dec72df9ea8abf542c91",
+    "delegated_release": "814f3177bcb08758ca044a3096f2438d3f197384cf8467ae07e9d394b9e71ae6"
+  },
+  "independent_validation": [
+    "Verified all31 direct final-handoff file bindings. Independently read all312 primary records and native rows, checked their order/identity/cap/environment policy, all312 resource-sidecar joins and2612 record-inventory file hashes. Every arm has the exact same156-case cohort once.",
+    "Checked all107 continuation captures against the native rows: complete streams/byte counts/file hashes, exact original scoped delegate argv/kwargs, time/exit/scope/kernel events and native CPU/RSS formatting. Original205 observations remain original; independent diagnostic contributes zero scored observations.",
+    "Recomputed strict30s scoring with decimal raw tokens, native outcomes, resolved sets, cross-arm/source17 raw truth, CPU sums, processRSS maxima, scope-peak maxima and kernelOOM counts. No decisive wall overrun, truth conflict or OOM event was found. The same eight5R/3U cases resolve in both arms, with zero gains or losses.",
+    "All four nativeERRORs remainERROR and cost60. The original204 record uses its exact independent-diagnostic adjudication with absent original stderr explicitly disclosed. Three new errors match the exact1080-byte primary stderr signature and empty stdout with clear resource/timeout/OOM fields. These are two shared cases, ltl2dba_R_pb_12_pe_.ltl and ltl2dba_R_pb_14_pe_.ltl, not four distinct inputs.",
+    "Owner's215-binding final invariance lists all expected/actual hashes equal and all match=true. Summary replay is scoped exit0 without timeout/resource/OOM and binds the unchanged reviewed command; summary bytes and all312 pre/post record hashes match, with zero new solver calls. The reviewed completed-record branch performs noPopen. Original-preservation redacted proof reports all five aliases/six fields matching; its explicit ignored/untracked-byte limit is retained."
+  ],
+  "outcome": {
+    "original_primary_records": 205,
+    "continued_primary_records": 107,
+    "total_primary_observations": 312,
+    "cases_per_arm": 156,
+    "each_arm_solved": 8,
+    "each_arm_NATIVE_TIMEOUT": 146,
+    "each_arm_NATIVE_ERROR_Spot32": 2,
+    "each_arm_REALIZABLE": 5,
+    "each_arm_UNREALIZABLE": 3,
+    "gains_lazy_vs_original": 0,
+    "losses_lazy_vs_original": 0,
+    "conditional_PAR2_anchor_seconds_exact": "9054.294432966038586",
+    "conditional_PAR2_lazy_seconds_exact": "9054.435914172790946",
+    "conditional_PAR2_lazy_minus_anchor_seconds_exact": "0.141481206752360",
+    "CPU_anchor_seconds_exact": "19462.935455",
+    "CPU_lazy_seconds_exact": "19465.618834",
+    "process_RSS_anchor_max_bytes": 4280414208,
+    "process_RSS_lazy_max_bytes": 4280303616,
+    "scope_peak_anchor_max_bytes": 6136221696,
+    "scope_peak_lazy_max_bytes": 6165204992,
+    "kernel_OOM_event_invocations": 0,
+    "diagnostic_scored_observations": 0
+  },
+  "interpretation_limits": [
+    "Conditional156-case timeout-union follow-up only; this is not a uniform30-second1524-case campaign. Original17s scores and3048 observations remain separate and unchanged. The identical eight additional solves do not create a lazy solved-set advantage.",
+    "Keep exact orientation: lazy minus original is+0.141481206752360s conditionalPAR2. Neither this tiny difference nor the earlier small17s difference establishes a timing winner or known noise floor.",
+    "102 prefix pairs were uninterrupted, one pair straddles STOP/diagnostic/adjudication, and53 suffix pairs are uninterrupted. Do not claim156 uninterrupted adjacent pairs or infer a finish-time ratio for theERROR pair.",
+    "ProcessRSS and cgroup scope peak are distinct observations. The approximately3.99GiB30s processRSS figures do not mean the scope used only3.99GiB. Zero kernelOOM is an observed campaign result, not a universal memory bound.",
+    "Actual frozencc lazyFC and genuinee167 default whole configurations were compared, with their accepted source/core/static-build context limitations. No isolated-header causality, rebuilt-currentELF identity, native-width whole-solver result, runtime route fraction or general solver correctness proof follows."
+  ],
+  "PR_body_check": {
+    "path": "work/deadline-reruns-v1/publication-prep/PR-BODY-final-v1.md",
+    "sha256": "6fdbed9c883410444bddea7a7052c3a942cccaf0243710e1cad2336c098a962e",
+    "decision": "No material numerical or interpretation correction required. Rounded tables, same-set/no-winner conclusion, processRSS label, native-library-error disclosure, previous789 versus originale167 distinction, retained default, actual16-lane scope and future native task are consistent with accepted evidence. Keep detailed paused-pair/error-adjudication/source-binding qualifications in the linked report rather than making the PR body denser.",
+    "limit": "This is a bounded factual/editorial read, not approval of an unassembled package, a new source CI run or publication by this reviewer."
+  },
+  "findings": [],
+  "execution": "Only saved evidence/source/log reads and independent standard-library hash/decimal/CSV calculations. No helper import, target/test/build/profile, replay or original-source/WIP mutation by reviewer. The immutable earlier contribution ledger was not changed."
+}

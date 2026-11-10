@@ -1,0 +1,46 @@
+{
+  "reviewer": "nbjorner-guided independent actual-artifact and concrete-plan review",
+  "decision": "Approve the exact ten-call forest plan for root's final release. No unresolved source, artifact, gate or concrete-plan blocker found. No performance or rollback conclusion follows before results.",
+  "bindings": {
+    "build_handoff_sha256": "98594f3e2e72031d0c7822e0af16460d033a8bc49b8deb7a5ce0439441289485",
+    "gates_sha256": "a4c82129840361acde17be24ad4333f233fe68326727b6c45e6076ea05e6c4f1",
+    "actual_arms_sha256": "9dd0bc68f21714f5955c71bdc70fd4adba88def7604c4497b463bbb531991812",
+    "common_context_sha256": "ef8c28f2cd3e4b6d1a09c7371bb6c36d392570b6367d78a87bbd26b8486cc269",
+    "preparation_sha256": "f6fc13165833f174425bdd4faa4fd846197f22e0b0a81c38c565727c5ffa25ec",
+    "plan_sha256": "017a374b8936efad7b26ae402f932c55e86d0b7e739c8ac9820bc89feb1e6c50",
+    "inventory_sha256": "0ddcecda6482152e8225c5cd385ad4db36c845816172a2ace074ea2fb3578175",
+    "map_before_ELF_sha256": "8f7266802a851c8fe175bb6ee856206cf3a3e401aaf2f61c86b2d37f0fd64f58",
+    "stamps_after_ELF_sha256": "00397ba89fc026b30f9f859ef2ea50eea3d47b69fc2420edfed6d2c33dbaec38",
+    "map_proof_sha256": "f1f774ec70e505e5631ccfbb5029f98903f207ac5cd94c165e8d8a0f9a891ea5",
+    "stamps_proof_sha256": "35309fbd8d6707e8fb43f95f18eda241163989b10e1adde0f64143346252c35b",
+    "source_review_sha256": "e47e2b1b24614d288411378bee755749d5dcc6fafe87b848f03b0ebd824a7f24",
+    "precompile_review_sha256": "6b17ea514e35915dbfbd7b135f7908a8efbe36fe7a18056bc6af02b973a4e321"
+  },
+  "build_closure_checks": [
+    "Verified75 nested handoff/gate evidence references, actual ELF hashes, all eight shared archives and17 thin-archive external members, and the exact eight resolved runtime library hashes. Both sides retain the approved common contextef8c28f2, source pins, generated config/version and selected compile/link treatment.",
+    "Independently parsed all four actual selected TU depfiles: solver TUs use only the corresponding reviewed forest overlay; version TUs contain no forest header. All other Posets dependencies resolve to the new common source. Previously checked17 reused Acacia object dependency inventories exclude the changed forest header.",
+    "Checked all30 listed successful build/gate scope records: actual specs/record hashes/logs, expected return codes,8G/no-swap, finite CPU/available peaks, no timeout/resource limit or OOM events. These records remain separate from the five preserved failed setup/checker attempts.",
+    "Actual gates pass: four common plumbing tests; both assertion-enabled forest semantic/fault/lifetime fixtures; two vector flavors at dimensions1/17/33/65 on each side,16 Boolean cases total; two portable Memchecks with0errors/0leaks; four known REAL/UNREAL smoke answers with expected native exits0/1. Map query allocation failure and same-root retry checks remain positive rather than silently disabling the hook.",
+    "Memcheck logs show150121 balanced allocation/free calls for the map fixture and40500 for current stamps. These are fixture diagnostics, not clean performance measurements. The portable assertion fixtures use O0 and UNDEBUG; their coverage is not conflated with NDEBUG production assertions.",
+    "Exact version text is generated-header-derived86dd487-dirty, shipping otf_sparse_formula_parity, sharingtree_backed,16 lanes and optional layout flags0. NO_VERBOSE evidence establishes source/type/configuration, requested smoke route and answer content, not observed route frequency."
+  ],
+  "failed_attempt_review": {
+    "preserved_count": 5,
+    "classification": [
+      "Initial systemd user-bus denial before successful authorized scoped materialization; unavailable initial resource observations are retained rather than counted as passed coverage.",
+      "Configuration checker first compared unordered option lists, then ran before generated version creation. The final name-keyed comparison rejects duplicates and still compares full option records; the version generation stage restores dependency ordering rather than dropping config/version equality.",
+      "Postbuild checker first mishandled string/Path metadata, then assumed -V returns0. Corrections wrap Path and require the existing exact Acacia exit2 with exact generated-header-derived output and empty stderr; they do not accept arbitrary exits or weaken ELF/source/runtime checks."
+    ],
+    "finding": "No C++ source/treatment change or masked compiler/solver failure found in these corrections."
+  },
+  "concrete_plan_checks": [
+    "Freshly verified all29 actual plan bindings plus interpreter, completion references and all three scoped preparation gates. Six authored offline mocked tests pass; actual prepare and dry-run records/logs match their specs and show rc0/no timeout/resource limit/OOM.",
+    "Exactly two regular sharingtree ELFs on common Posets1c46713 plus their explicit reviewed header overlays. Map control is before; stamps are after. Exact per-side actual provenance/common context and source pins agree; no historical ELF is relabelled as a new matched artifact.",
+    "Sole Alarm_a5f99bc6.ltl case retained. Five adjacent pairs have fixed map/stamps, stamps/map, map/stamps, stamps/map, map/stamps order;10 calls, seed260617,17s/8G/no swap, empty flags, shipping preset,16 lanes, no affinity/quota or instrumentation added.",
+    "Exact direct-controller argv/cwd and sole LD_LIBRARY_PATH override match the approved plan/stage templates. Existing shared host lock, native per-invocation cgroups/cleanup and thermal sampler remain. New forest-paired-execution-v1 output did not exist at review.",
+    "Existing all-five-uncensored timing and4vs1 solve rules remain. Native errors/opposite answers stop with artifacts preserved; timeouts/MEMOUT/UNKNOWN remain censored evidence. No survivor median, extra cap, observation substitution or optional repeat is permitted by this release."
+  ],
+  "findings": [],
+  "limits": "This is the selected regular-sharingtree memo intervention on one observed adverse case. It does not explain the whole forest/ranked gap, decide simple-sharingtree, prove general solver soundness, authorize production rollback, or release the separate final full original-versus-KD/30s phases. Appropriate second-wrapper validation is required before a shared-header rollback.",
+  "review_execution": "Saved source/JSON/log/depfile inspection and bounded metadata/artifact hash checks only. No helper import/execution, compiler, tests, ELF execution, profiles or target timing by the reviewer. No protected sources or old evidence modified; only this work/reviews artifact written."
+}

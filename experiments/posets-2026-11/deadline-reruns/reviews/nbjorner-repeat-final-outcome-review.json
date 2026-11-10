@@ -1,0 +1,58 @@
+{
+  "reviewer": "nbjorner-guided independent saved-evidence review",
+  "decision": "Accept the completed450 repeat arithmetic, censor treatment and bound closeout; no numerical or provenance-record blocker found. No automatic source rollback or future target release follows.",
+  "bindings": {
+    "handoff": {
+      "path": "work/deadline-reruns-v1/FINAL-HANDOFF.json",
+      "sha256": "09f0b3d0069af9f8043922429258d1be965bbe48a6219574e699a58bf16bf94c"
+    },
+    "summary_sha256": "3b8cd817db19422118a1499e1fc4d03a7bb5b7105d7ef49acab4553819acae61",
+    "plan_sha256": "cbbf2d215cf84c761b46c9fc5677529ec8c095d179ee84281e63152fd03f8fbc",
+    "owner_invariance_sha256": "c81341f420cf9b1ad6292db4223e3f471af4daf5ea4baace2b05d65ce2851ee2",
+    "independent_arithmetic": {
+      "path": "work/deadline-reruns-v1/reviews/nbjorner-repeat-independent-arithmetic.json",
+      "sha256": "87a7710bcec22c3f89cb49da626394b0c7f5bdaa19dc7ed2351389cb0a9d2588"
+    },
+    "preservation_redacted_sha256": "e2e8a7a456a9c9ba645451722fe997ca567264195efcce6ecc4af37bb15cd7e9"
+  },
+  "independent_checks": [
+    "Verified all30 direct handoff file hashes. Independently joined each of450 native TSV rows to its memory sidecar and embedded summary row, checking overlapping values exactly and each saved invocation record plus its listed artifact hashes.",
+    "Recomputed all45 cell solve counts, Decimal PAR2 sums, all-five-pair ratios, medians, censor flags and both serious-regression gates. Every summary value matches. Censored cells have null ratios/medians rather than survivor-only summaries.",
+    "Checked all225 scheduled adjacent pairs against actual record start order and found no invocation overlap. Exactly450 distinct scopes and17 actual used ELF identities occur, with the fixed17s/8G/no-swap/empty-flags/preset/resource settings.",
+    "Checked native decisive exit/timeout consistency and cross-arm decisive agreement by case: zero conflicts, errors, decisive wall overruns or kernelOOM-kill observations. All450 CPU, RSS, scope-peak and event observations are present and valid.",
+    "Automatic and summary-only outputs are byte-identical. The hash-bound owner invariance record reports exactly the56 frozen plan inputs plus the interpreter, all matching; checked its identities against the plan without repeating the large ELF/library hash scan.",
+    "Hash-bound redacted original-preservation proof has all five checkout aliases and all six metadata/tracked-byte comparisons true. Its stated exclusion of ignored/untracked file bytes remains explicit. No private status/diff/WIP content is reproduced here.",
+    "Final summary-only and followup30 offline fixture records both show scoped8G/no-swap success with no timeout/resource limit/OOM. The saved followup fixture log reports10 tests OK; this is mocked execution, not a30s target result or a future cohort qualification."
+  ],
+  "totals": {
+    "comparison_case_cells": 45,
+    "paired_visits": 225,
+    "native_rows": 450,
+    "native_REALIZABLE": 155,
+    "native_UNREALIZABLE": 64,
+    "native_TIMEOUT": 231,
+    "fully_uncensored_cells": 4,
+    "serious_solve_loss_cells": 27,
+    "serious_timing_loss_cells": 2,
+    "cpu_seconds_sum_decimal": "31862.910036",
+    "scope_peak_max_bytes": 5905948672,
+    "max_process_RSS_max_bytes": 4497088512,
+    "kernel_OOM_kill_observed_rows": 0
+  },
+  "interpretation": [
+    "The selected same-backend old/new ranked comparison does not reproduce its historical solve loss: load-balancer before4/5 after5/5; robot-repair1/5 on each side. Neither cell is uncensored, so neither has a decision timing median. These rows do not support a rank performance rollback or establish a general speedup.",
+    "Both forest wrappers are5/5 solved on Alarm. Sharingtree median paired backend/ranked ratio is1.8235372416761049; simple-sharingtree is1.7838853145583293. All five ratios exceed1 in each cell. The corresponding08 medians1.0902726602290462 and1.0536319018979636 do not pass the1.10 gate.",
+    "KD/trie/comp/block and forest robust solve-loss cells remain adverse backend-versus-ranked observations. They are not before/after effects of a particular performance patch. Available historical ELF contexts and censoring do not identify whether a KD scratch, trie layout or other source optimization caused those differences.",
+    "The27 solve-loss count is comparison/case cells, not27 unique instances. The whole matrix is an explicitly selected boundary/adverse-case diagnostic across six inputs, not a new full-corpus solved count or population estimate. Keep all45 cells and prior campaigns distinct.",
+    "Exact ELF reuse controls run variation for the declared configurations. Different historical compilation contexts/private Rust archives and shared Vector changes limit isolated-header causality; revision names or matching settings do not erase those differences."
+  ],
+  "minimal_attribution_advice": [
+    "One newly matched sharingtree map-control versus current stamp-cache pair on Alarm directly addresses the repeated fully solved forest memo question. Predeclare map as before and stamps as after, same wrapper/core/static/runtime closure, five paired17s repetitions and the unchanged serious gate. It tests that memo intervention, not every forest change or the entire backend/rank gap.",
+    "No need to launch the rank correctness-only control based on these repeats. Do not release all eight prepared configurations. Simple-sharingtree is a separate wrapper treatment if independently selected; it need not be automatically bundled into the first memo question.",
+    "A pre-scratch/current legacyKD control can answer only the scratch intervention if root specifically selects it. A result censored on both sides would remain unresolved; the existing backend/rank losses alone justify neither a scratch rollback nor an expanded blanket control matrix.",
+    "Protect correctness/exception fixes under any later rollback. Fresh actual compile/link/dependency proofs and selected gates remain required for matched controls; this outcome audit does not approve unmaterialized artifacts or future full17s/30s calls."
+  ],
+  "findings": [],
+  "contribution_attribution": "Independent numerical/resource/order validation and bounded inference advice. Root set the decision policy and owner produced the original summaries/closure; no exclusive discovery credit is claimed for their already-reported outcomes. The earlier forest control-fixture applicability gap originated in Barbosa review.",
+  "execution_limits": "Read-only saved data and small standard-library arithmetic/hash joins only. No target/helper import or execution, compiler, tests, profiles, timing, source mutation or originalAcacia/WIP writes. Historical immutable contribution ledgers remain unchanged."
+}

@@ -1,0 +1,3 @@
+arm,conditional_cohort_cases,resolved30,remaining_TIMEOUT,known_Spot32_ERROR,conditional_PAR2_s,gains_vs_original,losses_vs_original,process_RSS_peak_bytes,scope_peak_bytes,CPU_seconds,valid_resource_rows,OOM_kill_invocations
+anchor-e167,156,8,146,2,9054.294432966039,0,0,4280414208,6136221696,19462.935455,156,0
+lazy-fc,156,8,146,2,9054.435914172791,0,0,4280303616,6165204992,19465.618834,156,0

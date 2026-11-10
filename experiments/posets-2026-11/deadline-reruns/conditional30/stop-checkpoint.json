@@ -1,0 +1,1568 @@
+{
+  "status": "STOPPED_NATIVE_ERROR-PARTIAL-NOT_COMPLETE",
+  "checked_utc": "2026-11-10T12:55:35.864558+00:00",
+  "plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/plan.json",
+    "sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0"
+  },
+  "frozen30": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/frozen30.json",
+    "sha256": "14be5b7bf803f02c30d3663a4dc5ff420ed901ebbae926a352eed1ed52d890b2"
+  },
+  "release": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-PRIMARY-RELEASE.json",
+    "sha256": "7f422e29f90f350cbcc23b96f3f34f78ba0cb6ba932c2b9c0e7df0cf4c5444ea"
+  },
+  "source17_handoff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-17S-HANDOFF.json",
+    "sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24"
+  },
+  "source17_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/summary.json",
+    "sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3"
+  },
+  "stop": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/STOP-1794315203651880337.json",
+    "sha256": "7406effcb44e4cf333c2ebe988de66e44621c10febe4cd85a5dc86cc8e6105e2"
+  },
+  "controller_log": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-followup30-controller-v2.log",
+    "sha256": "193cee15f541d3d888d5457dddacda844f26d3b3433c857ba8cd40bf202aa326"
+  },
+  "recorded_calls": 205,
+  "complete_pairs": 102,
+  "failing_case_index": 102,
+  "pending_calls": 107,
+  "failed_observation": {
+    "visit_index": 204,
+    "record": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167/record.json",
+      "sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8"
+    },
+    "visit": {
+      "case_list": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/lists/0102.list",
+      "command": [
+        "/usr/bin/python3",
+        "-u",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+        "--bin",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/src/acacia-bonsai",
+        "--solver-label",
+        "anchor-e167",
+        "--list",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/lists/0102.list",
+        "--tlsf-map",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/tlsf-sources.tsv",
+        "--tlsf-corpus",
+        "/home/gperez/GIT-repos/acacia-bonsai/tlsf-corpus",
+        "--status-exceptions",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/syntcomp26-status-exceptions.tsv",
+        "--caps",
+        "30",
+        "--memory-max",
+        "8G",
+        "--memory-swap-max",
+        "0",
+        "--output",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167/raw/anchor-e167.tsv",
+        "--resume",
+        "--conflict-policy",
+        "stop",
+        "--acacia-sha",
+        "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "--preset",
+        "otf_sparse_formula_parity",
+        "--collect-rusage",
+        "--flags="
+      ],
+      "command_delta": {
+        "after": "30",
+        "before": "17",
+        "index": 16
+      },
+      "instance": "ltl2dba_R_pb_12_pe_.ltl",
+      "label": "anchor-e167",
+      "leg": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167"
+    },
+    "row": {
+      "solver_label": "anchor-e167",
+      "instance": "ltl2dba_R_pb_12_pe_.ltl",
+      "tlsf_file": "ltl2dba_R_pb_12_pe_.tlsf",
+      "cap_s": "30",
+      "result": "ERROR",
+      "seconds": "20.121184411924332",
+      "exit_code": "3",
+      "timed_out": "false",
+      "resource_reason": "",
+      "expectation_source": "none",
+      "stdout_bytes": "0",
+      "stderr_bytes": "1080",
+      "run_index": "0",
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary_sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+      "preset": "otf_sparse_formula_parity",
+      "timestamp_utc": "2026-11-10T12:53:23.625296Z",
+      "flags": "",
+      "cpu_seconds": "22.592969",
+      "max_process_rss_bytes": "3563900928",
+      "scope_memory_peak_bytes": "3565031424",
+      "memory_max": "8G",
+      "memory_swap_max": "0",
+      "allowed_cpus": "",
+      "cpu_quota": "",
+      "collect_rusage": "true",
+      "worker_records_dir": "",
+      "scope_unit": "acacia-syntcomp26-coverage-2283251-bc1fc323f0c4.scope"
+    }
+  },
+  "stderr_limit": "Native primary owner preserved stdout/stderr byte counts, not solver streams. No stderr text is available in this native TSV/log.",
+  "all_completed_record_file_hashes_match": true,
+  "remaining_leg_directories_absent": true,
+  "no_retry_or_later_target_calls": true,
+  "no_active_job": true,
+  "actual_diagnostic_runs": 0,
+  "partial_native_outcomes": {
+    "TIMEOUT": 192,
+    "REALIZABLE": 8,
+    "UNREALIZABLE": 4,
+    "ERROR": 1
+  },
+  "records": [
+    {
+      "visit_index": 0,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0000/anchor-e167/record.json",
+        "sha256": "a0c8de36027e6844ab2868517c5e30652995db7ea9b9f1b46fcb98a75949fff0"
+      }
+    },
+    {
+      "visit_index": 1,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0000/lazy-fc/record.json",
+        "sha256": "80435f3b1d0b4e79c235cb1067749cb1343ab7b3411b9e5d66fe033abaf7f851"
+      }
+    },
+    {
+      "visit_index": 2,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0001/lazy-fc/record.json",
+        "sha256": "3a7a2aee949cbb916ea28db43e1caac9ca779d764dd96c07b0526080895c7b8f"
+      }
+    },
+    {
+      "visit_index": 3,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0001/anchor-e167/record.json",
+        "sha256": "b92b2d774170e14ba657a76edb2f242026425ed4afd8314187152a27e9065b6f"
+      }
+    },
+    {
+      "visit_index": 4,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0002/anchor-e167/record.json",
+        "sha256": "f8fcd9797f6d0fce401ac8033bc24517d9cc3999055b479ce284b5a771a58cb6"
+      }
+    },
+    {
+      "visit_index": 5,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0002/lazy-fc/record.json",
+        "sha256": "f057925b6ac651c25d94d4c9203e6199251acac5b4463c06486f47b17f4f5133"
+      }
+    },
+    {
+      "visit_index": 6,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0003/lazy-fc/record.json",
+        "sha256": "3ed6678ad927761ccfdeb0b1518ec4222215cc652434cbd76ec9f751e2bc8b85"
+      }
+    },
+    {
+      "visit_index": 7,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0003/anchor-e167/record.json",
+        "sha256": "c960cfa090499f7d58ca5098a94366f789188e218e5835da49cd46a13a95a81f"
+      }
+    },
+    {
+      "visit_index": 8,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0004/anchor-e167/record.json",
+        "sha256": "b748daada1f3849188322c3749e8faf705d9417db930beddf2f49cb1d4d9b2ec"
+      }
+    },
+    {
+      "visit_index": 9,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0004/lazy-fc/record.json",
+        "sha256": "6cad41f10565317590bd0d892fb7fcb245a0a4b064539433d67cd99bf1a886c2"
+      }
+    },
+    {
+      "visit_index": 10,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0005/lazy-fc/record.json",
+        "sha256": "90b7393610430ae404d50a148f5fc99faea260f2df3dc270b8cac146cd3560ec"
+      }
+    },
+    {
+      "visit_index": 11,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0005/anchor-e167/record.json",
+        "sha256": "d60c9bd35d336c1d156d7f8e6c1f0a97fe61824f746df810407d54952b1c74e3"
+      }
+    },
+    {
+      "visit_index": 12,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0006/anchor-e167/record.json",
+        "sha256": "47d30fd84eee54ac2da1c48f4aad0e5725f3ae49b26afe98de9228be53646ca6"
+      }
+    },
+    {
+      "visit_index": 13,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0006/lazy-fc/record.json",
+        "sha256": "2796a9a329d75ba094ba632062d453e0cd86ab2887c7fe7c8385a567cb9aee7c"
+      }
+    },
+    {
+      "visit_index": 14,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0007/lazy-fc/record.json",
+        "sha256": "8b29634305c7cbcf40f218ce9e2da8d0cbfe4f71b71e4cf1d5d22b1146063f3c"
+      }
+    },
+    {
+      "visit_index": 15,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0007/anchor-e167/record.json",
+        "sha256": "9a288853545f6621f72383ea68c2350f441053a1a08b9a1fe4a94abab3dc918e"
+      }
+    },
+    {
+      "visit_index": 16,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0008/anchor-e167/record.json",
+        "sha256": "ce1148b78c9417a8c78eb1991186039af15e9f503be6f0bee782221409ce949f"
+      }
+    },
+    {
+      "visit_index": 17,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0008/lazy-fc/record.json",
+        "sha256": "f5d295645fd37cf221cdc79304075babca011536c8d4e3224928b2d5b6c270e6"
+      }
+    },
+    {
+      "visit_index": 18,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0009/lazy-fc/record.json",
+        "sha256": "242ba7d8641ceff579847c97135ba174ee9d41464a63e7351d98bd09834451f5"
+      }
+    },
+    {
+      "visit_index": 19,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0009/anchor-e167/record.json",
+        "sha256": "f46e1d618ae05982ef06e47da8500f52be69998e35da4058c5c6858b7df7e738"
+      }
+    },
+    {
+      "visit_index": 20,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0010/anchor-e167/record.json",
+        "sha256": "d9553612d8d1a6def37116b708ec75426f06fd1a04d73d28dc55e268b900f3b9"
+      }
+    },
+    {
+      "visit_index": 21,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0010/lazy-fc/record.json",
+        "sha256": "82f6a59ec83360c0e3f0449c012f38d520f379493749ad4b11c4ca3fb4ceed11"
+      }
+    },
+    {
+      "visit_index": 22,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0011/lazy-fc/record.json",
+        "sha256": "1193e3b416673a6d0f28e0dccf591b495a3b1778532ef6c0758d90ec739317cc"
+      }
+    },
+    {
+      "visit_index": 23,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0011/anchor-e167/record.json",
+        "sha256": "6bdaea7abb9802c03f6d73b749e9c6f02d2fda8370d5b5945cccb1bbee162d60"
+      }
+    },
+    {
+      "visit_index": 24,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0012/anchor-e167/record.json",
+        "sha256": "dc62615a80ee92572740a94e36a02610691f498fee2d67eb6f647317469a8eb5"
+      }
+    },
+    {
+      "visit_index": 25,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0012/lazy-fc/record.json",
+        "sha256": "181d1ab4092846ef4ca6a07459da86aba626bc88819f8906e12e6c564cd664cf"
+      }
+    },
+    {
+      "visit_index": 26,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0013/lazy-fc/record.json",
+        "sha256": "83d8baac8b4d2478e6e6e2b0aad286646b138b3b226a1b24f0536fb2ab8b1629"
+      }
+    },
+    {
+      "visit_index": 27,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0013/anchor-e167/record.json",
+        "sha256": "3e33d659fb04f85539e33a294e455ef9623f71883f3ac8feb48b7be76b5bebd3"
+      }
+    },
+    {
+      "visit_index": 28,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0014/anchor-e167/record.json",
+        "sha256": "91ba5239e47ea0a90c5b73930ecff87c95eaf9af1524b2fb58c86d996678bc83"
+      }
+    },
+    {
+      "visit_index": 29,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0014/lazy-fc/record.json",
+        "sha256": "b09bb0c4676981bf00f8a9f8aa4bcf41516cb6bebc9ceb0f732abc509f3686ff"
+      }
+    },
+    {
+      "visit_index": 30,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0015/lazy-fc/record.json",
+        "sha256": "50737ce0b8f965aa87d4e8078752b88d38d9b01770a43fd9cc168bb480d27311"
+      }
+    },
+    {
+      "visit_index": 31,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0015/anchor-e167/record.json",
+        "sha256": "bff09177b62b0062887744b3c5aa6dd95d3bf2976465b9b19c34c42c569b2f51"
+      }
+    },
+    {
+      "visit_index": 32,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0016/anchor-e167/record.json",
+        "sha256": "e93a0ce82718bc7d6c52c8e99ef9b90401c2e46cd62b3c3b9efaef18193d424d"
+      }
+    },
+    {
+      "visit_index": 33,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0016/lazy-fc/record.json",
+        "sha256": "356e463cc2e0133e9e57c7b59a0e2507a6429932ccbfe18470bc36ef26327b8b"
+      }
+    },
+    {
+      "visit_index": 34,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0017/lazy-fc/record.json",
+        "sha256": "57a0570ed7be02092e8f8e5e2c38fdcfd8c7395119fbb6fcdf22d86284e6dc9e"
+      }
+    },
+    {
+      "visit_index": 35,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0017/anchor-e167/record.json",
+        "sha256": "050250fa8b46d42f8bef9a63256695b00b4491a4f5daa86d18ddff3887bf909f"
+      }
+    },
+    {
+      "visit_index": 36,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0018/anchor-e167/record.json",
+        "sha256": "ef8b9a71343b762620d76aaf0f25edd247f710bcf6fb88995e84bcb9a9cc728d"
+      }
+    },
+    {
+      "visit_index": 37,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0018/lazy-fc/record.json",
+        "sha256": "815915a6227b9ce3af55bd2a55be1cce4803401419ccad4e8de544a5f7b256ff"
+      }
+    },
+    {
+      "visit_index": 38,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0019/lazy-fc/record.json",
+        "sha256": "958a4da932884301162fc9899a77cf7bf9852eacbd03e846d2ea1f5a7939d29b"
+      }
+    },
+    {
+      "visit_index": 39,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0019/anchor-e167/record.json",
+        "sha256": "e80a6076b07e11ee787920d635d648884d2d07a9f994be0c16541d279b47e339"
+      }
+    },
+    {
+      "visit_index": 40,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0020/anchor-e167/record.json",
+        "sha256": "cdca4b3706271aca3fca29ae69aabf9fa064f14211e2bcba513290ceb13f5a8c"
+      }
+    },
+    {
+      "visit_index": 41,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0020/lazy-fc/record.json",
+        "sha256": "e1af01d430033e6e869cfc256e152d815a9909b70caf0cd7d5851f9cb096aa08"
+      }
+    },
+    {
+      "visit_index": 42,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0021/lazy-fc/record.json",
+        "sha256": "94f69aaa2d8d7a1b301862f1aa00888003588091cbabd098880a5f68267f048a"
+      }
+    },
+    {
+      "visit_index": 43,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0021/anchor-e167/record.json",
+        "sha256": "d5f024da31c83745d105ea76ac1f176a494f4ae18e4af8adc4f7e2edca0a4e87"
+      }
+    },
+    {
+      "visit_index": 44,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0022/anchor-e167/record.json",
+        "sha256": "baf0e7913386e2213d4ce400361ad1dc20ebe62b532e064243448840b109a699"
+      }
+    },
+    {
+      "visit_index": 45,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0022/lazy-fc/record.json",
+        "sha256": "e63b02316a6be34123a1e71dd87a80f3d334770e6c051bae757a824eea7b71a0"
+      }
+    },
+    {
+      "visit_index": 46,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0023/lazy-fc/record.json",
+        "sha256": "a2f3604de888b80b0a1d76a424d43eed94295bb798925977cb2dce35bac9a5dc"
+      }
+    },
+    {
+      "visit_index": 47,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0023/anchor-e167/record.json",
+        "sha256": "83934631304399250cc7478691801dd359c9846d98477a613b56231a6a93ce94"
+      }
+    },
+    {
+      "visit_index": 48,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0024/anchor-e167/record.json",
+        "sha256": "3ca67c2e8963b956cbfb368672c535fe793ba1ac19c21b0746c1472ce148bef6"
+      }
+    },
+    {
+      "visit_index": 49,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0024/lazy-fc/record.json",
+        "sha256": "a09ab02853e776360877ed1a6039ec3dc7c04ad85f2a1842f77da1112ac1a343"
+      }
+    },
+    {
+      "visit_index": 50,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0025/lazy-fc/record.json",
+        "sha256": "95c8b6fa20496ac50e0d1145430563a41aee550e903021386374083021c57c8c"
+      }
+    },
+    {
+      "visit_index": 51,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0025/anchor-e167/record.json",
+        "sha256": "fba2456110142b6f3a406c66bf0c34debd9b220e8263ae0a1d29ecc2573e54a6"
+      }
+    },
+    {
+      "visit_index": 52,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0026/anchor-e167/record.json",
+        "sha256": "f653d4cbebb083151ec2504d3fc8ae54ff929f0399e06dff372de644c29cbdd7"
+      }
+    },
+    {
+      "visit_index": 53,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0026/lazy-fc/record.json",
+        "sha256": "c9ab44d25dd752c33bc2590d1c0c5321eb5db2d4d0dd9c446308b26637be7504"
+      }
+    },
+    {
+      "visit_index": 54,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0027/lazy-fc/record.json",
+        "sha256": "b2f4d265cd1a5a41fbef0ed621840b43ab60c9dd20eceea522600dd74a0932ca"
+      }
+    },
+    {
+      "visit_index": 55,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0027/anchor-e167/record.json",
+        "sha256": "ce1eaf496e647adddf7f86b9c488d0bf4d9cbd0a53cb0a584a247ce4960dce81"
+      }
+    },
+    {
+      "visit_index": 56,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0028/anchor-e167/record.json",
+        "sha256": "afa09fd13f52eee4b47a4b05f9be623b5b87dccff47465b4fc9e5d14b952c004"
+      }
+    },
+    {
+      "visit_index": 57,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0028/lazy-fc/record.json",
+        "sha256": "d4b9924e046dcfb9cab816c47fcc485ad85919ce9b12c2329f419211384dadc4"
+      }
+    },
+    {
+      "visit_index": 58,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0029/lazy-fc/record.json",
+        "sha256": "b8a1214b2424628a2d5d0f80ecd28479128f3206173ec010d38adabd6336e6c4"
+      }
+    },
+    {
+      "visit_index": 59,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0029/anchor-e167/record.json",
+        "sha256": "f25fe25b4e14077f8ba2ee5d9147fd61088f67ff1aa6505351b4d6d49dddd96c"
+      }
+    },
+    {
+      "visit_index": 60,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0030/anchor-e167/record.json",
+        "sha256": "d59cfd1bf5408320d99e581156c7fe54f16170a398666ebe3c170970af63976e"
+      }
+    },
+    {
+      "visit_index": 61,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0030/lazy-fc/record.json",
+        "sha256": "56a98d3f846da05769a787c0d28bc0e3cd49888280ed4ce544b534e6379f2d93"
+      }
+    },
+    {
+      "visit_index": 62,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0031/lazy-fc/record.json",
+        "sha256": "ef0f4419bb789d22fcad63ab3db374077d2bce29ed07529dc29f861e11b1ba02"
+      }
+    },
+    {
+      "visit_index": 63,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0031/anchor-e167/record.json",
+        "sha256": "1727ca81acdff78db08f7292743d97a200b357dbef6d048addab74cae07ab08c"
+      }
+    },
+    {
+      "visit_index": 64,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0032/anchor-e167/record.json",
+        "sha256": "6bf457cfae964b48b099317dc262cdf6bd78e2c976c59a589bbe393198d28e38"
+      }
+    },
+    {
+      "visit_index": 65,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0032/lazy-fc/record.json",
+        "sha256": "770956f7ee2bb59b16fda60cf47c3066a2c9c9f3e1e9819645e30b30457ec813"
+      }
+    },
+    {
+      "visit_index": 66,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0033/lazy-fc/record.json",
+        "sha256": "d0dde9b21ec5ea7362b0a1e34d3d512ea8b258cf4a8c42f26001722753f87420"
+      }
+    },
+    {
+      "visit_index": 67,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0033/anchor-e167/record.json",
+        "sha256": "7e84e8b42133e27204ad1ed0a33c5dd3daacf6babf6be4a72abb67d1e479158b"
+      }
+    },
+    {
+      "visit_index": 68,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0034/anchor-e167/record.json",
+        "sha256": "06618a0f56ef12f396026b54d777c0dab9d1d48901ad8c0f0836c9917849192a"
+      }
+    },
+    {
+      "visit_index": 69,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0034/lazy-fc/record.json",
+        "sha256": "3417d2be468e21813431d7267207ca95b48ec6f16dc83edd71b703ebcbfc87e3"
+      }
+    },
+    {
+      "visit_index": 70,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0035/lazy-fc/record.json",
+        "sha256": "e11116dddb5baa2fcdd5c45957d45803fe43065341e10d37cfe37639b94d25b4"
+      }
+    },
+    {
+      "visit_index": 71,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0035/anchor-e167/record.json",
+        "sha256": "fe100eb3fae99646eaac6fe2c0b3732766d2ac75dcb2cb5a1dd5e49744bbcc7d"
+      }
+    },
+    {
+      "visit_index": 72,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0036/anchor-e167/record.json",
+        "sha256": "e067f2fbe803939aa5701147ade13d1e5e47b21309f9e564cc7042ec7d51ab5e"
+      }
+    },
+    {
+      "visit_index": 73,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0036/lazy-fc/record.json",
+        "sha256": "b01846a7c7311d149375e8ca73909e5c44e3d62505bfa9f1fdfa1b5593cc1707"
+      }
+    },
+    {
+      "visit_index": 74,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0037/lazy-fc/record.json",
+        "sha256": "d80dafafda281c17e522a3bc3d3262f21ee8c93989218fd85c4fd20752b1717d"
+      }
+    },
+    {
+      "visit_index": 75,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0037/anchor-e167/record.json",
+        "sha256": "fcc37cb8a41a22638b43a4f770e4c769a1fa6c4b2f860b2d87798dcab7c3f092"
+      }
+    },
+    {
+      "visit_index": 76,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0038/anchor-e167/record.json",
+        "sha256": "0a8d517b7d5f44188fdf75f9c437e6acdb1f3513abfe1c946a5ce46defe9c6c1"
+      }
+    },
+    {
+      "visit_index": 77,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0038/lazy-fc/record.json",
+        "sha256": "6f10c1af20930d1e457123e4afeec6fdd1c40514b6508b45aa19ef19625ae864"
+      }
+    },
+    {
+      "visit_index": 78,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0039/lazy-fc/record.json",
+        "sha256": "37f8a4cf20fdc1c5140e865e6147362767fa51e31d6ed710a690f7551fb0376a"
+      }
+    },
+    {
+      "visit_index": 79,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0039/anchor-e167/record.json",
+        "sha256": "feed613eb9033d6cca6559568a4e1140150f50c2a98cc141543145d4dcf57fa4"
+      }
+    },
+    {
+      "visit_index": 80,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0040/anchor-e167/record.json",
+        "sha256": "88e622fea21afa87d27b36fcd0e88044f9fe41302dd79b3df66f671b729ef342"
+      }
+    },
+    {
+      "visit_index": 81,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0040/lazy-fc/record.json",
+        "sha256": "65e1888e59c9efa124429cd4d2a8ea43768b57cbd266589f806d541f22d0a1c8"
+      }
+    },
+    {
+      "visit_index": 82,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0041/lazy-fc/record.json",
+        "sha256": "f814b7ef02db135f95c7e01b118b7782142f28bc70ca3441b4baca1cdf736e30"
+      }
+    },
+    {
+      "visit_index": 83,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0041/anchor-e167/record.json",
+        "sha256": "9b5b4d2153e23e9909d49bdb6e895643404c4eb99b176d214b1ebd379029b3a8"
+      }
+    },
+    {
+      "visit_index": 84,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0042/anchor-e167/record.json",
+        "sha256": "5cb1e63a1a05c8b739f11a56b82b2645bbbbdf6a3672e1bd9ecb07518bf311d6"
+      }
+    },
+    {
+      "visit_index": 85,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0042/lazy-fc/record.json",
+        "sha256": "4fa276607950b6400c98f4995d1406a5d64bd63f4d1f3b0ae157537fd42d0a7c"
+      }
+    },
+    {
+      "visit_index": 86,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0043/lazy-fc/record.json",
+        "sha256": "ddd7459ba404337290bf332e22150cbc5fd83b52d3e1bed048c7cd457884533a"
+      }
+    },
+    {
+      "visit_index": 87,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0043/anchor-e167/record.json",
+        "sha256": "012a458d6ce8cfc0a901a26347b3e40f2cc013b246f4a7d5e87280c5ef548af8"
+      }
+    },
+    {
+      "visit_index": 88,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0044/anchor-e167/record.json",
+        "sha256": "bc217f055b481a679eeaaece6416fa96d55b30bb5f98198a136377e853c16662"
+      }
+    },
+    {
+      "visit_index": 89,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0044/lazy-fc/record.json",
+        "sha256": "0348d9f63310f455c7b84b660aeed4602b07f60f7c1ef046097947ff0b035577"
+      }
+    },
+    {
+      "visit_index": 90,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0045/lazy-fc/record.json",
+        "sha256": "e6205ef8ebf2c9c224fdfbc286ce48adb30527dd483dd2c2d24b7a3294a6b374"
+      }
+    },
+    {
+      "visit_index": 91,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0045/anchor-e167/record.json",
+        "sha256": "5ace4b4c7b43dc635a0b267e396d88e15971a923ed97122bf8b293977e06b109"
+      }
+    },
+    {
+      "visit_index": 92,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0046/anchor-e167/record.json",
+        "sha256": "ed338adeb9f7727da7530e861c1fbb94b46218d1b641298594f765db4280cfcb"
+      }
+    },
+    {
+      "visit_index": 93,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0046/lazy-fc/record.json",
+        "sha256": "4c46de713444aef580eb12010cbee887e10252b030fa82bd96dc59bb5bfc87e0"
+      }
+    },
+    {
+      "visit_index": 94,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0047/lazy-fc/record.json",
+        "sha256": "256aa1544859ed9ed130387ccd6e35b09dac8fb8e3def5bef51f5171ec332e83"
+      }
+    },
+    {
+      "visit_index": 95,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0047/anchor-e167/record.json",
+        "sha256": "b8f5deebcf7709e38efb24979e956746b50b7bb8cac9d3efcff2ee291ba2d986"
+      }
+    },
+    {
+      "visit_index": 96,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0048/anchor-e167/record.json",
+        "sha256": "78c709e2557348f40a15293e1b88b5d1ae74c9f6840a14a01b9e2ce5d5478e02"
+      }
+    },
+    {
+      "visit_index": 97,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0048/lazy-fc/record.json",
+        "sha256": "2b4bfe51c72cd63d291b2bfbd4365afe98f45862d9641bea3dc06e6a0febece6"
+      }
+    },
+    {
+      "visit_index": 98,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0049/lazy-fc/record.json",
+        "sha256": "a654d52b03913b97bd9ea15de329807710591c9084b0bdd0de3bb0e4a672bf84"
+      }
+    },
+    {
+      "visit_index": 99,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0049/anchor-e167/record.json",
+        "sha256": "3cfdedac7b575a269dedb9b42a6e8950a49500010ac6f4da46d2d4b9b7f742d8"
+      }
+    },
+    {
+      "visit_index": 100,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0050/anchor-e167/record.json",
+        "sha256": "5106ef48f03d9cf4da479fe66ce54eb8c6eabd6185a8ae4718b0f6d6a3184ddb"
+      }
+    },
+    {
+      "visit_index": 101,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0050/lazy-fc/record.json",
+        "sha256": "65bdd6a7575293d1cf711ff21ca2a1e5dbf8ca2ace7a19ba1460d0aff75126ff"
+      }
+    },
+    {
+      "visit_index": 102,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0051/lazy-fc/record.json",
+        "sha256": "81509a5efe59285ad03ac97ec4842b759caed972de73ca3f9f006a08950c6c75"
+      }
+    },
+    {
+      "visit_index": 103,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0051/anchor-e167/record.json",
+        "sha256": "3d1933effdfea6b9676c11f89a484a2de28e9a37f8f3a94e55f895e6f2fbd045"
+      }
+    },
+    {
+      "visit_index": 104,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0052/anchor-e167/record.json",
+        "sha256": "ad64f09e30478cbe30cb79f5524f8661fae321bde87da1ab468109b8e154b2b7"
+      }
+    },
+    {
+      "visit_index": 105,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0052/lazy-fc/record.json",
+        "sha256": "9691917abc7299908b71baec930ed2b0cb9b53b7a5b47e71d7b0fd2e7cb90036"
+      }
+    },
+    {
+      "visit_index": 106,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0053/lazy-fc/record.json",
+        "sha256": "07ba953c1f0c489b7f111fa3eb17e37ff763c4135524de937f23fd80e66aa433"
+      }
+    },
+    {
+      "visit_index": 107,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0053/anchor-e167/record.json",
+        "sha256": "da77c5a89865085dda05f05751a1816e14e62ed24b604d81c1e06a2c8bc53257"
+      }
+    },
+    {
+      "visit_index": 108,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0054/anchor-e167/record.json",
+        "sha256": "ddaac1830587b709419237c0845900e30992b8b6b18214a32ba2e34b71a6b7a4"
+      }
+    },
+    {
+      "visit_index": 109,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0054/lazy-fc/record.json",
+        "sha256": "575dfaab969fdf5dbe0e9283e6ee0295a0acf948d4b5ee54b2692645e2a228a3"
+      }
+    },
+    {
+      "visit_index": 110,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0055/lazy-fc/record.json",
+        "sha256": "23675bcceb1e68214ea8d5040bc8953aa29b59df4e09240c15286cec8b5f614a"
+      }
+    },
+    {
+      "visit_index": 111,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0055/anchor-e167/record.json",
+        "sha256": "b0322bd7543ad32d1e2eb6aa44edc8d1c2afc2cbce5215b63e6909ce7134d629"
+      }
+    },
+    {
+      "visit_index": 112,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0056/anchor-e167/record.json",
+        "sha256": "e28aacbb44cc89cb0cca3788261a3a0df542e522c656c22ffc8643d9f022c9b8"
+      }
+    },
+    {
+      "visit_index": 113,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0056/lazy-fc/record.json",
+        "sha256": "88ec507fee7c53e3a47773a17f100087287d665da37d0c9ae5a1cca0779ec59d"
+      }
+    },
+    {
+      "visit_index": 114,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0057/lazy-fc/record.json",
+        "sha256": "a2bdd2ff84a68cd31825b8a874a1190c4a00c9536247788b9a0e75b1b24d3ff2"
+      }
+    },
+    {
+      "visit_index": 115,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0057/anchor-e167/record.json",
+        "sha256": "4298c5524ef5ebed4057db76797b58383a8d381bf6d66ef60a101dbc997e1c47"
+      }
+    },
+    {
+      "visit_index": 116,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0058/anchor-e167/record.json",
+        "sha256": "44c5b498b4cfe8009b26319322869e46e16cc08359a2841acb238a8276ea647d"
+      }
+    },
+    {
+      "visit_index": 117,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0058/lazy-fc/record.json",
+        "sha256": "32d85816e77a18f70c92535b9090dfe7c0e684947852351c4ab7c5ba8dbb2cad"
+      }
+    },
+    {
+      "visit_index": 118,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0059/lazy-fc/record.json",
+        "sha256": "23927bfe084b37e5746e8fbe8519703ceea3c87d09391578eed614e612ba8f89"
+      }
+    },
+    {
+      "visit_index": 119,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0059/anchor-e167/record.json",
+        "sha256": "09369dbe2c2352c62e58ecdc2fa90df001fce4fcbd5cad9ec10b052058d1f69e"
+      }
+    },
+    {
+      "visit_index": 120,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0060/anchor-e167/record.json",
+        "sha256": "b22095b457fc16ded33234a7abd31c9949014bcd81990ba8b8bf91ae947ef14c"
+      }
+    },
+    {
+      "visit_index": 121,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0060/lazy-fc/record.json",
+        "sha256": "dff78de80b532c524cd5dc54004c687c0f32ea6f417a9898fd7ec87eebc02c9c"
+      }
+    },
+    {
+      "visit_index": 122,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0061/lazy-fc/record.json",
+        "sha256": "8f5cd479f8f577c04a391d8874c9d7b7de3881c3a364969c47c94cd8ed0e442f"
+      }
+    },
+    {
+      "visit_index": 123,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0061/anchor-e167/record.json",
+        "sha256": "43e154c93edc1553d2be63bd0d93ff51b376c4b2be73595f4fda13ada4e4e866"
+      }
+    },
+    {
+      "visit_index": 124,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0062/anchor-e167/record.json",
+        "sha256": "08ad14fa6d60ca69bb758d5e78b96fcd9525c4848b6b1cb03a87c9427ccb559a"
+      }
+    },
+    {
+      "visit_index": 125,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0062/lazy-fc/record.json",
+        "sha256": "8221e25a778f364589c2018c2edd3120d70f9056167b64556396108bd3fd1596"
+      }
+    },
+    {
+      "visit_index": 126,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0063/lazy-fc/record.json",
+        "sha256": "3405a700fc647a75fc886976e0c70fa935f0ef4de4cef5a235d5c43311237281"
+      }
+    },
+    {
+      "visit_index": 127,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0063/anchor-e167/record.json",
+        "sha256": "6bc052569cc40c040951b9eb5a4a4eda8bc77636bcac8717b16adf9bee9cde0a"
+      }
+    },
+    {
+      "visit_index": 128,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0064/anchor-e167/record.json",
+        "sha256": "57e1c2ec8ffa9a225a9bc9eb6a568ae2db422271ee434e444c95bc070e159df6"
+      }
+    },
+    {
+      "visit_index": 129,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0064/lazy-fc/record.json",
+        "sha256": "fddab3d7e157fe541624b3784fc6084ca956e3f0cf58efd6bb17dd8f50da02aa"
+      }
+    },
+    {
+      "visit_index": 130,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0065/lazy-fc/record.json",
+        "sha256": "052ae02b510f0bfd591d264be40e4fc04e50c0caf8c75c1a189ca8fc878f49ab"
+      }
+    },
+    {
+      "visit_index": 131,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0065/anchor-e167/record.json",
+        "sha256": "ab42f6a7bee6a179ae35295dbb235cd901b3a806db5c30c3ec9c7ff4d64db1eb"
+      }
+    },
+    {
+      "visit_index": 132,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0066/anchor-e167/record.json",
+        "sha256": "4bc7d4712df8b0d7b2795e700822d27eefad7b228f83c233bb8fdc6bdbc2feec"
+      }
+    },
+    {
+      "visit_index": 133,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0066/lazy-fc/record.json",
+        "sha256": "a7cce78fb7b66c22c88b4e96197b314abd8f8f8a8444f8249c64ac4b22a1db7f"
+      }
+    },
+    {
+      "visit_index": 134,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0067/lazy-fc/record.json",
+        "sha256": "d2e4951da3b7b76551a13846dff5090a0719e3c46127d102b7ab560b3d0e19a2"
+      }
+    },
+    {
+      "visit_index": 135,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0067/anchor-e167/record.json",
+        "sha256": "ff58d4089dafbdea4e77bd13eccb83b9830da82d19731baa39dd58f8f60b42f9"
+      }
+    },
+    {
+      "visit_index": 136,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0068/anchor-e167/record.json",
+        "sha256": "8afc1fa37dcad1e84a471fcb6f6c6a0f4c7a49fb764ee0867e877842445d1f56"
+      }
+    },
+    {
+      "visit_index": 137,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0068/lazy-fc/record.json",
+        "sha256": "e8b82025c658bf6359561d15bd275eb0c94edc0c424bbd84449a1a4cd27b63d0"
+      }
+    },
+    {
+      "visit_index": 138,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0069/lazy-fc/record.json",
+        "sha256": "d8a95a0afb892401d10d4ddefee412274b657336fc55e21d6cff9126e568da96"
+      }
+    },
+    {
+      "visit_index": 139,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0069/anchor-e167/record.json",
+        "sha256": "3af5efefb65abe316716c8bf6b041e8061dd00156ed18e8098e042997a1633fe"
+      }
+    },
+    {
+      "visit_index": 140,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0070/anchor-e167/record.json",
+        "sha256": "6006e42a999c422758febd3dbf3509b086f7d0cd83eb29b85fd9cd1a752a4a9a"
+      }
+    },
+    {
+      "visit_index": 141,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0070/lazy-fc/record.json",
+        "sha256": "df75a7409a0ee956dfe03f5ea91bf052b1aff6c8abaf847f620058e376fba521"
+      }
+    },
+    {
+      "visit_index": 142,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0071/lazy-fc/record.json",
+        "sha256": "b2c5a567d5a52232791d7a5922e9a8b5fa74046daa9799510387e6615e17f467"
+      }
+    },
+    {
+      "visit_index": 143,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0071/anchor-e167/record.json",
+        "sha256": "5b9b421afb5b82596eb00e9c9450d9b64811724ad960054fbd9ccd1bf641fb6f"
+      }
+    },
+    {
+      "visit_index": 144,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0072/anchor-e167/record.json",
+        "sha256": "d9dbd17b2c43928424688794f82afc831ee3335195eaff0cab844164694e941c"
+      }
+    },
+    {
+      "visit_index": 145,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0072/lazy-fc/record.json",
+        "sha256": "a3e39d8a43e3b3a93943bf1f68ab5c8350b5c8c16b3f9829a87b5aeafb5bc93f"
+      }
+    },
+    {
+      "visit_index": 146,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0073/lazy-fc/record.json",
+        "sha256": "c66d15383cf6114319a7c30715cb7fb35c34d263fb308fb47bc8dc65b96ae2e1"
+      }
+    },
+    {
+      "visit_index": 147,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0073/anchor-e167/record.json",
+        "sha256": "97e21644c0ab40b621d0a21aa6b6aa50fe3106d17f95857844ec0c381581e0be"
+      }
+    },
+    {
+      "visit_index": 148,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0074/anchor-e167/record.json",
+        "sha256": "718d5f615c84758c04846680b7a368dee8561c4849226a6e0a455291e93964ac"
+      }
+    },
+    {
+      "visit_index": 149,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0074/lazy-fc/record.json",
+        "sha256": "c2643e6930f73b5dc41d424119af2f3ddcdf891e48e442d44eec4cfe8a8dbeaa"
+      }
+    },
+    {
+      "visit_index": 150,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0075/lazy-fc/record.json",
+        "sha256": "4699c1cc37b930407b2d6fc6cc887917709035392b8f436822fbfbd65541a280"
+      }
+    },
+    {
+      "visit_index": 151,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0075/anchor-e167/record.json",
+        "sha256": "ca6706e311bf2e24e3df871f9f61c3471976b0d729836f54f72cd0f56e955b90"
+      }
+    },
+    {
+      "visit_index": 152,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0076/anchor-e167/record.json",
+        "sha256": "7a8b98ec1ee6481307012e062f29ebd42b34a6782b19fe73ac8a7ec66b7c23ba"
+      }
+    },
+    {
+      "visit_index": 153,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0076/lazy-fc/record.json",
+        "sha256": "7b9a851a3d91fdca8b5dce59b243320a931e6f5b145e30ee1ba258bb077141fd"
+      }
+    },
+    {
+      "visit_index": 154,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0077/lazy-fc/record.json",
+        "sha256": "ff71822e96d9683a0db46d79afc873acdb4652cd8e02fb76e5c65505e782060c"
+      }
+    },
+    {
+      "visit_index": 155,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0077/anchor-e167/record.json",
+        "sha256": "d3935ad6d7afd1dba0e9c8bec104bab2d209bc91d404989436c330b44449662f"
+      }
+    },
+    {
+      "visit_index": 156,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0078/anchor-e167/record.json",
+        "sha256": "e6891395df6779294b43d6c4be2c7a32de937afd4387ba91c9a46445b71f9244"
+      }
+    },
+    {
+      "visit_index": 157,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0078/lazy-fc/record.json",
+        "sha256": "e8c680eecb61fd56860c212e1b71fce1705bba352ebb16c4aef73f6124c5af56"
+      }
+    },
+    {
+      "visit_index": 158,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0079/lazy-fc/record.json",
+        "sha256": "27b1ccdc376c4e36cb6edf17c2345527396ff9ce26150cac1b1589d7e82e8558"
+      }
+    },
+    {
+      "visit_index": 159,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0079/anchor-e167/record.json",
+        "sha256": "c185544910b644ab42cde8ad005d8d7b72d7d1e362452dbd1bb87dfe369d9f2a"
+      }
+    },
+    {
+      "visit_index": 160,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0080/anchor-e167/record.json",
+        "sha256": "f972a9477d2e6c0764067835610ab239ebd82eff90073186ea848c76418efdd4"
+      }
+    },
+    {
+      "visit_index": 161,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0080/lazy-fc/record.json",
+        "sha256": "aba01626c81a3a9fe37bb00923b34a1b4ba45773cd560aac5d02beb0016d6151"
+      }
+    },
+    {
+      "visit_index": 162,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0081/lazy-fc/record.json",
+        "sha256": "ae842544a3d6104bbd653d3a55c94c2e3bb1fffb022327bf0127720316e6fe78"
+      }
+    },
+    {
+      "visit_index": 163,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0081/anchor-e167/record.json",
+        "sha256": "74552a474371e62d7e1510d4ec706023706b06c8e14a802db62dae9bae0e20fc"
+      }
+    },
+    {
+      "visit_index": 164,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0082/anchor-e167/record.json",
+        "sha256": "1e3642a2697fcb17e0f27c67fae0fbbc2bd4bd2aa1c68181107849e21b2df566"
+      }
+    },
+    {
+      "visit_index": 165,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0082/lazy-fc/record.json",
+        "sha256": "ccc304bc34629ac9a2f2585601815ecfa125eec0874bb83c6ba3c922ff4d4fed"
+      }
+    },
+    {
+      "visit_index": 166,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0083/lazy-fc/record.json",
+        "sha256": "8f9066b1d8f754b250cb5fefff042d628cd486d226efbcc0af74eb65daef9f05"
+      }
+    },
+    {
+      "visit_index": 167,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0083/anchor-e167/record.json",
+        "sha256": "00ea4c48160faf0f54053dc3797a60beec56eaff61f1882a1daef8596148e8c9"
+      }
+    },
+    {
+      "visit_index": 168,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0084/anchor-e167/record.json",
+        "sha256": "d4137b479df3643a6bf7bc0e7e06aa3ef5a905855d82d63c9ebcd06f350fb06f"
+      }
+    },
+    {
+      "visit_index": 169,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0084/lazy-fc/record.json",
+        "sha256": "3e0a2747668e4ecbb545a8dd355d7b02e9d37753d29c71fcc1961c5964fce072"
+      }
+    },
+    {
+      "visit_index": 170,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0085/lazy-fc/record.json",
+        "sha256": "02a2944f89fcb94cf65012877a0f9f0e7e25c93c6db9c3b578102eceb9339fdb"
+      }
+    },
+    {
+      "visit_index": 171,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0085/anchor-e167/record.json",
+        "sha256": "dcedc75d7ecb7dc63e84a07ec021f505ae350576ab1154d2797d2b52bab1e446"
+      }
+    },
+    {
+      "visit_index": 172,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0086/anchor-e167/record.json",
+        "sha256": "a6a01a37939568438d8ff74ad1e7e987c4348d1a9abee6d095801d04671a80d0"
+      }
+    },
+    {
+      "visit_index": 173,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0086/lazy-fc/record.json",
+        "sha256": "0a26b37e755b5f9da15d9eb8ee77c089b49ab6ab8890b912ef358d24ac5bf4ab"
+      }
+    },
+    {
+      "visit_index": 174,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0087/lazy-fc/record.json",
+        "sha256": "b12426966064ac68bb59d5886afc82f29aac6d2a3f41a3900e5d96581b494c6e"
+      }
+    },
+    {
+      "visit_index": 175,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0087/anchor-e167/record.json",
+        "sha256": "70101633baca717119314deaa4c70ee8485184f6709160266a31730abb3587eb"
+      }
+    },
+    {
+      "visit_index": 176,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0088/anchor-e167/record.json",
+        "sha256": "42882e8eb04984a3d54bf4605d53073c95e15bddd6ba1829d7ef860feec00efb"
+      }
+    },
+    {
+      "visit_index": 177,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0088/lazy-fc/record.json",
+        "sha256": "2966fae677ef5d0cac2e45540aaae4bae8e51d35ba45d06303a445945a369e44"
+      }
+    },
+    {
+      "visit_index": 178,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0089/lazy-fc/record.json",
+        "sha256": "c1a7e198ccb6f6d2b3652311277839bd2e61fc3ea1af824e99ffd627093dee09"
+      }
+    },
+    {
+      "visit_index": 179,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0089/anchor-e167/record.json",
+        "sha256": "3878839a268d276c556fcff415a798f45762d19cf8d66fa2f75fb39ddb94686d"
+      }
+    },
+    {
+      "visit_index": 180,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0090/anchor-e167/record.json",
+        "sha256": "bcad213676fb6f8e33eefe8b2d1dee02dc790579576de89b946f4bed337d32a9"
+      }
+    },
+    {
+      "visit_index": 181,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0090/lazy-fc/record.json",
+        "sha256": "1c8494627ed144f0b631bed55b662c7ad87b39fdacc95a27015db3621ed51316"
+      }
+    },
+    {
+      "visit_index": 182,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0091/lazy-fc/record.json",
+        "sha256": "810863873347ec5ea0dbdf6eb07dd9ae9b9cad1cb38df0615e6e9e13041182fd"
+      }
+    },
+    {
+      "visit_index": 183,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0091/anchor-e167/record.json",
+        "sha256": "bca031764e210cc8fdfc4e548688f168f64856652f57fa9c2f516354223c8b71"
+      }
+    },
+    {
+      "visit_index": 184,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0092/anchor-e167/record.json",
+        "sha256": "1558337a93289fab3d255b123d02adad667235f7abb864db8a49edcaac850845"
+      }
+    },
+    {
+      "visit_index": 185,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0092/lazy-fc/record.json",
+        "sha256": "3ddef19f34a35163a6881e10ea15987c8d33249d9678e49cb354a28293e973bd"
+      }
+    },
+    {
+      "visit_index": 186,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0093/lazy-fc/record.json",
+        "sha256": "e1d4ecea0627800eddec49e700e07e56359e1c828e469f060033222e1006f18f"
+      }
+    },
+    {
+      "visit_index": 187,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0093/anchor-e167/record.json",
+        "sha256": "44a5b51d06b7893eb6010b55b0a0983c301d693aec6829e381bff01b01c42b66"
+      }
+    },
+    {
+      "visit_index": 188,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0094/anchor-e167/record.json",
+        "sha256": "515a312fd600982d6b62de39452cbb406725f22e2de7ce2741b769ac2b8af756"
+      }
+    },
+    {
+      "visit_index": 189,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0094/lazy-fc/record.json",
+        "sha256": "79c9e66e157f2b10e651c62c88599fd915647fd07e953128674bec3255e1e7a0"
+      }
+    },
+    {
+      "visit_index": 190,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0095/lazy-fc/record.json",
+        "sha256": "af1cadb7f9a4f1ea8e738514200b2e5282e7fb4389bc3ca4a16c80451379444f"
+      }
+    },
+    {
+      "visit_index": 191,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0095/anchor-e167/record.json",
+        "sha256": "ed65f87979d3de96df5140ae324ccb30f82c33d43f2788fd520054f4d8eab36d"
+      }
+    },
+    {
+      "visit_index": 192,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0096/anchor-e167/record.json",
+        "sha256": "c110e4ad94692bafb0fb222b9059c621c56cd726e213f176055dca84867ff09d"
+      }
+    },
+    {
+      "visit_index": 193,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0096/lazy-fc/record.json",
+        "sha256": "0005a914aa57f0d26501947f350ba07e9e57e7ddfe8ef13180c9325a4462e22a"
+      }
+    },
+    {
+      "visit_index": 194,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0097/lazy-fc/record.json",
+        "sha256": "e3c233b4f41a296d699cb66010306dff62a18d86a1abd41782c160cbd8ac11b5"
+      }
+    },
+    {
+      "visit_index": 195,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0097/anchor-e167/record.json",
+        "sha256": "3d6e6eada49b8ad132449df209b7176bac0dbc1c3875d5863eebfdaab0997620"
+      }
+    },
+    {
+      "visit_index": 196,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0098/anchor-e167/record.json",
+        "sha256": "f8fcc0bd9b41390d04c33428cb129a124260026230dfbecee7cf4b1aea1fdad4"
+      }
+    },
+    {
+      "visit_index": 197,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0098/lazy-fc/record.json",
+        "sha256": "605a72d16d977121dd47a73caa6f085ad32b916871499b0dd8e9cdb2f7c2c3ba"
+      }
+    },
+    {
+      "visit_index": 198,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0099/lazy-fc/record.json",
+        "sha256": "e8721622c839e82cc99cbb7b9b2486c5da169afe5d21270d77812e763000d435"
+      }
+    },
+    {
+      "visit_index": 199,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0099/anchor-e167/record.json",
+        "sha256": "4d9adf109d79bd0abda9fe31dde06316757049dba20b520a022571196f725d73"
+      }
+    },
+    {
+      "visit_index": 200,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0100/anchor-e167/record.json",
+        "sha256": "8e5f2a4bfbb71daf8a49cd0440836eb3c133853d4716c6475adfa149f34f3bd3"
+      }
+    },
+    {
+      "visit_index": 201,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0100/lazy-fc/record.json",
+        "sha256": "ef59f225a8390974cf7a2b5c78897b19a8229874a61e49ec08e6c8147cc4d789"
+      }
+    },
+    {
+      "visit_index": 202,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0101/lazy-fc/record.json",
+        "sha256": "828b1a3e9315a6bb48acfe5a6d2b1620323f779eff6da11a97f15aae0dfb9054"
+      }
+    },
+    {
+      "visit_index": 203,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0101/anchor-e167/record.json",
+        "sha256": "d98ca4630df72c9908d3d208e5251fcbd8f4ba785dc6e71de5a420ebb1148010"
+      }
+    },
+    {
+      "visit_index": 204,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167/record.json",
+        "sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8"
+      }
+    }
+  ],
+  "next": "Root review required before any diagnosis/retry/continuation or policy change. Original17scores and frozen source untouched."
+}

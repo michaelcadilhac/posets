@@ -1,0 +1,99 @@
+Shipping portfolio and selected-downset scope — source-only note
+
+The measured default-versus-lazy-FC Acacia builds use the shipping preset
+otf_sparse_formula_parity and empty primary runtime flags. The preset starts
+seven competing workers. Changing VECTOR_AND_BITSET_DOWNSET_IMPL changes the
+selected downset in solve_game_vector.cc; it does not replace every search
+structure in the portfolio.
+
+Frozen identities and source locations
+
+Acacia source revision: 86dd487001dc75a3c1c0dfa9db50a9882a532db1.
+Original arm: bundled Posets e167f43646b880c69046bab7110dbb327686c024,
+ELF SHA256 49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6.
+Lazy-FC arm: Posets cc058ca96ebc667f727ea2f0c2360b77d60192d3,
+ELF SHA256 5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31,
+Acacia integration patch SHA256
+98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651.
+
+These are the identities in the frozen campaign manifest, not a new hash check:
+/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/frozen.json
+
+Below, ANCHOR means:
+/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia
+INTEGRATION means:
+/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval
+
+Both saved generated headers name the same seven arms at line 37:
+ANCHOR/build-anchor/acacia_build_config.hh
+INTEGRATION/build-posets/acacia_build_config.hh
+The integration target overrides the selected downset through target-local
+compiler definitions; the shared generated header's default remains ranked.
+See INTEGRATION/src/meson.build:81–90 and
+INTEGRATION/src/solver/solve_game_vector.cc:35–40.
+
+Worker scope
+
+* real:small:backward uses the selected downset for the backward fixed point
+  and its CPre operations. The optional equivariance prepass also receives the
+  selected downset type.
+* unreal:formula:spot-guarded-sparse uses its own sparse RowStore/Search before
+  semantic action/downset construction. The default candidate_mode::only
+  returns on an inconclusive candidate rather than falling back to backward.
+* unreal:automaton:forward searches with separate node/index structures and
+  minimal_losing_antichain. A successful search constructs selected downsets
+  for certificate verification; failed certificate verification can fall back
+  to the backward solver. It is therefore not a complete downset bypass.
+* both:gr1-real-lift:oxidd, both:obligation:spot, both:parity:spot and
+  both:parity:oxidd dispatch to their own implementations before run_ltl /
+  solve_game, without using the selected downset implementation.
+
+Exact inspected source locators:
+ANCHOR/config/acacia-presets.json:142–155 (preset arm list)
+ANCHOR/src/acacia-bonsai.cc:453–514 (native dispatch)
+ANCHOR/src/acacia-bonsai.cc:710–741 (worker launch)
+ANCHOR/src/acacia-bonsai.cc:1019–1052 (decisive answer and competitor cancellation)
+ANCHOR/src/solver/solve_game_vector.cc:19–24 (original downset instantiation)
+ANCHOR/src/solver/solve_game_impl.hh:194–219 (equivariance)
+ANCHOR/src/solver/solve_game_impl.hh:225–423 (guarded/sparse branch and fallback)
+ANCHOR/src/solver/solve_game_impl.hh:432–453 (forward and backward dispatch)
+ANCHOR/src/solver/forward_reachable_safety.hh:194–203 (separate search storage)
+ANCHOR/src/solver/forward_k_bounded_safety_aut.hh:107–184 (forward search and certificate)
+ANCHOR/src/arg_parser.hh:57 (candidate_mode::only default)
+
+Other bypasses and lifetimes
+
+Before selected-downset construction, the legacy workers can return through
+no-input/no-output checks, forced-output contradiction, or Spot's deterministic
+NBA fast path. Translation, simplification, preprocessing, action generation
+and the independent native solvers are not accelerated merely by changing the
+downset. See ANCHOR/src/solver/solver_invoker.cc:620–655, :793–829,
+:828–869 and :1126–1141. The first decisive portfolio result cancels competitors,
+so speeding a worker that does not decide the case need not reduce wall time.
+
+Within backward CPre, each action calls f.apply to construct a fresh downset;
+the action results are combined by union and then intersected with f. In this
+measured lazy implementation, a nontrivial intersection constructs a fresh
+result and swaps it in. Raising K also applies a transformation to a fresh
+result. See ANCHOR/src/solver/k_bounded_safety_aut.hh:229–249 and :259–319,
+and INTEGRATION/subprojects/posets/include/posets/downsets/lazy_kdtree_backed.hh:445–470.
+This limits the lifetime over which frozen-index construction can be amortized.
+It does not imply that lazy index reuse is absent: queries and monotone updates
+can reuse an index during its epoch. The forward solver separately documents a
+fresh search for each K at forward_k_bounded_safety_aut.hh:23–28.
+
+Evidence limit
+
+These are static dispatch and lifetime facts. The primary campaigns did not
+enable route records, phase records or worker recording, and release builds
+compile out verbose logging. We cannot infer the fraction of cases reaching
+this backend, which worker won each case, or a bottleneck percentage from these
+measurements. It is plausible that many results are insensitive to the chosen
+downset, but that frequency has not been measured. Separate captured-CPre
+comparison-attempt evidence concerns those recorded frames; it is not a route
+frequency estimate for the full corpus.
+
+This note saves the completed source inspection only. No new file inspection,
+source mutation, binary execution, tests, builds, profiles or live outcome reads
+were performed to write it. Original checkouts and frozen artifacts remain
+unchanged.

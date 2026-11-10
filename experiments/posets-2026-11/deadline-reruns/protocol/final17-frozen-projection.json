@@ -1,0 +1,68 @@
+{
+  "allowed_cpus": null,
+  "arms": [
+    {
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/src/acacia-bonsai",
+      "binary_sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+      "flags": "",
+      "label": "anchor-e167",
+      "preset": "otf_sparse_formula_parity",
+      "provenance": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+        "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+      },
+      "provenance_sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e",
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "e167f43646b880c69046bab7110dbb327686c024",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      }
+    },
+    {
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-lazy-fc",
+      "binary_sha256": "5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31",
+      "flags": "",
+      "label": "lazy-fc",
+      "preset": "otf_sparse_formula_parity",
+      "provenance": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+        "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+      },
+      "provenance_sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e",
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "acacia_integration_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      }
+    }
+  ],
+  "baseline": "anchor-e167",
+  "batch_size": 32,
+  "cap_s": 17,
+  "collect_rusage": true,
+  "corpus_sha256": "e2077833ffd3f2a616d8ca6286d1f22e5e09416f732ff174bc988629de4d96a1",
+  "cpu_quota": null,
+  "inputs": {
+    "list": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/all.list",
+      "sha256": "0226e5cd2cadc033544f0901bd900dd31dd7add813ef216558826468e0b7b5c7"
+    },
+    "status_exceptions": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/syntcomp26-status-exceptions.tsv",
+      "sha256": "80b634c70a3ef4aecd92e1ae6ce0c0c8deec375f2a06f485a470be472ce32866"
+    },
+    "tlsf_map": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/tlsf-sources.tsv",
+      "sha256": "9fbc4007b18065296d592f14bd9ef0e9e95a4893a4d4477e0153013fa531f92f"
+    }
+  },
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "schema_version": 1,
+  "seed": 260617
+}

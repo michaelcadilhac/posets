@@ -1,0 +1,96 @@
+{
+  "reviewer": "Barbosa skill-guided subagent; not the actual researcher",
+  "scope": "Completed450 historical repeats: independent compact outcome, interpretation and selected forest attribution-decision review. No actual future attribution build/gate or final original-default-vs-KD release acceptance.",
+  "verdict": "approve completed repeat reporting and bounded conditional forest attribution selection; no material outcome/reporting defect found",
+  "bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-HANDOFF.json",
+      "sha256": "09f0b3d0069af9f8043922429258d1be965bbe48a6219574e699a58bf16bf94c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/execution-v1/summary.json",
+      "sha256": "3b8cd817db19422118a1499e1fc4d03a7bb5b7105d7ef49acab4553819acae61",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-results.csv",
+      "sha256": "54b4b67c3747d889db2d93933c6c52ec59b028c6ba134cfd4ccaa07a47c61db0",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-digest.json",
+      "sha256": "cfd8f76bc9af912e8611921d407894a2ee4e9605b6abcb7c90e030645d6717c1",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-INVARIANCE.json",
+      "sha256": "c81341f420cf9b1ad6292db4223e3f471af4daf5ea4baace2b05d65ce2851ee2",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/original-preservation-redacted.json",
+      "sha256": "e2e8a7a456a9c9ba645451722fe997ca567264195efcce6ecc4af37bb15cd7e9",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOREST-MEMO-ATTRIBUTION-DECISION-v1.json",
+      "sha256": "197ee66ba428e906448ea17a0d4400779ae26c98fb81b6369bf0a890065f8a21"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-plan.json",
+      "sha256": "cbbf2d215cf84c761b46c9fc5677529ec8c095d179ee84281e63152fd03f8fbc",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-repeat-outcome-independent-check.json",
+      "sha256": "15be41195ecc01a8c1540428240deeeb618ff254e493a0491ddeb6db7ed1643c"
+    }
+  ],
+  "independent_checks": {
+    "arithmetic": "Recomputed all45 cells from450 embedded native observations: decisive<=17 scoring, unsolvedPAR2=34, before/after counts and sums, paired medians only when allfivepairs uncensored, solve/timing gates and CSV score fields; no mismatches.",
+    "counts": {
+      "native_rows": 450,
+      "strict_solved": 219,
+      "TIMEOUT": 231,
+      "REALIZABLE": 155,
+      "UNREALIZABLE": 64,
+      "fully_uncensored_cells": 4,
+      "serious_solve_loss_cells": 27,
+      "serious_timing_loss_cells": 2,
+      "decisive_overruns": 0,
+      "truth_conflicts": 0,
+      "oom_kill_invocations": 0,
+      "oom_kill_counter_sum": 0
+    },
+    "representative_raw_sample": "Independently verified40 bound record hashes and native+memory-sidecar hashes/field joins: regularforest Alarm, rank loadbalancer, rank robot and restoredKD generalizedbuffer. Other410 row/sidecar/record joins rely on owner/Nb checks; reviewer did not repeat exhaustive raw join.",
+    "resource_coverage": "All450 embedded CPU/RSS/scope-peak/event values valid. SumCPU31862.910036s; maximum reaped-processRSS4497088512bytes; maximum whole-scopepeak5905948672bytes.",
+    "preservation": "Owner FINAL-INVARIANCE metadata lists57 expected/actual matches; redacted original check lists5checkouts x6 true fields. Both records are hash-bound and internally consistent. Reviewer did not rehash every source/ELF/library or inspect private WIP bytes.",
+    "owner57_metadata_consistent": true,
+    "owner5x6_metadata_consistent": true
+  },
+  "interpretation": [
+    "Rank old/new loadbalancer solves4/5 versus5/5, robot1/5 versus1/5: historical solve losses do not repeat at the predeclared serious gate. This does not prove whole-corpus equality or no rank regression elsewhere.",
+    "KD/trie/block generalizedbuffer and simplearb deficits persist as backend-versus-rank comparisons. They do not identify which source optimization caused any deficit and do not justify blanket KD/performance rollback.",
+    "Regularforest Alarm median paired after/before1.8235372416761049 and simpleforest1.7838853145583293, both5/5solved and allfive ratios slower, meet timing screen. On08, ratios1.0902726602290462 and1.0536319018979636 stay below1.10.",
+    "Only4/45cells are fully uncensored. No timing medians are inferred from survivor-only pairs; timeout wrapper durations are not finishing times. No actual30s data or rescoring is present.",
+    "The45cells cover six deliberately selected seen names across historical comparisons, not45 independent inputs or a new complete1524-case campaign. Repetition supports repeatability on this selection, not unbiased generalization or significance claims."
+  ],
+  "forest_decision": {
+    "status": "supported as a conditional attribution experiment, not as evidence or release approval",
+    "question": "One regular sharingtree matched map-before versus stamp-after comparison on Alarm,5adjacent alternating pairs at17s/8GiB/no-swap. Both headers derive from current1c46713 with correctness/exception/lifetime/hash repairs retained.",
+    "limits": "The historical forest-vs-rank Alarm gap is a trigger to investigate, not proof of memoization harm. Common source/dependency/compiler/runtime/ODR bindings and semantic/fault/smoke gates must pass before timing. Result will address this source effect on this case, not the entire forest gap, other forest changes, or simple-wrapper behavior. Shared-header rollback requires relevant second-wrapper verification.",
+    "selection_honesty": "Decision excludes rank control and blanket legacy/trie/KD matrix; no retrospective threshold change, replacement repeats, hidden censors or automatic production revert."
+  },
+  "memory_and_causality_limits": [
+    "ProcessRSS is maximum reaped process, while scopepeak covers the whole cgroup; neither is requested allocationpayload/retainedheap ROI. Reported byte figures are maxima across450 invocations, not summed memory or backend-specific causal deltas.",
+    "CPU is cumulativeCPU time across invocations and may exceed wall time under solver parallelism. NativeTIMEOUT and kernelOOM events remain different concepts; noOOM here is limited to these450 runs.",
+    "Historical source/library/vector/dependency changes and separately built privateRust artifacts prevent attributing backend-vs-rank differences solely to one source optimization. Five repeats do not remove that confounding.",
+    "Original5x6 preservation evidence excludes ignored/untracked file bytes and keeps private status/diff/WIP names out of public material. Frozen57-binding check is not a new full source-tree inventory."
+  ],
+  "attribution_credit": "This pass independently validates arithmetic, a representative raw sample and interpretation. It does not claim origin of the persistent deficits, Nb exhaustive raw-join audit, root forest selection or owner execution/preservation work.",
+  "not_performed": [
+    "No helpers imported, tests/builds/probes/targets/profiles/timings run",
+    "No private WIP content scan, exhaustive57 ELF/library rehash or new wide inventory",
+    "No attribution source applied, control pair timed, actual30s cohort selected or final1524-campaign release approved"
+  ]
+}

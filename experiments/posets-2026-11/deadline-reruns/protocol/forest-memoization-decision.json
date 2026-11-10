@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-11-10T08:22:33.281206+00:00",
+  "status": "selected; build and runtime gates pending; measurement not yet released",
+  "trigger_summary_sha256": "3b8cd817db19422118a1499e1fc4d03a7bb5b7105d7ef49acab4553819acae61",
+  "trigger_cells": [
+    "pair-13-case-31",
+    "pair-14-case-36"
+  ],
+  "question": "Does the retained stamp memoization in regular sharingtree regress relative to the old per-query map memoization, with correctness repairs and all other source/build context held fixed?",
+  "before": "1c46713273c2e33cb7a1f5f7106861c0979a930a plus reviewed forest-map-cache.patch overlay",
+  "after": "1c46713273c2e33cb7a1f5f7106861c0979a930a current stamp memoization overlay",
+  "backend_both": "sharingtree",
+  "case_cohort": [
+    "Alarm_a5f99bc6.ltl"
+  ],
+  "paired_repetitions": 5,
+  "cap_s": 17,
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "order": "adjacent pairs; alternate starting arm by repetition; freeze concrete schedule before measurements",
+  "serious_solve_loss": "before solved >=4/5 and after <=1/5",
+  "serious_timing_loss": "all five pairs decisively solved within17s, median(after/before)>=1.10 and at least4/5 ratios>1",
+  "censor_rule": "no survivor-only timing median; censored pairs use solve gate or remain unresolved",
+  "context": "Fresh common Acacia/core/static dependencies built once; exact same static/runtime closure/compiler/flags/ABI for both overlays; actual dependency/ODR proof and focused semantic/fault/smoke gates required",
+  "prepared_manifest_sha256": "5501c9556109e149a22def73d67d4a13ccf6cfb1b658c6db0dc6ddd41c0954bb",
+  "patch_sha256": "6f9591f03ae1d0beb89b950203b85af5b859b44c0a4412a3251f074f665a75ff",
+  "limits": "Only tests memoization source effect on this case. Does not attribute the entire forest-vs-rank gap, other forest changes, or simple-sharingtree performance. A warranted shared-header rollback requires relevant second-wrapper verification before production change.",
+  "not_selected": {
+    "rank": "Reported historical losses did not meet serious repeat gate: loadbal old4/new5 and robot1/1.",
+    "legacy_kd_pre_scratch": "Cross-backend losses do not identify scratch regression; this control cannot isolate older capacity changes.",
+    "trie_and_other_backends": "Persistent backend-vs-rank deficits are retained as findings; no source-attributed regression proven. No blanket matrix or speculative rollback."
+  },
+  "source_reviewers": [
+    "Nbjorner",
+    "Barbosa"
+  ],
+  "runtime_owner": "pending benchmark closeout then coding build lane; benchmark owner measures after separate release"
+}

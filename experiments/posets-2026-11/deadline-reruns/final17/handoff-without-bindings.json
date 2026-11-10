@@ -1,0 +1,120 @@
+{
+  "OOM_kill_invocations": 0,
+  "attribution_limit": "Whole original configuration versus genuine frozen cc lazy-FC; source-equivalent retained implementation, not rebuilt current. Private Rust/static bytes and NO_VERBOSE attribution limits retained.",
+  "completed_utc": "2026-11-10T11:01:30.186366+00:00",
+  "data_files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+    }
+  ],
+  "decisive_wall_overruns": 0,
+  "gains": [],
+  "losses": [],
+  "memory_rows": 3048,
+  "native_errors_or_crashes": 0,
+  "native_rows": 3048,
+  "next": "Only30s cohort preparation released; actual30targetsheldforreview/rootrelease",
+  "resources": "All3048CPU/RSS/scopepeak/eventobservationsvalid",
+  "status": "full3048source17-complete-qualified-and-closed",
+  "summary_equivalence": "byte-identical",
+  "table": [
+    {
+      "PAR2_s": 5946.655226414325,
+      "RSS": {
+        "peak_bytes": 3976986624,
+        "total": 1524,
+        "valid": 1524
+      },
+      "cpu": {
+        "sum_s": 14011.778712,
+        "total": 1524,
+        "valid": 1524
+      },
+      "events": {
+        "OOM_kill_counter_sum": 0,
+        "OOM_kill_invocations": 0,
+        "total": 1524,
+        "valid": 1524
+      },
+      "label": "anchor-e167",
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "reported_PAR2_s": 5946.655226,
+      "rows": 1524,
+      "scope_peak": {
+        "peak_bytes": 4239486976,
+        "total": 1524,
+        "valid": 1524
+      },
+      "solved": 1368,
+      "wall_cap_overruns": 0
+    },
+    {
+      "PAR2_s": 5940.166345068719,
+      "RSS": {
+        "peak_bytes": 3977768960,
+        "total": 1524,
+        "valid": 1524
+      },
+      "cpu": {
+        "sum_s": 13979.571882,
+        "total": 1524,
+        "valid": 1524
+      },
+      "events": {
+        "OOM_kill_counter_sum": 0,
+        "OOM_kill_invocations": 0,
+        "total": 1524,
+        "valid": 1524
+      },
+      "label": "lazy-fc",
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "reported_PAR2_s": 5940.166345,
+      "rows": 1524,
+      "scope_peak": {
+        "peak_bytes": 4243906560,
+        "total": 1524,
+        "valid": 1524
+      },
+      "solved": 1368,
+      "wall_cap_overruns": 0
+    }
+  ],
+  "truth_conflicts": 0
+}

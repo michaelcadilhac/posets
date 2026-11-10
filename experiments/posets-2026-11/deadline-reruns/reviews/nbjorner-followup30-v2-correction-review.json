@@ -1,0 +1,26 @@
+{
+  "scope": "Bounded static V1-to-V2 correction audit only during the exclusive17second repeat lane. No draft/helper imports, offline fixtures, syntax checks, builds or targets executed by the reviewer.",
+  "decision": "Known source finding and controller-fixture gap are closed at source level. Approve V2 for a later root-released bounded offline gate when the lane is available. No concrete remaining execution blocker found in this correction. Actual source campaign, cohort, qualified pins, projected plan and30second target release remain pending.",
+  "bindings": {
+    "SOURCE-MANIFEST.json": "bf038658dd2eed7925bfad33d62bb22ee921c4d2dc2792734de23447a861f1ef",
+    "V1-TO-V2.patch": "9416897f9cd54bdaf20985980bb21f8bc2bf9768507723cfed0c0bcc77b1b701",
+    "followup30.py": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb",
+    "test_followup30.py": "0057a0f126ac4608639761020bd368fe176bd115cd967dcf38fd82c29006df6f"
+  },
+  "verified": [
+    "All19 manifest-declared current/preserved/origin/review bindings match bytes and hashes. V1 and seven frozen origins remain unchanged; no mutation to active repeat.py, campaign CAP17, coverage/scoped infrastructure or policy occurred.",
+    "The only acceptance algorithm change is the shared ORDINARY whitelist: REALIZABLE,UNREALIZABLE,TIMEOUT,MEMOUT,UNKNOWN. Source17 selection rejects error rows even when a generic usable summary exists. Followup30 rejects them after raw files and completed record are saved, before truth/report acceptance; main creates a separate STOP and no completed summary. Native labels and ordinary censors remain unchanged.",
+    "Direct valid-resource negatives cover CRASH/ERROR/AUDIT-ERROR/SYFCO-FAIL in both source17 and followup30; UNKNOWN remains explicitly unsolved. These reach the intended outcome guard rather than failing on unrelated resources or file paths.",
+    "One small fixture calls actual main and execute, retaining check_row30, join_guard and report. It mocks only source qualification, external coverage/scope/sampler/process work. Positive completion makes exactly two one-case arm calls with cap30; reuse makes zero additional calls. A started-only directory is refused with its bytes retained. CLI0 plus a CRASH row saves raw/start/completed record, creates STOP and launches no next leg or summary.",
+    "The unchanged signal-to-SystemExit body is moved to module scope solely so the fixture can inject the actual handler. Cancellation requires exit143, terminate followed by wait(timeout20), sampler exit, preserved started-only evidence and refusal to retry that interrupted leg; total mock process constructions are four across all branches. No real process/systemd/ELF is used.",
+    "Source changes do not alter cap projection,30second identity/resource guards, both-arm timeout union, source/command hashes, original17second data immutability,60second conditional penalty or selected-cohort reporting. README/spec paths and honest pending boundaries are updated for V2 only."
+  ],
+  "attribution": "Nbjorner and Barbosa independently identified error-outcome acceptance; shared finding. Barbosa additionally traced the same gap through source17 usable-summary qualification. Nbjorner requested bounded actual-controller coverage. Ponytail coder implemented the V2 correction and authored fixtures. Source approval is not an executed fixture pass or empirical result.",
+  "prior_review": {
+    "path": "work/deadline-reruns-v1/reviews/nbjorner-followup30-v1-static-review.json",
+    "sha256": "2c091244ba20c0ea8598a1e206ba1cd92b2aaa8761c01c9582c032be6ea9454a",
+    "status": "Preserved; its source blocker/coverage request is resolved by this correction."
+  },
+  "limits": "Ten authored fixture methods and the new mocked loop are still unexecuted. The final original-e167-versus-selected-KD17second campaign has not supplied actual data/pins/cohort; no30second commands are authorized while the450phase owns timing. No extra matrix/framework or future binding is introduced.",
+  "preservation": "Only this work review artifact was written. Original Acacia/nested WIP, current timing, frozen ELFs/helpers/policies/evidence and prior immutable contribution ledger are unchanged."
+}

@@ -1,0 +1,213 @@
+{
+  "reviewer": "Barbosa skill-guided agent; not the researcher",
+  "scope": "Independent completed final17 outcome/resource/source-treatment and frozen owner closure review. No future30s cohort or command plan acceptance.",
+  "verdict": "approve final17 outcome and bounded interpretation; source17 data is suitable for separately reviewed conditional30s preparation",
+  "handoff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-17S-HANDOFF.json",
+    "sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24"
+  },
+  "verified_handoff_bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-PRIMARY-RELEASE.json",
+      "sha256": "c64f55c7f0238bf1e12f4bdb44de66f7bedf76c9a56a787cdcfacb238ddf2e01",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-PREFLIGHT-READINESS.json",
+      "sha256": "e37b8d2560333212e93b8a3a33b9e92f2778758e89ac48c38181955453e5d6b4",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/frozen.json",
+      "sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/host.json",
+      "sha256": "3310cb88869ae8eec31d956b1df5f85789e4c44c3bbd80f9969bd89ae1613c61",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/progress.json",
+      "sha256": "182878238ff3390993573dc0bf6fe4f79970d0bb06933c32bfd642ebe38a3fe9",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/summary.json",
+      "sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/invocations.jsonl",
+      "sha256": "1b5fc858416c79059af1f5793507b5626d22643e46ec0293a790cf8efea13e3d",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/provenance.json",
+      "sha256": "634275cc815547890894dd2ff1d3956aabe3f4abdf5c29806e21ac797eb1bce5",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-automatic-summary.json",
+      "sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-result-digest.json",
+      "sha256": "30330cfd9f3fa9b7c58b4f801642b51503045b160eaa0716371b878564b4e679",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-table.csv",
+      "sha256": "4192d346ad613f98225177c3281e841ae8a0951ce57344479f10181fca6023e7",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-FINAL-INVARIANCE.json",
+      "sha256": "b9f8635349b656703c38b44412448615bf35cb06f344ffbba8bb1b574e625b81",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-summary-only-attempt1.json",
+      "sha256": "77e33203883bac2b782da50393eb01c2815097bc7f4fb7eb1bd1a2ffffbf3860",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-summary-only-attempt1.log",
+      "sha256": "296cfa84ff87be3d59a6d4863747e176c0167d7ebf31283d9e06c6c4747c8a9e",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/final-kd-summary-only-attempt1.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/specs/final-kd-summary-only.json",
+      "sha256": "27ba58117a69dee8c9e4b72c68606fc7658415d6c5e7e27aa7fc5a2059b11198",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-controller-17s-v1.log",
+      "sha256": "9897f741b8a898dacb0a187cb0682e5d3a6505c9ac1a6ee5fbe13210cc3a130b",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv",
+      "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv.memory.tsv",
+      "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv",
+      "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+      "matches_handoff": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv.memory.tsv",
+      "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5",
+      "matches_handoff": true
+    }
+  ],
+  "independent_arithmetic": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final17-independent-arithmetic.json",
+    "sha256": "2125e7531334c12783e207d6d529f5e8df51d3015dd4cada283d85270b251bb6"
+  },
+  "result": {
+    "instances_per_arm": 1524,
+    "same_strict_solved_instances": 1368,
+    "REALIZABLE_per_arm": 629,
+    "UNREALIZABLE_per_arm": 739,
+    "native_TIMEOUT_per_arm": 156,
+    "gains": 0,
+    "losses": 0,
+    "contradictions": 0,
+    "decisive_overruns": 0,
+    "errors": 0,
+    "MEMOUT": 0,
+    "oom_event_sums": 0,
+    "oom_kill_invocations": 0,
+    "original_PAR2_s": 5946.655226414325,
+    "lazy_PAR2_s": 5940.166345068719,
+    "lazy_minus_original_PAR2_s": -6.488881345605478,
+    "lazy_minus_original_percent": -0.10911816977017012
+  },
+  "resource_review": {
+    "scope": "All3048 native rows exactly joined to3048 memory-sidecar rows; identity fields, finite nonnegative clocks, integer nonnegative RSS/peak and kernel events checked independently. Native/scored files and sidecars byte-identical, not just equal solve counts.",
+    "original_CPU_sum_s": 14011.778712,
+    "lazy_CPU_sum_s": 13979.571882,
+    "original_process_RSS_max_bytes": 3976986624,
+    "lazy_process_RSS_max_bytes": 3977768960,
+    "original_whole_scope_peak_max_bytes": 4239486976,
+    "lazy_whole_scope_peak_max_bytes": 4243906560,
+    "limits": "RSS is maximum reaped-process RSS; scopepeak is whole cgroup including descendants. These maxima are across all measured rows, including timeouts, and are not retained/requested heap ROI. CPU is cumulativeCPU, not wall time. No lower memory usage is demonstrated by these maxima."
+  },
+  "source_protocol": {
+    "original": "Genuine frozen pristine Acacia86dd/Posetse167 original default; ELF49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+    "candidate": "Actual selected frozen cc058ca lazy-FC configuration; ELF5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31. Relevant retained lazy source equals current implementation, but this is not a newly rebuilt publicHEAD ELF.",
+    "inputs": "Exact full1524 list hash0226e5cd2cadc033544f0901bd900dd31dd7add813ef216558826468e0b7b5c7; corpus manifest e2077833ffd3f2a616d8ca6286d1f22e5e09416f732ff174bc988629de4d96a1. Both panels cover the same unique names and frozen TLSF identity fields; full corpus byte qualification and31 source/ELF/library/interpreter bindings are owner evidence, not a new reviewer corpus/ELF rehash.",
+    "settings": "Both shipping otf_sparse_formula_parity, empty flags,17s,8G/no-swap, no affinity/quota, collectrusage, batch32/seed260617; existing campaign unchanged.",
+    "causality_limit": "Whole original configuration versus selected frozencc lazy-FC includes backend, shared Vector/helper, integration/LTO/core build differences and separately built privateRust/static artifact bytes despite pinned revisions. Not an isolated FC/header optimization effect. NO_VERBOSE gates do not establish route frequency."
+  },
+  "report_orientation": {
+    "status": "Validated clarification, not a new reviewer-origin defect",
+    "origin": "Nbjorner flagged generic reporting orientation",
+    "instruction": "Generic summary.new is anchor-e167 and paired.lazy-fc.par2_delta_s is reverse-oriented+6.488881. Use candidate_vs_baseline or direct lazy-minus-anchor=-6.488881 for public comparison; do not modify historical helpers or relabel raw metadata."
+  },
+  "interpretation": [
+    "Same solve set and a0.1091percent lower single-run PAR2 do not convincingly demonstrate a speedup, performance equality or a new default recommendation. No supplied noise floor or repeat variance estimate supports a stronger claim.",
+    "Candidate was selected from seen-data engineering experiments before this frozen run. This is fresh measurement on the full known1524 corpus, not unseen validation or pooled historical scores.",
+    "All156TIMEOUT cases remain censored; their wrapper durations are not finishing times. Unsolved17s rows cost34s; no later30s answer may rescore or replace them."
+  ],
+  "closure_limits": [
+    "Owner summary-only output and saved automatic summary are byte-identical; verified actual files.",
+    "Owner FINAL-KD-FINAL-INVARIANCE records31 exact unchanged bindings. Reviewer verifies hash-bound report consistency, not every ELF/library/source byte again.",
+    "No original private WIP scan or changed-source approval is performed in this outcome pass; earlier preservation evidence keeps its ignored/untracked-byte limits."
+  ],
+  "conditional30_next": {
+    "source_data_qualification": "Both native timeout sets are identical156 cases and no error-family source outcomes exist; source17 prerequisites pass this independent data review.",
+    "expected_calls": 312,
+    "scope": "Both same frozen configurations once per selected strict17TIMEOUT union; conditional cohort only. Not a fresh full1524x30 result; unsolved30s costs60.",
+    "pending": "Actual V2 prepared plan, source/policy/interpreter/runtime/input bindings, both-arm orientation and cap-only projection require exact review and root release before any30s target. No such execution approval is given here."
+  },
+  "attribution": "Independent arithmetic/resource joins and evidence/claim validation, not origin of measurements or another defect discovery. Generic orientation clarification belongs to Nbjorner; execution/closure belongs to benchmark owner.",
+  "checks_not_performed": [
+    "No helper import, test/compiler/build/probe/solver/profile/timing call",
+    "No new full source/corpus/library/ELF rehash or actual30s selection/plan projection",
+    "No publication or default/backend change"
+  ],
+  "owner_invariance_metadata": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-FINAL-INVARIANCE.json",
+    "sha256": "b9f8635349b656703c38b44412448615bf35cb06f344ffbba8bb1b574e625b81",
+    "status": "all-matched",
+    "entry_count": 31,
+    "all_recorded_match_flags_true": true,
+    "limit": "Owner record contains declared sha256 and match flag, not a second actual_sha256 field. Reviewer checks count/status/all31 flags and bound record hash; does not independently rehash31 frozen inputs."
+  },
+  "summary_equivalence_verified": true,
+  "review_notes_correction": "Initial unsent notes assumed an actual_sha256 field in owner invariance entries. Corrected to the actual sha256+match schema before review delivery; not an owner data or solver defect."
+}

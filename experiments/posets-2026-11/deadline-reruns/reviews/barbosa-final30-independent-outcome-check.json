@@ -1,0 +1,132 @@
+{
+  "scope": "Independent own standard-library saved-data recomputation, no target/helper code imported or executed.",
+  "issues": [],
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/summary.json",
+    "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+  },
+  "counts": {
+    "native_primary_records": 312,
+    "resource_joins": 312,
+    "old_record_raw_memory_hashes_verified": 615,
+    "new_capture_inventory_checks": 107,
+    "old_records": 205,
+    "new_records": 107,
+    "diagnostic_scored": 0
+  },
+  "stats": {
+    "anchor-e167": {
+      "rows": 156,
+      "strict_solved": 8,
+      "native_outcomes": {
+        "TIMEOUT": 146,
+        "REALIZABLE": 5,
+        "UNREALIZABLE": 3,
+        "ERROR": 2
+      },
+      "PAR2_s": 9054.294432966039,
+      "CPU_sum_s": 19462.935455,
+      "max_process_RSS_bytes": 4280414208,
+      "max_scope_peak_bytes": 6136221696,
+      "event_sums": {
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "decisive_overruns": 0,
+      "solved_instances": [
+        "arbiter_with_cancel_pb_7_pe_.ltl",
+        "collector_v3_pb_10_pe_.ltl",
+        "full_arbiter_enc_pb_10_pe_.ltl",
+        "g-unreal-314.ltl",
+        "lift_pb_8_pe_.ltl",
+        "ltl2dba_R_pb_10_pe_.ltl",
+        "robot_repair5.ltl",
+        "workstation_resupply_pb_5_pe_.ltl"
+      ]
+    },
+    "lazy-fc": {
+      "rows": 156,
+      "strict_solved": 8,
+      "native_outcomes": {
+        "TIMEOUT": 146,
+        "REALIZABLE": 5,
+        "UNREALIZABLE": 3,
+        "ERROR": 2
+      },
+      "PAR2_s": 9054.435914172791,
+      "CPU_sum_s": 19465.618834,
+      "max_process_RSS_bytes": 4280303616,
+      "max_scope_peak_bytes": 6165204992,
+      "event_sums": {
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      },
+      "decisive_overruns": 0,
+      "solved_instances": [
+        "arbiter_with_cancel_pb_7_pe_.ltl",
+        "collector_v3_pb_10_pe_.ltl",
+        "full_arbiter_enc_pb_10_pe_.ltl",
+        "g-unreal-314.ltl",
+        "lift_pb_8_pe_.ltl",
+        "ltl2dba_R_pb_10_pe_.ltl",
+        "robot_repair5.ltl",
+        "workstation_resupply_pb_5_pe_.ltl"
+      ]
+    }
+  },
+  "lazy_minus_original_conditional_PAR2_s": 0.14148120675235987,
+  "lazy_minus_original_percent": 0.0015625867680781056,
+  "gains": [],
+  "losses": [],
+  "classified_errors": [
+    {
+      "index": 204,
+      "arm": "anchor-e167",
+      "instance": "ltl2dba_R_pb_12_pe_.ltl",
+      "native_result": "ERROR",
+      "exit_code": "3",
+      "seconds": "20.121184411924332",
+      "capture": "external diagnostic; originalstderr absent",
+      "PAR2_s": 60
+    },
+    {
+      "index": 205,
+      "arm": "lazy-fc",
+      "instance": "ltl2dba_R_pb_12_pe_.ltl",
+      "native_result": "ERROR",
+      "exit_code": "3",
+      "seconds": "18.415432973997667",
+      "capture": "this primary exact signature",
+      "PAR2_s": 60
+    },
+    {
+      "index": 206,
+      "arm": "lazy-fc",
+      "instance": "ltl2dba_R_pb_14_pe_.ltl",
+      "native_result": "ERROR",
+      "exit_code": "3",
+      "seconds": "25.371328962035477",
+      "capture": "this primary exact signature",
+      "PAR2_s": 60
+    },
+    {
+      "index": 207,
+      "arm": "anchor-e167",
+      "instance": "ltl2dba_R_pb_14_pe_.ltl",
+      "native_result": "ERROR",
+      "exit_code": "3",
+      "seconds": "25.354979562107474",
+      "capture": "this primary exact signature",
+      "PAR2_s": 60
+    }
+  ],
+  "pair_gap": {
+    "limit": "One pair spans STOP/diagnostic/adjudication; not all 156 pairs were uninterrupted adjacent.",
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "owner_closure_and_replay": "Await frozen owner handoff/invariance/replay for final closure."
+}

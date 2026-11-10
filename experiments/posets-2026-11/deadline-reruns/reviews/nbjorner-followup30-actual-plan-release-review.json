@@ -1,0 +1,36 @@
+{
+  "reviewer": "nbjorner-guided independent concrete30s plan review",
+  "decision": "Approve the exact312-call conditional30s plan for root release. No unresolved source, binding, cohort, command or gate blocker found. Preserve the completed17s campaign unchanged.",
+  "bindings": {
+    "preparation_sha256": "d04d6a36e1ab209a20e7266a2751edeed2bb00dd37c9cfad63c576e7d760668e",
+    "plan": "work/deadline-reruns-v1/final-kd-timeout-followup30-v2/plan.json",
+    "plan_sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0",
+    "cohort_list_sha256": "969f6083137debf9a7117dd9bfe2cf99bd57279912e05461c66e6afe60be84de",
+    "writer_sha256": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb",
+    "source_manifest_sha256": "bf038658dd2eed7925bfad33d62bb22ee921c4d2dc2792734de23447a861f1ef",
+    "source_review_sha256": "9dc6facb24d10fce09c9a73b1dacfdaf52dbb852730138721ac87f96e7404e74",
+    "accepted_final17_handoff_sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+    "accepted_final17_outcome_review_sha256": "022d0bff347542aa06b3d4e87d1b14bee1cf261f132f03b5be3879c82cdb21e8",
+    "source17_frozen_sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+    "source17_summary_sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3"
+  },
+  "independent_actual_plan_checks": [
+    "All185 concrete plan input bindings plus writer/policy/interpreter and preparation-checkpoint references freshly match actual bytes. Writer remains the exact reviewed V2 source; completed source17 manifest is embedded without modification.",
+    "Independently recomputed cohort and source truth from both1524-row native source panels. Exactly156 common nativeTIMEOUT cases form the strict17s timeout union, in the original list order. No decisive overruns or MEMOUT cases occur in this source; plan scored17 entries are TIMEOUT for both arms on every selected case. The saved cohort list and mapping agree.",
+    "Exactly312 visits give both exact frozen arms one fresh attempt per case. Each adjacent pair covers the same case/list; baseline-first and candidate-first alternate with78 first positions per arm. No omitted/duplicate case, replacement or optional extra repetition is present.",
+    "Independently compared every projected command with an actual native source17 command template for its arm. Apart from new case-list/output namespaces, only the single --caps operand changes17 to30. Exact ELF/label/preset/source identity, empty flags,8G/no swap, collect-rusage, conflict-stop, interpreter/native runner and remaining arguments stay fixed. command_delta descriptors match the actual operand indices.",
+    "Original e167 ELF49cf and frozen cc lazyFC ELF5dc remain the accepted source17 configurations, with original source/library provenance and whole-configuration limits. No new build, default switch, diagnostic or instrumentation treatment is introduced.",
+    "Actual scoped prepare record matches its bound spec/result and passes in0.666s with8G/no swap, rc0, no timeout/resource limit/OOM. The previously accepted ten-method offline fixture record is bound; no redundant fixture or target was run by this reviewer.",
+    "Exact direct --run argv, cwd and LD_LIBRARY_PATH override agree with source17 environment and reviewed helper. Per-case lists exist with exact content; frozen30.json and all leg directories are absent. Only the prepared plan/lists exist before target release."
+  ],
+  "unchanged_controller_contract_checked": [
+    "Explicit check_row30 requires cap_s30 and exact arm/case/TLSF/source/flags/preset/memory/affinity/rusage fields. New observations use generic coverage.load_output, not the17-only campaign.read_rows; no globalCAP monkeypatch is used.",
+    "ORDINARY whitelist is active in source17 qualification and30s ingestion: decisive answers, TIMEOUT, MEMOUT and UNKNOWN only. Native CLI0 plus ERROR/CRASH cannot produce an accepted complete summary. Raw/start/completed record preservation precedes acceptance and stopping.",
+    "Finite nonnegative seconds/CPU, nonnegative integral RSS/scope peaks and kernel events plus complete sidecar join keys remain required. Missing/invalid resource evidence cannot silently become complete coverage.",
+    "Cross-phase/raw decisive contradictions are checked even beyond wall caps. At30s, decisive measured seconds>30 score TIMEOUT; ordinary unsolved observations cost60. Native outcomes/event counts remain retained and distinct from strict scoring.",
+    "Existing host/output locks, per-invocation owned cgroup cleanup, scope-contention pause, original30s thermal sampler, termination cleanup, immutable completed-attempt reuse and interrupted-directory refusal remain. No broad cleanup or automatic replacement of interrupted/unfavorable observations is authorized."
+  ],
+  "reporting_limits": "Conditional156-case diagnostic selected from this completed17s campaign, not a full1524-case30s comparison. One attempt per arm/case, no timing reliability claim in advance. Keep17s raw/scored files and1524 denominator intact; report30s outcomes separately with156 denominator and60s unsolved cost. Private Rust/static/whole-configuration and NO_VERBOSE limits remain.",
+  "findings": [],
+  "review_execution": "Saved source/plan/proof/row reads and bounded standard-library metadata/hash comparisons only. No helper import/execution, tests, compiler, solver, profile, target timing, source change or originalAcacia/WIP write. Root remains launch authority."
+}

@@ -1,0 +1,24 @@
+{
+  "status": "byte-identical-summary-and-records-no-new-targets",
+  "automatic_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-automatic-summary.json",
+    "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+  },
+  "after_replay_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/summary.json",
+    "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+  },
+  "pre_replay_record_index": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-PRE-REPLAY-RECORDS.json",
+    "sha256": "e1134e6a8183bd1dce9b974cafc114d4ad4544ee66030da68c60c7cc705c6f97"
+  },
+  "scoped_replay_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-summary-replay-attempt1.json",
+    "sha256": "129154f17ef884c6e6d3273fd3ad4e4248e6a414e790a4b80f429713b472b825"
+  },
+  "primary_records_before": 312,
+  "primary_records_after": 312,
+  "old_immutable_records": 205,
+  "new_completed_records": 107,
+  "replay_new_solver_calls": 0
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "Bounded completed-evidence/source read for why lazyKD need not beat ranked scans. No live30s outcomes were read and no target/helper/profile work was run.",
+  "supported_explanation": [
+    "The default is already a filtered dense scan: rank_bucketed_vector_backed keeps contiguous Vector objects and a separate contiguous nondecreasing rank array. contains_impl lower-bounds the query's coordinate-sum rank and compares only that suffix, stopping at a witness. This is not a flat slab of all coordinates and not an unfiltered all-pairs baseline. The optimized default also reuses valid cached ranks and avoids some unnecessary equal-rank retirement comparisons.",
+    "Retained lazyKD checks live pending IDs first, then walks a frozen bucket tree. Coordinate0 catalogs and sampled internal bridges accelerate locating leaf ranges; split geometry can prune subtrees, but surviving candidates still require full partial_order confirmation. Stable-ID/live lookups, catalogs/traversal, pending scans and threshold-triggered replacement index construction are real source work. Their individual cycle/cache cost is not established by source inspection.",
+    "The completed RR captured CPre (4588 generators,453 coordinates) has10149479 whole-operation wrapper partial-order attempts for oldlazy versus5376016 for oldrank789 and5273875 for newrank30e, in either width. These include the CPre subphases, not only membership-query comparisons, and a full-order attempt may short-circuit rather than inspect all453 coordinates. It is a measured example of more exact order work, not a universal high-dimensional failure theorem.",
+    "The same RR CPre software pass sums81163 allocation requests/38480535 requested bytes for oldlazy versus78056/36518464 for either ranked control. These are instrumented phase sums, not a summed transient heap peak or clean clock. The profile's explicit lazy rebuild is distinct from clean replay's metric named rebuild, which means a second fresh construction.",
+    "The rejected two-column filter's RR miss is narrower evidence: all4067 frozen candidates survived those selected columns, plus521 pending comparisons, giving4588 full-order attempts. Pending is actually searched first. Zero selected-column rejection does not mean all KD geometry/catalog pruning is ineffective: the saved fullarb miss excludes every frozen candidate by geometry/coordinate0 and pays1023 pending comparisons before explicit rebuild, then zero afterward.",
+    "Completed clean RR CPre endpoint medians are lazy180.500268ms/137.109857ms and optimizedrank98.552219ms/77.895543ms for compatible16/native64 signed-char lanes. These endpoints come from different completed source-comparison reports and schedules; they are useful corroborating examples, not a newly matched cross-backend ratio or a whole-solver prediction. Collector's captured predecessor has523 coordinates, demonstrating that these are large-coordinate workloads rather than generic2D/3D spatial lookups."
+  ],
+  "whole_solver_limit": "The accepted final17 campaign has identical1368/1524 solved cases and only6.4888813456s totalPAR2 advantage for frozen lazyFC (about0.1091%), with one attempt per case and unknown noise floor. NO_VERBOSE provides no runtime fraction in the chosen downset route. The solver also performs translation/automata/native portfolio work. Common or bypassed work can dilute a container difference, but its fraction and causal contribution were not profiled. Near-identical solver totals therefore do not prove equal downset cost, nor establish a lazyKD speedup. The comparison is actual e167-original versus frozencc lazyFC whole configurations, not an isolated-header treatment.",
+  "evidence_locators": {
+    "work_counts_and_counter_limits": "work/kd-round2/profile-execution-v2/findings.txt, analysis-data.json groups[*].cpre_full_wrapper_phase_sums and phase-table.tsv",
+    "source_rank_filter": "work/posets/include/posets/downsets/rank_bucketed_vector_backed.hh:40-100 (dense arrays, rank_of, lower_rank_pos, contains_impl)",
+    "source_lazy_pending_and_maintenance": "work/posets/include/posets/downsets/lazy_kdtree_backed.hh:118-131 and292-316",
+    "source_catalog_geometry_and_confirmation": "work/posets/include/posets/utils/bucket_kdtree.hh:177-237",
+    "lazy_clean_endpoints": "work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json, trace0/cpre/simd_vector_backed, baseline_median_seconds",
+    "rank_clean_endpoints_and_dimensions": "outputs/default-replay-2026-11-09/larger-summary.json, trace0/cpre/simd_vector_backed, optimized_median_seconds; standard-summary.json trace0 collector dimension523",
+    "width_metadata_and_estimator_limits": "work/kd-round2/reviews/nbjorner-width-evidence-static-note.json",
+    "default_only_PMU_scope": "outputs/default-work-and-cache-2026-11-09/report.txt: pinned counters compare ranked789 versus ranked30e, not lazyKD versus rank or fullAcacia",
+    "full17_accepted_arithmetic": "work/deadline-reruns-v1/reviews/nbjorner-final17-outcome-review.json and nbjorner-final17-independent-arithmetic.json",
+    "whole_configuration_and_NO_VERBOSE_boundary": "work/deadline-reruns-v1/reviews/nbjorner-lazy-fc-reuse-provenance-static-review.json"
+  },
+  "not_established": [
+    "No matched lazy-versus-rank PMU/cache/memory-latency breakdown or full-solver downset hot-path/route fraction was collected here.",
+    "No measured universal curse-of-dimensionality, optimal axis/leaf policy, fastest SIMD width or causal explanation of all similar solver timings follows.",
+    "The rejected packed/filter candidates are not retained lazyFC production code. Instrumented epoch counters omit discarded index epochs and cannot substitute for the whole-operation wrapper sums."
+  ],
+  "attribution": "Root supplied the explanation question and candidate numerical claims. This note verifies exact completed counts, implementation mechanisms and inference limits; it originates no new experiment or production defect."
+}

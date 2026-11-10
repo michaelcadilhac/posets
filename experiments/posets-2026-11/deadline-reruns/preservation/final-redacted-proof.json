@@ -1,0 +1,50 @@
+{
+  "scope": "Five checkout aliases, all six HEAD/status/NUL-index/binary-diff/tracked-byte/count fields compared against new-task baseline. Ignored/untracked file bytes are outside this check. No original WIP filenames or raw status/diffs are published.",
+  "checked_utc": "2026-11-10T15:01:49.286960+00:00",
+  "all_match": true,
+  "checkouts": {
+    "checkout-1": {
+      "head": true,
+      "status": true,
+      "index_entries_sha256": true,
+      "diff_sha256": true,
+      "tracked_content_sha256": true,
+      "tracked_files_hashed": true
+    },
+    "checkout-2": {
+      "head": true,
+      "status": true,
+      "index_entries_sha256": true,
+      "diff_sha256": true,
+      "tracked_content_sha256": true,
+      "tracked_files_hashed": true
+    },
+    "checkout-3": {
+      "head": true,
+      "status": true,
+      "index_entries_sha256": true,
+      "diff_sha256": true,
+      "tracked_content_sha256": true,
+      "tracked_files_hashed": true
+    },
+    "checkout-4": {
+      "head": true,
+      "status": true,
+      "index_entries_sha256": true,
+      "diff_sha256": true,
+      "tracked_content_sha256": true,
+      "tracked_files_hashed": true
+    },
+    "checkout-5": {
+      "head": true,
+      "status": true,
+      "index_entries_sha256": true,
+      "diff_sha256": true,
+      "tracked_content_sha256": true,
+      "tracked_files_hashed": true
+    }
+  },
+  "checker_sha256": "2702534c704bfc58a906dc84f45511f7ea7c0861e2f4101dccf11c2bc9e59ea4",
+  "record_sha256": "9e7311b7f5462d894406e63c26fd183aa82db2157ebe68fabc311bbbe5e7d56e",
+  "private_snapshot_sha256": "d5b90f8fc02ece9c16714b9b73775c2f5e6991e0378a9e199dc9fd9e3b113eb2"
+}

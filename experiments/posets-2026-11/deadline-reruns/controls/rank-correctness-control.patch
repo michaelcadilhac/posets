@@ -1,0 +1,157 @@
+diff --git a/include/posets/downsets/rank_bucketed_vector_backed.hh b/include/posets/downsets/rank_bucketed_vector_backed.hh
+--- a/include/posets/downsets/rank_bucketed_vector_backed.hh
++++ b/include/posets/downsets/rank_bucketed_vector_backed.hh
+@@ -6,7 +6,6 @@
+ #include <cassert>
+ #include <cstdint>
+ #include <iostream>
+-#include <limits>
+ #include <vector>
+ 
+ #include <posets/concepts.hh>
+@@ -57,26 +56,6 @@
+         return static_cast<size_t> (std::ranges::upper_bound (ranks, r) - ranks.begin ());
+       }
+ 
+-      static bool exact_rank_domain (const V& v) {
+-        using coordinate_type = V::value_type;
+-        if constexpr (std::is_integral_v<coordinate_type> and
+-                      std::numeric_limits<coordinate_type>::digits <=
+-                          std::numeric_limits<rank_t>::digits) {
+-          if constexpr (std::numeric_limits<coordinate_type>::digits ==
+-                        std::numeric_limits<rank_t>::digits) {
+-            return v.size () <= 1;
+-          }
+-          else {
+-            return v.size () <=
+-                   static_cast<std::uint64_t> (std::numeric_limits<rank_t>::max ()) /
+-                       (std::uint64_t {1} << std::numeric_limits<coordinate_type>::digits);
+-          }
+-        }
+-        else {
+-          return false;
+-        }
+-      }
+-
+       template <typename T>
+       static void reserve_growing (std::vector<T>& values, size_t required) {
+         if (required > values.capacity ()) {
+@@ -101,15 +80,8 @@
+         return false;
+       }
+ 
+-      [[nodiscard]] bool contains_with_rank (const V& v, rank_t rv) const {
+-        POSETS_RANK_STAT_ADD (contains_calls, 1);
+-        return contains_impl (v, rv);
+-      }
+-
+-      void insert_accepted (V&& v, rank_t rv, size_t first_possible_dominator) {
+-        // Equal integral sums imply equality for comparable vectors only in a
+-        // proven exact domain. Floating/truncated and wide sums keep the fallback.
+-        const size_t stop = exact_rank_domain (v) ? first_possible_dominator : upper_rank_pos (rv);
++      void insert_accepted (V&& v, rank_t rv) {
++        const size_t stop = upper_rank_pos (rv);
+         size_t first_removed = 0;
+         for (; first_removed < stop; ++first_removed) {
+           POSETS_RANK_STAT_ADD (partial_order_calls, 1);
+@@ -127,11 +99,9 @@
+         bool mutated = false;
+         try {
+           size_t write = first_removed;
+-          auto removed_before = static_cast<size_t> (first_removed < first_possible_dominator);
+           for (size_t read = first_removed + 1; read < stop; ++read) {
+             POSETS_RANK_STAT_ADD (partial_order_calls, 1);
+             if (v.partial_order (vector_set[read]).geq ()) {
+-              removed_before += static_cast<size_t> (read < first_possible_dominator);
+               POSETS_RANK_STAT_ADD (existing_elements_removed, 1);
+               continue;
+             }
+@@ -153,7 +123,7 @@
+                               vector_set.end ());
+             ranks.erase (ranks.begin () + static_cast<std::ptrdiff_t> (write), ranks.end ());
+           }
+-          const size_t pos = first_possible_dominator - removed_before;
++          const size_t pos = lower_rank_pos (rv);
+           mutated = true;
+           vector_set.insert (vector_set.begin () + static_cast<std::ptrdiff_t> (pos),
+                              std::move (v));
+@@ -181,7 +151,7 @@
+         }
+ 
+         if constexpr (safe_moves) {
+-          insert_accepted (std::move (v), rv, first_possible_dominator);
++          insert_accepted (std::move (v), rv);
+         }
+         else {
+           // Throwing moves operate on copies, never on the live arrays.
+@@ -189,16 +159,11 @@
+           replacement.ranks = ranks;
+           for (const auto& old : vector_set)
+             replacement.vector_set.push_back (old.copy ());
+-          replacement.insert_accepted (std::move (v), rv, first_possible_dominator);
++          replacement.insert_accepted (std::move (v), rv);
+           vector_set.swap (replacement.vector_set);
+           ranks.swap (replacement.ranks);
+         }
+         return true;
+-      }
+-
+-      bool insert_with_rank (V&& v, rank_t rv) {
+-        POSETS_RANK_STAT_ADD (insert_attempts, 1);
+-        return insert_impl (std::move (v), rv);
+       }
+ 
+     public:
+@@ -233,7 +198,7 @@
+           return;
+         POSETS_RANK_STAT_ADD (union_insertions, other.vector_set.size ());
+         for (size_t i = 0; i < other.vector_set.size (); ++i)
+-          insert_with_rank (std::move (other.vector_set[i]), other.ranks[i]);
++          insert (std::move (other.vector_set[i]));
+       }
+ 
+       void intersect_with (const self& other) {
+@@ -248,32 +213,22 @@
+           *this = self {};
+           return;
+         }
+-        size_t first = 0;
+-        for (; first < vector_set.size (); ++first) {
+-          if (not other.contains_with_rank (vector_set[first], ranks[first]))
+-            break;
+-          POSETS_RANK_STAT_ADD (intersection_short_circuits, 1);
+-        }
+-        if (first == vector_set.size ())
+-          return;
+-
+         self intersection;
+-        for (size_t i = 0; i < first; ++i)
+-          intersection.insert_with_rank (vector_set[i].copy (), ranks[i]);
+-        for (size_t i = first; i < vector_set.size (); ++i) {
+-          const auto& x = vector_set[i];
+-          const bool dominated = i != first and other.contains_with_rank (x, ranks[i]);
+-          if (dominated) {
++        bool changed = false;
++        for (const auto& value : vector_set) {
++          if (other.contains (value)) {
+             POSETS_RANK_STAT_ADD (intersection_short_circuits, 1);
+-            intersection.insert_with_rank (x.copy (), ranks[i]);
++            intersection.insert (value.copy ());
+           }
+           else {
++            changed = true;
+             POSETS_RANK_STAT_ADD (intersection_pair_meets, other.size ());
+-            for (const auto& y : other)
+-              intersection.insert (x.meet (y));
+-          }
+-        }
+-        *this = std::move (intersection);
++            for (const auto& rhs : other)
++              intersection.insert (value.meet (rhs));
++          }
++        }
++        if (changed)
++          *this = std::move (intersection);
+       }
+ 
+       template <typename F>

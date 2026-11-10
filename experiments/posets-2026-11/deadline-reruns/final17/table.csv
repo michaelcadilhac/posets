@@ -1,0 +1,3 @@
+arm,solved_of1524,PAR2_s,gains,losses,native_TIMEOUT,native_MEMOUT,OOM_kill_invocations,max_scope_bytes,max_process_RSS_bytes,CPU_s,resource_rows
+anchor-e167,1368,5946.655226414325,0,0,156,0,0,4239486976,3976986624,14011.778712,1524
+lazy-fc,1368,5940.166345068719,0,0,156,0,0,4243906560,3977768960,13979.571882,1524

@@ -1,0 +1,42 @@
+{
+  "reviewer": "nbjorner-guided independent bounded outcome and draft review",
+  "forest_outcome_decision": "Accept the completed ten-call results and closure; no blocker. The selected case supports retaining current stamps, with no source rollback indicated.",
+  "final_draft_decision": "No source/identity/protocol blocker for the unchanged campaign selfcheck and exact two-arm dry run. Full3048 target release remains pending their concrete preflight records and root authority.",
+  "bindings": {
+    "forest_handoff_sha256": "82e5a281b7d5a6e59caaa34d8be5c41983dea33d707f47ce520147e02c55df5a",
+    "forest_summary_sha256": "ec14e4d89614f7c4a3966594a772119261473b3a154d9bf18ef6b85a6b92656b",
+    "forest_invariance_sha256": "6c5ee30edb9923fa47ce4526168cff2e9274bcdbde7066b9d4cb0153d4492d65",
+    "forest_plan_sha256": "017a374b8936efad7b26ae402f932c55e86d0b7e739c8ac9820bc89feb1e6c50",
+    "independent_arithmetic": {
+      "path": "work/deadline-reruns-v1/reviews/nbjorner-forest10-independent-arithmetic.json",
+      "sha256": "18c41181597d6c44d444fc83e29969051afe71fb2a0320a1bbdfef7aa3b09989"
+    },
+    "final_draft_checkpoint_sha256": "767bb4044cce53b7681493657e9d8f8b8b358982a86377aded08926bc1a50b20",
+    "final_draft_arms_sha256": "616e5fa9ef1ecb1ac81a6251b3722bbfd8d190f979495cb8e7825d0c425b09c4",
+    "final_draft_primary_spec_sha256": "0007088ad9018df6c48c497da7cfd477ff4d3c512157e804efd30d7d244fe7b0",
+    "final_draft_dryrun_spec_sha256": "d46fa963a005ab242aab270d6ec0c027c55f9ea7f39f08e1ca81c50f25300017",
+    "prior_lazyFC_reuse_review_sha256": "6e25b324352f6e1e8d3d5b290b8e515f1b54d78e1e422e88d265df6768a47bf0"
+  },
+  "forest_checks": [
+    "Independently joined all ten native rows, memory sidecars and embedded summary observations; invocation record hashes and every listed artifact hash match. Exact five-pair alternating order is observed with no invocation overlap.",
+    "Map before is0/5 solved, all nativeTIMEOUT/exit124. Current stamps after is5/5 nativeREALIZABLE/exit0, with walls13.744436863809824,14.958026756998152,15.85738431615755,14.947165961144492,15.655759723857045 seconds, all within17s.",
+    "Recomputed PAR2 sums: map170; stamps75.162773621967063 from the saved decimal wall strings, matching the reported float75.16277362196706. All map observations are censored: paired timing ratios and median correctly remain null. Neither serious-regression gate fires.",
+    "All ten CPU/RSS/scope-peak/event observations are valid. CPU sum599.565278s, maximum cgroup scope peak1233682432bytes and maximum reaped-process RSS724774912bytes match. Zero errors, decisive conflicts, decisive wall overruns and OOM events/kills.",
+    "All19 direct final-handoff bindings match. Automatic and summary-only summary bytes are identical. The saved final invariance record contains the29 frozen plan inputs plus interpreter, all matching; no target rerun or broader source scan was needed."
+  ],
+  "forest_inference_limits": [
+    "Current stamps improve deadline completion over the matched map control on this one regular-sharingtree Alarm case. This rejects the proposed memo-regression explanation on that case; it does not establish an uncensored speedup factor or universal workload benefit.",
+    "Do not infer the whole forest-versus-ranked difference, other forest changes, or simple-sharingtree timing from this treatment. Keep the earlier450 adverse-case matrix and these ten matched observations separate. No production header change follows."
+  ],
+  "final_two_arm_draft_checks": [
+    "Verified the exact draft checkpoint and its four referenced frozen/source/arms/spec file hashes. Both actual ELF and provenance hashes match. Arm records agree with the original frozen15 campaign after normalizing its provenance binding object to the campaign input's path plus explicit provenance_sha256 schema.",
+    "Baseline is genuine pristine Acacia86dd/Posetse167 ELF49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6. Candidate is the genuine retained frozen cc058ca lazy-FC ELF5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31, with its original task integration patch/source pins. Neither is relabelled as789/current or rebuilt evidence.",
+    "Exactly two empty-flag shipping-preset arms are requested, original baseline anchor-e167 and candidate lazy-fc. Existing compatible16-lane type/configuration and retained lazy implementation equivalence rely on the already accepted artifact/reuse evidence; no unnecessary rebuild is proposed.",
+    "Dry-run argv equals the primary argv plus only --dry-run. Absolute repo/arm/list/map/corpus/status paths, batch32 and seed260617 match the established protocol. Primary spec states3048 expected rows,17s/8G/no-swap and no affinity/quota; runtime override is the existing Spot LD_LIBRARY_PATH. New primary output was absent when checked.",
+    "The comparison is explicitly whole configurations, retaining differences in Acacia compilation layout, shared Vector dependencies and private Rust archives. Unchanged selected header bytes do not imply ELF identity with a hypothetical current rebuild or isolated-header causality.",
+    "Future30s work remains a separately frozen symmetric followup on the union of strict17s timeouts in the forthcoming completed campaign. There is no actual future cohort or30s target result yet, and17s outcomes are not replaced."
+  ],
+  "findings": [],
+  "attribution": "Independent outcome/identity/arithmetic validation of owner-reported results and root-selected next-stage draft; no new implementation defect or exclusive empirical-discovery claim. Existing immutable contribution snapshots remain untouched.",
+  "execution": "Small saved-data/source/log reads and bounded standard-library hash/arithmetic checks only. No helper import/execution, compiler, tests, solver, profile, originalAcacia/WIP/source modification or new measurement."
+}

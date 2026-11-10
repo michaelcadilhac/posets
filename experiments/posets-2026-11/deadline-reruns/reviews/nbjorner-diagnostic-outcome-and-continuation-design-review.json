@@ -1,0 +1,31 @@
+{
+  "scope": "Bounded saved-diagnostic verification and source-only continuation design review with coder",
+  "decision": "Accept the reproduced diagnostic conclusion. The proposed preserve-prefix/execute-suffix design is appropriate subject to the requirements below and exact frozen source/offline/concrete-plan review. This is not a target or unreviewed-code release.",
+  "bindings": {
+    "diagnostic_complete_sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da",
+    "diagnostic_record_sha256": "7ea1014369821954a1e32a4ff8fa90e2cf7b95cf011e9b845036299b709e44c9",
+    "diagnostic_log_sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667",
+    "stop_checkpoint_sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34",
+    "original_failed_record_sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8",
+    "original30_plan_sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0"
+  },
+  "diagnostic_verified": [
+    "All nine diagnostic-completion references and eight original source/spec/ELF/TLSF inputs match. The actual30s/8G/no-swap record returns3 after18.512807924998924s, with stdout0/stderr1080 and no timeout/resource limit/OOM event.",
+    "The combined log is exactly1080bytes and stdout count is0, so it contains the complete diagnostic stderr. It has three Spot Too-many-acceptance-sets/limit32 exception paragraphs, the exact gr1-real-lift outside-proved-DPA-Buchi-fragment rejection and terminal ERROR. This supports the diagnosed frozen-library limitation, not kernelOOM or an observed Posets optimization defect.",
+    "Independently checked all205 original record hashes against the frozen stop checkpoint; all are unchanged. This does not substitute the diagnostic for the primaryERROR or claim recovery of its unavailable original stderr text. The18.513s diagnostic does not replace the primary20.121s."
+  ],
+  "minimal_continuation_requirements": [
+    "Keep the original V2 source/policy/plan, all205 prefix records and their raw/resource files/STOP immutable. A separately bound amendment preserves every original312 cohort position: verify/reuse the205 prefix observations and execute exactly the107 remaining original visits in original order under a new namespace.",
+    "Same actual frozen e167/lazyFC binaries, Spot/static/runtime stack, TLSFs, shipping settings, empty flags and30s/8G/no-swap limits. No library-limit increase, rebuild, route/phase/worker switch or deadline-environment injection is part of this continuation.",
+    "Transparent runpy capture adapter must patch the nativeCLI import boundary only, call the original benchlib.run_systemd_scope with identical args/kwargs, then persist its already-returned full stdout/stderr/result outside the measured interval and return the SAME RunResult object. Do not install a live capture_consumer/filter, modify timing/resource metadata or solver environment. Test this object/argument contract with a small fake result before runtime release.",
+    "NativeERROR remains nativeERROR. Original failed visit204 is explicitly adjudicated only by its exact frozen record/row identity plus the separate diagnostic descriptors. Mark attribution as corroborating diagnostic adjudication, never recognition from recovered primary stderr.",
+    "New known-limit acceptance must require nativeERROR/exit3, complete empty stdout and exact captured stderr/byte-count agreement with the narrow observed signature. Require only the permitted Spot-limit blocks, specifically allowed benign fragment line and finalERROR. Extra/unknown/mixed errors, wrong identity, missing/truncated capture or resource mismatch still stop after evidence is saved. An exact matcher may conservatively stop on reordered/count-varied known output; that is preferable to silently broadening the exception.",
+    "The recognizedERROR branch must retain all original identity/TLSF/cap/flags/preset/sidecar/resource/nativeCLI/truth guards. Frozen check_row30 rejectsERROR at its first whitelist check, so simply catching/skipping that exception is insufficient. Do not globally mutate imported ORDINARY/CAP policy or make an UNKNOWN copy look like the actual observation. A known-message/wrong-identity negative should reach the relevant new guard.",
+    "Final reporting keeps nativeERROR and an explicit library-limit category separate from TIMEOUT/MEMOUT. It is an unsolved60s conditionalPAR2 observation, not a free20.121s early finish or a substituted diagnostic timing. Preserve the156-per-arm denominator, all312 positions, raw cross-phase truth checks, ordinary censors and original17s results.",
+    "Retain locks, exact-artifact guards, artifact-first stopping, no-overwrite capture/result records, completed-attempt validation and partial/interrupted-leg refusal. UnknownERROR or failed capture cannot launch a later visit. No diagnostic or failed primary call is automatically retried."
+  ],
+  "protocol_amendment_disclosure": "The stop interrupts case0102 between its recorded baselineERROR and pending lazyFC call. Consequently102 prefix pairs were complete, one pair straddles the stop/diagnostic gap, and53 pairs follow in the new suffix. Preserve the original order rather than rerun or replace the baseline, and do not claim all156 pairs were uninterrupted adjacent. No paired finish-time ratio applies to thatERROR/censored pair.",
+  "attribution": "Root authorized the amendment and transparent capture direction; coder proposed concrete adapter/classifier design. This review validates the saved diagnostic, reinforces guard/result identity preservation, and identifies the split-pair reporting caveat. No production defect/revert or external researcher claim.",
+  "pending": "Exact versioned controller/adapter/classifier/fixture bytes and policy, then root-released offline gates, then the concrete107-visit plan/artifact/absence review before any target continuation.",
+  "execution": "Read-only source/saved evidence and bounded hash checks only. No new helper import, tests, build, solver, profile, source/old-record mutation or originalAcacia/WIP writes. Only this own review note written."
+}

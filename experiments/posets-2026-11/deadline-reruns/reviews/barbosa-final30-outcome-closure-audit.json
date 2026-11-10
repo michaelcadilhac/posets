@@ -1,0 +1,294 @@
+{
+  "reviewer": "Barbosa skill-guided agent, not actual researcher",
+  "scope": "Final conditional30 outcome/resource/accounting/replay/provenance closure plus current concisePR factual interpretation. Public evidence package/archive/privacy review remains separate until frozen.",
+  "verdict": "accept completed outcome/closure and current concisePR factual wording; no blocker",
+  "issues": [],
+  "handoff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-COHORT30-HANDOFF.json",
+    "sha256": "fcdd3e037095d115a930a2c2b06ec9390f1b8067054516d5505ee4bf1057ed3f"
+  },
+  "verified_direct_bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-DELEGATED-AUTHORITY-v1.json",
+      "sha256": "c537ca50c8301cb2b524d507f42ce6427e15db52b841c71808d4f3bf4273f0b3",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-ROOT-RELEASE.json",
+      "sha256": "814f3177bcb08758ca044a3096f2438d3f197384cf8467ae07e9d394b9e71ae6",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-ACTUAL-READINESS.json",
+      "sha256": "b621ab75e082ae8894b3cc3c2196c7a9d49b4939ea1bf6b8f35c8a528a5b14d9",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-START-RECORD.json",
+      "sha256": "f029f65abc5dccbe104d66d850439d9a1a0911fe59e04c41f08bfa86c48766cc",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/amendment.json",
+      "sha256": "f5570dc6159e811462ed2bb06dfc08749aa12059d0c4bc629f5c4b193ef996e2",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/frozen.json",
+      "sha256": "1e65f52f0f3d3fbf76408c2964e4a607e6ffdadb06f4793602ba590f05713c0c",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/progress.json",
+      "sha256": "1f7498b9148d71c3b459efd7b646bdd1a87657cb45e19f344ed35e89b05366fc",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/summary.json",
+      "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-automatic-summary.json",
+      "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-SUMMARY-EQUIVALENCE.json",
+      "sha256": "d6154a834f4f4e08f47f6dc2a32249749b3003e547f8172722a35b8e4fa5539c",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-PRE-REPLAY-RECORDS.json",
+      "sha256": "e1134e6a8183bd1dce9b974cafc114d4ad4544ee66030da68c60c7cc705c6f97",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-COMPOSITE-INDEX.json",
+      "sha256": "f49385026479188d00ded8b1e8b75ea9cbb0f6051011e7be1e91a5d86733ae13",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-FINAL-RESULT-DIGEST.json",
+      "sha256": "f163c9939f97a591e567cb4233a6b2214a8800eb6f04d6cc559e3802444f49b1",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-RESOLVED-CASES.json",
+      "sha256": "69ebe71add276f18a482ae59daa2667cab2bf4abff37c2008c6de5b9e705fc78",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-EXACT-SCORES.json",
+      "sha256": "7e41c7acd408b98be9e4358ee2a148e7d1df7fb4df4acd525fe2e7280a552bd8",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-conditional-table.csv",
+      "sha256": "87b2bb2f0b7ef998e1613d14d058e535de90cb8d83e152fa7ee6ab5bb5e2dd73",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-conditional-cells.csv",
+      "sha256": "fcd6425cd04545e33957705a24b9f60bafac70feb09ce134fc132c874978b391",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-FINAL-INVARIANCE.json",
+      "sha256": "bd68403d45c532c5e4db20ecc6eb56dccae69c10b75172c8d80ba00d60bdf2fa",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-summary-replay-attempt1.json",
+      "sha256": "129154f17ef884c6e6d3273fd3ad4e4248e6a414e790a4b80f429713b472b825",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-summary-replay-attempt1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-summary-replay-attempt1.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/specs/continuation-summary-replay.json",
+      "sha256": "28ea1a1e0b8d5011d59b3044de1d686e199dd06c1c58b15b0b8b074f943a5f3e",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-controller-v1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-STOP-CHECKPOINT.json",
+      "sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+      "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-17S-HANDOFF.json",
+      "sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-table.csv",
+      "sha256": "4192d346ad613f98225177c3281e841ae8a0951ce57344479f10181fca6023e7",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-followup30-preservation-redacted.json",
+      "sha256": "b384145970416f721ddf807784fd155ba80a0771434b5a6f4326aed6fb3fa4f4",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-continuation-actual-plan-review.json",
+      "sha256": "accb1263956d27603858851aa6d89d6a3fd927818157dec72df9ea8abf542c91",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-continuation-actual-plan-review.json",
+      "sha256": "1bb8cdfd04276c9b9334e04f6d0d7c04eb2a754bf0b1a7c0329c551a0a382901",
+      "matches": true
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-continuation-independent-arithmetic.json",
+      "sha256": "9b47d7e1feeb4ec628831bf5ea5c39c0b6497a11889a1d6d7d37f03cd93474d5",
+      "matches": true
+    }
+  ],
+  "independent_outcome_check": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final30-independent-outcome-check.json",
+    "sha256": "1a3bd7b4184a795a0e32bcfa9a415efe9352cf9563336dc9e7f835f5bd377ad1"
+  },
+  "independent_results": {
+    "primary_records": 312,
+    "old_prefix": 205,
+    "new_suffix": 107,
+    "diagnostic_scored": 0,
+    "resource_joins": 312,
+    "prefix_record_raw_memory_hashes": 615,
+    "new_capture_inventory_checks": 107,
+    "per_arm": "Same8decisive solves(5REALIZABLE/3UNREALIZABLE),146nativeTIMEOUT,2nativeERROR,156cases. Same solved names/verdicts;0gains/losses,0truthcontradictions,0decisiveoverruns,0unclassifiederrors,0OOM/oom_kill events.",
+    "exact_PAR2_s": {
+      "anchor-e167": "9054.294432966038586",
+      "lazy-fc": "9054.435914172790946"
+    },
+    "exact_lazy_minus_original_PAR2_s": "0.141481206752360",
+    "inference": "Tiny0.141481206752360s higher lazy conditionalPAR2 on this single selectedcohort observation establishes no winner, equivalence or isolated source effect.17s run likewise establishes no convincing gain."
+  },
+  "error_adjudication": {
+    "cases": "ltl2dba_R_pb_12_pe_.ltl andltl2dba_R_pb_14_pe_.ltl in botharms,indices204..207",
+    "original204": "Exact boundERROR/exit3/time20.121184411924332 and resources preserved; stderr was not captured. Separate exact-binary diagnostic supports adjudication, not recoveredprimarytext or replacement.",
+    "new205_206_207": "All3 fullprimary stderr captures equal exact1080-byte a2656835 Spot32 signature,empty stdout,ERROR/exit3,no timeout/resource/OOM. Otheractualcapture/meta/nativejoins valid; no broadenedacceptance.",
+    "scoring": "Each nativeERROR remainsERROR,classifiedSPOT_ACCEPTANCE_LIMIT_32 andunsolvedcost60, notTIMEOUT/MEMOUT orcheapconclusiveanswer. Diagnostic contributes0primaryscores."
+  },
+  "paired_seam": "102uninterruptedprefixpairs,onepair acrossSTOP/diagnostic/adjudication gap,53uninterruptedsuffixpairs. No all156uninterrupted claim or timingratio for theERROR seam. Original remainingorder retained; no prefixrepeat/replacement.",
+  "resource_limits": {
+    "per_arm": {
+      "anchor-e167": {
+        "rows": 156,
+        "strict_solved": 8,
+        "native_outcomes": {
+          "TIMEOUT": 146,
+          "REALIZABLE": 5,
+          "UNREALIZABLE": 3,
+          "ERROR": 2
+        },
+        "PAR2_s": 9054.294432966039,
+        "CPU_sum_s": 19462.935455,
+        "max_process_RSS_bytes": 4280414208,
+        "max_scope_peak_bytes": 6136221696,
+        "event_sums": {
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "decisive_overruns": 0,
+        "solved_instances": [
+          "arbiter_with_cancel_pb_7_pe_.ltl",
+          "collector_v3_pb_10_pe_.ltl",
+          "full_arbiter_enc_pb_10_pe_.ltl",
+          "g-unreal-314.ltl",
+          "lift_pb_8_pe_.ltl",
+          "ltl2dba_R_pb_10_pe_.ltl",
+          "robot_repair5.ltl",
+          "workstation_resupply_pb_5_pe_.ltl"
+        ]
+      },
+      "lazy-fc": {
+        "rows": 156,
+        "strict_solved": 8,
+        "native_outcomes": {
+          "TIMEOUT": 146,
+          "REALIZABLE": 5,
+          "UNREALIZABLE": 3,
+          "ERROR": 2
+        },
+        "PAR2_s": 9054.435914172791,
+        "CPU_sum_s": 19465.618834,
+        "max_process_RSS_bytes": 4280303616,
+        "max_scope_peak_bytes": 6165204992,
+        "event_sums": {
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "decisive_overruns": 0,
+        "solved_instances": [
+          "arbiter_with_cancel_pb_7_pe_.ltl",
+          "collector_v3_pb_10_pe_.ltl",
+          "full_arbiter_enc_pb_10_pe_.ltl",
+          "g-unreal-314.ltl",
+          "lift_pb_8_pe_.ltl",
+          "ltl2dba_R_pb_10_pe_.ltl",
+          "robot_repair5.ltl",
+          "workstation_resupply_pb_5_pe_.ltl"
+        ]
+      }
+    },
+    "interpretation": "Complete312CPU/RSS/scopepeak/event coverage. CPUcumulative differs from wall. Maximumreaped-processRSS roughly3.99GiB,wholecgrouppeaks6136221696/6165204992bytes; these are maxima on all156rowsincludingcensors,not retained/requestedheapROI. No lower totalmemory or cachecause claimed. PrivateRust/static/LTO/source/NO_VERBOSE whole-configuration limits remain."
+  },
+  "replay_closure": {
+    "summary_byte_identical": true,
+    "records_before_and_after_match": true,
+    "record_count": 312,
+    "owner_new_solver_calls": 0,
+    "owner_gate_returncode": 0,
+    "qualification": "Read verified replay source/spec/record plus312unchangedpre-replay recordhashes; reviewed loop reusesexistingrecords. Reviewer did not rerun helper or targets."
+  },
+  "invariance_and_privacy": {
+    "owner_exact_binding_count": 215,
+    "all_owner_expected_actual_match": true,
+    "scope": "215listed source/input/library/authority/reviewbindings,not an entirely new source-treeinventory. Reviewer verifies hash-boundrecord/count/actualmatchmetadata,not rehash everyELF/libraryagain.",
+    "original_preservation_5x6_matches": true,
+    "limit": "Only redactedcheckoutsaliases/booleanproof is public. No privateWIPstatuses/diffs/filenames; ignored/untrackedfilebytes remain outsidepreservationcheck. Outcome acceptance does not approve an unassembledpublicationpackage."
+  },
+  "current_PR_review": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/PR-BODY-final-v1.md",
+    "sha256": "c8145c5dcf2b4dffc0914842bcea512b656a76dce54aa08e9a4c41122817781c",
+    "decision": "Factuallyacceptable at these bytes; futurepackage/linkavailability reviewed separately.",
+    "checks": "17s1368samecases/PAR25946.655vs5940.166,conditional30s8samecases/PAR29054.294vs9054.436,processRSSunits,noOOM,Spoterrorskeptunsolved,wholeconfiguration/sourcepins128bitlanecontext and no winner all match saved evidence.",
+    "accepted_clarifications": "Root added selected-case scope to450repeat,Alarmname toonecaseforestcontrol,and missingoriginalstderr todiagnostic explanation.",
+    "retention": "Engineeringdecision toretain currentimplementations follows no seriousrankrepeattrigger plus matchedAlarmstamps5/5 vsmap0/5. It does not demonstrate universalbenefit, isolatedKDwin or freedomfromregressions elsewhere. No added auditminutiae needed."
+  },
+  "publication_pending": "Coordinate exact frozen public package/archive/extraction with coder; no approval of unstagedtext, rawprivateartifacts, remotecomments or publication given here.",
+  "checks_actually_performed": [
+    "Own saved-data arithmetic and312native/resource/identitychecks in boundrecalc;3newSpotcaptures exactsignature;615oldprefixhashes,107newcaptureinventories",
+    "All31 directfinalhandoffsmallmetadata/data hashes,312pre/postreplayrecordhashes,exactDecimalscores,summaryequivalence and215/5x6ownerclosuremetadata",
+    "Read updated concisePRtext and scope/privateRust/memory/errorclaimlimits"
+  ],
+  "not_performed": [
+    "No new experiments, helperimports, tests/builds/solver/profile/timing or reviewerreplay",
+    "No broad fullsource/ELF/library rehash, WIPscan or sourcechange",
+    "No evidencepackagepublication, newPR or default/backend switch"
+  ],
+  "credit": "Independent final validation and conciseclaimreview; not origin of runtimeoutcomes/Spotdiagnosis or anotherdefect. Owner executedmeasurements/closure; bothreviewers separatelyverify. Previous immutableledgersremainunchanged."
+}

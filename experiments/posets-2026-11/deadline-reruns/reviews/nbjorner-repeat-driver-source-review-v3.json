@@ -1,0 +1,37 @@
+{
+  "scope": "Bounded independent source/fixture/spec review; no target/helper execution, imports of target code, tests, builds or timing.",
+  "decision": "Approve exact v3 source for root-released scoped offline fixtures, plan preparation and dry-run. No remaining concrete blocker found in this bounded pass. This is not approval to launch the450target invocations; the actual generated plan and gate records require the next final release review.",
+  "exact_bindings": {
+    "SOURCE-REVIEW-CHECKPOINT-v3.json": "3627044143bb51825da6fb133b7a8b7923716e90ee339eaf2ef82e83f49dd177",
+    "repeat.py": "40ede28a3de13ebcf1361246ec1be42ded6e429b663d76f4e15ddf2cdc48dd85",
+    "test_repeat.py": "a3cc2f3ba433262dc98e29b2f038022496782d510627d16d4a122cd9bfb57c9e",
+    "review-corrections-v3.patch": "2b2b34acaddfbf34835403dc9c3ab4caa8b7b9d23e1ff9ebf1a427db92967dba",
+    "inventory.json": "07bc3f33c6c3a292e71a68e41a93552be3e5f960fb19484434124c14871d4f97",
+    "ROOT-PLAN.json": "51846165f4eafe1aa512274acd3d86f58a1276ea3c565cb0f9416913b4080119"
+  },
+  "resolved_pre_execution_findings": [
+    {
+      "origin": "Nbjorner reviewer; owner implemented correction",
+      "issue": "V2 omitted the original campaign SIGTERM/SIGHUP handler, so OS termination could bypass the child exception cleanup and release the host lock while native work continued.",
+      "closure": "V3 installs the original signal-to-SystemExit pattern. The BaseException child path terminates and waits for the native CLI. A mocked cancellation invokes the actual handler while waiting, requires exit143, termination/two waits and preserved started-only evidence, without launching the next leg."
+    },
+    {
+      "origin": "Nbjorner reviewer; owner implemented correction",
+      "issue": "V2 resource coverage counted every nonempty float as valid; NaN/Inf/negative or fractional memory quantities could be labeled complete valid coverage and contaminate aggregates.",
+      "closure": "V3 validates each actual leg before accepting it: finite nonnegative CPU, nonnegative integer RSS/peak and explicit nonnegative integer oom_kill. Missing observations remain missing with null aggregate; malformed observed values fail with preserved leg evidence. Direct synthetic invalid-value negatives exercise the actual helper."
+    }
+  ],
+  "checked": [
+    "All15 v3 checkpoint bindings match. V2 source and fixture snapshots preserve their reviewed hashes8fd21cac/7fd6fdbe. Immutable root policy and historical campaign/native helpers stay unchanged.",
+    "Seeded schedule enumerates45cells in five passes, with225 unique pair visits and450 adjacent native legs. Each cell alternates first role, and index parity predeclares alternating starts across cases. Existing thermal sampling retains30seconds and actual leg labels without affecting scoring/selection.",
+    "Plan construction binds18 exact frozen ELFs, their existing provenance/eight-library forms, immutable helper/interpreter/input bytes and six TLSF inputs. Validation ties actual arms, ordered pairs and cohorts to the inventory; known historical labels are not relabeled as new source identities. Exact generated authority still needs final-plan inspection.",
+    "Exclusive host/output locks, inherited scope guard and fail-closed scope inspection are retained. Each leg has its own case.list/raw/memory/log/started record, preventing native resume from merging repetitions. Completed legs require matching plan/command/file hashes; an interrupted directory without a final record is preserved and rejected rather than silently rerun or replaced.",
+    "The unchanged native command keeps17s,8G/no swap, shipping preset, empty flags and no affinity/quota. Raw row validation checks binary/source/case/map/treatment identity and finite wall seconds with decisive exit consistency. Known truth conflicts and opposite native verdicts across all cells stop after saving artifacts, including decisive answers above the wall cap.",
+    "Only strictly solved observations cost actual wall time; all unsolved outcomes cost34seconds. Five-pair timing severity requires every role solved, median(after/before)>=1.10 and at least4/5slower. Any censor removes the timing decision median; the separate before>=4/after<=1 solve rule remains. No survivor-only median, longer cap or optional extra trials is introduced.",
+    "Mocked positive execution follows actual runner ingestion for450legs, then summary-only reuse adds no calls and tampered completed logs fail. Unbound interrupted output and over-cap opposing truth negatives are direct rather than unrelated-file failures. Added all-solved median>=1.10 with only3slower is correctly negative; exact before4/after1 is positive. These are independent threshold expectations, not runtime timing tests.",
+    "Three prepared specs only run synthetic offline fixtures, hash/metadata plan preparation, and dry-run. They use existing isolated cwd/environment and unchanged scoped wrapper under parent-owned8G/0swap/lock release. No native target is called by these gate paths."
+  ],
+  "limits": "Mocked checks have not executed at this approval. Actual source/library/input bindings, gate exit/resource records, exact resulting schedule/command and fresh output absence remain the final-plan release evidence. Historical backend-versus-ranked observations screen repeatability, not same-backend causality or authority to revert correctness/exception fixes.",
+  "attribution": "Root owns the cohort/policy; Barbosa's design review clarified the complete-five-pair gate. This reviewer identified the two pre-execution source gaps above and proposed narrow boundary fixture strengthening; benchmark owner authored and will execute corrections. No observed runtime failure, measurement corruption or performance conclusion is claimed.",
+  "preservation": "Only this work review artifact was written. Original Acacia/nested WIP, frozen ELFs/helpers/data and the old immutable contribution ledger are unchanged."
+}
