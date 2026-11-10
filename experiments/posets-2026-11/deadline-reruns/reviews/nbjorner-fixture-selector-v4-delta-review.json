@@ -1,0 +1,13 @@
+{
+  "scope": "Bounded source-only follow-up after the first authorized offline gate. Reviewer executed no helper, test, compiler or target.",
+  "checkpoint_sha256": "906b038ef64977d6763750247c274bbd68980271bea0efc6b860f8eb8875df61",
+  "unchanged_driver_sha256": "40ede28a3de13ebcf1361246ec1be42ded6e429b663d76f4e15ddf2cdc48dd85",
+  "corrected_fixture_sha256": "7f71a909404e4312688d38b8f8bbbef49437ab18dd3fda6d423fc912c29997c2",
+  "preserved_attempt1_fixture_sha256": "a3cc2f3ba433262dc98e29b2f038022496782d510627d16d4a122cd9bfb57c9e",
+  "decision": "Approve the exact fixture-only delta for the fresh authorized offline attempt and remaining existing preparation/dry-run gates. No actual450-target release is implied; final concrete plan/gate records remain pending.",
+  "classification": "The first offline run caught a test assertion selector defect: globbing raw/*.tsv also included the synthetic memory sidecar, which is deliberately not the native JSON stand-in. Actual mismatch handling had already saved both conflicting legs and stopped. The assertion then parsed the wrong evidence file. This was not a controller semantic failure, solver failure or corrupted measurement.",
+  "correction": "The sole changed line excludes names ending.memory.tsv before parsing the native stand-in. It preserves the over-cap17.05 assertion, expected opposite-verdict exception and two-record checks. Driver, policy, cohort and three gate specifications are unchanged.",
+  "evidence": "Read the saved failed4-test log: one JSONDecodeError at the evidence assertion, with the mocked450-leg execution and other tests completed. Attempt1 source/spec/record/log/helper remain preserved; fresh attempts must not overwrite them.",
+  "attribution_and_limit": "This selector ambiguity was missed in nbjorner static review and caught by the executed offline gate. Benchmark owner diagnosed and implemented the narrow correction. The revised fixture has not been executed by the reviewer; source acceptance is distinct from a successful gate result.",
+  "preservation": "Only this review note was written. Old audit/source/failed attempt, policy, original Acacia/WIP and historical evidence remain unchanged."
+}

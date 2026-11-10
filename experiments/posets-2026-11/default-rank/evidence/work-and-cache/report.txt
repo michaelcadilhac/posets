@@ -1,0 +1,90 @@
+Default ranked-vector optimization — work and cache evidence, 9 November 2026
+
+The default has been optimized. The completed work and hardware profiles support
+keeping candidate 30e6685 for the full Acacia comparison. They demonstrate fewer
+rank scans, comparisons and instructions, but no allocation or tracked-heap
+reduction on these captured workloads. The separate whole-solver comparison is
+still pending; this is an intermediate report.
+
+The production change retains the existing two dense arrays. It reuses cached
+ranks in union/intersection, skips unnecessary equal-rank retirement comparisons
+in the conservative exact-integral domain, and delays intersection output until
+containment fails. It also repairs allocation/exception handling. No additional
+production tuning was introduced after the clean replay measurements.
+
+All 192 qualified work/allocation runs passed, with no OOM or timeout. Twelve
+source-censored pass records remain explicitly unprofiled. Lemire- and
+Biere-guided reviews independently checked 96 matched record pairs containing
+990 phase pairs. Allocation counts, requested bytes, extra tracked heap peak and
+net live-byte changes were identical in every matched phase. All 822 observable
+result size/capacity pairs matched; 168 ROI descriptors remain unavailable.
+These repeated passes/vector controls are not 990 independent workloads.
+
+None of the eight distinct qualified predecessor traces exercised a no-op
+intersection. The positive no-op selfcheck verifies that allocation-saving path,
+but it does not establish a saving on this TRAIN capture. Rank and partial-order
+work never increased. Copy, meet and move-construction counts were unchanged;
+move assignments increased in 267 paired phases. On the collector predecessor,
+rank scans fell from 1,282 to 770, comparisons from 92,047 to 79,431, and move
+assignments rose from 12,408 to 12,616. Logical changes matched across SIMD widths.
+
+The fixed hardware companion measured four cells, three matched pairs each,
+using CPU 2 and user-only grouped counters. All 24 calls and all 96 event readings
+were usable, with enabled time equal to running time. No scaling, replacement
+zeros, retries or extra cells were used. Percentages below are median paired
+candidate/baseline ratios minus one; they are not ratios of separate medians.
+
+| Case | User cycles | Instructions | L1D read misses |
+|---|---:|---:|---:|
+| Collector predecessor, 128-bit | -22.37% | -26.81% | +1.90% |
+| Collector predecessor, native 512-bit | -22.60% | -25.13% | +1.66% |
+| Round-robin construction, 128-bit | -7.45% | -8.71% | -1.05% |
+| Round-robin construction, native 512-bit | -8.66% | -8.77% | -0.96% |
+
+Cycles and instructions improved in every pair for all four cells. Collector
+L1D misses worsened in every pair: the third native pair was 13.4% higher, which
+the median does not show. LLC counts were small or highly variable, including a
+native round-robin median regression; the raw values are retained and support
+no reliable LLC benefit claim.
+
+Earlier clean timings remain unchanged: native collector predecessor had a
+19.1% median paired regression and compatible round-robin construction a 7.8%
+regression, both with mixed directions across repetitions. Those regressions
+did not recur in this pinned counter treatment, but they are not corrected or
+causally explained. Instrumented user counters differ from unpinned elapsed
+clocks; instrumentation can also affect compilation context. Three repetitions
+do not establish statistical significance. Larger clean replay gains likewise
+remain separate: about 4.6% for the large round-robin predecessor and 30% for
+construction of the 6,446-element full-arbiter frontier at compatible128.
+
+Tracked heap means requested C++ payload, not RSS, allocator overhead or exact
+shipping object size. Operation-level caller/RHS lifetimes differ from the
+normalized whole-region measurements. Whole-predecessor live delta is net
+new-minus-old retained storage, not absolute frontier size. Unavailable result
+descriptors are not zero retention. All observed relative cleanup deltas were
+zero; that alone is not a general leak proof.
+
+Source inspection explains a plausible move-assignment tradeoff: reserving the
+vector before insertion can relocate it and then shift its suffix. Changing
+reserve order could remove shifts but would need different exception-publication
+handling and could increase transient heap peak. That remains an unmeasured
+future option. The measured instruction/cycle gains provide no material reason
+to change the qualified candidate before the solver comparison.
+
+Baseline 789bf99 and candidate 30e6685 have the same other production headers and
+replay kernel. Inputs are previously seen TRAIN data. Code commit 30e6685 passed
+all current CI suites; each reported 82 passes and one intentional expected
+failure. Both review workflows approved the code, and the independent profile
+reviews agreed on the limitations above. These are skill-guided agents, not the
+named researchers personally participating.
+
+The accompanying files retain full paired counter data, raw PMU event values,
+both ratio estimators, source/artifact bindings and independent interpretations.
+They are numerical evidence, not a self-contained capture/binary archive.
+publication.json records exact copied bytes and the derived report digest.
+
+Next: complete the isolated candidate Acacia build and integration gates, then
+run the frozen two-arm comparison on all 1,524 SYNTCOMP26 cases at 17 seconds,
+8 GiB and no swap. Keep that result separate from the completed 15-arm campaign,
+which did not include this default optimization. Original Acacia WIP is not used
+as a build or edit destination.

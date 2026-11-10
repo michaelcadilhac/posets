@@ -1,0 +1,679 @@
+{
+  "schema_version": 1,
+  "prepared_on": "2026-11-08",
+  "reviewer": "/root/review",
+  "workflow": "legendary-nbjorner",
+  "model_requested_by_user": "GPT-6.1 Sol, xhigh",
+  "skill_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/skills/legendary-nbjorner/SKILL.md",
+  "purpose": "Factual contribution ledger for the end-of-sprint workflow comparison; not an evaluation of the actual researchers.",
+  "preparation_scope": "Initial ledger preparation read existing source, records and retained task history only, without repository edits. A later parent-authorized source-only README wording correction is recorded in the bulk/color review entry. No build, test, profile, solver run or GitHub comment was performed for these ledger updates.",
+  "attribution_rules": [
+    "Reviewer-originated means the finding was first raised by this reviewer in the retained task history. It does not establish that nobody else could or did find it independently.",
+    "External findings independently reproduced here remain attributed to their reported originator.",
+    "Where first discovery cannot be recovered confidently, origin is marked unresolved and no unique-discovery credit is claimed.",
+    "Probe counts describe executed checks, not distinct bugs, code coverage or proof of correctness.",
+    "Some execution summaries survive in retained task history rather than standalone stdout artifacts; these are identified explicitly. Nothing was rerun to prepare this ledger.",
+    "No elapsed review time, aggregate unique-detection count, causal skill-effect estimate or counterfactual detection claim is asserted."
+  ],
+  "reviewed_checkpoints": {
+    "initial_base": "71918d6e113f33b9986968d9ae9c8ae5ea49ff27",
+    "initial_implementation": "be8d2947322153f7f050260a8ea77e0f90a15e0b",
+    "initial_reviewed_diff_sha256": "1756159b92abd7746dcc461716807116dbaf92757c9a40719e3ef2dd7b339ed1",
+    "dynamic_baseline": "7c407128326583abbb137fd3832857ed506e20fb",
+    "finite_policy_followup_owned_by_coder_and_Barbosa_review": "524f83ef192499d5a5141fe434d3c15d851e9c91",
+    "Biere_optimization_reviewed": "3a8e0276e98a0f400c91c8e45d8214394feac925",
+    "Lemire_optimization_reviewed": "1c8f3990d545ec404a741888cd084c39f14401a3",
+    "optimization_documentation_reviewed": "d139fb3438157caf903c989b00991a3c727af189",
+    "flat_color_interning_reviewed": "fdaf7033217f76a0295b217533e6b620ed43bdfe",
+    "lazy_bulk_constructor_reviewed": "a02713edd996778df043c984a2de2939355f7771",
+    "lazy_bulk_preflight_reviewed": "56cd005345921bfdc56bcdaa6ee4711e564e31e9",
+    "forest_fixed_shift_hash_reviewed": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+  },
+  "entries": [
+    {
+      "id": "reserved-kd-storage-accounting",
+      "kind": "confirmed finding",
+      "origin": "reviewer",
+      "origin_basis": "Retained review history records this reviewer finding the allocated-but-unbuilt KD storage-accounting underflow.",
+      "reviewer_contribution": "Identified that a reserved empty KD tree has allocated capacity but zero reachable nodes and labels; reviewed the accounting correction and regression.",
+      "outcome": "Corrected in the initial implementation series.",
+      "uniqueness_limit": "Reviewer-originated within retained review history; no cross-agent discovery census exists.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/layout-check.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/kdtree.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/validation.json"
+      ],
+      "evidence_limit": "The first report is retained in agent history, not a separate dated finding file."
+    },
+    {
+      "id": "default-comptrie-simd-empty-query",
+      "kind": "confirmed finding with independent reproducer",
+      "origin": "first-discovery attribution unresolved",
+      "reviewer_contribution": "Created a tiny default-constructed comptrie query reproducer for scalar/SIMD builds; checked the early root guard preventing access to the absent permutation in SIMD mode.",
+      "outcome": "Guard and regression are in the initial implementation series.",
+      "uniqueness_limit": "The retained compacted record establishes reviewer reproduction but does not independently settle who first noticed the crash. Do not count as a confirmed unique reviewer discovery.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-comptrie.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/layout-check.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/comptrie.hh"
+      ]
+    },
+    {
+      "id": "pre-existing-kd-axis-double-credit",
+      "kind": "independent reproduction and contract classification of external finding",
+      "origin": "coder's new layout-check scalar oracle detected the mismatch; coder proposed the crossing-predicate diagnosis and translated antichain",
+      "reviewer_contribution": "Independently reproduced the false-positive on the untouched baseline and candidate, confirmed the nonnegative antichain is a valid fixture, and checked the strict/non-strict axis-credit fix.",
+      "minimal_case": {
+        "generators": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "expected_nonstrict": false,
+        "baseline_nonstrict": true
+      },
+      "outcome": "Classified as a pre-existing KD query correctness defect; fixed in the shared KD query code, with regression.",
+      "uniqueness_limit": "Not a reviewer-originated discovery.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/kdtree-double-credit.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/validation.json"
+      ]
+    },
+    {
+      "id": "acacia-shared-core-pic-fairness",
+      "kind": "confirmed integration and benchmark-fairness finding",
+      "origin": "reviewer",
+      "reviewer_contribution": "Found that Meson's shared static solver core would default to PIC whereas the original executable compilation did not; requested matching pic:false to avoid confounding the backend comparison. Also inspected target-local macro/ODR boundaries and chosen Downset instantiations.",
+      "outcome": "Coder set pic:false and rebuilt the isolated matrix; target-specific downset/layout definitions remained confined to the appropriate translation units.",
+      "uniqueness_limit": "Reviewer-originated within retained review history; not a claim about hypothetical alternative reviewers.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/src/meson.build",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/src/solve_game_vector.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/src/version.cc"
+      ],
+      "evidence_limit": "The PIC correction and attribution were acknowledged in coder/parent messages; no separate finding log was saved."
+    },
+    {
+      "id": "initial-independent-semantic-oracle",
+      "kind": "reviewer-authored independent validation",
+      "origin": "reviewer probe design, within parent-authorized oracle scope",
+      "reviewer_contribution": "Derived coordinate-wise maxima, membership and algebra expectations independently of the backends; exercised all 256 Boolean generator subsets, 400 antichain algebra pairs, odd block sizes 3 and 17, signed 16/32/64-bit tails, and all layout controls enabled together.",
+      "recorded_result": "Passed. Portable O0 Valgrind completed with zero errors/leaks and 173712 allocations/frees.",
+      "revision_scope": "Initial additive/layout candidate, final reviewed diff SHA256 1756159b92abd7746dcc461716807116dbaf92757c9a40719e3ef2dd7b339ed1; not a fresh latest-head suite run.",
+      "overlap": "Coder also ran repository oracle/algebra/boundary tests; this probe supplied an independently implemented expectation rather than exclusive feature coverage.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-independent.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-independent-o0.valgrind.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/validation.json"
+      ]
+    },
+    {
+      "id": "optimized-kd-memcheck-warning-classification",
+      "kind": "diagnostic classification, not a confirmed defect or clean pass",
+      "origin": "reviewer Memcheck run observed warnings; parent requested classification",
+      "reviewer_contribution": "Preserved optimized O1 warnings and compared baseline/candidate/portable runs; inspected generated assembly around disengaged optional lower-bound payloads and found the relevant paths converged to the same result.",
+      "recorded_result": "O0 independent run was clean. Optimized O1 reports were retained and were not called passing Memcheck checks or an established source-level bug.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-independent.valgrind.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/kd-candidate-o1.valgrind.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/kd-baseline-o1.valgrind.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/kd-random-baseline-o1.valgrind.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/validation.json"
+      ],
+      "remaining_limit": "Assembly inspection explains the inspected instances; it is not a general proof that all optimized warnings are harmless."
+    },
+    {
+      "id": "monotone-tombstone-witness-specialization",
+      "kind": "conceptual invariant review",
+      "origin": "user proposed lazy deletion/fractional cascading; parent supplied the important monotone-retirement specialization",
+      "reviewer_contribution": "Checked the distinction between general deletion and monotone dominance retirement: a historical point dominated by a committed live replacement may still witness global downset membership, while apply/intersection require a fresh shrinking epoch; iteration must expose only live maxima. Reviewed frozen-tree plus pending-buffer implications.",
+      "outcome": "Provided invariants and hazards for the later lazy KD design; actual implementation additionally gates dead payload access and live subtree counts.",
+      "uniqueness_limit": "The monotone-witness observation is parent-originated, not credited as reviewer discovery.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/bucket_kdtree.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/downsets/lazy_kdtree_backed.hh"
+      ],
+      "evidence_limit": "Conceptual exchange is in parent/reviewer messages; these source files show the subsequent design, not a proof artifact."
+    },
+    {
+      "id": "fractional-cascading-bridge-model",
+      "kind": "independent model validation",
+      "origin": "parent requested the exhaustive bridge lemma check; reviewer authored the model",
+      "reviewer_contribution": "Enumerated every sorted catalog of length 0..6 over {-2,0,2}, both child catalogs, query -3..3, and lower/upper bounds. Compared derived bridge positions plus one predecessor repair to Python bisect; included a stride-three negative control that breaks the one-repair assumption.",
+      "recorded_result": "84 catalogs, 7056 catalog pairs, 197568 exact bound checks passed; stride-three negative control failed as expected.",
+      "overlap": "Coder's C++ bridge tests cover the implementation; this separate small model checked the stride-two lemma and its precondition.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/fc-bridge-model.py"
+      ],
+      "evidence_limit": "Execution result carried in retained reviewer messages; stdout was not saved separately."
+    },
+    {
+      "id": "lazy-owner-independent-sequences",
+      "kind": "reviewer-authored independent validation",
+      "origin": "reviewer probe design within parent-authorized dynamic semantic review",
+      "reviewer_contribution": "Checked exact live maxima, backing-vector exposure, strict/non-strict queries, both cascade modes, forced catalog boundaries 1..127, equal coordinate-zero keys, all-dead frozen trees followed by pending-only state, random union/intersection/nonmonotone apply, shrinking epochs, moves and self operations. Checked long dominance-chain metadata retention.",
+      "recorded_result": "Passed 898692 query observations, each with membership and strict-dominance checks. For 10001 dominating inserts with one live maximum, known retained bytes were 508 after insert1001 and 628 after insert10001 in both cascade modes.",
+      "revision_scope": "Dynamic implementation leading to baseline 7c407128326583abbb137fd3832857ed506e20fb; not a latest-head performance measurement.",
+      "overlap": "Coder independently ran dynamic scalar-oracle and FC tests; Barbosa reviewed ownership and API contracts.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/lazy-oracle.cc"
+      ],
+      "evidence_limit": "Observation count and retained-byte outputs are preserved in reviewer run summaries, not a standalone stdout log."
+    },
+    {
+      "id": "bucket-index-dead-payload-and-bridge-oracle",
+      "kind": "reviewer-authored independent component validation",
+      "origin": "reviewer",
+      "reviewer_contribution": "Checked utility results against original coordinate arrays for leaf sizes 1/2/3/8/16/64 and n0..65 after each retirement. Destroyed retired optional payloads and made the resolver throw if a dead ID was accessed. Checked live counts, emitted IDs, strictness, equality/extreme/end bridges, idempotent retirement, and throwing-getter rebuild preserving the prior published tree.",
+      "recorded_result": "Passed. Final Valgrind3.27.1 log: zero errors/leaks, 595292 allocations/frees.",
+      "overlap": "Retire idempotence and duplicate-ID rejection were coder changes; this independently tested the resulting live-ID contract.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/bucket-oracle.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/bucket-oracle-final.valgrind.log"
+      ]
+    },
+    {
+      "id": "lazy-owner-allocation-sweep",
+      "kind": "reviewer-authored fault-injection validation",
+      "origin": "reviewer test construction within parent-requested exception review",
+      "reviewer_contribution": "Swept insertion allocation failures for both cascade modes, with/without maintenance rebuild, and both a nothrow scalar vector and a custom throwing-move vector. After each bad_alloc checked unchanged logical maxima/queries and incoming value, then retried the same objects. Also checked moves/self-move/destruction with allocation disabled.",
+      "recorded_result": "Passed. Successful insertion reached after 9 allocation sites for ordinary no-reset cases, 23/28 for ordinary reset cascade0/1, 38 for throwing-vector no-reset, and 50/55 for throwing-vector reset cascade0/1. Valgrind zero errors/leaks, 143579 allocations/frees.",
+      "overlap": "Exception contracts and allocation testing were also coder/Barbosa scope; this added independent exact-state and retry checks rather than a unique discovered exception defect.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/lazy-allocation.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/lazy-allocation.valgrind.log"
+      ],
+      "evidence_limit": "Per-case site counts survive in the run summary; Memcheck log records memory diagnostics, not all stdout assertions."
+    },
+    {
+      "id": "dynamic-policy-boundary-validation",
+      "kind": "follow-up validation of external findings",
+      "origin": "parent found dead_fraction=1 can retain unbounded historical IDs; coder corrected policy and physical-capacity maintenance; parent raised the -Ofast NaN concern about finite-math folding of isfinite, coder reproduced and fixed it, and Barbosa reviewed that correction",
+      "reviewer_contribution": "Built a separate policy probe for invalid fraction boundaries and a max_index_bytes-only compaction trigger under a large min_buffer. Did not originate the dead_fraction=1 or -Ofast NaN defects.",
+      "recorded_result": "Initial policy probe rejected 11 invalid configurations and passed 1000 dominating inserts with 24 compactions, 40 created IDs and 40 pending slots for one live maximum.",
+      "scope_limit": "The later finite-policy correction 524f83ef192499d5a5141fe434d3c15d851e9c91 and its 26 runtime-bit-pattern -Ofast cases were coder/Barbosa work; this reviewer did not independently rerun or approve that correction as part of the optimization review.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/lazy-policy.cc"
+      ]
+    },
+    {
+      "id": "campaign-and-result-interpretation-review",
+      "kind": "read-only protocol and evidence review",
+      "origin": "parent requested independent review; benchmark agent authored driver/selfcheck; parent raised native teardown-over-cap edge case",
+      "reviewer_contribution": "Inspected shipping-portfolio routing and opt-in diagnostic flags, immutable corpus/binary/config provenance, resume validation, common host lock/scope ownership, exact row counts, unknown-status opposite-verdict conflicts, strict-wall scored views preserving native verdicts, PAR2 and incomplete-memory gates. Checked synthetic timing/memory claim limits and avoided attributing them to Acacia speedup.",
+      "outcome": "Acknowledged launch after recorded selfcheck and source review. Reviewed driver SHA256 20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e and selfcheck SHA256 eb0f3ec78cc0ec07299236e51b41ce1faa5cd0faf3ad14f889fee341356d3a1f at that checkpoint.",
+      "uniqueness_limit": "Most protocol guard design and fixes were benchmark-agent/parent contributions. Review acknowledgement is not authorship or independent rerun of the full campaign.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/selfcheck.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/benchmark-results.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/outputs/downset-operation-results.json"
+      ],
+      "evidence_limit": "Driver paths can contain later campaign revisions; hashes above identify the reviewed historical checkpoint."
+    },
+    {
+      "id": "optimization-exact-commit-review",
+      "kind": "static semantic/exception review and evidence audit",
+      "origin": "Biere and Lemire authored optimization patches and tests; parent requested independent review",
+      "reviewer_contribution": "Checked packed strictness memo implication, unsigned generation wrap clearing/reset, immutable layered DFS precondition, wide child-span arithmetic, hash shift removal, union-draft lifetime, compressed-trie stack depth bound, unused color removal, short-circuit strictness, KD heap-envelope arithmetic/high-water reuse and allocate-before-delete destructibility. Confirmed committed code matches reviewed diff and inspected focused evidence.",
+      "outcome": "No confirmed remaining defect in reviewed scope; approved exact optimization commits 3a8e0276e98a0f400c91c8e45d8214394feac925, 1c8f3990d545ec404a741888cd084c39f14401a3 and documentation d139fb3438157caf903c989b00991a3c727af189.",
+      "evidence_reviewed": "Biere's focused debug test and Valgrind3.27.1 run exited0, 40445 allocations/frees, zero errors/leaks. Lemire's existing comp/layout/block strict/tail/three-width checks and four matched allocation cells passed; source hashes matched current files.",
+      "scope_limit": "Reviewer ran no new builds/tests/profiles at this checkpoint because of the exclusive replay window. This was not a claim that full latest-head CI passed. The fixes themselves were not reviewer discoveries.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/focused-build-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/focused-run-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/focused-valgrind-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/focused-valgrind-record.log",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/targeted-checks.json"
+      ]
+    },
+    {
+      "id": "bulk-construction-and-sorted-color-source-review",
+      "kind": "semantic and instrumentation review, minor documentation clarification, then exact-commit validation-evidence audit",
+      "origin": "coder authored lazy KD bulk construction and instrumentation; Biere authored sorted color interning; parent requested independent review",
+      "revision_scope": "Initially a live uncommitted patch against e96748e, followed by exact committed review of fdaf7033217f76a0295b217533e6b620ed43bdfe and a02713edd996778df043c984a2de2939355f7771 on a clean working tree.",
+      "reviewer_contribution": "Checked typed lexicographic dominance ordering, duplicate handling, in-place index compaction, coverage-only reduction, final dense-ID association, one staged index build, bulk failure input preservation, fallback consumption semantics, exact complete child-color signatures, per-depth/global-color separation, relabel alias publication, optional bulk comparison counters and their move/rebuild/reset lifecycle. Reviewed independent signed-domain, threshold-boundary, allocation and semantic suffix fixtures without executing them.",
+      "finding": "No implementation defect confirmed in this source checkpoint. Reviewer identified a minor README lifecycle omission: pending/bulk counters do not preserve old history through successful intersection because it swaps in a fresh streaming result.",
+      "outcome": "At parent's explicit request, reviewer minimally clarified README object clearing/replacement and successful-intersection counter semantics. After comparing exact committed diffs with the source-reviewed patch and auditing recorded checks/source hashes, reviewer gave scoped approval to fdaf7033217f76a0295b217533e6b620ed43bdfe and a02713edd996778df043c984a2de2939355f7771. No confirmed implementation defect remained.",
+      "validation_evidence_audited": "Bulk core-record-2/provenance-2: five affected assertions-on tests covering three SIMD widths, existing updates/algebra/rebuild/moves, allocation and policy; 38 shipping-bit policy cases; configured header lint with stats0/1 and format. Current bulk source hashes match provenance. Portable allocation/throwing-vector Memcheck: 3582272 allocations/frees, zero errors/leaks. Flat-color records: 12 affected tests and three allocation Memchecks passed, with format and changed-line lint passing.",
+      "scope_limit": "No duplicate builds, tests, profiles or semantic probes were run by this reviewer during the paired-timing/profiler windows. Approval rests on static review plus audit of the authors' scoped recorded checks; it is not full latest-head CI approval, a new implementation-defect claim, a validated universal cutoff choice, or a solver-speedup claim.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/README.md",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/downsets/lazy_kdtree_backed.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/sharingtrie.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/block_sharingtrie.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/lazy-kdtree.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/lazy-kdtree-allocation.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/layout-check.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/block-sharingtrie.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-bulk-validation/core-record-2.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-bulk-validation/core-provenance-2.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-bulk-validation/core-testlog-2.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-bulk-validation/portable-record-1.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/flat-color-test-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/flat-color-memcheck-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/flat-color-format-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/flat-color-tidy-record.json"
+      ]
+    },
+    {
+      "id": "representative-preflight-and-late-fallback-test",
+      "kind": "semantic/exception review, reviewer-originated test-strength feedback, exact-commit evidence audit",
+      "origin": "coder authored representative preflight; parent requested independent review; reviewer proposed the two-maxima late-fallback regression",
+      "revision_scope": "Source review against a02713edd996778df043c984a2de2939355f7771, finalized as 56cd005345921bfdc56bcdaa6ee4711e564e31e9; owned diff SHA256 50b2c95a3e0c19b38d2a095de77caf1ec7b99e127676fbf7c9487ff9259dfa8a.",
+      "reviewer_contribution": "Checked the inductive representative invariant, equality/strict replacement direction, untouched full-input fallback after incomparability, counter accounting and pre-consumption exception boundary. Identified that the existing late-fallback fixture ended in a universal dominator and could hide loss of an incomparable branch. Requested a comparable prefix ending at {2,2,0}, followed by incomparable {3,0,0}, with both retained maxima checked through the independent coordinate oracle.",
+      "outcome": "Coder added the requested two-maxima fixture and derived retained size from the independent oracle. Reviewer verified the committed test and matching source hashes, audited scoped final records, and approved exact commit 56cd005345921bfdc56bcdaa6ee4711e564e31e9 with no remaining confirmed defect.",
+      "finding_classification": "A regression-discrimination gap strengthened by review, not a discovered implementation bug. No first-discovery credit is claimed for the preflight optimization itself.",
+      "validation_evidence_audited": "Final core five tests passed across three SIMD widths plus existing update/algebra/rebuild/move/allocation/policy coverage; 38 shipping-bit policy cases passed; stats0/1 configured header lint and format passed. Portable allocation/throwing-vector Memcheck recorded 3601232 allocations/frees, zero errors/leaks on unchanged final header/allocation bytes. Final test source includes the two-maxima oracle fixture; all owned source hashes match core-provenance-2/final-source.json.",
+      "scope_limit": "Reviewer performed no duplicate builds, tests or profiles. Approval is scoped to this commit and recorded checks, not full latest-head CI, a universal speed benefit or a solver-speedup claim. The separately dirty sharingforest hash recurrence is outside this approval.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/lazy-kdtree.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/lazy-kdtree-allocation.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/downsets/lazy_kdtree_backed.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-preflight-validation/core-record-2.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-preflight-validation/core-provenance-2.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-preflight-validation/final-source.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-preflight-validation/portable-record-1.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lazy-preflight-validation/portable-record-1.log"
+      ]
+    },
+    {
+      "id": "forest-fixed-shift-hash-followup",
+      "kind": "static equality/defined-arithmetic review and exact-commit evidence audit",
+      "origin": "Biere authored and measured the hash candidate; parent requested independent review",
+      "revision_scope": "cc058ca96ebc667f727ea2f0c2360b77d60192d3, clean working tree; sharingforest.hh SHA256 67d6ce5584dc577b394a9b3a1e76c2c6c0db14df2055e33b5e0345da3799400a.",
+      "reviewer_contribution": "Verified the exact one-recurrence-plus-comment patch matches prior source review. All combine operands are size_t and fixed shifts 6/2 are independent of fanout, so arithmetic wrap is defined. Equal labels and ordered child-ID signatures produce equal hashes. Existing equality still checks label, child count and all ordered children, so collisions affect lookup cost rather than semantic equality. Reviewed captured production checks and the private paired summary, including mixed cases and regressions.",
+      "outcome": "Scoped approval of exact commit cc058ca96ebc667f727ea2f0c2360b77d60192d3; no remaining confirmed defect. No implementation finding or performance discovery is attributed to this reviewer.",
+      "validation_evidence_audited": "Production build, six affected forest/backend/high-fanout/strictness/allocation fixtures, configured changed-line lint and format passed. Private records report eight builds, 51 source/backend/counter checks and 72 clean invocations on three training traces, with unchanged interned geometry and full equality retained. Summary explicitly preserves regressions and separates diagnostic counters from clean timings.",
+      "scope_limit": "No duplicate builds, tests or profiles run by reviewer. This is not full latest-head CI approval, proof of universal hash quality, a universal speedup claim or a default-backend recommendation. Hash collisions and workload-specific regressions remain possible.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/sharingforest.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/hash-production-build-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/hash-production-test-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/hash-production-tidy-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-layout/hash-production-format-record.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-hash/summary.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-hash/summary.txt"
+      ]
+    },
+    {
+      "id": "acacia-shared-core-source-guard",
+      "kind": "reviewer-originated source/test integration mismatch and proposed-fix review",
+      "origin": "reviewer found the mismatch; benchmark agent authored and applied the correction",
+      "reviewer_contribution": "Found that compiled_sources() still required the literal production executable source argument ab_sources while the opt-in integration used ab_main_sources. Requested a guard recognizing both forms while preserving default-to-ab_sources, opt-in-only splitting, the complete common-source loop/library/link and production linkage. Reviewed the agent's scratch diff and its positive plus four missing-boundary mutations before application.",
+      "outcome": "Benchmark agent applied after timing release and reported eight focused pytest cases passed, including legacy direct-source/nested-source fixtures and shared-core boundary cases. Reviewer did not run those tests or author the guard patch.",
+      "scope_limit": "Concrete inspectable source/test mismatch, not a solver correctness defect. Final fourteen-candidate plus anchor build/smoke/provenance qualification was still pending at this integration review checkpoint. Original Acacia remained read-only.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/pytest/test_no_benchmark_hardcoding.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/src/meson.build",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/acacia-source-guard.patch",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/acacia-source-guard-check-record.log"
+      ]
+    },
+    {
+      "id": "shared-partial-order-inline-pre-review",
+      "kind": "independent causal-evidence/API/portability review; prospective fix still private",
+      "origin": "Lemire originated the regression diagnostic and constructor/factory boundary experiments; parent requested independent nbjorner review alongside Barbosa",
+      "reviewer_contribution": "Read the shared lazy partial-order proxy/factory and wrappers, checked saved reducer assembly directly, and confirmed that constructor-only always_inline moved the per-pair call to the factory rather than eliminating it. Assessed conditional constructor-plus-factory annotations as a plausible narrow experiment with unchanged borrowed references, cached comparison semantics, layout and exception specification. Requested both accessor orders and signed scalar/SIMD/tail/wrapper semantic checks plus debug/compiler/native/control and code-size validation.",
+      "outcome": "No confirmed semantic defect in the prospective annotation scope. Initial pre-review withheld approval pending two-boundary results. The later root checkpoint records both constructor-only and constructor-plus-factory variants rejected; production headers remained unchanged at cc058ca. This reviewer did not originate the fix experiments or independently rerun their timings.",
+      "scope_limit": "No source edits, builds, tests or profiles by reviewer. Same-flags monomorphic recovery and saved call sites localize context-sensitive outlining, but do not prove all regression cost is call overhead or establish universal benefit. No fix-origination credit claimed.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/partial-order-inline-pre-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/regression-cc058ca/summary.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/regression-cc058ca/private-inline.patch",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/regression-cc058ca/cc-reduce-0.asm",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/regression-cc058ca/private-inline-reduce.asm"
+      ]
+    },
+    {
+      "id": "per-backend-generator-pre-execution-review",
+      "kind": "reviewer-originated pre-execution evidence-preservation/provenance defects and enforcement review",
+      "origin": "benchmark agent authored generators; Barbosa/parent supplied accepted symmetric compilation-context methodology; reviewer originated the concrete resume/spec-binding findings",
+      "reviewer_contribution": "Found that fresh_attempt checked only the final JSON and could overwrite interrupted log/helper sidecars, and that the executed stage spec was hash-checked but not tied to the compiler/linker argv and cwd later recorded in the row. Clarified that jointly hash-updated row/spec mutations must also be rejected by recomputing permitted template transformations. Flagged unchecked canonical24/native-max alias claims and separated builder responsibilities from final map validation. Reviewed the small matrix registry selector as leaving the original vectors/CLI/kernel/reducers/timers untouched.",
+      "outcome": "Before any build/timing execution, benchmark owner fixed the issues with persistent attempt sentinels/sidecar occupancy, row/spec and successful resume invocation checks, exact template transformations and canonical inventory/original alias verification. Reviewer verified exact preparer hash 517fc8c0259a37884d631b0941ebc686dc4c516a8767a04b3f1de4c26532048e and runner hash df1f490f5c6002bf0d6c8de653907aa905c4da0e7b3d6775417c1d63b9d5e2df, audited the v4 mock selfcheck and expected optimized-Python rejection, and gave scoped generator approval. Then reviewed the completed selector/map loader and exact final checkpoint, verified all hashes plus recorded57 offline tests/ruff/diff, and approved the combined scope for the bounded real-ELF pilot.",
+      "additional_attribution": "Root originated the requirement to reject __debug__ false so Python optimization cannot erase assert integrity guards. Reviewer verified that requirement in the corrected scripts without claiming it as a new discovery.",
+      "finding_classification": "Pre-execution defects in new private generators, not evidence that any existing benchmark result was corrupted. Template-transformation clarification tightens the same provenance boundary rather than adding a solver correctness claim.",
+      "final_checkpoint": "Driver SHA256 2ba71b2a0f16728b73d79e97c449affd4f057417831b243fda5df9855ae982ef; pytest SHA256 c3bb60a3bd90eefc49ac331d37d2aa213e75814a6480db06aad8c5bda238f6d3; selector patch SHA256 3c33fbd82ddb5d6c8880f16324266976b5b575db6b49c88735a114faa117db71. Direct replay-source comparison used the preserved b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf scheduler, not the older Acacia gitHEAD.",
+      "scope_limit": "Static review and audit of saved checks only; no builds, tests or timings by reviewer. Approval covers the bounded real-ELF pilot, not unrun measurements or full CI. Actual new ELFs still require loader validation. Supplemental per-backend results must retain original full-matrix regressions and cannot be pooled as unlike-context repetitions or treated as solver-speedup proof.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/per-backend-build-pre-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/prepare-per-backend-build.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-per-backend-build.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/barbosa-review/compilation-context-methodology.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/session-state-20261108-1827.txt"
+      ]
+    },
+    {
+      "id": "singleton-selector-static-review-miss",
+      "kind": "actual compile defect missed during static review; later independent overload analysis",
+      "origin": "benchmark agent's first real pilot compiler caught the failure; coder/parent proposed the narrow main-registration fix",
+      "prior_review_limit": "Both nbjorner and Barbosa static reviews approved the v1 frozen checkpoint for a bounded real-ELF pilot after offline mocked tests; neither static review caught the C++ singleton-registration overload failure. These approvals did not include a successful C++ build claim.",
+      "observed": "The first baseline KD-compatible compile returned 1 after 1.919 seconds, without timeout or resource exhaustion. The pilot produced zero ELFs and zero timing calls, and preserved failed source/build/log bindings.",
+      "cause": "Passing template_type_list<OneSet>* as the second argument forces the generic multi-set registrar. Its recursive call with empty SetTypes cannot deduce a set at test_maker.hh148. Offline mocked manifest tests did not instantiate this C++ path.",
+      "reviewer_contribution_after_detection": "Acknowledged the missed case, inspected the actual overload family and confirmed why direct explicit one-set registration with the existing two-vector list avoids the empty recursion: overload136 expands both vectors into overload95 and preserves set/vector metadata plus CreateAll=false. Requested unchanged default/full-alias/helper/kernel and updated exact source verifier/fixtures. No original-finding or fix-origination credit is claimed.",
+      "outcome": "Reviewed and approved exact narrow v2 main-call correction for fresh measurement clones and bounded pilot after auditing actual same-flags baseline-header KD-compatible compile/link, singleton metadata, four scalar/SIMD vectors/nonempty smokes, wrong-backend rejection and original ABI/SIMD instruction hash. Added permanent selected-KD debug target passed two existing nonempty tests; 58 offline tests/ruff/diff passed. V1 approval is superseded for selector execution; all 102 failed artifacts independently rehashed unchanged, and original v1 driver/tests archives matched. First v2 stale-Meson-target-index failure was also retained before explicit reconfigure and passing rerun.",
+      "v2_checkpoint": "Selector overlay 2e19003c71b87dcb6dbafbe3eee99fa3e8fa6aec1d2fcf14904f3317a670d6b4; driver b18f0e41750477e7d46094adcc26284f65ad27e2a465b0020a689e9b858518d4; pytest 4f67ba63f32b8c697d2fbf3f695b81fcfb0a5e4b7fd4e9f156a28872b5679a4a. No reviewer builds/tests/profiles were repeated; remaining backend/width builds and measurements remain future work.",
+      "comparison_limit": "Record as a shared static-review blind spot, not a nbjorner unique finding or Barbosa unique finding. The actual pilot, not either workflow label, detected this defect before measurements.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-real-pilot-v1-summary.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/test_maker.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/downset-bm.cc",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/checkpoint.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/pilot-proof.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/pilot-record-2.log"
+      ]
+    },
+    {
+      "id": "paired-map-adaptation-comparability",
+      "kind": "static protocol review and reviewer-originated dropped-guard finding before timing",
+      "origin": "benchmark agent authored map/revision/base adaptation; root identified/authorized existing None-summary edge fixes; reviewer identified the missing cross-variant compiler-context check",
+      "reviewer_contribution": "Compared the adaptation with saved snapshots, checked unchanged outer ordering/seeds/caps/qualification/grouping and explicit map/measurement/base bindings, and reviewed None timeout/censored-cell and missing-memory accounting. Found the new mapped writer path validates each map's original anchor individually but omits the old combined path's baseline-versus-candidate original compiler-command equality guard. Requested equivalent cross-variant comparability or a positive exact-anchor-pair binding, plus an updated-hash different-flags negative.",
+      "outcome": "Benchmark owner restored cross-variant compiler/Vector ABI/width equality using the already-reviewed normalized_command. Reviewer checked the exact corrected writer 8a25583e70f23ff2d41bde8630a5547d1e24d09a6f8b82dac70e6861bdd2e2a9, unchanged runner c0062ff177aff7422ccd1abdcf2f8f03519170b1332e5dec951bf173e1675fd9 and summarizer 6ed02cdfc2837cb562fd881e29fd59ef5134420a25944eebb7b001b48e439215, verified all 12 frozen checkpoint bindings and audited the passing focused fixture, including internally hash-consistent different-mtune anchor rejection. Approved exact adaptation and declared TRAIN plans before timing. No corrupted existing run was alleged.",
+      "evidence_limits": "Saved full-map/semantic summaries report 96 accepted entries and zero performance commands; reviewer audited those records without rebuilding/rechecking all ELFs. Both TRAIN plan schedules/seeds match the unchanged protocol. Approval establishes no performance result.",
+      "scope_limit": "Static only during compiler lane; reviewer ran no fixture, solver, build or timing. Root/owner's None-summary fixes are not credited as reviewer discoveries. Per-backend outlining observations alone establish no speed claim.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/paired-map-adaptation-pre-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-adaptation.patch",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/check-paired-map-adaptation.py"
+      ]
+    },
+    {
+      "id": "paired-post-report-correctness-stop",
+      "kind": "bounded static stop-policy and immutable-plan derivation review",
+      "origin": "root required halt-on-disagreement before launch and confirmed source/check/measure coverage; benchmark owner identified the absent post-report guard and authored wrapper/derived plans/mocked fixture",
+      "reviewer_contribution": "Verified exact artifact-first post-report exit, ordinary timeout/resource/source_unverified retention, no next invocation after rejection, and unchanged scheduling/kernel. Independently compared original/derived plan JSONs and found only orchestrator binding changed; rehashed all eight checkpoint inputs and original runner/plans. Clarified with root that measure-phase rejection is deliberately included and that rejection requires diagnosis rather than automatic wrong-answer attribution.",
+      "outcome": "Approved exact controller aa41c98deb2bda5293c53e54496c90b5678652f4e87c7835c12fecaf1969f661 and derived TRAIN/largeTRAIN plans after auditing passing mocked fixture. Report, source binding, fatal rows and stopped progress are retained before exit3; original controller/plans remain unchanged.",
+      "scope_limit": "No new defect or fix discovery credited to reviewer. This post-report hook stops the next invocation, not work already performed inside the reporting invocation. Fixture integrates a check-phase rejection and helper rejection across phases; malformed_output inclusion was checked statically. No reviewer workloads repeated, and no timing claim established.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/paired-correctness-stop-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-checkpoint.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-derivation.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-correctness-stop-check-record.log"
+      ]
+    },
+    {
+      "id": "forest-clear-false-positive",
+      "kind": "false positive, explicitly retracted",
+      "origin": "reviewer mistake",
+      "incorrect_report": "Claimed the new forest-kd-layout test would fail compilation because sharingforest had no clear() member.",
+      "cause": "The rg pattern searched clear immediately followed by '(' and missed the project's space before '('. Bounded source reads also skipped the existing public method. The finding was sent before verifying the full relevant API.",
+      "correction": "Parent pointed to the existing method; reviewer read the absolute current header at lines764-784, confirmed clear() existed already and emptied covers_visited before init reset the generation, and sent explicit retractions to parent and coder with an apology. No source fix was needed.",
+      "outcome": "Not a compile defect or cache-reset defect. Do not count as a finding fixed by the authors.",
+      "workflow_lesson": "Require a positive API-definition check before declaring absence from a text search; use whitespace-tolerant patterns and verify the actual absolute source checkpoint.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/include/posets/utils/sharingforest.hh",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/tests/forest-kd-layout.cc"
+      ],
+      "evidence_limit": "Initial report, parent correction and retractions are preserved in agent messages, not a separate file."
+    },
+    {
+      "id": "larger-train-incomplete-capture-classification",
+      "kind": "independent saved-record diagnosis and methodology review of externally reported rejection",
+      "origin": "Root reported the source rejection; benchmark owner and coder investigated capture provenance and parser in parallel.",
+      "reviewer_contribution": "Confirmed source SHA matches initial capture manifest; action8-of16/no-after/no-final-newline proves incomplete source beyond a newline-only format issue. Located loader filename/prefix-only structural admission gap; confirmed 1 rejected source +72 unverified checks and zero measurements for trace3. Assessed root-proposed structural-only subcohort correction with immutable failed epoch and full exclusion disclosure.",
+      "outcome": "Parser and correctness-stop behaved appropriately. No backend disagreement or implementation fix asserted. Root proposed immutable original evidence plus new complete-capture subcohorts/fresh pairs; final audit/implementation not yet reviewed.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/larger-train-source-rejection-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-large-train/paired-per-backend-v2-large-train-pair0-baseline/report.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-large-train/paired-per-backend-v2-large-train-pair0-baseline/correctness-stop.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/large-frontier-train-traces.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/invocation.json"
+      ],
+      "limits": "No reruns, builds, tests or timings; no all-cohort completeness audit; do not count initial rejection discovery or remediation proposal as reviewer originated.",
+      "validation_followup": {
+        "scope": "Read-only exact framing audit/cohort artifact review",
+        "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/saved-frame-audit-v1-review.json",
+        "result": "Approved exact frozen checkpoint89ff4e... (all29bindings) and fresh eligible5-trace larger-TRAIN plan7380ac...; unchanged settings/ABBAAB/seeds and fresh namespaces checked. Separate full-header frame fixtures passed in saved rc0 record. Original failed six-trace diagnostic unpooled; no full parser/semantic or timing result claim."
+      },
+      "sealed_heldout_plan_followup": {
+        "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/sealed-heldout-plan-review.json",
+        "result": "Approved exact prepared heldout plans1fc5d0dd.../b137d122... under explicit parent choice-freeze/launch gate; all12specs and hashes match approved treatment except cohort/output deltas;6/6 and11/12 coverage/Nemo lost stratum explicit. No workloads, outcome scans or launch authorization."
+      }
+    },
+    {
+      "id": "boolean-14-source-only-review",
+      "kind": "independent static integration-probe review, no confirmed new defect",
+      "origin": "Root requested review of coder-prepared expanded Boolean probe.",
+      "reviewer_contribution": "Verified aliases, four individually controlled modes, unchanged independent expectations,112 case arithmetic, zero-prefix/domain/tails and protected pending command paths; highlighted lazy tiny-buffer versus FC-path coverage and supplementary packed-vector versus actual solver routing.",
+      "outcome": "Approved exact source/readiness for later scoped validation only; compile/runtime explicitly pending. No changes to preserved expectation function requested.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/boolean-oracle-14-source-review.json"
+      ],
+      "limits": "No workloads or benchmark-result scans; no claim that14 algorithm paths or shipping routes have been validated.",
+      "execution_binding_followup": {
+        "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/boolean-oracle-execution-bindings-review.json",
+        "result": "Static materialized dependency gate closed at execution-bindings SHA f3381206...:15file bindings and8specs match approved source/readiness; actual generatedconfig, cc HEAD and compiler hardlink/SHA identity checked.112cases/28labels and scope caveats preserved. Runtime still pending; no workload or new hold."
+      }
+    },
+    {
+      "id": "final-acacia-static-execution-gates",
+      "kind": "independent static readiness/checklist review, no confirmed new defect",
+      "origin": "Root requested final gate review while benchmark held the exclusive host lane.",
+      "reviewer_contribution": "Confirmed reviewed campaign/selfcheck bytes unchanged and planned86dd/cc candidate versus86dd/e167 anchor shipping treatment; enumerated existing pending configure/introspection/build/unit/Boolean/smoke/provenance/freeze/campaign evidence and exact15-arm external manifest gate. Flagged stale setup-command=false and10-target metadata as known unclosed evidence, not new failures.",
+      "outcome": "Static sequence consistent; checklist identifies already required remaining evidence. No workloads, live-result inspection, new experiment or launch authorization.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-acacia-execution-gate-checklist.json"
+      ],
+      "limits": "No final build/test success, actual final15binary provenance, full1524\u00d715 completion or solver speed claim.",
+      "reporting_followup": {
+        "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/implementation-draft-static-review.json",
+        "contribution": "Static prose corrections: FC per-edge repair bound, bulk replacement may be buffer-only below32, final per-arm smokes remain pending. Other implementation/contracts/measurement boundaries consistent; no results or implementation defects claimed."
+      },
+      "final_gate_closure": {
+        "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-acacia-pre-primary-audit.json",
+        "result": "Approved exact proposed checkpointe3a697.../arms904edc.../provenanceb663bc.../summary759d1a...;431actual bindings+3proposal files match,15primary identities/flags/pins/profile and57record resource/count arithmetic verified;87unit/1version/112Boolean/45CLI outputs match. Dirty-version incident classified as owner metadata expectation error,13raw records reused+41new; exactheaders required. NO_VERBOSE/Boolean scope limits explicit. No new runtime work or fullprimary result claim."
+      }
+    },
+    {
+      "id": "heldout-digest-independent-arithmetic",
+      "kind": "independent saved-record arithmetic/provenance validation, no new defect",
+      "origin": "Root requested audit of completed benchmark-owner heldout digests.",
+      "reviewer_contribution": "Independently checked2016metric keys/ratios/estimators,680selected cells,160text table entries, all12saved report/source bindings, sixorder audits, rawphase/CPU/peak/failure arithmetic and frozen source/map/plan identities; clarified metrics versus invocations and retained23partial censored cells.",
+      "outcome": "Exact standard digest2e96fc... and largercaf51b... approved with714/816and521/1200fullypaired; source/check/timing censors and per-backend versus combined separation retained. No discrepancy found.",
+      "evidence": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/heldout-digest-review.json",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/heldout-digest-independent-arithmetic.json"
+      ],
+      "limits": "No workload, semantic rerun, ELF revalidation, significance/default-switch or fullAcacia result claim."
+    }
+  ],
+  "remaining_material_caveats": [
+    "Packed forest generation wrap is checked by source reasoning but lacks a directed near-wrap test.",
+    "Dense forest memo can allocate on cold/new/growing layers and retains historical-node/high-water storage; warm-query allocation checks do not establish universally allocation-free queries.",
+    "KD relabel allocation correction preserves destructibility, not rollback or validity of subsequent queries after failure. KD capacity reuse intentionally retains peak allocation.",
+    "The initial UBSan check could not link because the host UBSan runtime was missing; it was skipped, not passed.",
+    "Native clang-tidy encountered the Clang22/GCC16 experimental-SIMD AVX512 header incompatibility; compatible-width changed-line checking was the recorded successful scope.",
+    "Known retained memory excludes opaque vector payload/allocator overhead and is not interchangeable with process/cgroup peak memory.",
+    "Independent oracle and fault-injection passes are bounded validation, not a solver soundness proof.",
+    "No reviewer code/probe changes were made in original Acacia, which remained strictly read-only.",
+    "Bulk construction cutoff4096 remains performance-provisional; sorted color interning can trade allocation work for signature-comparison work. No universal performance or solver-speedup claim follows from semantic/allocation checks.",
+    "No new timing was executed by this reviewer during heldout/final-gate/outcome audits. Both completed primary campaigns now have independently checked saved-row arithmetic; exact30e code CI was audited. No blanket later-documentation-HEAD CI, solver soundness, significance or causal performance claim is asserted."
+  ],
+  "comparison_notes_for_parent": {
+    "observed_nbjorner_workflow_emphasis": [
+      "Classify baseline versus introduced defects before changing code.",
+      "Use independent coordinate/original-state oracles and small adversarial models rather than agreement between backends alone.",
+      "Exercise resource-failure cleanup and same-object retry, and distinguish rollback from destructibility.",
+      "Preserve warnings, inconclusive checks, attribution and retractions instead of converting them into clean-pass claims.",
+      "Tie review conclusions and result interpretations to exact source/protocol checkpoints."
+    ],
+    "directly_observed_overlap_with_Barbosa_reviewer": "Barbosa's messages identified a parallel focus on public ownership/maps after move/clear, insertion/union allocation guarantees, RHS validity on throwing union, postcommit rebuild exceptions, mutable-backing-vector contract, header contracts and additive registration/CI. This reviewer also checked several of those invariants through independent probes. Parent should use Barbosa's own ledger for findings/results and unique attribution.",
+    "limits_of_comparison": "These were different assigned roles on the same evolving implementation, with communication between agents, not a controlled skill A/B experiment. The record supports describing complementary emphasis and concrete contributions; it does not establish which skill is generally better or what either actual researcher would have done."
+  },
+  "final_comparison_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/reviewer-experience-final-audit.json",
+    "scope": "Static current draft versus both cumulative ledgers/latest exact package audits, with no live primary results read.",
+    "result": "Revised root draft resolves stale gate status; no remaining material origin dispute. Proposed concise complementary-workflow comparison and appendix trim supplied; no controlled ranking or reliable comparative cost/time statistics."
+  },
+  "final_table_static_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-table-deriver-static-review.json",
+    "result": "Source-only approval: two predeclared comparators, completedcampaign/strict17/34/censor/truth/CPU/sidecar gates and producer schema consistent. No actual primarydata or execution, no new defect found."
+  },
+  "compact_reproducibility_package_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/repro-package-static-review.json",
+    "result": "Initial114file/105exact-copy inventoryf89c... passes all lightweight hashes/mappings. Root-origin fuzzer/native decoder doc cue confirmed; reviewer requested NO_VERBOSE wording, explicit baseline provenance prerequisite path, and post-detection eligibility epoch disclosure. Owner doc fix/inventory refresh pending. No runtime, code defect, live primary results or source edits."
+  },
+  "default_rank_followup_static_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/static-audit.json",
+    "reviewed_patch_sha256": "56677a0b839765b05993175f432c41a33e48a7e39965ff655b9ca2a5675bc9d4",
+    "result": "Static core invariants/contracts coherent; no confirmed production-semantic defect. Concrete capacity-assumption fixture portability issue originated at349, extended byroot to320-345; float victim-plus-survivor order regression proposed. Execution/measurements all pending; no generic strong guarantee or speed claim.",
+    "v2_correction_audit": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/static-audit-v2.json",
+      "sha256": "a162515641dbe8d353df6a4152c63e0230fdc8f82a18593b6648afc5a7e5c32c",
+      "reviewed_patch_sha256": "0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60",
+      "result": "Source-only corrections close capacity-portability and proposed floating-order coverage gaps; Barbosa alias/docs refinements also validated. No new static production defect found. No compilation/tests/models/lint/format/profiles/timing executed; runtime gates pending. Prior audit unchanged.",
+      "attribution": "Capacity issue originated here, growth-sweep extension by root; floating-order strengthening originated here; alias/docs refinements originated with Barbosa; coder authored fixes."
+    },
+    "validation_plan_operational_audit": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/validation-plan-static-audit.json",
+      "sha256": "83ca5e5864e676a2a0a406eec425f2202721e6cd149747227bdb2a15f147bad9",
+      "plan_sha256": "e69678758c0ddfc3fec8267ed4e7dfffb86f4ab5f5b15500dec6648b7838a8fd",
+      "result": "No actionable static invocation/isolation gap found in 68-stage plan;155 hash/size bindings verified. Manual lane/fresh-path/stop/resource/evidence gates remain prerequisites. All execution pending; no new defect discovery or runtime validation claimed."
+    },
+    "selected_rank_helper_static_audit": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/selected-rank-helper-static-audit.json",
+      "sha256": "4be46bd3e697c3d256c2e3e9747593189cd4a40a05749585b0526643e93d3660",
+      "source_manifest_sha256": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+      "result": "One pre-execution defect originated here: literal-option validation admits effective argparse seed overrides, so declared paired seeds can differ from executed seeds. Requested canonical/effective argument and reported-seed checks with negatives; no execution or corrupted-existing-run claim. Source authority and actual-ELF proof chains statically reviewed; pending new frozen correction."
+    },
+    "v3_core_executed_gates_audit": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/core-v3-executed-gates-audit.json",
+      "sha256": "5a5f864b2823aecaa53296bd9601b6b175c4a429bb750be84a526333f1eafbc0",
+      "source_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+      "validation_sha256": "6e30adef99d8ecc7844463e85921a0d16972f8d4a27aec41c0cef30bd9d4ceb4",
+      "result": "V3 narrow corrections preserve semantics and fault guards. Saved9GCC+9Clang+3portable Memcheck passes accepted;242 hash/spec bindings and109 scope records checked. Precise retained59=57dependency+2owned-fixed diagnostics, baseline111 failure, skipped candidate full24 and pendingCI18 preserved. Scoped approval, not fullCI or performance/helper approval; no new reviewer defect originated."
+    },
+    "selected_rank_helper_v2_correction": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/selected-rank-helper-v2-static-audit.json",
+      "sha256": "b23a8dee71c369790fc482b06fca1db271c0a7bd2b686f3d875e8b0d5115072d",
+      "source_manifest_sha256": "1bed75101980b497a4e6da477424f3610589dd6026d53f45afd2456441180e75",
+      "result": "RANK-PROTOCOL-01 closed at source level: canonical whole-argv schema and effective-value plan binding, strict actual-integer reported seed in both controllers; meaningful refreshed command/report/link/library negatives drafted.43 binding checks plus14 V1-lineage entries match. Original driver/full48/proof/timer chains unchanged. No runtime/import/parse/test/lint/pilot/performance execution; separate gates remain."
+    },
+    "actual_replay_gate_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-rank-v3-replay-gate-audit.json",
+      "sha256": "98884e4fc9ae64f57e5ec987ec4258c8205f54d5a9e68c0d91b876673fea5aba",
+      "checkpoint_sha256": "1b1d79204f5589ae1a05d037bf15c5911614a99a401cba91545497f85f4ae017",
+      "result": "Approved exact actual789-to30e matched standard12/larger5 plans after162artifact+12spec hashes and653current source-file checks. Role-specific anchors/maps/actual ABI/compiler/link/library tuples and canonical protocol match;96backend pilot checks pass with symmetric2source timeouts/6unverified placeholders preserved. All12 timing outputs/record sets absent. No new defect or measurement claim; no workload executed."
+    },
+    "profile_artifact_closure_v4_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-v2-artifact-closure-v4-static-audit.json",
+      "sha256": "61d7014b91bc15db8d68809560f8893393bd334e4396dc47365a2a17f9fbf400",
+      "auditor_sha256": "569bd2686d56419012d6c27caec07917f3286250a1b0602ebbfbb65b224bad66",
+      "closure_sha256": "d097ccb5d0fc311293f2ebb91f2a5f942ec9241e8ce04848373247a7976e3a25",
+      "result": "Accepted three owner-originated derived-audit assumption corrections (env overlays, repeated GCC prerequisites, actual ET_EXEC anchor match) without weakening genuine policy evidence.1571 saved hash references and ordered positive markers checked; all33 original gates preserved; no remaining current acceptance mismatch. No workload/rerun; captured eligibility remains separate.",
+      "attribution": "Root/owner identified and corrected the three auditor failures; reviewer independently checked policy/equivalence and bindings. Internal per-row heap-equality assumption was corrected to the approved destruction boundary before any defect finding or rerun; not a new discovery."
+    },
+    "profile_eligibility_join_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-v2-eligibility-static-audit.json",
+      "sha256": "d308dfd8f21dc75f1e3cfb8d59b1d8989491e0d9d4159beca7ee7c5273d2a9ba",
+      "inventory_sha256": "80b5b22324661bd0af8835f5f275326c4844ca188d2498239d2abb9cbe17c7b8",
+      "result": "Accepted exact saved-data17identity/102cell eligibility:96eligible+6unprofiled,192eligible+12unprofiled diagnostic pass rows.167checkpoint bindings,29trace/capture/plan hashes and408source/check observations across16frozenreports checked. All-four qualification controls source_verified=true; clean measurement status stays separate. Standardcpre6qualification censor distinct from structurally excluded larger cpre7. No new defect, workload or repeated closure gate."
+    },
+    "profile_projection_v1_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-projection-v1-static-audit.json",
+      "sha256": "333d125cb6b7f19f87487c479c3d34a874c481f21e3ad1d54ee73fb5d2c5f0e9",
+      "source_manifest_sha256": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598",
+      "result": "One blocker: acceptor validates only subset of producer counters and leaves numeric fields unchecked; malformed/incomplete successful-looking output can pass. Root/reviewer overlapping detection, no unique credit. Projection authority/192of204 spec policy, tuple/ROI/kernel/unavailable descriptors otherwise coherent. No new operations sequence or zero-cleanup rule requested; no execution."
+    },
+    "profile_projection_v2_correction_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-projection-v2-static-audit.json",
+      "sha256": "ae518b7012e2f3157a278e0e9d074c890d119236e3bfe86bc4070a205f6d57d8",
+      "source_manifest_sha256": "b936a10d165a812b0d68d976c9d21f9548f91bea957058e1f0274a1c1c237598",
+      "result": "Closed overlapping root/reviewer V1 schema/numeric blocker at source level. Exact42 producer phase keys and11/4/3 other schemas, uint64/int64/enum/null validation, independent complete synthetic positives/negatives preserve nonzero deltas and unavailable descriptors. Projection/main unchanged. No execution; actual offline/spec/profile gates pending."
+    },
+    "conditional_pmu_operational_plan_review": {
+      "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/pmu-plan-v1-operational-static-audit.json",
+      "sha256": "5cd101e3dd17d4c2d04ce24e8349ed588b7b62824f00d9ee97f30cc6aa9e6127",
+      "manifest_sha256": "2e72016b0d8358395ad0b329bb6b981695f0420889e51dc8f40c855badab8c5c",
+      "result": "Statically accepted conditional4cell/CPU2 plan:130bindings and8inverse argv checks match,4recipes/8buildlinks/4metadata/8checks/24ABBAAB calls fixed,8actual-pin qualification cells bound, roots/records absent and future artifact hashes honestly pending. No widening/new assumption, execution/probe or activation claimed; prior source review credited Biere/root."
+    },
+    "compact_package_draft_review": {
+      "artifact": "work/review-probes/default-rank-package-draft-static-audit.json",
+      "sha256": "bb793ec69fa5c9477a479dbac5deec5221dab1575899f37e34f0924131dd3815",
+      "status": "Source-only preparation approved; pending application remains blocked",
+      "contribution": "Independent updater/copy/inventory/backup/documentation validation; no originated defect; no runtime or publication claim."
+    },
+    "two_arm_table_draft_v1_review": {
+      "artifact": "work/review-probes/default-two-arm-table-draft-v1-static-audit.json",
+      "sha256": "ee27abe6c099ccf34527038b2de5ff3747e99fa52444cb50c1fc7df07876e0db",
+      "status": "Approved for the already proposed bounded offline fixtures after owner/lane release; future real-data derivation and result acceptance remain pending",
+      "contribution": "Independent scoring, sidecar join, OOM event labels, coverage/publication and fixture-source validation; no new defect; future results unaccepted."
+    },
+    "final_two_arm_acacia_pre_primary_review": {
+      "artifact": "work/review-probes/default-acacia-v3-final-pre-primary-audit.json",
+      "sha256": "8103b3d6d0ad5fa7e5355ef143f35fc6fa9353035f65decc830f31555cb63622",
+      "decision": "Approved exact artifact package for parent freeze and already authorized 3048-row two-arm primary after parent release; no result acceptance or primary launch performed by reviewer",
+      "contribution": "Exact artifact/source/header/compiler/library and20gate review, explicit two-arm universe and schema-correction validation; no new defect or result claim."
+    },
+    "intermediate_report_and_workflow_comparison_audit": {
+      "artifact": "work/review-probes/default-final-reporting-static-audit.json",
+      "sha256": "e5e1d3da224fb6bfd866c02f1ff4db2092ad0c56c8f71a0faf86bf3e57aab483",
+      "contribution": "Bounded source-only attribution/status audit; requests benchmark-owner Valgrind reproduction wording and historical-vs-current Acacia build-gate note; no solver result or new runtime evidence.",
+      "correction_addendum": {
+        "artifact": "work/review-probes/default-final-reporting-corrections-accepted.json",
+        "sha256": "925b37e5d064671bdd05f02ba564a0e0693a0499b4843f8b4ea85fe5b485d308",
+        "status": "Accepted; actor credit corrected, historical published status intentionally preserved and to be superseded in final output."
+      }
+    },
+    "numerical_archive_adaptation_static_review": {
+      "artifact": "work/review-probes/default-evidence-archive-v1-static-audit.json",
+      "sha256": "6160692297ba09d7b9676ca4efeed6f16678f4c3794200d9de45217341b83e74",
+      "contribution": "Exact four-file/six-member/3048-per-kind adaptation and publication-boundary validation; no new defect or execution."
+    },
+    "compact_package_v2_delta_review": {
+      "artifact": "work/review-probes/default-rank-package-draft-v2-static-audit.json",
+      "sha256": "f68b76007299324dc8fbb1eff2e1573ec3ac2501c271058a654c74d4ee129aef",
+      "status": "V1-to-V2 source-only delta approved; readiness remains false and package application/publication is not authorized",
+      "contribution": "Verified exact V1 preservation,118-entry/37-new source-only inventory, single destination/hash/size exception, separate archive gate, privacy spots and completed-vs-pending claims; no new defect or execution."
+    },
+    "completed_two_arm_outcome_review": {
+      "artifact": "work/review-probes/default-final-outcome-audit.json",
+      "sha256": "10b7dd2275b5483dfe3daf7a3d0597b9b11a3dbe60dbc4a3aabaf3a026aed58f",
+      "result": "Independently recomputed3048rows:1369\u21921368solved,0gains/1loss(robot_repair5 actualTIMEOUT),PAR2+16.237269s,fullCPU/memory/eventcoverage,0OOM/overruns/oppositeanswers; no measurements run.",
+      "contribution": "Outcome/resource/sidecar/schedule/source-scope arithmetic validation and conservative negative-result interpretation; not a new defect or author-measured speedup."
+    }
+  },
+  "phase_one_full_solver_result_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-primary-final-audit.json",
+    "sha256": "bb5208a02768834c3042ccf81155d7f744e642e2332535fe847610fd24420cbd",
+    "table_sha256": "27df181d4c2262154adba7eebae907925fb69c2016b4371af442d92ed67ba6b7",
+    "result": "Independent22860-row strict17/34 arithmetic, both comparators, all-resource coverage/sidecar joins, corpus/expected and cross-arm verdict checks,720 saved schedule/command entries and bounded source/binding checks all match. Originated resource-label distinction:70 OOM-kill-observed invocations =25MEMOUT +45TIMEOUT, same7cases across10arms; larger block16 MEMOUT label count is not more OOM-affected cases. No native relabelling/rescoring or runtime workload. Conservative keep-default conclusion; FC difference not established benefit.",
+    "origin_boundaries": "Root supplied threshold/source-stack caveats and proposed conservative interpretation; this reviewer independently checked the raw data/arithmetic and supplied the additional OOM-event interpretation correction."
+  },
+  "phase_one_package_refresh_review": {
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-package-refresh-static-audit.json",
+    "sha256": "34f395eccd36a6dadd290702c6cd99562e62395c08e889d0b730195f8231169c",
+    "inventory_sha256": "5d37fbbc2b350f4a4fce00c6a8e1fc0505a98ebc08b67611d149ac3ec23a1a01",
+    "result": "Verified16 completed additions,121 exact copies,130 total files, preserved105 old copy-origin entries and full inventory/checksum coverage. Source/default30e separation and70/25/45 same-seven OOM interpretation correct. Originated stale RECREATE117-119 pending-final-table wording; root to preserve/fix/refresh. No archive extraction, workload, source edit or default-result claim."
+  },
+  "final_review_status": {
+    "as_of": "2026-11-09",
+    "phase_one": "Completed15arms x1524rows; exact saved-row/resource evidence audited. No demonstrated FC reason to switch.",
+    "default_followup": "Completed2arms x1524rows,negative observed solver result; accepted with full loss/censors/resource coverage and attribution limits.",
+    "work_PMUscope": "Actual profiles/PMU executed/interpreted by owners and Lemire/Biere; this reviewer validated source/build/projection gates and precise report denominators, not authoring those measurements.",
+    "outstanding_root_closeout": "Final original/WIP proof, final report/package/reviewer-ledger freeze/publication; historical pending fields retained in old snapshots.",
+    "comparison_limit": "Complementary skill-guided roles, not controlled skill ranking; no reliable comparative review-time/cost totals. Shared miss/retraction and external discovery origins remain preserved."
+  }
+}

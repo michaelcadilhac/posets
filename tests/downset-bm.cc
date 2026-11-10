@@ -167,6 +167,11 @@ struct test_t : public generic_test<result_t> {
 
     result_t operator() () override {
       result_t res;
+      if constexpr (requires { SetType::block_size; }) {
+        std::cout << "[block] B=" << SetType::block_size
+                  << " comparison=" << (SetType::uses_simd ? "simd" : "coordinate-loop")
+                  << " cache=" << SetType::uses_cache << " query_packing=included\n";
+      }
       if (not trace_file.empty ()) {
         matrix_check::require (check_case.empty () or check_case == "trace" or check_case == "replay", "unknown trace check");
         return matrix_cpre::run<SetType> (trace_file, params["rounds"], not check_case.empty (), params["detail"] != 0,
@@ -387,10 +392,42 @@ VECTOR_TYPES (
 
 #endif
 
+// Give template controls distinct names in the existing benchmark registry.
+template <class V, size_t B, bool Simd, bool Cache>
+struct set_name<posets::downsets::block_sharingtrie_backed<V, B, Simd, Cache>> {
+    static std::string get () {
+      if constexpr (B == 8 and Simd and Cache)
+        return "posets::downsets::block_sharingtrie_backed";
+      return "posets::downsets::block_sharingtrie_b" + std::to_string (B) +
+             (Simd ? "_simd" : "_scalar") + (Cache ? "" : "_nocache");
+    }
+};
+template <class V, bool Cascade>
+struct set_name<posets::downsets::lazy_kdtree_backed<V, Cascade>> {
+    static std::string get () {
+      return Cascade ? "posets::downsets::lazy_kdtree_backed"
+                     : "posets::downsets::lazy_kdtree_uncascaded";
+    }
+};
+namespace {
+  template <class V> using lazy_kd_cascaded = posets::downsets::lazy_kdtree_backed<V, true>;
+  template <class V> using lazy_kd_uncascaded = posets::downsets::lazy_kdtree_backed<V, false>;
+  template <class V> using block_b1_scalar = posets::downsets::block_sharingtrie_backed<V, 1, false>;
+  template <class V> using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
+  template <class V> using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
+  template <class V> using block_b8_scalar = posets::downsets::block_sharingtrie_backed<V, 8, false>;
+  template <class V> using block_b8_simd = posets::downsets::block_sharingtrie_backed<V, 8>;
+  template <class V> using block_b16_scalar = posets::downsets::block_sharingtrie_backed<V, 16, false>;
+  template <class V> using block_b16_simd = posets::downsets::block_sharingtrie_backed<V, 16>;
+  template <class V> using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
+}
+
 using set_types = template_type_list<
   posets::downsets::bboxtree_backed,
   posets::downsets::comptrie_backed,
   posets::downsets::kdtree_backed,
+  lazy_kd_cascaded,
+  lazy_kd_uncascaded,
   posets::downsets::vector_or_kdtree_backed,
   posets::downsets::vector_backed,
   posets::downsets::rank_bucketed_vector_backed,
@@ -400,6 +437,16 @@ using set_types = template_type_list<
   posets::downsets::sharingtree_backed,
   posets::downsets::simple_sharingtree_backed,
   posets::downsets::sharingtrie_backed,
+  block_b8_simd,
+#ifdef POSETS_MATRIX_ONLY
+  block_b1_scalar,
+  block_b4_scalar,
+  block_b4_simd,
+  block_b8_scalar,
+  block_b16_scalar,
+  block_b16_simd,
+  block_b8_nocache,
+#endif
   posets::downsets::skiplist_backed,
   posets::downsets::cst_backed
   >;
@@ -443,7 +490,11 @@ namespace {
 int main (int argc, char* argv[]) try {
   const char* prog = argv[0];
 
+#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)
+  register_maker<false, POSETS_MATRIX_BACKEND> ((vector_types*) nullptr);
+#else
   register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
+#endif
 
   while (true) {
     const int c = getopt_long (argc, argv, "hmc:s:t:vp:", LONG_OPTIONS.data (), nullptr);

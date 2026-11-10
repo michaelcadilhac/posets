@@ -1,0 +1,132 @@
+{
+  "status": "frozen_before_heldout_execution",
+  "frozen_at_utc": "2026-11-08T21:44:22.603476+00:00",
+  "production_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+  "public_pr_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "replay_baseline_revision": "7c407128326583abbb137fd3832857ed506e20fb",
+  "decision": "Retain the exact reviewed cc patchset and existing policies/controls for comparative held-out and Acacia evaluation. No default switch or universal speedup claim.",
+  "basis": "Training and allocation/cache evidence show substantial construction/allocation and some whole-CPre wins, alongside material workload/compiler-context regressions. No new correctness defect requires a source change. Preserve all residuals; no further tuning against these measurements.",
+  "constraints": [
+    "No library, kernel, flag, cutoff or data-structure tuning from held-out outcomes.",
+    "Keep combined and per-backend compilation treatments separate; preserve both rejected inline candidates and all regressions.",
+    "Only structurally complete predeclared captures are eligible; preserve incomplete inputs, original/new ID mappings, failed original larger-TRAIN epoch and reduced strata without pooling or replacement.",
+    "Keep all source/backend/timing censors; stop and preserve unexpected rejection, provenance or answer disagreement.",
+    "All solver/replay/compiler work uses existing Acacia8GiB/no-swap scopes; timings run serially without competing builds/tests/profiles.",
+    "Original Acacia checkout, submodules and nested worktrees remain read-only; verify isolated worktree and Git directory resolution before later source mutations."
+  ],
+  "heldout_plans": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-heldout-complete-frame-eligible-stop-on-correctness-plan.json",
+      "sha256": "1fc5d0dd0df6caee06ee3ae2e602c82dd75fa1836f62a9e1ccc1c22fc04a1b57"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-heldout-complete-frame-eligible-stop-on-correctness-plan.json",
+      "sha256": "b137d122b9cf8dd12be7cb1d1a25c68619cc55d1d0620480bd2b46dcd1e7134d"
+    }
+  ],
+  "heldout_output_and_record_paths_absent": 24,
+  "heldout_checkpoint_bindings_verified": 26,
+  "replay_method": {
+    "inventory": "all24 backends; original scalar qualification and two effective SIMD widths",
+    "pairs": 3,
+    "order": [
+      "baseline",
+      "candidate",
+      "candidate",
+      "baseline",
+      "baseline",
+      "candidate"
+    ],
+    "seeds": [
+      260617,
+      260618,
+      260619
+    ],
+    "source_timeout_seconds": 30,
+    "check_timeout_seconds": 2,
+    "timing_timeout_seconds": 2,
+    "rounds": 1,
+    "repetitions": 1,
+    "reported_metrics": [
+      "whole CPre",
+      "first construction",
+      "second fresh construction with first instance alive"
+    ],
+    "ratios": "median of exact paired candidate/baseline ratios; separate variant medians explicitly labeled; no significance claim from three observations"
+  },
+  "acacia_evaluation_plan": {
+    "base_revision": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+    "anchor_posets_revision": "e167f43646b880c69046bab7110dbb327686c024",
+    "candidate_posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+    "candidate_arms": [
+      "rank control",
+      "KD",
+      "narrow KD",
+      "trie",
+      "compact trie",
+      "comptrie",
+      "SIMD comptrie",
+      "block8 cached",
+      "block8 uncached",
+      "block16 cached",
+      "lazy FC",
+      "lazy independent search",
+      "sharingtree",
+      "simple sharingtree"
+    ],
+    "anchor_arms": 1,
+    "instances_per_arm": 1524,
+    "total_primary_rows": 22860,
+    "timeout_seconds": 17,
+    "memory_max": "8G",
+    "swap_max": 0,
+    "preset": "otf_sparse_formula_parity (docker_default)",
+    "vector_configuration": "shipping compatible128",
+    "primary_runtime_flags": "",
+    "batch_size": 32,
+    "seed": 260617,
+    "builds_and_primary_execution": "pending; final executable/source/library bindings required after build and validation"
+  },
+  "evidence": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-stop-on-correctness-summary.json",
+      "sha256": "d04f191d460ad9dae8bb8c7744b3551b4fe93b4b67d1348324f106676bfad944"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-eligible-stop-on-correctness-summary.json",
+      "sha256": "240e2a97fffd8a05dcbe92ee14e74b039c2395ea78546bb00cd7f2b9cb2152c0"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-TRAIN-digest.json",
+      "sha256": "4a8e670dd1503ee0a9115e3dcab9d37821c1415ec38f3641f4148d7a2b3305a2"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-large-TRAIN-complete-frame-digest.json",
+      "sha256": "80d2bb86c7053df07c83568a01412c8cf237f97f95322f0c52ff02ad43dc44eb"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1-checkpoint.json",
+      "sha256": "89ff4e236c7184abd2e9d6c305902bd4c07917688e5a6f6b9bbb7c3ce3b715c2"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/heldout-complete-frame-plans-checkpoint.json",
+      "sha256": "af85f3a145d3a9ae4cf127af30ca8be503059c53f9f44bfadb42f7ce48a8a22c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-final-train-summary.json",
+      "sha256": "efa7f2d523303d6ce2bd372209e237214e1b8f84faa05229a3d108e00577c846"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/per-backend-train-interpretation.txt",
+      "sha256": "6412ba33fb64e7c07a51c78cffbfeb1b9d109eff58a9968c2f0ef3267eca76ca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-hash/final-memory-cache-table.json",
+      "sha256": "ea2224a9859cdd72c62546f74c5ea4b75e9df3a77b7c6330b421cfc4caeba578"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/ci-42513707768-summary.json",
+      "sha256": "7321b1fd3b1dbef2527d54ae177cde2a3053d0cff812139f1bf122b7c0cb82e1"
+    }
+  ]
+}

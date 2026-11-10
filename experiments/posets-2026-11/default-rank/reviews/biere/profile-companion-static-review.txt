@@ -1,0 +1,104 @@
+Biere-perspective STATIC review: frozen default profiling companion V1
+
+Reviewed manifest SHA256:
+fb5d6803f06a0ab83c0019138cfd41d7093bc0c803008402254b37d588726596
+Baseline789bf99346d41a30f1b454ff58385b6f8a2961a9;
+candidate30e66853832d98bcfaada296d892157b95a8150d.
+Reviewed profile-draft README, Lemire measurement brief, source/plan/bindings,
+both shadow patches, counter header, driver, exact allocator hook and selfcheck.
+Individual reviewed-file hashes are in profile-companion-review.sha256.
+Only read/hash utilities were used: no target import, execution, parsing with a
+language tool, compilation, lint, test, profiling or timing. V1 was not edited.
+
+Verdict: no confirmed C++ measurement-path blocker found. One prose correction
+(D1 below), plus explicit external qualification/reporting gates, must be carried
+into the separately versioned execution contract. This is not runtime approval.
+
+D1 — clarify contains argument lifetime by pass (README contains paragraph).
+  Operation mode starts phase_scope inside measured_set::contains (driver188-192),
+  after argument evaluation, and closes before the argument temporary dies.
+  Thus the final CPre initial-state query's construction/destruction are OUTSIDE
+  that per-call contains snapshot. ROI mode starts/stops the original kernel's
+  timed window around the call, so the same temporary is INSIDE its final-CPre
+  contains ROI. Captured-contains queries already exist before either contains
+  window. These are intentionally different ownership boundaries; the README
+  statement must be scoped to ROI mode, not read as applying to both passes.
+  No kernel or C++ instrumentation change is required. Preserve V1 and version
+  the prose/bindings correction before collecting/reporting the next draft.
+
+Execution/reporting gates (not defects in the declared source-only plan)
+  G1. Driver253/259 passes source_verified=true. The frozen invocation generator
+      MUST join actual-pin source-oracle AND exact backend/vector/width clean
+      qualification before emitting a runnable profile spec. Historical status,
+      file existence or a manual assumption is insufficient. Every declared
+      unqualified identity remains an unprofiled status row. A30s instrumented
+      success must not upgrade clean30/2/2 censorship; paired claims need both
+      sides qualified and successful. Preserve missing/partial/failure rows.
+  G2. ROI finish(true) reports has_result=0 with placeholder size/capacity0.
+      Downstream must treat these descriptors as UNAVAILABLE, not as empty
+      results, zero retained bytes, or measured private rank capacity.
+  G3. Require process/scope success AND kernel_check=pass AND exact3/4 ROI
+      sequence. Bind actual dependencies, flags, compiler/link/libraries and ELF
+      hashes separately from clean maps; leave clean RANK_STATS undefined.
+
+Source findings supporting the measurement design
+  - Overlay changes add only symmetric hooks/locals. rank_of retains its exact
+    coordinate loop and return; intersection queries are evaluated exactly once.
+    Candidate's first failed preflight query is recorded once, and the later
+    reused-failure branch deliberately adds no query/hook (candidate overlay
+    260-280). Baseline records its real loop in order. No extra dominance call,
+    oracle preflight, sorting, backend field or layout change was found.
+  - Counters/header26-65 use allocation-free noexcept hooks under an explicit
+    active gate. They distinguish started/completed rank calls, planned versus
+    completed active-coordinate counts, attempt versus completed Vector work,
+    intersection entry/completion and no-query reasons. Partial throwing rank
+    reads are not measured; signed8 shipping traces are not exception probes.
+    Self/empty paths do not invent failed positions; null is preserved.
+  - Vector driver24-72 adds no fields and checks value type, sizeof, alignment
+    and both nothrow move traits for the original scalar/SIMD types. Its methods
+    call the base operation once. This preserves candidate safe_moves selection;
+    it does not claim identical shipping machine code. Base-return adoption
+    moves are labeled separately from backend relocation.
+  - Operations use measured_set with the original kernel in verification mode;
+    ROI mode uses the backend directly under the original START/STOP boundaries.
+    They run in separate processes, so per-call reset cannot erase a whole-CPre
+    peak. No nested wrapper/reset was found. Kernel clocks in ROI mode include
+    diagnostic activity but are discarded, never decision evidence.
+  - phase_scope closes/copies all counters/heap data before size/capacity
+    inspection and C stdio reporting (85-91,158-165). Fixed counter/frame storage
+    and disabled active flag keep serialization outside the observed snapshot.
+    Capacity access on this specific rank backend is nonmaterializing.
+  - Per-operation constructor retains caller staging; union/intersection retain
+    RHS. Those live deltas are not absolute index retention. Original kernel
+    build/rebuild windows close after matrix_check::build staging dies. Rebuild
+    is a second fresh object while the first lives. Whole CPre includes bottom,
+    mapped and RHS destruction but leaves the frontier and persistent scratch;
+    its delta is net new-minus-old. Final cleanup occurs outside all phase ROIs.
+    The metadata parse remains alive while the original kernel parses again:
+    cgroup peak includes both logical copies and is a different metric.
+  - Requested new/new[] allocation count/bytes/live peak are distinct; direct
+    malloc, allocator/tracker overhead, mappings, stack and RSS are excluded.
+    Private rank capacity is not inferred from generator capacity. The exact
+    reused hook hashes to18e8b12537fb3feb44853f44ec0bfb3b772a05fc382e7e23d62ebff22b69aeeb.
+
+Positive selfcheck nonvacuity (source review, not a claim it was run)
+  The equal two-point intersection exercises actual copies/allocations on the
+  baseline and requires their absence on candidate; baseline-positive sentinels
+  prevent a dead copy/allocation hook from passing. Stable tie order gives a real
+  first failed query at index1 in the restricted case, with two queries. Fresh
+  build requires two rank entries/completions, four active coordinates and a
+  positive allocation count. Post-scope heap equality checks both release and
+  caller staging cleanup. Both original Vector flavors are instantiated.
+  Explicit move/meet/partial-order counters are source-reviewed; this is not a
+  runtime assertion that every individual field already passed a positive test.
+
+Inventory/scope
+  Exact copied standard12 plus larger5 eligible plans retain17 already-seen TRAIN
+  identities, compatible scalar+SIMD/native SIMD, two separate passes, one round,
+  proposed30s profile cap,8G/no-swap. Existing max/native proof and actual artifact
+  bindings remain required. Do not describe reused previously seen held-out data
+  as fresh held-out evidence. No new controls are silently scheduled here.
+
+Skipped: all runtime/compile/profiling checks and production changes. Remaining
+risk is execution provenance/consumer interpretation, not an observed algorithm
+change in these hooks; D1 needs its planned versioned documentation correction.

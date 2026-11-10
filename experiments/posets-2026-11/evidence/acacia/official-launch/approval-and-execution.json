@@ -1,0 +1,119 @@
+{
+  "status": "root-approved; executing unchanged historical proposal",
+  "authorized_utc": "2026-11-09T01:26:51.229988+00:00",
+  "authorization": "Root explicitly approved exact reviewed proposal, selfcheck, dry-run and complete22860-row primary campaign.",
+  "approved_historical_proposal": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/review-checkpoint.json",
+      "sha256": "e3a69722d7972f61ac5d9b6185cd9d4221f6468dcee94a01addee80753eb49af"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/arms.json",
+      "sha256": "904edcd5739b273b7e932a5ec34f3546da6409d3e0ec3ace536a7e810e22f6cd"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+      "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/gate-summary.json",
+      "sha256": "759d1a6c0471081abb2ba87ceb381fb4dd0d7d41ab55fd60ea6f68a46bc30cc4"
+    }
+  ],
+  "review_approvals": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/final-acacia-pre-primary-audit.json",
+      "sha256": "038e12fb8be6a8263c24b7ecdc1c28242e335e03370703866c805ea5ea0a2c47"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/barbosa-review/final-acacia-proposed-package-audit.json",
+      "sha256": "380509ed734878f35e5963e4e9f44a6ccb91b69231c2aeb1989a6eaa73f3405b"
+    }
+  ],
+  "driver": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e"
+  },
+  "selfcheck": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/selfcheck.py",
+    "sha256": "eb0f3ec78cc0ec07299236e51b41ce1faa5cd0faf3ad14f889fee341356d3a1f"
+  },
+  "environment_file": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "sha256": "434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035"
+  },
+  "gates": {
+    "selfcheck": {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/selfcheck.py"
+      ],
+      "returncode": 0,
+      "stdout": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/selfcheck.stdout",
+        "sha256": "a3b0e304dda7627de30aa6f5f2908878cceb367d6819f67246764dc58c9e520d"
+      },
+      "stderr": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/selfcheck.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "dry-run": {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+        "--arms",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/arms.json",
+        "--output",
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109",
+        "--batch-size",
+        "32",
+        "--seed",
+        "260617",
+        "--dry-run"
+      ],
+      "returncode": 0,
+      "stdout": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/dry-run.stdout",
+        "sha256": "06fbaa723822dfcc8e20f73766d5aa10598c835a50209ea2fef65426b461ec26"
+      },
+      "stderr": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/dry-run.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/arms.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "expected_arms": 15,
+  "expected_rows_per_arm": 1524,
+  "expected_total_rows": 22860,
+  "settings": {
+    "flags": "",
+    "preset": "otf_sparse_formula_parity",
+    "cap_s": 17,
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "batch_size": 32,
+    "seed": 260617,
+    "allowed_cpus": null,
+    "cpu_quota": null
+  },
+  "official_frozen_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/frozen.json",
+  "progress": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/progress.json",
+  "historical_proposal_bytes_and_build_locations_unchanged": true,
+  "resumption_rule": "On contention75 preserve and resume identical command after idle; truth conflicts stop for review."
+}

@@ -1,0 +1,88 @@
+Conditional default PMU draft: Biere-style static readiness audit
+2026-11-09. No reviewed source/script was executed/imported; no compilation,
+tests, PMU probe, trace workload or clean/original-source edit was performed.
+
+Reviewed source-manifest SHA256:
+ca19ef93dc40829204a4443651f2050f8df750ab6fddacfde6cc8de2e098f66e
+All seven listed draft-file hashes match. The private driver diff against the
+actual baseline is exactly the supplied two hunks; candidate original driver
+has identical bytes. Both pinned kernels hash ec80bfbee63b2e483769a34ebbcaface6c2fb368d1789deed59cc6047e55a18f.
+The event_state/pmu_group slice is byte-identical to the saved phase-one source.
+
+Disposition: coherent conditional readiness, with one minor evidence-wording
+correction below. No execution approval follows. Actual work/heap interpretation,
+root activation, concrete matched source/build/run bindings and exclusive lane
+release remain prerequisites. There are no concrete PMU build/run specs or future
+ELF/dependency/runtime hashes to approve yet.
+
+Source and ROI findings:
+- No rank overlay, measured Vector/set, allocation hook, rank-stat field, kernel
+  change, annotation or proposed optimization/global-flag change is present.
+  The full original rank-selected registry retains scalar and SIMD instantiations.
+  Saved actual789/30e compatible/native command/link origins are bound; later
+  concrete recipes must retain their entire O3/LTO1/NDEBUG/native/width context,
+  changing only private source/include and isolated output/depfile destinations.
+  Actual dependencies must prove correct role headers and no shadow rank source.
+- Only collector whole CPre and RR552 build, each compatible/native, are declared:
+  four cells, two roles, three A/B,B/A,A/B pairs =24 calls. Require exact bound
+  trace/capture identity, rank/SIMD selection, rounds1/detail0 and phase/width/CPU;
+  the four-call count alone cannot prove arbitrary CLI arguments mean that ROI.
+- Original matrix-cpre.hh parses before all hooks. Build call0 includes coordinate
+  and V staging plus backend construction; staging destruction precedes STOP,
+  returned set destruction follows. CPre call1 includes bottom accumulator and
+  apply/union/intersection scoped temporaries; final frontier survives STOP.
+  Scalar result/membership validation and subsequent contains/rebuild calls are
+  outside the selected region. No additional dominance comparisons were added.
+- Check mode opens no perf events and requires zero hook/capture calls; original
+  verify-only path supplies that behavior. Measure mode enforces nonnested hooks,
+  exactly four complete regions and one capture. Groups open disabled before
+  parser/registry work and reset/enable only at selected START. Selected STOP
+  disables before reading/printing. Kernel exceptions/return failures retain
+  nonzero exit and/or invalid ROI; partial counters cannot validate that sample.
+
+PMU/control interpretation:
+- Original generic grouped events are cycles0/0, instructions0/1, L1D read miss
+  type3/config65536 and LLC read miss type3/config65538. They are Linux generic
+  encodings, not raw microarchitecture events or a guarantee of L2 coverage.
+  Per-thread pid0/cpu-1, inherit0, kernel/hypervisor exclusion, pinned leader,
+  GROUP|ID|enabled/running format15 and CLOEXEC are unchanged. CPU affinity must
+  equal {2}; unavailable CPU2 has no fallback.
+- EINTR retries and open/ID/reset/enable/disable/read errors remain explicit.
+  Exact read size and kernel-ID joins gate available counts. Denied/unsupported,
+  leader-unavailable, unscheduled, invalid-time and multiplexed records survive.
+  Kernel/ROI success is separate from pmu_core_usable: exit0 alone is insufficient.
+  Require group ok, core IDs available and enabled==running>0; use only matched
+  available cache events. Retain raw group IDs/counts/encodings/times/errno, never
+  replace missing events with zeros, scale multiplexed values or expand retries.
+- Counts include the fixed hook/control path adjacent to the original ROI and
+  diagnostic compiler context; they are not unperturbed clean clocks. Library
+  clocks must remain discarded. Natural prior process cache state differs from
+  cold simulated caches, requested heap and retained capacity. Three pairs and
+  especially small/noisy LLC counts may support no hardware conclusion.
+
+D1, minor evidence wording (not a kernel/control defect):
+STATIC-CHECKS.json:17 says original --metadata proves both vector flavors.
+Original metadata at downset-bm-pmu.cc:530-536 emits backend names, not vector
+names; rank-pmu.cc's original_vector_flavors=2 is a literal. Both instantiations
+are instead supported by exact source at downset-bm-pmu.cc:374-375 and unchanged
+register_maker<false,POSETS_MATRIX_BACKEND>. Clarify that proof split in the later
+frozen plan: metadata verifies backend/width; reviewed source/dependencies establish
+the two original V instantiations. No extra workload or production field is needed.
+
+Remaining gates: interpret real work/heap first; separately freeze/review four
+matched builds, metadata/dependency/library closure, actual-pin source-qualified
+eight new backend checks and bounded24 call specs using the existing8GiB/no-swap
+scope. Preserve all compile/semantic/PMU/resource/timeout failures. PMU failure is
+not a zero, longer diagnostic success never upgrades a clean censor, and paired
+claims require both valid sides. Keep paired-median and separate-median estimators
+distinct. No new optimization recommendation is made by this readiness audit.
+
+V2 doc-only follow-up reviewed, D1 resolved:
+V2 manifest 0379bd336017b8c214421377a1d7118aac5cd6316ebfc0b6e0984155e3709915;
+v1-to-v2.patch fb2fe7ca0206fc2c11d061343aeb30c77356faa8080cdbe6ad5fcaf4f4618e74.
+All eight V2 file bindings match. STATIC-CHECKS now limits metadata proof to
+backend registry/width and cites exact CLI source for both vector instantiations;
+README explicitly calls original_vector_flavors=2 a literal, not an independent
+probe. Three C++ files, CLI patch and plan hashes are unchanged from reviewed V1.
+No remaining confirmed static finding. Readiness is still conditional, with all
+activation/build/qualification/artifact/control gates above outstanding.

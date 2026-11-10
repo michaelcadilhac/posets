@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "post-style source freeze; affected runtime reruns in progress",
+  "baseline_commit": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "production_base_commit": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+  "source_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+  "supersedes": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v2",
+    "manifest_sha256": "394519c471fe98c6f7363bd1913a644b2c11eca4a62a71ad6b6b4f740900a970",
+    "patch_sha256": "0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60"
+  },
+  "patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+  "v2_to_v3_patch_sha256": "4090f6eae3201b3e8d0c115e0ddc24cb718ffa5cde03b504ec06c98134c5f155",
+  "files": [
+    {
+      "path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+      "sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+      "bytes": 11984
+    },
+    {
+      "path": "tests/rank-stats.cc",
+      "sha256": "14fab172b40981aca6b283a1809463ff69aa6888d7237ec1ab4313ef95f4a393",
+      "bytes": 6495
+    },
+    {
+      "path": "tests/meson.build",
+      "sha256": "dfed6368d6434cd9c213438f3f42426c577c463e0c237dd246db36e94e74afae",
+      "bytes": 13337
+    },
+    {
+      "path": "tests/rank-bucketed.cc",
+      "sha256": "932b411a54247a42153024ee6c4b779bdde04d469e45a0f8be7989369a5c3d7b",
+      "bytes": 24477
+    }
+  ],
+  "algorithm_assessment": "Same optimization and exception-policy flow. Production readability changes remove optional typename, add braces, spell bool-to-size_t conversion explicitly, infer the cast result type, and format includes/wrapping. Test changes are const/attributes/parentheses/separate declarations/if spelling and narrowly justified diagnostic annotations. No checks, expectations, counters, thresholds or public API behavior weakened.",
+  "read_only_patch_check": {
+    "baseline_source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99",
+    "returncode": 0
+  },
+  "performance_or_replay_executed": false
+}

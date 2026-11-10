@@ -1,0 +1,39 @@
+{
+  "driver": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+    "sha256": "b18f0e41750477e7d46094adcc26284f65ad27e2a465b0020a689e9b858518d4"
+  },
+  "maps": [
+    {
+      "label": "baseline",
+      "production_base_revision": "7c407128326583abbb137fd3832857ed506e20fb",
+      "measurement_revision": "6bc77ccf5d113edcdc62d9128bb6628565f19c7d",
+      "binary_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712/build-replay-release/per-backend/binary-map-explicit-report-anchor.json",
+        "sha256": "d8c90678264cd12d3d06a5419c77f11130ce1fbc28481f5446c7f00f79f593fe"
+      },
+      "provenance": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-full-validation/baseline/provenance.json",
+        "sha256": "2ba56ce14eb5d91f94152e0c9758251ffa577bfec01c854a570fe39dba71d51a"
+      },
+      "actual_ELFs": 48,
+      "status": "full_map_accepted_release_and_unchanged_checks_pass"
+    },
+    {
+      "label": "final",
+      "production_base_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "measurement_revision": "c03dfb076b4321a60a9dca728e2cfee0050cb40b",
+      "binary_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca/build-replay-release/per-backend/binary-map.json",
+        "sha256": "77483a967d6299dad9b9850e973f300d4d96465f1bd52b1531ba0c8ec8a5c877"
+      },
+      "provenance": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-full-validation/final/provenance.json",
+        "sha256": "eb1d41748705ba615cae1cedb8926bfc742bc9f1ae5d9586335ef83c874ab010"
+      },
+      "actual_ELFs": 48,
+      "status": "full_map_accepted_release_and_unchanged_checks_pass"
+    }
+  ],
+  "performance_commands": 0
+}

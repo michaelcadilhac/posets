@@ -1,0 +1,24 @@
+{
+  "status": "static source preparation only; no draft imports, compiles or runtime checks",
+  "source_checks": {
+    "inverse_cli_transform_restores_exact_original": true,
+    "copied_event_control_structs_verbatim": true,
+    "private_cli_mutations": [
+      "replace CALLGRIND Valgrind/fallback block with PMU hook include",
+      "rename original main for minimal wrapper lifecycle"
+    ],
+    "unchanged_kernel_and_library_headers": true,
+    "no_original_source_build_or_input_mutations": true
+  },
+  "anticipated_checks": [
+    "Verify new manifest/all input hashes and exact two-hunk CLI patch; reject unlisted dependency or production diff.",
+    "Review exact reused event/control slice and lifecycle including failed-region, unsupported-event and check-only paths.",
+    "Compile four matched stats-off source/width roles serially in the existing scope; save argv/cwd/compiler/link/dependency/ELF/library records.",
+    "Run original --metadata on each ELF in mode=check: establish rank-only registry and expected width; no region captures. Both original vector instantiations are supported by the exact bound CLI source at lines374-375, not independently by --metadata or the literal original_vector_flavors=2 marker.",
+    "Bind the already reviewed actual-pin source-oracle/backend report chain and trace/meta/capture hashes for indices0/1.",
+    "Run8 independent original --check=replay backend checks in mode=check: kernel exit0, zero region/capture calls, actual rank/SIMD selection and exact source/header bindings.",
+    "Freeze/approve all32 check/measurement commands plus four metadata records and bounded resource specs before PMU execution.",
+    "For24 PMU calls, require semantic+4/1 ROI markers, CPU2, exact phase/width; separately assess PMU core/cache validity from raw IDs/status/enabled/running, not exit0 alone.",
+    "Retain3 paired raw counts/ratios and two labeled estimators; unavailable/partial/timeout data remain missing, never zeros or clean timing evidence."
+  ]
+}

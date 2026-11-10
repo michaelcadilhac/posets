@@ -1,0 +1,94 @@
+{
+  "actual_elf_identities": [
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/acacia-bonsai-deadline-sharingtree-control",
+      "binary_sha256": "8f7266802a851c8fe175bb6ee856206cf3a3e401aaf2f61c86b2d37f0fd64f58",
+      "forest_overlay_sha256": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a",
+      "label": "forest-map-control",
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      }
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/acacia-bonsai-deadline-sharingtree-current",
+      "binary_sha256": "00397ba89fc026b30f9f859ef2ea50eea3d47b69fc2420edfed6d2c33dbaec38",
+      "forest_overlay_sha256": "67d6ce5584dc577b394a9b3a1e76c2c6c0db14df2055e33b5e0345da3799400a",
+      "label": "forest-current-stamps",
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      }
+    }
+  ],
+  "after": "forest-current-stamps",
+  "arms": {
+    "bytes": 2466,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/arms.json",
+    "sha256": "9dd0bc68f21714f5955c71bdc70fd4adba88def7604c4497b463bbb531991812"
+  },
+  "backend": "sharingtree",
+  "before": "forest-map-control",
+  "checks": {
+    "actual_compile_link_commands": 6,
+    "actual_runtime_libraries_per_elf": 8,
+    "all_successful_scopes": "8G/no swap; no OOM or timeout; UNREAL smoke native exit 1 is expected",
+    "assertion_forest_fixtures": 2,
+    "boolean_variant_vector_dimension_cases": 16,
+    "common_plumbing": 4,
+    "known_verdict_smokes": 4,
+    "memcheck": "0 errors, 0 bytes in use at exit on both sides; positive fault-hook assertions retained",
+    "portable_memcheck_runs": 2,
+    "unchanged_reused_acacia_objects": 17
+  },
+  "closure_scope_record": {
+    "bytes": 2843,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/records/40-close-gates-a1.json",
+    "sha256": "1b078190ee661fbc6faef54f2e982c74d2971cd4725347e473d47d99468bf4a6"
+  },
+  "cohort": [
+    "Alarm_a5f99bc6.ltl"
+  ],
+  "common_context": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/common-context.json",
+    "sha256": "ef8c28f2cd3e4b6d1a09c7371bb6c36d392570b6367d78a87bbd26b8486cc269"
+  },
+  "expected_paired_repetitions": 5,
+  "failure_classification": [
+    "Sandbox systemd user-bus denial; retried with authorized bus access",
+    "Configuration verifier first compared unordered options as a list, then checked a not-yet-generated version header; original diagnostics preserved",
+    "Postbuild verifier string/Path metadata bug, then incorrect expectation that -V exits zero; corrected to existing Acacia exit 2 with exact text"
+  ],
+  "gates": {
+    "bytes": 14409,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/GATES-COMPLETE.json",
+    "sha256": "a4c82129840361acde17be24ad4333f233fe68326727b6c45e6076ea05e6c4f1"
+  },
+  "not_done": [
+    "Any paired performance calls or performance conclusion",
+    "Rank, KD, trie, capacity, hash, or simple-wrapper control builds",
+    "Production source/PR mutation"
+  ],
+  "paired_ratio": "current stamps / map control",
+  "precompile_review": {
+    "bytes": 4146,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-forest-selected-precompile-review.json",
+    "sha256": "6b17ea514e35915dbfbd7b135f7908a8efbe36fe7a18056bc6af02b973a4e321"
+  },
+  "preservation": "Build/cache/source writes confined to the new task-owned common/cache roots and execution evidence; old frozen source artifacts remained read-only.",
+  "proofs": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/evidence/control-a3/proof.json",
+      "sha256": "f1f774ec70e505e5631ccfbb5029f98903f207ac5cd94c165e8d8a0f9a891ea5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/evidence/current-a1/proof.json",
+      "sha256": "35309fbd8d6707e8fb43f95f18eda241163989b10e1adde0f64143346252c35b"
+    }
+  ],
+  "status": "build/gates complete; compiler/check lane released; paired measurements require separate root release"
+}

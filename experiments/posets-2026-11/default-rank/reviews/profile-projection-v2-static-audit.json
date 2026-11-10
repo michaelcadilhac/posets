@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Exact parser-only V2 correction approved at source level; PROFILE-PROJECTION-01 closed. No remaining static blocker found. Offline tests/projection/actual captured-profile acceptance remain unexecuted and separately gated.",
+  "exact_inputs": {
+    "source-manifest.json": "b936a10d165a812b0d68d976c9d21f9548f91bea957058e1f0274a1c1c237598",
+    "project_profiles.py": "0f5c8019cc77f205f5e4442ac9970bec4213bd17d63140fccf4573173e3423b9",
+    "test_project_profiles.py": "cb50e4f0fbc4096cefc540759925165fb53806c1c248390ef84cd7f30563c157",
+    "v1-to-v2.patch": "d38e61eb87adfbac956cba729c9f29add489fc4ef101b1a63ee8cce02f2e21ca",
+    "stdout-schema.json": "e8b1721d17e271d0dd115f9d9f5c2c954f7a74443e7425a8e6e89cb9ac128c2a",
+    "README.md": "05871641ba28bc0b22a9e40c4ac70dbc16d6d2695a308a5640f476178382a9ab",
+    "input-bindings.json": "9d22839687cd86fbaa37d0b9770dbfede0aba44254539eae7a9c4d166a7879da"
+  },
+  "prior_review": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-projection-v1-static-audit.json",
+    "sha256": "333d125cb6b7f19f87487c479c3d34a874c481f21e3ad1d54ee73fb5d2c5f0e9",
+    "V1_preserved": true
+  },
+  "source_binding_checks": {
+    "V2_inventory_files": 8,
+    "V1_inventory_files": 6,
+    "hash_size_mismatches": [],
+    "producer_hash_matches_schema": true,
+    "actual_Cpp_phase_keys": 42,
+    "schema_phase_keys": 42,
+    "missing_or_extra_phase_keys": [],
+    "project_and_main_tail_identical_to_V1": true
+  },
+  "correction_assessment": [
+    "Exact field sets now cover all11 metadata,4 layout,42 phase and3 cleanup fields emitted by the frozen C++ source; duplicate/missing/extra fields fail closed. Independent source-text extraction confirms the42 phase names exactly.",
+    "All36 phase unsigned fields, size_t metadata/layout/cleanup quantities and optional failed-query index use canonical ASCII decimal with correct unsigned64 bounds for the accepted x86-64 ABI. Layout sizeof/alignment are positive; both deltas retain signed64 bounds including negative values.",
+    "Instrumentation/success/has_result/traits/vector/pass/selector/kernel tokens and the complete seven reason literals match the actual producer/counter-overlay source. NaN/fractions/exponents/Unicode/overflow/malformed tokens cannot pass the numeric validation.",
+    "Both live deltas remain arbitrary valid signed64 values. No cleanup==0, per-row entry==exit, counter relation, inferred retention or new exact operations count/order constraint is added.",
+    "has_result0 size/capacity placeholders remain lexically checked but normalize toNone even when nonzero. has_result1 descriptors remain available; null failed-query sentinel remainsNone.",
+    "Existing exact contains3-region/CPre4-region ROI sequences and per-call operations phase-name policy are retained. Metadata mode now consistently selects the matching policy.",
+    "The projection/main tail is byte-identical to V1. Authority/hash/source/ELF/library/capture bindings,204 retained rows/192 eligible specs/12 commandless rows, argc4 argv, cwd/env/wrapper/30s limits and exclusive outputs retain the prior source review."
+  ],
+  "test_source_assessment": [
+    "Complete positive fixture independently lists every emitted phase field instead of importing the implementation schema. It explicitly preserves negative phase delta, nonzero cleanup delta, unavailable nonzero placeholders and available descriptors.",
+    "Sources remove every field from metadata/layout/phase/cleanup, exercise unsigned malformed/negative/overflow tokens and positive layout constraints, signed64 boundaries/null-or-index, flags/reasons/unknown phases, duplicate/extra fields and ROI loss.",
+    "Operations positives deliberately remain one synthetic allowed phase per test so they do not introduce an unreviewed operation-count/order contract. These are source-level tests only, not executed results."
+  ],
+  "remaining_actionable_static_blockers": [],
+  "limits": [
+    "No source/helper/test import, syntax compile, unit test, projector run, ELF execution, compiler/profile/timing workload was performed. Text/hash/source comparison only.",
+    "Closure/build/eligibility/C++ source and artifacts are unchanged; no rebuild or broader gate is requested by this parser correction.",
+    "Actual offline tests and generated spec/output acceptance remain the next separately authorized stages. No captured-profile outcome or clean-censor/performance claim is established."
+  ],
+  "attribution": "Coder authored V2. Root/reviewer independently overlapped on the V1 schema gap; no unique detection credit is claimed. This review independently checked the narrow correction against actual producer syntax/types."
+}

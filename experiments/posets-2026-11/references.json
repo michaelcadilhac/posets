@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "scope": "Derived index of selected frozen bindings, not an assertion that external local paths are publicly accessible. Large referenced artifacts were not rehashed during package preparation.",
+  "task_only_acacia_patch_allowlist": [
+    "benchmarking/posets-matrix.py",
+    "meson.options",
+    "src/meson.build",
+    "src/solver/solve_game_vector.cc",
+    "src/version.cc",
+    "subprojects/posets",
+    "tests/check-config-frontends.py",
+    "tests/check-version.py",
+    "tests/pytest/test_no_benchmark_hardcoding.py",
+    "tests/pytest/test_posets_matrix.py"
+  ],
+  "pins": {
+    "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+    "production_posets": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+    "public_harness": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "replay_baseline": "7c407128326583abbb137fd3832857ed506e20fb",
+    "pristine_anchor_posets": "e167f43646b880c69046bab7110dbb327686c024"
+  },
+  "choice_freeze_evidence": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-stop-on-correctness-summary.json",
+      "sha256": "d04f191d460ad9dae8bb8c7744b3551b4fe93b4b67d1348324f106676bfad944",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-large-train-complete-frame-eligible-stop-on-correctness-summary.json",
+      "sha256": "240e2a97fffd8a05dcbe92ee14e74b039c2395ea78546bb00cd7f2b9cb2152c0",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-TRAIN-digest.json",
+      "sha256": "4a8e670dd1503ee0a9115e3dcab9d37821c1415ec38f3641f4148d7a2b3305a2",
+      "packaged_path": "evidence/replay/per-backend-TRAIN-digest.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-large-TRAIN-complete-frame-digest.json",
+      "sha256": "80d2bb86c7053df07c83568a01412c8cf237f97f95322f0c52ff02ad43dc44eb",
+      "packaged_path": "evidence/replay/per-backend-large-TRAIN-complete-frame-digest.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/saved-frame-audit-v1-checkpoint.json",
+      "sha256": "89ff4e236c7184abd2e9d6c305902bd4c07917688e5a6f6b9bbb7c3ce3b715c2",
+      "packaged_path": "evidence/replay/saved-frame-audit-v1-checkpoint.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/heldout-complete-frame-plans-checkpoint.json",
+      "sha256": "af85f3a145d3a9ae4cf127af30ca8be503059c53f9f44bfadb42f7ce48a8a22c",
+      "packaged_path": "evidence/replay/heldout-complete-frame-plans-checkpoint.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-final-train-summary.json",
+      "sha256": "efa7f2d523303d6ce2bd372209e237214e1b8f84faa05229a3d108e00577c846",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/per-backend-train-interpretation.txt",
+      "sha256": "6412ba33fb64e7c07a51c78cffbfeb1b9d109eff58a9968c2f0ef3267eca76ca",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-hash/final-memory-cache-table.json",
+      "sha256": "ea2224a9859cdd72c62546f74c5ea4b75e9df3a77b7c6330b421cfc4caeba578",
+      "packaged_path": "evidence/memory/final-memory-cache-table.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/ci-42513707768-summary.json",
+      "sha256": "7321b1fd3b1dbef2527d54ae177cde2a3053d0cff812139f1bf122b7c0cb82e1",
+      "packaged_path": "evidence/checks/ci-42513707768-summary.json",
+      "access": "embedded exact copy",
+      "note": "Selected evidence bound by pre-held-out choice freeze; treatment-specific interpretation remains in original artifact"
+    }
+  ],
+  "excluded_large_build_artifacts": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/intro-targets.json",
+      "sha256": "1dfcc9f8097cf3b1ac4e0490bcdde9660d4f276a0e85ce452985cf1e9215a830",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Explicitly excluded from compact package; hash copied from final checked build provenance"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/intro-tests.json",
+      "sha256": "902db387c458d89a80441f223b07e031a3e45ad5ab02cb92f017e2a4a9864cfc",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Explicitly excluded from compact package; hash copied from final checked build provenance"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/liboxidd_ffi_c.a",
+      "sha256": "0dcbbd30dc1b1dffc506b8cd2b11a0c658b913b2876c35758540eb3faeef3920",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Explicitly excluded from compact package; hash copied from final checked build provenance"
+    }
+  ],
+  "required_upstream_runner_sources": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/suite_paths.py",
+      "sha256": "262c750c2ff0f51ec508ecebd52b08438e08ed0fda1a31dcc76d7076cd0ad872",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/cactus-report.py",
+      "sha256": "9929471d26f69a44b05b2737e28c9f1d0a1e0a330c40c5ec4e46842c65c2aad1",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/make-panel.py",
+      "sha256": "950ca408bbe2267e8e33dc313375e61ac46c0b383dee5f4a763c0b2a6207bbfd",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/family_names.py",
+      "sha256": "26dd858dba18cd4e5d889800167bcd2898783984440210767407c7318605871c",
+      "packaged_path": null,
+      "access": "retained task-local locator; no public archive supplied",
+      "note": "Obtained from the pinned Acacia clone; not vendored a second time"
+    }
+  ],
+  "raw_evidence_access": {
+    "public_archive_url": null,
+    "retention": "Original task-local raw reports, traces, scopes, source/build snapshots and binaries retained at locators in copied manifests/digests",
+    "limitation": "Primary native/memory numerical rows embedded; captured replay workloads, full logs and binaries remain external task-local evidence",
+    "embedded_primary_archive": "evidence/acacia/final-primary/phase-one-native-evidence.tar.gz"
+  },
+  "primary_results": "Complete: 22,860 rows; reviewed final tables and verified numerical archive in evidence/acacia/final-primary",
+  "final_table_postprocessor": {
+    "path": "scripts/acacia-campaign/make-final-table.py",
+    "sha256": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c",
+    "status": "Executed after completion; all native/scored rows and both comparators checked; final table independently reviewed"
+  },
+  "excluded_original_work": "No original checkout or nested worktree/submodule WIP, ignored/untracked sweep, corpus, dependency cache, ELF/object/build tree or final partial primary row is bundled",
+  "default_followup": {
+    "baseline_harness_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "baseline_production_headers_equivalent_to": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+    "candidate_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+    "absent_from_phase_one_results": true,
+    "ci": {
+      "status": "completed success at exact30e, not future package HEAD",
+      "run_id": 42651196242,
+      "packaged_path": "default-rank/evidence/ci/30e6685-summary.json"
+    },
+    "clean_replay": {
+      "status": "completed seen TRAIN; standard12 plus complete-frame larger5",
+      "fully_paired_metric_cells": 80,
+      "source_censored_metric_cells": 6,
+      "estimators": "P=median of matched ratios; V=ratio of separate variant medians; not interchangeable",
+      "raw_cells": [
+        "default-rank/evidence/clean-replay/standard-train-cells.tsv",
+        "default-rank/evidence/clean-replay/larger-train-cells.tsv"
+      ]
+    },
+    "instrumented_profiles": {
+      "status": "completed;192 accepted calls,12 qualification-censored pass rows unprofiled; instrumented clocks discarded",
+      "paired_record_count": 96,
+      "paired_phase_count": 990,
+      "observable_result_pairs": 822,
+      "unavailable_ROI_result_descriptors": 168,
+      "all_paired_requested_heap_measures_match": true,
+      "captured_noop_intersections": 0,
+      "extra_move_assignment_phase_pairs": 267,
+      "full_paired_data": "default-rank/evidence/work-and-cache/work-pairs.json",
+      "completion": "default-rank/evidence/work-and-cache/profile-completion.json",
+      "limits": "Requested C++ payload, not RSS/allocator overhead/shipping object-size proof; per-call RHS/caller-alive vs normalized ROI lifetimes; net delta is not absolute retention; zero cleanup delta is not a general leak proof"
+    },
+    "actual_default_Acacia_followup": {
+      "status": "COMPLETE; independently accepted observed negative outcome",
+      "labels": [
+        "baseline-default",
+        "optimized-default"
+      ],
+      "source_pins": [
+        "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+        "30e66853832d98bcfaada296d892157b95a8150d"
+      ],
+      "cases_per_arm": 1524,
+      "rows": 3048,
+      "cap_s": 17,
+      "memory_max": "8G",
+      "memory_swap_max": "0",
+      "primary_flags": "",
+      "solved": [
+        1369,
+        1368
+      ],
+      "PAR2_total_s": [
+        "5926.874862",
+        "5943.112131"
+      ],
+      "PAR2_delta_s": "16.237269",
+      "gains": [],
+      "losses": [
+        "robot_repair5.ltl"
+      ],
+      "full_resource_and_zero_event_coverage": 3048,
+      "table": "default-rank/evidence/acacia/final-primary/solver-comparison.json",
+      "archive": "default-rank/evidence/acacia/final-primary/default-native-evidence.tar.gz",
+      "attribution_limit": "One unrepeated seen-corpus campaign; independently built private Rust artifact bytes differ; no isolated rank-only cause/general slowdown/synthesis-speedup claim; NO_VERBOSE requested-route bindings/verdicts do not measure route frequencies"
+    },
+    "PMU": {
+      "status": "completed;24 calls/96 user event readings; no scaling,zero fill,retries; clocks excluded",
+      "cells": 4,
+      "pairs_per_cell": 3,
+      "CPU": 2,
+      "events": [
+        "user cycles",
+        "user instructions",
+        "L1D read misses",
+        "LLC read misses"
+      ],
+      "full_paired_data": "default-rank/evidence/work-and-cache/pmu-pairs.json",
+      "completion": "default-rank/evidence/work-and-cache/pmu-completion.json",
+      "summary": "default-rank/evidence/work-and-cache/pmu-summary.json",
+      "limits": "Cycles/instructions improve all pairs in fixed cells; collector L1D regresses; LLC noisy/small; clean elapsed regressions remain unchanged and causally unexplained"
+    },
+    "final_original_WIP_proof": {
+      "status": "COMPLETE; all5x6match",
+      "path": "default-rank/evidence/preservation/public-proof.json",
+      "sha256": "fb4d73102e28cfc8de02abbb6865e1409c261e8aec70b38f604852dc83a0c8e4",
+      "limits": "Raw before/current statuses/WIP filenames not included; ignored/untracked byte contents not compared"
+    },
+    "final_integrated_report_and_review_ledgers": {
+      "status": "COMPLETE outcome-stage reports/ledger snapshots; package audit separate",
+      "overview": "default-rank/reports/final-overview-report.txt",
+      "experience": "default-rank/reports/reviewer-experience-report.txt",
+      "ledger_snapshots": "default-rank/reviews/final-outcome-stage/manifest.json"
+    },
+    "large_private_context_not_embedded": [
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/plan.json",
+        "sha256": "137f2e93460b2437a14143bf8ea1cf1a436b2073d1a2e87230454040dec9aa64",
+        "bytes": 940638,
+        "embedded": false,
+        "access": "Task-local private evidence; no public download URL supplied"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/ACTUAL-ARTIFACT-CLOSURE.json",
+        "sha256": "3f939a8be91e643e68b201357f5c42da3a6d9ee89335aac7b96f0e0b958a8a98",
+        "bytes": 1363435,
+        "embedded": false,
+        "access": "Task-local private evidence; no public download URL supplied"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-INVARIANCE.json",
+        "sha256": "3a8c65130e68489d41342f4e9bbf13a916c97c5eb8a3deed532c5a51f64dc106",
+        "bytes": 4124966,
+        "embedded": false,
+        "scope": "14981checked files,19approved bindings,1211phase-one files"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-preparation-v3/materialized-sources.json",
+        "sha256": "5ac7b6c2c446ead88d68d8cd68caa2fcde5992c5a9145d0884af3e87c36129d2",
+        "bytes": 5959696,
+        "embedded": false,
+        "scope": "Detailed private source reconstruction; exact task-only patches/compact proof embedded"
+      }
+    ],
+    "summary_minimization": {
+      "original_external": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/summary.json",
+        "sha256": "495aad8b1f5101a90e4e96104dce9cfed946a924f71ca3ceab50fbfbef66a0a3"
+      },
+      "projection": "default-rank/evidence/acacia/final-primary/summary-without-host-details.json",
+      "provenance": "default-rank/evidence/acacia/final-primary/summary-projection-provenance.json",
+      "omitted_JSON_pointer": "/cpu_host",
+      "all_other_parsed_keys_values_preserved": true
+    },
+    "hardware_context": {
+      "path": "default-rank/evidence/hardware-context.json",
+      "sha256": "1a32cde95d1fbfb94da9844c07b84db041d6f6189e0271d17369bea33ada8f25",
+      "limits": "Selected saved snapshot fields only; no new probe/fixed-clock claim"
+    },
+    "archive_verification": {
+      "sha256": "5f7e7a96ba2381d0d28d83e369e92c3b477b2e5302b624f85f45526147b145f0",
+      "bytes": 349264,
+      "data_members": 4,
+      "total_members": 6,
+      "rows_per_kind": 3048,
+      "verification": "default-rank/evidence/acacia/final-primary/verification.json"
+    }
+  }
+}

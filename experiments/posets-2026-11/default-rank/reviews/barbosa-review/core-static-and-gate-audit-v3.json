@@ -1,0 +1,231 @@
+{
+  "status": "APPROVE exact coreV3 source correction and bounded executed gate evidence; actual CI18/helper/performance gates remain pending",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "scope": "Independent PM/DEV source-only inspection of V2\u2192V3 correction, plus read-only audit of owner-executed gate evidence. No compiler, test, helper/module import, lint, formatter, model, profiler, solver or timing was run by this reviewer.",
+  "exact_inputs": {
+    "work/default-optimization/candidate-draft-v3/draft.patch": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/draft.patch",
+      "sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d"
+    },
+    "work/default-optimization/candidate-draft-v3/v2-to-v3.patch": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/v2-to-v3.patch",
+      "sha256": "4090f6eae3201b3e8d0c115e0ddc24cb718ffa5cde03b504ec06c98134c5f155"
+    },
+    "work/default-optimization/candidate-draft-v3/draft-manifest.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/draft-manifest.json",
+      "sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02"
+    },
+    "work/default-optimization/candidate-draft-v3/SUMMARY.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/candidate-draft-v3/SUMMARY.txt",
+      "sha256": "5bab8f84b23a549ea71bfb4693c3c2221e7e2c9dd3e5a7098e8f3f2801de093c"
+    },
+    "work/default-optimization/validation-results-v3/VALIDATION.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v3/VALIDATION.json",
+      "sha256": "6e30adef99d8ecc7844463e85921a0d16972f8d4a27aec41c0cef30bd9d4ceb4"
+    },
+    "work/default-optimization/validation-results-v3/VALIDATION.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v3/VALIDATION.txt",
+      "sha256": "4bd2b2352dd280d49df550645858de426168ecb3de81513f2c0a452f73cb13d4"
+    },
+    "work/default-optimization/validation-results-v3/evidence-inventory.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v3/evidence-inventory.json",
+      "sha256": "835788f8577588cbb35e17d26234158d915b552369bef88d3be98a5e4ef7bfa9"
+    },
+    "work/default-optimization/validation-results-v3/assertion-width-compile-bindings.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/validation-results-v3/assertion-width-compile-bindings.json",
+      "sha256": "e36c44aefd2e5415b9ed75d4e68b22b392ee0e4fa18dc969ba8b256e587553db"
+    }
+  },
+  "source_authority": {
+    "baseline_commit": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "production_base_commit": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+    "actual_candidate_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+    "all4_source_hashes_match_snapshot_and_actual_tree": true,
+    "files": [
+      {
+        "path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+        "sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+        "bytes": 11984
+      },
+      {
+        "path": "tests/rank-stats.cc",
+        "sha256": "14fab172b40981aca6b283a1809463ff69aa6888d7237ec1ab4313ef95f4a393",
+        "bytes": 6495
+      },
+      {
+        "path": "tests/meson.build",
+        "sha256": "dfed6368d6434cd9c213438f3f42426c577c463e0c237dd246db36e94e74afae",
+        "bytes": 13337
+      },
+      {
+        "path": "tests/rank-bucketed.cc",
+        "sha256": "932b411a54247a42153024ee6c4b779bdde04d469e45a0f8be7989369a5c3d7b",
+        "bytes": 24477
+      }
+    ],
+    "v2_patch_preserved": "0d6c48e55a1a6ba8e3c7898eeb374a47a94837361f62bea755094756f9dddd60",
+    "v2_manifest_preserved": "394519c471fe98c6f7363bd1913a644b2c11eca4a62a71ad6b6b4f740900a970"
+  },
+  "source_assessment": {
+    "production": "No unintended algorithm/order/exception-policy change found. V::value_type alias permits omitted typename in C++20; actual gate flags use C++20. Braces retain the if-constexpr branches. auto initialized from static_cast<size_t>(bool) has the same size_t type and0/1 arithmetic as prior implicit conversion. Include relocation and line wrapping do not alter behavior.",
+    "tests": "Const local inputs/constructed object, attributes, parenthesized index arithmetic, split declarations and mode0/1/else assignments preserve tested values and fault selection. No expectation, assertion or positive failure sentinel is removed/weakened. V2 portable-capacity/floating-tie correction remains.",
+    "contracts": "Central sorted parallel-array/common-dimension/rank-representability/const-copy prerequisites and logical-versus-address rollback/basic guarantee remain; no claim to repair prior overflow/external mutation/consumed RHS is added.",
+    "production_NOLINT_or_configuration_weakening": false,
+    "test_local_NOLINTs": [
+      {
+        "line": 94,
+        "check": "bugprone-random-generator-seed",
+        "justification": "Deterministic differential seed is intentional."
+      },
+      {
+        "line": 209,
+        "check": "bugprone-exception-escape",
+        "justification": "Conditional noexcept probe: false branch is constexpr-discarded when noexcept(true); throwing instantiation is noexcept(false). Base move is the ordinary nonthrowing owned-vector move."
+      },
+      {
+        "line": 215,
+        "check": "bugprone-exception-escape",
+        "justification": "Same conditional-noexcept reasoning for assignment."
+      },
+      {
+        "line": 223,
+        "check": "bugprone-derived-method-shadowing-base-method",
+        "justification": "Intercept operator[] to inject coordinate read faults."
+      },
+      {
+        "line": 234,
+        "check": "bugprone-derived-method-shadowing-base-method",
+        "justification": "Intercept copy() to inject copy faults."
+      },
+      {
+        "line": 271,
+        "check": "bugprone-use-after-move",
+        "justification": "Deliberate self-union no-op contract observation; independent contents/capacity checks remain."
+      },
+      {
+        "line": 413,
+        "check": "bugprone-use-after-move",
+        "justification": "Observe input after preflight allocation failure, before any move is permitted."
+      },
+      {
+        "line": 446,
+        "check": "bugprone-use-after-move",
+        "justification": "Same populated-growth preflight-input preservation probe."
+      }
+    ]
+  },
+  "evidence_integrity": {
+    "inventory_file_bindings": 180,
+    "external_build_bindings": 15,
+    "all195_hashes_match": true,
+    "v3_scope_records_checked": 42,
+    "rerun_plan_bound_specs_records": 39,
+    "all_logs_helpers_and_specs_match": true,
+    "record_scope_limits": "All42saved records retain8G/no-swap, no timeouts/resource-limit failures or positive OOM events. Only nonzero V3 record is the preserved intermediate full-filter tidy attempt.",
+    "current21_ELFs": "Magic/SHA256 checked by reviewer without execution:9GCC debug,9portable Clang,3portable GCC Memcheck targets. Hashes identify current retained binaries; owner records/logs carry historical invocation outcomes.",
+    "current_ELF_bindings": {
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/concept-checks": {
+        "sha256": "1b52b6b9fe7971b9ba2263b72fe245553708c8353d613dae49dd704079476c23",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/empty-downsets-test": {
+        "sha256": "11a693b593a9618c431bafcdbaa8b6cd0d626c21f6cdcab0f4bdc1c85c94f604",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/pruned-concept-checks": {
+        "sha256": "bfbcbba4a2628ef55bb24c0eeb64dddcb9d2c202460d6946b25fae5965e7907f",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/pruned-vector-only-concept-checks": {
+        "sha256": "df4a62e50935cc796fa9a9e7241505dd36de3dd7a3eaad2523267e099e45a276",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/rank-bucketed-compatible": {
+        "sha256": "6235703b1125e37880420354a3cff54117884daf9515c697ba5fc35f12414921",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/rank-bucketed-max": {
+        "sha256": "edcd39f8436ca79147a71a54418633731a60a4852516bb2bcdb527ea9223ff1e",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/rank-bucketed-native": {
+        "sha256": "3bbbc0577029b6fe48b39fc10bf436d59437601dde39611c5a7519b2eab0e7bf",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/rank-stats-off": {
+        "sha256": "540666e9edf7183b91df476cdcd321472a3aa3472093eecac4a0824d98d5ef2b",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-debug/tests/rank-stats-on": {
+        "sha256": "b862723057a46a34d3ed14780a4b9419ca45a201ddd827b27af19856431f2a10",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-rank-compatible": {
+        "sha256": "9e867ee273afcb815320b1b40da2f66c33644c897d3360c557eb4501ff957dc9",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-rank-native": {
+        "sha256": "9e867ee273afcb815320b1b40da2f66c33644c897d3360c557eb4501ff957dc9",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-rank-max": {
+        "sha256": "dc35dbc556a3c22d1958e8f4f679992e141a9df3a1e24898f687977912892015",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-rank-stats-on": {
+        "sha256": "5ea5f1d532239597c47ee852253a30ad52991c56f4c0c5458273076d570008ff",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-rank-stats-off": {
+        "sha256": "9b4112011f6354a86abf1657b64b47dc9bf8c45fe95874346139c108a4d7feb5",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-empty": {
+        "sha256": "0b07060aba8c49705acbb560a58b1d1a87573325998253a3890a66a5d476775b",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-concepts": {
+        "sha256": "de93f902aabfe7f4c987564bce346c77c74ee37e873731aeb859518e83703fe1",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-pruned-concepts": {
+        "sha256": "fafb2555f22b17018fb8ce5cc0d602ad64bebc7e931675c9c0dae64a311ea9bb",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/clang-portable/candidate-pruned-vector-concepts": {
+        "sha256": "3cc550c707734398256eaf2daa182eb903b473da9e3929dd2eecc10af5f51011",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-portable/tests/rank-bucketed-compatible": {
+        "sha256": "f962d5bd51bea7a1b59fd2d4c6fbc9180f756aec596b032a4d40f8f186f69df0",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-portable/tests/rank-bucketed-native": {
+        "sha256": "f962d5bd51bea7a1b59fd2d4c6fbc9180f756aec596b032a4d40f8f186f69df0",
+        "elf_magic": true
+      },
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-validation-v3/build-gcc-portable/tests/rank-bucketed-max": {
+        "sha256": "7c16d8f80e0ed8e3e0bae538e08ab9fd3744935dd93fa43426c2371d334e4f97",
+        "elf_magic": true
+      }
+    }
+  },
+  "gates": {
+    "gcc": "9/9 Meson debug/assertion tests passed; actual build metadata resolves the candidate source and GCC16.2.1, C++20,-O0,-UNDEBUG,_GLIBCXX_ASSERTIONS,rank-stats on/off and COMPATIBLE/NATIVE/MAX selectors. Targeted oracle binaries use-march=native; no portability claim made for these.",
+    "clang": "9direct portable Clang22.1.8 tests passed; recorded build argv uses C++20,-O0,-UNDEBUG,-march=x86-64,-mtune=generic and the intended width selectors. Native/max labels are selectors under portable flags; not evidence ofAVX512 Clang execution. V2 baseline rank-stats control is separately retained.",
+    "memcheck": "3portable GCC oracle/allocation fixtures passed under Valgrind3.27.1, soname-synonyms=somalloc=nouserintercepts,error-exitcode18,full definite/indirect leak checking. Each log has75,014allocs/frees,0exit blocks/bytes,0errors. Passing positive first/second-growth, populated-growth, constructor and staging failure sentinels prevents a silent hook bypass.",
+    "owned_style": "Final configured clang-tidy22 for changed header/new test passes with only a narrowed reporting header filter. Check set/WarningsAsErrors remain intact. Final header/include and test format checks pass.",
+    "lint_limits": "Unchanged baseline full24 clang-tidy22 failed111warnings-as-errors in421.10862388298847s, peak1,987,776,512bytes, no OOM/timeout. Candidate full24 sweep was explicitly skipped by root and preserved in deviation record. Intermediate full-filter new-fixture tidy has59diagnostics:57byte-unchanged dependencies+2owned readability issues then fixed before final owned-file lint/runtime reruns. Actual CI18 unavailable locally and still pending; no whole-suite/full-CI pass is claimed.",
+    "preserved_initial_failures": "Initial sandbox bus denial and derivative runner wrong-plan-path assertion were before workloads; owner preserves notes/initial runner. Earlier format/tidy failures and before-final-style header remain."
+  },
+  "findings": [],
+  "source_semantic_risks_newly_identified": [],
+  "not_approved_by_this_audit": [
+    "HelperV2 corrections/execution or selected replay plan/build/semantic pilots.",
+    "Shipping optimized O3/Ofast replay/performance evidence or whole-solver results.",
+    "Actual CI18 or a complete candidate full24/broad suite pass."
+  ],
+  "conclusion": "Exact finalV3manifest93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02 and patch889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d are acceptable as the next experiment-specific source authority. Any later source/style correction needs a new reviewed binding. Bounded local gates passed as recorded; source inspection is not a correctness proof.",
+  "attribution": "Independent correction/evidence validation only; no new confirmed defect. Original V1 naming/contract concerns remain separately attributed; owner performed all executions and fixes."
+}

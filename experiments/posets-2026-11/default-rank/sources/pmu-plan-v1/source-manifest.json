@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "status": "source-only concrete conditional PMU plan; no target import/build/probe/PMU/workload execution",
+  "activation": "requires actual work/heap interpretation, independent source/spec review, root lane release and existing sole benchmark owner; readiness is not activation",
+  "files": {
+    "README.txt": "b2dcb92f4356e4ac9ec5f3e32f9de66c23fd6a2f92c73864d024faa307ad2aca",
+    "argv.json": "8ac7e45a5bdcfa2fd98b27811c172344ddc39582315e3fa05faf03f79c63059a",
+    "build-recipes.json": "ee63caa611a7c116dad8544a2669b5a29a5d42aaa23bbdb455b61a22c4f6e6bb",
+    "evidence-bindings.json": "a06a037f055a8c3de82887ba8374992c61b5e9006cdc3815fc0d90687d3a76e4",
+    "recipe-diff.json": "f256b709470f327e6dc1a05fdc1d31c73ae4389c210d75602a2e6bddaf63693c",
+    "schedule.json": "1ae256827bced2a3d61c9be4f5a562483b6d14c9fa2bebc772cf612f7b7cbaa1",
+    "specs/build-baseline-compatible-compile.json": "d2b64a84006a68fd80a3d5c7f54b5fcda171855bb594ab0f435ba2441881b1f7",
+    "specs/build-baseline-compatible-link.json": "165a9275321bf243b1db0ddf5e47a335a27151bc5c98b746108b159543f867d3",
+    "specs/build-baseline-native-compile.json": "8e56ffff31e59cf8a8382ea4a1d6da0a3c752ed0b3676ee07bdf427101b09945",
+    "specs/build-baseline-native-link.json": "7735adaf0d0b01f7a26029ecc1c5c1974eb7291becbe9b2a5e48296c39357ff4",
+    "specs/build-candidate-compatible-compile.json": "c0ff5e182b64d2c2cdb4374130798009c6db3d298446ada96c3204d8bcb1b433",
+    "specs/build-candidate-compatible-link.json": "85590e31b0c30ead5df359dcfcf0de5c1af234da1ade416db818d200cb79edd4",
+    "specs/build-candidate-native-compile.json": "aac64841d00a742f0d16db62dd156637234e8a17063b8e5086bc546408c4f2ce",
+    "specs/build-candidate-native-link.json": "c8d1198a43d51d0ea171a0b75119ef887f6c5f1c4c99a06b72a8422ad404442c",
+    "specs/check-baseline-collector-cpre-compatible.json": "e9945f43390e93b5a6ca74e605ade67b5452f8e8c69a1259ae3f7ef7eb3539b6",
+    "specs/check-baseline-collector-cpre-native.json": "8af906f0559cc0ff23ff6855271bbba5e8366ea9e76b0c40d39e0418619a1d4b",
+    "specs/check-baseline-rr552-build-compatible.json": "df209fcee5921de85debf4d12ad8bbfcbaa7536451dbb33c227f0503abb6ba03",
+    "specs/check-baseline-rr552-build-native.json": "c30436b2916ef89069e82972d31b1b97b4e1bab04a329b83cc3100bc92422709",
+    "specs/check-candidate-collector-cpre-compatible.json": "2a1058759daf438bea300cb0766ef79d356a0fd572a92e941fb07c6dec475d7f",
+    "specs/check-candidate-collector-cpre-native.json": "36b79509120976dc6f01b7d909c433315886f25f3268f8f3a6dd2741841c3d45",
+    "specs/check-candidate-rr552-build-compatible.json": "3c42a5340e28edfdad7657e6affa4fd087f2c59c396be49d09d4fc440187e9a8",
+    "specs/check-candidate-rr552-build-native.json": "6a826c80c392651ac46a31f0ead1f9b9f81ef505e326913f745872279f1e8bc8",
+    "specs/metadata-baseline-compatible.json": "67464166d177338efbaa7b3f4c1ad2507a6d28bf295be03ef48aecac69df25d7",
+    "specs/metadata-baseline-native.json": "2c07f69d12a4b2753f03306b878ad4f5f4d958a556b4154a40b2df722c075eae",
+    "specs/metadata-candidate-compatible.json": "803d95eccdc7f1ac9c26a23bb5b71790105e866ddf0d27379e041cdd4544f76f",
+    "specs/metadata-candidate-native.json": "7de065d041923e0692e12b81d744358bfca850cb13c6fdc0029209f5e11828f0",
+    "specs/pmu-pair0-baseline-collector-cpre-compatible.json": "a67bb268179124b89db4d20afe945b4729a57059e6395b63129cb149ddde7376",
+    "specs/pmu-pair0-baseline-collector-cpre-native.json": "cae1bd729c1879ad0b34be3fb1e9083de1632899179fdae41f4e90525c168c13",
+    "specs/pmu-pair0-baseline-rr552-build-compatible.json": "340bdf6e84a80e7b3a78ec3fa9d662e96613129e425839b19789297b57559452",
+    "specs/pmu-pair0-baseline-rr552-build-native.json": "4776cfe6a4909a54b64af9120b63b6297d0ee202607cd36d268a1110f34143ac",
+    "specs/pmu-pair0-candidate-collector-cpre-compatible.json": "084ad45529aafe2043872fa2f5ebb0c14de85e0b307ee76124b36ff4d20c4e48",
+    "specs/pmu-pair0-candidate-collector-cpre-native.json": "205df8f104424c7f81dc1cd8b639dc19ab8eb75a0a7c182a586eb9d53952f0ee",
+    "specs/pmu-pair0-candidate-rr552-build-compatible.json": "df690208fa86a803630aa1305126f5ea521fd73de6e73ac3c25b39bd2e1ad3e5",
+    "specs/pmu-pair0-candidate-rr552-build-native.json": "ef33907f19654d69b83d5794f833340070b731a3c9cce9b8c0635eabb2fc47c9",
+    "specs/pmu-pair1-baseline-collector-cpre-compatible.json": "45e6b144172472814789389ee5f590c7c572ea1047ba99dcd5a337923bf2b299",
+    "specs/pmu-pair1-baseline-collector-cpre-native.json": "5adaeff0032b67d423766f8b7145c2d1168a6f331b11e759c2f13a79d7dd6951",
+    "specs/pmu-pair1-baseline-rr552-build-compatible.json": "f26c80d76243d7265711134c34faa1f7efa7fdd0c2b8c25773c1ab057453b73d",
+    "specs/pmu-pair1-baseline-rr552-build-native.json": "bc44abd4e0c6db012db141489ce390670fbeffe43df457aecb924cf11d6eb32b",
+    "specs/pmu-pair1-candidate-collector-cpre-compatible.json": "ea0f51645dfa874fdcfe02ea72e7687a01489cd7a8ec119718f47b79f0aefa86",
+    "specs/pmu-pair1-candidate-collector-cpre-native.json": "894a677d794cdf4628cf9365c6628112692c2efb71f8186f91cb194321657730",
+    "specs/pmu-pair1-candidate-rr552-build-compatible.json": "a6a57737522f5fb8cdb5dd67827c771340f0c9c4eab2e10878fdbfb78dcc9eb9",
+    "specs/pmu-pair1-candidate-rr552-build-native.json": "ebe4adfd8f09b201c054b0996072ad840d1277dce9875d13e48b2cd5469ae9af",
+    "specs/pmu-pair2-baseline-collector-cpre-compatible.json": "2806c7b37f39141bd0c651d25180073006afe55f4389ddca67da10406d5d73fd",
+    "specs/pmu-pair2-baseline-collector-cpre-native.json": "39a5b253436d878d1364f24cff758a240ba213d4a57af3855d5d9b2f90118149",
+    "specs/pmu-pair2-baseline-rr552-build-compatible.json": "a5b022b83a51b344dbcba48b357d524c2583c80feac9075f9eca33736eaf68a5",
+    "specs/pmu-pair2-baseline-rr552-build-native.json": "3abd99124db9c62e7f3a72621d92729b92ed5fb7eff959eb2542e9922784cf23",
+    "specs/pmu-pair2-candidate-collector-cpre-compatible.json": "6095f4548b28f8486a0615a43f7a2b5548b013b4f52ac98dee578ef8f32ccf8f",
+    "specs/pmu-pair2-candidate-collector-cpre-native.json": "3b95f39f7475981bec211e6319866f5e6336645dfde66a3b64b642fe11e2428c",
+    "specs/pmu-pair2-candidate-rr552-build-compatible.json": "8bdfee6875ec382dec15f92468d68d17ff7996a24dc1fe7386bfd2d649666e61",
+    "specs/pmu-pair2-candidate-rr552-build-native.json": "51869a3f383d25a3e07fed95c37fe0047479beb8a10f389be630f88d836c2b84"
+  },
+  "source": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-draft-v2/source-manifest.json",
+    "sha256": "0379bd336017b8c214421377a1d7118aac5cd6316ebfc0b6e0984155e3709915"
+  },
+  "source_revisions": {
+    "baseline": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "candidate": "30e66853832d98bcfaada296d892157b95a8150d"
+  },
+  "source_roots": [
+    {
+      "role": "baseline",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99",
+      "rank_header_sha256": "346a917307ea3ae818968b426f672489a54ad7ac61403fa91ae10b83a4dad064"
+    },
+    {
+      "role": "candidate",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99",
+      "rank_header_sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b"
+    }
+  ],
+  "exact_clean_recipe_templates": [
+    {
+      "role": "baseline",
+      "width": "compatible",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+      "sha256": "4e88786c3fcae1394ee2aafa03ac6cd331b8a3ff0de8dcb9576cbf14b26e31be"
+    },
+    {
+      "role": "baseline",
+      "width": "native",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-baseline-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+      "sha256": "0840864375f002eea7cb1be460b1b6bb76ee42b52d61bf72dd04c86a8847bda8"
+    },
+    {
+      "role": "candidate",
+      "width": "compatible",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/compatible-rank_bucketed_vector_backed-build.json",
+      "sha256": "e495c69ad90eaf2cedf9deba51747c37114cb1bafe52898f6d45959b69d9ec6e"
+    },
+    {
+      "role": "candidate",
+      "width": "native",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-candidate-789bf99/build-replay-release/selected-rank-v3/records/native-rank_bucketed_vector_backed-build.json",
+      "sha256": "544d17f33ae66e19c1c8514246d3668b3096ba09850edeeb8741fdd250efd90b"
+    }
+  ],
+  "fixed_input_bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "use": "unchanged8G/no-swap scoped helper"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+      "use": "unchanged scope implementation"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+      "use": "existing sole-owner HOST_LOCK definition"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+      "sha256": "434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035",
+      "use": "unchanged selected-build environment file"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-train-plan.json",
+      "sha256": "dad182529e3cb748345094766cde7e59d14a9ee3a62613630855d9c62ee176a3",
+      "use": "actual-pin source/qualification binding"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+      "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d",
+      "use": "seen TRAIN indices0/1 only"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/eligibility-inventory.json",
+      "sha256": "80b5b22324661bd0af8835f5f275326c4844ca188d2498239d2abb9cbe17c7b8",
+      "use": "accepted exact source/backend qualification references and raw report row indices; no prior profile ELF promoted to PMU"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-v2-eligibility-static-audit.json",
+      "sha256": "d308dfd8f21dc75f1e3cfb8d59b1d8989491e0d9d4159beca7ee7c5273d2a9ba",
+      "use": "independent accepted eligibility review"
+    }
+  ],
+  "static_checks": {
+    "requested_source_manifest_hash_matches": true,
+    "exact_template_inverse_argv_match_all_four": true,
+    "all_effective_global_flags_and_cwds_unchanged": true,
+    "allowed_changes_only": [
+      "private source path",
+      "one private support include path",
+      "object/dependency/ELF destinations"
+    ],
+    "no_rank_or_allocation_stats_define": true,
+    "metadata_commands": 4,
+    "backend_check_commands": 8,
+    "measurement_commands": 24,
+    "compile_link_specs": 8,
+    "eligible_source_cells": 8,
+    "eligibility_cell_indices": [
+      1,
+      2,
+      4,
+      5,
+      7,
+      8,
+      10,
+      11
+    ],
+    "trace_meta_capture_hashes_match_current_files": true,
+    "PMU_CPU_permission_or_event_check_performed": false,
+    "sources_builds_inputs_and_previous_drafts_unmodified": true,
+    "new_controller": false
+  },
+  "prospective_outputs": {
+    "artifacts_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned",
+    "results_root": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1",
+    "status": "not_created_by_preparation; owner must recheck fresh before mkdir/build",
+    "ELFs": [
+      {
+        "role": "baseline",
+        "width": "compatible",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/compatible/rank-pmu",
+        "sha256": null,
+        "status": "pending_not_built"
+      },
+      {
+        "role": "baseline",
+        "width": "native",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/baseline/native/rank-pmu",
+        "sha256": null,
+        "status": "pending_not_built"
+      },
+      {
+        "role": "candidate",
+        "width": "compatible",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/compatible/rank-pmu",
+        "sha256": null,
+        "status": "pending_not_built"
+      },
+      {
+        "role": "candidate",
+        "width": "native",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-pmu-v2-planned/candidate/native/rank-pmu",
+        "sha256": null,
+        "status": "pending_not_built"
+      }
+    ],
+    "compiler_identity": null,
+    "dependency_closure": null,
+    "runtime_libraries": null,
+    "PMU_cpu_kernel_identity": null
+  },
+  "future_owner_requirements": [
+    "hold existing host lock across all stages and verify no competing scopes",
+    "reverify immutable inputs and exact argv/environment",
+    "serial scoped build and metadata/backend gates",
+    "freeze new actual artifact/dependency/ELF/library evidence in a separate accepted record before measurements",
+    "bind actual closure/hash to every run record; never edit pending plan in place",
+    "preserve raw PMU statuses and missing/censored failures; no new sweeps, annotations or flag rescue"
+  ],
+  "manifest_excludes": "self and all nonexistent future compiled/runtime evidence"
+}

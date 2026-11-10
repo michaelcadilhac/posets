@@ -1,0 +1,23 @@
+{"arm":"both:gr1-real-lift:oxidd","stage":"mp-class","status":2,"message":"outside proved DPA Buchi fragment"}
+Exception caught: Too many acceptance sets used.  The limit is 32.
+
+If you do not mind a slowdown, you could try recompiling Spot with a larger limit.
+See the --enable-max-accsets=N configure option.
+
+If you believe Spot could be improved to solve your problem
+using the current limit, please email <spot@lrde.epita.fr>.
+Exception caught: Too many acceptance sets used.  The limit is 32.
+
+If you do not mind a slowdown, you could try recompiling Spot with a larger limit.
+See the --enable-max-accsets=N configure option.
+
+If you believe Spot could be improved to solve your problem
+using the current limit, please email <spot@lrde.epita.fr>.
+Exception caught: Too many acceptance sets used.  The limit is 32.
+
+If you do not mind a slowdown, you could try recompiling Spot with a larger limit.
+See the --enable-max-accsets=N configure option.
+
+If you believe Spot could be improved to solve your problem
+using the current limit, please email <spot@lrde.epita.fr>.
+ERROR

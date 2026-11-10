@@ -1,0 +1,108 @@
+Actual default work/heap companion: independent bounded memory interpretation
+2026-11-09. Saved-data/source analysis only; no production edit, build, test,
+profile, PMU probe, new trace or runtime workload. Baseline789bf993 -> candidate
+30e66853; previously seen TRAIN, not fresh held-out. Instrumented clocks discarded.
+
+Data bindings and independent check:
+  profile-trace-execution-v2/COMPLETION.json
+    64b83bb5ac50ca6a67beff8c1255985933ac8c81aa87039836a48113a04cf2ee
+  profile-trace-specs-v2/plan.json
+    137f2e93460b2437a14143bf8ea1cf1a436b2073d1a2e87230454040dec9aa64
+  Adjacent heap-work-v2-data.json records the data-only join, counts, representative
+  accepted-file paths/hashes and limitations. All192 accepted-file hashes were
+  checked against COMPLETION; join by exact trace identity/width/vector/pass gives
+  96 baseline/candidate record pairs and990 aligned phase pairs. Accepted layout,
+  metadata, phase order and success agree. This does not rerun semantic gates.
+
+Confirmed observations:
+- Allocations, cumulative requested bytes, extra requested-live peak and live_delta
+  are identical in ALL990 paired phases. All822 observable operation result pairs
+  have identical size and generator capacity. The other168 ROI descriptors are
+  unavailable/null, not measured zero size/capacity. Thus this captured workload
+  demonstrates no tracked heap or final observable capacity reduction.
+- All192 whole-kernel cleanup deltas return to entry. This covers the reused C++
+  allocation hook's requested live heap, not every allocator/RSS/fragmentation cost
+  or an exhaustive leak proof. Completion retains12 qualification-censored rows,
+  reports0 failed accepted calls/OOM and3204-file final invariance; those censors
+  are not successful zero-cost samples. Largest recorded scope peak is42,618,880B;
+  that is whole-process/cgroup context, not a backend-retention measurement.
+- Rank calls/coordinates decrease in351 phase pairs, PO calls in339; neither
+  increases. Copy, meet, move-construction, accepted/rejected insertion, removed
+  generator and intersection-query counts are unchanged in all990. Move assignments
+  increase in267 and equal in723, never decrease. Counts are attempts/completions
+  as documented; not bytes copied or cache misses. The two diagnostic passes are
+  separate replays, so aggregate sums are not independent workload totals.
+- Across64 exact trace/role/pass groups, compatible scalar, compatible SIMD and
+  native SIMD have identical selected logical work/move counters. This excludes
+  a different count of those operations as the width-reversal explanation, not
+  different instructions, padding, touched bytes or generated control flow.
+- Every captured intersection changes its receiver:48 completed phase rows per
+  role =24 operations windows plus24 ROI windows over the same24 underlying cells.
+  There are0 no-ops; first-miss position/reason and query counts match across all
+  paired phases. The selfcheck's zero-copy/zero-allocation no-op is real functional
+  coverage, but supplies no captured-TRAIN memory/performance benefit here.
+
+Representative compatible SIMD results (both roles have the heap values shown):
+Trace/ROI                  alloc requestedB extra_peakB live_deltaB size/capacity
+collector ctor-only           18      20440       13312       10240       256/256
+collector union,RHS alive      2      20480       16384       10240       257/512
+collector whole CPre        1069     623120      318496       10768   unavailable
+RR552 ctor-only               22      81880       53248       40960      552/1024
+RR552 whole CPre            9723    4524704      214128      -84512   unavailable
+fullarbN1009 ctor-only         22      81880       53248       40960     1009/1024
+Collector N256/d523; RR552/d453; fullarb validated contains-5/d43, not CPre.
+
+Work endpoints, same representative cells:
+  collector constructor: rank256 unchanged; PO38947->32640; assignments6204->6307.
+  collector whole CPre: rank1282->770; PO92047->79431; assignments12408->12616.
+  RR552 constructor: rank552 unchanged; PO154954->152076; assignments2863->2878.
+  fullarb constructor: rank1009 unchanged; PO637127->508536;
+    assignments128124->128591. Constructor gains cannot be cached-rank reuse:
+    every input is still ranked; compare/range/loop work differs. Fewer logical
+    comparisons are supporting mechanism evidence, not a time decomposition.
+
+Lifetime/capacity limits:
+- Payload objects remain32B/alignment8 with both move traits noexcept in all three
+  vector/width cells, unchanged across roles. That is object layout, not SIMD
+  coordinate-buffer alignment or allocated payload size.
+- Constructor-only windows begin after caller coordinate/V materialization and
+  retain caller backing storage; they isolate backend construction, not total
+  construction ownership. Normalized build includes staging and its destruction.
+  Separate operations leave union/intersection RHS objects alive; whole CPre
+  includes their destruction and accumulator replacement. Do not add their peaks
+  or infer whole-CPre retention by summing per-operation live_delta.
+- A negative whole-CPre live_delta means released entry ownership exceeds new
+  ownership, not negative capacity. Rebuild still retains the first result.
+  Live delta is net requested ownership, not total retained result bytes.
+- Growth retains spare generator slots: collector257 uses512, RR552 uses1024,
+  fullarb1009 uses1024; these bounds are unchanged. Initial ctor net bytes agree
+  with32B generator plus8B rank slots at observed capacities; preexisting moved
+  coordinate buffers are excluded from that net. Rank capacity is not separately
+  exposed by the descriptor. No universal shrink/growth-policy win follows.
+
+Extra assignments: source-supported mechanism, not a measured material problem
+Candidate rank header:81/123-125 explicitly grows V then ranks before mutation;
+the final insert is at158-160. A baseline allocating vector insert places the new
+element and relocates prefix/suffix directly into final slots. Candidate reserve
+first relocates V, then in-capacity insert shifts the suffix and assigns the new
+element. Local libstdc++16 vector.tcc:365-383,425-447,459 onward and reserve:65-105
+support that difference. generic.hh:137/160 moves the owning data vector; these
+are not full coordinate-copy counts. Collector union256->257 is a clean example:
+move constructions257 unchanged, assignments0->1, same2 allocations/20,480B and
+512 result capacity. This supports the mechanism; it does not assign runtime cost
+to the267 increases or explain the compiler/width reversal by itself.
+
+Future tradeoff only, NOT an implementation recommendation or measured win:
+preflighting ranks before letting a safe-move/no-victim V insert fuse growth and
+placement could avoid redundant shifts, but could raise transient heap. At256->257
+the new4096B rank buffer, rather than old2048B, would coexist with V growth:
+predicted extra_peak +2048B despite unchanged final capacity/requested allocations.
+Current paired-array failure guarantees, exact tie order and custom throwing-V
+path must remain intact. Do not undo the correctness repair to remove a counter.
+
+Recommendation: keep the current validated candidate and finish the already fixed
+four-cell PMU diagnostic. These data justify an algorithmic-work reduction, not a
+captured heap/cache win; extra moves alone do not establish a material problem.
+Do not expand the sprint with a speculative growth-path patch or new probe. Decide
+any later bounded follow-up from actual PMU/code-generation evidence, keeping the
+heap tradeoff and all recorded clean regressions visible.

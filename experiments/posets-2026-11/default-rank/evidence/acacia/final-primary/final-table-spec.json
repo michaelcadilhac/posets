@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/make-default-table.py",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3",
+    "--frozen-sha256",
+    "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+  "expected_exit_codes": [
+    0
+  ],
+  "timeout": 120
+}

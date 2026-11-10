@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "source-only approved for postprocessing a completed reviewed campaign; no concrete blocker found",
+  "scope": "Static source/schema/protocol comparison only. No execution, tests, fixture generation, solver/builds, configuration, primary-progress read or actual primary data inspected. Deriver is separate postprocessing, not frozen measurement machinery.",
+  "sources": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/make-final-table.py",
+      "sha256": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-table-comparators.txt",
+      "sha256": "36fec37a9a9de7a1a1a311f11b5dcd8ad236b96d131915d926d1744d82de500c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/cactus-report.py",
+      "sha256": "9929471d26f69a44b05b2737e28c9f1d0a1e0a330c40c5ec4e46842c65c2aad1"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90"
+    }
+  ],
+  "checks": [
+    "Requires progress.statuscomplete, usable/no-conflict campaign summary, exact frozen-manifest SHA and15canonical labels with pristineanchor baseline. Resourcecap17/8G/noSwap and all primaryflagsempty are explicit gates.",
+    "Consumes hash-bound native/scored TSVs and both memory sidecars; requires1524unique names per arm and equal raw/scored/cross-arm identity sets. Does not select a winner-specific subset.",
+    "Strict-wall transform is exact row equality except native decisive result withseconds>17 becomesTIMEOUT. Original decisive verdicts, times, exit codes and memory join fields remain unchanged; rawcross-arm truth includes those overruns.",
+    "Recomputes solved identities from finite nonnegative raw clocks and native decisive answerswithin17, charges everyotheroutcome34seconds, checks solved/PAR2/native counts/overrun count against campaign summary. Reporter PAR2 totals round to6decimals, compatible with1e-5validation tolerance.",
+    "For each of15rows derives gain/loss sets and candidate-minus-comparator PAR2 deltas against bothanchor-e167 andcandidate-default. Existing primary comparator sets/deltas must match campaign.candidate_vs_baseline. Extra anchor-vs-default/self rows do not filter or alter original primary comparator.",
+    "CPU observation coverage and sum are independently checked; incomplete CPU aggregate must beNone. Incomplete scope-memory aggregate must remainNone; memory sidecars are hash-checked and summary memory fields carried forward.",
+    "Field shapes match currentcampaign.py and officialreporter: series.native_outcomes, wall_cap_overruns, failure_subtypes, cpu, peak_memory.scope, strict_wall_scoring.sources andcandidate_vs_baseline. Native/scored memory sidecars are alwayswritten by currentpipeline, including missing-observation rows.",
+    "Output binds exact summary, frozen manifest andderivation script hashes, writes15rows plus full per-instance comparator sets. Clear strict17/34/no-significance scope; no solver invocation/build/corpus or measurement mutation path."
+  ],
+  "trust_boundary": [
+    "KnownSTATUSexpected-verdict validation is inherited from usable/no-conflictcampaignsummary, whose producer checks expectedstatuses and nativeoverrun answers. Deriver itself rechecks cross-arm opposing answers, not the corpus expected-statusoracle.",
+    "Memory max/median are inherited from already validated campaignsummary; hashing sidecars and guarding partial aggregates are not independent memory-aggregate recomputation.",
+    "Exact per-row source/preset/cap/exit identity and canonical list validation were performed by campaign.read_rows/reporter. Deriver checks frozenmanifestbinding and uniformrowidentity sets; it is a consistency/tablederiver, not a replacement for that campaign validator."
+  ],
+  "limits": [
+    "No actual completed output has been processed yet and no mocked test was executed during active timing. Approval is for exactsource/producer-schema consistency.",
+    "Primary summary, fullcoverage, raw/source hashes and conflict-free completion must actually exist before invoking. The complete gate prevents reading partialcampaign as a finalcomparison.",
+    "Singlecampaign results do not establish significance, universal speedup or isolate everypristine-vs-candidate difference to a backend. Candidate-default comparison is explicitly the within-candidate counterpart.",
+    "No new metric, comparatorpolicy, flags, binary, sourcepin, cap, corpus or ordering change is introduced; existing frozenmeasurement scripts remain untouched."
+  ],
+  "findings": [],
+  "attribution": "Root authored reportingderiver and predeclared comparator instruction; reviewer independently inspected arithmetic/orientation/schema/boundaries. No runtime or discovery credit claimed."
+}

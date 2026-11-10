@@ -1,0 +1,111 @@
+The bounded heap/work pass completed successfully: eight probe binaries and all56
+instrumented calls passed. No profile provenance, captured-output, allocation-hook
+or resource gate failed. The80 compile/link/metadata/profile scope records all have
+returncode0, no timeout/resource limit and zero cgroup max/OOM/OOM-kill events.
+Selfcheck, input preparation and report-only summary also passed in separate scopes.
+Every workload used host flock and the existing8GiB/no-swap wrapper. Lane released.
+
+Source: oldlazy aa61043, selected layout dda25715d1b2538825eb4d3840576c60cda0d765
+(maintenance A/B excluded), oldrank789bf99 and newrank30e6685. The approved1bcb8666
+C++probe and18e8b125 allocation hook were unchanged. The actual source/report/
+inputs.json/trace/meta/capture chains and backend/vector/width identities passed.
+
+Primary evidence:
+freeze-001/completion.json SHA4c11a0b4470ef39673a2cb268bf1a9218cef2963cfe55e04f4617b1cb7ff1656
+analysis-data.json SHA8a402690b6578528dceb15de2e9ea90533726f297030040ffedcb26337a735ed
+phase-table.tsv SHA3cfd0ef7c65b29b20378460963f8ec2f03dd81788381b521b5538571a01dec99
+All source/binary/dependency/library bindings and raw scope logs remain in freeze-001.
+
+The current block filter has no measured work advantage for the captured RR CPre
+or its isolated miss. RR CPre wrapper partial-order attempts are exactly10,149,479
+for oldlazy, compact plain, K2scalar and K2SIMD, in both widths. The captured RR miss
+passes all4067 frozen candidates through the selected columns: zero column
+rejection, with521 additional pending comparisons. It makes4588 exact full-order
+attempts in every lazy arm. K2scalar and K2SIMD have identical full-order work in
+this pass. These observations do not justify an8lane follow-up for this workload.
+No extra width, axis or policy experiment was performed or is proposed here.
+
+There is useful construction-specific work evidence, not an operation speed claim.
+For compatible128, first construction after caller Vector materialization:
+
+Frontier/backend          allocation calls  requestedB  extra peakB  known retainedB  full-order attempts
+RR4588 oldlazy                       965     2770712       590748           339248             21045156
+RR4588 compact plain                 703     2487141       535350           312582             21045156
+RR4588 K2scalar or SIMD               719     2519267       549584           320740             17355561
+Fullarb6446 oldlazy                  1045     3747351       808232           492268             20502941
+Fullarb6446 compact plain             759     3340796       722764           433498             20502941
+Fullarb6446 K2scalar or SIMD           776     3383768       741744           444368             14890735
+
+These are RR contains-11 and fullarb contains-7 construction inputs. Allfour selected
+trace identities, both widths and every phase remain in the full data. Compact
+plain retains fewer metadata bytes and makes fewer allocation requests while
+preserving the oldlazy full-order count. K2 reduces constructor full-order attempts
+but adds requested/retained storage over compact plain. It does not reduce RR CPre
+attempts. Both ranked controls construct either quoted frontier using28allocations,
+655320requested bytes,425984extra tracked peak and327680tracked live-byte delta.
+Their private rank capacity is not exposed; no known-retained value is invented.
+
+Bridge capacities are32768→8192B at the RR final constructor index and65536→16384B
+at the fullarb index: one quarter of the old bridge payload. K2 adds8134B and10846B
+of column capacity at those indexes, respectively, plus a24B vector header versus
+plain on this ABI. Object/known-retained values include enabled library statistics;
+they are not shipping sizeof or complete opaque Vector heap payload.
+
+Actual index occupancy qualifies the zero-SIMD hypothesis:
+
+RR constructor leaves4067 frozen points plus521 pending, not4588 frozen. Its frozen
+geometry has29leaves of15points and227of16. The isolated miss executes227explicit
+16lane chunks:3632logical SIMD candidate lanes loaded,3632active SIMD lanes and
+435scalar active lanes (100%active occupancy within executed chunks). All4067
+survive the columns. After explicit index rebuild, pending becomes0 and all4588
+points are frozen in20leaves of8 and492of9. The same query then executes zero
+explicit SIMD chunks and4588scalar active lanes; all4588survive. Both compatible
+and native filters are capped at16candidate lanes; native underlying Vector width
+64does not alter that cap.
+
+Fullarb constructor leaves5423 frozen plus1023 pending, with209leaves of10points
+and303of11. Explicit rebuild freezes6446 in210leaves of12 and302of13. Neither such
+geometry has a full16point leaf. In the captured miss, geometry/coordinate0 already
+exclude every frozen candidate, so actual active filter lanes are zero both before
+and after rebuild; pending costs1023full-order attempts before rebuild and0after.
+The captured fullarb hit is found in the pending buffer in one attempt during the
+ordinary operation replay. Empty denominators stay null, not100%column rejection.
+
+Constructor/CPre filter counters are surviving-index-epoch snapshots. Zero chunks
+there cannot prove that earlier constructor/rebuild epochs or the whole CPre never
+executed SIMD. Isolated reset-and-query counters are complete for that query.
+Frozen prefix is inferred from created_ids-pending_slots in these pinned sources,
+and the report-only audit verifies its balanced leaf16node count against actual
+recorded geometry. Leaf-size distributions are derived, not newly instrumented.
+
+Explicit lazy rebuild preserves payloads and exposes real old+replacement overlap:
+
+Frontier/backend              allocations  requestedB  extra peakB  retained afterB
+RR oldlazy                            54      245395       167616           355096
+RR compact plain                      30      169058       135832           319232
+RR K2scalar or SIMD                    31      178234       135832           328432
+Fullarb oldlazy                        55      340659       254688           482680
+Fullarb compact plain                  31      220744       173372           425956
+Fullarb K2scalar or SIMD                32      233636       178072           438872
+
+Each rebuild makes zero Vector copies/moves and zero full-order attempts. RR retained
+metadata increases when the frozen tree grows from511to1023nodes, even as pending
+empties; fullarb retains1023nodes and retained metadata decreases. A global rebuild
+does not universally shrink memory. These are controlled calls to rebuild() on
+captured live generators, not observed continuous Acacia-state-history maintenance.
+The replay kernel's other rebuild is a second fresh-set construction; it is not
+the operation tabulated here.
+
+RR CPre sums of wrapper subphase allocation requests are81163calls/38480535B for
+oldlazy,80831/38240082B for compact plain, and80852/38265930B for either K2mode at
+compatible128. Full-order attempts remain unchanged at10149479. The old/new ranked
+defaults use5376016/5273875full-order attempts respectively, with78056allocation
+calls and36518464requested bytes in either version. Subphase peaks and lazy epoch
+snapshots are not summed into a whole-CPre peak or cumulative mask-work claim.
+
+All figures are instrumented software/heap evidence, separate from the completed
+clean timing campaign. Requested C++ payload excludes hook/allocator overhead,
+direct malloc/mmap and stacks; extra peak is above region entry after caller Vector
+materialization. Known retained uses capacities and excludes opaque Vector heap.
+Scope memory/RSS are whole-invocation diagnostics. No cache, PMU, universal heap,
+solver speed, or backend-switch claim follows from this pass.

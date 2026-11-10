@@ -1,0 +1,14 @@
+{
+  "completed_utc": "2026-11-09T17:03:42.657467+00:00",
+  "controller_returncode": 0,
+  "session_id": 28593,
+  "source_censors_retained": true,
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/standard-train-summary.json",
+    "sha256": "ca7d2e0c2c0c97ee29f712721fd6ca315ae250d1a41ade3a674437e4e6be9465"
+  },
+  "summary_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/standard-train-summary-record.json",
+    "sha256": "e2ccdcf33f4bfccfed831d2c3329fa84d5d181df494bca054534e47a23c26a23"
+  }
+}

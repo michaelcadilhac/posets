@@ -1,0 +1,1108 @@
+{
+  "entries": [
+    {
+      "bytes": 3300,
+      "destination": "protocol/historical-repeat-policy.json",
+      "kind": "exact copy",
+      "scope": "Historical policy snapshot; planning/pending statements remain historical",
+      "sha256": "51846165f4eafe1aa512274acd3d86f58a1276ea3c565cb0f9416913b4080119",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/ROOT-PLAN.json",
+        "sha256": "51846165f4eafe1aa512274acd3d86f58a1276ea3c565cb0f9416913b4080119"
+      }
+    },
+    {
+      "bytes": 1870,
+      "destination": "repeats/digest.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "cfd8f76bc9af912e8611921d407894a2ee4e9605b6abcb7c90e030645d6717c1",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-digest.json",
+        "sha256": "cfd8f76bc9af912e8611921d407894a2ee4e9605b6abcb7c90e030645d6717c1"
+      }
+    },
+    {
+      "bytes": 17146,
+      "destination": "repeats/cells.csv",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "54b4b67c3747d889db2d93933c6c52ec59b028c6ba134cfd4ccaa07a47c61db0",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat-results.csv",
+        "sha256": "54b4b67c3747d889db2d93933c6c52ec59b028c6ba134cfd4ccaa07a47c61db0"
+      }
+    },
+    {
+      "bytes": 2595,
+      "destination": "protocol/forest-memoization-decision.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "197ee66ba428e906448ea17a0d4400779ae26c98fb81b6369bf0a890065f8a21",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOREST-MEMO-ATTRIBUTION-DECISION-v1.json",
+        "sha256": "197ee66ba428e906448ea17a0d4400779ae26c98fb81b6369bf0a890065f8a21"
+      }
+    },
+    {
+      "bytes": 1913,
+      "destination": "forest/digest.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "56d468d557e35e37f57df61dc141d6999d72b0d5887a8ab14fb8878cc76afd78",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-result-digest.json",
+        "sha256": "56d468d557e35e37f57df61dc141d6999d72b0d5887a8ab14fb8878cc76afd78"
+      }
+    },
+    {
+      "bytes": 3831,
+      "destination": "controls/source-controls.json",
+      "kind": "exact copy",
+      "scope": "Prepared controls, not blanket build or rollback approval",
+      "sha256": "4e5861e3918339ffff5b0059176ba5f0a0565222152fff8e566cdd4f3074de26",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/CONTROLS.json",
+        "sha256": "4e5861e3918339ffff5b0059176ba5f0a0565222152fff8e566cdd4f3074de26"
+      }
+    },
+    {
+      "bytes": 3850,
+      "destination": "controls/gate-plan.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "dca7c2ead1ec14953c420f1e8a4e0debf8d1cb09b62d0b0751ffc8e33afd62c9",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/GATE-PLAN.txt",
+        "sha256": "dca7c2ead1ec14953c420f1e8a4e0debf8d1cb09b62d0b0751ffc8e33afd62c9"
+      }
+    },
+    {
+      "bytes": 3518,
+      "destination": "controls/forest-map-cache.patch",
+      "kind": "exact copy",
+      "scope": "Only this prepared control was built and measured",
+      "sha256": "6f9591f03ae1d0beb89b950203b85af5b859b44c0a4412a3251f074f665a75ff",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/forest-map-cache.patch",
+        "sha256": "6f9591f03ae1d0beb89b950203b85af5b859b44c0a4412a3251f074f665a75ff"
+      }
+    },
+    {
+      "bytes": 6249,
+      "destination": "controls/rank-correctness-control.patch",
+      "kind": "exact copy",
+      "scope": "Unselected, uncompiled proposal; preserve safety fixes",
+      "sha256": "2a95fe46c1fac90525b415fff2ba58c4aaf4fce0521eb453e7bac67e33ea237d",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/rank-correctness-control.patch",
+        "sha256": "2a95fe46c1fac90525b415fff2ba58c4aaf4fce0521eb453e7bac67e33ea237d"
+      }
+    },
+    {
+      "bytes": 1581,
+      "destination": "controls/legacy-pre-scratch.patch",
+      "kind": "exact copy",
+      "scope": "Unselected, uncompiled; retains current capacity policy",
+      "sha256": "a3aa2c2fe7eab0ce58466c21fd211e6924ae796b4dbaed5ffed9ec2f42a44c3b",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/legacy-pre-scratch.patch",
+        "sha256": "a3aa2c2fe7eab0ce58466c21fd211e6924ae796b4dbaed5ffed9ec2f42a44c3b"
+      }
+    },
+    {
+      "bytes": 6499,
+      "destination": "controls/control-fixtures.patch",
+      "kind": "exact copy",
+      "scope": "Separate control-only treatment assertions; production tests untouched",
+      "sha256": "503ce35fdad813d621a08ab36c62c89f071fd688b7ec51231999625c86ba8041",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/control-fixtures.patch",
+        "sha256": "503ce35fdad813d621a08ab36c62c89f071fd688b7ec51231999625c86ba8041"
+      }
+    },
+    {
+      "bytes": 6400,
+      "destination": "forest/map-control-proof.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "f1f774ec70e505e5631ccfbb5029f98903f207ac5cd94c165e8d8a0f9a891ea5",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/evidence/control-a3/proof.json",
+        "sha256": "f1f774ec70e505e5631ccfbb5029f98903f207ac5cd94c165e8d8a0f9a891ea5"
+      }
+    },
+    {
+      "bytes": 6403,
+      "destination": "forest/current-stamps-proof.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "35309fbd8d6707e8fb43f95f18eda241163989b10e1adde0f64143346252c35b",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/evidence/current-a1/proof.json",
+        "sha256": "35309fbd8d6707e8fb43f95f18eda241163989b10e1adde0f64143346252c35b"
+      }
+    },
+    {
+      "bytes": 19420,
+      "destination": "tools/repeat.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "40ede28a3de13ebcf1361246ec1be42ded6e429b663d76f4e15ddf2cdc48dd85",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/repeat.py",
+        "sha256": "40ede28a3de13ebcf1361246ec1be42ded6e429b663d76f4e15ddf2cdc48dd85"
+      }
+    },
+    {
+      "bytes": 9570,
+      "destination": "tools/test_repeat.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "7f71a909404e4312688d38b8f8bbbef49437ab18dd3fda6d423fc912c29997c2",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/test_repeat.py",
+        "sha256": "7f71a909404e4312688d38b8f8bbbef49437ab18dd3fda6d423fc912c29997c2"
+      }
+    },
+    {
+      "bytes": 21235,
+      "destination": "tools/forest-repeat.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "349aaf260e88ea67d13c2ef61fc9355cb01e68d7de983fc42dce77a00be1e198",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-repeat.py",
+        "sha256": "349aaf260e88ea67d13c2ef61fc9355cb01e68d7de983fc42dce77a00be1e198"
+      }
+    },
+    {
+      "bytes": 15091,
+      "destination": "tools/test_forest_repeat.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "9a3c87c42fe82f7ee29e695a3377c1ee8284a09632d67211b28d531e0e09e9e9",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/test_forest_repeat.py",
+        "sha256": "9a3c87c42fe82f7ee29e695a3377c1ee8284a09632d67211b28d531e0e09e9e9"
+      }
+    },
+    {
+      "bytes": 20990,
+      "destination": "tools/followup30.py",
+      "kind": "exact copy",
+      "scope": "Current reviewed controller; bind actually executed version again after final follow-up",
+      "sha256": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/followup30.py",
+        "sha256": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb"
+      }
+    },
+    {
+      "bytes": 19308,
+      "destination": "tools/test_followup30.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "0057a0f126ac4608639761020bd368fe176bd115cd967dcf38fd82c29006df6f",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/test_followup30.py",
+        "sha256": "0057a0f126ac4608639761020bd368fe176bd115cd967dcf38fd82c29006df6f"
+      }
+    },
+    {
+      "bytes": 109,
+      "destination": "gates/followup30-offline.log",
+      "kind": "exact copy",
+      "scope": "Ten synthetic tests, not actual 30-second solver results",
+      "sha256": "ceea5e339bfb84b2653af263ee2fe0a0e2de2bfaed2f3efd00a6d42b42fde502",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/followup30-offline-attempt1.log",
+        "sha256": "ceea5e339bfb84b2653af263ee2fe0a0e2de2bfaed2f3efd00a6d42b42fde502"
+      }
+    },
+    {
+      "bytes": 1255,
+      "destination": "protocol/conditional30-policy.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence",
+      "sha256": "7de1a321de6576633230203b5384bd5184aced781888ff47a21f52fc4e92632a",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP-30S-POLICY.json",
+        "sha256": "7de1a321de6576633230203b5384bd5184aced781888ff47a21f52fc4e92632a"
+      }
+    },
+    {
+      "bytes": 1598,
+      "destination": "preservation/repeats-redacted-proof.json",
+      "kind": "exact copy",
+      "scope": "Only this redacted completed-stage proof; a later final preservation proof remains pending",
+      "sha256": "e2e8a7a456a9c9ba645451722fe997ca567264195efcce6ecc4af37bb15cd7e9",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/original-preservation-redacted.json",
+        "sha256": "e2e8a7a456a9c9ba645451722fe997ca567264195efcce6ecc4af37bb15cd7e9"
+      }
+    },
+    {
+      "bytes": 3272,
+      "destination": "reviews/experience-addendum.txt",
+      "kind": "exact copy",
+      "scope": "Bounded preparation/completed-repeat review; excludes final solver outcomes",
+      "sha256": "ab3bd113d2050e60123e7b2afdc0bc3f39e2a4b8b8fe9544312754b7f8c9a537",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/deadline-review-experience-addendum-v1.txt",
+        "sha256": "ab3bd113d2050e60123e7b2afdc0bc3f39e2a4b8b8fe9544312754b7f8c9a537"
+      }
+    },
+    {
+      "bytes": 6768,
+      "destination": "reviews/experience-addendum-ledger.json",
+      "kind": "exact copy",
+      "scope": "Immutable addendum only; do not copy live ledgers",
+      "sha256": "bc8c6b67111a958b018d29d9eb084512edc7c9911e3611457e21c031094b4c89",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/deadline-review-experience-ledger-v1.json",
+        "sha256": "bc8c6b67111a958b018d29d9eb084512edc7c9911e3611457e21c031094b4c89"
+      }
+    },
+    {
+      "bytes": 5975,
+      "destination": "reviews/nbjorner-repeat-driver-source-review-v3.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "f2044d1eb814cafc6030d51c47c8c70180c59d6af8bd733ad8ea34b3732a72a1",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-repeat-driver-source-review-v3.json",
+        "sha256": "f2044d1eb814cafc6030d51c47c8c70180c59d6af8bd733ad8ea34b3732a72a1"
+      }
+    },
+    {
+      "bytes": 2194,
+      "destination": "reviews/nbjorner-fixture-selector-v4-delta-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "9d87c52619985bc82a299ff94cd308ac197f2904943b117f6482b7906371c652",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-fixture-selector-v4-delta-review.json",
+        "sha256": "9d87c52619985bc82a299ff94cd308ac197f2904943b117f6482b7906371c652"
+      }
+    },
+    {
+      "bytes": 21986,
+      "destination": "reviews/nbjorner-repeat-independent-arithmetic.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "87a7710bcec22c3f89cb49da626394b0c7f5bdaa19dc7ed2351389cb0a9d2588",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-repeat-independent-arithmetic.json",
+        "sha256": "87a7710bcec22c3f89cb49da626394b0c7f5bdaa19dc7ed2351389cb0a9d2588"
+      }
+    },
+    {
+      "bytes": 6792,
+      "destination": "reviews/nbjorner-repeat-final-outcome-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "436eb86839737139cc557d81c6aacaa5c5cd0ef9d2a3f3de0413e91b8906460a",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-repeat-final-outcome-review.json",
+        "sha256": "436eb86839737139cc557d81c6aacaa5c5cd0ef9d2a3f3de0413e91b8906460a"
+      }
+    },
+    {
+      "bytes": 8026,
+      "destination": "reviews/barbosa-repeat-outcome-audit.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "7bba5a6a37338be21a8a23ebccf72577f37bb9af2a5f8140791cecca60673ab6",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-repeat-outcome-audit.json",
+        "sha256": "7bba5a6a37338be21a8a23ebccf72577f37bb9af2a5f8140791cecca60673ab6"
+      }
+    },
+    {
+      "bytes": 6245,
+      "destination": "reviews/nbjorner-attribution-controls-static-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "40c62440f22b885ac802863276518f1ee38a7d61c9904e0e3fdaf813d3187b1e",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-attribution-controls-static-review.json",
+        "sha256": "40c62440f22b885ac802863276518f1ee38a7d61c9904e0e3fdaf813d3187b1e"
+      }
+    },
+    {
+      "bytes": 7172,
+      "destination": "reviews/barbosa-attribution-controls-static-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "5a73c2b9ba84e150c98df41505cc70d253bb36d0356f32bc7a02021932083ac9",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-attribution-controls-static-review.json",
+        "sha256": "5a73c2b9ba84e150c98df41505cc70d253bb36d0356f32bc7a02021932083ac9"
+      }
+    },
+    {
+      "bytes": 5669,
+      "destination": "reviews/barbosa-matched-attribution-fixtures-static-audit.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "dd19aa10655873778d7cdd616c23fcdb3764e2737137240045dd64bfc0f02fa0",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-matched-attribution-fixtures-static-audit.json",
+        "sha256": "dd19aa10655873778d7cdd616c23fcdb3764e2737137240045dd64bfc0f02fa0"
+      }
+    },
+    {
+      "bytes": 4146,
+      "destination": "reviews/nbjorner-forest-selected-precompile-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "6b17ea514e35915dbfbd7b135f7908a8efbe36fe7a18056bc6af02b973a4e321",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-forest-selected-precompile-review.json",
+        "sha256": "6b17ea514e35915dbfbd7b135f7908a8efbe36fe7a18056bc6af02b973a4e321"
+      }
+    },
+    {
+      "bytes": 6648,
+      "destination": "reviews/nbjorner-forest-build-and-plan-final-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "8cab0f2ebcbb7f38c8317236777600c7de7c638583cdf358cbd789cf03506df8",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-forest-build-and-plan-final-review.json",
+        "sha256": "8cab0f2ebcbb7f38c8317236777600c7de7c638583cdf358cbd789cf03506df8"
+      }
+    },
+    {
+      "bytes": 5886,
+      "destination": "reviews/nbjorner-forest10-outcome-and-final-draft-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "c7e391b26ece7652140207d1dceaa02d7d4a5d999d08466ec8490a1484b9e3da",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-forest10-outcome-and-final-draft-review.json",
+        "sha256": "c7e391b26ece7652140207d1dceaa02d7d4a5d999d08466ec8490a1484b9e3da"
+      }
+    },
+    {
+      "bytes": 4211,
+      "destination": "reviews/nbjorner-followup30-v2-correction-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "9dc6facb24d10fce09c9a73b1dacfdaf52dbb852730138721ac87f96e7404e74",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-followup30-v2-correction-review.json",
+        "sha256": "9dc6facb24d10fce09c9a73b1dacfdaf52dbb852730138721ac87f96e7404e74"
+      }
+    },
+    {
+      "bytes": 10712,
+      "destination": "reviews/barbosa-followup30-v2-correction-audit.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "52c06be5d8991ebc4a2c8f99db49dcb9a41dc5d0119caf99ecd855423908fb3b",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-v2-correction-audit.json",
+        "sha256": "52c06be5d8991ebc4a2c8f99db49dcb9a41dc5d0119caf99ecd855423908fb3b"
+      }
+    },
+    {
+      "bytes": 7130,
+      "destination": "reviews/width-evidence-static-note.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "00c9a8f47fc1c13192d1a327bb4fbd1a905fb7fff1c707ef5bcdf83bda35e363",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/nbjorner-width-evidence-static-note.json",
+        "sha256": "00c9a8f47fc1c13192d1a327bb4fbd1a905fb7fff1c707ef5bcdf83bda35e363"
+      }
+    },
+    {
+      "bytes": 29274,
+      "destination": "tools/campaign.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+        "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e"
+      }
+    },
+    {
+      "bytes": 3104,
+      "destination": "tools/scoped_task.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+        "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+      }
+    },
+    {
+      "bytes": 1561,
+      "destination": "repeats/handoff-without-binding-list.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/bindings",
+        "/private_preservation"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "8b0f87e8db82652cc76b571106a0ba43fae8ced6149c89103af5e9eea6cda371",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-HANDOFF.json",
+        "sha256": "09f0b3d0069af9f8043922429258d1be965bbe48a6219574e699a58bf16bf94c"
+      }
+    },
+    {
+      "bytes": 2583,
+      "destination": "forest/handoff-without-binding-list.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/bindings"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "ee784fee29738b5c024b8b4a346f28014be58dae04217b37843ff6592deaef5c",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOREST-FINAL-HANDOFF.json",
+        "sha256": "82e5a281b7d5a6e59caaa34d8be5c41983dea33d707f47ce520147e02c55df5a"
+      }
+    },
+    {
+      "bytes": 5149,
+      "destination": "forest/build-and-failure-classification.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/decision",
+        "/preserved_failed_attempts",
+        "/source_files"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "c7049487a3647e12e9016784b2eb9de516a9365e156696fbe499081fec29cb97",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/BUILD-HANDOFF.json",
+        "sha256": "98594f3e2e72031d0c7822e0af16460d033a8bc49b8deb7a5ce0439441289485"
+      }
+    },
+    {
+      "bytes": 4809,
+      "destination": "final17/digest.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "30330cfd9f3fa9b7c58b4f801642b51503045b160eaa0716371b878564b4e679",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-result-digest.json",
+        "sha256": "30330cfd9f3fa9b7c58b4f801642b51503045b160eaa0716371b878564b4e679"
+      }
+    },
+    {
+      "bytes": 319,
+      "destination": "final17/table.csv",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "4192d346ad613f98225177c3281e841ae8a0951ce57344479f10181fca6023e7",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-17s-table.csv",
+        "sha256": "4192d346ad613f98225177c3281e841ae8a0951ce57344479f10181fca6023e7"
+      }
+    },
+    {
+      "bytes": 5074,
+      "destination": "conditional30/digest.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "f163c9939f97a591e567cb4233a6b2214a8800eb6f04d6cc559e3802444f49b1",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-FINAL-RESULT-DIGEST.json",
+        "sha256": "f163c9939f97a591e567cb4233a6b2214a8800eb6f04d6cc559e3802444f49b1"
+      }
+    },
+    {
+      "bytes": 360,
+      "destination": "conditional30/exact-scores.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "7e41c7acd408b98be9e4358ee2a148e7d1df7fb4df4acd525fe2e7280a552bd8",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-EXACT-SCORES.json",
+        "sha256": "7e41c7acd408b98be9e4358ee2a148e7d1df7fb4df4acd525fe2e7280a552bd8"
+      }
+    },
+    {
+      "bytes": 1630,
+      "destination": "conditional30/resolved-cases.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "69ebe71add276f18a482ae59daa2667cab2bf4abff37c2008c6de5b9e705fc78",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-RESOLVED-CASES.json",
+        "sha256": "69ebe71add276f18a482ae59daa2667cab2bf4abff37c2008c6de5b9e705fc78"
+      }
+    },
+    {
+      "bytes": 399,
+      "destination": "conditional30/table.csv",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "87b2bb2f0b7ef998e1613d14d058e535de90cb8d83e152fa7ee6ab5bb5e2dd73",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-conditional-table.csv",
+        "sha256": "87b2bb2f0b7ef998e1613d14d058e535de90cb8d83e152fa7ee6ab5bb5e2dd73"
+      }
+    },
+    {
+      "bytes": 67097,
+      "destination": "conditional30/cells.csv",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "fcd6425cd04545e33957705a24b9f60bafac70feb09ce134fc132c874978b391",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-conditional-cells.csv",
+        "sha256": "fcd6425cd04545e33957705a24b9f60bafac70feb09ce134fc132c874978b391"
+      }
+    },
+    {
+      "bytes": 1650,
+      "destination": "preservation/final-redacted-proof.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "b384145970416f721ddf807784fd155ba80a0771434b5a6f4326aed6fb3fa4f4",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-followup30-preservation-redacted.json",
+        "sha256": "b384145970416f721ddf807784fd155ba80a0771434b5a6f4326aed6fb3fa4f4"
+      }
+    },
+    {
+      "bytes": 1317,
+      "destination": "conditional30/summary-replay.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "d6154a834f4f4e08f47f6dc2a32249749b3003e547f8172722a35b8e4fa5539c",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-SUMMARY-EQUIVALENCE.json",
+        "sha256": "d6154a834f4f4e08f47f6dc2a32249749b3003e547f8172722a35b8e4fa5539c"
+      }
+    },
+    {
+      "bytes": 73754,
+      "destination": "conditional30/stop-checkpoint.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-STOP-CHECKPOINT.json",
+        "sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34"
+      }
+    },
+    {
+      "bytes": 6579,
+      "destination": "conditional30/diagnostic-completion.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+        "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da"
+      }
+    },
+    {
+      "bytes": 1080,
+      "destination": "conditional30/separate-diagnostic.stderr.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/reproduction-attempt1.log",
+        "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+      }
+    },
+    {
+      "bytes": 3337,
+      "destination": "conditional30/delegated-authority.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "c537ca50c8301cb2b524d507f42ce6427e15db52b841c71808d4f3bf4273f0b3",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-DELEGATED-AUTHORITY-v1.json",
+        "sha256": "c537ca50c8301cb2b524d507f42ce6427e15db52b841c71808d4f3bf4273f0b3"
+      }
+    },
+    {
+      "bytes": 453967,
+      "destination": "conditional30/amendment.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "f5570dc6159e811462ed2bb06dfc08749aa12059d0c4bc629f5c4b193ef996e2",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/amendment.json",
+        "sha256": "f5570dc6159e811462ed2bb06dfc08749aa12059d0c4bc629f5c4b193ef996e2"
+      }
+    },
+    {
+      "bytes": 4135,
+      "destination": "conditional30/summary.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/summary.json",
+        "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+      }
+    },
+    {
+      "bytes": 3281,
+      "destination": "conditional30/source-mapping-checkpoint.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "0c61aa1108c42ecc44d8e7eb9b125d583143b016c5df1a6f899da0971b89f5e3",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-source-map-v1/MAPPING-CHECKPOINT.json",
+        "sha256": "0c61aa1108c42ecc44d8e7eb9b125d583143b016c5df1a6f899da0971b89f5e3"
+      }
+    },
+    {
+      "bytes": 5750,
+      "destination": "protocol/shipping-portfolio-and-index-lifetimes.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "484ec0efb84ae54d8278012b7c5b74cd4f58853564c3f419370a2dfbf54e4052",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/shipping-portfolio-downset-scope-note-v1.txt",
+        "sha256": "484ec0efb84ae54d8278012b7c5b74cd4f58853564c3f419370a2dfbf54e4052"
+      }
+    },
+    {
+      "bytes": 2119,
+      "destination": "reviews/experience-final-addendum.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "da46de3c080f3cfd7e09a5ab509be896bce05a7365dcf386a7626acbd6140d65",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/deadline-review-experience-final-v2.txt",
+        "sha256": "da46de3c080f3cfd7e09a5ab509be896bce05a7365dcf386a7626acbd6140d65"
+      }
+    },
+    {
+      "bytes": 4953,
+      "destination": "reviews/nbjorner-final17-independent-arithmetic.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "8d8f178dff4f751e087f6b0c4e7b5e9eb3eb552f705b2be93bdde537124b1c24",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final17-independent-arithmetic.json",
+        "sha256": "8d8f178dff4f751e087f6b0c4e7b5e9eb3eb552f705b2be93bdde537124b1c24"
+      }
+    },
+    {
+      "bytes": 2578,
+      "destination": "reviews/barbosa-final17-independent-arithmetic.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "2125e7531334c12783e207d6d529f5e8df51d3015dd4cada283d85270b251bb6",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final17-independent-arithmetic.json",
+        "sha256": "2125e7531334c12783e207d6d529f5e8df51d3015dd4cada283d85270b251bb6"
+      }
+    },
+    {
+      "bytes": 5878,
+      "destination": "reviews/nbjorner-final17-outcome-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "022d0bff347542aa06b3d4e87d1b14bee1cf261f132f03b5be3879c82cdb21e8",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final17-outcome-review.json",
+        "sha256": "022d0bff347542aa06b3d4e87d1b14bee1cf261f132f03b5be3879c82cdb21e8"
+      }
+    },
+    {
+      "bytes": 14385,
+      "destination": "reviews/barbosa-final17-outcome-closure-audit.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "50e7a84ef2f91f082c66f368658d7710c04e3d93dd139eb39d185ddd3885a01d",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final17-outcome-closure-audit.json",
+        "sha256": "50e7a84ef2f91f082c66f368658d7710c04e3d93dd139eb39d185ddd3885a01d"
+      }
+    },
+    {
+      "bytes": 5539,
+      "destination": "reviews/nbjorner-followup30-actual-plan-release-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "57b7895b2030f42cdfd25511a8e43a616661d2c18d6b0ca966e604f37537272d",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-followup30-actual-plan-release-review.json",
+        "sha256": "57b7895b2030f42cdfd25511a8e43a616661d2c18d6b0ca966e604f37537272d"
+      }
+    },
+    {
+      "bytes": 8394,
+      "destination": "reviews/barbosa-followup30-actual-plan-release-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "c364258a34238e78007dfb70200ae1ba5dc113e47ea93b35fbdc1219cd477141",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-actual-plan-release-review.json",
+        "sha256": "c364258a34238e78007dfb70200ae1ba5dc113e47ea93b35fbdc1219cd477141"
+      }
+    },
+    {
+      "bytes": 3321,
+      "destination": "reviews/nbjorner-exit3-diagnostic-spec-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "009d5d5541a15abdcd8df7fed238f755fd41e631f147c251f17caaad9854f7c0",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-exit3-diagnostic-spec-review.json",
+        "sha256": "009d5d5541a15abdcd8df7fed238f755fd41e631f147c251f17caaad9854f7c0"
+      }
+    },
+    {
+      "bytes": 6177,
+      "destination": "reviews/nbjorner-diagnostic-outcome-and-continuation-design-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "2a5602fa3b61a69f22c0327efd1930fa99131691cf235f9607e9c6a6f8714d52",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-diagnostic-outcome-and-continuation-design-review.json",
+        "sha256": "2a5602fa3b61a69f22c0327efd1930fa99131691cf235f9607e9c6a6f8714d52"
+      }
+    },
+    {
+      "bytes": 4702,
+      "destination": "reviews/nbjorner-continuation-source-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "44033e0b0698486ea442bfe0012bc73fefa7f3bc783b4023eebf88013f565d62",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-continuation-source-review.json",
+        "sha256": "44033e0b0698486ea442bfe0012bc73fefa7f3bc783b4023eebf88013f565d62"
+      }
+    },
+    {
+      "bytes": 11613,
+      "destination": "reviews/barbosa-followup30-continuation-source-review-v1.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "724e31947122a9eec6dedb56c9b5ff3af717f555a62166f2094f7ba9b3c0a539",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-continuation-source-review-v1.json",
+        "sha256": "724e31947122a9eec6dedb56c9b5ff3af717f555a62166f2094f7ba9b3c0a539"
+      }
+    },
+    {
+      "bytes": 5295,
+      "destination": "reviews/nbjorner-continuation-actual-plan-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "accb1263956d27603858851aa6d89d6a3fd927818157dec72df9ea8abf542c91",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-continuation-actual-plan-review.json",
+        "sha256": "accb1263956d27603858851aa6d89d6a3fd927818157dec72df9ea8abf542c91"
+      }
+    },
+    {
+      "bytes": 11449,
+      "destination": "reviews/barbosa-followup30-continuation-actual-plan-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "1bb8cdfd04276c9b9334e04f6d0d7c04eb2a754bf0b1a7c0329c551a0a382901",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-followup30-continuation-actual-plan-review.json",
+        "sha256": "1bb8cdfd04276c9b9334e04f6d0d7c04eb2a754bf0b1a7c0329c551a0a382901"
+      }
+    },
+    {
+      "bytes": 3994,
+      "destination": "reviews/nbjorner-continuation-independent-arithmetic.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "9b47d7e1feeb4ec628831bf5ea5c39c0b6497a11889a1d6d7d37f03cd93474d5",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-continuation-independent-arithmetic.json",
+        "sha256": "9b47d7e1feeb4ec628831bf5ea5c39c0b6497a11889a1d6d7d37f03cd93474d5"
+      }
+    },
+    {
+      "bytes": 3894,
+      "destination": "reviews/barbosa-final30-independent-outcome-check.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "1a3bd7b4184a795a0e32bcfa9a415efe9352cf9563336dc9e7f835f5bd377ad1",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final30-independent-outcome-check.json",
+        "sha256": "1a3bd7b4184a795a0e32bcfa9a415efe9352cf9563336dc9e7f835f5bd377ad1"
+      }
+    },
+    {
+      "bytes": 6594,
+      "destination": "reviews/nbjorner-final-cohort30-outcome-review.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "0ca7827deb4dadaef3e3cb542eb8e6da6fc29bf547ae65be7231b98db46a9879",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final-cohort30-outcome-review.json",
+        "sha256": "0ca7827deb4dadaef3e3cb542eb8e6da6fc29bf547ae65be7231b98db46a9879"
+      }
+    },
+    {
+      "bytes": 16701,
+      "destination": "reviews/barbosa-final30-outcome-closure-audit.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "3a7c60134ee797cbf4d3e983005420db5abb64f170da3c2e168f8dedff9f808d",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final30-outcome-closure-audit.json",
+        "sha256": "3a7c60134ee797cbf4d3e983005420db5abb64f170da3c2e168f8dedff9f808d"
+      }
+    },
+    {
+      "bytes": 6002,
+      "destination": "reviews/nbjorner-lazy-versus-rank-explanation-note.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "f030ae7b609228efbb16b57078c2ae24f084fef0f6f3c0a810f309b5fe8933ad",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-lazy-versus-rank-explanation-note.json",
+        "sha256": "f030ae7b609228efbb16b57078c2ae24f084fef0f6f3c0a810f309b5fe8933ad"
+      }
+    },
+    {
+      "bytes": 1778,
+      "destination": "tools/continuation/PROPOSAL.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "7df5edd7cac5d45f580dbb69ee712dff0a66e5028c11e7be5545b7c22c5b299e",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/PROPOSAL.json",
+        "sha256": "7df5edd7cac5d45f580dbb69ee712dff0a66e5028c11e7be5545b7c22c5b299e"
+      }
+    },
+    {
+      "bytes": 5415,
+      "destination": "tools/continuation/README.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "7a1fb8e7bbe338b14615bc7265a527166896f933a36cf805b2644e463ef68c5c",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/README.txt",
+        "sha256": "7a1fb8e7bbe338b14615bc7265a527166896f933a36cf805b2644e463ef68c5c"
+      }
+    },
+    {
+      "bytes": 5636,
+      "destination": "tools/continuation/SOURCE-CHECKPOINT.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "3b8e48ab829d6ad0ff2e8109a086be468a9761b80bfa868a545a3acbf28c9c4c",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/SOURCE-CHECKPOINT.json",
+        "sha256": "3b8e48ab829d6ad0ff2e8109a086be468a9761b80bfa868a545a3acbf28c9c4c"
+      }
+    },
+    {
+      "bytes": 3314,
+      "destination": "tools/continuation/capture_native.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "121615da7997b3e284712250728edc1fb6a5178417c1bdf623374011e6f8858a",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/capture_native.py",
+        "sha256": "121615da7997b3e284712250728edc1fb6a5178417c1bdf623374011e6f8858a"
+      }
+    },
+    {
+      "bytes": 21218,
+      "destination": "tools/continuation/continue30.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "2ed3c4c7413633412ff4c5303a386d23893ae91c5be237501cc51a592a08f02f",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/continue30.py",
+        "sha256": "2ed3c4c7413633412ff4c5303a386d23893ae91c5be237501cc51a592a08f02f"
+      }
+    },
+    {
+      "bytes": 363,
+      "destination": "tools/continuation/offline-spec.json",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "e9f558a2eb04c72bf2cf2648c3f5b518f060c41b93a76fa4595c30e17edb95aa",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/offline-spec.json",
+        "sha256": "e9f558a2eb04c72bf2cf2648c3f5b518f060c41b93a76fa4595c30e17edb95aa"
+      }
+    },
+    {
+      "bytes": 1080,
+      "destination": "tools/continuation/spot-limit32.stderr.txt",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/spot-limit32.stderr.txt",
+        "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+      }
+    },
+    {
+      "bytes": 20436,
+      "destination": "tools/continuation/test_continuation.py",
+      "kind": "exact copy",
+      "scope": "Exact historical evidence; preserve its original scope",
+      "sha256": "9ee6153aeb65ac8dc0cf094c11222bd1fa42e7ad4dce8cd912a3c3ed872a71b9",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/test_continuation.py",
+        "sha256": "9ee6153aeb65ac8dc0cf094c11222bd1fa42e7ad4dce8cd912a3c3ed872a71b9"
+      }
+    },
+    {
+      "bytes": 4450,
+      "destination": "final17/handoff-without-bindings.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/bindings"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "2397d3bb4f68b4ff50245a7105d5bc04dc2a7eac4651d7145157ea61d0dfec10",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-KD-17S-HANDOFF.json",
+        "sha256": "48d070d3332bd76fb7532d9a981c3cb902e5b903603953893af7c845aabf1f24"
+      }
+    },
+    {
+      "bytes": 4180,
+      "destination": "conditional30/handoff-without-bindings.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/bindings"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "cdc2ce3aa6f585c3dd2a107fb36027d20cdd0a45289cf04c5e13d358a0e53c4e",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FINAL-COHORT30-HANDOFF.json",
+        "sha256": "fcdd3e037095d115a930a2c2b06ec9390f1b8067054516d5505ee4bf1057ed3f"
+      }
+    },
+    {
+      "bytes": 13012,
+      "destination": "final17/summary-without-host-details.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/cpu_host"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "8849798e43a506d1c06553098a5ce4594476c57ccc5e20e150c2e1a379ab084e",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/summary.json",
+        "sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3"
+      }
+    },
+    {
+      "bytes": 3405,
+      "destination": "protocol/final17-frozen-projection.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/environment",
+        "/host_lock",
+        "/implementation",
+        "/repo",
+        "/schedule",
+        "/tlsf_corpus"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "7ad40ea2439631252c0b369a9b03c7d1ae61b017532eb4ac10ba8b30dc7dd05a",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/frozen.json",
+        "sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801"
+      }
+    },
+    {
+      "bytes": 9456,
+      "destination": "conditional30/continuation-release-projection.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/actual_invocation/environment_overrides"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "88f2607784a83050f4b1c138effd744a2b0e61c38b9cbae97e300de009186add",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-ROOT-RELEASE.json",
+        "sha256": "814f3177bcb08758ca044a3096f2438d3f197384cf8467ae07e9d394b9e71ae6"
+      }
+    },
+    {
+      "bytes": 8242,
+      "destination": "conditional30/preparation-gates-projection.json",
+      "kind": "explicit JSON projection",
+      "omitted_json_pointers": [
+        "/bindings",
+        "/primary_command/environment_overrides"
+      ],
+      "scope": "Original remains unchanged and external; projection is not byte-equal to original",
+      "sha256": "ca0d542cf742bcc67c1da6d8ae629d021f78946bf952f38a3268154e52031c90",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-ACTUAL-READINESS.json",
+        "sha256": "b621ab75e082ae8894b3cc3c2196c7a9d49b4939ea1bf6b8f35c8a528a5b14d9"
+      }
+    },
+    {
+      "bytes": 3231,
+      "destination": "README.md",
+      "kind": "exact copy",
+      "scope": "New final prose; source bytes outside the repository",
+      "sha256": "801da6edf2d99c59a4d61dbb77c7cac797f47c90aba2f60a924f0d1465ac1f21",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/final-assembly-v3/authored/README.md",
+        "sha256": "801da6edf2d99c59a4d61dbb77c7cac797f47c90aba2f60a924f0d1465ac1f21"
+      }
+    },
+    {
+      "bytes": 8799,
+      "destination": "REPORT.txt",
+      "kind": "exact copy",
+      "scope": "New final prose; source bytes outside the repository",
+      "sha256": "b4aa8bcdb90a7820f40a73764caadbd5f971107957253df10a4433ee31de3399",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/final-assembly-v3/authored/REPORT.txt",
+        "sha256": "b4aa8bcdb90a7820f40a73764caadbd5f971107957253df10a4433ee31de3399"
+      }
+    },
+    {
+      "bytes": 3105,
+      "destination": "RECREATE.txt",
+      "kind": "exact copy",
+      "scope": "New final prose; source bytes outside the repository",
+      "sha256": "58d26b63cc733b28e51a3dcae7303988232e3ccdccdab11b217d99b3b870236f",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/final-assembly-v3/authored/RECREATE.txt",
+        "sha256": "58d26b63cc733b28e51a3dcae7303988232e3ccdccdab11b217d99b3b870236f"
+      }
+    },
+    {
+      "bytes": 6374,
+      "destination": "reviews/nbjorner-final-package-review.json",
+      "kind": "exact copy",
+      "scope": "Final V3 package evidence/prose/privacy audit. V4 appends these records and updates status/inventory only; no numerical or earlier copied evidence changed.",
+      "sha256": "18522407252980f904c6cdf99af923fdb14169642119718a3be51da9f84d4b0c",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final-publication-package-review.json",
+        "sha256": "18522407252980f904c6cdf99af923fdb14169642119718a3be51da9f84d4b0c"
+      }
+    },
+    {
+      "bytes": 8355,
+      "destination": "reviews/barbosa-final-package-review.json",
+      "kind": "exact copy",
+      "scope": "Final V3 package evidence/prose/privacy audit. V4 appends these records and updates status/inventory only; no numerical or earlier copied evidence changed.",
+      "sha256": "898ccb94b45444bf5e5dea240bb9d998d5025e4d3e58cabf9f5975b155ce9f34",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final-publication-package-review.json",
+        "sha256": "898ccb94b45444bf5e5dea240bb9d998d5025e4d3e58cabf9f5975b155ce9f34"
+      }
+    }
+  ],
+  "policy": "Exact source bytes or explicitly declared projections; original locators are historical, not portable promises"
+}

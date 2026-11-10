@@ -1,0 +1,73 @@
+diff --git a/include/posets/utils/sharingforest.hh b/include/posets/utils/sharingforest.hh
+--- a/include/posets/utils/sharingforest.hh
++++ b/include/posets/utils/sharingforest.hh
+@@ -114,9 +114,7 @@
+       std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> node_union_stack;
+       std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> st_intersect_stack;
+       std::vector<std::tuple<size_t, size_t, bool, size_t>> covers_stack;
+-      // The low bit records owed strictness; remaining bits identify the query.
+-      std::vector<std::vector<uint32_t>> covers_visited;
+-      uint32_t covers_generation {0};
++      std::vector<std::unordered_map<size_t, bool>> covers_visited;
+       mutable std::vector<std::tuple<size_t, size_t, size_t>> get_all_stack;
+       mutable std::vector<std::unordered_map<size_t, size_t>> count_cache;
+       mutable std::vector<std::tuple<size_t, size_t, bool>> count_stack;
+@@ -132,7 +130,6 @@
+           cached_inter.emplace_back ();
+         }
+         covers_visited.resize (dim + 1);
+-        covers_generation = 0;
+         count_cache.resize (dim + 1);
+ 
+         cbuffer_size = SHARINGFOREST_INIT_LAYER_SIZE * SHARINGFOREST_INIT_MAX_CHILDREN;
+@@ -912,13 +909,9 @@
+           return not strict;
+         // Stack with tuples (layer, node id, strictness, child id)
+         covers_stack.clear ();
+-        // Clear only on generation wrap, avoiding per-visited-node allocations.
+-        covers_generation += uint32_t {2};
+-        if (covers_generation == 0) {
+-          for (auto& stamps : covers_visited)
+-            std::ranges::fill (stamps, uint32_t {0});
+-          covers_generation = 2;
+-        }
++        // Visited cache (reused across calls)
++        for (auto& m : covers_visited)
++          m.clear ();
+ 
+         // Add all roots at dimension 0 such that their labels cover the first
+         // component of the given vector
+@@ -940,22 +933,25 @@
+           // if this node has been visited, it means this node is useless
+           // NOTE: this works only because we are doing a DFS and not a BFS
+           if (child == 0) {
+-            auto& stamps = covers_visited[lay];
+-            if (stamps.size () < layers[lay].size ())
+-              stamps.resize (layers[lay].size (), 0);
+-            uint32_t& stamp = stamps[node];
++            auto res = covers_visited[lay].find (node);
+             // if we visited with strictness then we can safely exit only if
+             // we come back with strictness prev_strict -> owe_strict, i.e.
+             // not prev_strict or owe_strict
+-            if ((stamp & ~uint32_t {1}) == covers_generation) {
+-              if ((stamp & uint32_t {1}) == 0 or owe_strict) {
++            if (res != covers_visited[lay].end ()) {
++              if ((not res->second) or owe_strict) {
+ #ifndef NDEBUG
+                 std::cout << "Avoided node in covers check, DFS cache helps.\n";
+ #endif
+                 continue;
+               }
+-            }
+-            stamp = covers_generation | static_cast<uint32_t> (owe_strict);
++              // we conjoin with previous result if any to make sure we have
++              // more early exits based on implication condition above
++              covers_visited[lay][node] = res->second and owe_strict;
++            }
++            else {
++              // no early exit? then mark the node as visited and keep going
++              covers_visited[lay][node] = owe_strict;
++            }
+           }
+           const auto parent = layers[lay][node];
+ 

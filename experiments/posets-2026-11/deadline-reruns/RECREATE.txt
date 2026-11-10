@@ -1,0 +1,44 @@
+Recreation and retained evidence
+
+This folder records completed work; it is not a launcher that can reproduce
+historical hashes on another host. Exact helper copies retain their original
+absolute paths and source/hash guards. Read origins.json before using them.
+
+1. Obtain Acacia from https://github.com/gaperez64/acacia-bonsai.git at
+   86dd487001dc75a3c1c0dfa9db50a9882a532db1. The local frozen source supplied
+   the measured bytes; remote commit availability is not asserted here.
+   Use owned clones, never a user's WIP or an existing frozen build destination.
+2. Follow the earlier package's Acacia integration patch/build instructions,
+   binding bundled Posets e167 and retained lazy-FC cc058ca as distinct actual
+   source/build treatments. The new source-and-protocol map identifies measured
+   ELFs and dependency contexts. Do not label a newly rebuilt ELF as an old one.
+3. Configure otf_sparse_formula_parity, compatible 16 signed-char lanes, empty
+   primary flags and identical declared runtime policy. Actual original/lazy
+   Rust archives differed; use the saved provenance limitation, not a claim
+   that these historical builds isolate one header.
+4. Acacia's native syntcomp-corpus.py materializer supplies the native corpus.
+   Existing decode_corpus.py helpers elsewhere decode saved FUZZ seeds and are
+   not the materializer for this full native SYNTCOMP campaign.
+5. Use unchanged campaign.py through Acacia's existing cgroup runner with 17 s,
+   8 GiB, no swap and the host lock. Derive strict-wall scores from complete
+   native and resource rows; keep all raw truths and reject contradictions.
+6. Only after complete full-corpus qualification, the frozen timeout union can
+   receive both exact arms at 30 s. Its unsolved penalty is 60, not 34, and its
+   denominator is the selected cohort, not all 1,524. The actual historical run
+   stopped at native ERROR and required a separately reviewed adjudication.
+   Do not blanket-whitelist ERROR or replay the diagnostic as a primary sample.
+7. tools/continuation/ contains the exact adapter/controller/fixtures. Its
+   capture hook delegates the existing native scope call unchanged and persists
+   strings afterward. Actual amendment and root/delegated releases remain
+   hash-bound evidence; editing paths requires a new reviewed treatment rather
+   than claiming historical equivalence. Partial legs must never be retried
+   silently. No further benchmark calls are requested by this package.
+
+The native/resource numerical archive has its own member/source manifest and
+checksums. Recombined single-row files keep header bytes and every row token;
+source provenance explains their order. Extraction verification compares every
+member byte-for-byte, not just table totals. No source row is rescored there.
+The archive does not contain ELFs, library caches, corpus, process environments,
+private original-checkout snapshots or WIP contents. Those historical private
+artifacts are retained externally with locators/hashes, not made downloadable
+by merely listing them. Tables, policies, patches and bounded reviews are public.

@@ -1,0 +1,14 @@
+{
+  "scope": "Additional exact-byte numerical archive; existing report/data/publication manifest unchanged",
+  "archive_sha256": "53ecde5845352ffcef89a3c438f7495ab7df5312ed675c282860d29a26b82fbd",
+  "archive_bytes": 2615862,
+  "verified_rows": {
+    "native": 22860,
+    "memory_sidecar": 22860
+  },
+  "data_members": 30,
+  "total_archive_members": 32,
+  "verification_sha256": "9ae117b8e8264628940d5c82bbff8cabd6888745cda9efc988b128b8fa054126",
+  "resource_record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/primary-evidence-archive-20261109/archive-record.json",
+  "resource_record_sha256": "f64560cab7d5066d047b8411c1ec44d3d68381f1f57097118720fa26ce8665f9"
+}

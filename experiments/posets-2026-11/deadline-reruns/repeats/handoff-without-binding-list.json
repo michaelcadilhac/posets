@@ -1,0 +1,26 @@
+{
+  "completed_utc": "2026-11-10T08:22:57.219582+00:00",
+  "counts": {
+    "OOM_kill_invocations": 0,
+    "decisive_wall_overruns": 0,
+    "fully_uncensored_cells": 4,
+    "memory_rows": 450,
+    "native_errors_or_crashes": 0,
+    "native_rows": 450,
+    "pair_case_cells": 45,
+    "paired_repetitions": 5,
+    "serious_solve_loss_cells": 27,
+    "serious_timing_loss_cells": 2,
+    "truth_conflicts": 0
+  },
+  "coverage": "All450 CPU/RSS/scope-peak/memory-event observations valid; every censor retained. All57 exact input/helper/ELF/library/interpreter bindings match after run.",
+  "final_two_arm_draft": "Prepared only; genuine original e167 versus retained frozen cc lazyFC; root review/release still required after conditional attribution decision",
+  "independent_outcome_audit": "Nb independently joined450rows/sidecars/records, verified chronology and all45 arithmetic/gates; audit bound above",
+  "interpretation": "Historical repeatability screening, not same-backend optimization causality; no automatic rollback, pooling or 30s rescoring",
+  "next_authority": "Root owns conditional one-forest-pair decision; no new target call until explicit next release",
+  "no_active_workload": true,
+  "offline30_fixture": "Actual10tests+OK; all observations mocked; no actual source17 cohort or30s target projected/executed",
+  "runtime_elapsed_seconds": 7040.320477962494,
+  "status": "450-complete-closure-complete-runtime-lane-released-for-root-next-stage",
+  "summary_only_equivalence": "byte-for-byte identical automatic and summary-only summary.json"
+}

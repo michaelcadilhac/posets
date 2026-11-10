@@ -4,6 +4,9 @@
 #include <posets/config.hh>
 #include <posets/vectors.hh>
 
+#if POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED
+# include <posets/downsets/block_sharingtrie_backed.hh>
+#endif
 #if POSETS_ENABLE_DOWNSET_BBOXTREE_BACKED
 # include <posets/downsets/bboxtree_backed.hh>
 #endif
@@ -18,6 +21,9 @@
 #endif
 #if POSETS_ENABLE_DOWNSET_FULL_SET
 # include <posets/downsets/full_set.hh>
+#endif
+#if POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED
+# include <posets/downsets/lazy_kdtree_backed.hh>
 #endif
 #if POSETS_ENABLE_DOWNSET_KDTREE_BACKED
 # include <posets/downsets/kdtree_backed.hh>

@@ -1,0 +1,163 @@
+{
+  "NO_VERBOSE_limit": "requested routes/source/type/config/verdict only; no observed route frequency",
+  "actual_full_acacia_patch": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/legacy-actual-acacia.patch",
+    "sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5"
+  },
+  "arm": {
+    "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+    "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/src/acacia-bonsai-kd",
+    "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+    "compiled_benchmark_label": "kd",
+    "expected_downset": "kdtree_backed",
+    "expected_optional_controls": [
+      0,
+      0,
+      0
+    ],
+    "expected_simd_lanes": 16,
+    "flags": "",
+    "generated_version_header": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/acacia_version.hh",
+      "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+    },
+    "label": "kd-scratch-restored",
+    "preset": "otf_sparse_formula_parity",
+    "runtime_libraries": [
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+        "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+        "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+      },
+      {
+        "path": "/usr/lib64/libstdc++.so.6.0.36",
+        "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+      },
+      {
+        "path": "/usr/lib64/libm.so.6",
+        "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+      },
+      {
+        "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+        "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+      },
+      {
+        "path": "/usr/lib64/libc.so.6",
+        "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+      },
+      {
+        "path": "/usr/lib64/ld-linux-x86-64.so.2",
+        "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+      },
+      {
+        "path": "/usr/lib64/libmvec.so.1",
+        "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+      }
+    ],
+    "source_pins": {
+      "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "actual_acacia_diff_sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5",
+      "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+      "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+      "posets": "d363b9f901b927575ee1544b19820a146c2479d9",
+      "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+    },
+    "version_output": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: kd downset=kdtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n"
+  },
+  "command_expansion": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/kd-command-expansion.txt",
+    "sha256": "1ebba76943619784bbc27b3773898926794d0ab45b03bfad8a77915a6ef3b44b"
+  },
+  "configuration": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/CONFIGURATION-COMPLETE-v2.json",
+    "sha256": "63d17440cfe6e805baa36966a1ecde81f9db9aa4418bd73ba151ec4541e27460"
+  },
+  "environment": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/legacy-environment.json",
+    "sha256": "1628d2418f6014941b4b9c227eaff6477520488d0d2c48ff54f9b58b517cc94c"
+  },
+  "gate_closure_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/records/21-verify-gates.json",
+    "sha256": "98c708ee527a401e5e1f77792739c9f9c8f81dfae0328f5177d247c3763d323d"
+  },
+  "gate_completion": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/GATES-COMPLETE.json",
+    "sha256": "368239d50158023fa9e6aa7f86e88f2ea91438190238a7c5e4f149236be636a8"
+  },
+  "git_pins_status_and_actual_diff_rechecked": true,
+  "helpers": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/selfcheck.py",
+      "sha256": "eb0f3ec78cc0ec07299236e51b41ce1faa5cd0faf3ad14f889fee341356d3a1f"
+    }
+  ],
+  "materialized_sources": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/materialized-sources.json",
+    "sha256": "030a642ccc8e9ab534bde259f04961010b13a47e9264660bcc98a6842d23af7e"
+  },
+  "new_source_files_rechecked": {
+    "actual_acacia_tracked_sha256": 5528,
+    "actual_posets_tracked_sha256": 640,
+    "yyjson_files": 907
+  },
+  "postbuild_proof": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/evidence/legacy-built-kd/proof.json",
+    "sha256": "a3203591dd375883f63b2309bccf73ea5d6e60f449a13c768448e127ae33b702"
+  },
+  "selected_compiler_commands": [
+    {
+      "command": "c++ -Isrc/acacia-bonsai-kd.p -Isrc -I../src -I. -I.. -Isubprojects/posets/include -I../subprojects/posets/include -I../subprojects/posets/lib -Isubprojects/tlsf-tools/include -I../subprojects/tlsf-tools/include -I../subprojects/tlsf-tools/subprojects/yyjson-0.12.0/src -Isubprojects/tlsf-tools -I../subprojects/tlsf-tools -Isubprojects/tlsf-tools/include/tlsf -Isubprojects/tlsf-tools/oxidd -I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/include -flto=1 -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++23 -O3 -march=native -Ofast -pipe -DNO_VERBOSE -DNDEBUG -fuse-linker-plugin -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -Wunused-function '-DACACIA_POSETS_BENCHMARK_LABEL=\"kd\"' -DVECTOR_AND_BITSET_DOWNSET_IMPL=kdtree_backed -DPOSETS_ENABLE_DOWNSET_KDTREE_BACKED=1 -MD -MQ src/acacia-bonsai-kd.p/solver_solve_game_vector.cc.o -MF src/acacia-bonsai-kd.p/solver_solve_game_vector.cc.o.d -o src/acacia-bonsai-kd.p/solver_solve_game_vector.cc.o -c ../src/solver/solve_game_vector.cc",
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping",
+      "file": "../src/solver/solve_game_vector.cc",
+      "output": "src/acacia-bonsai-kd.p/solver_solve_game_vector.cc.o"
+    },
+    {
+      "command": "c++ -Isrc/acacia-bonsai-kd.p -Isrc -I../src -I. -I.. -Isubprojects/posets/include -I../subprojects/posets/include -I../subprojects/posets/lib -Isubprojects/tlsf-tools/include -I../subprojects/tlsf-tools/include -I../subprojects/tlsf-tools/subprojects/yyjson-0.12.0/src -Isubprojects/tlsf-tools -I../subprojects/tlsf-tools -Isubprojects/tlsf-tools/include/tlsf -Isubprojects/tlsf-tools/oxidd -I/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/include -flto=1 -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=c++23 -O3 -march=native -Ofast -pipe -DNO_VERBOSE -DNDEBUG -fuse-linker-plugin -ftrack-macro-expansion=0 -fno-diagnostics-show-caret -fconcepts-diagnostics-depth=2 -Wunused-function '-DACACIA_POSETS_BENCHMARK_LABEL=\"kd\"' -DVECTOR_AND_BITSET_DOWNSET_IMPL=kdtree_backed -DPOSETS_ENABLE_DOWNSET_KDTREE_BACKED=1 -MD -MQ src/acacia-bonsai-kd.p/version.cc.o -MF src/acacia-bonsai-kd.p/version.cc.o.d -o src/acacia-bonsai-kd.p/version.cc.o -c ../src/version.cc",
+      "directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping",
+      "file": "../src/version.cc",
+      "output": "src/acacia-bonsai-kd.p/version.cc.o"
+    }
+  ],
+  "selected_linker_argv": [
+    "c++",
+    "-o",
+    "src/acacia-bonsai-kd",
+    "src/acacia-bonsai-kd.p/solver_solve_game_vector.cc.o",
+    "src/acacia-bonsai-kd.p/version.cc.o",
+    "-flto=1",
+    "-Wl,--as-needed",
+    "-Wl,--no-undefined",
+    "-Wl,-O1",
+    "-fuse-linker-plugin",
+    "-Wl,-rpath,$ORIGIN/../subprojects/tlsf-tools/oxidd:/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+    "-Wl,--start-group",
+    "src/libclosure-buchi-provider.a",
+    "src/libparity-route.a",
+    "src/libparity.a",
+    "src/libtlsf-dpa.a",
+    "subprojects/tlsf-tools/src/lib/libtlsf.a",
+    "subprojects/tlsf-tools/subprojects/yyjson-0.12.0/libyyjson.a",
+    "subprojects/tlsf-tools/oxidd/liboxidd_ffi_c.a",
+    "src/libacacia-posets-common.a",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so",
+    "-lpthread",
+    "-lm",
+    "-ldl",
+    "/usr/lib/gcc/x86_64-redhat-linux/16/libstdc++.so",
+    "-Wl,--end-group"
+  ],
+  "source_attribution_limit": "The genuine frozen defaults have different private Rust archive bytes. The new KD is built separately. This is a source-treatment comparison, not an exact static dependency closure or isolated KD causal proof.",
+  "status": "Actual completed source/build/gate evidence; primary proposal pending root freeze"
+}

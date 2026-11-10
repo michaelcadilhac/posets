@@ -1,0 +1,80 @@
+{
+  "approval": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/approval-and-execution.json",
+    "sha256": "b19f310d04a9f35bf7a7d016fce2d2cbff3acb810db1f28727c3a7f3a0b216d7"
+  },
+  "arms": 15,
+  "cap_s": 17,
+  "completed_progress_file_mtime_utc": "2026-11-09T15:27:59.942926+00:00",
+  "conflicts": 0,
+  "controller_returncode": 0,
+  "controller_session_id": 32515,
+  "cpu_valid_rows": 22860,
+  "final_invariance": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/final-invariance-audit.json",
+    "sha256": "9e3bf2b2a4cb0b1097fec2c05e66ba25795fffd42cb87d6a105fff043cd6edd3"
+  },
+  "frozen": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/frozen.json",
+    "sha256": "99a05fd894b5994d86759aebe56a42846a820019e1431b86e18639cce034f9ec"
+  },
+  "limits": [
+    "one solver campaign; no repetition/noise floor",
+    "forcedCLI smoke requests lacked verbose backend trace because releaseNO_VERBOSE",
+    "all raw timeout/MEMOUT evidence retained"
+  ],
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "native_outcomes": {
+    "MEMOUT": 25,
+    "REALIZABLE": 9414,
+    "TIMEOUT": 2339,
+    "UNREALIZABLE": 11082
+  },
+  "phase": "phase-one frozen15-arm comparison; separate later default optimization work",
+  "primary_command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/arms.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "primary_flags": "",
+  "process_rss_valid_rows": 22860,
+  "progress": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/progress.json",
+    "sha256": "db39cb8778df4a833ffe012e59e4e720b280e8ed4b49131d1105bc4a5c57637c"
+  },
+  "released_timing_lane_utc": "2026-11-09T15:31:21.078655+00:00",
+  "remaining_work_owned_by_root": [
+    "dual-comparator final-table derivation",
+    "independent final report reviews",
+    "original-checkout closing snapshot",
+    "default-only follow-up scheduling"
+  ],
+  "rows": 22860,
+  "rows_per_arm": 1524,
+  "scope_memory_valid_rows": 22860,
+  "started_utc": "2026-11-09T01:26:51+00:00",
+  "status": "complete",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/summary.json",
+    "sha256": "2bd0a88d55a0ad611f7cdcac7372f25f8b807bedb2cf47946133c2f499ad0b04"
+  },
+  "summary_only": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/summary-only-record.json",
+    "sha256": "03c227c35b02b6c250bce51c626df78e982b9670af9aacf10c70f0252a872e66"
+  },
+  "summary_text": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/summary.txt",
+    "sha256": "60483c06b2b1c0948013059f8434996f5e910aace41f085136d01f885c12a2d0"
+  },
+  "wall_cap_overruns": 0,
+  "wall_seconds": 50468.942926
+}

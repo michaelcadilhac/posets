@@ -1,0 +1,177 @@
+The useful change retained from this round is a small optimization to the existing
+KD tree. A normal dominance query now restores each temporary bound as recursion
+returns, so it no longer clears an array across every dimension before each query.
+Exception recovery still clears scratch state before rethrowing. The reviewed
+change and its tests are included in PR 40 at commit d363b9f. Acacia backend selection remains ranked-vector.
+
+The lazy KD maintenance and leaf-filter experiments did not establish a broad
+CPre improvement and are excluded from production. Their patches, unfavorable
+measurements and censors remain in this package. The exact offset-only catalog
+control was also rejected after its separate measurement; its result is not
+inferred from the combined packed-catalog experiment.
+
+The following ratios describe the larger round-robin frame with 4,588 generators
+and 453 dimensions. A ratio below 1 means the proposed arm was faster. Each value
+is the median of three matched candidate/baseline ratios, not a ratio of the two
+endpoint medians.
+
+Comparison                                      Compatible       Native
+A and B maintenance / original lazy KD              1.0401         1.0318
+A: contained intersection / original lazy KD        1.0378         0.9964
+B: transition retirement / original lazy KD         0.9812         0.9953
+Compact plain catalogs / original lazy KD           1.0573         1.0102
+Offset-only catalog layout / original lazy KD       1.0410         1.0052
+Two-column scalar filter / compact plain            1.0983         1.0242
+Two-column SIMD filter / compact plain              1.1039         1.0264
+SIMD filter / matching scalar filter                1.0443         1.0067
+Compact plain / old ranked default                  1.8687         1.6787
+Compact plain / optimized ranked default            1.9198         1.8319
+Legacy scratch change / previous legacy KD          0.8959         0.9490
+
+A and B together regressed 15 of the 16 usable whole-CPre groups across the first
+standard and larger tiers. B alone had some favorable measurements but mixed
+pairs and nine regressions among ten second-construction groups. The simpler
+original maintenance policy was therefore retained for the layout/filter tests.
+The filtered variants then failed the declared compatible-width CPre improvement
+guard. Compact plain also lost the larger comparison against the original lazy
+KD and both ranked defaults. Its standard-tier comparison against the optimized
+ranked default had a few wins and more losses; every group remains in the table.
+
+The exact offset-only ablation lost both CPre groups: all three pairs were slower
+in each width. Construction regressed in 8 of 10 groups and second construction
+in 7 of 10. Its 60 clean calls and 180 valid scope-memory records had no censors,
+failures or OOM events. Allocation and retained-byte expectations for offset-only
+remain static hypotheses: there was no separate offset-only heap pass. The compact
+plain profile must not be presented as a measurement of the offset-only patch.
+
+The retained legacy scratch change improved 12 of 14 usable standard-tier CPre
+groups. Two regressions are retained: the native-width small round-robin frame
+had a ratio of 1.0118, and the compatible-width tiny fuzzer frame had a ratio of
+1.2515. Construction and the replay's second-construction metric each regressed
+in 9 of 22 standard groups. The metric named "rebuild" in clean replay is another
+fresh set construction; it is not the explicit lazy rebuild operation profiled
+separately. These mixed results do not establish a whole-solver win.
+
+The software work and heap pass helps explain why the filter did not help this
+workload. Across the captured larger round-robin CPre, the four profiled lazy variants
+made 10,149,479 full partial-order attempts. The old and optimized ranked controls
+made 5,376,016 and 5,273,875 attempts on that same frame. This is a measured work-count
+gap; it does not identify a cache cause. For the isolated captured miss, every one
+of the 4,067 frozen candidates passed the selected columns, plus 521
+pending comparisons. The filter rejected nothing on that query. It did execute
+227 explicit SIMD chunks before an explicit rebuild; after that rebuild, balanced
+leaves held only 8 or 9 points and no complete 16-point chunk was available. A
+zero chunk count after rebuild does not mean SIMD never ran earlier. Neither
+observation justifies changing the lane cap or choosing another axis after seeing
+these results, and no such follow-up was performed.
+
+Compact metadata did reduce construction work. On the quoted round-robin frontier,
+allocation requests fell from 965 to 703, and extra tracked construction heap fell
+from 590,748 to 535,350 bytes. On the full-arbiter frontier they fell from 1,045 to
+759 requests and from 808,232 to 722,764 extra bytes. That is about 27% fewer
+allocation requests and 9–11% less extra tracked construction heap. It was not a
+whole-CPre timing win. Two-column filters lowered some constructor-only order
+counts but added retained columns and did not lower the round-robin CPre count.
+
+Heap figures have explicit limits. Extra tracked heap is measured above region
+entry after caller Vector materialization. Known-retained values use capacities,
+include enabled diagnostic statistics, and exclude opaque Vector heap payloads;
+they are neither shipping sizeof values nor total backend heap. The tracker covers
+C++ allocation requests and excludes direct malloc/mmap, stacks and hook overhead.
+Index counters after construction or CPre describe the surviving index epoch, not
+all discarded epochs. Peaks are not summed into a whole-operation peak. This round
+collected no PMU or cache-miss measurements, and instrumented times are not clean
+performance samples.
+
+All these frames were previously seen TRAIN data. The existing replay kernels,
+scalar and SIMD vector types, three external pairs and fixed seeds were retained.
+The pairs ran in A then B, B then A, and A then B order. The source oracle had a
+30 second cap; checks and measurements each had a 2 second cap. Work ran through
+the existing 8 GiB/no-swap scopes. The package includes 478 metric cells: 460 paired
+and 18 censored. Qualification failures, timeouts and unavailable ratios stay
+visible and are not replaced by longer instrumented runs. Three observations per
+cell support an engineering decision on these frames, not a significance claim
+or generalization to all inputs.
+
+The retained source passed its six focused legacy tests and owned-code style
+checks. The rejected layout/filter composition separately passed seven GCC
+assertion-enabled checks, two portable Clang fixtures and two portable Memcheck
+fixtures, with positive allocation-failure hooks and zero memory errors or leaks.
+That correctness evidence does not turn a negative timing result into a useful
+production optimization. The combined legacy/filter integration clone was only
+static preparation; it is not the source now retained publicly.
+
+The Acacia preparation is complete. The new release build passed 87 unit tests,
+88 Boolean oracle cases, version/configuration checks and known realizable and
+unrealizable examples. The genuine frozen defaults also passed their current
+version and realizable/unrealizable checks. These Acacia release tests use NDEBUG;
+the separate library checks above exercised assertions and fault injection. Under
+NO_VERBOSE, requested backward runs plus source, type, configuration and verdict
+bindings do not establish the frequency of runtime routes.
+
+The completed Acacia comparison used three arms over the same 1,524 SYNTCOMP26
+cases: the old ranked default at 789bf99, the optimized ranked default at 30e6685
+and legacy KD at d363b9f. Each used a 17 second strict wall cap, 8 GiB with no swap,
+empty primary flags and the shipping otf_sparse_formula_parity preset. Every
+unsolved case costs 34 seconds in PAR2. Lower totals are better.
+
+Implementation                 Solved / 1,524     Total PAR2 seconds    OOM-kill-positive runs
+Old ranked default                   1,368             5945.136669                    0
+Optimized ranked default             1,367             5959.958145                    0
+Legacy KD with scratch restoration   1,365             6010.868080                    7
+
+Legacy KD gained no solves. It lost three cases against the original default and
+two against the optimized default; its PAR2 was higher by 65.731411 and 50.909935
+seconds respectively. Its three losses against the original default were
+generalized_buffer_pb_4_pe_.ltl, load_balancer_unreal1_pb_6_4_pe_.ltl and
+simple_arbiter_enc_pb_11_pe_.ltl. Native measurements are in the exact table
+and handoff projection. All three were native TIMEOUT results with zero OOM-kill
+events. They must not be attributed to OOM.
+
+The seven OOM-kill-positive invocations are different cases, all unsolved by every
+arm. Two carried native MEMOUT labels and five carried native TIMEOUT labels.
+Seven is the invocation count; the observed oom_kill counters sum to 15. The
+ranked controls had no OOM-kill-positive invocations. The distinction between native
+labels, invocations and event counters is retained in the exact OOM audit.
+
+All 4,572 case rows have CPU, cgroup peak, process RSS and kernel-event coverage.
+There were no contradictory answers or decisive wall-cap overruns. The unchanged
+summary-only pass reproduced the automatic summary byte-for-byte. The numerical
+archive contains 24 source files in 26 members, including 4,572 native case rows
+and their memory sidecars; fresh extraction and checksums passed before packaging.
+No solver rerun or selective rescoring followed the result.
+
+This is one prospective campaign, not a measured noise floor or a significance
+claim. Dynamic runtime-library bindings match across the three arms, but their
+private static Rust archive bytes differ. The artifact identities are retained;
+the campaign compares source treatments and cannot isolate a precise KD-header
+cause. Under NO_VERBOSE, known-answer gates bind requested routes, source, type,
+configuration and verdict, not observed runtime route frequencies. The optimized
+ranked header at 30e6685 is byte-identical to the ranked header at d363b9f; that
+identity applies only to that header, not all sources, ELFs or dependencies.
+
+These results remain separate from the earlier 15-arm campaign and the focused
+two-arm default campaign. They establish no full-solver reason to replace the
+ranked default. Only the legacy query-scratch change is retained from round 2;
+maintenance A/B, packed catalogs, offset-only layout and SIMD leaf blocks/filters
+on lazy KD remain rejected experiments, not a new block-vector branching topology.
+No further tuning or backend switch followed the measurements.
+
+The first closing invariance audit used the previous default executable selector
+instead of the declared KD executable name. That failed attempt is preserved.
+A versioned selector correction, with unchanged acceptance policy, then verified
+22,366 file bindings, including 14,981 historical evidence bindings. The compact
+incident and correction patch are included; the full 6.18 MB inventory remains
+external and hash-bound. The final redacted preservation proof matched all six
+recorded fields in each of five original checkouts. Ignored and untracked bytes
+were not compared, and private WIP/status details are excluded.
+
+Both independent final outcome audits approve the completed numerical evidence,
+archive and closing provenance within their stated scopes. Those approvals are
+not final publication-prose approval. Implementation d363b9f has green push CI
+run 42729670700 across all three jobs. No green claim is made for a later
+evidence-only commit.
+
+The evidence is complete, and root final prose/package review is complete. The
+package is ready for publication. Publication history is recorded in the containing
+Git commit and PR 40. The original package and its README/inventory stay unchanged.

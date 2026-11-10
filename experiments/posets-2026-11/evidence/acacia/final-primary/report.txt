@@ -1,0 +1,48 @@
+Completed phase-one Acacia comparison — 9 November 2026
+
+All 15 arms completed the same 1,524 SYNTCOMP26 cases: 22,860 runs. This is the finished first campaign. The subsequent focused default-backend optimization is not included in these binaries or scores.
+
+Current decision: keep the existing ranked-vector default. Lazy FC is the closest alternative: it solves the identical 1,369 cases and has a PAR2 total 4.283s (0.072%) lower. This was one unrepeated full campaign; no noise floor or statistical advantage was established. Every other alternative has zero gains and one to four losses against this default.
+
+Protocol: unchanged shipping preset otf_sparse_formula_parity, empty flags, strict measured wall time <=17 seconds, 8 GiB RAM/no swap, serial case execution, batch32/seed260617 with balanced arm order, no CPU affinity or quota. PAR2 below is the total over all cases; every unsolved case costs34 seconds. Lower is better.
+
+| Arm | Solved /1,524 | PAR2 total s | Losses vs current default | Native MEMOUT | OOM-kill runs | Max scope GiB |
+|---|---:|---:|---:|---:|---:|---:|
+| anchor-e167 | 1368 | 5944.021 | 1 | 0 | 0 | 3.953 |
+| candidate-default | 1369 | 5926.861 | 0 | 0 | 0 | 3.953 |
+| kd | 1365 | 6010.087 | 4 | 2 | 7 | 8.000 |
+| kd-narrow | 1366 | 5996.635 | 3 | 2 | 7 | 8.000 |
+| trie | 1365 | 6014.395 | 4 | 3 | 7 | 8.000 |
+| trie-compact | 1365 | 6016.873 | 4 | 2 | 7 | 8.000 |
+| comp | 1365 | 6013.668 | 4 | 2 | 7 | 8.000 |
+| comp-simd | 1365 | 6014.120 | 4 | 2 | 7 | 8.000 |
+| block8 | 1365 | 6012.232 | 4 | 2 | 7 | 8.000 |
+| block8-uncached | 1367 | 5979.528 | 2 | 2 | 7 | 8.000 |
+| block16 | 1366 | 5997.109 | 3 | 6 | 7 | 8.000 |
+| lazy-fc | 1369 | 5922.578 | 0 | 0 | 0 | 3.950 |
+| lazy-search | 1368 | 5939.522 | 1 | 0 | 0 | 3.953 |
+| sharingtree | 1367 | 5995.329 | 2 | 0 | 0 | 4.163 |
+| simple-sharingtree | 1366 | 6008.873 | 3 | 2 | 7 | 8.000 |
+
+candidate-default denotes the existing ranked-vector backend in the candidate library, before the new focused default optimization. anchor-e167 is the pristine Acacia Posets anchor. The rank-container header is byte-identical between these two library versions, but their surrounding vector/library source and binaries differ. The additional solved case is not evidence that the new default optimization helped; it was absent.
+
+The threshold case is robot_repair5.ltl. Current default returned UNREALIZABLE at16.952175s, just47.8ms inside the cap; lazy-FC returned UNREALIZABLE at16.817899s. The pristine anchor and lazy-search timed out (wrapper wall observations17.118035s and17.106662s, not completed-solver runtimes). This one unrepeated boundary crossing explains the solve-count difference between these four arms; it does not establish a general benefit from fractional cascading.
+
+Relative to current default, the remaining losses come from generalized_buffer_pb_4_pe_.ltl, load_balancer_unreal1_pb_6_4_pe_.ltl and simple_arbiter_enc_pb_11_pe_.ltl, with the exact subset per arm in solver-comparison.json. No alternative solves a case missed by current default.
+
+Memory: the kernel sidecars record70 invocation rows with an OOM kill:25 have native MEMOUT outcomes and45 ultimately have native TIMEOUT outcomes. Each of kd, kd-narrow, trie, trie-compact, comp, comp-simd, block8, block8-uncached, block16 and simple-sharingtree has exactly7 such rows. Default, both lazy variants, pristine anchor and sharingtree have none. Block16 has the most MEMOUT labels (6), but no more OOM-affected runs than the other affected arms. The table retains native classifications; no case was relabelled or rescored. All25 native MEMOUTs and2,339 timeouts remain penalized. Scope peaks cover the entire wrapped process tree, not isolated index retention. Earlier zero-OOM statements concerned separate replay/gate runs. The provisional comparison used native MEMOUT labels; its implication that block16 had more total memory failures is superseded by this complete event audit.
+
+Validation: zero contradictory native answers, zero decisive wall-cap overruns, and valid CPU/scope-memory/process-RSS observations for every one of22,860 rows. Automatic summary and identical-command summary-only are byte-identical. Final checks matched all431 approved bindings,180 compiled source files,15 binaries,8 runtime libraries,10 helpers, six repository identities/statuses/directories, the integration diff, and all720 native invocation schedules/commands/log hashes. The independent table derivation checked every native/scored row and both pristine-anchor/current-default comparisons.
+
+Full campaign elapsed14h01m09s. No reruns, retuning, changed flags, or changed binaries were used to select these results. The earlier768-case and1,184-case reports remain historical partial snapshots.
+
+This table does not negate the separate measured allocation/layout improvements or replay regressions. It shows that those gains have not established a better whole-solver default on this protocol. The focused ranked-vector follow-up is a separate prospective experiment and will be reported separately.
+
+The supplemental oom-event-observations.json records per-arm counts, all70 affected observations and the15 raw memory-sidecar bindings.
+
+Evidence bindings:
+summary.json SHA256 2bd0a88d55a0ad611f7cdcac7372f25f8b807bedb2cf47946133c2f499ad0b04
+frozen.json SHA256 99a05fd894b5994d86759aebe56a42846a820019e1431b86e18639cce034f9ec
+table deriver SHA256 8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c
+
+Publication status: both independent full-result reviews passed. The requested supplemental OOM-event artifact is included here as oom-event-observations.json (SHA256 a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69). Root also independently rejoined all15 sidecars to native labels, confirming the70 rows and identical seven-case sets. Audit files are included alongside this report. The separate default-optimization follow-up is still in progress.

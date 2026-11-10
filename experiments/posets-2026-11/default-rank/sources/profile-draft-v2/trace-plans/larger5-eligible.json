@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "traces": [
+    {
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "family": "round_robin_arbiter",
+      "split": "train",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-23.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "family": "round_robin_arbiter",
+      "split": "train",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/contains-10.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "family": "round_robin_arbiter",
+      "split": "train",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/contains-11.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "family": "full_arbiter_enc",
+      "split": "train",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/contains-6.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "family": "full_arbiter_enc",
+      "split": "train",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/contains-7.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/invocation.json"
+    }
+  ]
+}

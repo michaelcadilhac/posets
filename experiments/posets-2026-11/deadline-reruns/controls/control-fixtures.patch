@@ -1,0 +1,155 @@
+--- production/tests/rank-bucketed.cc
++++ fixtures/rank-control.cc
+@@ -254,11 +254,33 @@
+     auto subject = build<vector_type> (rows);
+     auto covering = build<vector_type> ({{4, 4}});
+     const auto capacity = subject.get_backing_vector ().capacity ();
++    // This control deliberately restores scratch work even for a covered intersection.
++    for (int failure = 0; failure < 2; ++failure) {
++      bool failed = false;
++      if (failure == 0)
++        allocations_left = 0;
++      else
++        vector_type::copies_left = 0;
++      try {
++        subject.intersect_with (covering);
++      } catch (const std::bad_alloc&) {
++        failed = failure == 0;
++      } catch (const vector_error&) {
++        failed = failure == 1;
++      }
++      allocations_left = -1;
++      vector_type::reset ();
++      require (failed, "covered control scratch failure was not injected");
++      check (subject, rows, rows);
++      check (covering, {{4, 4}}, rows);
++      require (subject.get_backing_vector ().capacity () == capacity,
++               "failed covered control changed original capacity");
++    }
++    subject.intersect_with (covering);
+     bool threw = false;
+     allocations_left = 0;
+     vector_type::copies_left = 0;
+     try {
+-      subject.intersect_with (covering);
+       subject.intersect_with (subject);
+       subject.union_with (std::move (subject));
+     } catch (...) {
+@@ -266,7 +288,7 @@
+     }
+     allocations_left = -1;
+     vector_type::reset ();
+-    require (not threw, "covered/self operation allocated or copied");
++    require (not threw, "self operation allocated or copied");
+     // Self-union must return before consuming its own generators.
+     // NOLINTNEXTLINE(bugprone-use-after-move)
+     require (subject.get_backing_vector ().capacity () == capacity, "covered capacity changed");
+@@ -323,19 +345,20 @@
+     auto right = build<vector_type> ({{2, 2}});
+     vector_type::coordinate_reads = 0;
+     left.union_with (std::move (right));
+-    require (vector_type::coordinate_reads == 0, "union recomputed a cached rank");
++    require (vector_type::coordinate_reads == 2, "control union did not recompute the RHS rank");
+     auto covering = build<vector_type> ({{5, 5}});
+     vector_type::coordinate_reads = 0;
+ #ifdef POSETS_RANK_STATS
+     posets::utils::rank_stats_reset ();
+ #endif
+     left.intersect_with (covering);
+-    require (vector_type::coordinate_reads == 0, "covered intersection recomputed cached ranks");
++    require (vector_type::coordinate_reads == 4 * left.size (),
++             "covered control must scan containment and scratch-insertion ranks");
+ #ifdef POSETS_RANK_STATS
+     const auto covered = posets::utils::rank_stats_current ();
+-    require (covered.contains_calls == left.size () and covered.insert_attempts == 0 and
++    require (covered.contains_calls == left.size () and covered.insert_attempts == left.size () and
+                  covered.intersection_short_circuits == left.size (),
+-             "covered rank counters");
++             "covered control rank counters");
+ #endif
+     auto restricted = build<vector_type> ({{4, 0}, {2, 2}});
+     vector_type::coordinate_reads = 0;
+@@ -350,8 +373,8 @@
+     require (changed.insert_attempts ==
+                  changed.intersection_short_circuits + changed.intersection_pair_meets,
+              "changed insert counters");
+-    require (vector_type::coordinate_reads == 2 * changed.intersection_pair_meets,
+-             "unchanged intersection copies recomputed rank");
++    require (vector_type::coordinate_reads == 2 * (changed.contains_calls + changed.insert_attempts),
++             "control containment and output insertion rank scans changed");
+ #endif
+     vector_type::reset ();
+   }
+--- production/tests/forest-kd-layout.cc
++++ fixtures/forest-map-control.cc
+@@ -47,7 +47,7 @@
+     std::vector<std::array<bool, 2>> expected;
+     for (const auto& query : queries)
+       expected.push_back ({covered (rows, query, false), covered (rows, query, true)});
+-    // Warm both the stack and each visited layer before checking query allocation reuse.
++    // The map control may allocate after every clear; keep the repeated semantic checks.
+     for (int repeat = 0; repeat < 2; ++repeat)
+       for (size_t i = 0; i < probes.size (); ++i)
+         for (bool strict : {false, true})
+@@ -57,12 +57,52 @@
+       struct reset_budget {
+           ~reset_budget () { allocations_left = -1; }
+       } guard;
+-      allocations_left = 0;
+       for (int repeat = 0; repeat < 8; ++repeat)
+         for (size_t i = 0; i < probes.size (); ++i)
+           for (bool strict : {false, true})
+             require (forest.covers_vector (root, probes[i], strict) == expected[i][strict],
+                      "forest repeated query changed");
++    }
++  }
++
++  void map_query_failures () {
++    const region rows {{3, 1, 2}, {2, 3, 1}, {1, 2, 3}};
++    const region queries {{1, 1, 1}, {3, 1, 2}, {3, 3, 3}, {-1, -1, -1}};
++    forest_type forest (3);
++    const auto root = forest.add_vectors (values (rows), false);
++    const auto query = matrix_check::vector<V> (queries.front ());
++    check_forest (forest, root, rows, queries);
++    for (const bool strict : {false, true}) {
++      size_t failures = 0;
++      bool completed = false;
++      const bool expected = covered (rows, queries.front (), strict);
++      for (long budget = 0; budget < 64; ++budget) {
++        bool threw = false;
++        bool answer = false;
++        {
++          struct reset_budget {
++              ~reset_budget () { allocations_left = -1; }
++          } guard;
++          allocations_left = budget;
++          try {
++            answer = forest.covers_vector (root, query, strict);
++          } catch (const std::bad_alloc&) {
++            threw = true;
++          }
++        }
++        if (threw)
++          ++failures;
++        else
++          require (answer == expected, "map query sweep differs from scalar oracle");
++        // Retry the same root, with checks/setup outside the charged query window.
++        check_forest (forest, root, rows, queries);
++        require (forest.check_child_order (), "map query failure changed geometry");
++        if (not threw) {
++          completed = true;
++          break;
++        }
++      }
++      require (failures > 0 and completed, "map query allocation hook or success not reached");
+     }
+   }
+ 
+@@ -205,6 +245,7 @@
+ }
+ 
+ int main () try {
++  map_query_failures ();
+   wide_forest ();
+   shared_suffixes ();
+   union_lifecycle ();

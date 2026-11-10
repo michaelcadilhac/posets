@@ -1,0 +1,233 @@
+{
+  "scope": "Native invocation-row/kernel-counter audit; no outcome relabeling or PAR2 changes. Counter sums are not invocation counts. Missing event coverage is not evidence of zero OOM.",
+  "expected_rows": 4572,
+  "per_arm": {
+    "baseline-default": {
+      "event_observed_rows": 1524,
+      "event_missing_rows": 0,
+      "all_event_rows_observed": true,
+      "event_missing_reasons": {},
+      "oom_observed_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "sum_observed_kernel_counters": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 156,
+      "native_MEMOUT_with_oom_kill": 0,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes_among_oom_kill_rows": {}
+    },
+    "optimized-default": {
+      "event_observed_rows": 1524,
+      "event_missing_rows": 0,
+      "all_event_rows_observed": true,
+      "event_missing_reasons": {},
+      "oom_observed_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "sum_observed_kernel_counters": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 157,
+      "native_MEMOUT_with_oom_kill": 0,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes_among_oom_kill_rows": {}
+    },
+    "kd-scratch-restored": {
+      "event_observed_rows": 1524,
+      "event_missing_rows": 0,
+      "all_event_rows_observed": true,
+      "event_missing_reasons": {},
+      "oom_observed_rows": 7,
+      "oom_kill_observed_rows": 7,
+      "sum_observed_kernel_counters": {
+        "oom": 24,
+        "oom_kill": 15
+      },
+      "native_MEMOUT": 2,
+      "native_TIMEOUT": 157,
+      "native_MEMOUT_with_oom_kill": 2,
+      "native_TIMEOUT_with_oom_kill": 5,
+      "native_outcomes_among_oom_kill_rows": {
+        "MEMOUT": 2,
+        "TIMEOUT": 5
+      }
+    }
+  },
+  "event_observed_rows": 4572,
+  "event_missing_rows": 0,
+  "all_event_rows_observed": true,
+  "native_MEMOUT_outcomes": 2,
+  "native_TIMEOUT_outcomes": 470,
+  "oom_observed_rows": 7,
+  "oom_kill_observed_rows": 7,
+  "sum_observed_kernel_counters": {
+    "oom": 24,
+    "oom_kill": 15
+  },
+  "native_TIMEOUT_rows_with_oom_kill": 5,
+  "source_sidecars": {
+    "baseline-default": {
+      "raw_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/baseline-default.tsv.memory.tsv",
+        "sha256": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3"
+      },
+      "scored_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/baseline-default.tsv.memory.tsv",
+        "sha256": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3"
+      }
+    },
+    "optimized-default": {
+      "raw_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/optimized-default.tsv.memory.tsv",
+        "sha256": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3"
+      },
+      "scored_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/optimized-default.tsv.memory.tsv",
+        "sha256": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3"
+      }
+    },
+    "kd-scratch-restored": {
+      "raw_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/kd-scratch-restored.tsv.memory.tsv",
+        "sha256": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78"
+      },
+      "scored_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/kd-scratch-restored.tsv.memory.tsv",
+        "sha256": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78"
+      }
+    }
+  },
+  "observations": [
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+      "native_result": "MEMOUT",
+      "run_index": "254",
+      "scope_unit": "acacia-syntcomp26-coverage-3639606-7c9f09f3e2d4.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 91,
+        "oom": 3,
+        "oom_group_kill": 0,
+        "oom_kill": 3,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+      "native_result": "TIMEOUT",
+      "run_index": "280",
+      "scope_unit": "acacia-syntcomp26-coverage-3652353-04318280a4c5.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 162,
+        "oom": 7,
+        "oom_group_kill": 0,
+        "oom_kill": 2,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+      "native_result": "TIMEOUT",
+      "run_index": "529",
+      "scope_unit": "acacia-syntcomp26-coverage-3763678-c9a7bd0155ea.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 39,
+        "oom": 1,
+        "oom_group_kill": 0,
+        "oom_kill": 1,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+      "native_result": "TIMEOUT",
+      "run_index": "638",
+      "scope_unit": "acacia-syntcomp26-coverage-3792270-3b7b86b9b2c5.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 39,
+        "oom": 1,
+        "oom_group_kill": 0,
+        "oom_kill": 1,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+      "native_result": "TIMEOUT",
+      "run_index": "691",
+      "scope_unit": "acacia-syntcomp26-coverage-3799967-75b5ec4ac28c.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 107,
+        "oom": 4,
+        "oom_group_kill": 0,
+        "oom_kill": 2,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+      "native_result": "TIMEOUT",
+      "run_index": "1068",
+      "scope_unit": "acacia-syntcomp26-coverage-42348-d9bf97dc525c.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 91,
+        "oom": 3,
+        "oom_group_kill": 0,
+        "oom_kill": 2,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+      "native_result": "MEMOUT",
+      "run_index": "1402",
+      "scope_unit": "acacia-syntcomp26-coverage-524614-24d7d9e43338.scope",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "events": {
+        "high": 0,
+        "low": 0,
+        "max": 108,
+        "oom": 5,
+        "oom_group_kill": 0,
+        "oom_kill": 4,
+        "sock_throttled": 0
+      },
+      "scope_memory_peak_bytes": "8589934592"
+    }
+  ],
+  "missing_observations": []
+}

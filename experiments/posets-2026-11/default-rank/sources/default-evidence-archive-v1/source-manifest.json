@@ -1,0 +1,31 @@
+{
+  "status": "source-only draft; no archive execution; plan.json must bind completed source TSVs after table/invariance review",
+  "origin": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/primary-evidence-archive-20261109/build_archive.py",
+    "sha256": "47d85ea4639c351119b1607542c3113385a782e192e0ef91b1ca3917f9c010f2"
+  },
+  "files": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/build_archive.py",
+      "sha256": "a50096bd42fed0da0bdc8e65676b81b432b5e528c85e9c92c9ce500fe2248046"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/changes.patch",
+      "sha256": "fea7f0f27c226f50528e7d1960e7d2386489d2b38819817bc20978b8f1bfaba2"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/archive-spec.json",
+      "sha256": "b794ce8166f54f3a7f2290509d66e3b768418430876bc3e25a7a69a61dc76e5d"
+    }
+  ],
+  "expected_data_members": 4,
+  "expected_archive_members": 6,
+  "expected_rows_each_kind": 3048,
+  "execution_conditions": [
+    "completed primary plus summary-only/invariance",
+    "reviewed table and exact raw hashes",
+    "benchmark owner releases shared lock",
+    "unchanged scoped_task.py8GnoSwap; cwdexistingAcacia",
+    "fresh archive and verified-extraction paths"
+  ]
+}

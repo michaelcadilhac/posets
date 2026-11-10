@@ -1,0 +1,21 @@
+{
+  "status": "explicit metadata-minimization projection, not byte-identical to original; no numerical relabel/rescore",
+  "original": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/summary.json",
+    "sha256": "495aad8b1f5101a90e4e96104dce9cfed946a924f71ca3ceab50fbfbef66a0a3",
+    "bytes": 24914,
+    "embedded": false
+  },
+  "projection": {
+    "filename": "summary-without-host-details.json",
+    "sha256": "4088acb9db7dae08cf4bfc7851237e0c3e62121c425d566179c3f40864fb388d",
+    "bytes": 18952
+  },
+  "omitted_JSON_pointer": "/cpu_host",
+  "all_other_keys_values_preserved": true,
+  "replacement_hardware_context": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-hardware-context.json",
+    "sha256": "1a32cde95d1fbfb94da9844c07b84db041d6f6189e0271d17369bea33ada8f25"
+  },
+  "approval": "Parent explicitly approved this one-pointer projection before package assembly; original summary remains unchanged/external"
+}

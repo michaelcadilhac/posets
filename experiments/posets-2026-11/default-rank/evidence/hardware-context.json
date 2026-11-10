@@ -1,0 +1,83 @@
+{
+  "scope": "Selected fields from saved campaign-start hardware snapshots; no new hardware probe/workload",
+  "snapshots": [
+    {
+      "campaign": "phase_one",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/host.json",
+      "source_sha256": "eff20847c082101b43bb277aed572cee40cef949285d267831e439d6efe61754",
+      "hardware": {
+        "Architecture": "x86_64",
+        "Model name": "11th Gen Intel(R) Core(TM) i7-11850H @ 2.50GHz",
+        "CPU(s)": "16",
+        "Thread(s) per core": "2",
+        "Core(s) per socket": "8",
+        "Socket(s)": "1",
+        "L1d cache": "384 KiB (8 instances)",
+        "L1i cache": "256 KiB (8 instances)",
+        "L2 cache": "10 MiB (8 instances)",
+        "L3 cache": "24 MiB (1 instance)"
+      },
+      "available_CPU_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "kernel_system": "Linux",
+      "kernel_release": "7.2.8-200.fc44.x86_64",
+      "machine": "x86_64"
+    },
+    {
+      "campaign": "default_followup",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/host.json",
+      "source_sha256": "ec149a58d076b9d2e8cf3c98a614ce89cee432089acb97aa1787e060ba81054e",
+      "hardware": {
+        "Architecture": "x86_64",
+        "Model name": "11th Gen Intel(R) Core(TM) i7-11850H @ 2.50GHz",
+        "CPU(s)": "16",
+        "Thread(s) per core": "2",
+        "Core(s) per socket": "8",
+        "Socket(s)": "1",
+        "L1d cache": "384 KiB (8 instances)",
+        "L1i cache": "256 KiB (8 instances)",
+        "L2 cache": "10 MiB (8 instances)",
+        "L3 cache": "24 MiB (1 instance)"
+      },
+      "available_CPU_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "kernel_system": "Linux",
+      "kernel_release": "7.2.8-200.fc44.x86_64",
+      "machine": "x86_64"
+    }
+  ],
+  "selected_hardware_fields_equal": true,
+  "limits": "Cache sizes are lscpu totals across the stated instances. Model name frequency is descriptive, not a measured or fixed clock. Both primary campaigns had no affinity or CPU quota override; separate PMU used CPU2. Hostname, vulnerability flags and other full-host details are omitted."
+}

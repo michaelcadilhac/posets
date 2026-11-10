@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "scope": "train paired replay; per-backend selector with original scalar+SIMD vectors; production bases 7c407128326583abbb137fd3832857ed506e20fb versus cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+  "compilation_treatment": "per-backend selector with original scalar+SIMD vectors",
+  "split": "train",
+  "driver": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+    "sha256": "b18f0e41750477e7d46094adcc26284f65ad27e2a465b0020a689e9b858518d4"
+  },
+  "orchestrator": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay-stop-on-correctness.py",
+    "sha256": "aa41c98deb2bda5293c53e54496c90b5678652f4e87c7835c12fecaf1969f661"
+  },
+  "trace_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+    "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+  },
+  "variants": {
+    "baseline": {
+      "build": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712",
+      "revision": "6bc77ccf5d113edcdc62d9128bb6628565f19c7d",
+      "production_base_revision": "7c407128326583abbb137fd3832857ed506e20fb",
+      "binary_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712/build-replay-release/per-backend/binary-map-explicit-report-anchor.json",
+        "sha256": "d8c90678264cd12d3d06a5419c77f11130ce1fbc28481f5446c7f00f79f593fe"
+      },
+      "manifest": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712/build-replay-release/per-backend/binary-map-explicit-report-anchor.json",
+        "sha256": "d8c90678264cd12d3d06a5419c77f11130ce1fbc28481f5446c7f00f79f593fe"
+      }
+    },
+    "optimized": {
+      "build": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-final-cc058ca",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca",
+      "revision": "c03dfb076b4321a60a9dca728e2cfee0050cb40b",
+      "production_base_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "binary_map": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca/build-replay-release/per-backend/binary-map.json",
+        "sha256": "77483a967d6299dad9b9850e973f300d4d96465f1bd52b1531ba0c8ec8a5c877"
+      },
+      "manifest": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca/build-replay-release/per-backend/binary-map.json",
+        "sha256": "77483a967d6299dad9b9850e973f300d4d96465f1bd52b1531ba0c8ec8a5c877"
+      }
+    }
+  },
+  "runs": [
+    {
+      "id": "paired-per-backend-v2-train-pair0-baseline",
+      "pair": 0,
+      "variant": "baseline",
+      "seed": 260617,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair0-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair0-baseline-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair0-baseline-spec.json",
+        "sha256": "aa7de548755b26bd688726580f16d3a1eb9daf780f4949fec4edab110b7fd2d4"
+      }
+    },
+    {
+      "id": "paired-per-backend-v2-train-pair0-optimized",
+      "pair": 0,
+      "variant": "optimized",
+      "seed": 260617,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair0-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair0-optimized-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair0-optimized-spec.json",
+        "sha256": "ec61d4cb9ba20c6365ce6915d0c28aa1c9fc1def8c73d1df6ae63b164d78c0c1"
+      }
+    },
+    {
+      "id": "paired-per-backend-v2-train-pair1-optimized",
+      "pair": 1,
+      "variant": "optimized",
+      "seed": 260618,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair1-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair1-optimized-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair1-optimized-spec.json",
+        "sha256": "5e25163ee1c3f70c1dddc27eff7a077ca8e48d96bcb26a44dd15bafd71886cda"
+      }
+    },
+    {
+      "id": "paired-per-backend-v2-train-pair1-baseline",
+      "pair": 1,
+      "variant": "baseline",
+      "seed": 260618,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair1-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair1-baseline-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair1-baseline-spec.json",
+        "sha256": "36848ebc56d8980e11b0acc54ae8edd6ebe94fbecca64cf4ed858de3e92667c4"
+      }
+    },
+    {
+      "id": "paired-per-backend-v2-train-pair2-baseline",
+      "pair": 2,
+      "variant": "baseline",
+      "seed": 260619,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair2-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair2-baseline-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair2-baseline-spec.json",
+        "sha256": "d748349a4cb5e5ab030491d3aebf7c64b3b1425af68e6337d6f4914239eb8c2d"
+      }
+    },
+    {
+      "id": "paired-per-backend-v2-train-pair2-optimized",
+      "pair": 2,
+      "variant": "optimized",
+      "seed": 260619,
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-per-backend-v2-train/paired-per-backend-v2-train-pair2-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair2-optimized-record.json",
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/paired-per-backend-v2-train-pair2-optimized-spec.json",
+        "sha256": "9e486e4f7a26044c4928a28e547dcf716f5c94fa208de5ff0468b3deb8bc79fe"
+      }
+    }
+  ],
+  "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+  "plan_writer": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/prepare-paired-replay.py",
+    "sha256": "8a25583e70f23ff2d41bde8630a5547d1e24d09a6f8b82dac70e6861bdd2e2a9"
+  },
+  "template": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/pair0-baseline-spec.json",
+    "sha256": "a14dfd3e17dc40506d396b3ea363da634a393a9ade8ca06286728680f5e8920d"
+  },
+  "release_note": "Writing this plan does not release held-out timing or the host lane."
+}

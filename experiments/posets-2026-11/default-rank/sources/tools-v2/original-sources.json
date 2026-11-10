@@ -1,0 +1,81 @@
+{
+  "scope": "Exact original snapshots identified; only copies under this directory will change. No original/frozen helper or C++ kernel is edited.",
+  "copies_before_adaptation": [
+    {
+      "path": "prepare-per-backend-build.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/prepare-per-backend-build.py",
+      "sha256": "517fc8c0259a37884d631b0941ebc686dc4c516a8767a04b3f1de4c26532048e",
+      "bytes": 8300
+    },
+    {
+      "path": "run-per-backend-build.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-per-backend-build.py",
+      "sha256": "df1f490f5c6002bf0d6c8de653907aa905c4da0e7b3d6775417c1d63b9d5e2df",
+      "bytes": 9149
+    },
+    {
+      "path": "prepare-paired-replay.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/prepare-paired-replay.py",
+      "sha256": "8a25583e70f23ff2d41bde8630a5547d1e24d09a6f8b82dac70e6861bdd2e2a9",
+      "bytes": 9217
+    },
+    {
+      "path": "run-paired-replay.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay.py",
+      "sha256": "c0062ff177aff7422ccd1abdcf2f8f03519170b1332e5dec951bf173e1675fd9",
+      "bytes": 7125
+    },
+    {
+      "path": "run-paired-replay-stop-on-correctness.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay-stop-on-correctness.py",
+      "sha256": "aa41c98deb2bda5293c53e54496c90b5678652f4e87c7835c12fecaf1969f661",
+      "bytes": 7891
+    },
+    {
+      "path": "summarize-paired-replay.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/summarize-paired-replay.py",
+      "sha256": "6ed02cdfc2837cb562fd881e29fd59ef5134420a25944eebb7b001b48e439215",
+      "bytes": 10692
+    },
+    {
+      "path": "posets-matrix.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+      "sha256": "b18f0e41750477e7d46094adcc26284f65ad27e2a465b0020a689e9b858518d4",
+      "bytes": 56465
+    },
+    {
+      "path": "test_posets_matrix.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/pytest/test_posets_matrix.py",
+      "sha256": "4f67ba63f32b8c697d2fbf3f695b81fcfb0a5e4b7fd4e9f156a28872b5679a4a",
+      "bytes": 40202
+    },
+    {
+      "path": "freeze_replay.py",
+      "origin": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/freeze_replay.py",
+      "sha256": "b9b202a328f885d3d9c03916ff830c357da00147a297cb1a521e66f4c011acdd",
+      "bytes": 3816
+    }
+  ],
+  "shared_unchanged_dependencies": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+      "sha256": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+      "copied": false
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+      "copied": false
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+      "copied": false
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+      "copied": false
+    }
+  ]
+}

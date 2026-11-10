@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-11-10T05:57:18.771448+00:00",
+  "user_objective": [
+    "Repeat gains/regressions near17s deadline",
+    "Consider performance-only rollback for serious repeatable regressions on pre-existing data structures",
+    "Run most promising retained optimized KD against genuinely original Acacia default configuration"
+  ],
+  "public_pr": "https://github.com/michaelcadilhac/posets/pull/40",
+  "starting_head": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+  "starting_head_ci": "all3jobs success,42756455713",
+  "phase": "Planning and source-control inventory; no new target workloads launched",
+  "runtime_owner": "/root/benchmark",
+  "source_owner": "/root/coding, Ponytail",
+  "review": "Barbosa bounded policy accepted; Nbjorner source/runner review pending actual draft",
+  "repeat_policy": {
+    "pairs": 5,
+    "primary_cap_s": 17,
+    "memory_max": "8G",
+    "swap_max": "0",
+    "order": "Alternate pair order; predeclare alternating starting arm across cases",
+    "cohort": "All historical solved-set flips; plus both-solved pairs with max time>=13.6s and multiplicative timing difference>=1.10. Selected from historical data, fixed before new outcomes.",
+    "known_case_union": [
+      "generalized_buffer_pb_4_pe_.ltl",
+      "simple_arbiter_enc_pb_11_pe_.ltl",
+      "load_balancer_unreal1_pb_6_4_pe_.ltl",
+      "robot_repair5.ltl",
+      "Alarm_a5f99bc6.ltl",
+      "08.ltl"
+    ],
+    "serious_solve_loss": "before solved>=4/5 and after solved<=1/5",
+    "serious_timing_loss": "ALL5pairs both decisively solved within17s; median after/before>=1.10 and>=4/5ratios>1. No survivor-only median.",
+    "censoring": "Use solve-rate rule or unresolved; any longer-cap diagnostic requires separately frozen symmetric phase and never replaces17s scores",
+    "attribution": "Backend-vs-ranked regressions are not evidence that a same-backend optimization regressed; matched same-backend before/after controls required for rollback",
+    "rollback": "Preserve correctness/exception-safety fixes; independent code review and appropriate tests before publishing any performance-only revert"
+  },
+  "final_full_comparison": {
+    "baseline": "Genuine original frozen Acacia/Posets e167 anchor, not789 old-ranked control",
+    "candidate": "Leading retained production lazy-FC KD, subject to source-equivalence and repeat selection; no archived slower experiments by novelty",
+    "instances": 1524,
+    "protocol": "Unchanged campaign.py,17s,8G/no swap,shippingpreset,emptyflags; fresh two-arm run after candidate frozen"
+  },
+  "protections": [
+    "Never edit/build original Acacia or sibling/nested WIP",
+    "Use owned copies; preserve prior frozen evidence/binaries/scripts",
+    "One runtime owner and existing host lock/cgroup infrastructure",
+    "No source/tool/build workloads concurrent with clean target timing",
+    "No raw process/status/WIP details in public preservation proof"
+  ],
+  "side_question_rss": {
+    "meaning": "Measured maximum reaped-process RSS across broad15armcampaign, not backend-onlyheap or cgrouppeak",
+    "sharingtree_peak_MiB": 3793.168,
+    "original_default_peak_MiB": 3793.199,
+    "interpretation": "Nominal32KiBdifference; ranked/sharingtree/bothlazyKD effectively tied~3.70GiB. OtherKD/trievariants~7.7\u20137.8GiBwithOOM."
+  }
+}

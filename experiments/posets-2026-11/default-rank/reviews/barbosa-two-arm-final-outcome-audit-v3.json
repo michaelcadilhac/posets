@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "reviewer": "Barbosa-guided subagent; PM evidence/claim review followed by detailed saved-row and report inspection",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "verdict": "APPROVE exact completed two-arm result evidence and bounded human-report draft; no mortal or venial finding remains in this scope",
+  "bindings": {
+    "handoff": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-HANDOFF.json",
+      "sha256": "cf9c9d6e8c028ea2139ac0f37b72299bf1c814009ef600c7f352dd19921b9fd7"
+    },
+    "invariance": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-INVARIANCE.json",
+      "sha256": "3a8c65130e68489d41342f4e9bbf13a916c97c5eb8a3deed532c5a51f64dc106"
+    },
+    "frozen_manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/frozen.json",
+      "sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb"
+    },
+    "original_solver_summary": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/summary.json",
+      "sha256": "495aad8b1f5101a90e4e96104dce9cfed946a924f71ca3ceab50fbfbef66a0a3"
+    },
+    "comparison": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/solver-comparison.json",
+      "sha256": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf"
+    },
+    "comparison_csv": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/solver-comparison.csv",
+      "sha256": "d1f3289bf37a67f01ec243c3786926e2da08e4a45b86c65fe19196922ca3ae07"
+    },
+    "oom_observations": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/oom-event-observations.json",
+      "sha256": "89387f76a85b67a47635fd356884a8634dca414bfe0de91b1966c9cc3a67f092"
+    },
+    "comparison_completion": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/COMPLETION.json",
+      "sha256": "a6832195b2675fa3faaeb43c768b8441341c2516ae4bc4c1116f566047f16314"
+    },
+    "human_report_draft": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-overview-report-draft.txt",
+      "sha256": "91bdbf43ade1acb8430d994f5055b1259d0758a27f4a34807fc1a12abb70b129"
+    },
+    "hardware_companion": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-hardware-context.json",
+      "sha256": "1a32cde95d1fbfb94da9844c07b84db041d6f6189e0271d17369bea33ada8f25"
+    },
+    "public_preservation_proof": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-preservation-check-v1/public-proof.json",
+      "sha256": "fb4d73102e28cfc8de02abbb6865e1409c261e8aec70b38f604852dc83a0c8e4"
+    },
+    "saved_hardware_phase_one": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/host.json",
+      "sha256": "eff20847c082101b43bb277aed572cee40cef949285d267831e439d6efe61754"
+    },
+    "saved_hardware_default_followup": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/host.json",
+      "sha256": "ec149a58d076b9d2e8cf3c98a614ce89cee432089acb97aa1787e060ba81054e"
+    }
+  },
+  "scope": {
+    "source_roles": {
+      "baseline-default": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "optimized-default": "30e66853832d98bcfaada296d892157b95a8150d"
+    },
+    "unchanged_protocol": "Two fixed fresh Acacia arms; rank default, empty solver flags, shipping otf_sparse_formula_parity preset, strict measured-wall <=17 s, unsolved 34 s, 8 GiB/no swap, batch32, seed260617, serial, no CPU affinity or quota override.",
+    "checks_performed_by_reviewer": [
+      "Saved-data only: independently recalculated every native and scored row (1524 per role), same instance universe and verdict agreement on common solves, strict PAR2, loss/gain set, CPU and memory aggregates.",
+      "Joined all3048 native rows to their exact memory-sidecar keys; checked completeness/finite nonnegative metrics, recorded event validity, exit/timeout/resource labels and frozen per-row identities.",
+      "Verified52 unique bound files in result/top-level handoff/comparison chain; additionally hash-checked and compared the current report, public preservation proof, hardware companion and both referenced saved snapshots. Did not independently rehash all14981 entries of owner invariance inventory.",
+      "Compared CSV/JSON/handoff/completion summaries with independently recalculated data and inspected final report outcome, hardware, limitations and preservation paragraphs.",
+      "No target helper imports, ELF execution, tests, compilers, solver invocations, profiles, new host probes, timing, reruns or tuning."
+    ],
+    "inherited_owner_evidence": "Bound owner invariance record reports14981 unchanged file bindings and1211 rechecked files from earlier phase-one evidence. Separate public preservation proof records5 original repositories x6 matching facets; reviewer checked the saved proof, not a new scan of original WIP."
+  },
+  "independent_result": {
+    "rows_per_arm": 1524,
+    "native_total_rows": 3048,
+    "scored_total_rows": 3048,
+    "raw_and_scored_identical": true,
+    "results": [
+      {
+        "arm": "baseline-default",
+        "solved": 1369,
+        "instances": 1524,
+        "par2_total_s": 5926.874862,
+        "baseline_gains": 0,
+        "baseline_losses": 0,
+        "baseline_par2_delta_s": 0.0,
+        "cpu_observed_rows": 1524,
+        "cpu_total_s": 14005.477029,
+        "scope_peak_observed_rows": 1524,
+        "scope_peak_max_bytes": 4244238336,
+        "scope_peak_median_bytes": 106885120.0,
+        "process_rss_observed_rows": 1524,
+        "process_rss_max_bytes": 3977629696,
+        "process_rss_median_bytes": 61794304.0,
+        "wall_cap_overruns": 0,
+        "native_outcomes": {
+          "REALIZABLE": 629,
+          "TIMEOUT": 155,
+          "UNREALIZABLE": 740
+        },
+        "failure_subtypes": {
+          "AUDIT-ERROR": 0,
+          "CRASH": 0,
+          "ERROR": 0,
+          "MEMOUT": 0,
+          "SYFCO-FAIL": 0,
+          "TIMEOUT": 155,
+          "UNKNOWN": 0
+        },
+        "memory_events_observed_rows": 1524,
+        "memory_events_missing_rows": 0,
+        "oom_kill_observed_rows": 0,
+        "native_TIMEOUT_with_oom_kill": 0
+      },
+      {
+        "arm": "optimized-default",
+        "solved": 1368,
+        "instances": 1524,
+        "par2_total_s": 5943.112131,
+        "baseline_gains": 0,
+        "baseline_losses": 1,
+        "baseline_par2_delta_s": 16.237269,
+        "cpu_observed_rows": 1524,
+        "cpu_total_s": 14001.094425,
+        "scope_peak_observed_rows": 1524,
+        "scope_peak_max_bytes": 4237766656,
+        "scope_peak_median_bytes": 106244096.0,
+        "process_rss_observed_rows": 1524,
+        "process_rss_max_bytes": 3977637888,
+        "process_rss_median_bytes": 61624320.0,
+        "wall_cap_overruns": 0,
+        "native_outcomes": {
+          "REALIZABLE": 629,
+          "TIMEOUT": 156,
+          "UNREALIZABLE": 739
+        },
+        "failure_subtypes": {
+          "AUDIT-ERROR": 0,
+          "CRASH": 0,
+          "ERROR": 0,
+          "MEMOUT": 0,
+          "SYFCO-FAIL": 0,
+          "TIMEOUT": 156,
+          "UNKNOWN": 0
+        },
+        "memory_events_observed_rows": 1524,
+        "memory_events_missing_rows": 0,
+        "oom_kill_observed_rows": 0,
+        "native_TIMEOUT_with_oom_kill": 0
+      }
+    ],
+    "gains": [],
+    "losses": [
+      "robot_repair5.ltl"
+    ],
+    "par2_delta_s": 16.237269,
+    "par2_delta_percent": 0.273960044341493,
+    "lost_case": {
+      "baseline": {
+        "result": "UNREALIZABLE",
+        "exit_code": 1,
+        "seconds": 16.28706081188284,
+        "timed_out": false
+      },
+      "optimized": {
+        "result": "TIMEOUT",
+        "exit_code": 124,
+        "seconds": 17.11799132404849,
+        "timed_out": true
+      },
+      "interpretation": "Optimized row is an actual native timeout;17.117991324 is a censored wrapper duration, not solver completion time. Strict penalty34 s. No successful row was reclassified for cap overrun."
+    },
+    "cpu_scope_peak_rss_event_observed_rows_each": 3048,
+    "oom_or_oom_kill_observed_rows": 0,
+    "native_MEMOUT": 0,
+    "native_TIMEOUT": 311,
+    "contradictory_common_answers": 0,
+    "errors": 0,
+    "decisive_wall_cap_overruns": 0,
+    "native_invocations": 96,
+    "native_invocation_meaning": "48 schedule batches x2 wrappers, covering3048 individual solver cases."
+  },
+  "report_closure": {
+    "current_draft_hash": "91bdbf43ade1acb8430d994f5055b1259d0758a27f4a34807fc1a12abb70b129",
+    "remaining_draft_placeholder": "Final reviewer outcome acceptance/publication bookkeeping only; deliberately pending, not missing benchmark results.",
+    "accepted_claims": [
+      "No demonstrated whole-solver gain for optimized default; retain ranked backend. One unrepeated negative observation is not a causal or general regression claim.",
+      "15-arm phase-one and fresh2-arm default campaign remain distinct; neither pooled timing nor unseen-test claim is made.",
+      "CPU sums, cgroup peak and process RSS are whole-process observations, distinct from requested C++ payload/constructor ROI and cache-counter companions; no heap-memory improvement inferred.",
+      "Independent private Rust bytes may differ under matched source/dependency revisions and compiler settings; declared rank source treatment is not byte-isolated causal proof.",
+      "NO_VERBOSE smoke evidence binds source/type/config/forced requests and verdicts; it does not observe runtime route frequencies.",
+      "Both saved hardware snapshots match the selected fields exactly; descriptive2.50GHz model text is not measured/fixed frequency, primary had no affinity/quota, separate PMU pinned CPU2.",
+      "Public preservation proof supports only HEAD/status/index/binary HEAD diff/tracked content/count for5 checkouts; ignored and untracked bytes excluded, raw WIP names/status remain private.",
+      "Earlier intermediate publications stay immutable and are superseded; original full solver summary hash495aad8b... remains external authority. A later package projection dropping only top-levelcpu_host must be labeled as such with its own hash; package revision has not been reviewed by this audit."
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "Saved evidence audit, not a new performance experiment or formal correctness proof.",
+    "Owner performed all compilation/tests/profiling/solver runs; reviewer independently validated saved results rather than claiming execution credit.",
+    "This is not final publication/package-byte approval. Root owns final bookkeeping and package review."
+  ],
+  "attribution": {
+    "new_originated_defect": "none",
+    "incremental_value": "Independent complete3048-row result/resource recalculation and final claim/scope audit; earlier requests closed.",
+    "historical_credit": "B01 origin remains Barbosa source hypothesis; benchmark owner reproduction/fix. Subnormal interval concern Barbosa, initial NaN concern root; effective argv and OOM-label distinction Nb; shared registrar static miss retained."
+  }
+}

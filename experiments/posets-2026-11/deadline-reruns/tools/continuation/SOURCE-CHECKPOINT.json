@@ -1,0 +1,109 @@
+{
+  "authority": "Root requested narrow continuation; exact actual amendment and separate root/delegated release still required",
+  "counts": {
+    "carried_primary": 205,
+    "cases_per_arm": 156,
+    "final_primary": 312,
+    "remaining_calls": 107,
+    "scored_diagnostic": 0
+  },
+  "files": [
+    {
+      "bytes": 3314,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/capture_native.py",
+      "relative_path": "capture_native.py",
+      "sha256": "121615da7997b3e284712250728edc1fb6a5178417c1bdf623374011e6f8858a"
+    },
+    {
+      "bytes": 21218,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/continue30.py",
+      "relative_path": "continue30.py",
+      "sha256": "2ed3c4c7413633412ff4c5303a386d23893ae91c5be237501cc51a592a08f02f"
+    },
+    {
+      "bytes": 20436,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/test_continuation.py",
+      "relative_path": "test_continuation.py",
+      "sha256": "9ee6153aeb65ac8dc0cf094c11222bd1fa42e7ad4dce8cd912a3c3ed872a71b9"
+    },
+    {
+      "bytes": 1080,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/spot-limit32.stderr.txt",
+      "relative_path": "spot-limit32.stderr.txt",
+      "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+    },
+    {
+      "bytes": 5415,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/README.txt",
+      "relative_path": "README.txt",
+      "sha256": "7a1fb8e7bbe338b14615bc7265a527166896f933a36cf805b2644e463ef68c5c"
+    },
+    {
+      "bytes": 1778,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/PROPOSAL.json",
+      "relative_path": "PROPOSAL.json",
+      "sha256": "7df5edd7cac5d45f580dbb69ee712dff0a66e5028c11e7be5545b7c22c5b299e"
+    },
+    {
+      "bytes": 363,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/offline-spec.json",
+      "relative_path": "offline-spec.json",
+      "sha256": "e9f558a2eb04c72bf2cf2648c3f5b518f060c41b93a76fa4595c30e17edb95aa"
+    }
+  ],
+  "not_checked": [
+    "Python syntax/imports",
+    "Eight offline fixtures",
+    "Actual source qualification",
+    "Actual amendment",
+    "Target continuation"
+  ],
+  "offline_fixture_methods": 8,
+  "original_preserved": "All old source, policy, plan, 205 records, raw rows/sidecars, diagnostic, binaries and libraries remain unmodified",
+  "pair_gap": {
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "reserved_new_namespace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1",
+  "static_checks_only": [
+    "Authored JSON parsed with standard library",
+    "Seven small draft file hashes and eight existing small source/reference hashes",
+    "Signature bytes equal independent diagnostic log"
+  ],
+  "status": "SOURCE FROZEN FOR REVIEW; no imports/tests/qualification/amendment/target execution",
+  "verified_small_source_references": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup-30s-draft-v2/followup30.py",
+      "sha256": "6cdc4851af74b26b1a8b17e7deabf81c3297a3391f5162dd0df0159fa6b01acb"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-source-map-v1/MAPPING-CHECKPOINT.json",
+      "sha256": "0c61aa1108c42ecc44d8e7eb9b125d583143b016c5df1a6f899da0971b89f5e3"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+      "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/reproduction-attempt1.log",
+      "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-diagnostic-outcome-and-continuation-design-review.json",
+      "sha256": "2a5602fa3b61a69f22c0327efd1930fa99131691cf235f9607e9c6a6f8714d52"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "OOM_kill_invocations": 0,
+  "accounting": {
+    "conditional30cases_per_arm": 156,
+    "diagnostic_scored_observations": 0,
+    "known_Spot32_native_ERROR_each": 2,
+    "new_primary_records": 107,
+    "old_primary_records": 205,
+    "remaining_TIMEOUT_each": 146,
+    "resolved_each": 8,
+    "source17cases_per_arm": 1524,
+    "total_primary_records": 312
+  },
+  "completed_utc": "2026-11-10T15:05:09.210528+00:00",
+  "decisive_wall_overruns": 0,
+  "exact_PAR2": {
+    "candidate_minus_original_s": "0.141481206752360",
+    "conditional_PAR2_s": {
+      "anchor-e167": "9054.294432966038586",
+      "lazy-fc": "9054.435914172790946"
+    },
+    "scope": "Exact decimal verification of the existing conditional30s scoring formula;156perarm, all unsolved including nativeERROR cost60; native rows and reported float summary unchanged."
+  },
+  "gains_lazy_vs_original": [],
+  "invariance": "215 exact original/cohort/helper/ELF/runtime/source/review/authority bindings match; old205record/raw/memory bytes unchanged; all107new captures/raw/memory records valid.",
+  "losses_lazy_vs_original": [],
+  "no_active_workload": true,
+  "original_preservation": "Five checkout aliases/all six fields matched new-task baseline. Publish only redacted proof; private statuses/diffs/WIP names excluded.",
+  "pair_gap": {
+    "limit": "One pair spans STOP/diagnostic/adjudication; not all 156 pairs were uninterrupted adjacent.",
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "publication": "Pending root and final outcome/package reviews; no commit/push/publication by runtime owner.",
+  "resolved_case_names": [
+    "arbiter_with_cancel_pb_7_pe_.ltl",
+    "collector_v3_pb_10_pe_.ltl",
+    "full_arbiter_enc_pb_10_pe_.ltl",
+    "g-unreal-314.ltl",
+    "lift_pb_8_pe_.ltl",
+    "ltl2dba_R_pb_10_pe_.ltl",
+    "robot_repair5.ltl",
+    "workstation_resupply_pb_5_pe_.ltl"
+  ],
+  "results": [
+    {
+      "CPU_seconds": 19462.935455,
+      "OOM_kill_counter_sum": 0,
+      "OOM_kill_invocations": 0,
+      "arm": "anchor-e167",
+      "cohort_cases": 156,
+      "conditional_PAR2_s": 9054.294432966039,
+      "followup_decisive_at_or_before17_s": 0,
+      "known_Spot32_ERRORS": 2,
+      "native_outcomes": {
+        "ERROR": 2,
+        "REALIZABLE": 5,
+        "TIMEOUT": 146,
+        "UNREALIZABLE": 3
+      },
+      "process_RSS_peak_bytes": 4280414208,
+      "process_RSS_peak_case": "Morning2s_9cbf2546.ltl",
+      "remaining_unsolved": 148,
+      "resolved30": 8,
+      "scope_peak_bytes": 6136221696,
+      "scope_peak_case": "collector_v2_pb_27_pe_.ltl",
+      "valid_resource_rows": 156
+    },
+    {
+      "CPU_seconds": 19465.618834,
+      "OOM_kill_counter_sum": 0,
+      "OOM_kill_invocations": 0,
+      "arm": "lazy-fc",
+      "cohort_cases": 156,
+      "conditional_PAR2_s": 9054.435914172791,
+      "followup_decisive_at_or_before17_s": 0,
+      "known_Spot32_ERRORS": 2,
+      "native_outcomes": {
+        "ERROR": 2,
+        "REALIZABLE": 5,
+        "TIMEOUT": 146,
+        "UNREALIZABLE": 3
+      },
+      "process_RSS_peak_bytes": 4280303616,
+      "process_RSS_peak_case": "Morning2s_9cbf2546.ltl",
+      "remaining_unsolved": 148,
+      "resolved30": 8,
+      "scope_peak_bytes": 6165204992,
+      "scope_peak_case": "collector_v2_pb_27_pe_.ltl",
+      "valid_resource_rows": 156
+    }
+  ],
+  "scope_boundary": "End of this sprint/PR40. No additional experiments, variants, repetitions, native-width or forced-backward runs. Further KD work is a later task.",
+  "signature_adjudication": "All nativeERROR retained asERROR with separate SPOT_ACCEPTANCE_LIMIT_32 category and unsolvedPAR2=60. Existing uncapturedERROR references separate diagnostic; three newERRORs have exact full primary capture. Unknown/mixed errors never continued.",
+  "source17": "Original3048observations and17s scores remain immutable. Conditional30report is not a new full1524case30s campaign.",
+  "status": "FULL312CONDITIONALCOHORT-CLOSED-RUNTIME LANE RELEASED",
+  "summary_replay": "Byte-identical summary and all312record hashes; zero new solver calls.",
+  "truth_conflicts": 0,
+  "valid_CPU_RSS_scope_event_rows": 312
+}

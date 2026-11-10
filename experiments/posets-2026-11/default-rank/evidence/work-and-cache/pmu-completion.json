@@ -1,0 +1,883 @@
+{
+  "clocks_discarded": true,
+  "completed": [
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-rr552-build-native-record.accepted.json",
+        "sha256": "629ea08e9e36f77d55ab5c14c90f60a155b96b43a79536ff03b7c392b0c01059"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-baseline-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-rr552-build-native-record.json",
+        "sha256": "800731750e550ca27c578d8b553c680657de5d46b07a6e31cd77b4acb3d4cee9"
+      },
+      "resource": {
+        "cpu_seconds": 0.024659,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392557-d112089b8faf.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4640768,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392557-d112089b8faf.scope",
+        "seconds": 0.1647915889043361,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2017,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-rr552-build-native-record.accepted.json",
+        "sha256": "51f4b19ce27a2dde1b60758f7886538d011dbb04e29b749969809a1f2c251774"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-candidate-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-rr552-build-native-record.json",
+        "sha256": "36c13012d9cd45be8fc1990f928866e8b0a77f85e31737848eef9c29b3cb4df7"
+      },
+      "resource": {
+        "cpu_seconds": 0.022437,
+        "max_process_rss_bytes": 14262272,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392566-1fbdc02ccfc8.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4808704,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392566-1fbdc02ccfc8.scope",
+        "seconds": 0.16477460390888155,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2026,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-collector-cpre-compatible-record.accepted.json",
+        "sha256": "7b8197dc296b634b46d842d7b82939a25d087c3fc485804522dd5b94076ae5ed"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-baseline-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-collector-cpre-compatible-record.json",
+        "sha256": "b784f6ecff7577cb8a980817add93eb4d480d4ded809ca7c92db2a87e659d9de"
+      },
+      "resource": {
+        "cpu_seconds": 0.012582999999999999,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392575-150417253426.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4796416,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392575-150417253426.scope",
+        "seconds": 0.1143134911544621,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2016,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-collector-cpre-compatible-record.accepted.json",
+        "sha256": "fa494a5caf9c00d9c68041900da5e75ed8cea61d52531d4e067d13d8581ed57d"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-candidate-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-collector-cpre-compatible-record.json",
+        "sha256": "22958341bf3aec43637d0d1a638b0390bd3dc3b1ec9c120553b05229fbf32a00"
+      },
+      "resource": {
+        "cpu_seconds": 0.012674,
+        "max_process_rss_bytes": 14258176,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392584-e00a971bec8d.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4763648,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392584-e00a971bec8d.scope",
+        "seconds": 0.11428195610642433,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 1982,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-rr552-build-compatible-record.accepted.json",
+        "sha256": "7526fbc5b46866aa7ff21ca91b1065ad0274eb34ffdf123835a849e38a76e1c2"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-baseline-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-rr552-build-compatible-record.json",
+        "sha256": "ba7cb39cdeed552e406d73b88e7a0a3ebe6114e57f108c6e540fa31ab1ec87a7"
+      },
+      "resource": {
+        "cpu_seconds": 0.024684,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392593-4db656e08637.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4829184,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392593-4db656e08637.scope",
+        "seconds": 0.16464414191432297,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2034,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-rr552-build-compatible-record.accepted.json",
+        "sha256": "ee22c69b410d44a807687459b7519ab723e36797b32e7c70aca39cbc03c0b45f"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-candidate-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-rr552-build-compatible-record.json",
+        "sha256": "42f53d2efb37737b7018c3457ea7c590af3dbf8e4d0291de351c86ff84bae25b"
+      },
+      "resource": {
+        "cpu_seconds": 0.025404999999999997,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392603-b4f43936f978.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4767744,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392603-b4f43936f978.scope",
+        "seconds": 0.11449861782602966,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 1997,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-collector-cpre-native-record.accepted.json",
+        "sha256": "990eea26de4166830cdc52b1ea94248c24f865fb2982d566e29a72f466ef8800"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-baseline-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-baseline-collector-cpre-native-record.json",
+        "sha256": "49281151edecc53643aa2d8a122fd761dfe42832f54da72b89e6fd89618b1d1f"
+      },
+      "resource": {
+        "cpu_seconds": 0.012684999999999998,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392612-aca6b19bdc1c.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4886528,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392612-aca6b19bdc1c.scope",
+        "seconds": 0.11451898980885744,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2003,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-collector-cpre-native-record.accepted.json",
+        "sha256": "a8c430c654c1cda6effb1ce06bbde70ae37563f86ba3249fd7101edf9419e28d"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair0-candidate-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair0-candidate-collector-cpre-native-record.json",
+        "sha256": "02c7968dba5edf4936f381c4b73166e11189fe8621e7301f5d272e2e6a1aeb10"
+      },
+      "resource": {
+        "cpu_seconds": 0.013371999999999998,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392621-c5ea36af6381.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4751360,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392621-c5ea36af6381.scope",
+        "seconds": 0.11444709310308099,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2031,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-rr552-build-compatible-record.accepted.json",
+        "sha256": "8e67aff26aa9afa09848a31159bbce9e92fa0e75be861167308502591335a85e"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-candidate-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-rr552-build-compatible-record.json",
+        "sha256": "6d9e7870859225961092945f15380ddc7d9c5b3da8f004fabbc21a2700f90f93"
+      },
+      "resource": {
+        "cpu_seconds": 0.024003,
+        "max_process_rss_bytes": 14241792,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392630-cbeba71540e9.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4792320,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392630-cbeba71540e9.scope",
+        "seconds": 0.11460381490178406,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2009,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-rr552-build-compatible-record.accepted.json",
+        "sha256": "f0951d16fa541b10780a87f0173054060e4bd28b138ca828d30768c893922429"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-baseline-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-rr552-build-compatible-record.json",
+        "sha256": "f03665b1d3ddbde85c34d4bb45bf418186d2c1f1c3b7fa114e84ac87e4b14509"
+      },
+      "resource": {
+        "cpu_seconds": 0.03297,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392639-5ba42e46171b.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4734976,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392639-5ba42e46171b.scope",
+        "seconds": 0.16481264494359493,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2000,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-collector-cpre-native-record.accepted.json",
+        "sha256": "6cdc42d37bd22f3ecc6a426a0a0975680c41b0ece45ae6c8f94f013cb9cc6cee"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-candidate-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-collector-cpre-native-record.json",
+        "sha256": "4c2a763579ace55f95cfd6da8fcc4ff53ce9247d4077643757c622743692c7d2"
+      },
+      "resource": {
+        "cpu_seconds": 0.012565999999999999,
+        "max_process_rss_bytes": 14254080,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392648-e490d2c83511.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4804608,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392648-e490d2c83511.scope",
+        "seconds": 0.11445625615306199,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2031,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-collector-cpre-native-record.accepted.json",
+        "sha256": "1a669b81f54b544a97749c2588ba09e76b219bf1157af0ff5a9666b3f808f92a"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-baseline-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-collector-cpre-native-record.json",
+        "sha256": "42242760323a8aa7acbf08cdcf3a318e2739e74f2be421eb2a03f7af0cf3d2ed"
+      },
+      "resource": {
+        "cpu_seconds": 0.012676,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392657-88a97189af30.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4788224,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392657-88a97189af30.scope",
+        "seconds": 0.11445302003994584,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2016,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-rr552-build-native-record.accepted.json",
+        "sha256": "4b82f89cbc571ca9a5cd1ea3fb0df52b150b508ddbbf423a765bc8e058e025b8"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-candidate-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-rr552-build-native-record.json",
+        "sha256": "6b2ca04bf674ba5c8f9a0c56d22dd52d1dbf569b6acd82053924f0c5fab01aa0"
+      },
+      "resource": {
+        "cpu_seconds": 0.022667999999999997,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392666-16fbdf70a509.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4788224,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392666-16fbdf70a509.scope",
+        "seconds": 0.16467721411027014,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2034,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-rr552-build-native-record.accepted.json",
+        "sha256": "6505824db1df821b48578e321298e133ec1bc210e6b741783fa4878637908d32"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-baseline-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-rr552-build-native-record.json",
+        "sha256": "d89859cc5cc658a57fa265338bcfa9d8010088379c254f8fba367b4ef25f4180"
+      },
+      "resource": {
+        "cpu_seconds": 0.029501,
+        "max_process_rss_bytes": 14254080,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392675-dbd334514c72.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4816896,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392675-dbd334514c72.scope",
+        "seconds": 0.11455904203467071,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2021,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-collector-cpre-compatible-record.accepted.json",
+        "sha256": "be7f648fb304c9d1555741ffa1f7e3771a2125555c7bb2ca0614ec02e9f39750"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-candidate-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-candidate-collector-cpre-compatible-record.json",
+        "sha256": "588806e3220018411e86ba75e0b3ed52de019f2cf2f2b9700e3f003e472e201b"
+      },
+      "resource": {
+        "cpu_seconds": 0.012542999999999999,
+        "max_process_rss_bytes": 14258176,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392685-64a106386a98.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4886528,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392685-64a106386a98.scope",
+        "seconds": 0.11467420682311058,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2018,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-collector-cpre-compatible-record.accepted.json",
+        "sha256": "0b21d2da4a756a581c20228e436dc318fac07b59912e02cfb2b5db69b2636634"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair1-baseline-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair1-baseline-collector-cpre-compatible-record.json",
+        "sha256": "94dba3e25256ddc4eb2da27f18d685ea4d138b75a819b4c45af891f096091030"
+      },
+      "resource": {
+        "cpu_seconds": 0.012492,
+        "max_process_rss_bytes": 14262272,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392694-9e3a1174b7ce.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4960256,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392694-9e3a1174b7ce.scope",
+        "seconds": 0.11445439606904984,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2001,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-collector-cpre-compatible-record.accepted.json",
+        "sha256": "f57ae44209d8a6d72082732d2a1dd1127ed49dee78913baf150d336db284d133"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-baseline-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-collector-cpre-compatible-record.json",
+        "sha256": "8f3de1149dc9d575dde480bf8ef4045491b26292e34f2f972c2cd92f40cc5621"
+      },
+      "resource": {
+        "cpu_seconds": 0.012469999999999998,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392703-2e8b02c564df.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4784128,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392703-2e8b02c564df.scope",
+        "seconds": 0.1145577838178724,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2004,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-collector-cpre-compatible-record.accepted.json",
+        "sha256": "f709b3ba631be15d79a0949230fd1c21196a9ae5600fa4167a580dafb164326d"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-candidate-collector-cpre-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-collector-cpre-compatible-record.json",
+        "sha256": "b4ed7e1fef7dd822810eda0ce8bbed0c8a2c126c39308f73d8903d36a2e3572f"
+      },
+      "resource": {
+        "cpu_seconds": 0.012872999999999999,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392712-bbf8a882a7cc.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4706304,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392712-bbf8a882a7cc.scope",
+        "seconds": 0.11442272015847266,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2016,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-rr552-build-native-record.accepted.json",
+        "sha256": "0092642ddf40ba4d250ed85e9b2351989ce401d8d01df60b71db5b1e9375539d"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-baseline-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-rr552-build-native-record.json",
+        "sha256": "75b908c22a7f4b3e103ea042d6f38e62eb1e097df6a9a0eefc69f3a6d733bd75"
+      },
+      "resource": {
+        "cpu_seconds": 0.022151999999999998,
+        "max_process_rss_bytes": 14245888,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392721-f602e1c0afb1.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4792320,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392721-f602e1c0afb1.scope",
+        "seconds": 0.11455726088024676,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2021,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-rr552-build-native-record.accepted.json",
+        "sha256": "ce14cd37dd791b02f15dfcfc1002ccd98b515d934f1873ad0a92b03ef0c9567e"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-candidate-rr552-build-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-rr552-build-native-record.json",
+        "sha256": "1b87399686ae6bf07fc211cd51b28b68a8568978d3656fd78b3a073784f6df70"
+      },
+      "resource": {
+        "cpu_seconds": 0.021693999999999998,
+        "max_process_rss_bytes": 14254080,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392730-72e7da9a19d8.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4804608,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392730-72e7da9a19d8.scope",
+        "seconds": 0.1143172481097281,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2036,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-rr552-build-compatible-record.accepted.json",
+        "sha256": "92fd7696d80fa16cae104de291a53ee565a9e7e39548fd2393ca4740e4fc5d00"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-baseline-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-rr552-build-compatible-record.json",
+        "sha256": "d4b930775cf65644246ce36e65d89c8c3d5f81b10e2cf939a98d23ae36bc8e9c"
+      },
+      "resource": {
+        "cpu_seconds": 0.025190999999999998,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392739-947f6e25671b.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4952064,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392739-947f6e25671b.scope",
+        "seconds": 0.11429760395549238,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2023,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-rr552-build-compatible-record.accepted.json",
+        "sha256": "1ba62c23022844beb89967cb4e63d218a2ba85cd032dedf879f196e31b9359ec"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-candidate-rr552-build-compatible",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-rr552-build-compatible-record.json",
+        "sha256": "67d03783702d138afbec925cc5fe2e3837612595a66c0dd7603eae012d51965b"
+      },
+      "resource": {
+        "cpu_seconds": 0.024467,
+        "max_process_rss_bytes": 14249984,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392748-710ea8ef41d1.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4857856,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392748-710ea8ef41d1.scope",
+        "seconds": 0.11443837289698422,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 1998,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-collector-cpre-native-record.accepted.json",
+        "sha256": "0cbabdd11470092514f1cdfc3d55fb34e4202c15b7a862d715394e947cf056cf"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-baseline-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-baseline-collector-cpre-native-record.json",
+        "sha256": "87b5e86c13371c25395331c572872b529b20ec875304ea2bb7d29ac365768381"
+      },
+      "resource": {
+        "cpu_seconds": 0.012936,
+        "max_process_rss_bytes": 14254080,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392757-111313070a95.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4775936,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392757-111313070a95.scope",
+        "seconds": 0.11462372983805835,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2021,
+        "timed_out": false
+      }
+    },
+    {
+      "accepted": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-collector-cpre-native-record.accepted.json",
+        "sha256": "0e18077a1216ee8469fbeda5b695a9fdcfeafed99f4fea2443bd3be78973681a"
+      },
+      "core_usable": true,
+      "group_status": "ok",
+      "name": "pmu-pair2-candidate-collector-cpre-native",
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/pmu-pair2-candidate-collector-cpre-native-record.json",
+        "sha256": "38648dfbfd3aadc77ce898f3c6a3787953c2ed688ef9766566da86439d83ebea"
+      },
+      "resource": {
+        "cpu_seconds": 0.015009,
+        "max_process_rss_bytes": 14254080,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2392766-fb6000ab1df4.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 4939776,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2392766-fb6000ab1df4.scope",
+        "seconds": 0.11438076896592975,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 2008,
+        "timed_out": false
+      }
+    }
+  ],
+  "final_invariance": {
+    "checked_closure_files": 1290,
+    "release_bindings": 4
+  },
+  "finished_utc": "2026-11-09T18:50:01.039135+00:00",
+  "release": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-measurement-release-v1.json",
+    "sha256": "aeb7a7c02870f9dfc21bcc84374e1e1b3bd8e9cf6341b9d092cf40b25d6fc752"
+  },
+  "script": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/run-released-measurements.py",
+    "sha256": "0094142d157ce96b4fef6a8b78f6ebb3edfd4d6dc2cfa78d39d6854f6437d855"
+  },
+  "status": "all24 original PMU calls completed; event usability remains separate"
+}

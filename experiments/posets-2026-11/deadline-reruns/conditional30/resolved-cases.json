@@ -1,0 +1,53 @@
+{
+  "scope": "The exact eight cases resolved by BOTH frozen configurations in the conditional30s followup; no gains or losses. Source17 scores unchanged.",
+  "cases": [
+    {
+      "instance": "arbiter_with_cancel_pb_7_pe_.ltl",
+      "verdict": "REALIZABLE",
+      "anchor_seconds": "23.9087812139187",
+      "lazy_FC_seconds": "23.38794802618213"
+    },
+    {
+      "instance": "collector_v3_pb_10_pe_.ltl",
+      "verdict": "REALIZABLE",
+      "anchor_seconds": "25.467972917016596",
+      "lazy_FC_seconds": "24.088847045088187"
+    },
+    {
+      "instance": "full_arbiter_enc_pb_10_pe_.ltl",
+      "verdict": "REALIZABLE",
+      "anchor_seconds": "17.468525115866214",
+      "lazy_FC_seconds": "17.608154674991965"
+    },
+    {
+      "instance": "g-unreal-314.ltl",
+      "verdict": "UNREALIZABLE",
+      "anchor_seconds": "21.135451533133164",
+      "lazy_FC_seconds": "22.201867771800607"
+    },
+    {
+      "instance": "lift_pb_8_pe_.ltl",
+      "verdict": "REALIZABLE",
+      "anchor_seconds": "27.61851305095479",
+      "lazy_FC_seconds": "27.49824835988693"
+    },
+    {
+      "instance": "ltl2dba_R_pb_10_pe_.ltl",
+      "verdict": "UNREALIZABLE",
+      "anchor_seconds": "19.8656394679565",
+      "lazy_FC_seconds": "19.571902504889295"
+    },
+    {
+      "instance": "robot_repair5.ltl",
+      "verdict": "UNREALIZABLE",
+      "anchor_seconds": "18.172910920111462",
+      "lazy_FC_seconds": "17.891172010917217"
+    },
+    {
+      "instance": "workstation_resupply_pb_5_pe_.ltl",
+      "verdict": "REALIZABLE",
+      "anchor_seconds": "20.65663874708116",
+      "lazy_FC_seconds": "22.187773779034615"
+    }
+  ]
+}

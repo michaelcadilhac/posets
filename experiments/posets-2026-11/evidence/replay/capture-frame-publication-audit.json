@@ -1,0 +1,79 @@
+{
+  "status": "saved bytes incomplete at capture; parser rejection is correct; no post-capture mutation",
+  "trace": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/cpre-7.tsv",
+    "sha256": "a877d668d1b8be1e12c0655410d2ef832ee478e2cc3c456740c8ce4e62f6ec72"
+  },
+  "capture_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/invocation.json",
+    "sha256": "433c83fd19dcd184c937b09a6e44fc362687c056a56d0d66d44b505c1ff53d6a"
+  },
+  "capture_result": {
+    "returncode": 124,
+    "seconds": 17.04854393203277,
+    "timed_out": true,
+    "stdout_bytes": 0,
+    "stderr_bytes": 88626,
+    "resource_limited": false,
+    "memory_peak_bytes": 24600576,
+    "scope_unit": "acacia-posets-capture-3681767-4701d892f03c.scope",
+    "max_process_rss_bytes": 28684288,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-capture-3681767-4701d892f03c.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 16.958459
+  },
+  "capture_outcome": "TIMEOUT",
+  "visible_frame": {
+    "complete_frame": false,
+    "reasons": [
+      "missing final LF",
+      "declared action count/order incomplete",
+      "missing after section/count/rows"
+    ],
+    "final_lf": false,
+    "dimension": 43,
+    "declared_before": 6446,
+    "declared_actions": 16,
+    "observed_before": 6446,
+    "observed_actions": 9,
+    "action_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "observed_edge_rows": 338,
+    "after_present": false
+  },
+  "writer": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/src/solver/antichain_snapshot.hh",
+    "sha256": "48e815d03caf3b01031e72a1d5b38048ab87147b8a7606fcc0c61ba671006e37"
+  },
+  "collector": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-capture.py",
+    "sha256": "5ce7b39de6b2f6c113f13e12bd42ce4c0045f942d427cf7ac51674cb99f98ad4"
+  },
+  "writer_git_base": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+  "writer_diff_from_base": "empty (read-only Git diff observed)",
+  "publication_points": {
+    "CPre_open_final_filename": 344,
+    "CPre_after_write": 426,
+    "CPre_close": 435,
+    "contains_partial_open": 394,
+    "contains_rename": 411,
+    "collector_hashes_all_saved_files_after_process": 79
+  },
+  "interpretation": "CPre .tsv is opened before before/actions; after region and close occur later. Timeout can leave an incomplete final-named file. Stream buffering prevents inferring the exact interrupted execution point from the saved tail. Contains uses partial/rename. Manifest hashes prove current bytes equal initial captured bytes; no file was repaired or retried."
+}

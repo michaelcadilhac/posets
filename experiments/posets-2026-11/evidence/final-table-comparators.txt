@@ -1,0 +1,25 @@
+Final Acacia table presentation, declared before final build/primary execution
+
+The frozen campaign baseline remains the pristine86dd/e167 anchor. Keep its
+primary solved/gained/lost/PAR2/resource summary exactly as reviewed.
+
+Also derive a clearly labelled paired solved-gain/loss view for EVERY candidate
+against candidate-default (rank backend with productioncc and the same optional
+shared-core integration as the alternative candidates). This uses the same full
+1524 identities and strict17s derived statuses; it adds no execution, filtering,
+cap change or new winner-specific subset. Keep raw decisive answers in conflict
+checks, including answers beyond the scoring wall cap.
+
+This second comparator helps distinguish a backend-switch decision within the
+candidate build from the whole candidate-versus-pristine change. The pristine
+comparison also includes the Posets revision and benchmark integration/build
+context; do not attribute all of that difference to one data structure change.
+Do not pool this solver evidence with combined or per-backend replay timings.
+
+Report single-campaign observations as such. A close runtime difference from
+one17-second run per instance is not statistical significance or a universal
+speedup. The conclusions must retain solver failures, timeouts, memory coverage,
+mixed case gains/losses, and any dominant portfolio-route limitations.
+
+This is a derived reporting instruction only. No frozen script, plan, binary,
+source, runtime flag, corpus, order, cap, primary comparator or policy is changed.

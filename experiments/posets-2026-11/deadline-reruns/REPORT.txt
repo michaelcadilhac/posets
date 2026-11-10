@@ -1,0 +1,138 @@
+Deadline checks and final Acacia comparison
+
+Acacia backend selection remains ranked-vector. The final full-corpus comparison
+and its longer conditional follow-up solve exactly the same cases with original
+ranked vectors and retained lazy-FC KD. Their small timing differences do not
+establish a reliable winner. No production optimization is reverted on this
+evidence, and this sprint ends with PR40; further KD work is a separate task.
+
+Full comparison and conditional follow-up
+
+The genuine original control is Acacia 86dd487 with bundled Posets e167. The
+candidate is the genuine frozen cc058ca lazy-FC executable, whose lazy algorithm
+matches the retained implementation. It is not relabelled as a freshly rebuilt
+current binary. Both use the shipping otf_sparse_formula_parity portfolio,
+empty runtime flags, 16 signed-char SIMD lanes, 8 GiB cgroups and no swap.
+
+At 17 seconds, each solves 1,368 of 1,524 cases: 629 realizable and 739
+unrealizable, with the same 156 timeouts. There are no gains or losses.
+Total PAR2 is 5,946.655226 seconds for original ranked vectors and 5,940.166345
+for lazy-FC, a difference of -6.488881 seconds (about -0.1091%). Each unsolved
+case costs 34 seconds. This is one complete campaign, not a significance claim.
+All 3,048 native/resource rows are present, with no errors, contradictory
+answers, decisive wall overruns or OOM kills. Maximum reaped-process RSS is
+3,976,986,624 versus 3,977,768,960 bytes. Whole-cgroup peaks are separately
+4,239,486,976 versus 4,243,906,560 bytes; neither measures retained backend heap.
+
+The strict 17-second timeout union contains 156 cases. Both unchanged frozen
+arms receive one 30-second primary attempt per case. Each resolves the same
+eight cases (five realizable and three unrealizable), retains 146 native
+TIMEOUTs, and has two native ERRORs from Spot's acceptance-set limit. There
+are no gains or losses. Conditional PAR2 is 9,054.294432966038586 seconds for
+the original and 9,054.435914172790946 for lazy-FC; every unsolved case,
+including ERROR, costs 60 seconds. All 312 resource rows are valid, with no
+OOM events, truth conflicts or decisive overruns. This is a conditional cohort
+of previously seen cases, not a new 1,524-case run at 30 seconds. The 17-second
+observations and scores are unchanged.
+
+At 30 seconds, peak process RSS is 4,082.121094 versus 4,082.015625 MiB.
+Whole-cgroup peaks are separately 5,851.957031 versus 5,879.597656 MiB.
+There is no meaningful observed process-RSS advantage for either configuration.
+
+The first native ERROR stopped execution after 205 primary observations.
+A separate diagnostic reproduced the original e167 arm's exit 3 on
+ltl2dba_R_pb_12_pe_.ltl. Its complete stderr contains an outside-proved-DPA-
+Buchi status message, three identical Spot exceptions saying the acceptance-set
+limit is 32, and final ERROR. The original primary stderr was not retained;
+that one observation is explicitly adjudicated from its bound primary record
+and the separate diagnostic, not from recovered original text. The diagnostic
+is not scored and never replaces the primary time, result, exit or resources.
+
+A reviewed continuation preserved all 205 records and executed only the
+remaining 107 original visits in order. A transparent adapter called the
+unchanged native scoped runner with identical arguments and returned the same
+RunResult object, writing its existing full stdout/stderr only after the
+measured/resource interval. No route, phase, worker or deadline option was
+added. Three later primary ERRORs have their own exact captured signature.
+All four remain native ERROR with separate SPOT_ACCEPTANCE_LIMIT_32 classification
+and unsolved cost 60. Unknown, incomplete or mixed errors would stop. One pair
+spans the interruption: 102 uninterrupted prefix pairs, one split pair, and
+53 uninterrupted suffix pairs. We do not claim all 156 pairs were uninterrupted
+adjacent calls, or infer a paired speed ratio for the ERROR pair. Summary-only
+replay was byte-identical and launched no solver calls; 215 final invariance
+bindings matched. The original-checkout proof reports all five aliases and all
+six fields matching, with ignored/untracked bytes explicitly outside its scope.
+
+Deadline repeat and matched attribution
+
+The preceding deadline check repeated 45 historical pair/case cells five times,
+for 450 calls on six deliberately selected, already-seen cases. There were
+219 decisive answers and 231 timeouts, with no errors, truth conflicts, decisive
+overruns or OOM kills. Every resource observation was present. Only four cells
+were fully uncensored. The engineering screen retained 27 serious solve-loss
+and two timing-loss signals, but most compare different backends; these are not
+29 attributed regressions of source optimizations.
+
+The previous ranked implementation solved load_balancer_unreal1_pb_6_4_pe_.ltl
+in 4/5 attempts and the optimized default in 5/5. Both solved robot_repair5 in
+1/5. The earlier default loss did not reproduce the declared serious-loss gate.
+The historical binaries retain their original source and dependency contexts.
+
+One matched control isolates regular-sharingtree memoization on
+Alarm_a5f99bc6.ltl. Both builds share exact common objects, static and runtime
+libraries, flags, preset and SIMD width, retaining correctness/exception fixes.
+The selected TUs were rebuilt for old query-cleared maps or current generation
+stamps, with dependency/ODR checks. Maps time out in all five runs; stamps solve
+all five, between 13.744 and 15.857 seconds. All ten resource records are valid,
+with no errors, conflicts or OOM. The map times are censored: no timing ratio is
+available. This supports retaining stamps on this case, not a general benefit
+for every workload or simple-sharingtree. No ranked, legacy pre-scratch or
+second-wrapper control was built. Their preserved patches are unselected proposals.
+
+Scope and limits
+
+The earlier three-arm KD package's 789 baseline is the previous ranked
+implementation, despite its historical "Original ranked default" display label.
+The genuine original control here is e167. No old package or data is rewritten,
+and the earlier 15-arm and three-arm campaigns are not pooled with this work.
+
+Full Acacia runs use compatible 16-lane, 128-bit Posets SIMD despite -march=native.
+Acacia explicitly sets SIMD_IS_NATIVE=false and SIMD_IS_MAX=false; Posets alone
+defaults to native width without overrides. Separate three-repetition TRAIN
+replay medians at 64 lanes were mixed: on round_robin_arbiter_pb_4_pe_.ltl,
+lazy CPre was 180.500268 versus 137.109857 ms and ranked CPre 98.552219 versus
+77.895543 ms; full-arbiter frontier construction was 84.582781 versus 99.318678 ms.
+These are not a dedicated paired width experiment or native-width full Acacia
+scores. See Acacia issue 380 for deferred work.
+
+The shipping portfolio has seven competing workers. Four native workers do not
+use the selected downset, the sparse worker uses its own search structures, and
+forward search uses the selected downset chiefly for certificate checking or
+backward fallback. Translation and several direct checks precede downset use.
+Within backward CPre, apply and nontrivial intersection create fresh downsets,
+limiting index amortization without eliminating reuse within an index epoch.
+Primary route/phase/worker recording was off and NO_VERBOSE removed verbose
+messages. Thus no measured winning-route frequency or bottleneck percentage is
+claimed. The routing note supplies exact source conditions. Separate recorded
+CPre work counts are not full-corpus route shares.
+
+The original and lazy configurations also contain different private Rust archive
+bytes. These are whole-configuration results, not isolated causal measurements
+of a Posets source change. No cache/PMU mechanism or fixed-clock claim follows.
+Kernel OOM observations are reported separately from native TIMEOUT/MEMOUT/ERROR;
+there are zero OOM-kill-positive invocations in all four stages here.
+
+Review and preservation
+
+Nbjorner and Barbosa independently checked the completed numerical evidence.
+Their joint error-whitelist finding was corrected before the original 30-second
+run; the later exact Spot-limit amendment was reviewed separately before
+continuation. Final outcome approvals validate evidence, not a new defect count
+or a ranking of reviewers. The dated experience addendum and its later closing
+note keep those scopes distinct. Skill PR19 had already merged before this
+later evidence and does not contain it retroactively.
+
+All current production optimizations remain. Implementation d363b9f passed its
+recorded Linux, macOS and portable Valgrind CI; no future evidence-only HEAD is
+called green here. Only the new deadline-reruns folder is added. Original
+checkouts, frozen evidence and older experiment packages are unchanged.

@@ -1,0 +1,89 @@
+diff --git a/README.md b/README.md
+index 39f92acbd03754e3605521bace83d5afa4dbca6d..838dd765d95ae9a3e1eb9f6657d5ed3cbb7e1a0a 100644
+--- a/README.md
++++ b/README.md
+@@ -387,6 +387,8 @@ keeps each live payload valid and supplies consistent access/live predicates.
+ all geometry and catalogs. The utility ID-to-leaf map scales with the supplied
+ ID span; the owning backend freezes densely renumbered IDs. `check_bridges(key, upper)` checks exact cascaded
+ positions against independent standard-library searches.
++Leaf keys occupy the first frozen-point-count slots. Internal catalogs append
++after them and map directly to bridge entries, without a per-node offset array.
+ 
+ Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
+ collect query/node/leaf visits, full comparisons, binary searches and bridge
+diff --git a/include/posets/utils/bucket_kdtree.hh b/include/posets/utils/bucket_kdtree.hh
+index baf894970eadefec39d805e1a89080ecd3387030..6631f77c46b01252c88491b7dedad74bf5929bbb 100644
+--- a/include/posets/utils/bucket_kdtree.hh
++++ b/include/posets/utils/bucket_kdtree.hh
+@@ -59,7 +59,6 @@ namespace posets::utils {
+       std::vector<key_type> keys;
+       // One pair per INTERNAL catalog entry; leaf entries have no bridge storage.
+       std::vector<bridge> links;
+-      std::vector<id_type> link_start;
+       size_t dimension {0};
+       size_t bucket_size {16};
+ #if POSETS_LAZY_KDTREE_STATS
+@@ -72,18 +71,16 @@ namespace posets::utils {
+       id_type build_node (size_t begin, size_t end, id_type axis, id_type parent, const Get& get) {
+         const auto index = static_cast<id_type> (nodes.size ());
+         nodes.push_back ({0, 0, parent, static_cast<id_type> (end - begin), none, 0, 0, {}});
+-        if constexpr (Cascade)
+-          link_start.push_back (0);
+         if (end - begin <= bucket_size) {
+           std::ranges::sort (std::span (ids).subspan (begin, end - begin),
+                              [&] (id_type a, id_type b) { return get (a)[0] < get (b)[0]; });
+           auto& current = nodes[index];
+           current.first = static_cast<id_type> (begin);
+           current.second = static_cast<id_type> (end - begin);
+-          current.catalog = static_cast<id_type> (keys.size ());
++          current.catalog = static_cast<id_type> (begin);
+           current.length = current.second;
+           for (size_t i = begin; i < end; ++i) {
+-            keys.push_back (get (ids[i])[0]);
++            keys[i] = get (ids[i])[0];
+             leaf_for_id[ids[i]] = index;
+           }
+           return index;
+@@ -105,7 +102,6 @@ namespace posets::utils {
+           const auto a = nodes[left];
+           const auto b = nodes[right];
+           const auto start = static_cast<id_type> (keys.size ());
+-          link_start[index] = static_cast<id_type> (links.size ());
+           size_t i = 1;
+           size_t j = 1;
+           size_t lower_a = 0;
+@@ -159,7 +155,8 @@ namespace posets::utils {
+         const auto& c = nodes[child];
+         size_t result = c.length;
+         if (position < p.length) {
+-          const auto& link = links[link_start[parent] + position];
++          // Leaf keys occupy [0,N); appended internal keys map 1:1 to links.
++          const auto& link = links[(p.catalog - ids.size ()) + position];
+           result = right ? link.right : link.left;
+         }
+         if (result > 0) {
+@@ -254,7 +251,6 @@ namespace posets::utils {
+         swap (leaf_for_id, other.leaf_for_id);
+         swap (keys, other.keys);
+         swap (links, other.links);
+-        swap (link_start, other.link_start);
+         swap (dimension, other.dimension);
+         swap (bucket_size, other.bucket_size);
+ #if POSETS_LAZY_KDTREE_STATS
+@@ -272,6 +268,7 @@ namespace posets::utils {
+         replacement.dimension = dim;
+         replacement.bucket_size = leaf_size;
+         replacement.ids = std::move (points);
++        replacement.keys.resize (replacement.ids.size ());
+         if (not replacement.ids.empty ()) {
+           const auto maximum = std::ranges::max (replacement.ids);
+           if (maximum == none)
+@@ -348,7 +345,7 @@ namespace posets::utils {
+                 keys.capacity () * sizeof (key_type),
+                 links.capacity () * sizeof (bridge),
+                 ids.capacity () * sizeof (id_type),
+-                (leaf_for_id.capacity () + link_start.capacity ()) * sizeof (id_type)};
++                leaf_for_id.capacity () * sizeof (id_type)};
+       }
+       [[nodiscard]] size_t frozen_size () const { return ids.size (); }
+       [[nodiscard]] size_t live_size () const { return nodes.empty () ? 0 : nodes[0].live; }

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Exact saved-data eligibility join/inventory approved; no actionable gap found. Eligible rows may be projected only through a separately bound captured-workload writer/release. No runnable specs or captured workload executed in this gate.",
+  "exact_inputs": {
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/derive-eligibility.py": "d47fa628de79e1d710c39644e3a3d454ca2709a9d8cf3db6870f5aafd3ec06b1",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/eligibility-inventory.json": "80b5b22324661bd0af8835f5f275326c4844ca188d2498239d2abb9cbe17c7b8",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/BUILD-AND-ELIGIBILITY-CHECKPOINT.json": "4ba0100e40465abed6c29b08176a0a5d5972aa6ca36abeafcb8a1cb4844eca05",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-plan-v2/eligibility-contract.json": "61391c4feab348a1612a53b4402700bfd09fe8e94d48b5f2b9a5c4f590d059a7",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-v2-eligibility-independent-details.json": "537b83e77a0199044709e49606bc8a02f4a474cfd7b13b95b0ceaa02a730626c"
+  },
+  "independent_checks": {
+    "checkpoint_hash_bindings": 167,
+    "current_unique_trace_capture_plan_hashes": 29,
+    "frozen_reports": 16,
+    "trace_identities": 17,
+    "qualification_cells": 102,
+    "qualification_observations_checked": 408,
+    "mismatches": [],
+    "scope": "Read the297-line join, exact contract and output; independently checked every cell/observation against source/check rows, actual commands, logs/output identity, role/pin/width/caps and trace metadata. No join/helper import or execution."
+  },
+  "qualification_assessment": [
+    "Canonical identity includes cohort-plan/path/hash, trace bytes, capture manifest/hash, instance/family/split/kind and header/features. IDs from different cohorts are not conflated; current29 unique trace/capture/plan hashes and all16 report identities match.",
+    "Actual roles remain baseline789 versus candidate30e with the accepted selected-rank maps/anchors and width aliases. Exact backend, compatible16 scalar+SIMD and native64 SIMD cells are required; max remains an existing alias.",
+    "Each cell has exactly three distinct clean paired observations plus the no-measure pilot. Eligibility requires source_status=check_status=pass in all four, with rc0/no timeout/resource limit and exact source/check command/output identities. Rejected/malformed cases fail the join rather than becoming eligible or disappearing.",
+    "The source oracle command uses the correct actual combined-compatible source ELF and exact trace, and its successful stdout is exactly TRACE SOURCE OK. Backend qualification binds actual selected ELF/trace/backend/vector and verified one-banner identity.",
+    "Clean phase=measure statuses/metrics are retained independently. Eligibility is not inferred from a measurement pass and later instrumented success cannot replace/upgrade clean clocks or censors; scalar timing remains not scheduled.",
+    "All17 declared identities and all102 cells remain in the output. Pass expansion produces operations androi placeholders only, not runnable commands. Matching instrumented role/mode ELF identity comes from the already accepted closure."
+  ],
+  "counts": {
+    "cells": 102,
+    "eligible_cells": 96,
+    "unprofiled_cells": 6,
+    "diagnostic_pass_inventory_rows": 204,
+    "eligible_diagnostic_pass_rows": 192,
+    "unprofiled_diagnostic_pass_rows": 12,
+    "standard_cells_eligible": 66,
+    "standard_cells_unprofiled": 6,
+    "larger_cells_eligible": 30,
+    "clean_measurement_observation_statuses": {
+      "pass": 192,
+      "not_qualified": 12
+    },
+    "count_note": "The192 eligible diagnostic pass rows and192 saved clean measurement rows are different inventories whose counts happen to coincide; scalar controls are included only in the former."
+  },
+  "censor_boundary": "All six unprofiled cells (both roles, three cells each) are standardTRAIN trace2 full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/cpre-6.tsv: source30s timeout and explicit unverified check in all three clean runs and pilot. The truncated largerTRAIN cpre-7 originalid3 was excluded earlier by the separate structural frame audit and is not this qualification censor. No substitution, repair, timeout change or hidden retry occurs.",
+  "source_verified_semantics": "The profile program's hardcoded source_verified=true is justified only for exact projected rows from this accepted gate: same trace/capture bytes, approved source/role, backend/vector/width and accepted instrumented ELF. It is not an independent source-validation capability or permission to run arbitrary traces. Future writer must bind those identities and emit no spec for the12 unprofiled pass rows.",
+  "remaining_actionable_blockers": [],
+  "limits": [
+    "No imports, join/auditor execution, ELF/compiler/test/profile/timing workload were performed by reviewer. Saved-data arithmetic/log/hash reads only.",
+    "Accepted33 build/artifact closure is inherited without rerun or new constraints.",
+    "This is eligibility approval, not a clean performance result, captured-profile success or permission to pool diagnostic clocks with clean ratios. Runnable projection/execution retains separate explicit release, caps and failure preservation."
+  ]
+}

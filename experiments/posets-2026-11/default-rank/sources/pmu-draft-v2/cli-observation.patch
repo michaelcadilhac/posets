@@ -1,0 +1,25 @@
+--- a/tests/downset-bm.cc
++++ b/tests/downset-bm.cc
+@@ -36,12 +36,7 @@
+ #include "test_maker.hh"
+ #include "matrix-check.hh"
+ 
+-#if __has_include(<valgrind/callgrind.h>)
+-  #include <valgrind/callgrind.h>
+-#else
+-  #define CALLGRIND_START_INSTRUMENTATION (void)0
+-  #define CALLGRIND_STOP_INSTRUMENTATION (void)0  
+-#endif
++#include "rank-pmu-hooks.hh"
+ 
+ #include "matrix-cpre.hh"
+ 
+@@ -487,7 +482,7 @@
+ }
+ 
+ // NOLINTBEGIN(bugprone-exception-escape)
+-int main (int argc, char* argv[]) try {
++int rank_pmu_original_main (int argc, char* argv[]) try {
+   const char* prog = argv[0];
+ 
+ #if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)

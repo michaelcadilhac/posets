@@ -39,6 +39,7 @@ namespace posets::downsets {
 
     public:
       using value_type = V;
+      [[nodiscard]] auto storage () const { return trie.storage (); }
 
       sharingtrie_backed () = delete;
 

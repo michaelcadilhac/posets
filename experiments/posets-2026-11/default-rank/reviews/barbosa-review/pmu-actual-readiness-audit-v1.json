@@ -1,0 +1,87 @@
+{
+  "status": "APPROVE actual4-artifact/20-gate closure and exact24spec attachment for root-controlled PMU release; no event result/usability claim",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "scope": "Narrow static acceptance of actual saved artifacts/gates and future measurements. Prior Biere/root PMU C++ source approval and Nb operational source-plan review inherited, not claimed as newly performed. No target import, test, compiler, ELF/permission/event probe, solver or PMU execution by reviewer.",
+  "exact_inputs": {
+    "work/default-optimization/pmu-execution-v1/BUILD-CHECK-CHECKPOINT.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/BUILD-CHECK-CHECKPOINT.json",
+      "sha256": "7b0ccc97f205bb7394b006891b1d1a253d5d8a153461e5741388f021745f8cc4"
+    },
+    "work/default-optimization/pmu-execution-v1/ACTUAL-ARTIFACT-CLOSURE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/ACTUAL-ARTIFACT-CLOSURE.json",
+      "sha256": "3f939a8be91e643e68b201357f5c42da3a6d9ee89335aac7b96f0e0b958a8a98"
+    },
+    "work/default-optimization/pmu-execution-v1/BUILD-COMPLETE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/BUILD-COMPLETE.json",
+      "sha256": "41054c7224e39259ff69e0657f6d30e61c14b0f10adc736948983fa155db46c8"
+    },
+    "work/default-optimization/pmu-execution-v1/CHECKS-COMPLETE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/CHECKS-COMPLETE.json",
+      "sha256": "c1f5475f30cd4e2cc82b6ee60a9fe55862fc319045e784dd31aeaf382ad8c379"
+    },
+    "work/default-optimization/pmu-execution-v1/PMU24-ACTUAL-BINDINGS.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/PMU24-ACTUAL-BINDINGS.json",
+      "sha256": "de71a963cabf7dcf3d3b7754f971fa42f66decf5ecbc7d1df6c16ac2f71b7df6"
+    },
+    "work/default-optimization/pmu-execution-v1/POSTPROCESSING-NOTE.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/POSTPROCESSING-NOTE.json",
+      "sha256": "c5c2868a26486806b3455b99d1816c554f9376421be53322b7cf4bda744c1371"
+    },
+    "work/default-optimization/pmu-execution-v1/actual-CPU2-kernel-context.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/actual-CPU2-kernel-context.json",
+      "sha256": "b25967cf9ba2d69616910891d208c3aba3af27c0b956179672348c2f2136cfe0"
+    },
+    "work/default-optimization/pmu-plan-v1/source-manifest.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/source-manifest.json",
+      "sha256": "2e72016b0d8358395ad0b329bb6b981695f0420889e51dc8f40c855badab8c5c"
+    },
+    "work/review-probes/pmu-plan-v1-operational-static-audit.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/pmu-plan-v1-operational-static-audit.json",
+      "sha256": "5cd101e3dd17d4c2d04ce24e8349ed588b7b62824f00d9ee97f30cc6aa9e6127"
+    }
+  },
+  "actual_artifacts": {
+    "artifacts": 4,
+    "roles": "Clean actual789baseline/30e6685candidate, compatible/native each. Current HEAD/status matches recipe source pins.",
+    "unique_current_file_hashes_checked": 1338,
+    "closure_checked_entries": 1290,
+    "all_match": true,
+    "dependency_occurrences": 2644,
+    "duplicate_policy": "Raw GCC dependency occurrences retained and independently hash-checked; duplicates are valid and no uniqueness requirement imposed.",
+    "original_compile_link_inverse_comparisons": 8,
+    "recipe_result": "Each inverse transformation restores the actual clean selected compiler/linkargv exactly. Only reviewed privateTU/include and fresh object/depfile/ELF destinations differ. Actual records/specs match transformed argv/cwd; O3,NDEBUG,LTO1,nativeISA,width/rank selector unchanged; no rank/allocation statistics definition.",
+    "libraries": "Identical5runtime libraries for all4artifacts, matching actual query and current bound hashes.",
+    "ELF_header_policy": "Observed actual headers retained (type2in all4); no invented ET_DYN requirement. Artifact identity follows exact file/dependency/recipe binding."
+  },
+  "executed_gates": {
+    "compile_link": 8,
+    "metadata": "All4real runtime metadata outputs show requested singleton rank backend and16/64lane ABI/compiler fields matching source-bound clean selected artifacts.",
+    "backend_checks": 8,
+    "total": 20,
+    "all_passed_as_recorded": true,
+    "resources": "All20recorded scopes8G/no-swap,successful exit,no timeout/resource-limit/OOM. Saved resource summary35.0730820458848s scope total/32.945317CPU seconds and542531584max scope peak agree; two separate library-query/artifact-closure metadata scopes are recorded additionally.",
+    "actual_check_only_observations": "All12metadata/backend calls report exactCPU2,checkmode,clocks_discarded1,kernel_exit0,ROIvalid1,total_region_calls0,captured_regions0,correctphase/selectedregion/width,andrank_stats/allocation_hooks0. This intentionally does not open events or establish permission.",
+    "semantic_scope": "Exactly8backend checks =2roles\u00d72widths\u00d72frozen trace/phase cases. All logs invoke the expected simd_vector_backed<test_value_type> rank instantiation once and [OK]. Both original Vector registrations remain source-bound; original_vector_flavors=2 is a literal diagnostic, not independent runtime inventory evidence. Only SIMD runtime backend coverage is claimed."
+  },
+  "future24": {
+    "all_original_spec_hashes_and_argv_match": true,
+    "actual_ELF_and_closure_attachments_match_all24": true,
+    "all24_records_absent_at_audit": true,
+    "four_cells": [
+      "collector-cpre-compatible",
+      "collector-cpre-native",
+      "rr552-build-compatible",
+      "rr552-build-native"
+    ],
+    "order": "Original fixed four-case permutations, AB/BA/AB roles, seeds260617\u201319 retained.",
+    "CPU": "taskset-c2, no fallback",
+    "protocol": "Original round1/detail0/phase/trace/backend/SIMDargv and17s scope caps; unchanged wrapper8G/no-swap.",
+    "expected_measurement_acceptance": "total4regions,selected1capture at declared ordinal,ROIvalid/kernel0,raw group IDs/encoding,enabled==running>0 and core usability remain future actual-output checks. Missing/denied/unsupported/multiplexed/timeout outcomes must remain explicit, without zero-fill/scaling/adaptive rescue.",
+    "immutable_lineage": "Original pending-plan null artifact slots remain untouched; separate PMU24-ACTUAL-BINDINGS attaches actual ELF hashes, shared closure and libraries truthfully."
+  },
+  "CPU_context": "ActualCPU2/kernel/topology/PMU sysfs context saved; outer affinity includesCPU2, hardwareicelake type4. The checkmode zero captures and perf_event_paranoid2 are observations, not an event-permission or availability test.",
+  "postprocessing_incident": "Preserved resources-versus-singular-resource KeyError happened in checkpoint derivation after gates. Existing host/spec bindings reused and reverified; no gate rerun or old-source/plan rewrite. Not a solver/PMU correctness failure or new reviewer discovery.",
+  "findings": [],
+  "limits": "Approval is readiness for the exact fixed24calls under root release, not their future acceptance, a cache/cycle improvement, clean-clock result, cold-cache claim or fresh-heldout evidence. No additional runtime cells or broader solver/default recommendation follows.",
+  "attribution": "Independent artifact/flag/dependency/library/metadata/semantic-gate and exact-spec validation. No new originated defect; existing source/operational reviews remain credited to Biere/root/Nb."
+}

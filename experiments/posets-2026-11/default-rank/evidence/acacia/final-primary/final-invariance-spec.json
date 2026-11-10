@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/check-final-invariance.py"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+  "expected_exit_codes": [
+    0
+  ],
+  "timeout": 300
+}

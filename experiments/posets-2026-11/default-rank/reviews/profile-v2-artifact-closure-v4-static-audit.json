@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Exact v4 derived artifact-closure correction and saved accepted output approved for this frozen build/selfcheck set. No remaining actionable acceptance mismatch found. No execution performed by reviewer; captured-profile eligibility is still separate.",
+  "exact_inputs": {
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/verify-artifact-closure-v4.py": "569bd2686d56419012d6c27caec07917f3286250a1b0602ebbfbb65b224bad66",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/artifact-closure-v1-to-v4.patch": "d2d33de88185958249179a6aa19f12e39f048c69944f0f25c7b0517ec278ed0e",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/CLOSURE-AUDIT-REVIEW.txt": "2e5f7a68ef750ea0ebb3ca2bc101b0f3b5641863dd91bbd4fc19d5c4ed57040a",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/actual-artifact-closure.json": "d097ccb5d0fc311293f2ebb91f2a5f942ec9241e8ce04848373247a7976e3a25",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-plan-v2/dependency-and-gate-policy.json": "cc83561b8eb81a96774b014e47a78dbe06c04e88e957e2c106fd94847094148c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-plan-v2/RUNBOOK.md": "bc6feeaf25bca27ce5fcb4b72c38cf2ce8c0d29ba0221f8f1ad8fa8928e2a4cf",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-plan-v2/plan.json": "1ec741b039df2e70b4f5d437af74c8c5a42ca028b7239f82a7fd934c4a506d30",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-plan-v2/compile-link-recipes.json": "5204229efd4d595c516d8cfa89928b27dccc5bfce46bbedc948de658360be957"
+  },
+  "scope": "All288 lines of latest auditor, full v1-to-v4 diff, approved dependency/gate policy and runbook, saved anchor/closure facts, original executor positive-content checks and selfcheck lifetime boundary. No broader core/source/profile redesign or new test matrix.",
+  "correction_assessment": [
+    {
+      "case": "environment",
+      "result": "Compare the full approved environment plus exactly the documented scope-guard/PYTHONDONTWRITEBYTECODE overlays. Portable env may already contain PYTHONDONTWRITEBYTECODE; removing it only from actual was invalid. Full equality still rejects unrelated override changes."
+    },
+    {
+      "case": "Make prerequisites",
+      "result": "Remove only unsupported raw-token uniqueness. Preserve raw dependency hashes, target match, every repeated occurrence, actual resolved path/category/source hash and required TU/shadow/kernel/vector/lib closure. Duplicate simd_detail.h entries are legitimate compiler output."
+    },
+    {
+      "case": "ELF type",
+      "result": "Replace invented linked ET_DYN requirement with actual role/mode clean-anchor type; portable refers to compatible anchor. All current anchors/newELFs are ET_EXEC2. Object ET_REL1 and ELF64/little-endian/x86-64/version1 checks remain. No PIE mandate is introduced."
+    }
+  ],
+  "remaining_assertion_assessment": [
+    "Exact source/helper/plan/recipe/spec/argv/cwd/environment/log/actual compiler/object/ELF/depfile/library bindings, correct role/shadow/header closure, successful33 scoped calls and ordered positive selfcheck evidence are genuine policy requirements and remain intact.",
+    "Single GCC Make rule/known escaping, local source regular/resolved paths, pinned role bytes, actual system-header roots and recorded runtime-library contexts are supported by this concrete approved compiler/artifact set; unsupported syntax/dependencies require explicit review, not silent guessing.",
+    "The current /usr system-header boundary, scoped-task guard prefix, five-library count, GCC16.2.1 and anchor ET_EXEC facts are snapshot-specific and match these frozen inputs/anchors. They must not be presented as universal acceptance requirements for other hosts, wrappers or future anchor sets. No further change or rerun is needed for this checkpoint.",
+    "All current library rows match the actual clean anchor and both roles/modes. The three edits do not weaken actual source/header/flag/ELF/library proof or the separation from clean binary maps.",
+    "Successful compile/selfcheck closure does not enroll captured workloads. Eligibility must still join saved actual-pin clean source+backend/vector/width qualifications; no captured TRACE/PMU/Acacia profile is authorized here."
+  ],
+  "saved_evidence_checks": {
+    "hash_references_verified": 1571,
+    "hash_mismatches": [],
+    "gates": 33,
+    "shipping_selfchecks": 4,
+    "portable_memchecks": 2,
+    "positive_content_records": 6,
+    "ELFs": 10,
+    "objects": 10,
+    "raw_depfiles": 10,
+    "dependency_occurrences": 5242,
+    "runtime_library_files": 5,
+    "timeouts": 0,
+    "OOM": 0,
+    "valid_peak_coverage": [
+      33,
+      33
+    ],
+    "max_scope_peak_bytes": 427843584,
+    "cpu_seconds_sum": 36.533765,
+    "scope_seconds_sum": 40.12286459724419
+  },
+  "lifetime_boundary": "The phase row for normalized construction samples an owning retained result. The approved selfcheck separately requires requested heap to return to entry after that result/caller scope ends. Do not add per-row entry_live==exit_live as an acceptance rule. Saved positive markers and original post-destruction require checks are consistent.",
+  "preservation": "All three failed derived-audit attempts and successive scripts/diffs remain. Attempt4 completed before pause delivery, rc0/0.816s; no new build/selfcheck/TRACE data change occurred. Review acceptance is based on corrected exact bytes, not relabelling failed attempts.",
+  "remaining_actionable_blockers": [],
+  "reviewer_limits": [
+    "Only saved-source/JSON/log/hash reads were performed. No auditor rerun, helper import, embedded parser/model execution, ELF execution, compiler/test/profile/timing workload was launched.",
+    "An initial internal reviewer check incorrectly tried per-row heap equality, then was discarded after reading the approved post-destruction boundary. It produced no external defect finding, rerun, source edit or additional gate.",
+    "This is current artifact acceptance, not captured-profile eligibility or performance approval."
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "binary_sha256": {
+    "baseline-default": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+    "kd-scratch-restored": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+    "optimized-default": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af"
+  },
+  "cap_s": 17,
+  "files": [
+    {
+      "bytes": 8051,
+      "path": "comparison/oom-event-observations.json",
+      "sha256": "5ae9cd54a167236e2ddb02b76dc1d6465e43aef996d74bf7c44a2f91fd0f4f09"
+    },
+    {
+      "bytes": 1495,
+      "path": "comparison/solver-comparison.csv",
+      "sha256": "2c855269bc6f5d12b9fd1fe92c5d5638b29d0f963302281385166d4044f5e525"
+    },
+    {
+      "bytes": 81,
+      "path": "raw/baseline-default-conflicts.tsv",
+      "sha256": "54c7ae789aa2b588e8e0db539dd55ca06888b7a73e6475269f0b6512754af7ce"
+    },
+    {
+      "bytes": 39,
+      "path": "raw/baseline-default-requested-caps.tsv",
+      "sha256": "29559185a3450a016c33d8e3f6783e09e38230e72f4f0a4f43ff09adbe6f33de"
+    },
+    {
+      "bytes": 145969,
+      "path": "raw/baseline-default-summary.tsv",
+      "sha256": "c0a35c95fff4c7c6d011daf80efd74cd3b29da1e21300065d7d55f38b6c9b45d"
+    },
+    {
+      "bytes": 590858,
+      "path": "raw/baseline-default.tsv",
+      "sha256": "2ae2e822ed2e9ff6c51551def87eef864652df8bf8bea9e4c4d71433ff2ce5de"
+    },
+    {
+      "bytes": 880977,
+      "path": "raw/baseline-default.tsv.memory.tsv",
+      "sha256": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3"
+    },
+    {
+      "bytes": 81,
+      "path": "raw/kd-scratch-restored-conflicts.tsv",
+      "sha256": "54c7ae789aa2b588e8e0db539dd55ca06888b7a73e6475269f0b6512754af7ce"
+    },
+    {
+      "bytes": 42,
+      "path": "raw/kd-scratch-restored-requested-caps.tsv",
+      "sha256": "a2aa7f729e159bc89f6e71606b58c894b4d851d7c40f2d959a21f0b7922a3d1e"
+    },
+    {
+      "bytes": 150444,
+      "path": "raw/kd-scratch-restored-summary.tsv",
+      "sha256": "7cbcacc73ddd94ed5a02d640fc66a8f4ba3a6d2b09f2ce7afab2bdd2113d526a"
+    },
+    {
+      "bytes": 595385,
+      "path": "raw/kd-scratch-restored.tsv",
+      "sha256": "fba7cc753f5130e8342f16e6b104e996a2d575c578b1555c0c4d3b26193b1c02"
+    },
+    {
+      "bytes": 885443,
+      "path": "raw/kd-scratch-restored.tsv.memory.tsv",
+      "sha256": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78"
+    },
+    {
+      "bytes": 81,
+      "path": "raw/optimized-default-conflicts.tsv",
+      "sha256": "54c7ae789aa2b588e8e0db539dd55ca06888b7a73e6475269f0b6512754af7ce"
+    },
+    {
+      "bytes": 40,
+      "path": "raw/optimized-default-requested-caps.tsv",
+      "sha256": "7d3b0075efed12003293150cfa7a4e54908581474b884bc7653421cdca70ae06"
+    },
+    {
+      "bytes": 147434,
+      "path": "raw/optimized-default-summary.tsv",
+      "sha256": "f0d336f2f88171635999cf8211444382f370bc6097fa0f43d68b05db46e947c0"
+    },
+    {
+      "bytes": 592289,
+      "path": "raw/optimized-default.tsv",
+      "sha256": "a5bd501c33a509b643cd7e95d855ce955bbaf13a71218ed9e7950d97d7de571f"
+    },
+    {
+      "bytes": 882340,
+      "path": "raw/optimized-default.tsv.memory.tsv",
+      "sha256": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3"
+    },
+    {
+      "bytes": 590858,
+      "path": "strict-wall-scoring/baseline-default.tsv",
+      "sha256": "2ae2e822ed2e9ff6c51551def87eef864652df8bf8bea9e4c4d71433ff2ce5de"
+    },
+    {
+      "bytes": 880977,
+      "path": "strict-wall-scoring/baseline-default.tsv.memory.tsv",
+      "sha256": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3"
+    },
+    {
+      "bytes": 595385,
+      "path": "strict-wall-scoring/kd-scratch-restored.tsv",
+      "sha256": "fba7cc753f5130e8342f16e6b104e996a2d575c578b1555c0c4d3b26193b1c02"
+    },
+    {
+      "bytes": 885443,
+      "path": "strict-wall-scoring/kd-scratch-restored.tsv.memory.tsv",
+      "sha256": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78"
+    },
+    {
+      "bytes": 592289,
+      "path": "strict-wall-scoring/optimized-default.tsv",
+      "sha256": "a5bd501c33a509b643cd7e95d855ce955bbaf13a71218ed9e7950d97d7de571f"
+    },
+    {
+      "bytes": 882340,
+      "path": "strict-wall-scoring/optimized-default.tsv.memory.tsv",
+      "sha256": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3"
+    },
+    {
+      "bytes": 4140,
+      "path": "strict-wall-scoring/provenance.json",
+      "sha256": "87539802a0a1e1095e0eed135794a855f572db16a941ebd7173e2e7215690c46"
+    }
+  ],
+  "frozen_sha256": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+  "instances_per_arm": 1524,
+  "limits": [
+    "One prospective campaign, no measured noise floor or significance claim.",
+    "Private Rust archives differ; this is a source-treatment comparison.",
+    "Original Git status/diff and WIP filenames are excluded."
+  ],
+  "native_observations": 4572,
+  "scope": "Exact native/scored numerical observations and memory-event sidecars; no corpus, captures, build trees or private preservation details",
+  "source_pins": {
+    "baseline-default": {
+      "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "actual_acacia_diff_sha256": "195297109a7c4cdb7e4c3fbf51ee0c18d3e7806c3770754aeeea7dd950ed8f97",
+      "baseline_public_test_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+      "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+      "posets": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+    },
+    "kd-scratch-restored": {
+      "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "actual_acacia_diff_sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5",
+      "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+      "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+      "posets": "d363b9f901b927575ee1544b19820a146c2479d9",
+      "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+    },
+    "optimized-default": {
+      "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "actual_acacia_diff_sha256": "cb445daa2489a74e5c374364590f9f6f073d6b90a1dadb83abea26030c6e53b2",
+      "baseline_public_test_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+      "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+      "posets": "30e66853832d98bcfaada296d892157b95a8150d",
+      "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+    }
+  },
+  "strict_scoring": "Only native decisive rows with seconds > 17 become TIMEOUT in the scoring view; all other fields remain unchanged. This is a scoring category, not evidence that the native timer fired.",
+  "summary_sha256": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+  "wall_cap_overruns": {
+    "baseline-default": [],
+    "kd-scratch-restored": [],
+    "optimized-default": []
+  }
+}

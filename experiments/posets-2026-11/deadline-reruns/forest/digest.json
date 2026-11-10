@@ -1,0 +1,64 @@
+{
+  "status": "ten-calls-complete",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-paired-execution-v1/summary.json",
+    "sha256": "ec14e4d89614f7c4a3966594a772119261473b3a154d9bf18ef6b85a6b92656b"
+  },
+  "plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-repeat-plan.json",
+    "sha256": "017a374b8936efad7b26ae402f932c55e86d0b7e739c8ac9820bc89feb1e6c50"
+  },
+  "before": "forest-map-control",
+  "after": "forest-current-stamps",
+  "case": "Alarm_a5f99bc6.ltl",
+  "before_solved": 0,
+  "after_solved": 5,
+  "before_wall_seconds": [
+    17.098593520000577,
+    17.08126422110945,
+    17.096132413018495,
+    17.068158481037244,
+    17.069535684073344
+  ],
+  "after_wall_seconds": [
+    13.744436863809824,
+    14.958026756998152,
+    15.85738431615755,
+    14.947165961144492,
+    15.655759723857045
+  ],
+  "median_paired_ratio": null,
+  "paired_ratios": null,
+  "before_PAR2_sum5": 170,
+  "after_PAR2_sum5": 75.16277362196706,
+  "serious_solve_loss": false,
+  "serious_timing_loss": false,
+  "native_outcomes": {
+    "REALIZABLE": 5,
+    "TIMEOUT": 5
+  },
+  "resource_coverage": {
+    "cpu_seconds": {
+      "aggregate": 599.565278,
+      "total": 10,
+      "valid": 10
+    },
+    "max_process_rss_bytes": {
+      "aggregate": 724774912,
+      "total": 10,
+      "valid": 10
+    },
+    "oom_events": {
+      "oom_kill_counter_sum": 0,
+      "oom_kill_observed_invocations": 0,
+      "total": 10,
+      "valid": 10
+    },
+    "scope_memory_peak_bytes": {
+      "aggregate": 1233682432,
+      "total": 10,
+      "valid": 10
+    }
+  },
+  "interpretation": "Stamps solve5/5 versus map0/5. Map times are censored: no timing speedup ratio. No serious regression of stamps. One case/regular wrapper only; no claim about the whole forest-vs-ranked gap."
+}

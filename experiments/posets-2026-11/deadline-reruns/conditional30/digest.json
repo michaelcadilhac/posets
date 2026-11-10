@@ -1,0 +1,125 @@
+{
+  "status": "312primary-complete-and-qualified",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/summary.json",
+    "sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+  },
+  "original_records": 205,
+  "continued_records": 107,
+  "diagnostic_scored_rows": 0,
+  "conditional_denominator_per_arm": 156,
+  "strict_cap_s": 30,
+  "unsolved_PAR2_s": 60,
+  "results": [
+    {
+      "arm": "anchor-e167",
+      "cohort_cases": 156,
+      "resolved30": 8,
+      "remaining_unsolved": 148,
+      "native_outcomes": {
+        "TIMEOUT": 146,
+        "REALIZABLE": 5,
+        "UNREALIZABLE": 3,
+        "ERROR": 2
+      },
+      "known_Spot32_ERRORS": 2,
+      "conditional_PAR2_s": 9054.294432966039,
+      "CPU_seconds": 19462.935455,
+      "process_RSS_peak_bytes": 4280414208,
+      "process_RSS_peak_case": "Morning2s_9cbf2546.ltl",
+      "scope_peak_bytes": 6136221696,
+      "scope_peak_case": "collector_v2_pb_27_pe_.ltl",
+      "valid_resource_rows": 156,
+      "OOM_kill_invocations": 0,
+      "OOM_kill_counter_sum": 0,
+      "followup_decisive_at_or_before17_s": 0
+    },
+    {
+      "arm": "lazy-fc",
+      "cohort_cases": 156,
+      "resolved30": 8,
+      "remaining_unsolved": 148,
+      "native_outcomes": {
+        "TIMEOUT": 146,
+        "REALIZABLE": 5,
+        "UNREALIZABLE": 3,
+        "ERROR": 2
+      },
+      "known_Spot32_ERRORS": 2,
+      "conditional_PAR2_s": 9054.435914172791,
+      "CPU_seconds": 19465.618834,
+      "process_RSS_peak_bytes": 4280303616,
+      "process_RSS_peak_case": "Morning2s_9cbf2546.ltl",
+      "scope_peak_bytes": 6165204992,
+      "scope_peak_case": "collector_v2_pb_27_pe_.ltl",
+      "valid_resource_rows": 156,
+      "OOM_kill_invocations": 0,
+      "OOM_kill_counter_sum": 0,
+      "followup_decisive_at_or_before17_s": 0
+    }
+  ],
+  "gains_lazy_vs_original": [],
+  "losses_lazy_vs_original": [],
+  "conditional_PAR2_delta_lazy_minus_original_s": 0.14148120675235987,
+  "native_decisive_overruns": [],
+  "truth_conflicts": 0,
+  "resource_valid_rows": 312,
+  "adjudicated_library_errors": [
+    {
+      "PAR2_s": 60,
+      "adjudication_source": "separate diagnostic; original primary stderr was not recovered",
+      "classification": "SPOT_ACCEPTANCE_LIMIT_32",
+      "diagnostic": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+        "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da"
+      },
+      "native_result": "ERROR",
+      "original_visit_index": 204,
+      "primary_record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167/record.json",
+        "sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8"
+      }
+    },
+    {
+      "PAR2_s": 60,
+      "adjudication_source": "this primary capture",
+      "classification": "SPOT_ACCEPTANCE_LIMIT_32",
+      "native_result": "ERROR",
+      "original_visit_index": 205,
+      "primary_record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/legs/0102/lazy-fc/record.json",
+        "sha256": "30aa52be89de492dac16e7f8b86bd9a54a3b46d7af2d72c47fc33c0dd4d73aef"
+      }
+    },
+    {
+      "PAR2_s": 60,
+      "adjudication_source": "this primary capture",
+      "classification": "SPOT_ACCEPTANCE_LIMIT_32",
+      "native_result": "ERROR",
+      "original_visit_index": 206,
+      "primary_record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/legs/0103/lazy-fc/record.json",
+        "sha256": "3f423a17f93c867dde672c74db93708e601410d8d13da3ffc28574d80b289784"
+      }
+    },
+    {
+      "PAR2_s": 60,
+      "adjudication_source": "this primary capture",
+      "classification": "SPOT_ACCEPTANCE_LIMIT_32",
+      "native_result": "ERROR",
+      "original_visit_index": 207,
+      "primary_record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/legs/0103/anchor-e167/record.json",
+        "sha256": "902bb2db790342d512567b27dafe63c6c95dcc5e1c244f9dc7c587a45cb3f172"
+      }
+    }
+  ],
+  "pair_gap": {
+    "limit": "One pair spans STOP/diagnostic/adjudication; not all 156 pairs were uninterrupted adjacent.",
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "summary_replay": "byte-identical; all312record hashes unchanged, no newtargetrecords",
+  "scope": "Conditional156casefollowup, not a fresh full1524case30scampaign. Original17scores untouched. Source/Spot/ELF and NO_VERBOSE limitations retained."
+}

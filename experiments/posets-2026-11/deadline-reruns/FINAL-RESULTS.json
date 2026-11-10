@@ -1,0 +1,34 @@
+{
+  "CI_scope": "Recorded d363b9f implementation CI only; latest publication-HEAD CI is reported separately, never inferred here",
+  "OOM_kill_invocations": 0,
+  "conditional30_TIMEOUT_each": 146,
+  "conditional30_native_ERROR_each": 2,
+  "conditional30_rows": 312,
+  "conditional30_solved_each": 8,
+  "continued30_records": 107,
+  "diagnostic_scored_rows": 0,
+  "final17_solved_each": 1368,
+  "final_package_reviews": [
+    {
+      "package_path": "reviews/nbjorner-final-package-review.json",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-final-publication-package-review.json",
+        "sha256": "18522407252980f904c6cdf99af923fdb14169642119718a3be51da9f84d4b0c"
+      }
+    },
+    {
+      "package_path": "reviews/barbosa-final-package-review.json",
+      "source": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-final-publication-package-review.json",
+        "sha256": "898ccb94b45444bf5e5dea240bb9d998d5025e4d3e58cabf9f5975b155ce9f34"
+      }
+    }
+  ],
+  "full17_rows": 3048,
+  "no_more_experiments": true,
+  "original30_records": 205,
+  "pending": [],
+  "production_rollback": false,
+  "ready_for_publication": true,
+  "status": "Completed evidence and reviewed package content; publication history is the containing Git commit and PR40"
+}

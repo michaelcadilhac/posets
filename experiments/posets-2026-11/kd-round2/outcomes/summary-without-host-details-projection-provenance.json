@@ -1,0 +1,17 @@
+{
+  "kind": "Explicit public metadata projection, not an exact copy",
+  "original": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/summary.json",
+    "sha256": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+    "bytes": 33663
+  },
+  "projection": {
+    "path": "outcomes/summary-without-host-details.json",
+    "sha256": "fc9a0d6fa12dcafac85d24fc2f9be61aafde428965944baf986cacbb91365b56"
+  },
+  "omitted_json_pointers": [
+    "/cpu_host"
+  ],
+  "all_other_keys_and_values_preserved": true,
+  "original_retained_unchanged": true
+}

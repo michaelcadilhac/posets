@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/arms-campaign.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617",
+    "--summary-only"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "sha256": "434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035"
+  },
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "1",
+    "CARGO_HOME": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/cargo",
+    "CARGO_NET_OFFLINE": "true",
+    "LD_LIBRARY_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+    "PKG_CONFIG_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "method": "unchanged campaign owns shared hostlock; summary-only executes no solver"
+}

@@ -1,0 +1,11 @@
+{
+  "cause": "Read before_maxima from an original reporter cell, whose field is maxima, instead of the derived renamed entry.",
+  "effect": "No derived outputs written before exception; no solver, source, helper, raw result or authoritative summary changed; no benchmark repeated.",
+  "exception": "KeyError('before_maxima')",
+  "launch_note": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/standard-controller-launch.json",
+    "sha256": "197f3956dabbb1bb98df594960d9508e9ee6945ba1203ad008e79b79f05dd4d8"
+  },
+  "resolution": "Use existing authoritative summaries and raw-three-pair TSVs, plus this separate invariance proof and compact presentation.",
+  "status": "metadata-only stopped derived-export attempt preserved in tool transcript"
+}

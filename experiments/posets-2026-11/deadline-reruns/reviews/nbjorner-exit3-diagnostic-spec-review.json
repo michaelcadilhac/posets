@@ -1,0 +1,24 @@
+{
+  "reviewer": "nbjorner-guided independent bounded diagnostic-spec review",
+  "decision": "Approve exactly one stderr-preserving diagnostic reproduction for root release. No retry, original-row replacement, score/whitelist change or continuation is approved.",
+  "bindings": {
+    "checkpoint_sha256": "bf87c220b51f6943816d69089f9c0c6857402d67391f936c42f593d233bddaa7",
+    "spec_sha256": "9030f9f8df45f8de3ef2259b41a6182333dea53125f60cac664cb3c9e3fa64ae",
+    "failure_checkpoint_sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34",
+    "failed_record_sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8",
+    "ELF_sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+    "TLSF_sha256": "99ed5b9ac62e8fb2a7af83f6b46293c1480abfd98d9748c0dbebe0554624026c",
+    "scoped_helper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+    "source_triage_sha256": "f7b38ee2b48ca64bd8125041cfe202b37355e3f1a85a00ba3b5c6ac5f473a694"
+  },
+  "checked": [
+    "All eight diagnostic file bindings and three failure/failed-leg/source-plan references match current bytes. Actual command exactly equals the frozen native empty-flags solver command: original49cf ELF, -T and the bound ltl2dba_R_pb_12_pe_.tlsf.",
+    "Spec retains isolated Acacia cwd and only the same frozen LD_LIBRARY_PATH environment override, timeout30 and unchanged scoped_task8G/no-swap owner. Outer execution argv explicitly holds the same nonblocking host flock. New reproduction-attempt1 record/log/helper paths are absent and separate from frozen failed-leg evidence.",
+    "Existing capture_consumer streams all stdout/stderr lines into the complete combined log and retains separate channel byte counts/resources. It does not preserve channel tags, and result text fields are empty in consumer mode; the documented log is the diagnostic stream artifact. No new helper, source change, binary rebuild, solver verbosity, forced backend, phase/worker/route switch or instrumentation is introduced.",
+    "Checked the corrected deadline-context observation: native coverage's no-route branch calls run_systemd_scope with run_env=None in this frozen empty-flags treatment. Outer-deadline environment injection belongs to the separate enabled-route branch. This reproduction appropriately adds no deadline injection; the external30s owner remains the cap.",
+    "expected_exit_codes=[3] classifies reproduction of the known error as the diagnostic expectation only. A different return/timeout remains a preserved diagnostic nonmatch, with no automatic second attempt or reinterpretation of the original ERROR."
+  ],
+  "findings": [],
+  "interpretation_limits": "The original1080 stderr bytes were not retained, so a fresh capture can investigate reproducibility/source cause but cannot recover their exact text. Wrapper prefix/capture consumer/fresh guard bookkeeping differ and are disclosed. Do not pool this call with the planned312 observations or infer a source revert. Actual diagnostic outcome and any later continuation need separate review/root authority.",
+  "execution": "Read-only source/spec/evidence and bounded binding checks. No helper import/execution, compiler, tests, solver, profile, original-plan/failed-leg mutation or originalAcacia/WIP write."
+}

@@ -1,0 +1,107 @@
+Fixed four-cell PMU: complete saved-data interpretation
+
+Keep production candidate30e. No further production change or hot-loop/assembly
+inspection is warranted by these measurements. Proceed with the qualified
+actual-default solver comparison. The original clean regressions remain in the
+record; PMU observations neither correct nor causally explain those clocks.
+
+All four selected cells reduce USER cycles and instructions in every paired
+repetition. Median paired ratios (candidate/baseline; below1 is lower):
+  collector whole-CPre128: cycles.77633, instructions.73188
+  collector whole-CPre native512: cycles.77405, instructions.74866
+  RR552 build128: cycles.92551, instructions.91286
+  RR552 build native512: cycles.91338, instructions.91234
+Instruction totals are essentially identical across the three runs of each
+variant (only0/1-instruction variation); cycle direction is consistent all3.
+
+This is consistent with the independently observed logical rank/PO savings,
+despite a modest increase in move assignments. Collector rank1282->770 and
+PO92047->79431; RR build rank552 unchanged and PO154954->152076. Heap/allocation/
+copy/meet/move-construction measures were unchanged within each matched width.
+Neither memory savings nor captured no-op intersections explain these PMU gains.
+
+Preserve the counter regressions:
+- Collector L1D read misses increase in ALL3 pairs at both widths. At128 the
+  pair ratios1.00770/1.03626/1.01896 give median pairedP1.01896 and separate-
+  medians ratioV1.02671. Native ratios1.01286/1.01660/1.13407 giveP/V1.01660;
+  the +13.4% third-pair miss count is retained, not replaced by the median.
+  This is not a cache-win story even though cycles fall.
+- RR L1D misses decrease slightly in every pair: P.98947(128),P.99036(native),
+  roughly1% lower. Do not inflate this into an allocator or locality conclusion.
+- LLC samples lack consistent scale/direction. NativeRR has raw baseline
+  16/3590/3950 and candidate3662/719/4184: paired228.875/.20028/1.05924,
+  P1.05924 versusV1.02006. Preserve this observed median regression, but its
+  small first baseline and sign reversal prohibit a robust LLC mechanism claim.
+  RR128 similarly gives8.10543/.14192/.23112. Collector counts are just3-75
+  misses per call; native collectorP.44444 contrasts sharply withV.96296.
+  None of these valid raw LLC observations warrants a cache-benefit claim.
+
+How this relates to the mixed CLEAN regressions:
+Native collector clean CPreP1.19099 (raw1.20575/1.19099/.88805) remains a recorded
+regression. In this CPU2-pinned PMU treatment user-cycle ratios are instead
+.75004/.77405/.77406. CompatibleRR build cleanP1.07767 (1.12199/1.07767/.96808)
+likewise contrasts with PMU cycles.93478/.90778/.92551. Both widths benefit in
+the PMU sample. The clean reversed signs are not evidence of more logical
+rank/PO/allocation work, but their cause is unresolved.
+These are different treatments and quantities: prior clean elapsed clocks versus
+phase-instrumented, CPU2-pinned user-only counters with natural preceding cache
+state. Hook/lifecycle code can perturb compilation context; user counters exclude
+kernel/descheduled time. Do not identify any of those possibilities as the cause,
+substitute PMU cycles for old clean timings or claim pure call-overhead isolation.
+Three samples in either treatment do not establish statistical significance.
+The full actual-default solver evidence still matters, including small singleton/
+native constructor costs outside this fixed diagnostic. No flag/annotation/
+reserve-order experiment or broader event matrix is justified now.
+
+The reserve-order idea stays a conceptual future option. It could avoid some
+growth shifts, but is unmeasured, changes allocation-failure publication details
+and must preserve the safe_moves/generic staged guarantees if ever implemented.
+Faster user cycles in all four cells provide no material reason to disturb the
+currently qualified30e while actual solver gates proceed. No additional codegen
+inspection files/symbols are requested because no PMU instruction/cycle regression
+needs a local call-boundary explanation here.
+
+All16 event comparisons (P=median of3paired ratios;V=ratio of separate medians):
+case event baseline_raw_pair0/1/2 candidate_raw_pair0/1/2 raw_pair_ratios P V
+collector-cpre-compatible	cycles	3740889/3741306/3750098	2912622/2904494/2897738	0.77859/0.77633/0.77271	0.77633	0.77633
+collector-cpre-compatible	instructions	15564653/15564652/15564653	11391425/11391425/11391425	0.73188/0.73188/0.73188	0.73188	0.73188
+collector-cpre-compatible	l1d_read_miss	29474/28381/28645	29701/29410/29188	1.00770/1.03626/1.01896	1.01896	1.02671
+collector-cpre-compatible	llc_read_miss	10/9/13	30/3/6	3.00000/0.33333/0.46154	0.46154	0.60000
+collector-cpre-native	cycles	4172084/4024706/4025258	3129234/3115329/3115776	0.75004/0.77405/0.77406	0.77405	0.77406
+collector-cpre-native	instructions	16831988/16831988/16831988	12601420/12601420/12601421	0.74866/0.74866/0.74866	0.74866	0.74866
+collector-cpre-native	l1d_read_miss	48523/48504/44470	49147/49309/50432	1.01286/1.01660/1.13407	1.01660	1.01660
+collector-cpre-native	llc_read_miss	75/27/27	26/26/12	0.34667/0.96296/0.44444	0.44444	0.96296
+rr552-build-compatible	cycles	10679359/10785522/10739964	9982814/9790903/9939905	0.93478/0.90778/0.92551	0.92551	0.92551
+rr552-build-compatible	instructions	31240460/31240461/31240461	28518206/28518205/28518205	0.91286/0.91286/0.91286	0.91286	0.91286
+rr552-build-compatible	l1d_read_miss	785639/788567/783279	777365/776813/780710	0.98947/0.98509/0.99672	0.98947	0.98947
+rr552-build-compatible	llc_read_miss	645/4587/4859	5228/651/1123	8.10543/0.14192/0.23112	0.23112	0.24482
+rr552-build-native	cycles	6740855/7042211/7085971	6365502/6244997/6472181	0.94432/0.88679/0.91338	0.91338	0.90391
+rr552-build-native	instructions	19955227/19955226/19955226	18205907/18205907/18205906	0.91234/0.91234/0.91234	0.91234	0.91234
+rr552-build-native	l1d_read_miss	640753/642578/645893	638260/636384/636304	0.99611/0.99036/0.98515	0.99036	0.99036
+rr552-build-native	llc_read_miss	16/3590/3950	3662/719/4184	228.87500/0.20028/1.05924	1.05924	1.02006
+
+Provenance/acceptance:
+MEASUREMENTS-COMPLETE.json SHA256
+  6870bc76b9e2410d38a423b7911056a907971a6cb672144145915324aa939b8c
+MEASUREMENT-SUMMARY.json SHA256
+  5f61cf57a3eed51b9c1d6c1e83545cb638eb7cc622576a036864d34f4b6af8df
+under work/default-optimization/pmu-execution-v1/. Owner final invariance covers
+1290 closure files+4 release bindings. Independently rehashed72 current accepted/
+record/spec files and checked all24 kernel/ROI/CPU2/width/stats-off guards plus
+all96 raw IDs, event encodings and count/read mappings. All groupsok, all events
+available/read, enabled==running>0, no scaling/zero fill. Owner reports0OOM/
+timeouts; no instrumented clock or process duration was used here.
+Events are Linux generic cycles(0,0),instructions(0,1),L1Dreadmiss(3,65536),
+LLCreadmiss(3,65538), user-only/per-thread,pinned group,read_format15. They are
+not a raw microarchitecture encoding or cold-cache simulation claim.
+Both original V instantiations are source-bound; the literal vector-flavor marker
+alone is not independent inventory proof.
+
+Bound raw24calls/96events, exact3pair counts and ratios, P andV, original raw
+groupIDs/times/statuses, actual ELF/closure/spec/record bindings, and separate
+clean metric groups are retained in:
+  work/default-optimization/lemire/pmu-counter-data-v1.json
+  SHA256af099eb5248e6b1ab26d3f64bbb53a7c9b4cda21a175db33ce9d32a31413639e
+
+Only saved-data reads, arithmetic, hashes and derived writes were performed.
+No new PMU/event/flag/probe/codegen/solver workload or source change occurred.

@@ -1,0 +1,80 @@
+--- a/include/posets/downsets/rank_bucketed_vector_backed.hh
++++ b/include/posets/downsets/rank_bucketed_vector_backed.hh
+@@ -1,4 +1,6 @@
+ #pragma once
++
++#include "rank-profile-counters.hh"
+ 
+ #include <type_traits>
+ 
+@@ -43,9 +45,11 @@
+           std::is_nothrow_move_constructible_v<V> and std::is_nothrow_move_assignable_v<V>;
+ 
+       static rank_t rank_of (const V& v) {
++        rank_probe::rank_enter (v.size ());
+         rank_t sum = 0;
+         for (size_t i = 0; i < v.size (); ++i)
+           sum += static_cast<rank_t> (v[i]);
++        rank_probe::rank_leave (v.size ());
+         return sum;
+       }
+ 
+@@ -237,25 +241,34 @@
+       }
+ 
+       void intersect_with (const self& other) {
++        rank_probe::intersection_enter (vector_set.size ());
+         POSETS_RANK_STAT_ADD (intersection_left_elements, vector_set.size ());
+         if (this == &other) {
+           POSETS_RANK_STAT_ADD (intersection_short_circuits, vector_set.size ());
+-          return;
+-        }
+-        if (vector_set.empty ())
+-          return;
++          rank_probe::intersection_leave (true, "self");
++          return;
++        }
++        if (vector_set.empty ()) {
++          rank_probe::intersection_leave (true, "empty_left");
++          return;
++        }
+         if (other.vector_set.empty ()) {
+           *this = self {};
++          rank_probe::intersection_leave (false, "empty_right");
+           return;
+         }
+         size_t first = 0;
+         for (; first < vector_set.size (); ++first) {
+-          if (not other.contains_with_rank (vector_set[first], ranks[first]))
++          const bool profile_covered = other.contains_with_rank (vector_set[first], ranks[first]);
++          rank_probe::intersection_query (first, profile_covered);
++          if (not profile_covered)
+             break;
+           POSETS_RANK_STAT_ADD (intersection_short_circuits, 1);
+         }
+-        if (first == vector_set.size ())
+-          return;
++        if (first == vector_set.size ()) {
++          rank_probe::intersection_leave (true);
++          return;
++        }
+ 
+         self intersection;
+         for (size_t i = 0; i < first; ++i)
+@@ -263,6 +276,8 @@
+         for (size_t i = first; i < vector_set.size (); ++i) {
+           const auto& x = vector_set[i];
+           const bool dominated = i != first and other.contains_with_rank (x, ranks[i]);
++          if (i != first)
++            rank_probe::intersection_query (i, dominated);
+           if (dominated) {
+             POSETS_RANK_STAT_ADD (intersection_short_circuits, 1);
+             intersection.insert_with_rank (x.copy (), ranks[i]);
+@@ -274,6 +289,7 @@
+           }
+         }
+         *this = std::move (intersection);
++        rank_probe::intersection_leave (false);
+       }
+ 
+       template <typename F>

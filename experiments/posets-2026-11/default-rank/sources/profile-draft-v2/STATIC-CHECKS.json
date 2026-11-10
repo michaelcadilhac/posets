@@ -1,0 +1,30 @@
+{
+  "scope": "Static file/text/SHA assertions only; no target import, parse/compile, model, compiler, test, formatter/lint, profiler, benchmark or PMU execution",
+  "allocation_header_exact_verified_copy": true,
+  "unchanged_actual_matrix_kernel_and_oracle_between_pins": true,
+  "cohort_exact_copies": {
+    "standard": 12,
+    "larger_eligible": 5
+  },
+  "header_call_site_token_counts_preserved": true,
+  "rank_enter_leave_once_per_shadow_rank_of": true,
+  "header_counter_hooks_noexcept": true,
+  "new_production_fields_or_original_source_changes": false,
+  "vector_layout_and_move_trait_guards": "Source static_asserts drafted, compilation still pending",
+  "snapshot_before_storage_and_serialization": "Source ordering reviewed; not executed",
+  "selfcheck_source": "Both vector flavors, positive baseline copies/allocations versus candidate no-work, actual late query index, rank-call/coordinate sentinels and normalized cleanup; uncompiled/unexecuted",
+  "whole_roi_source": "Existing START/STOP calls and exact3/4 sequence check; kernel clocks discarded; raw backend separate from operation wrapper to prevent nested resets",
+  "limitations": [
+    "Shipping signed8-bit traces only; no throwing Vector/floating/overflow behavior claim",
+    "Per-operation post-call RHS still alive; normalized CPre reports net retention, not absolute new backend bytes",
+    "Counter-only values require completed pin-specific source/backend qualification and successful kernel check",
+    "No profile compiler/ELF/dependency/library/run/qualification evidence exists yet",
+    "No derived controls, PMU, codegen, allocator/layout/threshold or clean performance change"
+  ],
+  "pending": [
+    "Lemire+Biere+root exact review",
+    "Explicit runtime release and scoped selfcheck/Memcheck",
+    "Matched instrumented compile/link/dependency/binary/library and source qualification bindings",
+    "Root-approved profile run specs and exclusive lane"
+  ]
+}

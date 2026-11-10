@@ -1,0 +1,110 @@
+{
+  "status": "ONE_DIAGNOSTIC_COMPLETE-NO_PRIMARY_CONTINUATION",
+  "completed_utc": "2026-11-10T13:06:16.931501+00:00",
+  "bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/SOURCE-SPEC-CHECKPOINT.json",
+      "sha256": "bf87c220b51f6943816d69089f9c0c6857402d67391f936c42f593d233bddaa7"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/ROOT-RELEASE.json",
+      "sha256": "770b64c57456e71e57b8e56140d5fe56b861bbd9e9bc4b8b079301057a38778d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/spec.json",
+      "sha256": "9030f9f8df45f8de3ef2259b41a6182333dea53125f60cac664cb3c9e3fa64ae"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/runtime-env.json",
+      "sha256": "ee6501a25c94ac7c8d11410db3ae81327b11ba8ac2010cf6cbb18ace24fcb79a"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/reproduction-attempt1.json",
+      "sha256": "7ea1014369821954a1e32a4ff8fa90e2cf7b95cf011e9b845036299b709e44c9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/reproduction-attempt1.log",
+      "sha256": "a2656835dc796b43411dd0a30f4bef6e4e2d3e4f9b30ab40ccb810ad9b4e4667"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/reproduction-attempt1.helper.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/nbjorner-exit3-diagnostic-spec-review.json",
+      "sha256": "009d5d5541a15abdcd8df7fed238f755fd41e631f147c251f17caaad9854f7c0"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-STOP-CHECKPOINT.json",
+      "sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34"
+    }
+  ],
+  "verified_original_inputs": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/spec.json",
+      "sha256": "9030f9f8df45f8de3ef2259b41a6182333dea53125f60cac664cb3c9e3fa64ae"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/runtime-env.json",
+      "sha256": "ee6501a25c94ac7c8d11410db3ae81327b11ba8ac2010cf6cbb18ace24fcb79a"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/scoped_task.py",
+      "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+      "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py",
+      "sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/src/acacia-bonsai",
+      "sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6"
+    },
+    {
+      "path": "/home/gperez/GIT-repos/acacia-bonsai/tlsf-corpus/ltl2dba_R_pb_12_pe_.tlsf",
+      "sha256": "99ed5b9ac62e8fb2a7af83f6b46293c1480abfd98d9748c0dbebe0554624026c"
+    }
+  ],
+  "actual_result": {
+    "stdout": "",
+    "stderr": "",
+    "returncode": 3,
+    "seconds": 18.512807924998924,
+    "timed_out": false,
+    "stdout_bytes": 0,
+    "stderr_bytes": 1080,
+    "resource_limited": false,
+    "memory_peak_bytes": 3565301760,
+    "scope_unit": "acacia-posets-setup-2288236-2f8ef83857e9.scope",
+    "max_process_rss_bytes": 3563790336,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2288236-2f8ef83857e9.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 20.890117000000004
+  },
+  "observed_cause": "Three frozen Spot translation exceptions report acceptance-set limit32; portfolio also logs gr1-real-lift outside proved DPA Buchi fragment and endsERROR. Exit3 is reproduced without timeout/OOM.",
+  "capture_proof": "Primaryfailedrowstderr_bytes1080 matches diagnosticstderr_bytes1080; stdout0 and full combinedlog1080bytes, so the diagnostic log contains complete stderr. Original primary stderr text was not retained.",
+  "timing_limit": "Diagnostic capture path is not a scored repeat and is not pooled/substituted. Its18.513s does not replace primary20.121s.",
+  "original205record_hashes_unchanged": true,
+  "remaining107leg_directories_absent": true,
+  "native_whitelist_unchanged": true,
+  "no_new_deadline_route_phase_or_worker_flags": true,
+  "no_library_rebuild_or_limit_change": true,
+  "no_active_workload": true,
+  "runtime_lane": "released to root after exactly one diagnostic",
+  "next": "Root adjudicates any continuation separately; no automaticretry/resume/sourceorpolicychange authorized here."
+}

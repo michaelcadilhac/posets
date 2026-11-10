@@ -1,0 +1,44 @@
+{
+  "run_id": 42651196242,
+  "status": "completed",
+  "conclusion": "success",
+  "head_sha": "30e66853832d98bcfaada296d892157b95a8150d",
+  "completed_at": "2026-11-09T16:58:17Z",
+  "url": "https://github.com/michaelcadilhac/posets/actions/runs/42651196242",
+  "jobs": [
+    {
+      "job_id": 129277679489,
+      "path": "work/default-optimization/ci-30e6685/job-129277679489.log",
+      "summary_lines": [
+        "2026-11-09T16:16:44.9487881Z Ok:                82  ",
+        "2026-11-09T16:16:44.9488119Z Expected Fail:     1   ",
+        "2026-11-09T16:16:44.9488305Z Fail:              0   ",
+        "2026-11-09T16:58:14.2035875Z Ok:                82  ",
+        "2026-11-09T16:58:14.2036037Z Expected Fail:     1   ",
+        "2026-11-09T16:58:14.2036164Z Fail:              0   "
+      ]
+    },
+    {
+      "job_id": 129277679787,
+      "path": "work/default-optimization/ci-30e6685/job-129277679787.log",
+      "summary_lines": [
+        "2026-11-09T16:31:07.9028530Z Ok:                82  ",
+        "2026-11-09T16:31:07.9029950Z Expected Fail:     1   ",
+        "2026-11-09T16:31:07.9030830Z Fail:              0   "
+      ]
+    },
+    {
+      "job_id": 129277679829,
+      "path": "work/default-optimization/ci-30e6685/job-129277679829.log",
+      "summary_lines": [
+        "2026-11-09T16:18:01.4318424Z Ok:                 82  ",
+        "2026-11-09T16:18:01.4318656Z Expected Fail:      1   ",
+        "2026-11-09T16:18:01.4318875Z Fail:               0   ",
+        "2026-11-09T16:18:01.4319067Z Unexpected Pass:    0   ",
+        "2026-11-09T16:18:01.4319251Z Skipped:            0   ",
+        "2026-11-09T16:18:01.4319435Z Timeout:            0   "
+      ]
+    }
+  ],
+  "interpretation": "Four executed full suites: native Linux, portable Valgrind, Linux baseline, macOS ARM; each82pass+1intentional expectedfail,0fail. No future documentation head is claimed."
+}

@@ -1,0 +1,76 @@
+{
+  "scope": "Native invocation-row/kernel-counter audit; no outcome relabeling or PAR2 changes. Counter sums are not invocation counts. Missing event coverage is not evidence of zero OOM.",
+  "expected_rows": 3048,
+  "per_arm": {
+    "baseline-default": {
+      "event_observed_rows": 1524,
+      "event_missing_rows": 0,
+      "all_event_rows_observed": true,
+      "event_missing_reasons": {},
+      "oom_observed_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "sum_observed_kernel_counters": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 155,
+      "native_MEMOUT_with_oom_kill": 0,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes_among_oom_kill_rows": {}
+    },
+    "optimized-default": {
+      "event_observed_rows": 1524,
+      "event_missing_rows": 0,
+      "all_event_rows_observed": true,
+      "event_missing_reasons": {},
+      "oom_observed_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "sum_observed_kernel_counters": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "native_MEMOUT": 0,
+      "native_TIMEOUT": 156,
+      "native_MEMOUT_with_oom_kill": 0,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes_among_oom_kill_rows": {}
+    }
+  },
+  "event_observed_rows": 3048,
+  "event_missing_rows": 0,
+  "all_event_rows_observed": true,
+  "native_MEMOUT_outcomes": 0,
+  "native_TIMEOUT_outcomes": 311,
+  "oom_observed_rows": 0,
+  "oom_kill_observed_rows": 0,
+  "sum_observed_kernel_counters": {
+    "oom": 0,
+    "oom_kill": 0
+  },
+  "native_TIMEOUT_rows_with_oom_kill": 0,
+  "source_sidecars": {
+    "baseline-default": {
+      "raw_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv.memory.tsv",
+        "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6"
+      },
+      "scored_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/baseline-default.tsv.memory.tsv",
+        "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6"
+      }
+    },
+    "optimized-default": {
+      "raw_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv.memory.tsv",
+        "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099"
+      },
+      "scored_memory": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/strict-wall-scoring/optimized-default.tsv.memory.tsv",
+        "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099"
+      }
+    }
+  },
+  "observations": [],
+  "missing_observations": []
+}

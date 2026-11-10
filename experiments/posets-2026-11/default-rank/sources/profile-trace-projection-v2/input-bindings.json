@@ -1,0 +1,186 @@
+{
+  "status": "static references to accepted existing evidence; no generator/target import or execution",
+  "eligibility_inventory": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/eligibility-inventory.json",
+    "sha256": "80b5b22324661bd0af8835f5f275326c4844ca188d2498239d2abb9cbe17c7b8"
+  },
+  "accepted_artifact_closure": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-gate-results-v2/actual-artifact-closure.json",
+    "sha256": "d097ccb5d0fc311293f2ebb91f2a5f942ec9241e8ce04848373247a7976e3a25"
+  },
+  "eligibility_approval": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-v2-eligibility-static-audit.json",
+    "sha256": "d308dfd8f21dc75f1e3cfb8d59b1d8989491e0d9d4159beca7ee7c5273d2a9ba"
+  },
+  "actual_Cpp_source": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2/source-manifest.json",
+    "sha256": "5758cd87989294ee2c392008522f866e6774954de7289e8f12b2a0c466b16368"
+  },
+  "profile_ELFs_from_accepted_closure": [
+    {
+      "role": "baseline",
+      "mode": "compatible",
+      "ELF": {
+        "class": 64,
+        "endian": "little",
+        "machine": "x86-64",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-profile-v2-gates/baseline/compatible/profile",
+        "sha256": "46252b47310118e1d4d3f2affd366ba4dfc174715a9ce763a824d80be0180cfb",
+        "type": 2
+      },
+      "runtime_libraries": [
+        {
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "realpath": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/lib64/libc.so.6",
+          "realpath": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/lib64/libgcc_s.so.1",
+          "realpath": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/lib64/libm.so.6",
+          "realpath": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/lib64/libstdc++.so.6",
+          "realpath": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        }
+      ]
+    },
+    {
+      "role": "baseline",
+      "mode": "native",
+      "ELF": {
+        "class": 64,
+        "endian": "little",
+        "machine": "x86-64",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-profile-v2-gates/baseline/native/profile",
+        "sha256": "97f60ceda3756333bb4c9506adc49e15afac704aa001d6930fe23df098b925f1",
+        "type": 2
+      },
+      "runtime_libraries": [
+        {
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "realpath": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/lib64/libc.so.6",
+          "realpath": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/lib64/libgcc_s.so.1",
+          "realpath": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/lib64/libm.so.6",
+          "realpath": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/lib64/libstdc++.so.6",
+          "realpath": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "mode": "compatible",
+      "ELF": {
+        "class": 64,
+        "endian": "little",
+        "machine": "x86-64",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-profile-v2-gates/candidate/compatible/profile",
+        "sha256": "a369237a56f7af8a8de1b385d1165b0541cb0681f0e71917331e4a3fed34684f",
+        "type": 2
+      },
+      "runtime_libraries": [
+        {
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "realpath": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/lib64/libc.so.6",
+          "realpath": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/lib64/libgcc_s.so.1",
+          "realpath": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/lib64/libm.so.6",
+          "realpath": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/lib64/libstdc++.so.6",
+          "realpath": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        }
+      ]
+    },
+    {
+      "role": "candidate",
+      "mode": "native",
+      "ELF": {
+        "class": 64,
+        "endian": "little",
+        "machine": "x86-64",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-rank-profile-v2-gates/candidate/native/profile",
+        "sha256": "b633d9cc2adf8c1c84099db9f25a6a92c7c960fc53ceea4782b7ae83da6117e4",
+        "type": 2
+      },
+      "runtime_libraries": [
+        {
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "realpath": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/lib64/libc.so.6",
+          "realpath": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/lib64/libgcc_s.so.1",
+          "realpath": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/lib64/libm.so.6",
+          "realpath": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/lib64/libstdc++.so.6",
+          "realpath": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        }
+      ]
+    }
+  ],
+  "projection_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v2",
+  "preserved_v1": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v1/source-manifest.json",
+    "sha256": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598"
+  },
+  "correction_audit": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/profile-projection-v1-static-audit.json",
+    "sha256": "333d125cb6b7f19f87487c479c3d34a874c481f21e3ad1d54ee73fb5d2c5f0e9"
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "audits": {},
+  "candidate_vs_baseline": {
+    "lazy-fc": {
+      "gains": [],
+      "losses": [],
+      "par2_delta_s": -6.488881
+    }
+  },
+  "cap_s": 17,
+  "conflicts": [],
+  "corpus_sha256": "e2077833ffd3f2a616d8ca6286d1f22e5e09416f732ff174bc988629de4d96a1",
+  "frozen_manifest_sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+  "instances": 1524,
+  "list": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/all.list",
+  "list_sha256": "0226e5cd2cadc033544f0901bd900dd31dd7add813ef216558826468e0b7b5c7",
+  "new": "anchor-e167",
+  "noise_floor_s": null,
+  "noise_floor_source": "",
+  "paired": {
+    "lazy-fc": {
+      "gains": [],
+      "losses": [],
+      "noise_reading": "no noise floor supplied; not interpreted",
+      "par2_delta_s": 6.488881
+    }
+  },
+  "series": {
+    "anchor-e167": {
+      "collected_conflicts": [],
+      "cpu": {
+        "expected_rows": 1524,
+        "observed_rows": 1524,
+        "total_seconds": 14011.778712
+      },
+      "derived": false,
+      "exclusive_solves_all_series": 0,
+      "exclusive_solves_in_group": 0,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 156,
+        "UNKNOWN": 0
+      },
+      "frozen_arm": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/src/acacia-bonsai",
+        "binary_sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+        "flags": "",
+        "label": "anchor-e167",
+        "preset": "otf_sparse_formula_parity",
+        "provenance": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+          "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+        },
+        "provenance_sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e",
+        "source_pins": {
+          "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+          "posets": "e167f43646b880c69046bab7110dbb327686c024",
+          "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+        }
+      },
+      "identity": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "binary_sha256": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+        "flags": "",
+        "memory_max": "8G",
+        "memory_swap_max": "0",
+        "preset": "otf_sparse_formula_parity",
+        "solver_label": "anchor-e167"
+      },
+      "input": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv",
+      "input_sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+      "measured_rows": 1524,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "native_raw": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv",
+        "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+      },
+      "observation_verification": "TSV bytes verified; solver outcome and source revision require independent evidence",
+      "par2_mean_s": 3.902005,
+      "par2_total_s": 5946.655226,
+      "peak_memory": {
+        "max_mib": 4043.09,
+        "median_mib": 101.549,
+        "process_rss": {
+          "denominator": 1524,
+          "denominator_basis": "all campaign rows, including nonexecuted conversions",
+          "max_bytes": 3976986624,
+          "median_bytes": 61609984.0,
+          "missing_reasons": {},
+          "numerator": 1524,
+          "selection_bias": "none from missing samples"
+        },
+        "rows_with_peak": 1524,
+        "rows_without_peak": 0,
+        "scope": {
+          "denominator": 1524,
+          "denominator_basis": "all campaign rows, including nonexecuted conversions",
+          "max_bytes": 4239486976,
+          "median_bytes": 106481664.0,
+          "missing_reasons": {},
+          "numerator": 1524,
+          "selection_bias": "none from missing samples"
+        }
+      },
+      "real": 629,
+      "recycled_rows": 0,
+      "role": "public",
+      "solved": 1368,
+      "solved_time_s": 642.655226,
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "e167f43646b880c69046bab7110dbb327686c024",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      },
+      "sources": [],
+      "timing_boundary": "timing boundary unverified; supply a campaign manifest or --untimed-conversion",
+      "truth_conflict_instances": [],
+      "unreal": 739,
+      "wall_cap_overruns": []
+    },
+    "lazy-fc": {
+      "collected_conflicts": [],
+      "cpu": {
+        "expected_rows": 1524,
+        "observed_rows": 1524,
+        "total_seconds": 13979.571882
+      },
+      "derived": false,
+      "exclusive_solves_all_series": 0,
+      "exclusive_solves_in_group": 0,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 156,
+        "UNKNOWN": 0
+      },
+      "frozen_arm": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-lazy-fc",
+        "binary_sha256": "5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31",
+        "flags": "",
+        "label": "lazy-fc",
+        "preset": "otf_sparse_formula_parity",
+        "provenance": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/provenance.json",
+          "sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e"
+        },
+        "provenance_sha256": "b663bc42376c221824e989671371e2071ac59cfb5c2bd5b320d5c641e736693e",
+        "source_pins": {
+          "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "acacia_integration_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+          "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+          "posets": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+          "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+        }
+      },
+      "identity": {
+        "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "binary_sha256": "5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31",
+        "flags": "",
+        "memory_max": "8G",
+        "memory_swap_max": "0",
+        "preset": "otf_sparse_formula_parity",
+        "solver_label": "lazy-fc"
+      },
+      "input": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv",
+      "input_sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+      "measured_rows": 1524,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "native_raw": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv",
+        "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+      },
+      "observation_verification": "TSV bytes verified; solver outcome and source revision require independent evidence",
+      "par2_mean_s": 3.897747,
+      "par2_total_s": 5940.166345,
+      "peak_memory": {
+        "max_mib": 4047.305,
+        "median_mib": 101.824,
+        "process_rss": {
+          "denominator": 1524,
+          "denominator_basis": "all campaign rows, including nonexecuted conversions",
+          "max_bytes": 3977768960,
+          "median_bytes": 61751296.0,
+          "missing_reasons": {},
+          "numerator": 1524,
+          "selection_bias": "none from missing samples"
+        },
+        "rows_with_peak": 1524,
+        "rows_without_peak": 0,
+        "scope": {
+          "denominator": 1524,
+          "denominator_basis": "all campaign rows, including nonexecuted conversions",
+          "max_bytes": 4243906560,
+          "median_bytes": 106770432.0,
+          "missing_reasons": {},
+          "numerator": 1524,
+          "selection_bias": "none from missing samples"
+        }
+      },
+      "real": 629,
+      "recycled_rows": 0,
+      "role": "public",
+      "solved": 1368,
+      "solved_time_s": 636.166345,
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "acacia_integration_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "posets": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      },
+      "sources": [],
+      "timing_boundary": "timing boundary unverified; supply a campaign manifest or --untimed-conversion",
+      "truth_conflict_instances": [],
+      "unreal": 739,
+      "wall_cap_overruns": []
+    }
+  },
+  "status_exceptions_sha256": "80b634c70a3ef4aecd92e1ae6ce0c0c8deec375f2a06f485a470be472ce32866",
+  "strict_wall_scoring": {
+    "cap_s": 17,
+    "memory_binding": "All native memory join keys and observations are unchanged; the scoring memory sidecar is copied from loaded native observations.",
+    "solved_wall_rule": "native decisive verdict and measured seconds <= 17",
+    "sources": {
+      "anchor-e167": {
+        "raw": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv",
+          "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+        },
+        "raw_memory": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv.memory.tsv",
+          "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+        },
+        "scored": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv",
+          "sha256": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8"
+        },
+        "scored_memory": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv.memory.tsv",
+          "sha256": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8"
+        },
+        "wall_cap_overruns": []
+      },
+      "lazy-fc": {
+        "raw": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv",
+          "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+        },
+        "raw_memory": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv.memory.tsv",
+          "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+        },
+        "scored": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv",
+          "sha256": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830"
+        },
+        "scored_memory": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv.memory.tsv",
+          "sha256": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+        },
+        "wall_cap_overruns": []
+      }
+    },
+    "transform": "Only native decisive rows with seconds > 17 become TIMEOUT in the scoring view; all other fields remain unchanged. This is a scoring category, not evidence that the native timer fired."
+  },
+  "usable": true,
+  "verification": "input, corpus and attached source bytes are checked; solver outcomes, source revision, status correction authority and any declared noise floor remain unverified"
+}

@@ -1,0 +1,42 @@
+{
+  "reviews": [
+    {
+      "file": "acacia/reviews/nbjorner-acacia-completed-gates-review.json",
+      "sha256": "f03d4098a8a51eb0e6488158cdb23806281b26c07c0804f4825e01c42c3586b5",
+      "scope": "completed build and gate evidence"
+    },
+    {
+      "file": "acacia/reviews/nbjorner-acacia-three-arm-release-review.json",
+      "sha256": "14047f6731da93a6b07d79a852d97622965b3cb323248cee74a7b65e1ae86dbe",
+      "scope": "exact three-arm release"
+    },
+    {
+      "file": "acacia/reviews/barbosa-acacia-preparation-source-spec-review.json",
+      "sha256": "86185c68ed638c24e33e2efbfbc137197d533842942c66f0282b591b8739332e",
+      "scope": "preparation source and planned specifications only"
+    },
+    {
+      "file": "acacia/reviews/barbosa-three-arm-table-source-review.json",
+      "sha256": "ef08dd6fc085e0223d72d05d23e6cef7ce8366a060f647e6b5a81434c92f41ba",
+      "scope": "three-arm table derivation source only"
+    }
+  ],
+  "limits": [
+    "Source, build/release and outcome reviews have different recorded scopes.",
+    "No separate Barbosa actual build/release approval is implied.",
+    "Final outcome approvals do not approve final publication prose/package."
+  ],
+  "outcome_review": {
+    "nbjorner": {
+      "decision": "approved completed outcomes/archive/provenance",
+      "file": "acacia/reviews/nbjorner-three-arm-final-outcome-review.json",
+      "sha256": "9033327674e287ff501546d2b492d94e5c1876406e9ce4cb73ab392356ef8450"
+    },
+    "barbosa": {
+      "decision": "approved completed outcomes/archive evidence; excludes retroactive actual build/release approval",
+      "file": "acacia/reviews/barbosa-final-three-arm-outcome-archive-audit.json",
+      "sha256": "e2a766ed049118e3e9fd19339827ba9c8a11a65f194e5e079dd069498db7ed2c"
+    }
+  },
+  "root_final_prose_package_review": "Complete; root approved final report, numerical interpretation and package content."
+}

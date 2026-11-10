@@ -1,0 +1,54 @@
+{
+  "spec": {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/test_three_arm_table.py"
+    ],
+    "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+    "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "expected_exit_codes": [
+      0
+    ],
+    "timeout": 60
+  },
+  "spec_sha256": "5103ee4701ba2c58ecb34e019387e2c8da259848f47c961bc442ccc9419006fb",
+  "helper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+  "benchlib_sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+  "memory_max": "8G",
+  "memory_swap_max": "0",
+  "environment_overrides": {
+    "PKG_CONFIG_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/pkgconfig",
+    "LD_LIBRARY_PATH": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib",
+    "CARGO_HOME": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/cargo",
+    "CARGO_NET_OFFLINE": "true",
+    "CARGO_BUILD_JOBS": "1",
+    "ACACIA_CAMPAIGN_SCOPE_GUARD": "scoped-task:3516049",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "result": {
+    "stdout": "",
+    "stderr": "",
+    "returncode": 0,
+    "seconds": 0.16452785511501133,
+    "timed_out": false,
+    "stdout_bytes": 0,
+    "stderr_bytes": 105,
+    "resource_limited": false,
+    "memory_peak_bytes": 13574144,
+    "scope_unit": "acacia-posets-setup-3516049-8832d6231d1f.scope",
+    "max_process_rss_bytes": 24117248,
+    "scope_memory_peak_source": "cgroup-v2/memory.peak",
+    "scope_memory_peak_missing_reason": "",
+    "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+    "scope_memory_events_source": "cgroup-v2/memory.events",
+    "scope_memory_events_missing_reason": "",
+    "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-3516049-8832d6231d1f.scope/invocation",
+    "memory_oom_group": "false",
+    "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+    "max_process_rss_missing_reason": "",
+    "cpu_seconds": 0.053762
+  },
+  "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/offline-tests-record.log",
+  "log_sha256": "4190e6532da5d52050bd5ea71ff40310f4ffe0846610b4b159650675a5a9c2b2"
+}

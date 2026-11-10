@@ -1,0 +1,36 @@
+Final review experience: the 30-second campaign
+
+Both the Nbjorner and Barbosa reviewers independently found that the original
+follow-up controller could accept an ERROR outcome without stopping. That shared
+finding mattered in practice: the corrected controller stopped on the original
+default's first native ERROR, preserving the result before any continuation.
+
+A separate bounded diagnostic reproduced Spot's acceptance-set limit. The original
+stderr had not been retained, so it was not presented as recovered evidence. Both
+reviewers checked the continuation rules and then independently recomputed the
+completed cohort. The original ERROR remained ERROR; the diagnostic was excluded
+from scoring; three later errors had exact captured signatures; and one pair's
+interruption was disclosed. The final audits accepted all 312 primary observations.
+
+This adds a concrete example to the earlier experience ledger: Barbosa supplied
+another adversarial check of failure handling and the evidence needed to justify
+continuation. Nbjorner supplied an independent check of the same gap, plus source,
+identity and arithmetic audits. Credit for the error guard is shared. The earlier
+allocation-failure and control-fixture findings remain recorded in the v1 addendum.
+
+These were the same GPT-6.1 Sol model at xhigh, using different skills and sometimes
+different assignments. This was not a controlled comparison of reviewer quality or
+cost, and the researchers themselves did not participate. The evidence supports
+keeping the complementary review roles; it does not establish that either skill
+is universally better.
+
+The original skill-evidence PR is already merged:
+https://github.com/ai4ardev/agent-skills/pull/19
+This local addendum records the later campaign; it does not claim that the merged
+skill PR contains these subsequent results.
+
+Final outcome audit sources:
+reviews/nbjorner-final-cohort30-outcome-review.json
+SHA256 0ca7827deb4dadaef3e3cb542eb8e6da6fc29bf547ae65be7231b98db46a9879
+reviews/barbosa-final30-outcome-closure-audit.json
+SHA256 3a7c60134ee797cbf4d3e983005420db5abb64f170da3c2e168f8dedff9f808d

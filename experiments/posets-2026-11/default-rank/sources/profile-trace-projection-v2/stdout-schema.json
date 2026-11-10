@@ -1,0 +1,61 @@
+{
+  "status": "source-text schema binding; not executed",
+  "producer": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2/rank-profile.cc",
+    "sha256": "04ee80861141c4e26d39c3e25939379d43d5f5ca006dd8748839338130e5a4cc"
+  },
+  "accepted_ABI": "pinned x86-64 ELF64; size_t/uint64 unsigned64 and int64 signed deltas",
+  "phase_unsigned64_fields": [
+    "allocations",
+    "entry_live",
+    "exit_live",
+    "extra_peak",
+    "generator_capacity",
+    "intersections_changed",
+    "intersections_completed",
+    "intersections_noop",
+    "intersections_started",
+    "last_intersection_left",
+    "last_intersection_queries",
+    "rank_active_coordinates_completed",
+    "rank_active_coordinates_planned",
+    "rank_apply_elements",
+    "rank_bucket_rebuild_elements",
+    "rank_bucket_rebuilds",
+    "rank_completed",
+    "rank_contains_calls",
+    "rank_existing_elements_removed",
+    "rank_insert_attempts",
+    "rank_insert_rejected_dominated",
+    "rank_intersection_left_elements",
+    "rank_intersection_pair_meets",
+    "rank_intersection_short_circuits",
+    "rank_partial_order_calls",
+    "rank_peak_backing_size",
+    "rank_started",
+    "rank_union_insertions",
+    "requested_bytes",
+    "size",
+    "vector_base_adoptions_completed",
+    "vector_copy_attempts",
+    "vector_meet_attempts",
+    "vector_move_assignments_completed",
+    "vector_move_constructions_completed",
+    "vector_partial_order_attempts"
+  ],
+  "phase_non_unsigned_fields": {
+    "phase": "existing mode-specific allowed literal",
+    "success": "literal1 for accepted completed phase",
+    "has_result": "literal0|1;0 descriptors normalized to null after lexical validation",
+    "live_delta": "canonical signed64 decimal",
+    "last_intersection_reason": "not_called|incomplete|no_query|queried|self|empty_left|empty_right",
+    "last_intersection_first_failed_query": "literalnull or canonical unsigned64 decimal"
+  },
+  "field_counts": {
+    "metadata": 11,
+    "layout": 4,
+    "phase": 42,
+    "cleanup": 3
+  },
+  "no_arithmetic_or_counter_semantics_added": true
+}

@@ -1,0 +1,52 @@
+{
+  "status": "READ-ONLY SOURCE MAP-NO CONTINUATION PLAN OR TARGET EXECUTION",
+  "created_utc": "2026-11-10T13:15:07.373308+00:00",
+  "original_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/plan.json",
+    "sha256": "111b5b54ca9274f538c9fdf1ab8dc5ff46614f17fc939487cb5c9a386e29c9c0"
+  },
+  "failure": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/FOLLOWUP30-STOP-CHECKPOINT.json",
+    "sha256": "f0b2ac658393fa87e43da2587f4b8739688897397e9053c604517d2b5a31ee34"
+  },
+  "diagnostic": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+    "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da"
+  },
+  "completed205": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-source-map-v1/completed205.json",
+    "sha256": "6e09484d60f3c29a28357eaf7d557aed34cf98afcfdb360cde4814674168c2f7"
+  },
+  "remaining107": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-source-map-v1/remaining107.json",
+    "sha256": "55f0e9ef720b933030266b524211307f421ad6273dc779917b890e29ea5d3146"
+  },
+  "index_csv": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-source-map-v1/visit-index.csv",
+    "sha256": "828b330873561b191f1b9319121e6efd7412562ddb1559325f6f2b453005e61e"
+  },
+  "owner_native_source": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+    "sha256": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2"
+  },
+  "benchlib": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py",
+    "sha256": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c"
+  },
+  "boundary": {
+    "completed_original_indices": [
+      0,
+      204
+    ],
+    "failed_original_index": 204,
+    "pending_original_indices": [
+      205,
+      311
+    ],
+    "first_pending": "lazy-fc counterpart on ltl2dba_R_pb_12_pe_.ltl",
+    "split_pair_original_case_index": 102,
+    "timing_limit": "One planned pair spans the STOP/diagnostic/adjudication pause; do not claim all156pairs were temporally adjacent in one uninterrupted epoch. Its original armERROR is censored and cannot have a paired timing ratio."
+  },
+  "immutability": "No original plan/helper/record/raw/memory/log modified, no replacement observations created. New capture/continuation source is coder-owned and still needs review/release.",
+  "capture_contract": "Intercept the native module imported run_systemd_scope alias; call original(*args,**kwargs) unchanged in default full-string capture mode; persist RunResult.stdout/stderr after the timed call; return the identical result and invoke native.main(originalCLIargs). Do not patch caps or add route/deadline/phase/worker variables."
+}

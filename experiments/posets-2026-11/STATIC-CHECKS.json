@@ -1,0 +1,16 @@
+{
+  "scope": "Static exact-byte/JSON/inventory refresh; no workload/script reruns",
+  "prior_snapshot": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/package-final-apply-v3/before",
+  "historical_exact_copies_preserved": 121,
+  "new_exact_copies_verified_against_origins": 182,
+  "historical_origin_files_reread": false,
+  "historical_status_fields_preserved": true,
+  "all_packaged_JSON_parsed": true,
+  "new_allowlist": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/package-draft-v3/allowlist.json",
+  "new_allowlist_sha256": "9897a85e0a34a00d5b170cbfece0185b7b482a66e658d5b66a3f913167f5145a",
+  "archive_policy": "Existing approved phase-one archive preserved; only separately approved numerical archive copies; no archive creation/extraction",
+  "new_archive_copies": [
+    "default-rank/evidence/acacia/final-primary/default-native-evidence.tar.gz"
+  ],
+  "runtime_revalidation": "Not performed by package refresh"
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "requested_model_effort": "GPT-6.1 Sol xhigh",
+  "status": "Exact helperV2 STATIC correction approval: RANK-PROTOCOL-01 is closed at source level; no remaining static blocker found. Offline/runtime/pilot execution and measurement remain separately gated.",
+  "exact_inputs": {
+    "source-manifest.json": "1bed75101980b497a4e6da477424f3610589dd6026d53f45afd2456441180e75",
+    "v1-to-v2.patch": "190687c47a11ddc8e1c33bd11a5a9aebe2b868e9b4d7c7336809078d0b5ba28f",
+    "changes.patch": "21c43c9d5b6e6144c86e61c1323e46baea8dd331e31a3a9a46114aaa3ef571c9",
+    "rank_contract.py": "eaee95c1815edd91e6211d103fdbf166d823924601f545b3fb007a686b61d15a",
+    "test_posets_matrix.py": "3a3239b946c2aba5f69c5fefe9f9d64ff2f141dcd4270039b5e6e164325f007e",
+    "run-paired-replay.py": "b31cb7fbed2ecf30dad65c2afd296fe5173c9b4b90df7c2f5619c28e4de0dee3",
+    "run-paired-replay-stop-on-correctness.py": "18a0697f0247beb9811218677be2212821f24325776208ccb10f8bbfc927d5ea",
+    "README.md": "1b57d8a63639d4c6e828a6d88bd3e9642eab758e63e8c357a9c528eca46fff4f",
+    "v1-snapshot.json": "6d459fbfe8bca134761236db1a4dd15d84b7048db72f3a0904b16be7ea777392",
+    "original-sources.json": "bdad34b7803a79d09df166973a7376d817b304b6fc8a24564075e213fb12f7d9"
+  },
+  "preserved_v1": {
+    "manifest_sha256": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+    "patch_sha256": "535cb0a1187c84fae694e869f6e656ce5929c2ea1d97338ee78a488857a31937",
+    "prior_review": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/nbjorner-review/selected-rank-helper-static-audit.json",
+    "prior_review_sha256": "4be46bd3e697c3d256c2e3e9747593189cd4a40a05749585b0526643e93d3660",
+    "unchanged": true
+  },
+  "binding_checks": {
+    "inventory_original_dependency_hash_size_checks": 43,
+    "preserved_v1_lineage_entries_checked": 14,
+    "mismatches": [],
+    "approved_core_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+    "approved_core_patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+    "authority_literals_match_approved_core": true
+  },
+  "finding_closure": {
+    "id": "RANK-PROTOCOL-01",
+    "origin": "This reviewer originated the effective-argv/seed finding in preserved unexecuted helperV1; coder authored the V2 fix.",
+    "canonical_schema": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/rank_contract.py",
+      "lines": "103-130",
+      "assessment": "Consumes the entire argument tail. Every required full-valued option or exact flag occurs once; equals-form options, abbreviations, duplicate flags/values, unknown options, terminator and extra positional tokens are rejected. Valued arguments cannot hide another option. Fixed caps/backend/rounds/repetitions/memory treatment are checked on the parsed values."
+    },
+    "plan_binding": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/rank_contract.py",
+      "lines": "147-183",
+      "assessment": "check_plan_run compares the returned effective values for map/source/build/trace/output/seed against the actual plan/run, rather than a second literal index lookup. Both source roles and maps remain validated before invocation. The appended --seed=7 witness cannot pass this schema."
+    },
+    "actual_seed": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/rank_contract.py",
+      "lines": "133-137",
+      "assessment": "Requires exact Python int for actual JSON report seed and declared run seed, with exact equality; bool,float,string,null,missing and wrong integer values cannot satisfy it."
+    },
+    "controller_calls": "Both paired controllers add precisely the common reported-seed check to their rank-inventory post-report branch. Removing that one added line yields each original helperV1 file exactly. Existing source/caps/backend checks and artifact/correctness stopping remain."
+  },
+  "negative_test_source_assessment": [
+    "Canonical command fixture first accepts the valid command, then tests equal-form/abbreviated/duplicate seed and source/map/build/trace/output overrides, protocol equals forms, wrong backend, abbreviated/duplicate flags and -- terminator. These directly address the actual V1 witness and equivalent argument forms.",
+    "Paired contract negatives write a current invocation spec and refresh its binding, then exercise effective overrides and both source-role/authority sides. An internally current outer hash cannot enroll the hidden override.",
+    "Reported-seed cases first accept the correct integer, serialize/read wrong integer,float,bool,null,string values, and also test missing seed. They exercise the common strict guard; controller call sites are inspected statically, not executed by these fixtures.",
+    "Paired-writer fixture first accepts two matching selected source/compile/link/library contexts using the real normalization and source validator with explicit synthetic authority. A selected-link flag or runtime-library change then refreshes all affected child/outer bindings and must reach the final contexts-differ guard. This is meaningful mismatch coverage, not a stale-hash rejection.",
+    "All these are unexecuted fixture sources. Synthetic compiler/ELF/library observations are explicitly identified and are not actual build, ELF, ABI, source-pin or performance evidence."
+  ],
+  "retained_boundaries": {
+    "whole_files_unchanged_from_v1": [
+      "freeze_replay.py",
+      "posets-matrix.py",
+      "prepare-paired-replay.py",
+      "prepare-per-backend-build.py",
+      "run-per-backend-build.py",
+      "summarize-paired-replay.py",
+      "original-sources.json"
+    ],
+    "rank_guard_function_bodies_unchanged": [
+      "backends",
+      "check_cells",
+      "source_fields",
+      "validate_source",
+      "clean_flags"
+    ],
+    "assessment": "Original full48 inventory/default selector-overlay path, actual singleton ELF/Vector ABI/native=max/compiler/link/Ninja/invocation/library checks, cc-equivalent baseline proof, approved exact-source net-delta policy, normalization, replay/timers/qualification/order/caps/censors and stop behavior retain the prior reviewed implementation. Authority constant changes enroll only independently approved coreV3; no source-check relaxation.",
+    "core_authority": "Manifest93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02 and patch889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d match the separately reviewed source freeze. Root reports actual committed source30e66853832d98bcfaada296d892157b95a8150d; helpers still require the actual clean declared HEAD and exact approved source bytes. This is not a fabricated measurement revision or an ELF claim.",
+    "source_lineage": "V1/original nine snapshots and four shared dependencies retain their declared hashes. All new changes stay in the separate tools-v2 directory; original Acacia/nested WIP, frozen phase-one code and V1 were not edited in this review."
+  },
+  "remaining_actionable_static_blockers": [],
+  "pending": [
+    "Explicit runtime/offline host-lane release; no execution permission is implied by this review.",
+    "Run exact frozen offline integrity/negative/legacy-parity checks and configured lint, retaining failures/new attempts.",
+    "Generate real matched clean anchors/ELFs/maps and execute actual loader/semantic pilots with source/compiler/ABI/invocation bindings before any measurement.",
+    "CI18 remains pending for core; local owned-file22 results are not full CI. Any source/helper correction requires a new reviewed freeze and authority binding."
+  ],
+  "claim_limits": [
+    "No helper or test was imported, syntax-parsed/compiled, collected, linted or executed. Only bounded saved-source/diff/manifest text and hashes were read/evaluated, and reviewer evidence written.",
+    "Source-level fix validation is not a passed runtime regression or real ELF/pilot proof.",
+    "No performance/default-switch conclusion or permission to change caps/order/seed/censor policy follows from helper approval. Seen TRAIN/heldout inputs remain seen."
+  ],
+  "attribution": "Independent correction validation by this reviewer; implementation and drafted tests by coder. No new defect discovery beyond the earlier RANK-PROTOCOL-01 finding."
+}

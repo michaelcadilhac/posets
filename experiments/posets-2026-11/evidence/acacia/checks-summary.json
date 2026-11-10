@@ -1,0 +1,1597 @@
+{
+  "Boolean_limit": "Tiny all-Boolean frontiers do not exercise lazy indexed/FC paths; x_and_bitset supplementary to shipping plain SIMD.",
+  "CLI_version_checks_passed": 15,
+  "NO_VERBOSE_compile_bound": true,
+  "all_original9_type_evidence_preserved": true,
+  "arms_checked": [
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/src/acacia-bonsai",
+      "binary_sha256_before_remaining_checks": "49cf6cc1c94c9298936e8ae669f7b710a38dfd32975cbc7a332dfffbbb5f42b6",
+      "expected_downset": null,
+      "label": "anchor-e167",
+      "posets_revision": "e167f43646b880c69046bab7110dbb327686c024"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai",
+      "binary_sha256_before_remaining_checks": "5cf07667e7948cff3c623f60f79597dc107ef2a7ce7bce00cc3aab9bc6362872",
+      "expected_downset": "rank_bucketed_vector_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "candidate-default",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-kd",
+      "binary_sha256_before_remaining_checks": "68082182dc21a8e4b72704411f595108991635e558e65d6360d07a342be09124",
+      "expected_downset": "kdtree_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "kd",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-kd-narrow",
+      "binary_sha256_before_remaining_checks": "bdb2c9f1f6d5752b059d86634e3a03bad82ea98125114fae29f098de4ed74afb",
+      "expected_downset": "kdtree_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 1,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "kd-narrow",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-trie",
+      "binary_sha256_before_remaining_checks": "23017d4b4660fb0e6d3447099ecebc00354a7aecb63ec48ac1af466f76a652a4",
+      "expected_downset": "sharingtrie_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "trie",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-trie-compact",
+      "binary_sha256_before_remaining_checks": "ab73c688f20f5e10d81e9d3e0c98dc3bd8ca70a6589e8db0a05bd9904c0b879d",
+      "expected_downset": "sharingtrie_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 1
+      },
+      "label": "trie-compact",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-comp",
+      "binary_sha256_before_remaining_checks": "be77f3992790bd88ff38fd2a476db290f063fc4c94fd06ee74fb8699595fbcc7",
+      "expected_downset": "comptrie_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "comp",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-comp-simd",
+      "binary_sha256_before_remaining_checks": "8a47f073044b2e50421f5aa72ba227be7cbcce7b64c786aec3f65ea7c4602fe6",
+      "expected_downset": "comptrie_backed",
+      "expected_metadata": {
+        "comptrie_simd": 1,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "comp-simd",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-block8",
+      "binary_sha256_before_remaining_checks": "13061beb330957471df560dd10c2a994962c35ded40cb2857c72f8069a5766d0",
+      "expected_downset": "block_sharingtrie_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "block8",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-block8-uncached",
+      "binary_sha256_before_remaining_checks": "f10c9c2c5ea783541e35dbe374f1363fef766f78d8ffda19c004e8a104cc6a01",
+      "expected_downset": "block_sharingtrie_b8_uncached",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "block8-uncached",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-block16",
+      "binary_sha256_before_remaining_checks": "e56ee582c80944c20d8ea0d0e749043f63e9977c4e92168c25686abeee00bb8c",
+      "expected_downset": "block_sharingtrie_b16",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "block16",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-lazy-fc",
+      "binary_sha256_before_remaining_checks": "5dc3a7b6e4cbfb3616313a233df929e259e0018fc305870e6ec86b3280899c31",
+      "expected_downset": "lazy_kdtree_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "lazy-fc",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-lazy-search",
+      "binary_sha256_before_remaining_checks": "3f910078a7139abef067696c0e0ea87f45c1bea7c411f427e66e9745ced6aa0e",
+      "expected_downset": "lazy_kdtree_uncascaded",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "lazy-search",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-sharingtree",
+      "binary_sha256_before_remaining_checks": "6a899cc99735e60d7e5479403e44d0372b6db3b661c09ad6c9c5a9dbeafa0bcd",
+      "expected_downset": "sharingtree_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "sharingtree",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    },
+    {
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/src/acacia-bonsai-simple-sharingtree",
+      "binary_sha256_before_remaining_checks": "dba009dce59d9f19bf1fa4f4f1f97694175681edff4c45ead28b06aa859cb762",
+      "expected_downset": "simple_sharingtree_backed",
+      "expected_metadata": {
+        "comptrie_simd": 0,
+        "kd_narrow": 0,
+        "simd_lanes": 16,
+        "trie_compact": 0
+      },
+      "label": "simple-sharingtree",
+      "posets_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    }
+  ],
+  "boolean_bindings": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/execution-bindings.json",
+    "sha256": "f3381206e3aea5cf1ead9c192c9baca0ee20d091b80950b1451803b9152d52fa"
+  },
+  "boolean_dimension_cases": 112,
+  "boolean_variant_vector_pass_lines": 28,
+  "cli_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-check-plan.json",
+    "sha256": "fd6ac083a2e0f4149dcd46e30ea9c7510b2ce6f561f9fdcc7ae921a329e90756"
+  },
+  "completed_records_reused_without_rerun": 13,
+  "corrected_metadata_expectation_incident": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/version-expectation-incident.json",
+    "sha256": "1326c8bdc98cd6d74ff25e384f942a104bf723c5060fff0c74b576d80052f285"
+  },
+  "exact_version_bindings": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/exact-version-bindings.json",
+    "sha256": "511f619be2e3ac94946433712965011703bdb9db41771ac16295612b85ea20d0"
+  },
+  "forced_R_proofs_passed": 15,
+  "forced_UR_proofs_passed": 15,
+  "integration_source_patch_unchanged_since_preflight": true,
+  "new_remaining_calls_executed": 41,
+  "official_freeze_and_campaign_not_started": true,
+  "scope": "Final Acacia build/check gates only; no official binary/arms freeze or primary campaign.",
+  "stages": [
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-baseline-record.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "memory_peak_bytes": 1054593024,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-baseline-record.json",
+        "sha256": "c70b9cab87d6f6818ee19c2668da79ce90bc7f6ef8f77432d9546471bcaca8c3"
+      },
+      "returncode": 0,
+      "seconds": 9.58953906595707,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-baseline-spec.json",
+        "sha256": "6d1cdc184888485c5ac0dcb0ab8cdd0b3a0366d6b5b7f11d1d0b970da100db8d"
+      },
+      "stage": "Boolean baseline build",
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-baseline-record.log",
+        "sha256": "4e639250deebb0d752880772b5944dafe9a27021a19fbd7893caf359c8b1bac6"
+      },
+      "memory_peak_bytes": 897024,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-baseline-record.json",
+        "sha256": "76bed60266b81c52ad00e6a9d34b909a3cf7b77821b12bda9ec50856d3975da5"
+      },
+      "returncode": 0,
+      "seconds": 0.11432240903377533,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-baseline-spec.json",
+        "sha256": "00e7620de43e0c83b16aa43cde3b2fb45853350ae52cd0c6591a0aa4612cd7f3"
+      },
+      "stage": "Boolean baseline run",
+      "stderr_bytes": 0,
+      "stdout_bytes": 27446,
+      "validated_dimension_cases": 88,
+      "validated_variant_vector_passes": 22
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-kd-narrow-record.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "memory_peak_bytes": 535339008,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-kd-narrow-record.json",
+        "sha256": "3df198a3d3afb99058611c8ab7893e6a7356a8e066d05f6f12786f63a671d649"
+      },
+      "returncode": 0,
+      "seconds": 2.7719630950596184,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-kd-narrow-spec.json",
+        "sha256": "944175c2c836c128abc015a7665a2c75e8c1ee30112d515a388b17c6d5f25418"
+      },
+      "stage": "Boolean kd-narrow build",
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-kd-narrow-record.log",
+        "sha256": "287711da343a216a93760301c434b19fc95352c3b4ecc14b6cd29f922f704e4a"
+      },
+      "memory_peak_bytes": 667648,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-kd-narrow-record.json",
+        "sha256": "6fa1c68714b6cdff4f9aa8532727eab002bc4b54a5b93a304964725e32c2a364"
+      },
+      "returncode": 0,
+      "seconds": 0.11472463211975992,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-kd-narrow-spec.json",
+        "sha256": "6d9f6de88037f30872675f1fb880f87f6bff1cef6f727abf670b321e9d5b1627"
+      },
+      "stage": "Boolean kd-narrow run",
+      "stderr_bytes": 0,
+      "stdout_bytes": 218,
+      "validated_dimension_cases": 8,
+      "validated_variant_vector_passes": 2
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-trie-compact-record.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "memory_peak_bytes": 588443648,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-trie-compact-record.json",
+        "sha256": "05d95e0e2f8d6cfe33da4a7112d4d2d3dfa139b2d1808a0dbdd9ecf02b125788"
+      },
+      "returncode": 0,
+      "seconds": 3.272638716036454,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-trie-compact-spec.json",
+        "sha256": "bc66668c2de4b2dab18666fe37318ae4fc9c56a4a263e337036bc112b0518988"
+      },
+      "stage": "Boolean trie-compact build",
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-trie-compact-record.log",
+        "sha256": "2f7a69743bb3c4cc385660aafe2a44d0bb2040f1ddafc46dfaf5269e4e118bf5"
+      },
+      "memory_peak_bytes": 557056,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-trie-compact-record.json",
+        "sha256": "bbe8b814b0e338652f53171c15fae9669c8e19fe4e189ece8287b166d38de971"
+      },
+      "returncode": 0,
+      "seconds": 0.11455781199038029,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-trie-compact-spec.json",
+        "sha256": "b669e3640bddcf18c0d1a0d5e8339f4e061077ba6a0feccfeb84aeea013cb23a"
+      },
+      "stage": "Boolean trie-compact run",
+      "stderr_bytes": 0,
+      "stdout_bytes": 224,
+      "validated_dimension_cases": 8,
+      "validated_variant_vector_passes": 2
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-comp-simd-record.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "memory_peak_bytes": 569024512,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-comp-simd-record.json",
+        "sha256": "09c8408087c9e07bfdd186463eea8c00b1446bd6a8d96cf83a699deb52b87c17"
+      },
+      "returncode": 0,
+      "seconds": 3.1725905081257224,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/build-comp-simd-spec.json",
+        "sha256": "fb22ab2b5f17b2d7d3806aafbb332bdaf8ae3ef00cca5ec97a2fdbcf6619759f"
+      },
+      "stage": "Boolean comp-simd build",
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-comp-simd-record.log",
+        "sha256": "d67e54f44a530f84ef1ff02ed1e372c975df5d569c54cf6ad041f87be319ac7c"
+      },
+      "memory_peak_bytes": 581632,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-comp-simd-record.json",
+        "sha256": "c2e5bebf771e0b494781c003455ad6f19393e03179432a978e3db93f2eb6ac01"
+      },
+      "returncode": 0,
+      "seconds": 0.11478414991870522,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/final-acacia-readiness/run-comp-simd-spec.json",
+        "sha256": "174e2fc6628f4b26e4711ef6939989b905b5e3c0235e1105c44133fd221b51e9"
+      },
+      "stage": "Boolean comp-simd run",
+      "stderr_bytes": 0,
+      "stdout_bytes": 218,
+      "validated_dimension_cases": 8,
+      "validated_variant_vector_passes": 2
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/version-suite-record.log",
+        "sha256": "0eba52bf3189962a1c2a2b149f0423abf730750c3ebc0740663ea06ed95b2a5f"
+      },
+      "memory_peak_bytes": 154107904,
+      "meson_version_test_passed": true,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/version-suite-record.json",
+        "sha256": "a4432a5486febe050479eeb6fa6e5a52f21c9b613edea74029591a1cf4cfea74"
+      },
+      "returncode": 0,
+      "seconds": 0.5152911709155887,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/version-suite-spec.json",
+        "sha256": "69416e2c14713306595bb05f8cb57efb6ec8201da97097e4f24dac5ef2683740"
+      },
+      "stage": "Meson version-output suite",
+      "stderr_bytes": 0,
+      "stdout_bytes": 269
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-version-record.log",
+        "sha256": "7d84bf8dd31ca778a1791ed52bddfb2297c5a046d3424207d889a175ee725a08"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/anchor-acacia/build-anchor/acacia_version.hh",
+        "sha256": "d20ea2ddcb75630d835f1a3d19b25016184a12947433d3b214f9337ed392ab86"
+      },
+      "memory_peak_bytes": 552960,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-version-record.json",
+        "sha256": "969a636f3d79ed68cec24ca4ac3d13e0b7713db19202008df61e673d6b586d56"
+      },
+      "returncode": 2,
+      "seconds": 0.11458102497272193,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-version-spec.json",
+        "sha256": "7202026c508e11ed480e82685544fd52abd5e37d15eae68c4c1f981bc53ce49c"
+      },
+      "stage": "anchor-e167 version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 58,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11046912,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-real-record.json",
+        "sha256": "cdd7ae14bf5750e921cf76c4becd1d7a3e4490cb7dfc8bf655e8641bb4628504"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11461214302107692,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-real-spec.json",
+        "sha256": "9a2b2649d13d106aa2fbd1b13fb7557649c5877c3ac5d422df9d0b27ba682b21"
+      },
+      "stage": "anchor-e167 real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11325440,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-unreal-record.json",
+        "sha256": "cb52fe9376183870a773832f6fee5df3921d0ee031e8bed64967184f306272b0"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11459339712746441,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/anchor-e167-unreal-spec.json",
+        "sha256": "6c6e22f2ffe3427b4af280462759b2b8039c27dcc27a9f2593e323a58a3c6e4f"
+      },
+      "stage": "anchor-e167 unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-version-record.log",
+        "sha256": "c88c4d648b3acb4db0582d3d9f5f0f068b68d457f2ce3c831c2ebf5d9b75857d"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 602112,
+      "preserved_record_reused_without_rerun": true,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-version-record.json",
+        "sha256": "515eac1ee7cece68091a70ae2dc5f86e41e81efd2e8aebc4a54f81ccef0e08f8"
+      },
+      "returncode": 2,
+      "seconds": 0.11475985683500767,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-version-spec.json",
+        "sha256": "8b9ed1879db2fed1bc740b63fdd3440bf9ddad965610fe1692ed39e28a4d017e"
+      },
+      "stage": "candidate-default version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 193,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11059200,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-real-record.json",
+        "sha256": "98019448cd7d182f2c8bd02622f76db9eb8c275131ee8a66b03493902c9f0dcb"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11462605884298682,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-real-spec.json",
+        "sha256": "d7ff35742079d552d0e24a01a20c1f52afd44d8ea66e1941b8541e91de786834"
+      },
+      "stage": "candidate-default real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11341824,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-unreal-record.json",
+        "sha256": "89b960f1501b377b3dca534378d99b043f977db526ec5dcf0c9167ac61deeab5"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11445233994163573,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/candidate-default-unreal-spec.json",
+        "sha256": "ef4745a8e0c5ec0627e24195a39aead38d27b591b502f309bdea2d4ba0ccfbe3"
+      },
+      "stage": "candidate-default unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-version-record.log",
+        "sha256": "6d354236dce7991447ad04755db4d19604f333ead1087f6bab9a037df78380bd"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 581632,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-version-record.json",
+        "sha256": "7360dd5a1998f6761e82d494b9de4ecaa05062cf23111d3d607238c9166580b6"
+      },
+      "returncode": 2,
+      "seconds": 0.11470067594200373,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-version-spec.json",
+        "sha256": "11f23be0ea1a7794ddd799243d5113da626053fff9e2eb0b702eb39d679a8dce"
+      },
+      "stage": "kd version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 164,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11055104,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-real-record.json",
+        "sha256": "eabf7316a599ef85ac6352d30898b0a28c815e1c79f68ca32d54eec5df12da38"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11458108690567315,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-real-spec.json",
+        "sha256": "3a024348a2444b474d15901317676deee139f4ca5ac0d5fc5aaefebbb2179ab4"
+      },
+      "stage": "kd real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11333632,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-unreal-record.json",
+        "sha256": "7794509710f13437515e8b72968048888df30c56148c54efef01acb0b3a359be"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11482997401617467,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-unreal-spec.json",
+        "sha256": "17d75bf6ca19f41e73a11a690788880d462e003f1a4acd70749324af89299fca"
+      },
+      "stage": "kd unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-version-record.log",
+        "sha256": "c4c15cf08c4bde40f89a83884a72381ad1e21bd81c9a47d23113cf2f1bc8da19"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 585728,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-version-record.json",
+        "sha256": "a7d7f6b2f2baf6157ada27e6b80b7c798a13817003e1e6cf0341ed2c09248a7b"
+      },
+      "returncode": 2,
+      "seconds": 0.11470152088440955,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-version-spec.json",
+        "sha256": "9b43ad539e814857608176f2f026f335bd2905b0e6d5c72831cdb389b3cdeea0"
+      },
+      "stage": "kd-narrow version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 171,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11059200,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-real-record.json",
+        "sha256": "eddf66da565f870a64b92bfa080d0d2770eeb2639a7863a00eaefe7d57d8b775"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11437761411070824,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-real-spec.json",
+        "sha256": "64c90a1743f9827588bdfacd3cfe718da41a07c9334948b62bb2bb6eb135664b"
+      },
+      "stage": "kd-narrow real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11309056,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-unreal-record.json",
+        "sha256": "657f548d31557ece13512b0d6b307082d0ede812ed1c8343c4206d7750c42ba3"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11468537198379636,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/kd-narrow-unreal-spec.json",
+        "sha256": "fc09c0bcb1845c2368ab7b6aefe8213c2eb64e3a5dbe0bc03481f9c485e3531e"
+      },
+      "stage": "kd-narrow unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-version-record.log",
+        "sha256": "4f7a88ea372c2aadd545d5344bf22e89d3b09b735dabec3c52e9d4655e158235"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 565248,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-version-record.json",
+        "sha256": "9996cf0a572d7e8c0a0759cd83d92d437fcac20a65aeb1b59e58767909c02603"
+      },
+      "returncode": 2,
+      "seconds": 0.11467993212863803,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-version-spec.json",
+        "sha256": "49e8c2123faefac7f5aeb3265463e6904116f9e34d72c151df2747a1ee69d51f"
+      },
+      "stage": "trie version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 171,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11071488,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-real-record.json",
+        "sha256": "91035643ab41892a28cc57788957381c52f9175f49adf46e868c5d94e2bc124a"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.114665542030707,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-real-spec.json",
+        "sha256": "69175a50861058d6327daba967259ce9886da92c9ff5639f070f6d4dc34a5bd1"
+      },
+      "stage": "trie real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11329536,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-unreal-record.json",
+        "sha256": "eab6db400f19dbd4dc9154171756a6110126a7457af330e85ae0c137aedb63dd"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11459880811162293,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-unreal-spec.json",
+        "sha256": "ca9f644133affb0ecf673c49d4d077e5f0c10bdbfbb212f46e092a5720eee7c2"
+      },
+      "stage": "trie unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-version-record.log",
+        "sha256": "efd34c3dd9e93ea77778418e5a8c3ad9cd6fb91dc70cc8042ad47d0dc0416f06"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 577536,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-version-record.json",
+        "sha256": "ce5029111629f1c485e269633cc29d205af5faa281d010cfb915fafe68b747cb"
+      },
+      "returncode": 2,
+      "seconds": 0.11451462912373245,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-version-spec.json",
+        "sha256": "59973c736bb2f73ce037da14f9cff9184e6eac814bcf6080399ed62585ad0466"
+      },
+      "stage": "trie-compact version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 179,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11046912,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-real-record.json",
+        "sha256": "9196d975ab760cd9a17928ac5a577552778968c1a972a4f182fc76580a7fc4df"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.1145580520387739,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-real-spec.json",
+        "sha256": "b32ac2cb8270496a8d7e34eff6fe189dbb273a3341e19109f489496a77ba3ea5"
+      },
+      "stage": "trie-compact real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11309056,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-unreal-record.json",
+        "sha256": "d82d20928d14a8dffca42d035c2faaa99d2f68f16ae3a880a64c306c43cd7539"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11462096800096333,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/trie-compact-unreal-spec.json",
+        "sha256": "a41abdbc11a6e5e36d726cb88675ce21b1131c6a170dbb8670f9d9d0863e4966"
+      },
+      "stage": "trie-compact unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-version-record.log",
+        "sha256": "74fd077c495628740ca8539eead9ab2b5a277aa26e8cb7bedb99e69f99168bb1"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 557056,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-version-record.json",
+        "sha256": "6a5c454394afe6a489a51775b2f8c0adf435f56df02ffaa6922ddaa663633c98"
+      },
+      "returncode": 2,
+      "seconds": 0.11470979521982372,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-version-spec.json",
+        "sha256": "40bfb46166c1a76a0773046536427bb22f4b6deae60ab4b08ef0306921ad14bb"
+      },
+      "stage": "comp version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 168,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11059200,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-real-record.json",
+        "sha256": "9e060f3bd28db0da3eb6d179abc8e96d760493af7481253801b32d38a47cac5e"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11467018607072532,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-real-spec.json",
+        "sha256": "f50524a707282e6837d83d6acf33810b8614f5fdb4a57d1fa475d5870a84592b"
+      },
+      "stage": "comp real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11341824,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-unreal-record.json",
+        "sha256": "754ec113970f7ede518cff754a12e3094196b0df4d41a631ad64eb80399b6eb6"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11472537484951317,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-unreal-spec.json",
+        "sha256": "b817462b40bc598d9839510dbd577fcac11ff8cbf5fe539bd8e25cfb82bbd84e"
+      },
+      "stage": "comp unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-version-record.log",
+        "sha256": "81f10d04b927f0000429a4fff69523778f720d5a2e8b2b0d79499fb1be26e5aa"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 573440,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-version-record.json",
+        "sha256": "40d9eaccd41672fc58d798defd2ea716a87915f30abf170ed1267869f8e0aede"
+      },
+      "returncode": 2,
+      "seconds": 0.11466838396154344,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-version-spec.json",
+        "sha256": "4b1c7c47fa8c630de92d89362edfb5a5609eb4078c9b8ca86f90012e526435c0"
+      },
+      "stage": "comp-simd version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 173,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11046912,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-real-record.json",
+        "sha256": "4fb8992e062a3cff7236cf0df410e2cf04433f96bdf72076a1cb8217a6f82714"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11470620497129858,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-real-spec.json",
+        "sha256": "230676394d9d565245641143db0c0740012b2a23f6cce6e260f5ec761f95a8f4"
+      },
+      "stage": "comp-simd real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11337728,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-unreal-record.json",
+        "sha256": "d7f8b2047141d196e7f796b53c7be4d582d486350ea588747efc73e19fc1a3f8"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11449509696103632,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/comp-simd-unreal-spec.json",
+        "sha256": "2f4e97084ec91d00267f99efcecadaff07d83ccf336109123affbed02d04fbf4"
+      },
+      "stage": "comp-simd unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-version-record.log",
+        "sha256": "cdbc3ca599fcec1841c79162306c182062e9367ebc509bbed2ceda6b7f398b88"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 589824,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-version-record.json",
+        "sha256": "97742d5ac0e36cad808b730ba2357ca08465382986fcf8daf86d31e228417c5a"
+      },
+      "returncode": 2,
+      "seconds": 0.11460825987160206,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-version-spec.json",
+        "sha256": "dddcacee211ec775197019fc41cc289ef4621b761413efab59330a4de34af48b"
+      },
+      "stage": "block8 version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 179,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11071488,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-real-record.json",
+        "sha256": "62aa10b91ed7f5b850ec4fa9237a827eca7d33c889cc8a354381bb7b5044d95f"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11438543885014951,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-real-spec.json",
+        "sha256": "349fd08ce5ade99cc040c34d3820b18fe58b3b63031d072f4a8436933696ca3a"
+      },
+      "stage": "block8 real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11333632,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-unreal-record.json",
+        "sha256": "24a8f6b3755742515cd55621d8aaf2278dd867d76b70ebc7c4d7728a299ad6aa"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11456809705123305,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-unreal-spec.json",
+        "sha256": "aebc8755ec5308aa9accc13835b2bd0e457706c3b3164e8ab14bc9248b7fe2ee"
+      },
+      "stage": "block8 unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-version-record.log",
+        "sha256": "4e2dd53890b6b5697374e5c30fe0b4bce11684ad7f9897f4631cc0a819d0d27e"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 577536,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-version-record.json",
+        "sha256": "af1603db125582a5721861fd7e0188fafa41400c5eeb144ac53da618ace059e7"
+      },
+      "returncode": 2,
+      "seconds": 0.11460845521651208,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-version-spec.json",
+        "sha256": "f0487242a24c1343df172adf36a2e61b1bf28c90eaee8846553832aa2cfd98a9"
+      },
+      "stage": "block8-uncached version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 193,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11071488,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-real-record.json",
+        "sha256": "07bfb1abee9a24af6b1d35501e04e7761ccb1d251df23f241862be39697eee9b"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11455468297936022,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-real-spec.json",
+        "sha256": "e0ea479139297dc8b48ae44093e773d63cbcb89e5198dbe60af29ce7d5fc65d3"
+      },
+      "stage": "block8-uncached real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11329536,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-unreal-record.json",
+        "sha256": "155c3598105dbab9976ab953430421103dd3bc5ad1caeca957ee0fdba447093e"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11457926011644304,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block8-uncached-unreal-spec.json",
+        "sha256": "b3606433bed1ddde525075f99f05005d3dc13fc662ea6a82dbe4ece6077fc046"
+      },
+      "stage": "block8-uncached unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-version-record.log",
+        "sha256": "cecb25cff1376a012442ad4f65d78b87b7e7a9044a9b54bff7b90c22518241f6"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 593920,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-version-record.json",
+        "sha256": "cc84f17b76ff11b55546779a409d27d4232b40f1418f3ffb59b4c836ef9f81d0"
+      },
+      "returncode": 2,
+      "seconds": 0.11460677487775683,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-version-spec.json",
+        "sha256": "0545e382e017e4baa3fb0e7f00933398b15a68fe10d65285972d60737a4a7b54"
+      },
+      "stage": "block16 version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 177,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11075584,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-real-record.json",
+        "sha256": "05f2b92f204e4a6ac1c81897d5d20d4e2f69114b2f279bc389a072d30ed3c5e7"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11471259803511202,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-real-spec.json",
+        "sha256": "f56499a28fb5863272694a730228b7912bcd1b47a57c45056dac76e741d55a77"
+      },
+      "stage": "block16 real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11313152,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-unreal-record.json",
+        "sha256": "f89ca87b962614c185c5ad2396781b360b4da1064067cb2cff78e3c3ec91ad82"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11455574096180499,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/block16-unreal-spec.json",
+        "sha256": "2dbae1b0042bc5487dcf90c50b34976c2994f53cee7d5bc822aae0498c7f73c0"
+      },
+      "stage": "block16 unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-version-record.log",
+        "sha256": "c8b46efc49c38f295d0a5eeca6d69f8e017cf5a0f5fa3bdb7d6c7d0beaf5628e"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 581632,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-version-record.json",
+        "sha256": "56b9d78d530d642b38b7b24638558e26e5b19790e0c6840a585c9a90f2cd601e"
+      },
+      "returncode": 2,
+      "seconds": 0.11457772506400943,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-version-spec.json",
+        "sha256": "05edb134350ef4c41b701b4136e3b667f4516f02211d297973bd437c3d45542f"
+      },
+      "stage": "lazy-fc version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 174,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11071488,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-real-record.json",
+        "sha256": "2a0c04e74ad2841c3d10233f998dac98e50f00f107fca00ed9d50a7f94726a1e"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11462440202012658,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-real-spec.json",
+        "sha256": "54006b5feaee62fbdcafd81f90d3a9623a0656777a70e633d89909882b335bc2"
+      },
+      "stage": "lazy-fc real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11309056,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-unreal-record.json",
+        "sha256": "1c22db5d2023b863346d2a53b05c65c58023281e3af2abad9117e7bf423f1733"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11457932996563613,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-fc-unreal-spec.json",
+        "sha256": "151581426e01dbb85c03784e22b6d48b38f90fe1a918bc1f24a1dfd7ab7322ab"
+      },
+      "stage": "lazy-fc unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-version-record.log",
+        "sha256": "43e8efdc86bb6ef6b4ba30947528df5d0a6d076eb053d129c9a06c0a11275164"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 569344,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-version-record.json",
+        "sha256": "621391e3fecb2f1a1afe6e7ebc3bbeb238f5353b1be47a12f11bea5a28afe6f2"
+      },
+      "returncode": 2,
+      "seconds": 0.11470264103263617,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-version-spec.json",
+        "sha256": "37558d83414a81e564cfdd6cbea9e9486953c5538b689f4987b329123874336d"
+      },
+      "stage": "lazy-search version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 182,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11063296,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-real-record.json",
+        "sha256": "4eca28dda5f26ab10ab9eb3f3bb808031e1cd4b5cd212c129d6704948e238ed3"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11456388188526034,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-real-spec.json",
+        "sha256": "394ea3fbd9894f65ba0636967933b4c8b450b3402fa2bc16c9c1836458d8d12f"
+      },
+      "stage": "lazy-search real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11350016,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-unreal-record.json",
+        "sha256": "23da6279ea0cc85b6be306aaa7a13b2461e5fca6a0eb15d8718ba63ecfde01f9"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11452261405065656,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/lazy-search-unreal-spec.json",
+        "sha256": "a58cf57204d5e39bf5fea011be7aed6f9e9c902ebf7b89ceb3e09468a5210147"
+      },
+      "stage": "lazy-search unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-version-record.log",
+        "sha256": "b26d3f6562b0ea402807f352929c7c79184e712d679218f961b082dbfb907679"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 577536,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-version-record.json",
+        "sha256": "c78c4b60f6b7613e4286ced5d3fd066ed9108e30bf20aec4b3aace41ef232ffe"
+      },
+      "returncode": 2,
+      "seconds": 0.11466919397935271,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-version-spec.json",
+        "sha256": "1b4a1c679a4db4873d40a8d35a6b3317a0470882f59338571bce04b13d418509"
+      },
+      "stage": "sharingtree version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 178,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11067392,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-real-record.json",
+        "sha256": "7e52866bf9968aa1056dfd6cb77c0c914a3dfa8004ae0b5431e0516673bc9018"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11471234704367816,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-real-spec.json",
+        "sha256": "d1855217962413a0c54f62a6fc4d1e588988fe7e005ef027b1d3bcf177af0aee"
+      },
+      "stage": "sharingtree real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11333632,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-unreal-record.json",
+        "sha256": "8877dcf01db6c4b65e8b78a87e2bdd8608d1b3dd18ba319c403e7cf8b2995bee"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11475339299067855,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/sharingtree-unreal-spec.json",
+        "sha256": "4c6537e355379382e2d5da21ee1a5d16f945df1edb9a54248a7b958f7d240690"
+      },
+      "stage": "sharingtree unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-version-record.log",
+        "sha256": "ac3ebf5899a078fe18b83a0beaa63f0ab219a1cafd4c4c1699bef769779b618b"
+      },
+      "generated_version_header": {
+        "exact_version": "86dd487-dirty",
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/build-posets/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "memory_peak_bytes": 557056,
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-version-record.json",
+        "sha256": "d3e30ab7b5473d45e25be07df6485e897fc49cc3b6c69ee6fcab3314bc642c60"
+      },
+      "returncode": 2,
+      "seconds": 0.11461277701891959,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-version-spec.json",
+        "sha256": "6322a23ae6d7933031bb746ad2360a244477eb22798cc5e0b24591d869ca9548"
+      },
+      "stage": "simple-sharingtree version",
+      "stderr_bytes": 0,
+      "stdout_bytes": 192,
+      "validated_metadata": true
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-real-record.log",
+        "sha256": "1a5bd52325bfeaa7404c329f6b83990470e3280c7b72973056c2781599e608e7"
+      },
+      "memory_peak_bytes": 11059200,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-real-record.json",
+        "sha256": "447f48e40df0bcb5adf2f682d7358bcb4775db0e0f04ca37283f9dfb2f0d8955"
+      },
+      "returncode": 0,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11470615305006504,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-real-spec.json",
+        "sha256": "9bbfc31891f87503aa374fc7f80b4e53967e171c161486ab3adabe014f37f9c4"
+      },
+      "stage": "simple-sharingtree real",
+      "stderr_bytes": 0,
+      "stdout_bytes": 11,
+      "validated_verdict": "REALIZABLE",
+      "verbose_backend_trace_observed": false
+    },
+    {
+      "combined_stdout_stderr_log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-unreal-record.log",
+        "sha256": "5ee318b1a0e80d9d254bba5b0c967cb96388ef86989fb91d9b5b05539133bc8a"
+      },
+      "memory_peak_bytes": 11345920,
+      "nonverdict_log_lines": [],
+      "preserved_record_reused_without_rerun": false,
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-unreal-record.json",
+        "sha256": "8d452a88958c06c9e0028059213933a8ebc22293987d6b82a5542f9d638bd2b6"
+      },
+      "returncode": 1,
+      "route_evidence": "Forced CLI route request plus source/type/configuration binding and actual verdict; not an observed verbose backend execution trace.",
+      "seconds": 0.11465905793011189,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/cli-smokes/simple-sharingtree-unreal-spec.json",
+        "sha256": "a17c3b2090a2ae03826ba0a328b78c54588f7fc446f6f7b48bdfb30255b59b68"
+      },
+      "stage": "simple-sharingtree unreal",
+      "stderr_bytes": 0,
+      "stdout_bytes": 13,
+      "validated_verdict": "UNREALIZABLE",
+      "verbose_backend_trace_observed": false
+    }
+  ],
+  "unit_tests_passed": 87,
+  "verbose_limit": "Release -DNO_VERBOSE suppresses verb_do; retained CLI evidence is forced route requests + source/type/config binding + actual verdicts. No emitted verbose route/frequency or large indexed/FC coverage claim.",
+  "version_output": {
+    "anchor-e167": "Version: 86dd487\nConfiguration: otf_sparse_formula_parity\n",
+    "block16": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: block16 downset=block_sharingtrie_b16 simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "block8": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: block8 downset=block_sharingtrie_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "block8-uncached": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: block8-uncached downset=block_sharingtrie_b8_uncached simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "candidate-default": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: candidate-default downset=rank_bucketed_vector_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "comp": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: comp downset=comptrie_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "comp-simd": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: comp-simd downset=comptrie_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=1\n",
+    "kd": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: kd downset=kdtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "kd-narrow": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: kd-narrow downset=kdtree_backed simd_lanes=16 kd_narrow=1 trie_compact=0 comptrie_simd=0\n",
+    "lazy-fc": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: lazy-fc downset=lazy_kdtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "lazy-search": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: lazy-search downset=lazy_kdtree_uncascaded simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "sharingtree": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: sharingtree downset=sharingtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "simple-sharingtree": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: simple-sharingtree downset=simple_sharingtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "trie": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: trie downset=sharingtrie_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n",
+    "trie-compact": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: trie-compact downset=sharingtrie_backed simd_lanes=16 kd_narrow=0 trie_compact=1 comptrie_simd=0\n"
+  },
+  "version_suite_tests_passed": 1
+}

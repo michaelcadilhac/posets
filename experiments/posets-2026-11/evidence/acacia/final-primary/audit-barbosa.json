@@ -1,0 +1,120 @@
+{
+  "status": "APPROVE completed phase-one arithmetic/provenance interpretation and conservative keep-default conclusion; one venial final evidence locator request",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "scope": "Lightweight saved metadata/JSON/CSV/report/source review only. No compiler, test, helper/deriver execution, solver, profile, timing or raw-corpus scan. Four threshold rows were read explicitly; the15 native raw/scored row sets were not independently rederived here.",
+  "exact_inputs": {
+    "work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.json",
+      "sha256": "27df181d4c2262154adba7eebae907925fb69c2016b4371af442d92ed67ba6b7"
+    },
+    "work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.csv": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.csv",
+      "sha256": "108329ec96193b4c6072b774a1ab57cf0b366fa915b075b8b06fdb7918a4d604"
+    },
+    "work/acacia-campaign/final-primary-comparison-20261109/report-draft.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/report-draft.txt",
+      "sha256": "ead4a0291ae049e14a2dd4021eb2a96264a74f519b5055d40b5b753c172e25d0"
+    },
+    "work/acacia-campaign/make-final-table.py": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/make-final-table.py",
+      "sha256": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c"
+    },
+    "work/acacia-campaign/final-primary-15-20261109/summary.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/summary.json",
+      "sha256": "2bd0a88d55a0ad611f7cdcac7372f25f8b807bedb2cf47946133c2f499ad0b04"
+    },
+    "work/acacia-campaign/final-primary-15-20261109/frozen.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/frozen.json",
+      "sha256": "99a05fd894b5994d86759aebe56a42846a820019e1431b86e18639cce034f9ec"
+    },
+    "work/acacia-campaign/final-primary-execution-20261109/final-invariance-audit.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/final-invariance-audit.json",
+      "sha256": "9e3bf2b2a4cb0b1097fec2c05e66ba25795fffd42cb87d6a105fff043cd6edd3"
+    },
+    "work/acacia-campaign/final-primary-execution-20261109/completion.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/completion.json",
+      "sha256": "9f81100c6e6708381578e7d1a26189575cd821fc935fdf89c91af01a61da5314"
+    },
+    "work/review-probes/phase-one-oom-event-observations.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-oom-event-observations.json",
+      "sha256": "a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69"
+    }
+  },
+  "checks": {
+    "top_metadata_bindings_checked": 10,
+    "top_metadata_bindings_all_match": true,
+    "deriver_hash_matches_approved_8aea9df": true,
+    "table_consistency": "All15 JSON/CSV rows agree with summary solved counts, totals, native/failure counts, CPU/scope peak observations, wall-cap counts and both-comparator arithmetic. All candidate gains/loss lengths agree with lists; every candidate has0gains relative to candidate-default.",
+    "denominators": {
+      "arms": 15,
+      "instances_per_arm": 1524,
+      "total_rows": 22860,
+      "valid_cpu_rows": 22860,
+      "valid_scope_memory_rows": 22860,
+      "valid_process_rss_rows": 22860
+    },
+    "native_outcomes": {
+      "REALIZABLE": 9414,
+      "UNREALIZABLE": 11082,
+      "TIMEOUT": 2339,
+      "MEMOUT": 25
+    },
+    "protocol": "Frozen manifest confirms cap17,8G/no-swap,batch32,seed260617,empty flags,preset otf_sparse_formula_parity,no requested CPU affinity/quota. Serial and balanced schedule/exact commands are reported by the bound final invariant audit; no schedule rerun was performed.",
+    "final_invariant_record": "Bound passing record reports431approved bindings,180compiled source files,15binaries,8runtime libraries,10helpers,6repository checks,720native invocation/log bindings and unchanged summary-only. These underlying1211files/ELFs were not all rehashed again by this audit.",
+    "unrepeated": "Summary noise floor is null; completion explicitly reports one unrepeated full campaign. No statistical superiority, threshold generalization or independent verdict truth certification is claimed.",
+    "source_attribution": "Read-only Git diff e167\u2192cc shows no rank-container header difference and changes in vector headers. Frozen candidate source pincc predates the prospective new default optimization; report correctly excludes it.",
+    "elapsed": "50468.942926s rounds to14h01m09s, as reported.",
+    "top_metadata_binding_count_basis": "Ten explicit binding entries, including repeated summary/frozen references across result/completion/invariance records, plus a separate approved deriver SHA256 check."
+  },
+  "default_vs_FC": {
+    "same_solved_set_size": 1369,
+    "default_par2_total_s": 5926.861275,
+    "FC_par2_total_s": 5922.578472,
+    "FC_total_lower_s": 4.282803,
+    "percent_of_default_total": 0.07226089495405066,
+    "interpretation": "Numerical difference in one observed campaign; no noise floor/significance established. Keeping existing default is conservative and consistent with zero alternative gains and losses for every other alternative."
+  },
+  "threshold_case": {
+    "instance": "robot_repair5.ltl",
+    "native_default": {
+      "outcome": "UNREALIZABLE",
+      "measured_wall_s": 16.95217512291856
+    },
+    "native_FC": {
+      "outcome": "UNREALIZABLE",
+      "measured_wall_s": 16.81789881386794
+    },
+    "anchor": {
+      "outcome": "TIMEOUT",
+      "censored_wrapper_wall_s": 17.118035037070513
+    },
+    "lazy_search": {
+      "outcome": "TIMEOUT",
+      "censored_wrapper_wall_s": 17.106662242906168
+    },
+    "assessment": "Four saved native rows match draft. Timeout wrapper durations are not finishing times; no speedup ratio from them is licensed."
+  },
+  "OOM_disclosure": {
+    "origin": "Nbjorner identified native-label versus kernel-event distinction; owner preserved/froze observations and updated prose. Barbosa validates saved correction, not duplicate discovery.",
+    "resolved": true,
+    "affected_invocation_rows": 70,
+    "native_MEMOUT_with_event": 25,
+    "native_TIMEOUT_with_event": 45,
+    "affected_arms": 10,
+    "rows_each_affected_arm": 7,
+    "unaffected_arms": 5,
+    "checks": "The70 saved positive observations reconcile per-arm totals/results; all peak8GiB, oom_kill>0; all15 source-sidecar bindings equal frozen summary raw-memory bindings. No new full sidecar parse was performed.",
+    "interpretation": "Count invocation rows rather than killed processes or kernel event totals. Preserve native labels/PAR2; block16 has more MEMOUT labels but the same7OOM-affected rows as every other affected arm. Whole-scope peaks are not retained index storage."
+  },
+  "findings": [
+    {
+      "rank": "venial",
+      "location": "report-draft.txt supplemental oom-event-observations.json paragraph/evidence list",
+      "request": "Provide exact current source path/hash work/review-probes/phase-one-oom-event-observations.json SHAa05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69, or bind the eventual packaged copy. Current report directory contains no file at the shortened name; this is locator clarity, not missing validation or score error."
+    }
+  ],
+  "material_unresolved_findings": [],
+  "limits": "Approval is for the exact hash-bound saved report/result interpretation, not a solver correctness proof or an improvement claim for the prospective default optimization. Generic summary verification warnings are supplemented by owner final source/build/invocation audit; observed answer consistency is not independent truth checking.",
+  "attribution": "Independent result/evidence validation; no new confirmed numerical/protocol defect found. Nbjorner resource disclosure correction explicitly acknowledged as resolved."
+}

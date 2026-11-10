@@ -1,0 +1,129 @@
+{
+  "CPU2_kernel_context": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/actual-CPU2-kernel-context.json",
+    "sha256": "b25967cf9ba2d69616910891d208c3aba3af27c0b956179672348c2f2136cfe0"
+  },
+  "activation": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-activation-v1.json",
+    "sha256": "4e9857778fbbfcb17dfd85865ecee9602918a8a7b2d97795920f88ff0f3aa21c"
+  },
+  "actual24bindings": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/PMU24-ACTUAL-BINDINGS.json",
+    "sha256": "de71a963cabf7dcf3d3b7754f971fa42f66decf5ecbc7d1df6c16ac2f71b7df6"
+  },
+  "additional_required_metadata_collection_scopes": [
+    {
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/actual-library-query-record.json",
+        "sha256": "2e6dabd3d023b1a85f85003d36e7d23c2d05d3a074ef8e34d7a778ca4e88bdb4"
+      },
+      "resource": {
+        "cpu_seconds": 0.008728,
+        "max_process_rss_bytes": 13721600,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2324495-2d26cb4b77d4.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 3514368,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2324495-2d26cb4b77d4.scope",
+        "seconds": 0.11432618601247668,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 1898,
+        "timed_out": false
+      }
+    },
+    {
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/artifact-closure-record.json",
+        "sha256": "05c3bef8ccbb5b2387bfd7243161447c5fee3570922dcf01246da5bb95455691"
+      },
+      "resource": {
+        "cpu_seconds": 0.31519299999999995,
+        "max_process_rss_bytes": 29782016,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2325429-6a133d9854f4.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 21319680,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2325429-6a133d9854f4.scope",
+        "seconds": 0.4151204130612314,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 184,
+        "timed_out": false
+      }
+    }
+  ],
+  "artifact_closure": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/ACTUAL-ARTIFACT-CLOSURE.json",
+    "sha256": "3f939a8be91e643e68b201357f5c42da3a6d9ee89335aac7b96f0e0b958a8a98"
+  },
+  "build_complete": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/BUILD-COMPLETE.json",
+    "sha256": "41054c7224e39259ff69e0657f6d30e61c14b0f10adc736948983fa155db46c8"
+  },
+  "checks_complete": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/CHECKS-COMPLETE.json",
+    "sha256": "c1f5475f30cd4e2cc82b6ee60a9fe55862fc319045e784dd31aeaf382ad8c379"
+  },
+  "closure_checked_files_unchanged": true,
+  "created_utc": "2026-11-09T18:38:40.273634+00:00",
+  "dependency_occurrences": 2644,
+  "gate_counts": {
+    "actualELFs": 4,
+    "backend_checks": 8,
+    "compile_link": 8,
+    "hardware_measurements": 0,
+    "metadata": 4
+  },
+  "gates_resource_summary": {
+    "CPU_seconds_sum": 32.945317,
+    "OOM": 0,
+    "max_scope_peak_bytes": 542531584,
+    "observed": 20,
+    "seconds_sum": 35.0730820458848,
+    "timeouts": 0,
+    "total": 20
+  },
+  "immutable_plan_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-plan-v1/source-manifest.json",
+    "sha256": "2e72016b0d8358395ad0b329bb6b981695f0420889e51dc8f40c855badab8c5c"
+  },
+  "limits": "Fourmetadata +8backend checks assert exactCPU2/checkonly/kernel0/ROIvalid1/0regions; no PMUevent permissions/usability claim. Both original vectorinstantiations bound bysource, onlySIMD runtimebackend checks. ActualELFtype observed, repeatedGCCdep tokens retained. No flags/source/oldplan edits.",
+  "operational_scripts": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/run-pmu-builds-v1.py",
+      "sha256": "4dbab2ad3c84a4e59da028520b477606425c7358c4ee26ee1a40add58c0df37c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/freeze-actual-artifacts.py",
+      "sha256": "ea7490bd6c239ebfb9c0f453525f6bf20ac220bf0be624daf13a0e1291f69a88"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/run-released-checks.py",
+      "sha256": "8f244a15a52c5487e7bb60f832a1018d0e0574e88fe7457ada277604b5c19e85"
+    }
+  ],
+  "postprocessing_note": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/pmu-execution-v1/POSTPROCESSING-NOTE.json",
+    "sha256": "c5c2868a26486806b3455b99d1816c554f9376421be53322b7cf4bda744c1371"
+  },
+  "status": "all8compile/link+4metadata+8backend gates pass; actual4ELFs/dependencies/libraries frozen;24 measurements awaitrootrelease"
+}

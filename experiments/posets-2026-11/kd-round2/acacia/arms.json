@@ -1,0 +1,200 @@
+{
+  "arms": [
+    {
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/src/acacia-bonsai",
+      "binary_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+      "compiled_benchmark_label": "candidate-default",
+      "expected_downset": "rank_bucketed_vector_backed",
+      "expected_optional_controls": [
+        0,
+        0,
+        0
+      ],
+      "expected_simd_lanes": 16,
+      "flags": "",
+      "generated_version_header": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "label": "baseline-default",
+      "preset": "otf_sparse_formula_parity",
+      "provenance": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/baseline-default-provenance.json",
+      "runtime_libraries": [
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+          "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+        },
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+          "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+        },
+        {
+          "path": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        },
+        {
+          "path": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/usr/lib64/libmvec.so.1",
+          "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+        }
+      ],
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "actual_acacia_diff_sha256": "195297109a7c4cdb7e4c3fbf51ee0c18d3e7806c3770754aeeea7dd950ed8f97",
+        "baseline_public_test_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+        "posets": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      },
+      "version_output": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: candidate-default downset=rank_bucketed_vector_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n"
+    },
+    {
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/src/acacia-bonsai",
+      "binary_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af",
+      "compiled_benchmark_label": "candidate-default",
+      "expected_downset": "rank_bucketed_vector_backed",
+      "expected_optional_controls": [
+        0,
+        0,
+        0
+      ],
+      "expected_simd_lanes": 16,
+      "flags": "",
+      "generated_version_header": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "label": "optimized-default",
+      "preset": "otf_sparse_formula_parity",
+      "provenance": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-final-proposed-v3/optimized-default-provenance.json",
+      "runtime_libraries": [
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+          "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+        },
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+          "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+        },
+        {
+          "path": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        },
+        {
+          "path": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/usr/lib64/libmvec.so.1",
+          "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+        }
+      ],
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "actual_acacia_diff_sha256": "cb445daa2489a74e5c374364590f9f6f073d6b90a1dadb83abea26030c6e53b2",
+        "baseline_public_test_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+        "posets": "30e66853832d98bcfaada296d892157b95a8150d",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      },
+      "version_output": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: candidate-default downset=rank_bucketed_vector_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n"
+    },
+    {
+      "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/src/acacia-bonsai-kd",
+      "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+      "compiled_benchmark_label": "kd",
+      "expected_downset": "kdtree_backed",
+      "expected_optional_controls": [
+        0,
+        0,
+        0
+      ],
+      "expected_simd_lanes": 16,
+      "flags": "",
+      "generated_version_header": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      "label": "kd-scratch-restored",
+      "preset": "otf_sparse_formula_parity",
+      "provenance": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/kd-scratch-restored-provenance.json",
+      "runtime_libraries": [
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+          "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+        },
+        {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+          "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+        },
+        {
+          "path": "/usr/lib64/libstdc++.so.6.0.36",
+          "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+        },
+        {
+          "path": "/usr/lib64/libm.so.6",
+          "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+        },
+        {
+          "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+          "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+        },
+        {
+          "path": "/usr/lib64/libc.so.6",
+          "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+        },
+        {
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+        },
+        {
+          "path": "/usr/lib64/libmvec.so.1",
+          "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+        }
+      ],
+      "source_pins": {
+        "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+        "actual_acacia_diff_sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5",
+        "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+        "phase_one_full_reconstruction_patch_sha256": "98719f18ddfb296420da997e7655d32e3ba9b625c291a12b30c35f6394d93651",
+        "posets": "d363b9f901b927575ee1544b19820a146c2479d9",
+        "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+      },
+      "version_output": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: kd downset=kdtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n"
+    }
+  ],
+  "baseline": "baseline-default",
+  "status": "Proposed actual three-arm campaign; pending root freeze"
+}

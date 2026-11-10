@@ -1,0 +1,1245 @@
+diff --git a/benchmarking/posets-matrix.py b/benchmarking/posets-matrix.py
+index d68315b6a9bccecdfeef1bc6d99b56605194383b..88d957916106b47746f68784f14459c6dde5aec9 100644
+--- a/benchmarking/posets-matrix.py
++++ b/benchmarking/posets-matrix.py
+@@ -19,12 +19,28 @@ import subprocess
+ from benchlib import RunResult, campaign_scope_guard, classify_run, run_systemd_scope
+ 
+ ROOT = Path(__file__).resolve().parents[1]
++SCHEDULER_REFERENCE_SHA256 = "b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf"
+ MODES = ("compatible", "native", "max")
+ CASES = ("vectors", "nonempty", "empty", "zero")
+ BACKENDS = {"bboxtree_backed", "comptrie_backed", "kdtree_backed", "vector_or_kdtree_backed",
+             "vector_backed", "rank_bucketed_vector_backed", "filtered_vector_backed", "vector_backed_bin",
+             "vector_backed_one_dim_split_intersection_only", "sharingtree_backed", "simple_sharingtree_backed",
+-            "sharingtrie_backed", "skiplist_backed", "cst_backed"}
++            "sharingtrie_backed", "skiplist_backed", "cst_backed",
++            "block_sharingtrie_backed", "block_sharingtrie_b1_scalar", "block_sharingtrie_b4_scalar",
++            "block_sharingtrie_b4_simd", "block_sharingtrie_b8_scalar", "block_sharingtrie_b16_scalar",
++            "block_sharingtrie_b16_simd", "block_sharingtrie_b8_simd_nocache",
++            "lazy_kdtree_backed", "lazy_kdtree_uncascaded"}
++BACKEND_SELECTORS = {name: "posets::downsets::" + name for name in BACKENDS} | {
++    "block_sharingtrie_backed": "block_b8_simd",
++    "block_sharingtrie_b1_scalar": "block_b1_scalar",
++    "block_sharingtrie_b4_scalar": "block_b4_scalar",
++    "block_sharingtrie_b4_simd": "block_b4_simd",
++    "block_sharingtrie_b8_scalar": "block_b8_scalar",
++    "block_sharingtrie_b16_scalar": "block_b16_scalar",
++    "block_sharingtrie_b16_simd": "block_b16_simd",
++    "block_sharingtrie_b8_simd_nocache": "block_b8_nocache",
++    "lazy_kdtree_backed": "lazy_kd_cascaded",
++    "lazy_kdtree_uncascaded": "lazy_kd_uncascaded"}
+ 
+ 
+ def require(value, message):
+@@ -237,11 +253,14 @@ def load_traces(plan):
+ 
+ 
+ def unchanged(metadata, traces=None):
+-    for row in metadata["modes"].values():
++    for row in executable_entries(metadata):
+         require(sha(Path(row["binary"])) == row["binary_sha256"], "A harness executable changed")
+         require(libraries(Path(row["binary"])) == row["libraries"], "Resolved runtime dependencies changed")
++    for name, expected in metadata.get("bound_files_sha256", {}).items():
++        require(sha(regular(Path(name))) == expected, "A binary-map provenance input changed")
+     for name, expected in metadata["source_sha256"].items():
+-        require(sha(ROOT / "subprojects/posets" / name) == expected, "A Posets source changed")
++        require(sha(Path(metadata.get("posets_source_dir", ROOT / "subprojects/posets")) / name) == expected,
++                "A Posets source changed")
+     require(sha(Path(__file__).resolve()) == metadata["driver_sha256"], "The matrix driver changed")
+     for name, expected in metadata["support_sha256"].items():
+         require(sha(ROOT / "benchmarking" / name) == expected, "Runner support changed")
+@@ -272,7 +291,7 @@ def status(result):
+ 
+ def measurement_build(metadata):
+     common = None
+-    for mode in metadata["modes"].values():
++    for mode in executable_entries(metadata):
+         command = mode["compiler_command"]
+         flags = command.get("arguments") or shlex.split(command["command"])
+         optimization = [flag for flag in flags if re.fullmatch(r"-O(?:[0-3sgz]|fast)", flag)]
+@@ -301,15 +320,28 @@ def output_identity(stdout, backend, vector):
+     return seen == [f"posets::downsets::{backend}<posets::vectors::{vector}<test_value_type>>"]
+ 
+ 
++def executable_entries(metadata):
++    if "backend_binaries" not in metadata:
++        return metadata["modes"].values()
++    return [entry for mode in metadata["backend_binaries"].values() for entry in mode.values()] + list(metadata["alias_probes"].values())
++
++
++def binary_entry(metadata, mode, backend):
++    if "backend_binaries" in metadata:
++        return metadata["backend_binaries"][metadata["aliases"][mode]][backend]
++    return metadata["modes"][mode]
++
++
+ def replay(args, metadata, traces, output):
+     rows, accepted = [], []
+     scalar_mode = next(mode for mode in metadata["modes"] if metadata["aliases"][mode] == mode)
+-    cells = [(mode, backend, vector, entry) for mode, entry in metadata["modes"].items()
++    cells = [(mode, backend, vector, binary_entry(metadata, mode, backend)) for mode, entry in metadata["modes"].items()
+              if metadata["aliases"][mode] == mode for backend in entry["backends"] if backend in args.backends
+              for vector in ("vector_backed", "simd_vector_backed") if vector != "vector_backed" or mode == scalar_mode]
+     with campaign_scope_guard("posets-matrix"):
+         for trace in traces:
+-            source_command = [cells[0][3]["binary"], "--trace", trace["path"], "--check=trace-source"]
++            source_binary = metadata.get("source_oracle", cells[0][3])["binary"]
++            source_command = [source_binary, "--trace", trace["path"], "--check=trace-source"]
+             source_result = run_systemd_scope(source_command, args.source_timeout, args.memory_max, "0",
+                                               unit_prefix="acacia-posets", scratch_root=output / "scopes")
+             source_prefix = f"source-{trace['id']}"
+@@ -343,13 +375,18 @@ def replay(args, metadata, traces, output):
+                     accepted.append((trace, mode, backend, vector, entry))
+         if args.measure:
+             order = []
++            accepted_keys = {(trace["id"], mode, backend, vector)
++                             for trace, mode, backend, vector, _ in accepted}
+             for repetition in range(args.repetitions):
+                 rng = random.Random(args.seed + repetition)
+-                groups = [[cell for cell in accepted if cell[0]["id"] == trace["id"]] for trace in traces]
++                groups = [[(trace, mode, backend, vector, entry)
++                           for mode, backend, vector, entry in cells if vector == "simd_vector_backed"]
++                          for trace in traces]
+                 rng.shuffle(groups)
+                 for group in groups:
+                     rng.shuffle(group)
+-                    order.extend((repetition, *cell) for cell in group)
++                    order.extend((repetition, *cell) for cell in group
++                                 if (cell[0]["id"], *cell[1:4]) in accepted_keys)
+             planned = [{"repetition": repetition, "trace": trace["id"], "mode": mode, "backend": backend,
+                         "vector": vector} for repetition, trace, mode, backend, vector, _ in order]
+             (output / "measurement-order.json").write_text(json.dumps(planned, indent=2) + "\n")
+@@ -379,7 +416,290 @@ def replay(args, metadata, traces, output):
+     return rows
+ 
+ 
+-def provenance(build, output):
++def bound_file(entry, bound):
++    require(isinstance(entry, dict) and set(entry) == {"path", "sha256"}, "Invalid file binding")
++    path = Path(entry["path"])
++    require(path.is_absolute() and re.fullmatch(r"[0-9a-f]{64}", entry["sha256"]) and
++            sha(regular(path)) == entry["sha256"], "Bound file hash mismatch")
++    bound[str(path)] = entry["sha256"]
++    return path
++
++
++def command_args(command):
++    args = command.get("arguments") or shlex.split(command["command"])
++    require(isinstance(args, list) and args and all(isinstance(arg, str) for arg in args), "Invalid command argv")
++    if "arguments" in command and "command" in command:
++        require(args == shlex.split(command["command"]), "Command representations differ")
++    return args
++
++
++def command_path(command, value):
++    directory = Path(command["directory"])
++    require(directory.is_absolute(), "Compiler directory must be absolute")
++    return (directory / value).resolve()
++
++
++def normalized_command(command, source, build, object_file=None, selector=False):
++    """Retain every flag; normalize only declared source/build and output paths."""
++    args, normalized, index, selectors = command_args(command), [], 0, 0
++    output = command_path(command, command["output"])
++
++    def path_name(value):
++        path = command_path(command, value)
++        if object_file is not None and path == object_file:
++            return "$OBJECT"
++        for root, name in ((build, "$BUILD"), (source, "$SOURCE")):
++            if path.is_relative_to(root):
++                return name + "/" + str(path.relative_to(root))
++        return str(path)
++
++    while index < len(args):
++        arg = args[index]
++        if arg.startswith("-DPOSETS_MATRIX_BACKEND="):
++            require(selector and arg.split("=", 1)[1], "Unexpected backend selector")
++            selectors += 1
++        elif arg in ("-o", "-MF", "-MT", "-MQ"):
++            require(index + 1 < len(args), "Missing output/dependency argument")
++            value = command_path(command, args[index + 1])
++            expected = Path(str(output) + ".d") if arg == "-MF" else output
++            require(value == expected, "Unexpected output/dependency path")
++            normalized.extend((arg, "$OUTPUT" + (".d" if arg == "-MF" else "")))
++            index += 1
++        elif arg in ("-I", "-L", "-isystem", "-iquote"):
++            require(index + 1 < len(args), "Missing include/library argument")
++            normalized.extend((arg, path_name(args[index + 1])))
++            index += 1
++        elif arg.startswith(("-I", "-L")) and len(arg) > 2:
++            normalized.append(arg[:2] + path_name(arg[2:]))
++        elif not arg.startswith("-") and (arg.endswith((".cc", ".o"))):
++            normalized.append(path_name(arg))
++        else:
++            normalized.append(arg)
++        index += 1
++    require(selectors == int(selector), "Missing/duplicate backend selector")
++    return normalized
++
++
++def inspect_binary(binary, output, name):
++    require(regular(binary).read_bytes()[:4] == b"\x7fELF", "Harness must be an ELF, not a launcher")
++    metadata = json.loads(subprocess.check_output([str(binary), "--metadata"], text=True))
++    assembly = subprocess.check_output(["objdump", "--disassemble=posets_matrix_compare", str(binary)], text=True)
++    (output / (name + "-compare.asm")).write_text(assembly)
++    instructions = [match[1] for line in assembly.splitlines()
++                    if (match := re.match(r"\s*[0-9a-f]+:\s+((?:[0-9a-f]{2}\s+)+)", line))]
++    require(instructions, "Missing emitted SIMD comparison kernel")
++    return {**metadata, "binary": str(binary), "binary_sha256": sha(binary), "libraries": libraries(binary),
++            "comparison_instructions_sha256": hashlib.sha256(bytes.fromhex(" ".join(instructions))).hexdigest()}
++
++
++def abi_key(entry):
++    return tuple(entry[key] for key in ("simd_type", "selected_lanes", "block_bytes", "alignment",
++                                        "element_bytes", "compatible_lanes", "native_lanes", "max_fixed_lanes",
++                                        "hybrid_policy", "comparison_instructions_sha256"))
++
++
++def build_invocations(record, bound):
++    plan = json.loads(bound_file(record["build_plan"], bound).read_text())
++    bound_file(record["builder"], bound)
++    require(type(plan.get("schema_version")) is int and plan["schema_version"] == 1 and
++            plan.get("kind") == "posets-selector-build-plan" and
++            all(plan.get(name) == record[name] for name in ("base_revision", "source_revision", "source_dir")),
++            "Build plan source pin mismatch")
++    rows = [row for row in plan["rows"] if (row["mode"], row["backend"]) == (record["mode"], record["backend"])]
++    require(len(rows) == 1, "Missing/duplicate build plan row")
++    row = rows[0]
++    names = ("compiler_command", "linker_command", "template_compiler_command", "template_linker_command")
++    require(all(row[name] == record[name] for name in names), "Build plan argv differs from build record")
++    require([item["stage"] for item in row["stages"]] == ["compile", "link"] and
++            [item["stage"] for item in record["invocations"]] == ["compile", "link"], "Incomplete build invocations")
++    for stage, invocation, name in zip(row["stages"], record["invocations"], names[:2]):
++        spec_path = bound_file(stage["spec"], bound)
++        path = bound_file({key: invocation[key] for key in ("path", "sha256")}, bound)
++        spec, observed = json.loads(spec_path.read_text()), json.loads(path.read_text())
++        require(observed["spec"] == spec and observed["spec_sha256"] == sha(spec_path) and
++                spec["command"] == command_args(record[name]) and spec["cwd"] == record[name]["directory"],
++                "Actual build invocation differs from declared argv/cwd")
++        result = observed["result"]
++        require(type(result["returncode"]) is int and result["returncode"] == 0 and
++                result["timed_out"] is False and result["resource_limited"] is False and
++                observed["memory_max"] == "8G" and observed["memory_swap_max"] == "0",
++                "Build invocation failed or escaped the required memory scope")
++        bound_file({"path": observed["log"], "sha256": observed["log_sha256"]}, bound)
++        bound_file({"path": str(path.with_suffix(".helper.py")), "sha256": observed["helper_sha256"]}, bound)
++        require(observed["benchlib_sha256"] == sha(ROOT / "benchmarking/benchlib.py"), "Build scope helper changed")
++        if spec.get("environment_file"):
++            environment = regular(Path(spec["environment_file"]))
++            bound[str(environment)] = sha(environment)
++            require(all(observed["environment_overrides"].get(key) == value
++                        for key, value in json.loads(environment.read_text()).items()
++                        if key not in {"ACACIA_CAMPAIGN_SCOPE_GUARD", "PYTHONDONTWRITEBYTECODE"}),
++                    "Build environment changed")
++
++
++def selector_source(source, base, revision, overlay):
++    require(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() == revision and
++            not subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True),
++            "Measurement source pin/cleanliness mismatch")
++    names = set(subprocess.check_output(["git", "diff", "--name-only", base, revision], cwd=source, text=True).splitlines())
++    require(names <= {"tests/downset-bm.cc", "tests/meson.build"} and "tests/downset-bm.cc" in names,
++            "Measurement overlay changes more than the selector")
++    before = subprocess.check_output(["git", "show", base + ":tests/downset-bm.cc"], cwd=source, text=True)
++    marker = "  register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);\n"
++    require(before.count(marker) == 1, "Unknown base selector registration")
++    selected = ("#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)\n"
++                "  register_maker<false, POSETS_MATRIX_BACKEND> ((vector_types*) nullptr);\n#else\n" + marker + "#endif\n")
++    expected = before.replace(marker, selected)
++    require((source / "tests/downset-bm.cc").read_text() == expected, "Selector harness overlay differs")
++    before = subprocess.check_output(["git", "show", base + ":tests/meson.build"], cwd=source, text=True)
++    expected = before.replace("# Keep the 14-backend matrix", "# Keep the 24-backend matrix") if "tests/meson.build" in names else before
++    require((source / "tests/meson.build").read_text() == expected,
++            "Selector build overlay differs")
++    require(subprocess.run(["git", "apply", "--reverse", "--check", str(overlay)], cwd=source,
++                           capture_output=True).returncode == 0, "Declared selector overlay does not match source")
++
++
++def backend_provenance(build, output, source, map_path):
++    bound = {str(map_path): sha(regular(map_path))}
++    plan = json.loads(map_path.read_text())
++    require(type(plan.get("schema_version")) is int and plan["schema_version"] == 1 and plan.get("kind") == "posets-per-backend-binaries",
++            "Unsupported per-backend map schema")
++    require(all(isinstance(plan.get(key), str) and re.fullmatch(r"[0-9a-f]{40}", plan[key])
++                for key in ("base_revision", "source_revision")), "Invalid map source pins")
++    declared_source = Path(plan["source_dir"])
++    require(declared_source.is_absolute() and (source is None or source.resolve() == declared_source.resolve()),
++            "Binary map/source directory mismatch")
++    source = declared_source.resolve()
++    overlay = bound_file(plan["selector_overlay"], bound)
++    selector_source(source, plan["base_revision"], plan["source_revision"], overlay)
++    anchor_path = bound_file(plan["anchor_provenance"], bound)
++    anchor = json.loads(anchor_path.read_text())
++    anchor = anchor.get("provenance", anchor)
++    require(anchor["posets_revision"] == plan["base_revision"] and not anchor["posets_dirty"],
++            "Binary map does not match the frozen anchor source pin")
++    anchor_source = Path(anchor["posets_source_dir"])
++    require(anchor_source.is_absolute(), "Anchor source must be explicit")
++    for name, expected_hash in anchor["source_sha256"].items():
++        file = regular(anchor_source / name)
++        require(sha(file) == expected_hash, "Frozen anchor source changed")
++        bound[str(file)] = expected_hash
++    oracle = bound_file(plan["source_oracle_binary"], bound)
++    require(str(oracle) == anchor["modes"]["compatible"]["binary"] and
++            sha(oracle) == anchor["modes"]["compatible"]["binary_sha256"] and
++            oracle == build / "tests/downset-matrix-compatible", "Source oracle is not the matching frozen compatible anchor")
++    probes = {}
++    for mode in MODES:
++        old = anchor["modes"][mode]
++        actual = inspect_binary(Path(old["binary"]), output, "anchor-" + mode)
++        require(all(old.get(key) == value for key, value in actual.items()), "Frozen anchor binary/probe changed")
++        require(actual["backends"] == sorted(BACKENDS),
++                "Anchor backend inventory changed")
++        probes[mode] = {**actual, "compiler_command": old["compiler_command"]}
++    require(plan["aliases"] == {"max": "native"} and abi_key(probes["max"]) == abi_key(probes["native"]),
++            "Unsupported/unproven width alias")
++    require(abi_key(probes["compatible"]) != abi_key(probes["native"]), "Map does not describe two effective widths")
++    entries = {mode: {} for mode in ("compatible", "native")}
++    templates = {}
++
++    def template_link(directory, mode):
++        key = (str(directory), mode)
++        if key not in templates:
++            manifest = regular(directory / "build.ninja")
++            bound[str(manifest)] = sha(manifest)
++            lines = subprocess.check_output(["ninja", "-C", str(directory), "-t", "commands",
++                                             "tests/downset-matrix-" + mode], text=True).splitlines()
++            require(len(lines) == 2, "Expected the original one-TU matrix build")
++            templates[key] = {"arguments": shlex.split(lines[-1]), "directory": str(directory),
++                              "output": "tests/downset-matrix-" + mode}
++        return templates[key]
++
++    for item in plan["binaries"]:
++        mode, backend = item["mode"], item["backend"]
++        require(mode in entries and backend in BACKENDS and backend not in entries[mode],
++                "Duplicate/unknown per-backend map entry")
++        binary = Path(item["binary"])
++        require(binary.is_absolute() and sha(regular(binary)) == item["binary_sha256"], "Mapped binary hash mismatch")
++        record_path = bound_file(item["build_record"], bound)
++        record = json.loads(record_path.read_text())
++        require(type(record.get("schema_version")) is int and record["schema_version"] == 1 and record.get("kind") == "posets-selector-build" and
++                all(record.get(key) == value for key, value in {
++                    "mode": mode, "backend": backend, "base_revision": plan["base_revision"],
++                    "source_revision": plan["source_revision"], "source_dir": str(source),
++                    "selector_overlay_sha256": plan["selector_overlay"]["sha256"],
++                    "binary_sha256": item["binary_sha256"]}.items()), "Build record/map source identity mismatch")
++        db_path = bound_file(record["compile_commands"], bound)
++        commands = json.loads(db_path.read_text())
++        template, command = record["template_compiler_command"], record["compiler_command"]
++        directory = Path(template["directory"])
++        require(directory.is_absolute() and db_path == directory / "compile_commands.json" and
++                command["directory"] == template["directory"], "Compiler directory/database mismatch")
++        require(sum(command_args(row) == command_args(template) and row["directory"] == template["directory"] and
++                    row["file"] == template["file"] and row.get("output") == template.get("output") for row in commands) == 1,
++                "Missing/ambiguous original compiler template")
++        require(command_path(command, command["file"]) == source / "tests/downset-bm.cc" and
++                command_path(template, template["file"]) == source / "tests/downset-bm.cc",
++                "Compiler is not bound to the selector harness source")
++        old_command = probes[mode]["compiler_command"]
++        old_directory = Path(old_command["directory"])
++        require(normalized_command(template, source, directory) ==
++                normalized_command(old_command, anchor_source, old_directory), "Compiler template differs from frozen anchor flags")
++        selectors = [arg for arg in command_args(command) if arg.startswith("-DPOSETS_MATRIX_BACKEND=")]
++        require(selectors == ["-DPOSETS_MATRIX_BACKEND=" + BACKEND_SELECTORS[backend]], "Wrong declared backend selector")
++        require(normalized_command(command, source, directory, selector=True) ==
++                normalized_command(template, source, directory), "Selector compiler argv changes flags")
++        link, template_linker = record["linker_command"], record["template_linker_command"]
++        require(link["directory"] == template_linker["directory"] == str(directory) and
++                command_args(template_linker) == command_args(template_link(directory, mode)) and
++                command_path(link, link["output"]) == binary,
++                "Linker is not bound to the original template/output")
++        old_linker = template_link(old_directory, mode)
++        require(normalized_command(template_linker, source, directory, command_path(template, template["output"])) ==
++                normalized_command(old_linker, anchor_source, old_directory, command_path(old_command, old_command["output"])),
++                "Linker template differs from frozen anchor flags")
++        require(normalized_command(link, source, directory, command_path(command, command["output"])) ==
++                normalized_command(template_linker, source, directory, command_path(template, template["output"])),
++                "Selector linker argv changes flags")
++        build_invocations(record, bound)
++        actual = inspect_binary(binary, output, mode + "-" + backend)
++        require(actual["backends"] == [backend], "Mapped ELF is not the requested singleton backend")
++        require(actual["width_selector"] == MODES.index(mode) and abi_key(actual) == abi_key(probes[mode]) and
++                actual["compiler"] == probes[mode]["compiler"] and actual["libraries"] == probes[mode]["libraries"],
++                "Mapped ELF width/compiler/runtime proof differs from anchor")
++        entries[mode][backend] = {**actual, "compiler_command": command, "linker_command": link,
++                                  "build_record": {"path": str(record_path), "sha256": sha(record_path)}}
++    require(all(set(rows) == BACKENDS for rows in entries.values()), "Missing per-backend map entries")
++    modes = {mode: {key: value for key, value in probes[mode].items()
++                    if key not in {"binary", "binary_sha256", "libraries", "compiler_command"}} for mode in MODES}
++    return source, {"modes": modes, "aliases": {"compatible": "compatible", "native": "native", "max": "native"},
++                    "backend_binaries": entries, "alias_probes": probes, "source_oracle": probes["compatible"],
++                    "bound_files_sha256": bound, "binary_map": {"path": str(map_path), "sha256": sha(map_path)},
++                    "base_revision": plan["base_revision"], "selector_overlay": plan["selector_overlay"],
++                    "treatment": "per-backend selector; identical original replay kernels/timers"}
++
++
++def provenance(build, output, source=None, binary_map=None):
++    if binary_map is not None:
++        source, extra = backend_provenance(build, output, source, binary_map)
++        modes, aliases = extra["modes"], extra["aliases"]
++    else:
++        extra = {}
++        modes, aliases = combined_provenance(build, output)
++    source = (source or ROOT / "subprojects/posets").resolve()
++    names = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard"],
++                                    cwd=source, text=True).splitlines()
++    return {**extra, "modes": modes, "aliases": aliases, "posets_source_dir": str(source),
++            "posets_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip(),
++            "source_sha256": {name: sha(source / name) for name in names if (source / name).is_file()},
++            "posets_dirty": subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True),
++            "support_sha256": {name: sha(ROOT / "benchmarking" / name) for name in ("benchlib.py", "scope_memory.py")},
++            "driver_sha256": sha(Path(__file__).resolve()), "scheduler_reference_sha256": SCHEDULER_REFERENCE_SHA256,
++            "affinity": sorted(os.sched_getaffinity(0)),
++            "cwd": str(Path.cwd()),
++            "environment": {name: value for name, value in os.environ.items()
++                            if name.startswith(("ACACIA_", "LD_", "MALLOC_", "GLIBC_", "OMP_"))},
++            "cpu": subprocess.check_output(["lscpu", "-J"], text=True)}
++
++
++def combined_provenance(build, output):
+     commands = json.loads((build / "compile_commands.json").read_text())
+     modes, aliases, seen = {}, {}, {}
+     for mode in MODES:
+@@ -396,29 +716,21 @@ def provenance(build, output):
+         aliases[mode] = seen.setdefault(key, mode)
+         selected = [row for row in commands if f"downset-matrix-{mode}.p/" in row.get("output", "")]
+         require(len(selected) == 1, f"Missing/ambiguous compiler command for {mode}")
+-        require(len(metadata["backends"]) == 14 and set(metadata["backends"]) == BACKENDS,
+-                "The requested14-backend inventory changed")
++        require(len(metadata["backends"]) == len(BACKENDS) and set(metadata["backends"]) == BACKENDS,
++                "The requested backend inventory changed")
+         modes[mode] = {**metadata, "binary": str(binary), "binary_sha256": sha(binary),
+                        "libraries": libraries(binary),
+                        "comparison_instructions_sha256": instruction_hash, "compiler_command": selected[0]}
+-    source = ROOT / "subprojects/posets"
+-    names = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+-                                    cwd=source, text=True).splitlines()
+-    return {"modes": modes, "aliases": aliases,
+-            "posets_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip(),
+-            "source_sha256": {name: sha(source / name) for name in names if (source / name).is_file()},
+-            "posets_dirty": subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True),
+-            "support_sha256": {name: sha(ROOT / "benchmarking" / name) for name in ("benchlib.py", "scope_memory.py")},
+-            "driver_sha256": sha(Path(__file__).resolve()), "affinity": sorted(os.sched_getaffinity(0)),
+-            "cwd": str(Path.cwd()),
+-            "environment": {name: value for name, value in os.environ.items()
+-                            if name.startswith(("ACACIA_", "LD_", "MALLOC_", "GLIBC_", "OMP_"))},
+-            "cpu": subprocess.check_output(["lscpu", "-J"], text=True)}
++    return modes, aliases
+ 
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--build-dir", type=Path, required=True)
++    parser.add_argument("--source-dir", type=Path,
++                        help="Frozen Posets source used by this build (default: subprojects/posets)")
++    parser.add_argument("--binary-map", type=Path,
++                        help="Hash-bound per-backend ELFs with original combined source oracle and proven width alias")
+     parser.add_argument("--output", type=Path, required=True)
+     parser.add_argument("--case-timeout", type=float, default=15)
+     parser.add_argument("--check-timeout", type=float, help="Separate backend correctness cap; defaults to --case-timeout")
+@@ -431,7 +743,7 @@ def main():
+     parser.add_argument("--memory-max", default="8G")
+     parser.add_argument("--seed", type=int, default=0, help="Fixed within-trace measurement-order shuffle seed")
+     parser.add_argument("--backends", nargs="+", choices=sorted(BACKENDS), default=sorted(BACKENDS),
+-                        help="Explicit subset for later hybrid/profile follow-ups; default retains all14")
++                        help="Explicit subset for later hybrid/profile follow-ups; default retains all24")
+     args = parser.parse_args()
+     no_core()
+     args.check_timeout = args.case_timeout if args.check_timeout is None else args.check_timeout
+@@ -441,14 +753,18 @@ def main():
+     require(not args.measure or args.trace_plan, "Timing requires a fixed actual-trace plan")
+     require(not args.detail or args.measure, "Detailed instrumentation requires --measure")
+     build, output = args.build_dir.resolve(), args.output.resolve()
++    if args.source_dir:
++        args.source_dir = args.source_dir.resolve()
+     if args.trace_plan:
+         args.trace_plan = args.trace_plan.resolve()
++    if args.binary_map:
++        args.binary_map = args.binary_map.resolve()
+     os.chdir(ROOT)  # Also used by ldd when a library override contains relative paths.
+     require(not output.exists(), "Output exists; preserve it and choose a new directory")
+     require(subprocess.run(["git", "check-ignore", "-q", str(output)], cwd=ROOT).returncode == 0,
+             "Raw matrix evidence must start in an ignored output directory")
+     output.mkdir(parents=True)
+-    metadata = provenance(build, output)
++    metadata = provenance(build, output, args.source_dir, args.binary_map)
+     if args.measure:
+         measurement_build(metadata)
+     trace_source = None
+@@ -457,7 +773,10 @@ def main():
+         (output / "inputs.json").write_text(json.dumps({"provenance": trace_source, "traces": traces}, indent=2) + "\n")
+         rows = replay(args, metadata, traces, output)
+         unchanged(metadata, trace_source)
+-        report = {"scope": "Instrumented operation diagnosis" if args.detail else "Clean whole-CPre / sampled actual-query replay" if args.measure else "Actual-trace correctness only",
++        scope = "Instrumented operation diagnosis" if args.detail else "Clean whole-CPre / sampled actual-query replay" if args.measure else "Actual-trace correctness only"
++        if args.binary_map:
++            scope = "Supplemental per-backend registry-instantiation treatment: " + scope
++        report = {"scope": scope,
+                   "provenance": metadata, "inputs_sha256": sha(output / "inputs.json"),
+                   "measurement_order_sha256": sha(output / "measurement-order.json") if args.measure else None,
+                   "treatment": {"memory_max": args.memory_max, "memory_swap_max": "0", "serial": True,
+@@ -475,7 +794,8 @@ def main():
+                              "Process/cgroup peak and CPU include input parsing and result checks. Operation timers exclude them.",
+                              "Allocation counts/cache events require separate explicitly instrumented profiles; not collected here.",
+                              "The scalar representation is a correctness control; compiler loop vectorization is possible.",
+-                             "All-Boolean positive-dimensional traces remain distinct from zero-dimensional sets; packed-tail integration requires its own oracle."],
++                             "All-Boolean positive-dimensional traces remain distinct from zero-dimensional sets; packed-tail integration requires its own oracle."] +
++                            (["Each ELF retains scalar and SIMD vectors with one backend; this supplemental compiler-context treatment does not replace full-matrix observations or solver validation."] if args.binary_map else []),
+                   "traces": traces, "rows": rows,
+                   "counts": dict(Counter(row["status"] for row in rows)),
+                   "performance_measurements": sum(row["phase"] == "measure" for row in rows)}
+@@ -491,7 +811,8 @@ def main():
+             # compiler's automatic vectorization of ordinary integer loops.
+             for vector in ("vector_backed", "simd_vector_backed"):
+                 for case in CASES:
+-                    command = [entry["binary"], "--check=" + case, backend, vector + "<test_value_type>"]
++                    selected = binary_entry(metadata, mode, backend)
++                    command = [selected["binary"], "--check=" + case, backend, vector + "<test_value_type>"]
+                     prefix = f"{mode}-{backend}-{vector}-{case}"
+                     try:
+                         result = subprocess.run(command, capture_output=True, text=True,
+@@ -509,7 +830,7 @@ def main():
+                                  "logs_sha256": logs,
+                                  "output_identity_verified": identity})
+     unchanged(metadata)
+-    report = {"scope": "Semantic screen only; no operation timings sampled",
++    report = {"scope": ("Supplemental per-backend registry-instantiation treatment: " if args.binary_map else "") + "Semantic screen only; no operation timings sampled",
+               "cases": "empty downset, zero-dimensional singleton and all-minus-one bottom are distinct",
+               "policy": "Every rejection/crash/timeout is retained. Constructor preconditions, empty results and zero-dimensional domains stay distinct; actual-trace eligibility is checked separately.",
+               "provenance": metadata, "rows": rows,
+diff --git a/meson.options b/meson.options
+index f7c28051f411c49ac8d7be4cf34658e246d031a7..0836bf49f87354484e2b9cab03f110e5df4a32ca 100644
+--- a/meson.options
++++ b/meson.options
+@@ -65,3 +65,6 @@ option('acacia_enable_equivariant_solver', type: 'boolean', value: true,
+ option('acacia_vector_downset', type: 'combo',
+        choices: ['vector_backed', 'rank_bucketed_vector_backed'],
+        value: 'vector_backed')
++
++option('acacia_posets_benchmarks', type: 'boolean', value: false,
++       description: 'Build isolated Posets comparison executables with the selected solver preset')
+diff --git a/src/meson.build b/src/meson.build
+index 09ab5a12f1bab9267d0486ef0c9ddaabfbf1911c..5710e4f9ae90cc23d066ef6a2a980061cb008b8d 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -37,12 +37,61 @@ if get_option('build_python')
+ endif
+ #subdir ('python_pybind')
+ 
+-ab_exe = executable ('acacia-bonsai', ab_sources, version_h,
+-                     link_with : [closure_buchi_provider_lib, parity_route_lib, parity_lib, tlsf_dpa_lib],
++ab_links = [closure_buchi_provider_lib, parity_route_lib, parity_lib, tlsf_dpa_lib]
++ab_deps = [posets_dep, spot_dep, bddx_dep, stdsimd_dep] + tlsf_deps
++ab_main_sources = ab_sources
++ab_bench_flags = []
++if get_option('acacia_posets_benchmarks')
++  # Only the downset instantiation and its version record vary between arms.
++  shared_sources = []
++  foreach source : ab_sources
++    if source not in ['solver/solve_game_vector.cc', 'version.cc']
++      shared_sources += source
++    endif
++  endforeach
++  shared_solver = static_library('acacia-posets-common', shared_sources,
++    include_directories: inc, dependencies: ab_deps, pic: false, install: false)
++  ab_links += shared_solver
++  ab_main_sources = ['solver/solve_game_vector.cc', 'version.cc']
++  ab_bench_flags = ['-DACACIA_POSETS_BENCHMARK_LABEL="candidate-default"']
++endif
++
++ab_exe = executable ('acacia-bonsai', ab_main_sources, version_h,
++                     link_with : ab_links,
+                      include_directories : inc,
++                     cpp_args: ab_bench_flags,
+                      install: true,
+                      install_tag: 'cli',
+-                     dependencies : [posets_dep, spot_dep, bddx_dep, stdsimd_dep] + tlsf_deps)
++                     dependencies : ab_deps)
++
++if get_option('acacia_posets_benchmarks')
++  posets_variants = [
++    ['kd', 'kdtree_backed', 'POSETS_ENABLE_DOWNSET_KDTREE_BACKED', []],
++    ['trie', 'sharingtrie_backed', 'POSETS_ENABLE_DOWNSET_SHARINGTRIE_BACKED', []],
++    ['comp', 'comptrie_backed', 'POSETS_ENABLE_DOWNSET_COMPTRIE_BACKED', []],
++    ['block8', 'block_sharingtrie_backed', 'POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED', []],
++    ['block16', 'block_sharingtrie_b16', 'POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED', []],
++    ['block8-uncached', 'block_sharingtrie_b8_uncached', 'POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED', []],
++    ['kd-narrow', 'kdtree_backed', 'POSETS_ENABLE_DOWNSET_KDTREE_BACKED',
++      ['-DPOSETS_KDTREE_NARROW_INDICES=1']],
++    ['trie-compact', 'sharingtrie_backed', 'POSETS_ENABLE_DOWNSET_SHARINGTRIE_BACKED',
++      ['-DPOSETS_SHARINGTRIE_COMPACT_NODES=1']],
++    ['comp-simd', 'comptrie_backed', 'POSETS_ENABLE_DOWNSET_COMPTRIE_BACKED',
++      ['-DPOSETS_COMPTRIE_SIMD_PATHS=1']],
++    ['lazy-fc', 'lazy_kdtree_backed', 'POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED', []],
++    ['lazy-search', 'lazy_kdtree_uncascaded', 'POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED', []],
++    ['sharingtree', 'sharingtree_backed', 'POSETS_ENABLE_DOWNSET_SHARINGTREE_BACKED', []],
++    ['simple-sharingtree', 'simple_sharingtree_backed', 'POSETS_ENABLE_DOWNSET_SIMPLE_SHARINGTREE_BACKED', []],
++  ]
++  foreach variant : posets_variants
++    flags = ['-DACACIA_POSETS_BENCHMARK_LABEL="' + variant[0] + '"',
++             '-DVECTOR_AND_BITSET_DOWNSET_IMPL=' + variant[1],
++             '-D' + variant[2] + '=1'] + variant[3]
++    executable('acacia-bonsai-' + variant[0], ab_main_sources, version_h,
++      link_with: ab_links, include_directories: inc, cpp_args: flags,
++      dependencies: ab_deps, install: false)
++  endforeach
++endif
+ 
+ if native_test_hooks
+   native_test_exe = executable ('acacia-bonsai-native-test', ab_sources,
+diff --git a/src/solver/solve_game_vector.cc b/src/solver/solve_game_vector.cc
+index a88c0238a01a17e34ddde909160423dd98bd1f9b..1d0a3b75bbefd4d58ebe6fe02cc5a865e47867a4 100644
+--- a/src/solver/solve_game_vector.cc
++++ b/src/solver/solve_game_vector.cc
+@@ -8,6 +8,22 @@
+ #include <optional>
+ #include <spot/twa/twagraph.hh>
+ 
++#if POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED
++namespace posets::downsets {
++  template <class V>
++  using block_sharingtrie_b16 = block_sharingtrie_backed<V, 16>;
++  template <class V>
++  using block_sharingtrie_b8_uncached = block_sharingtrie_backed<V, 8, true, false>;
++}
++#endif
++
++#if POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED
++namespace posets::downsets {
++  template <class V>
++  using lazy_kdtree_uncascaded = lazy_kdtree_backed<V, false>;
++}
++#endif
++
+ std::optional<spot::twa_graph_ptr> solve_game (
+     spot::twa_graph_ptr aut, const VECTOR_ELT_T& kmax, const VECTOR_ELT_T& kmin,
+     const VECTOR_ELT_T& kinc, const bdd& all_inputs, const bdd& all_outputs, bool do_synthesis,
+@@ -19,7 +35,7 @@ std::optional<spot::twa_graph_ptr> solve_game (
+   using Vector = posets::vectors::simd_vector_backed<VECTOR_ELT_T>;
+   using Downset = posets::downsets::VECTOR_AND_BITSET_DOWNSET_IMPL<Vector>;
+ 
+-  return acacia::solver_detail::solve_with_downset<Downset> (
+-      aut, kmax, kmin, kinc, all_inputs, all_outputs, do_synthesis, hints, backend, candidate,
+-      equivariance);
++  return acacia::solver_detail::solve_with_downset<Downset> (aut, kmax, kmin, kinc, all_inputs,
++                                                             all_outputs, do_synthesis, hints,
++                                                             backend, candidate, equivariance);
+ }
+diff --git a/src/version.cc b/src/version.cc
+index b7479495c2a9ab9b0f72c5764be98463604b4de0..59f8d0322dd1d405082046d73d09e5c65837daf7 100644
+--- a/src/version.cc
++++ b/src/version.cc
+@@ -4,12 +4,24 @@
+ 
+ #include <ostream>
+ 
+-const char* acacia_version () {
+-  return ACACIA_VERSION;
+-}
++#ifdef ACACIA_POSETS_BENCHMARK_LABEL
++# include <posets/utils/simd_traits.hh>
++# define ACACIA_STRINGIFY_INNER(x) #x
++# define ACACIA_STRINGIFY(x) ACACIA_STRINGIFY_INNER (x)
++#endif
++
++const char* acacia_version () { return ACACIA_VERSION; }
+ 
+ void print_version (std::ostream& output) {
+   output << "Version: " << acacia_version () << '\n';
+   const char* preset = acacia_preset ();
+   output << "Configuration: " << (*preset ? preset : "(unnamed configuration)") << '\n';
++#ifdef ACACIA_POSETS_BENCHMARK_LABEL
++  output << "Posets benchmark: " << ACACIA_POSETS_BENCHMARK_LABEL
++         << " downset=" << ACACIA_STRINGIFY (VECTOR_AND_BITSET_DOWNSET_IMPL)
++         << " simd_lanes=" << posets::utils::simd_traits<VECTOR_ELT_T>::simd_size
++         << " kd_narrow=" << POSETS_KDTREE_NARROW_INDICES
++         << " trie_compact=" << POSETS_SHARINGTRIE_COMPACT_NODES
++         << " comptrie_simd=" << POSETS_COMPTRIE_SIMD_PATHS << '\n';
++#endif
+ }
+diff --git a/subprojects/posets b/subprojects/posets
+index e167f43646b880c69046bab7110dbb327686c024..cc058ca96ebc667f727ea2f0c2360b77d60192d3 160000
+--- a/subprojects/posets
++++ b/subprojects/posets
+@@ -1 +1 @@
+-Subproject commit e167f43646b880c69046bab7110dbb327686c024
++Subproject commit cc058ca96ebc667f727ea2f0c2360b77d60192d3
+diff --git a/tests/check-config-frontends.py b/tests/check-config-frontends.py
+index 04efd3a20632901bd4e02e33e41eb680b3d29cab..95b800689052b19ef5366038bbf5c63d9240862f 100644
+--- a/tests/check-config-frontends.py
++++ b/tests/check-config-frontends.py
+@@ -45,6 +45,7 @@ NON_SOLVER_OPTIONS = {
+     "build_python",
+     "acacia_tlsf_corpus_dir",
+     "acacia_compiler_profile",
++    "acacia_posets_benchmarks",
+ }
+ 
+ 
+diff --git a/tests/check-version.py b/tests/check-version.py
+index 164c2ff995561619426e179c2455f3fe1ef0679e..cd68eea78fed0b77da287926ab86c64c94c624dc 100644
+--- a/tests/check-version.py
++++ b/tests/check-version.py
+@@ -22,6 +22,8 @@ def main() -> None:
+     pattern = (
+         r"Version: (\d[\w.+-]*|[0-9a-f]{7,40})(-dirty)?\n"
+         r"Configuration: (\(unnamed configuration\)|[\w.+-]+)\n"
++        r"(?:Posets benchmark: [\w-]+ downset=\w+ simd_lanes=\d+ "
++        r"kd_narrow=[01] trie_compact=[01] comptrie_simd=[01]\n)?"
+     )
+     if completed.returncode != 2 or re.fullmatch(pattern, completed.stdout) is None:
+         raise AssertionError(
+diff --git a/tests/pytest/test_no_benchmark_hardcoding.py b/tests/pytest/test_no_benchmark_hardcoding.py
+index 0b46132160265c795d8d9769cff1ef787478bb27..c7f0b23bc1f6340f8719099726200f89e724c68c 100644
+--- a/tests/pytest/test_no_benchmark_hardcoding.py
++++ b/tests/pytest/test_no_benchmark_hardcoding.py
+@@ -476,7 +476,21 @@ def compiled_sources() -> set[Path]:
+     main = main.split("if native_test_hooks", 1)[0]
+     tlsf = (ROOT / "subprojects/tlsf-tools/src/lib/meson.build").read_text(
+         encoding="utf-8").split("# The fault-injection build", 1)[0]
+-    assert "executable ('acacia-bonsai', ab_sources" in main
++    if "executable ('acacia-bonsai', ab_sources" not in main:
++        assert "executable ('acacia-bonsai', ab_main_sources" in main
++        guard = "if get_option('acacia_posets_benchmarks')"
++        assert guard in main
++        defaults, opt_in = main.split(guard, 1)
++        opt_in, production = opt_in.split("\nendif\n", 1)
++        assert "ab_main_sources = ab_sources" in defaults
++        assert "foreach source : ab_sources" in opt_in
++        assert "if source not in ['solver/solve_game_vector.cc', 'version.cc']" in opt_in
++        assert "shared_sources += source" in opt_in
++        assert "static_library('acacia-posets-common', shared_sources" in opt_in
++        assert "ab_links += shared_solver" in opt_in
++        assert "ab_main_sources = ['solver/solve_game_vector.cc', 'version.cc']" in opt_in
++        assert "link_with : ab_links" in production
++        assert main.count("ab_main_sources =") == 2
+     assert "static_library(\n  'tlsf'" in tlsf
+     return ({ROOT / "src" / name for name in COMPILED.findall(main)}
+             | {ROOT / "subprojects/tlsf-tools/src/lib" / name
+@@ -1132,6 +1146,34 @@ def test_new_meson_source_enters_scan(tmp_path: Path,
+     assert added in solver_files()
+ 
+ 
++@pytest.mark.parametrize("removed", [None, "ab_main_sources = ab_sources",
++                                    "shared_sources += source", "ab_links += shared_solver",
++                                    "link_with : ab_links"])
++def test_shared_core_sources_enter_scan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
++                                        removed: str | None) -> None:
++    main = (ROOT / "src/meson.build").read_text(encoding="utf-8")
++    if removed:
++        assert removed in main
++        main = main.replace(removed, "", 1)
++    (tmp_path / "src").mkdir()
++    (tmp_path / "src/meson.build").write_text(main)
++    lib = tmp_path / "subprojects/tlsf-tools/src/lib"
++    lib.mkdir(parents=True)
++    (lib / "meson.build").write_text("tlsf_lib = static_library(\n  'tlsf', files('dep.c'))\n")
++    monkeypatch.setitem(globals(), "ROOT", tmp_path)
++    if removed:
++        with pytest.raises(AssertionError):
++            compiled_sources()
++    else:
++        sources = compiled_sources()
++        assert {tmp_path / "src" / name for name in
++                ("acacia-bonsai.cc", "solver/solve_game_vector.cc", "version.cc",
++                 "solver/solver_invoker.cc")} <= sources
++        assert tmp_path / "subprojects/tlsf-tools/src/lib/dep.c" in sources
++        assert tmp_path / "src/native_test_hooks.cc" not in sources
++        assert not any("research" in path.parts for path in sources)
++
++
+ def test_subdir_source_enters_scan(tmp_path: Path,
+                                   monkeypatch: pytest.MonkeyPatch) -> None:
+     ids = corpus_identities()
+diff --git a/tests/pytest/test_posets_matrix.py b/tests/pytest/test_posets_matrix.py
+index c7da0078c3a9f7a226d2906f4a4b8f1b39c8b948..67e0de38c5435fa17aa226eb70a63f957ef2472f 100644
+--- a/tests/pytest/test_posets_matrix.py
++++ b/tests/pytest/test_posets_matrix.py
+@@ -2,8 +2,13 @@
+ 
+ import importlib.util
+ from contextlib import nullcontext
++import hashlib
+ import json
++import os
+ from pathlib import Path
++import shlex
++import shutil
++import subprocess
+ import sys
+ 
+ import pytest
+@@ -15,6 +20,20 @@ M = importlib.util.module_from_spec(SPEC)
+ SPEC.loader.exec_module(M)
+ 
+ 
++def test_unchanged_checks_the_declared_frozen_source(tmp_path):
++    source = tmp_path / "frozen-posets"
++    source.mkdir()
++    header = source / "fixture.hh"
++    header.write_text("frozen source\n")
++    metadata = {"modes": {}, "posets_source_dir": str(source),
++                "source_sha256": {"fixture.hh": M.sha(header)},
++                "driver_sha256": M.sha(Path(M.__file__)), "support_sha256": {}}
++    M.unchanged(metadata)
++    header.write_text("changed source\n")
++    with pytest.raises(ValueError, match="A Posets source changed"):
++        M.unchanged(metadata)
++
++
+ def capture(tmp_path):
+     snapshot = tmp_path / "snapshots"
+     directory = snapshot / "aut-1-0"
+@@ -232,6 +251,47 @@ def test_planned_order_is_saved_and_source_timeout_never_qualifies(tmp_path, mon
+     assert not measured and not json.loads((tmp_path / "measurement-order.json").read_text())
+ 
+ 
++def test_common_timing_order_survives_different_qualification(tmp_path, monkeypatch):
++    from argparse import Namespace
++    from benchlib import RunResult
++
++    monkeypatch.setattr(M, "campaign_scope_guard", lambda _: nullcontext())
++    backends = ["kdtree_backed", "sharingtree_backed", "vector_backed"]
++    mode = {"binary": "/fixture", "backends": backends}
++    metadata = {"modes": {"compatible": mode, "native": mode},
++                "aliases": {"compatible": "compatible", "native": "native"}}
++    args = Namespace(case_timeout=1, check_timeout=1, source_timeout=1, memory_max="8G",
++                     backends=backends, measure=True, repetitions=3, rounds=1, detail=False, seed=17)
++    traces = [{"id": number, "path": f"/trace-{number}",
++               "features": {"dimension": 2, "maxima": 1, "boolean_tail": 2}} for number in range(2)]
++
++    def run(directory, rejected):
++        directory.mkdir()
++
++        def fake(command, *_args, **_kwargs):
++            if "--check=trace-source" in command:
++                return RunResult("[TRACE SOURCE OK]\n", "", 0, 0, False)
++            trace = int(command[command.index("--trace") + 1].rsplit("-", 1)[1])
++            backend, vector = command[-2:]
++            if "--check=replay" in command and (trace, backend) in rejected:
++                return RunResult("", "retained timeout\n", 124, 1, True)
++            output = f"[--] running tests for posets::downsets::{backend}<posets::vectors::{vector}>\n"
++            if "--check=replay" not in command:
++                output += "  - rounds: 1\n  - dimension: 2\n  - boolean_tail: 2\n  - before_maxima: 1\n  - cpre: 0.001\n"
++            return RunResult(output, "", 0, 0, False)
++
++        monkeypatch.setattr(M, "run_systemd_scope", fake)
++        rows = M.replay(args, metadata, traces, directory)
++        order = json.loads((directory / "measurement-order.json").read_text())
++        return rows, [(row["repetition"], row["trace"], row["mode"], row["backend"], row["vector"]) for row in order]
++
++    rejected = {(0, "kdtree_backed"), (1, "sharingtree_backed")}
++    rows, filtered = run(tmp_path / "censored", rejected)
++    _, complete = run(tmp_path / "complete", set())
++    assert filtered == [row for row in complete if (row[1], row[3]) not in rejected]
++    assert any(row["phase"] == "check" and row["status"] == "timeout" for row in rows)
++
++
+ @pytest.mark.parametrize("mutation", ["none", "ndebug", "stdlib", "optimization", "lto", "target"])
+ def test_measurements_require_comparable_release_builds(mutation):
+     flags = ["c++", "-O3", "-flto=auto", "-march=native", "-std=c++20", "-DNDEBUG"]
+@@ -253,3 +313,402 @@ def test_measurements_require_comparable_release_builds(mutation):
+     else:
+         with pytest.raises(ValueError):
+             M.measurement_build({"modes": modes})
++
++
++def binary_map_fixture(tmp_path, monkeypatch):
++    """Real source pins, fake ELF/Ninja observations; no compiler or harness runs."""
++    source, anchor_source = tmp_path / "source", tmp_path / "anchor"
++    (source / "tests").mkdir(parents=True)
++    (source / ".gitignore").write_text("build/\n")
++    marker = "  register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);\n"
++    original = "using set_types = template_type_list<\n  fixture\n  >;\nint main () {\n" + marker + "}\n"
++    (source / "tests/downset-bm.cc").write_text(original)
++    (source / "tests/meson.build").write_text("# Keep the 14-backend matrix\n")
++
++    def git(*args):
++        return subprocess.check_output(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", *args], cwd=source)
++
++    git("init", "-q")
++    git("add", ".")
++    git("commit", "-qm", "base")
++    base = git("rev-parse", "HEAD").decode().strip()
++    shutil.copytree(source, anchor_source)
++    replacement = ("#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)\n"
++                   "  register_maker<false, POSETS_MATRIX_BACKEND> ((vector_types*) nullptr);\n#else\n" + marker + "#endif\n")
++    selected = original.replace(marker, replacement)
++    (source / "tests/downset-bm.cc").write_text(selected)
++    git("add", ".")
++    git("commit", "-qm", "selector")
++    revision = git("rev-parse", "HEAD").decode().strip()
++    overlay = tmp_path / "selector.patch"
++    overlay.write_bytes(git("diff", "--binary", "--full-index", base, revision))
++    library = tmp_path / "libfixture.so"
++    library.write_text("library\n")
++
++    def libs(_binary):
++        return [{"path": str(library), "realpath": str(library), "sha256": M.sha(library)}]
++
++    def binding(path):
++        return {"path": str(path), "sha256": M.sha(path)}
++
++    metadata, ninja = {}, {}
++
++    def compile_command(directory, mode):
++        obj = f"tests/downset-matrix-{mode}.p/downset-bm.cc.o"
++        args = ["c++", "-Itests/downset-matrix-" + mode + ".p", "-I../include", "-O3", "-flto=1", "-march=native",
++                "-std=c++20", "-DNDEBUG", "-DPOSETS_MATRIX_ONLY", "-DPOSETS_SIMD_WIDTH=" + str(M.MODES.index(mode)),
++                "-MD", "-MQ", obj, "-MF", obj + ".d", "-o", obj, "-c", "../tests/downset-bm.cc"]
++        return {"arguments": args, "directory": str(directory), "file": "../tests/downset-bm.cc", "output": obj}
++
++    def link_command(directory, mode):
++        return {"arguments": ["c++", "-o", "tests/downset-matrix-" + mode,
++                               f"tests/downset-matrix-{mode}.p/downset-bm.cc.o", "-O3", "-flto=1", "-march=native"],
++                "directory": str(directory), "output": "tests/downset-matrix-" + mode}
++
++    def meta(mode, backends):
++        lanes = 16 if mode == "compatible" else 64
++        return {"compiler": "fixture", "element_bytes": 1, "selected_lanes": lanes, "compatible_lanes": 16,
++                "native_lanes": 64, "max_fixed_lanes": 64, "block_bytes": lanes, "width_selector": M.MODES.index(mode),
++                "alignment": lanes, "ndebug": True, "stdlib_assertions": False, "simd_type": str(lanes),
++                "hybrid_policy": "fixture", "backends": backends}
++
++    def instructions(mode):
++        return "90 c3" if mode == "compatible" else "91 c3"
++
++    def elf(path, mode, backends):
++        path.parent.mkdir(parents=True, exist_ok=True)
++        path.write_bytes(b"\x7fELF" + str(path).encode())
++        metadata[str(path)] = meta(mode, backends)
++        return {**metadata[str(path)], "binary": str(path), "binary_sha256": M.sha(path), "libraries": libs(path),
++                "comparison_instructions_sha256": hashlib.sha256(bytes.fromhex(instructions(mode))).hexdigest()}
++
++    for tree in (source, anchor_source):
++        build = tree / "build"
++        build.mkdir()
++        (build / "build.ninja").write_text("fixture manifest\n")
++        commands = [compile_command(build, mode) for mode in M.MODES]
++        (build / "compile_commands.json").write_text(json.dumps(commands))
++        for mode in M.MODES:
++            ninja[(str(build), mode)] = "\n".join(shlex.join(command["arguments"])
++                                                  for command in (compile_command(build, mode), link_command(build, mode))) + "\n"
++    anchor = {"posets_revision": base, "posets_dirty": "", "posets_source_dir": str(anchor_source),
++              "source_sha256": {name: M.sha(anchor_source / name) for name in ("tests/downset-bm.cc", "tests/meson.build")},
++              "modes": {mode: {**elf(anchor_source / "build/tests" / ("downset-matrix-" + mode), mode, sorted(M.BACKENDS)),
++                                "compiler_command": compile_command(anchor_source / "build", mode)} for mode in M.MODES}}
++    proof = tmp_path / "anchor.json"
++    proof.write_text(json.dumps({"provenance": anchor}))
++    plan = {"schema_version": 1, "kind": "posets-per-backend-binaries", "base_revision": base,
++            "source_revision": revision, "source_dir": str(source), "selector_overlay": binding(overlay),
++            "anchor_provenance": binding(proof),
++            "source_oracle_binary": binding(anchor_source / "build/tests/downset-matrix-compatible"),
++            "aliases": {"max": "native"}, "binaries": []}
++    builder = tmp_path / "builder.py"
++    builder.write_text("fixture builder\n")
++    build_plan_path = tmp_path / "build-plan.json"
++    build_rows = []
++    for mode in ("compatible", "native"):
++        for backend in sorted(M.BACKENDS):
++            binary = source / "build/per-backend" / (mode + "-" + backend)
++            observed = elf(binary, mode, [backend])
++            template = compile_command(source / "build", mode)
++            command = json.loads(json.dumps(template))
++            obj = str(binary) + ".o"
++            for flag, value in (("-MQ", obj), ("-MF", obj + ".d"), ("-o", obj)):
++                command["arguments"][command["arguments"].index(flag) + 1] = value
++            command["arguments"].append("-DPOSETS_MATRIX_BACKEND=" + M.BACKEND_SELECTORS[backend])
++            command["output"] = obj
++            template_linker = link_command(source / "build", mode)
++            linker = json.loads(json.dumps(template_linker))
++            linker["arguments"][2] = str(binary)
++            linker["arguments"][3] = obj
++            linker["output"] = str(binary)
++            record = {"schema_version": 1, "kind": "posets-selector-build", "mode": mode, "backend": backend,
++                      "base_revision": base, "source_revision": revision, "source_dir": str(source),
++                      "selector_overlay_sha256": M.sha(overlay), "binary_sha256": observed["binary_sha256"],
++                      "compile_commands": binding(source / "build/compile_commands.json"),
++                      "template_compiler_command": template, "compiler_command": command,
++                      "template_linker_command": template_linker, "linker_command": linker}
++            stages, invocations = [], []
++            for stage, argv in (("compile", command), ("link", linker)):
++                stem = tmp_path / (mode + "-" + backend + "-" + stage)
++                spec = {"command": argv["arguments"], "cwd": argv["directory"], "timeout": 600}
++                spec_path = stem.with_suffix(".spec.json")
++                spec_path.write_text(json.dumps(spec))
++                invocation_path = stem.with_suffix(".json")
++                log = stem.with_suffix(".log")
++                log.write_text("fixture successful build\n")
++                helper = invocation_path.with_suffix(".helper.py")
++                helper.write_text("fixture scope helper\n")
++                invocation_path.write_text(json.dumps({"spec": spec, "spec_sha256": M.sha(spec_path),
++                    "result": {"returncode": 0, "timed_out": False, "resource_limited": False},
++                    "memory_max": "8G", "memory_swap_max": "0", "log": str(log), "log_sha256": M.sha(log),
++                    "helper_sha256": M.sha(helper), "benchlib_sha256": M.sha(M.ROOT / "benchmarking/benchlib.py")}))
++                stages.append({"stage": stage, "spec": binding(spec_path)})
++                invocations.append({"stage": stage, **binding(invocation_path)})
++            record["invocations"] = invocations
++            record["builder"] = binding(builder)
++            record_path = tmp_path / (mode + "-" + backend + ".json")
++            record_path.write_text(json.dumps(record))
++            plan["binaries"].append({"mode": mode, "backend": backend, "binary": str(binary),
++                                     "binary_sha256": M.sha(binary), "build_record": binding(record_path)})
++            build_rows.append({key: record[key] for key in ("mode", "backend", "compiler_command", "linker_command",
++                                                           "template_compiler_command", "template_linker_command")} | {"stages": stages})
++    build_plan_path.write_text(json.dumps({"schema_version": 1, "kind": "posets-selector-build-plan", "rows": build_rows,
++                                          "base_revision": base, "source_revision": revision, "source_dir": str(source)}))
++    for entry in plan["binaries"]:
++        record_path = Path(entry["build_record"]["path"])
++        record = json.loads(record_path.read_text())
++        record["build_plan"] = binding(build_plan_path)
++        record_path.write_text(json.dumps(record))
++        entry["build_record"]["sha256"] = M.sha(record_path)
++    path = tmp_path / "map.json"
++    path.write_text(json.dumps(plan))
++    real_check_output = subprocess.check_output
++
++    def fake_check_output(command, **kwargs):
++        if command[0] == "ninja":
++            return ninja[(command[2], command[-1].removeprefix("tests/downset-matrix-"))]
++        if command[0] == "objdump":
++            mode = "compatible" if metadata[command[-1]]["width_selector"] == 0 else "native"
++            return "0 <posets_matrix_compare>:\n  0: " + instructions(mode) + "  ret\n"
++        if len(command) == 2 and command[1] == "--metadata":
++            return json.dumps(metadata[command[0]])
++        return real_check_output(command, **kwargs)
++
++    monkeypatch.setattr(M.subprocess, "check_output", fake_check_output)
++    monkeypatch.setattr(M, "libraries", libs)
++    output = tmp_path / "output"
++    output.mkdir()
++    return path, plan, output, metadata, library, ninja
++
++
++def load_binary_map(path, plan, output):
++    return M.backend_provenance(Path(plan["source_oracle_binary"]["path"]).parent.parent, output, None, path)[1]
++
++
++def resync_build_record(plan, entry, record):
++    """Rebind all internal artifacts so negative flag tests reach the anchor guard."""
++    build_plan_path = Path(record["build_plan"]["path"])
++    build_plan = json.loads(build_plan_path.read_text())
++    row, = [row for row in build_plan["rows"] if (row["mode"], row["backend"]) == (record["mode"], record["backend"])]
++    for name in ("compiler_command", "linker_command", "template_compiler_command", "template_linker_command"):
++        row[name] = record[name]
++    for stage, invocation, name in zip(row["stages"], record["invocations"], ("compiler_command", "linker_command")):
++        spec_path = Path(stage["spec"]["path"])
++        spec = json.loads(spec_path.read_text())
++        spec["command"] = record[name]["arguments"]
++        spec_path.write_text(json.dumps(spec))
++        stage["spec"]["sha256"] = M.sha(spec_path)
++        invocation_path = Path(invocation["path"])
++        observed = json.loads(invocation_path.read_text())
++        observed["spec"], observed["spec_sha256"] = spec, M.sha(spec_path)
++        invocation_path.write_text(json.dumps(observed))
++        invocation["sha256"] = M.sha(invocation_path)
++    build_plan_path.write_text(json.dumps(build_plan))
++    for other_entry in plan["binaries"]:
++        path = Path(other_entry["build_record"]["path"])
++        other = record if other_entry is entry else json.loads(path.read_text())
++        other["build_plan"]["sha256"] = M.sha(build_plan_path)
++        other["compile_commands"]["sha256"] = M.sha(Path(other["compile_commands"]["path"]))
++        path.write_text(json.dumps(other))
++        other_entry["build_record"]["sha256"] = M.sha(path)
++
++
++def test_per_backend_map_binds_complete_inventory_and_alias(tmp_path, monkeypatch):
++    path, plan, output, _, _, _ = binary_map_fixture(tmp_path, monkeypatch)
++    metadata = load_binary_map(path, plan, output)
++    assert set(metadata["backend_binaries"]) == {"compatible", "native"}
++    assert all(set(rows) == M.BACKENDS for rows in metadata["backend_binaries"].values())
++    assert metadata["aliases"]["max"] == "native"
++    assert M.binary_entry(metadata, "max", "kdtree_backed") is M.binary_entry(metadata, "native", "kdtree_backed")
++    assert metadata["source_oracle"]["binary"] == plan["source_oracle_binary"]["path"]
++    assert "binary" not in metadata["modes"]["max"]
++    M.measurement_build(metadata)
++
++
++def test_selector_source_rejects_the_legacy_singleton_alias_location(tmp_path, monkeypatch):
++    _, plan, _, _, _, _ = binary_map_fixture(tmp_path, monkeypatch)
++    source = Path(plan["source_dir"])
++    original = subprocess.check_output(["git", "show", plan["base_revision"] + ":tests/downset-bm.cc"], cwd=source, text=True)
++    start = original.index("using set_types = template_type_list<\n")
++    end = original.index("  >;\n", start) + len("  >;\n")
++    rejected = (original[:start] + "#if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)\n"
++                "using set_types = template_type_list<POSETS_MATRIX_BACKEND>;\n#else\n" + original[start:end] + "#endif\n" + original[end:])
++    (source / "tests/downset-bm.cc").write_text(rejected)
++    subprocess.run(["git", "add", "tests/downset-bm.cc"], cwd=source, check=True)
++    subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "rejected alias selector"], cwd=source, check=True)
++    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip()
++    with pytest.raises(ValueError, match="Selector harness overlay differs"):
++        M.selector_source(source, plan["base_revision"], revision, Path(plan["selector_overlay"]["path"]))
++
++
++@pytest.mark.parametrize("mutation", ["duplicate", "missing", "singleton", "source_pin", "base_pin", "binary", "library", "oracle", "alias", "alias_probe", "abi", "selector", "optimization", "template_define", "link_flags", "invocation", "scope_budget"])
++def test_per_backend_map_rejects_integrity_failures(tmp_path, monkeypatch, mutation):
++    path, plan, output, observed, library, _ = binary_map_fixture(tmp_path, monkeypatch)
++    entry = plan["binaries"][0]
++    record_path = Path(entry["build_record"]["path"])
++    record = json.loads(record_path.read_text())
++    if mutation == "duplicate":
++        plan["binaries"].append(dict(entry))
++    elif mutation == "missing":
++        plan["binaries"].pop()
++    elif mutation == "singleton":
++        observed[entry["binary"]]["backends"] = ["vector_backed", "kdtree_backed"]
++    elif mutation == "source_pin":
++        plan["source_revision"] = plan["base_revision"]
++    elif mutation == "base_pin":
++        plan["base_revision"] = plan["source_revision"]
++    elif mutation == "binary":
++        Path(entry["binary"]).write_bytes(b"\x7fELFtampered")
++    elif mutation == "library":
++        library.write_text("changed library")
++    elif mutation == "oracle":
++        plan["source_oracle_binary"] = {"path": entry["binary"], "sha256": entry["binary_sha256"]}
++    elif mutation == "alias":
++        plan["aliases"]["max"] = "compatible"
++    elif mutation == "alias_probe":
++        proof = Path(plan["anchor_provenance"]["path"])
++        document = json.loads(proof.read_text())
++        maximum = document["provenance"]["modes"]["max"]
++        maximum["alignment"] *= 2
++        observed[maximum["binary"]]["alignment"] = maximum["alignment"]
++        proof.write_text(json.dumps(document))
++        plan["anchor_provenance"]["sha256"] = M.sha(proof)
++    elif mutation == "abi":
++        observed[entry["binary"]]["alignment"] *= 2
++    elif mutation == "selector":
++        record["compiler_command"]["arguments"][-1] = "-DPOSETS_MATRIX_BACKEND=wrong"
++    elif mutation == "optimization":
++        record["compiler_command"]["arguments"].append("-O2")
++    elif mutation == "template_define":
++        record["compiler_command"]["arguments"].append("-D__AVX512F__=1")
++        record["template_compiler_command"]["arguments"].append("-D__AVX512F__=1")
++        db_path = Path(record["compile_commands"]["path"])
++        commands = json.loads(db_path.read_text())
++        commands[0] = record["template_compiler_command"]
++        db_path.write_text(json.dumps(commands))
++        # Update every internal reference; the frozen anchor must still reject it.
++        for row in plan["binaries"]:
++            p = Path(row["build_record"]["path"])
++            other = record if p == record_path else json.loads(p.read_text())
++            other["compile_commands"]["sha256"] = M.sha(db_path)
++            p.write_text(json.dumps(other))
++            row["build_record"]["sha256"] = M.sha(p)
++    elif mutation == "link_flags":
++        record["linker_command"]["arguments"].append("-Ofast")
++    else:
++        invocation = record["invocations"][0]
++        p = Path(invocation["path"])
++        observed_scope = json.loads(p.read_text())
++        if mutation == "invocation":
++            observed_scope["spec"]["command"].append("-O2")
++        else:
++            observed_scope["memory_max"] = "9G"
++        p.write_text(json.dumps(observed_scope))
++        invocation["sha256"] = M.sha(p)
++    if mutation in {"selector", "optimization", "template_define", "link_flags"}:
++        resync_build_record(plan, entry, record)
++    elif mutation in {"invocation", "scope_budget"}:
++        record_path.write_text(json.dumps(record))
++        entry["build_record"]["sha256"] = M.sha(record_path)
++    path.write_text(json.dumps(plan))
++    with pytest.raises(ValueError):
++        load_binary_map(path, plan, output)
++
++
++def test_per_backend_dispatch_keeps_source_oracle_scalar_scope_and_shuffle(tmp_path, monkeypatch):
++    from argparse import Namespace
++    from benchlib import RunResult
++
++    path, plan, output, _, _, _ = binary_map_fixture(tmp_path, monkeypatch)
++    mapped = load_binary_map(path, plan, output)
++    combined = {"modes": {mode: {"binary": "/combined/" + mode, "backends": sorted(M.BACKENDS)} for mode in M.MODES},
++                "aliases": mapped["aliases"]}
++    args = Namespace(case_timeout=1, check_timeout=2, source_timeout=3, memory_max="8G",
++                     backends=sorted(M.BACKENDS), measure=True, repetitions=2, rounds=1, detail=False, seed=13)
++    trace = {"id": 0, "path": "/trace", "features": {"dimension": 2, "maxima": 1, "boolean_tail": 2}}
++    monkeypatch.setattr(M, "campaign_scope_guard", lambda _: nullcontext())
++    reference = M
++    if name := os.environ.get("ACACIA_POSETS_PRE_MAP_DRIVER"):
++        snapshot = Path(name)
++        assert M.sha(snapshot) == M.SCHEDULER_REFERENCE_SHA256
++        spec = importlib.util.spec_from_file_location("posets_matrix_pre_map", snapshot)
++        reference = importlib.util.module_from_spec(spec)
++        spec.loader.exec_module(reference)
++        monkeypatch.setattr(reference, "campaign_scope_guard", lambda _: nullcontext())
++
++    def run(metadata, name, mismatch=False, module=M, censored=False):
++        directory = tmp_path / name
++        directory.mkdir()
++        seen = []
++
++        def fake(command, cap, *_args, **_kwargs):
++            seen.append(command)
++            if "--check=trace-source" in command:
++                assert cap == 3
++                expected = metadata.get("source_oracle", metadata["modes"]["compatible"])["binary"]
++                assert command[0] == expected
++                return RunResult("[TRACE SOURCE OK]\n", "", 0, 0, False)
++            backend, vector = command[-2:]
++            assert command[0] in {M.binary_entry(metadata, mode, backend)["binary"] for mode in ("compatible", "native")}
++            if censored and backend == "kdtree_backed" and "--check=replay" in command:
++                return RunResult("", "retained timeout\n", 124, 1, True)
++            emitted = "wrong_backend" if mismatch else backend
++            text = f"[--] running tests for posets::downsets::{emitted}<posets::vectors::{vector}>\n"
++            if "--check=replay" not in command:
++                text += "  - rounds: 1\n  - dimension: 2\n  - boolean_tail: 2\n  - before_maxima: 1\n  - cpre: 0.001\n"
++            return RunResult(text, "", 0, 0, False)
++
++        monkeypatch.setattr(M, "run_systemd_scope", fake)
++        monkeypatch.setattr(module, "run_systemd_scope", fake)
++        rows = module.replay(args, metadata, [trace], directory)
++        scalar = [row for row in rows if row.get("vector") == "vector_backed"]
++        assert len(scalar) == 24 and {row["mode"] for row in scalar} == {"compatible"}
++        measurements = 92 if censored else 96
++        assert len([row for row in rows if row["phase"] == "measure"]) == measurements
++        assert len(seen) == 1 + 72 + measurements
++        return json.loads((directory / "measurement-order.json").read_text())
++
++    assert run(mapped, "mapped") == run(combined, "combined", module=reference)
++    assert run(mapped, "mapped-censored", censored=True) == run(combined, "combined-censored", module=reference, censored=True)
++    with pytest.raises(ValueError, match="exactly the requested backend"):
++        run(mapped, "wrong-dispatch", mismatch=True)
++
++
++def test_per_backend_synthetic_dispatch_uses_selected_elf(tmp_path, monkeypatch):
++    path, plan, output, _, _, _ = binary_map_fixture(tmp_path, monkeypatch)
++    metadata = load_binary_map(path, plan, output)
++    commands = []
++
++    def fake(command, **_kwargs):
++        if command[:3] == ["git", "check-ignore", "-q"]:
++            return subprocess.CompletedProcess(command, 0)
++        backend, vector = command[-2:]
++        assert command[0] in {M.binary_entry(metadata, mode, backend)["binary"] for mode in ("compatible", "native")}
++        commands.append(command)
++        text = f"[--] running tests for posets::downsets::{backend}<posets::vectors::{vector}>\n"
++        return subprocess.CompletedProcess(command, 0, text, "")
++
++    monkeypatch.chdir(tmp_path)
++    monkeypatch.setattr(M.subprocess, "run", fake)
++    monkeypatch.setattr(M, "no_core", lambda: None)
++    monkeypatch.setattr(M, "provenance", lambda *_args: metadata)
++    monkeypatch.setattr(M, "unchanged", lambda *_args: None)
++    monkeypatch.setattr(sys, "argv", ["posets-matrix.py", "--build-dir", str(Path(plan["source_oracle_binary"]["path"]).parent.parent),
++                                     "--binary-map", str(path), "--output", str(tmp_path / "screen")])
++    M.main()
++    assert len(commands) == 24 * 2 * 2 * len(M.CASES)
++    assert json.loads((tmp_path / "screen/report.json").read_text())["scope"].startswith("Supplemental per-backend")
++
++
++@pytest.mark.parametrize("changed", ["binary", "map", "record", "library"])
++def test_per_backend_inputs_are_rechecked_after_replay(tmp_path, monkeypatch, changed):
++    path, plan, output, _, library, _ = binary_map_fixture(tmp_path, monkeypatch)
++    metadata = load_binary_map(path, plan, output)
++    metadata.update({"source_sha256": {}, "driver_sha256": M.sha(Path(M.__file__)), "support_sha256": {}})
++    M.unchanged(metadata)
++    targets = {"binary": Path(plan["binaries"][0]["binary"]), "map": path,
++               "record": Path(plan["binaries"][0]["build_record"]["path"]), "library": library}
++    targets[changed].write_bytes(b"changed after replay")
++    with pytest.raises(ValueError):
++        M.unchanged(metadata)

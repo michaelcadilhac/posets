@@ -1,0 +1,1523 @@
+{
+  "scope": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+  "ratio_definition": "optimized operation seconds / baseline operation seconds, matched by pair and exact trace/mode/explicit comparison_key/vector/metric; actual arm backends retained; below 1 is faster",
+  "treatment": "three external paired repetitions in A/B,B/A,A/B order; rounds=1; seeds=260617,260618,260619; 8G/no swap; no allocation/statistics instrumentation",
+  "limits": [
+    "Three observations per cell, no significance claim or generalization beyond these frozen traces.",
+    "A zero baseline operation clock has no defined ratio; summary fails closed rather than inventing one.",
+    "Single-query contains clocks excluded; only whole-CPre, build and rebuild are summarized.",
+    "Process wall time includes parsing/checks/launch/cleanup and is not an operation clock.",
+    "Scope peak memory includes parsing/checks and is not retained storage or an allocation count.",
+    "Source-oracle timeout is not a backend correctness failure; unverified source cells remain censored.",
+    "Each cell represents a fresh replay operation, not continuous captured deletion history."
+  ],
+  "paired_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldrank-vs-k2simd-larger-plan.json",
+    "sha256": "136921f00babbd8920939b1b8a6bf464cd674f94474ed70c318d9c5ee01d1d39"
+  },
+  "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+  "evidence": [
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair0-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-baseline/report.json",
+      "report_sha256": "6d4c6a25c29b0e606e0c0a63a17acd4c4bdbf37051b6c564593b4a72f8f8f068",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-baseline/build-source-binding.json",
+      "binding_sha256": "890d09c5d634f1f0780a6bb143a5d060b462add8947ec4804a419184b762b29e"
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair0-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-optimized/report.json",
+      "report_sha256": "44d54985c77fed1bf977e5a8594c7e2eb3efecd9de172ce6d3f1f0fb40083d4e",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-optimized/build-source-binding.json",
+      "binding_sha256": "c1811eec61145b554aa4cb842e3d7f5c5c9d2beac47b3fb8cdf360cb51dd7804"
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair1-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-optimized/report.json",
+      "report_sha256": "db580a38e4285e2b0d5c9d4e014c0e26f9e6bdeb6ba9345cef0b23c322cf6ba6",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-optimized/build-source-binding.json",
+      "binding_sha256": "d1d6a606eefc833ae3ab06c053a03982e381925837a154f8432803e864f11437"
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair1-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-baseline/report.json",
+      "report_sha256": "26b6996833dae718eb4aeabc384ce8582a315e1ff85784bbe568d37c21e981bd",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-baseline/build-source-binding.json",
+      "binding_sha256": "da32c354f8612cf70ad4d42a90625988a26549105c73c9809d36ef41b36d43b1"
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair2-baseline",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-baseline/report.json",
+      "report_sha256": "85992b6d2859e31ac57ccddc8c6fcb24fabb4fa04d341026b84f2a74e4f71643",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-baseline/build-source-binding.json",
+      "binding_sha256": "c1cb5a2ca14f4877521119ac0c677803b2f99c9d8e3cb5e29b523d41b77790d4"
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair2-optimized",
+      "report": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-optimized/report.json",
+      "report_sha256": "55abce8160c011ff49bc6eef3cd89cadb7c936bf8870ee66aa1b1832813cb0dc",
+      "binding": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-optimized/build-source-binding.json",
+      "binding_sha256": "40da09710faf9368a0587d29bb8d32b8d799b08e0afbfdce9e435bc00db54723"
+    }
+  ],
+  "order_audit": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldrank-vs-k2simd-larger-order-audit.json",
+    "sha256": "09ab98700746714bac53afca6b0e504dca51d47b467dab965156c7b94edad9e3",
+    "rows": [
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 0
+      },
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 1
+      },
+      {
+        "baseline_only": [],
+        "common_cells": 10,
+        "common_relative_order_equal": true,
+        "optimized_only": [],
+        "pair": 2
+      }
+    ]
+  },
+  "coverage": [
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair0-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28487680,
+      "oom_invocations": []
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair0-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28483584,
+      "oom_invocations": []
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair1-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28508160,
+      "oom_invocations": []
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair1-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28487680,
+      "oom_invocations": []
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair2-baseline",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28491776,
+      "oom_invocations": []
+    },
+    {
+      "run": "kd3-oldrank-vs-k2simd-larger-pair2-optimized",
+      "phase_counts": {
+        "source_oracle": {
+          "pass": 5
+        },
+        "check": {
+          "pass": 15
+        },
+        "measure": {
+          "pass": 10
+        }
+      },
+      "executed_invocations": 30,
+      "valid_scope_memory_peaks": 30,
+      "max_scope_memory_peak_bytes": 28516352,
+      "oom_invocations": []
+    }
+  ],
+  "failure_rows": [],
+  "cells": [
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "cpre",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.104248042,
+          "optimized_seconds": 0.209753174,
+          "optimized_over_baseline": 2.0120586437489156
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.106080203,
+          "optimized_seconds": 0.214792871,
+          "optimized_over_baseline": 2.0248157990421642
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.102832511,
+          "optimized_seconds": 0.213459599,
+          "optimized_over_baseline": 2.075798761735965
+        }
+      ],
+      "baseline_median_seconds": 0.104248042,
+      "optimized_median_seconds": 0.213459599,
+      "median_paired_optimized_over_baseline": 2.0248157990421642,
+      "paired_ratio_min": 2.0120586437489156,
+      "paired_ratio_max": 2.075798761735965,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.155290908,
+          "optimized_seconds": 0.369391097,
+          "optimized_over_baseline": 2.3787039547737074
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.15458249,
+          "optimized_seconds": 0.377292227,
+          "optimized_over_baseline": 2.4407177488213576
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.15292548,
+          "optimized_seconds": 0.375006036,
+          "optimized_over_baseline": 2.4522142157082
+        }
+      ],
+      "baseline_median_seconds": 0.15458249,
+      "optimized_median_seconds": 0.375006036,
+      "median_paired_optimized_over_baseline": 2.4407177488213576,
+      "paired_ratio_min": 2.3787039547737074,
+      "paired_ratio_max": 2.4522142157082,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.043677979,
+          "optimized_seconds": 0.023247856,
+          "optimized_over_baseline": 0.5322557621084071
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.039129211,
+          "optimized_seconds": 0.023614257,
+          "optimized_over_baseline": 0.6034943306165821
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.042962273,
+          "optimized_seconds": 0.025300997,
+          "optimized_over_baseline": 0.5889119740010031
+        }
+      ],
+      "baseline_median_seconds": 0.042962273,
+      "optimized_median_seconds": 0.023614257,
+      "median_paired_optimized_over_baseline": 0.5889119740010031,
+      "paired_ratio_min": 0.5322557621084071,
+      "paired_ratio_max": 0.6034943306165821,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "cpre",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.082272846,
+          "optimized_seconds": 0.150708765,
+          "optimized_over_baseline": 1.8318165996105205
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.082387255,
+          "optimized_seconds": 0.150945616,
+          "optimized_over_baseline": 1.8321476543914468
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.082126679,
+          "optimized_seconds": 0.147488651,
+          "optimized_over_baseline": 1.7958677106619643
+        }
+      ],
+      "baseline_median_seconds": 0.082272846,
+      "optimized_median_seconds": 0.150708765,
+      "median_paired_optimized_over_baseline": 1.8318165996105205,
+      "paired_ratio_min": 1.7958677106619643,
+      "paired_ratio_max": 1.8321476543914468,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.106588957,
+          "optimized_seconds": 0.266888552,
+          "optimized_over_baseline": 2.503904339733806
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.106821255,
+          "optimized_seconds": 0.266935879,
+          "optimized_over_baseline": 2.498902292432344
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.106180614,
+          "optimized_seconds": 0.261988676,
+          "optimized_over_baseline": 2.4673870881929534
+        }
+      ],
+      "baseline_median_seconds": 0.106588957,
+      "optimized_median_seconds": 0.266888552,
+      "median_paired_optimized_over_baseline": 2.498902292432344,
+      "paired_ratio_min": 2.4673870881929534,
+      "paired_ratio_max": 2.503904339733806,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 0,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "cpre",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.028357532,
+          "optimized_seconds": 0.020384934,
+          "optimized_over_baseline": 0.7188543065031188
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.028561267,
+          "optimized_seconds": 0.020506566,
+          "optimized_over_baseline": 0.717985165013863
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.028711791,
+          "optimized_seconds": 0.01970477,
+          "optimized_over_baseline": 0.6862953968980897
+        }
+      ],
+      "baseline_median_seconds": 0.028561267,
+      "optimized_median_seconds": 0.020384934,
+      "median_paired_optimized_over_baseline": 0.717985165013863,
+      "paired_ratio_min": 0.6862953968980897,
+      "paired_ratio_max": 0.7188543065031188,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.153505161,
+          "optimized_seconds": 0.368730339,
+          "optimized_over_baseline": 2.4020712828020163
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.150152977,
+          "optimized_seconds": 0.382719495,
+          "optimized_over_baseline": 2.5488638496990976
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.153152188,
+          "optimized_seconds": 0.377555011,
+          "optimized_over_baseline": 2.4652276662217845
+        }
+      ],
+      "baseline_median_seconds": 0.153152188,
+      "optimized_median_seconds": 0.377555011,
+      "median_paired_optimized_over_baseline": 2.4652276662217845,
+      "paired_ratio_min": 2.4020712828020163,
+      "paired_ratio_max": 2.5488638496990976,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.160870933,
+          "optimized_seconds": 0.372674117,
+          "optimized_over_baseline": 2.316603192697341
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.151088827,
+          "optimized_seconds": 0.384388539,
+          "optimized_over_baseline": 2.5441228622418253
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.154513876,
+          "optimized_seconds": 0.380708916,
+          "optimized_over_baseline": 2.463914088855036
+        }
+      ],
+      "baseline_median_seconds": 0.154513876,
+      "optimized_median_seconds": 0.380708916,
+      "median_paired_optimized_over_baseline": 2.463914088855036,
+      "paired_ratio_min": 2.316603192697341,
+      "paired_ratio_max": 2.5441228622418253,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.106037578,
+          "optimized_seconds": 0.266489862,
+          "optimized_over_baseline": 2.5131643614115746
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.105970801,
+          "optimized_seconds": 0.267153353,
+          "optimized_over_baseline": 2.521009093816324
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.10653476,
+          "optimized_seconds": 0.265463298,
+          "optimized_over_baseline": 2.4917998407280404
+        }
+      ],
+      "baseline_median_seconds": 0.106037578,
+      "optimized_median_seconds": 0.266489862,
+      "median_paired_optimized_over_baseline": 2.5131643614115746,
+      "paired_ratio_min": 2.4917998407280404,
+      "paired_ratio_max": 2.521009093816324,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 1,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.108370041,
+          "optimized_seconds": 0.269828362,
+          "optimized_over_baseline": 2.4898796707108377
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.107149581,
+          "optimized_seconds": 0.268658364,
+          "optimized_over_baseline": 2.5073207145812355
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.107378081,
+          "optimized_seconds": 0.268094802,
+          "optimized_over_baseline": 2.496736759525438
+        }
+      ],
+      "baseline_median_seconds": 0.107378081,
+      "optimized_median_seconds": 0.268658364,
+      "median_paired_optimized_over_baseline": 2.496736759525438,
+      "paired_ratio_min": 2.4898796707108377,
+      "paired_ratio_max": 2.5073207145812355,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.148806505,
+          "optimized_seconds": 0.38422979,
+          "optimized_over_baseline": 2.5820765698381263
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.155594025,
+          "optimized_seconds": 0.375026184,
+          "optimized_over_baseline": 2.4102865389593204
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.149775377,
+          "optimized_seconds": 0.375369162,
+          "optimized_over_baseline": 2.5062141022018594
+        }
+      ],
+      "baseline_median_seconds": 0.149775377,
+      "optimized_median_seconds": 0.375369162,
+      "median_paired_optimized_over_baseline": 2.5062141022018594,
+      "paired_ratio_min": 2.4102865389593204,
+      "paired_ratio_max": 2.5820765698381263,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.151294907,
+          "optimized_seconds": 0.385099328,
+          "optimized_over_baseline": 2.545355528722457
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.157750908,
+          "optimized_seconds": 0.378842622,
+          "optimized_over_baseline": 2.4015241928116193
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.152223237,
+          "optimized_seconds": 0.379595283,
+          "optimized_over_baseline": 2.4936750162526105
+        }
+      ],
+      "baseline_median_seconds": 0.152223237,
+      "optimized_median_seconds": 0.379595283,
+      "median_paired_optimized_over_baseline": 2.4936750162526105,
+      "paired_ratio_min": 2.4015241928116193,
+      "paired_ratio_max": 2.545355528722457,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.106229934,
+          "optimized_seconds": 0.262108172,
+          "optimized_over_baseline": 2.467366420466758
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.106416341,
+          "optimized_seconds": 0.257795084,
+          "optimized_over_baseline": 2.4225140761041577
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.107904041,
+          "optimized_seconds": 0.26258269,
+          "optimized_over_baseline": 2.4334833762157246
+        }
+      ],
+      "baseline_median_seconds": 0.106416341,
+      "optimized_median_seconds": 0.262108172,
+      "median_paired_optimized_over_baseline": 2.4334833762157246,
+      "paired_ratio_min": 2.4225140761041577,
+      "paired_ratio_max": 2.467366420466758,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 2,
+      "instance": "round_robin_arbiter_pb_4_pe_.ltl",
+      "kind": "contains",
+      "maxima": 4588,
+      "dimension": 453,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.108286513,
+          "optimized_seconds": 0.264178197,
+          "optimized_over_baseline": 2.4396223470599705
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.107120854,
+          "optimized_seconds": 0.260131261,
+          "optimized_over_baseline": 2.428390470075976
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.109225218,
+          "optimized_seconds": 0.264293941,
+          "optimized_over_baseline": 2.4197153902682067
+        }
+      ],
+      "baseline_median_seconds": 0.108286513,
+      "optimized_median_seconds": 0.264178197,
+      "median_paired_optimized_over_baseline": 2.428390470075976,
+      "paired_ratio_min": 2.4197153902682067,
+      "paired_ratio_max": 2.4396223470599705,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.070988144,
+          "optimized_seconds": 0.084445475,
+          "optimized_over_baseline": 1.1895715290147606
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.071953883,
+          "optimized_seconds": 0.082013098,
+          "optimized_over_baseline": 1.1398008638394124
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.069480723,
+          "optimized_seconds": 0.083746355,
+          "optimized_over_baseline": 1.2053178404605835
+        }
+      ],
+      "baseline_median_seconds": 0.070988144,
+      "optimized_median_seconds": 0.083746355,
+      "median_paired_optimized_over_baseline": 1.1895715290147606,
+      "paired_ratio_min": 1.1398008638394124,
+      "paired_ratio_max": 1.2053178404605835,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.073410912,
+          "optimized_seconds": 0.087566604,
+          "optimized_over_baseline": 1.1928281724656957
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.073257355,
+          "optimized_seconds": 0.084426836,
+          "optimized_over_baseline": 1.1524690729005982
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.071127107,
+          "optimized_seconds": 0.085277958,
+          "optimized_over_baseline": 1.198951589581733
+        }
+      ],
+      "baseline_median_seconds": 0.073257355,
+      "optimized_median_seconds": 0.085277958,
+      "median_paired_optimized_over_baseline": 1.1928281724656957,
+      "paired_ratio_min": 1.1524690729005982,
+      "paired_ratio_max": 1.198951589581733,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.096754713,
+          "optimized_seconds": 0.089923254,
+          "optimized_over_baseline": 0.9293940440916815
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.094974396,
+          "optimized_seconds": 0.094204238,
+          "optimized_over_baseline": 0.9918908881505284
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.095760199,
+          "optimized_seconds": 0.091804649,
+          "optimized_over_baseline": 0.9586931727240876
+        }
+      ],
+      "baseline_median_seconds": 0.095760199,
+      "optimized_median_seconds": 0.091804649,
+      "median_paired_optimized_over_baseline": 0.9586931727240876,
+      "paired_ratio_min": 0.9293940440916815,
+      "paired_ratio_max": 0.9918908881505284,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 3,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.099380468,
+          "optimized_seconds": 0.092862876,
+          "optimized_over_baseline": 0.9344177771430902
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.096204297,
+          "optimized_seconds": 0.09596301,
+          "optimized_over_baseline": 0.9974919311556324
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.098577209,
+          "optimized_seconds": 0.093292648,
+          "optimized_over_baseline": 0.946391655296307
+        }
+      ],
+      "baseline_median_seconds": 0.098577209,
+      "optimized_median_seconds": 0.093292648,
+      "median_paired_optimized_over_baseline": 0.946391655296307,
+      "paired_ratio_min": 0.9344177771430902,
+      "paired_ratio_max": 0.9974919311556324,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.06979091,
+          "optimized_seconds": 0.085309332,
+          "optimized_over_baseline": 1.2223559199901535
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.069592817,
+          "optimized_seconds": 0.083233884,
+          "optimized_over_baseline": 1.1960125712399312
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.070226836,
+          "optimized_seconds": 0.083496782,
+          "optimized_over_baseline": 1.1889583349590178
+        }
+      ],
+      "baseline_median_seconds": 0.06979091,
+      "optimized_median_seconds": 0.083496782,
+      "median_paired_optimized_over_baseline": 1.1960125712399312,
+      "paired_ratio_min": 1.1889583349590178,
+      "paired_ratio_max": 1.2223559199901535,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "compatible",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.073494017,
+          "optimized_seconds": 0.087452413,
+          "optimized_over_baseline": 1.1899256098629092
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.073204736,
+          "optimized_seconds": 0.085837168,
+          "optimized_over_baseline": 1.1725630429156932
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.071548422,
+          "optimized_seconds": 0.086511692,
+          "optimized_over_baseline": 1.2091348709269927
+        }
+      ],
+      "baseline_median_seconds": 0.073204736,
+      "optimized_median_seconds": 0.086511692,
+      "median_paired_optimized_over_baseline": 1.1899256098629092,
+      "paired_ratio_min": 1.1725630429156932,
+      "paired_ratio_max": 1.2091348709269927,
+      "pairs_optimized_faster": 0
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "build",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.097734251,
+          "optimized_seconds": 0.095316389,
+          "optimized_over_baseline": 0.9752608530248009
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.093995405,
+          "optimized_seconds": 0.093258325,
+          "optimized_over_baseline": 0.9921583400805604
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.097902477,
+          "optimized_seconds": 0.092290769,
+          "optimized_over_baseline": 0.9426806330957285
+        }
+      ],
+      "baseline_median_seconds": 0.097734251,
+      "optimized_median_seconds": 0.093258325,
+      "median_paired_optimized_over_baseline": 0.9752608530248009,
+      "paired_ratio_min": 0.9426806330957285,
+      "paired_ratio_max": 0.9921583400805604,
+      "pairs_optimized_faster": 3
+    },
+    {
+      "trace": 4,
+      "instance": "full_arbiter_enc_pb_8_pe_.ltl",
+      "kind": "contains",
+      "maxima": 6446,
+      "dimension": 43,
+      "mode": "native",
+      "actual_backend_by_variant": {
+        "baseline": "rank_bucketed_vector_backed",
+        "optimized": "block_lazy_kdtree_2_simd"
+      },
+      "baseline_backend": "rank_bucketed_vector_backed",
+      "optimized_backend": "block_lazy_kdtree_2_simd",
+      "comparison_key": "downset-operation",
+      "vector": "simd_vector_backed",
+      "metric": "rebuild",
+      "status": "paired",
+      "qualification_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "measurement_statuses": [
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "baseline_seconds": 0.099551995,
+          "optimized_seconds": 0.097498211,
+          "optimized_over_baseline": 0.9793697353830025
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 0.097274289,
+          "optimized_seconds": 0.092278346,
+          "optimized_over_baseline": 0.9486406628991141
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 0.099537062,
+          "optimized_seconds": 0.093308623,
+          "optimized_over_baseline": 0.9374259308557852
+        }
+      ],
+      "baseline_median_seconds": 0.099537062,
+      "optimized_median_seconds": 0.093308623,
+      "median_paired_optimized_over_baseline": 0.9486406628991141,
+      "paired_ratio_min": 0.9374259308557852,
+      "paired_ratio_max": 0.9793697353830025,
+      "pairs_optimized_faster": 3
+    }
+  ]
+}

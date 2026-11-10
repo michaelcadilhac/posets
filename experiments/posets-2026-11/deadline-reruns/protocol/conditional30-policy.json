@@ -1,0 +1,10 @@
+{
+  "recorded_utc": "2026-11-10T06:19:16.331805+00:00",
+  "authorization": "User requested KD campaign timeouts rerun at30s, same forbaseline. Rootstated this applies to final optimizedKDvsoriginaldefault fullcampaign; usercansteer otherwise.",
+  "applies_to": "Final originale167default vs selectedretainedoptimizedKD 1524-casecomparison; not current450targeted17srepeats.",
+  "cohort": "Afterfinal17scampaigncomplete, freezeunionofinstances scoredTIMEOUT in eitherarm. Includesdecisive17soverrunsandnativeTIMEOUTswithOOM; pureMEMOUTincludedonlyifotherarmTIMESOUT.",
+  "treatments": "RunBOTH exactfrozenconfigurations onEVERYselectedinstance, preservingoriginalbaselineidentity, preset,emptyflags,8GiB/no swap; changeonlywallcapto30s.",
+  "separation": "Freshoutputdirectory andfrozen30smanifest; preserve17sraw/scoredrowsunchanged. Reportconditionalcohortresolved/remaining/contradictions/OOM and30sPAR2ifused(unsolvedcost60), neverpoolasafreshfull1524\u00d730scampaign.",
+  "runner": "UseexistingAcaciacoverage/cgroupinfrastructure andexclusivehostlock. Originalcampaign.py andcurrentrepeat-plan/ROOT-PLANremainunchanged.",
+  "next_step": "Implement/freezeexact30sdriver/specs/cohortaftercandidateandfinal17soutcomesknown; no30stargetcallslaunched."
+}

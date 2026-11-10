@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "traces": [
+    {
+      "instance": "robot_grid_pb_4_4_pe_.ltl",
+      "family": "robot_grid",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/snapshots/aut-3682417-0/cpre-17.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "robot_grid_pb_4_4_pe_.ltl",
+      "family": "robot_grid",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/snapshots/aut-3682417-0/contains-12.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "robot_grid_pb_4_4_pe_.ltl",
+      "family": "robot_grid",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/snapshots/aut-3682417-0/contains-13.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/robot_grid_pb_4_4_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "workstation_resupply_pb_3_pe_.ltl",
+      "family": "workstation_resupply",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/snapshots/aut-3682459-0/cpre-36.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "workstation_resupply_pb_3_pe_.ltl",
+      "family": "workstation_resupply",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/snapshots/aut-3682459-0/contains-10.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "workstation_resupply_pb_3_pe_.ltl",
+      "family": "workstation_resupply",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/snapshots/aut-3682459-0/contains-11.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/workstation_resupply_pb_3_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "finding_nemo_pb_2_pe_.ltl",
+      "family": "finding_nemo",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/finding_nemo_pb_2_pe_.ltl/snapshots/aut-3682545-0/contains-8.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/finding_nemo_pb_2_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "finding_nemo_pb_2_pe_.ltl",
+      "family": "finding_nemo",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/finding_nemo_pb_2_pe_.ltl/snapshots/aut-3682545-0/contains-9.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/finding_nemo_pb_2_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "generalized_buffer_pb_5_pe_.ltl",
+      "family": "generalized_buffer",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/snapshots/aut-3682573-1/cpre-20.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "generalized_buffer_pb_5_pe_.ltl",
+      "family": "generalized_buffer",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/snapshots/aut-3682573-1/contains-10.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/invocation.json"
+    },
+    {
+      "instance": "generalized_buffer_pb_5_pe_.ltl",
+      "family": "generalized_buffer",
+      "split": "heldout",
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/snapshots/aut-3682573-1/contains-11.tsv",
+      "capture_manifest": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/generalized_buffer_pb_5_pe_.ltl/invocation.json"
+    }
+  ]
+}

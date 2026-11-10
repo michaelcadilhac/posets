@@ -1,0 +1,50 @@
+{
+  "CPU_memory_observed": 582,
+  "censored_metric_groups": 6,
+  "clean_timing_passes": 192,
+  "compact_all_metric_table": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/RESULTS.txt",
+    "sha256": "fae18ae9853a31acc7b8575afada4b2eb37379f503e289a856fa048aaafcbf7c"
+  },
+  "executed_scope_rows": 582,
+  "final_invariance": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/FINAL-INVARIANCE.json",
+    "sha256": "7b98f3ad73d1ec5dac8ee6ecbd973dc66b78be8d335d8bdc23dbc0d571c4a887"
+  },
+  "host_lock_available": true,
+  "larger_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/larger-train-summary.json",
+    "sha256": "67aa0d81f1aaebd378bd8ea6a350acb987d1ff7fd7f66aa9c9219dbc27184711"
+  },
+  "no_benchmark_retries": true,
+  "observed_regressions": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/OBSERVED-REGRESSIONS.json",
+    "sha256": "69fbbbbc1c938b1a52b711098bf2a46c11f7c8db184c705090cd4b98acbbd55b"
+  },
+  "order_audits_passed": 6,
+  "paired_metric_groups": 80,
+  "planned_metric_groups": 86,
+  "postprocessing_note": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/POSTPROCESSING-NOTE.json",
+    "sha256": "698f575fdbbe6f9866ac9bc5a57af5d522a7be0e7160152cde54576fc7f8fb99"
+  },
+  "profile_or_Acacia_run": false,
+  "regression_groups_observed": 22,
+  "released_utc": "2026-11-09T17:12:53.643723+00:00",
+  "root_release": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-release-v3.json",
+    "sha256": "1a1280fb78a291aa67175f393ede5578a304a47d841fa9ce1ddd4dbbaa0de8cd"
+  },
+  "source_ELF_helpers_libraries_unchanged": true,
+  "source_timeout_rows": 6,
+  "source_unverified_rows": 18,
+  "standard_summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/clean-replay-results-v3/standard-train-summary.json",
+    "sha256": "ca7d2e0c2c0c97ee29f712721fd6ca315ae250d1a41ade3a674437e4e6be9465"
+  },
+  "status": "complete; heavy lane released; profile/Acacia still require root gate",
+  "wording_clarification": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-preparation-v3/CHECKPOINT-WORDING-CLARIFICATION.json",
+    "sha256": "8a06226de18d5af8a7560eac9ec699925cb6bf9be6476f3e2a2bb1be99cd05f5"
+  }
+}

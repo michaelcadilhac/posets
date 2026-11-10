@@ -1,0 +1,95 @@
+--- v1/README.md
++++ v2/README.md
+@@ -1,4 +1,4 @@
+-# Default-rank work/heap companion — source draft, not executed
++# Default-rank work/heap companion V2 — documentation correction, not executed
+ 
+ This directory is separate instrumentation for baseline
+ `789bf99346d41a30f1b454ff58385b6f8a2961a9` and candidate
+@@ -51,11 +51,19 @@
+ | `cpre_after_rhs_destruction_net` | Includes bottom accumulator construction and all mapped/combined/RHS temporary destruction. Final frontier remains alive. Delta is net new-minus-old retained heap, including any other persistent scratch changes; no absolute final-frontier estimate is invented. |
+ | `rebuild_normalized_first_alive` | A second fresh constructor, not in-place rebuilding. The first frontier is still alive; caller staging is destroyed before this exit. |
+ 
+-Contains windows also preserve the original kernel's query lifetime: a captured
+-contains query is built before its contains window; the final CPre initial-state
+-query is constructed/destroyed inside that contains window. Whole kernel cleanup
+-is reported separately after the returned metric map and frontier die. This is a
+-diagnostic live-heap delta, not an automatic leak or backend-size verdict.
++Contains argument lifetimes differ by pass. The `operations` window starts
++inside `measured_set::contains`, after argument materialization, and closes before
++an argument temporary is destroyed. Thus its final-CPre contains snapshot excludes
++the initial-state query temporary's creation/destruction. The raw `roi` final-CPre
++contains window surrounds the original timed lambda and includes both. A captured
++contains query is already built before either pass's contains window. Keep mode
++on every row; these two contains allocation scopes are not interchangeable.
++
++Whole kernel cleanup is reported separately after the returned metric map and
++frontier die. This is a diagnostic live-heap delta, not an automatic leak or
++backend-size verdict. Rows with `has_result=0` have unavailable result size and
++generator capacity: their printed zero placeholders do not mean an empty result,
++zero retained bytes or measured private rank capacity.
+ 
+ All heap numbers are requested C++ `new`/`new[]` bytes. They exclude tracker
+ headers/alignment, allocator overhead, direct malloc, stacks, mappings and RSS.
+@@ -101,10 +109,15 @@
+ `trace-plans/` preserves exact copies of the existing standard12 and larger5
+ eligible TRAIN plans. These are already seen observations, not fresh held-out
+ validation. All17 declared identities remain in the attempt inventory. Before
+-profiling a cell, bind its actual-pin clean source-oracle/backend qualification,
+-trace/capture hashes and original source/library identities. In particular a
+-source-unverified CPre stays an unprofiled failure/censor row. Existence or a
+-historical status alone must not set `source_verified=true`.
++any runnable profile spec is generated, its generator must enforce a join of
++actual-pin clean source-oracle qualification AND the exact backend/vector/width
++clean qualification, with trace/capture hashes and source/library identities.
++This source draft has no spec generator and does not assert that gate was run.
++Unqualified or censored identities remain explicit unprofiled failure/censor rows,
++including source-unverified CPre. Existence or a historical status alone must not
++set `source_verified=true`. A30s instrumented success cannot upgrade a censored
++clean30/2/2 cell; paired profile comparisons require both sides independently
++qualified and successfully completed.
+ 
+ Use compatible scalar+SIMD and native SIMD on both sides, retaining the actual
+ native=max proof from the new clean builds. The instrumented plan proposes a
+@@ -148,3 +161,11 @@
+ Derived equal/covering/first-middle-last controls are deferred unless actual
+ counters need clarification. Any later controls must use only a few recorded
+ frontiers, an independent oracle and an explicit derived/seen label.
++
++## V2 lineage
++
++Only documentation/metadata changed from the preserved `../profile-draft/` V1.
++All C++/counter/overlay/allocation/selfcheck/trace-plan bytes are identical. Paths
++in this inventory resolve against the actual V2 directory; original evidence
++locators remain labeled as originals. `v1-to-v2.patch` and `STATIC-NOTE.json`
++record the correction and exact byte-equality proof. No execution is claimed.
+--- v1/input-bindings.json
++++ v2/input-bindings.json
+@@ -116,5 +116,7 @@
+     "baseline_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+     "candidate_revision": "30e66853832d98bcfaada296d892157b95a8150d"
+   },
+-  "allocator_copy_sha256": "18e8b12537fb3feb44853f44ec0bfb3b772a05fc382e7e23d62ebff22b69aeeb"
++  "allocator_copy_sha256": "18e8b12537fb3feb44853f44ec0bfb3b772a05fc382e7e23d62ebff22b69aeeb",
++  "draft_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2",
++  "relative_copy_paths": "Resolve exact_copy and local source paths against draft_directory, never the preserved V1 directory."
+ }
+--- v1/profile-plan.json
++++ v2/profile-plan.json
+@@ -52,7 +52,7 @@
+     "profile_case_timeout_seconds": 30,
+     "timeout_note": "Separate instrumented cap proposed for root approval; never replace clean30/2/2 caps."
+   },
+-  "eligibility": "Same17 declared identities, including all source/backend failures as unprofiled status rows. Execute only cells independently source/backend-qualified at these actual pins; never set source_verified from file existence alone.",
++  "eligibility": "Before generating any runnable profile spec, enforce actual-pin clean source-oracle AND exact backend/vector/width clean qualification, plus trace/capture/source/library identities. Keep all17 identities; unqualified/censored rows stay explicitly unprofiled. A30s profile success never upgrades clean30/2/2 censorship; paired profiles require both qualified/successful sides.",
+   "failures": "Preserve stdout/stderr/spec/helper/binary/dependency hashes plus resource/returncode outcomes. Missing/incomplete rows stay missing, never zeros. All captured kernel or oracle rejections halt review.",
+   "derived_controls": "deferred; only add a few previously recorded frontiers if actual counters require clarification; no fresh held-out claim",
+   "pending": [
+@@ -61,5 +61,6 @@
+     "Compile/assertion trait/positive-hook/selfcheck gates under existing wrapper",
+     "Actual dependency/compile/link/ELF/library and pin-specific qualification binding freeze",
+     "Profile-only run-spec approval and exclusive serial execution"
+-  ]
++  ],
++  "draft_directory": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2"
+ }

@@ -1,0 +1,20 @@
+{
+  "status": "ROOT RELEASED archival byte preservation and verified extraction; no new measurements",
+  "source_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/source-manifest.json",
+    "sha256": "368768adf1952fcf395519f943cabee8a987df3ed1d0f31d884b2669565d42db"
+  },
+  "plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/default-evidence-archive-v1/plan.json",
+    "sha256": "dc3cd44451678a01e782a60c60186f16a9dca2ed8d53eb5e8318e024bdc5443b"
+  },
+  "source_review": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-evidence-archive-v1-static-audit.json",
+    "sha256": "6160692297ba09d7b9676ca4efeed6f16678f4c3794200d9de45217341b83e74"
+  },
+  "outcome_review": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/default-final-outcome-audit.json",
+    "sha256": "10b7dd2275b5483dfe3daf7a3d0597b9b11a3dbe60dbc4a3aabaf3a026aed58f"
+  },
+  "scope": "Exact four native/memory TSVs, six archive members,3048rows perkind; unchanged8GnoSwap wrapper and sharedlock; preserve failedattempts; final Barbosa/report/package acceptance separate"
+}

@@ -1,0 +1,681 @@
+{
+  "title": "Static memory/cache evidence checkpoint; preparatory, not default selection",
+  "definitions": {
+    "allocation_count": "Number of requested C++ heap allocations in the constructor ROI; allocator hooks, never clean timing.",
+    "requested_bytes": "Sum of requested C++ payload bytes over the ROI, not retained/live bytes; excludes allocator metadata, direct malloc and tracker overhead.",
+    "extra_peak": "Maximum tracked live C++ payload during ROI minus entry live payload; caller Vector materialization already exists. Not total working set or index-only retention.",
+    "known_retained": "Reported capacity metadata/object bytes, including generator objects but excluding opaque Vector heap payload and allocator overhead. Lazy measurements have POSETS_LAZY_KDTREE_STATS=1; object/policy fields changed. Do not call these exact shipping sizeof totals.",
+    "cachegrind": "Cold simulated I1=32768B/8-way,D1=49152B/12-way,LL=25165824B/12-way,64B lines; ignores actualL2; portable generic O3,noLTO. Data totals here add read+write misses.",
+    "hardware_pmu": "Native-compatible128 O3/LTO,CPU2,user-only build0. Includes Vector materialization+constructor; parser/validation/final destruction excluded. Natural cache state after preceding process work, no cold flush.24 event groups/96 reads all running fraction1, no scaled counts.",
+    "pmu_estimators": "Table uses separate before/final medians; three exact paired ratios remain in F. Separate-median ratio differs from median paired ratio; neither supplies significance from three samples.",
+    "llc": "Retain raw triplets: KD724/748/1557->4115/1284/1352; scalar2546/2340/2200->2543/648/1983; block1986/755/926->1644/1309/1111; FC14/1/1->4/3/1. No universal LLC improvement.",
+    "cgroup": "Scope memory.peak would include parser/oracle/children and is not an index-retention or selected-PMU-ROI metric. These selected small summaries do not provide comparable per-row cgroup peak values; none is invented here.8GiB/no-swap is an enforced limit, not observed usage."
+  },
+  "rows": [
+    {
+      "id": 1,
+      "backend": "Existing KD",
+      "start_pin": "7c40712",
+      "end_pin": "cc058ca",
+      "input": "n256 -> n257 live generators",
+      "width": "Source geometry; ABI-independent slots",
+      "metric_roi": "Retained heap-node envelope; source-derived, not measured allocation attribution",
+      "values": {
+        "old_slots_n256_and_n257": [
+          1024,
+          1024
+        ],
+        "new_slots_n256_and_n257": [
+          511,
+          1023
+        ]
+      },
+      "source_artifact": "I:KD512 collector paragraph; D:existing kd-tree envelope/high-water paragraphs",
+      "limitation_or_tradeoff": "Smaller n256 allocation loses headroom for n257 and can trigger growth. Saved collector512 CPre ratios1.2723/1.4822/1.0001 are consistent with a cost tradeoff, not proof of its cause. High-water capacity is retained until replacement/destruction; nonpowers-of-two save only one slot."
+    },
+    {
+      "id": 2,
+      "backend": "Existing KD control",
+      "start_pin": "d139fb3",
+      "end_pin": "a02713edd996778df043c984a2de2939355f7771",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / portable generic",
+      "metric_roi": "Cold Cachegrind build region0; parser/oracle/final destruction excluded",
+      "values": {
+        "instructions_Ir": [
+          3892303,
+          3895109
+        ],
+        "D1_data_misses_read_plus_write": [
+          14754,
+          14764
+        ],
+        "LL_data_misses_read_plus_write": [
+          11671,
+          11672
+        ],
+        "conditional_branch_mispredictions_Bcm": [
+          4779,
+          5030
+        ]
+      },
+      "source_artifact": "A:cache_metrics[6],cache_metrics[7]; A:provenance.cache_model",
+      "limitation_or_tradeoff": "Essentially unchanged model results; optional a027 narrow-index control has D1 total14705 versus14764 default, not a demonstrated general cache win."
+    },
+    {
+      "id": 3,
+      "backend": "Existing KD control",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / native ISA",
+      "metric_roi": "Naturally warm user-only hardware PMU build0; includes Vector materialization+constructor; hooks/stats off",
+      "values": {
+        "cycles_separate_medians": [
+          1028576,
+          1096167
+        ],
+        "instructions_separate_medians": [
+          3235493,
+          3442602
+        ],
+        "l1d_read_miss_separate_medians": [
+          14046,
+          13991
+        ],
+        "llc_read_miss_separate_medians": [
+          748,
+          1352
+        ],
+        "llc_read_miss_raw_triplets": [
+          [
+            724,
+            748,
+            1557
+          ],
+          [
+            4115,
+            1284,
+            1352
+          ]
+        ]
+      },
+      "source_artifact": "F:hardware_pmu[0]; F:provenance; F:hardware_pmu_estimator",
+      "limitation_or_tradeoff": "Instruction count rises6.4% despite unchanged KD/reducer/vector source in this checkpoint; compiler-context/control variation limits attribution. L1 read misses approximately flat. No KD cache win; LLC is noisy."
+    },
+    {
+      "id": 4,
+      "backend": "Compressed trie",
+      "start_pin": "d139fb3 (layout already present)",
+      "end_pin": "cc058ca (unchanged source snapshot)",
+      "input": "Current documented layout, not a measured fixture delta",
+      "width": "Four32-bit node fields; optional SIMD path control separate",
+      "metric_roi": "Source/README layout snapshot only; no observed d139-to-cc delta",
+      "values": {
+        "documented_node_bytes": 16,
+        "suffix_color_field": false,
+        "pending_sibling_scratch_bound": "at most one per coordinate"
+      },
+      "source_artifact": "D:compressed-trie paragraph; include/posets/utils/comptrie.hh:ct_node and storage()",
+      "limitation_or_tradeoff": "No compressed-trie allocation or PMU row exists in these selected summaries; do not invent a before/after heap/cache result. Permutation capacity is shared and charged per instance; summed retained views can double-count it. SIMD path mode packs a full permuted query."
+    },
+    {
+      "id": 5,
+      "backend": "Scalar sharingtrie",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          138833,
+          4681
+        ],
+        "requested_bytes": [
+          7551284,
+          3790336
+        ],
+        "extra_peak": [
+          3246672,
+          3244488
+        ],
+        "known_retained": [
+          2691280,
+          2691280
+        ],
+        "reachable": [
+          131341,
+          131341
+        ],
+        "capacity": [
+          133888,
+          133888
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[6](alloc-before-collector-trie); F:constructor_metrics[21](alloc-candidate-collector-trie)",
+      "limitation_or_tradeoff": "Allocations fall138833->4681, but extra peak is nearly flat and retained metadata unchanged. Same131341 reachable/133888 allocated nodes. Default uncompacted shape; optional compaction coexists with old array during replacement."
+    },
+    {
+      "id": 6,
+      "backend": "Scalar sharingtrie",
+      "start_pin": "d139fb3",
+      "end_pin": "a02713edd996778df043c984a2de2939355f7771",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / portable generic",
+      "metric_roi": "Cold Cachegrind build region0; parser/oracle/final destruction excluded",
+      "values": {
+        "instructions_Ir": [
+          102689015,
+          70735378
+        ],
+        "D1_data_misses_read_plus_write": [
+          394172,
+          365945
+        ],
+        "LL_data_misses_read_plus_write": [
+          63023,
+          62618
+        ],
+        "conditional_branch_mispredictions_Bcm": [
+          206731,
+          267109
+        ]
+      },
+      "source_artifact": "A:cache_metrics[0],cache_metrics[1]; A:provenance.cache_model",
+      "limitation_or_tradeoff": "Less instruction/data traffic, but conditional branch mispredictions increase206731->267109. Cold simulated data misses are not hardware PMU misses."
+    },
+    {
+      "id": 7,
+      "backend": "Scalar sharingtrie",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / native ISA",
+      "metric_roi": "Naturally warm user-only hardware PMU build0; includes Vector materialization+constructor; hooks/stats off",
+      "values": {
+        "cycles_separate_medians": [
+          42150024,
+          32506257
+        ],
+        "instructions_separate_medians": [
+          102161447,
+          71238351
+        ],
+        "l1d_read_miss_separate_medians": [
+          392706,
+          317617
+        ],
+        "llc_read_miss_separate_medians": [
+          2340,
+          1983
+        ],
+        "llc_read_miss_raw_triplets": [
+          [
+            2546,
+            2340,
+            2200
+          ],
+          [
+            2543,
+            648,
+            1983
+          ]
+        ]
+      },
+      "source_artifact": "F:hardware_pmu[1]; F:provenance; F:hardware_pmu_estimator",
+      "limitation_or_tradeoff": "Three pairs only. Reduced instructions/L1 read misses do not establish universal cache or LLC improvement. I reports residual fullarb scalar-trie build regressions14\u201322%, consistent with sort-vs-interner comparison costs at repeated suffixes."
+    },
+    {
+      "id": 8,
+      "backend": "Cached block8 trie",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          25041,
+          71
+        ],
+        "requested_bytes": [
+          2697718,
+          2078814
+        ],
+        "extra_peak": [
+          1730440,
+          1142931
+        ],
+        "known_retained": [
+          734395,
+          734395
+        ],
+        "reachable": [
+          16657,
+          16657
+        ],
+        "capacity": [
+          32768,
+          32768
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[7](alloc-before-collector-block8); F:constructor_metrics[22](alloc-candidate-collector-block8)",
+      "limitation_or_tradeoff": "Shape stays16657 nodes/capacity32768; retained metadata stays734395B. Signature-allocation removal lowers constructor peak; it does not remove cache stamp retention."
+    },
+    {
+      "id": 9,
+      "backend": "Uncached block8 control",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          69,
+          53
+        ],
+        "requested_bytes": [
+          1876998,
+          1352718
+        ],
+        "extra_peak": [
+          1072128,
+          809984
+        ],
+        "known_retained": [
+          665835,
+          665835
+        ],
+        "reachable": [
+          16657,
+          16657
+        ],
+        "capacity": [
+          32768,
+          32768
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[8](alloc-before-collector-block8nocache); F:constructor_metrics[23](alloc-candidate-collector-block8nocache)",
+      "limitation_or_tradeoff": "Same16657 nodes/capacity32768 as cached control; retained metadata665835B unchanged. Removing unused depth construction reduces temporary allocation work. Cached-versus-uncached shape is controlled, not a default recommendation."
+    },
+    {
+      "id": 10,
+      "backend": "Cached block8 trie",
+      "start_pin": "d139fb3",
+      "end_pin": "a02713edd996778df043c984a2de2939355f7771",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / portable generic",
+      "metric_roi": "Cold Cachegrind build region0; parser/oracle/final destruction excluded",
+      "values": {
+        "instructions_Ir": [
+          26748042,
+          22356392
+        ],
+        "D1_data_misses_read_plus_write": [
+          288424,
+          160375
+        ],
+        "LL_data_misses_read_plus_write": [
+          42264,
+          27220
+        ],
+        "conditional_branch_mispredictions_Bcm": [
+          190854,
+          120071
+        ]
+      },
+      "source_artifact": "A:cache_metrics[4],cache_metrics[5]; A:provenance.cache_model",
+      "limitation_or_tradeoff": "Model D1 and LL data misses decrease; model has no actualL2. I reports fullarb cached build ratios1.096\u20131.170 while uncached build is approximately flat0.995/1.002/0.994; fewer allocations can trade for more signature comparisons."
+    },
+    {
+      "id": 11,
+      "backend": "Cached block8 trie",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523",
+      "width": "compatible128 / native ISA",
+      "metric_roi": "Naturally warm user-only hardware PMU build0; includes Vector materialization+constructor; hooks/stats off",
+      "values": {
+        "cycles_separate_medians": [
+          10357986,
+          8643497
+        ],
+        "instructions_separate_medians": [
+          26346075,
+          20566600
+        ],
+        "l1d_read_miss_separate_medians": [
+          290383,
+          234374
+        ],
+        "llc_read_miss_separate_medians": [
+          926,
+          1309
+        ],
+        "llc_read_miss_raw_triplets": [
+          [
+            1986,
+            755,
+            926
+          ],
+          [
+            1644,
+            1309,
+            1111
+          ]
+        ]
+      },
+      "source_artifact": "F:hardware_pmu[3]; F:provenance; F:hardware_pmu_estimator",
+      "limitation_or_tradeoff": "Cycles/instructions/L1 read misses decrease in these three pairs; LLC median rises926->1309 and varies by pair, so make no LLC win claim."
+    },
+    {
+      "id": 12,
+      "backend": "Shared sharing forests",
+      "start_pin": "7c40712",
+      "end_pin": "cc058ca",
+      "input": "Query-visited layers of a shared historical arena",
+      "width": "32-bit software memoization slots",
+      "metric_roi": "Source-backed retained query metadata; no measured byte delta",
+      "values": {
+        "stamp_bytes_per_historical_node_in_a_visited_layer": 4,
+        "capacity_may_exceed_logical_stamp_count": true,
+        "automatic_reclamation_of_dead_historical_roots": false
+      },
+      "source_artifact": "D:sharing-tree memoization paragraph; include/posets/utils/sharingforest.hh:covers_visited/covers_vector",
+      "limitation_or_tradeoff": "Warm queries reuse stamp storage; new/growing layers can allocate. Dense historical stamps can cost more for sparse visits; interned arena lifetime remains shared. No exact forest retained-byte total or forest PMU result is supplied by A/F/H."
+    },
+    {
+      "id": 13,
+      "backend": "Shared sharing forests hash",
+      "start_pin": "a02713e private Boost",
+      "end_pin": "a02713e private shift; adopted cc058ca",
+      "input": "Collector actual-contains trace6 N256,d523; both wrappers/widths checked",
+      "width": "compatible128/max512",
+      "metric_roi": "Untimed first-constructor equality/bucket diagnostics; separate clean timing",
+      "values": {
+        "hash_calls": [
+          198415,
+          198415
+        ],
+        "hash_words": [
+          198667,
+          198667
+        ],
+        "equal_calls": [
+          77639,
+          64269
+        ],
+        "equal_words": [
+          64015,
+          64015
+        ],
+        "arena_nodes": [
+          67073,
+          67073
+        ],
+        "buckets": [
+          109112,
+          109112
+        ],
+        "max_bucket": [
+          7,
+          3
+        ],
+        "bucket_pairs": [
+          29543,
+          5110
+        ]
+      },
+      "source_artifact": "H:counter_cells[trace6,compatible,tree]; H:cells and observed_regressions",
+      "limitation_or_tradeoff": "Lower bucket crowding/equality calls are software-work proxies, not hardware cache misses or allocated bytes. Complete signature equality stays exact. H retains RRmax-tree constructor regressions in2/3pairs and one compatible-tree CPre regression; no universal runtime claim."
+    },
+    {
+      "id": 14,
+      "backend": "Lazy KD FC",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Full-arbiter actual-contains trace7 N1009,d43",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          603,
+          45
+        ],
+        "requested_bytes": [
+          638633,
+          86155
+        ],
+        "extra_peak": [
+          141852,
+          71352
+        ],
+        "known_retained": [
+          81072,
+          63688
+        ],
+        "reachable": [
+          127,
+          127
+        ],
+        "capacity": [
+          128,
+          128
+        ],
+        "rebuilds": [
+          11,
+          1
+        ],
+        "key_bytes": [
+          2048,
+          2048
+        ],
+        "bridge_bytes": [
+          8192,
+          8192
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[4](alloc-before-trace7-fc-bulk0); F:constructor_metrics[18](alloc-candidate-trace7-fc-bulk4096)",
+      "limitation_or_tradeoff": "603->45 allocations and11->1 rebuilds, but known_retained63688B is instrumentation-enabled metadata, excludes opaque Vector payload. This is fresh construction, not continuous Acacia lazy-deletion history."
+    },
+    {
+      "id": 15,
+      "backend": "Lazy KD independent search",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Full-arbiter actual-contains trace7 N1009,d43",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          427,
+          25
+        ],
+        "requested_bytes": [
+          552973,
+          66711
+        ],
+        "extra_peak": [
+          122396,
+          61624
+        ],
+        "known_retained": [
+          71344,
+          53960
+        ],
+        "reachable": [
+          127,
+          127
+        ],
+        "capacity": [
+          128,
+          128
+        ],
+        "rebuilds": [
+          11,
+          1
+        ],
+        "key_bytes": [
+          1024,
+          1024
+        ],
+        "bridge_bytes": [
+          0,
+          0
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[5](alloc-before-trace7-search-bulk0); F:constructor_metrics[20](alloc-candidate-trace7-search-bulk4096)",
+      "limitation_or_tradeoff": "427->25 allocations and11->1 rebuilds. Final search key capacity1024B/bridges0 versus FC2048B/8192B; FCknown_retained63688B versus search53960B. Same127 reachable nodes/capacity128; catalogs buy search work at a retained-space cost."
+    },
+    {
+      "id": 16,
+      "backend": "Lazy KD forced-index control",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Collector trace0 N256,d523; bulk limit0 in both",
+      "width": "compatible128",
+      "metric_roi": "First constructor; caller Vector materialization excluded; allocation hooks/stats enabled",
+      "values": {
+        "allocations": [
+          304,
+          304
+        ],
+        "requested_bytes": [
+          129834,
+          129834
+        ],
+        "extra_peak": [
+          33928,
+          33928
+        ],
+        "known_retained": [
+          19804,
+          19820
+        ],
+        "reachable": [
+          31,
+          31
+        ],
+        "capacity": [
+          32,
+          32
+        ],
+        "rebuilds": [
+          6,
+          6
+        ],
+        "key_bytes": [
+          512,
+          512
+        ],
+        "bridge_bytes": [
+          2048,
+          2048
+        ]
+      },
+      "source_artifact": "F:constructor_metrics[0](alloc-before-trace0-fc-bulk0); F:constructor_metrics[9](alloc-candidate-trace0-fc-bulk0)",
+      "limitation_or_tradeoff": "Allocation count304, requested129834B and extra peak33928B unchanged. known_retained19804->19820B reflects16B of instrumentation/policy metadata, not a heap regression or exact shipping sizeof delta."
+    },
+    {
+      "id": 17,
+      "backend": "Lazy KD FC",
+      "start_pin": "d139fb3",
+      "end_pin": "a02713edd996778df043c984a2de2939355f7771",
+      "input": "Full-arbiter actual-contains trace7 N1009,d43",
+      "width": "compatible128 / portable generic",
+      "metric_roi": "Cold Cachegrind build region0; parser/oracle/final destruction excluded",
+      "values": {
+        "instructions_Ir": [
+          66333242,
+          11758749
+        ],
+        "D1_data_misses_read_plus_write": [
+          740481,
+          734102
+        ],
+        "LL_data_misses_read_plus_write": [
+          9458,
+          6886
+        ],
+        "conditional_branch_mispredictions_Bcm": [
+          147552,
+          20818
+        ]
+      },
+      "source_artifact": "A:cache_metrics[2],cache_metrics[3]; A:provenance.cache_model",
+      "limitation_or_tradeoff": "Instructions fall strongly while totalD1 data misses are nearly flat740481->734102; this is primarily construction/rebuild-work removal, not a large D1-miss improvement."
+    },
+    {
+      "id": 18,
+      "backend": "Lazy KD FC",
+      "start_pin": "d139fb3",
+      "end_pin": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "input": "Full-arbiter actual-contains trace7 N1009,d43",
+      "width": "compatible128 / native ISA",
+      "metric_roi": "Naturally warm user-only hardware PMU build0; includes Vector materialization+constructor; hooks/stats off",
+      "values": {
+        "cycles_separate_medians": [
+          15206620,
+          2698718
+        ],
+        "instructions_separate_medians": [
+          60162931,
+          9167337
+        ],
+        "l1d_read_miss_separate_medians": [
+          764186,
+          742815
+        ],
+        "llc_read_miss_separate_medians": [
+          1,
+          3
+        ],
+        "llc_read_miss_raw_triplets": [
+          [
+            14,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            1
+          ]
+        ]
+      },
+      "source_artifact": "F:hardware_pmu[2]; F:provenance; F:hardware_pmu_estimator",
+      "limitation_or_tradeoff": "Instructions/cycles fall strongly; L1 read misses only modestly. LLC raw counts14/1/1->4/3/1 are too small/noisy to support a cache-level claim. No matching search PMU run in selected summaries."
+    }
+  ],
+  "limitations": [
+    "Static preparatory checkpoint only: no new build, test, profile, timing or full raw scan; no default/backend recommendation.",
+    "Pinned artifact comparisons are historical d139->a027 or d139->cc, not later compiler-context repair results or an end-to-end Acacia solver claim.",
+    "I records remaining workload-dependent regressions; do not relabel all of them compiler noise. Constructor versus second independent build versus in-place maintenance are distinct.",
+    "Final cc synthetic grid policy control: forced bulkN16384 median100.796ms versus indexed80.656ms; N4096 bulk6.221ms versus indexed7.407ms. Memory/capacity savings do not imply universal CPU gains or a larger default cutoff.",
+    "The full-arbiter construction input is validated actual-contains trace7; source-unverified full-arbiter CPre is excluded. Held-out data is not consulted."
+  ],
+  "artifacts": {
+    "A": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/followup-a02713e-v1/results/summary.json",
+      "sha256": "c60af56fd5d5b90d2ca9616e64e681d0216824075159883a9dacab3dd18e7b37"
+    },
+    "F": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/final-cc058ca-v1/results/summary.json",
+      "sha256": "93fc487df12610376d5a290fec7b15b0f9ae67f54208b6176b8124e6179e62b7"
+    },
+    "H": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/biere-hash/summary.json",
+      "sha256": "601cc0a893da85217895efcf52feed7af3868a3eb60ce7997f27a23c3a5013cc"
+    },
+    "I": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/lemire/per-backend-train-interpretation.txt",
+      "sha256": "6412ba33fb64e7c07a51c78cffbfeb1b9d109eff58a9968c2f0ef3267eca76ca"
+    },
+    "D": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/README.md",
+      "sha256": "61318a6956af4db38cce3b64ef448ce085b27c5cc880a09365abacabd96b3ecf"
+    }
+  }
+}

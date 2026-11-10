@@ -1,0 +1,17 @@
+{
+  "kind": "Explicit public metadata projection, not an exact copy",
+  "original": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-HANDOFF.json",
+    "sha256": "6a0cbd21da561b5c0004dea0e35c3fdb1a779540e42f54a7d539d69506c1673c",
+    "bytes": 42257
+  },
+  "projection": {
+    "path": "outcomes/final-handoff-projection.json",
+    "sha256": "a92ca63f4dc04c0de78b42f73d054da412301967f3c3e4b2350e508edd918890"
+  },
+  "omitted_json_pointers": [
+    "/bindings"
+  ],
+  "all_other_keys_and_values_preserved": true,
+  "original_retained_unchanged": true
+}

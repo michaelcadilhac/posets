@@ -1,0 +1,36 @@
+{
+  "approved_utc": "2026-11-10T01:18:39.116443+00:00",
+  "arms": {
+    "bytes": 10433,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/arms.json",
+    "sha256": "02410434cc7f55fabe8e5cebce4168b42f16954b57bbd13cf2050aac94abc169"
+  },
+  "checkpoint": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/FINAL-REVIEW-CHECKPOINT.json",
+    "sha256": "59dab0d4ee84652bf71e18d70b821922de4e53fb2619b7c2216f9a678db80765"
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py",
+    "--arms",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/arms.json",
+    "--output",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+    "--batch-size",
+    "32",
+    "--seed",
+    "260617"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+  "official_output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+  "reviewer_authorization": {
+    "agent": "/root/review",
+    "message": "Explicit approval of exact checkpoint59dab0d4 and arms02410434; no blocker; all source/protocol unchanged; output absent; archive audit being saved."
+  },
+  "root_authorization": "Run the exact bound primary once immediately after /root/review explicitly approves the final delta; no variants, repeats, tuning or overlap. Finish summary-only, frozen derivative, invariance and read-only original preservation.",
+  "source_attribution_limit": "The genuine frozen defaults have different private Rust archive bytes. The new KD is built separately. This is a source-treatment comparison, not an exact static dependency closure or isolated KD causal proof.",
+  "status": "Root conditional release activated by explicit Nbjorner exact-checkpoint approval",
+  "verified_checkpoint_bindings": 141
+}

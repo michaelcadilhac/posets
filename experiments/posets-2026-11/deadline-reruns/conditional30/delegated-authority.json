@@ -1,0 +1,52 @@
+{
+  "issued_utc": "2026-11-10T13:34:07.821230+00:00",
+  "reason": "User explicitly requested root sleep until the remaining results; delegate bounded orchestration to avoid stalling authorized work.",
+  "delegate": "/root/benchmark",
+  "source_author": "/root/coding",
+  "required_reviewers": [
+    "/root/review (Nbjorner)",
+    "/root/barbosa_review"
+  ],
+  "authority": "Conditional permission to execute only the approved continuation after all listed prerequisites. Not a release of unreviewed source or targets.",
+  "prefix_primary_records": 205,
+  "remaining_original_visit_indices": [
+    205,
+    311
+  ],
+  "remaining_calls": 107,
+  "final_primary_calls": 312,
+  "case_cohort": 156,
+  "output_namespace": "work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1",
+  "preserve": [
+    "all original V2 helper/plan/frozen/input/record bytes",
+    "all205 original primary outcomes including ERROR",
+    "independent diagnostic remains separate and never replaces primary row",
+    "same original source17 scores and entire156-case cohort",
+    "original remaining visit order, input mapping, exact ELFs/Spot/runtime settings/flags/environment",
+    "30-second cap,8GiB cgroups,no swap,shared host lock,no competing workload"
+  ],
+  "prerequisites": [
+    "exact frozen continuation source, eight meaningful offline fixtures and protocol amendment approved by Nb",
+    "existing scoped offline gate passed, failed attempts preserved; any routine fixture correction reviewed by Nb",
+    "actual concrete plan/source/ELF/context/prefix/suffix bindings verified",
+    "Nb approves actual source,gates,plan",
+    "Barbosa independently approves strict signature/original-error adjudication and actual107 plan",
+    "delegate writes a release record binding this authority, reviews, gates, source and actual plan before launching"
+  ],
+  "error_policy": {
+    "future_known": "Only exact reviewed1080-byte captured Spot32 signature plus complete identity/resource guards may continue; nativeERROR staysERROR with distinct category, unsolvedPAR2=60.",
+    "old_uncaptured": "ExistingERROR allowed only by exact bound failed record plus separate exact-binary diagnostic; disclose absent original stderr and do not claim recovery or replacement.",
+    "unexpected": "Any unknown/mixed error, truth conflict, identity/resource failure or material policy change stops and wakes root immediately."
+  },
+  "pairing": "102 complete adjacent prefix pairs; one pair straddles STOP/diagnostic/adjudication;53 new adjacent suffix pairs. Never claim all156 uninterrupted adjacent; no timing ratio for censoredERROR pair.",
+  "delegated_closure": "After107calls, verify full205+107 accounting,resource/rawtruth coverage,invariance,summary replay with zero newtargets, distinct errors and conditional156/PAR260 reporting. Notify root with completed result/handoff.",
+  "not_authorized": [
+    "additional targets or automatic retries",
+    "new variants/native-width experiments",
+    "Spot/library/solver rebuild or mutation",
+    "changes to original/frozen source or user WIP",
+    "publication/commit/push",
+    "broadening the accepted error signature without new review/root adjudication"
+  ],
+  "communication": "No routine root pings while sleeping; coordinate directly. Notify only material blocker/STOP or completed results."
+}

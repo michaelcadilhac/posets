@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "scope": "TRAIN only; baseline 7c40712 versus final cc058ca; held-out timings remain sealed",
+  "driver": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/posets-matrix.py",
+    "sha256": "b7583da68de894784074fd83fc001875a52839dd778e99ce4a94e2fb07d4e3cf"
+  },
+  "trace_plan": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+    "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+  },
+  "variants": {
+    "baseline": {
+      "build": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets-preopt-baseline",
+      "manifest": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-baseline-7c40712/provenance.json",
+        "sha256": "1dd1d5af3802c26d0cda30608ef8de1a049cb4e552c20fc1ed9bd202da673e9b"
+      },
+      "revision": "7c407128326583abbb137fd3832857ed506e20fb"
+    },
+    "optimized": {
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-final-cc058ca",
+      "build": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-final-cc058ca",
+      "manifest": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/replay-final-cc058ca/provenance.json",
+        "sha256": "9ed9b646c1718a515ec031322020f3926c9cd845b429cece02bf6879ca0bb887"
+      },
+      "revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3"
+    }
+  },
+  "runs": [
+    {
+      "id": "final-pair0-baseline",
+      "pair": 0,
+      "variant": "baseline",
+      "seed": 260617,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair0-baseline-spec.json",
+        "sha256": "8a1b81aeda847aeebd3c0b03bfc6af0bc04f4323f828ec4974f4d1be45d06f2f"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair0-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair0-baseline-record.json"
+    },
+    {
+      "id": "final-pair0-optimized",
+      "pair": 0,
+      "variant": "optimized",
+      "seed": 260617,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair0-optimized-spec.json",
+        "sha256": "2086b795af347dd7111176b35c2ecd9f2c60bdbbc882c3b051d43af1a70fe637"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair0-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair0-optimized-record.json"
+    },
+    {
+      "id": "final-pair1-optimized",
+      "pair": 1,
+      "variant": "optimized",
+      "seed": 260618,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair1-optimized-spec.json",
+        "sha256": "878024db3a1336faa33e15f18a17cff24f279e4fc873e774982d483c64d9cc80"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair1-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair1-optimized-record.json"
+    },
+    {
+      "id": "final-pair1-baseline",
+      "pair": 1,
+      "variant": "baseline",
+      "seed": 260618,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair1-baseline-spec.json",
+        "sha256": "fc9cbdc2917212cfe69a678affa9cc0dc047a55f86c9ea3dfad5ac05ebbca004"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair1-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair1-baseline-record.json"
+    },
+    {
+      "id": "final-pair2-baseline",
+      "pair": 2,
+      "variant": "baseline",
+      "seed": 260619,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair2-baseline-spec.json",
+        "sha256": "59df0c5a0c5cbf1cb56798fc8f8b188e2cc2dfd08df1d89dcc601a75e0b36c64"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair2-baseline",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair2-baseline-record.json"
+    },
+    {
+      "id": "final-pair2-optimized",
+      "pair": 2,
+      "variant": "optimized",
+      "seed": 260619,
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair2-optimized-spec.json",
+        "sha256": "816795f7294f22130ec9381495c0ca96e657621de59556f45d7c57a31774ff2a"
+      },
+      "output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/paired-final-train/final-pair2-optimized",
+      "record": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-pair2-optimized-record.json"
+    }
+  ],
+  "schedule": "A/B, B/A, A/B; fixed seed per pair; full-universe shuffle preserves common-cell relative order when qualification differs",
+  "failure_policy": "Retain every source timeout, backend timeout/rejection/OOM and newly qualified cell. No replacement. Distinguish verification/process overhead from operation clocks.",
+  "primary_metrics": [
+    "whole CPre",
+    "build",
+    "rebuild"
+  ],
+  "query_note": "Single-query contains clocks are diagnostic; no small-speedup conclusions.",
+  "build_environment": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+    "sha256": "434ff5292396348ef6bd0220cc00171076707a09ffe11b3c99389f3bcf5ca035"
+  },
+  "split": "train",
+  "orchestrator": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/run-paired-replay.py",
+    "sha256": "594d7760936b5c7dfc083f7139c7a8d23a7d1c364473055a94ca51e07832219c"
+  },
+  "source_freeze": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-source-freeze.json",
+    "sha256": "d5e2bd0b85ddc0f6a697d7b8db992e18fb5be3480178780ff3b320dbb4dfe426"
+  }
+}

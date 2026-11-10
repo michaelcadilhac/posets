@@ -1,0 +1,181 @@
+{
+  "Rust_archive_hashes": {
+    "baseline-default": "66382eaef453c258f2d1ef85e2e7e9835c623bb963c86858e40df261d24da00c",
+    "kd-scratch-restored": "e40ef50f02086b7d9db546e99032991d03749dc61bb836c390e7ad0e1c4d65ca",
+    "optimized-default": "452544d67ce57780e8ff68e3e4fe49d8fbd70edbd249b549b7943d5e4bb653d6"
+  },
+  "control_artifacts": {
+    "baseline-default": [
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/src/acacia-bonsai",
+        "sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/acacia_build_config.hh",
+        "sha256": "0ea192e63ba2c985a4f3eb42e985947b67817c8e0702895ab3283dcbdd85a824"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/compile_commands.json",
+        "sha256": "20921883e009e1de224cb4775f6bfb15d977e82e8a8cccf2dcdef48e876da9e8"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/liboxidd_ffi_c.a",
+        "sha256": "66382eaef453c258f2d1ef85e2e7e9835c623bb963c86858e40df261d24da00c"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/oxidd-build-stamp",
+        "sha256": "902cbb925adff72a946b2ab40f54525e171cfcb2ce5aa5664f75a6fd0112c1dc"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/oxidd_build_stamp.h",
+        "sha256": "0b28720a5513abd43470a1048a7b3684f120baad6b5f301969bfb1f607eaa6f8"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/oxidd_verified.h",
+        "sha256": "aab57b08fcb4578a99adfc7713cd9c1f552a1bd73f99be2a55af4df7c1488aa4"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/capi.h",
+        "sha256": "ac934389b30a0ade93763a49b67316e623bc0de4f7a6d8099e7509e7c91e86b7"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-baseline-789bf99/build-default/subprojects/tlsf-tools/oxidd/config.h",
+        "sha256": "0bbd0860d46c10c7b73d3e10d181b89a42a9312691f1048c6bf647a128df0e5b"
+      }
+    ],
+    "optimized-default": [
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/src/acacia-bonsai",
+        "sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/acacia_build_config.hh",
+        "sha256": "0ea192e63ba2c985a4f3eb42e985947b67817c8e0702895ab3283dcbdd85a824"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/acacia_version.hh",
+        "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/compile_commands.json",
+        "sha256": "2989ed9a93530ad2b51bc8ee5f7da0066d62dc55c972674111ef0adfa4d475bd"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/liboxidd_ffi_c.a",
+        "sha256": "452544d67ce57780e8ff68e3e4fe49d8fbd70edbd249b549b7943d5e4bb653d6"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/oxidd-build-stamp",
+        "sha256": "fe0fed90450c9e92b97aaf1b2d8583979ac2fad7003c113dde3f57d94b620392"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/oxidd_build_stamp.h",
+        "sha256": "6383a28bddcd27ce2d5c5f0ebd2a87123f7776954cbc859eba1c33489785b76b"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/oxidd_verified.h",
+        "sha256": "75e70b360d8c4b2656e2bf36022b84dc1c064970331e30d74ecb3c69e40f2a69"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/capi.h",
+        "sha256": "ac934389b30a0ade93763a49b67316e623bc0de4f7a6d8099e7509e7c91e86b7"
+      },
+      {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/subprojects/tlsf-tools/oxidd/config.h",
+        "sha256": "0bbd0860d46c10c7b73d3e10d181b89a42a9312691f1048c6bf647a128df0e5b"
+      }
+    ]
+  },
+  "new_KD_artifacts": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/src/acacia-bonsai-kd",
+      "sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/acacia_build_config.hh",
+      "sha256": "0ea192e63ba2c985a4f3eb42e985947b67817c8e0702895ab3283dcbdd85a824"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/acacia_version.hh",
+      "sha256": "6cf8d6957523659dc94747b843f844a2748eb4e424ec92eb2758a85aea8e2b1c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/compile_commands.json",
+      "sha256": "9e4158f1d982f95037738b907f5d5da1e0e8d7f30849d11a818235961fab7e5c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/liboxidd_ffi_c.a",
+      "sha256": "e40ef50f02086b7d9db546e99032991d03749dc61bb836c390e7ad0e1c4d65ca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/oxidd-build-stamp",
+      "sha256": "f77fe646d053cba80a74333691d4233c646efc304807894dc287e9aa3262d593"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/oxidd_build_stamp.h",
+      "sha256": "caf4e59d96ec88db9aaf42102d092ce0bf550f7caf6725b86a56abc5f45ccff4"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/oxidd_verified.h",
+      "sha256": "d91f37826821d92249301aa628de72bd11b86ce9cb48c31d7b42614cb7599c19"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/capi.h",
+      "sha256": "ac934389b30a0ade93763a49b67316e623bc0de4f7a6d8099e7509e7c91e86b7"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-acacia-legacy-d363b9f/build-kd-shipping/subprojects/tlsf-tools/oxidd/config.h",
+      "sha256": "0bbd0860d46c10c7b73d3e10d181b89a42a9312691f1048c6bf647a128df0e5b"
+    }
+  ],
+  "no_cross_source_object_reuse": true,
+  "runtime_libraries_identical_for_three_arms": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+      "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+      "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+    },
+    {
+      "path": "/usr/lib64/libstdc++.so.6.0.36",
+      "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+    },
+    {
+      "path": "/usr/lib64/libm.so.6",
+      "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+    },
+    {
+      "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+      "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+    },
+    {
+      "path": "/usr/lib64/libc.so.6",
+      "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+    },
+    {
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+    },
+    {
+      "path": "/usr/lib64/libmvec.so.1",
+      "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+    }
+  ],
+  "source_attribution_limit": "The genuine frozen defaults have different private Rust archive bytes. The new KD is built separately. This is a source-treatment comparison, not an exact static dependency closure or isolated KD causal proof.",
+  "source_files": {
+    "actual_acacia_tracked_sha256": 5528,
+    "actual_posets_tracked_sha256": 640,
+    "yyjson_files": 907
+  },
+  "source_manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/materialized-sources.json",
+    "sha256": "030a642ccc8e9ab534bde259f04961010b13a47e9264660bcc98a6842d23af7e"
+  },
+  "status": "Actual sources/artifacts/configuration/commands and shared runtime libraries rechecked"
+}

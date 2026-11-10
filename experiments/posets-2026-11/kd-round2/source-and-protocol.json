@@ -1,0 +1,3144 @@
+{
+  "schema": 1,
+  "status": "Completed evidence; root final prose/package review complete; ready for publication",
+  "timing_table": {
+    "path": "timing-rows.tsv",
+    "rows": 478,
+    "paired": 460,
+    "censored": 18,
+    "ratio_definition": "median of the three paired optimized_seconds / baseline_seconds ratios; not the ratio of endpoint medians"
+  },
+  "scope_correction": "Historical generic scope sentences can misidentify the arm revisions. Actual arm maps below come from bound plan variants and are verified against all saved per-run source bindings. Raw summaries are preserved exactly, not relabelled.",
+  "protocol": {
+    "data": "previously seen TRAIN frames; not fresh held-out evidence",
+    "pairs": 3,
+    "order": [
+      "A/B",
+      "B/A",
+      "A/B"
+    ],
+    "seeds": [
+      260617,
+      260618,
+      260619
+    ],
+    "source_cap_seconds": 30,
+    "check_cap_seconds": 2,
+    "measurement_cap_seconds": 2,
+    "rounds": 1,
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "vector_policy": "Original scalar and SIMD vector types retained. Scalar runs once at compatible width; SIMD at compatible and native. Larger five traces select the original SIMD vector type.",
+    "measurement": "Uninstrumented existing replay kernels; clock scopes unchanged; all qualification and measurement censors retained."
+  },
+  "comparisons": [
+    {
+      "id": "stage1-execution/train-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage1-execution/train-summary.json",
+        "sha256": "b52fa6de57f9cdc26a4f67932e954c7010fee3c4c93253cbb8929d4a41276db1",
+        "bytes": 129208
+      },
+      "included_summary": "evidence/summaries/stage1-execution/train-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/kd2-stage1-train-plan.json",
+        "sha256": "debd94054f24a0fb571060d95b3bf5bca4a11154e861b9c34e0003f145ccca13",
+        "bytes": 9297
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "baseline",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage1/binary-map.json",
+            "sha256": "1232a57f3f78cd2e925581137e331bb3f4bcb365951d47db9206fd3f2ef6213b"
+          }
+        },
+        "optimized": {
+          "revision": "15874113b18cad913941421b7ba189368722db96",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "candidate",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage1-1587411",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage1-1587411/build-replay-release/selected-stage1/binary-map.json",
+            "sha256": "e6647e71dca44d5aa3c9d8dc421ec0d76abe3833c4db051156cf832c6adff857"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+        "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/posets-matrix.py",
+        "sha256": "ad6dbe75b5a63cbc3ed2647c9c42b92c6b7f3a811897ff2c0a9a522dd71ed138"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/run-paired-replay-stop-on-correctness.py",
+        "sha256": "65e038dd38ba27379cdc14080fd7fb1787fe603693adcccd8f27b046d873cbaf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/kd_contract.py",
+        "sha256": "bc8427aeb03a3255882d6f04b4489f01782dc7635147c0e6378e3c09aa013c5b"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/prepare-paired-replay.py",
+        "sha256": "6ee5c25c5ab2d08a29c6619dc219660d03a225d4b1cf06d0da4e74256426571c"
+      },
+      "summarizer_sha256": "157f4170618dae747e47f481b35b4b5b058f96083e07df2b460463966049edbf",
+      "cell_status_counts": {
+        "paired": 58,
+        "censored": 6
+      },
+      "failure_counts": [
+        {
+          "phase": "check",
+          "status": "source_unverified",
+          "rows": 18
+        },
+        {
+          "phase": "source_oracle",
+          "status": "timeout",
+          "rows": 6
+        }
+      ],
+      "bound_runs": [
+        {
+          "run": "kd2-stage1-train-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair0-baseline/build-source-binding.json",
+            "sha256": "50f34cc37a59d30cfa799f02443ead982501fb0cb1474abd94ab94e59313c3d7",
+            "bytes": 2501
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair0-baseline/report.json",
+            "sha256": "d18fd960eaade0ec83966f18c1d40da61812078875de0ca6e9214b6a0068fe1f"
+          }
+        },
+        {
+          "run": "kd2-stage1-train-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair0-optimized/build-source-binding.json",
+            "sha256": "ec848569696f3368e87cfbdf25c817d4045a94620ea38efb1633f4fca32a3f4f",
+            "bytes": 2524
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair0-optimized/report.json",
+            "sha256": "43ebd997c8fcb354e95afeca81e71314ce69f8f2c78b6d0c6fb7b4bb3be4a7ce"
+          }
+        },
+        {
+          "run": "kd2-stage1-train-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair1-optimized/build-source-binding.json",
+            "sha256": "8962bf338d7ba90c552011581f994dd91d789a09fb56d0c5c3787f4e5c5fad46",
+            "bytes": 2524
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair1-optimized/report.json",
+            "sha256": "402af9f6fdc1f48096e106dba8d45aa303c0004e60f82a82a6fd2474b654d8e0"
+          }
+        },
+        {
+          "run": "kd2-stage1-train-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair1-baseline/build-source-binding.json",
+            "sha256": "6be0b0da284a99e55d7b6c731fbcd8a9eb11fe8de311e4969ba83dd80b2f2efd",
+            "bytes": 2501
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair1-baseline/report.json",
+            "sha256": "a76418363af71b6bb0987d3d8d58e35cb4612fa5a51faa562a09593ec0bcda79"
+          }
+        },
+        {
+          "run": "kd2-stage1-train-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair2-baseline/build-source-binding.json",
+            "sha256": "9516d0cdf781c00959ff962c5446b74cd544035faeab9afdcc1441f3086da998",
+            "bytes": 2501
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair2-baseline/report.json",
+            "sha256": "5a647a273f30d77b6d1a916db45ff0199c39fa431e6015783e66036f3cca7b19"
+          }
+        },
+        {
+          "run": "kd2-stage1-train-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair2-optimized/build-source-binding.json",
+            "sha256": "4d00ca82bb603b3fb5b7b45bcb83699e5d52b5d4914c7c16aa97aff45ed57e94",
+            "bytes": 2524
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-train/kd2-stage1-train-pair2-optimized/report.json",
+            "sha256": "ffdb4468b6fe861a2b0ef53eddab3e08007872e766b2430068ca3ffb2f3e1417"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage1-execution/larger-train-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage1-execution/larger-train-summary.json",
+        "sha256": "ca40ccd3f53540a8373c5c165b096d5a1dafa974e7472a2c98b070c78ad954da",
+        "bytes": 44633
+      },
+      "included_summary": "evidence/summaries/stage1-execution/larger-train-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/kd2-stage1-larger-train-plan.json",
+        "sha256": "5701076b5ed0ee36c4df9ed46dcdbfe9e0a2107bb65bcd1298ef8066816e5a35",
+        "bytes": 9534
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "baseline",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage1/binary-map.json",
+            "sha256": "1232a57f3f78cd2e925581137e331bb3f4bcb365951d47db9206fd3f2ef6213b"
+          }
+        },
+        "optimized": {
+          "revision": "15874113b18cad913941421b7ba189368722db96",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "candidate",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage1-1587411",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage1-1587411/build-replay-release/selected-stage1/binary-map.json",
+            "sha256": "e6647e71dca44d5aa3c9d8dc421ec0d76abe3833c4db051156cf832c6adff857"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/posets-matrix.py",
+        "sha256": "ad6dbe75b5a63cbc3ed2647c9c42b92c6b7f3a811897ff2c0a9a522dd71ed138"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/run-paired-replay-stop-on-correctness.py",
+        "sha256": "65e038dd38ba27379cdc14080fd7fb1787fe603693adcccd8f27b046d873cbaf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/kd_contract.py",
+        "sha256": "bc8427aeb03a3255882d6f04b4489f01782dc7635147c0e6378e3c09aa013c5b"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/prepare-paired-replay.py",
+        "sha256": "6ee5c25c5ab2d08a29c6619dc219660d03a225d4b1cf06d0da4e74256426571c"
+      },
+      "summarizer_sha256": "157f4170618dae747e47f481b35b4b5b058f96083e07df2b460463966049edbf",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd2-stage1-larger-train-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair0-baseline/build-source-binding.json",
+            "sha256": "480161877454fbd15931939fb7b8e94f27d4e836028072ec7db6e1fb25ea4df8",
+            "bytes": 2543
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair0-baseline/report.json",
+            "sha256": "c5a9339ef4fe27cf37a8f58427b9e4f795fb79db3238d092b06417746bc740ea"
+          }
+        },
+        {
+          "run": "kd2-stage1-larger-train-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair0-optimized/build-source-binding.json",
+            "sha256": "cb24427f3fdcf7cc992a825f4de5c3f8022491ba29fcc5ec878bbe697fafa5db",
+            "bytes": 2566
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair0-optimized/report.json",
+            "sha256": "54b3de789dfc596b797b7d562a12885f8e0961909197a81dc7f7bed0ed04b8b8"
+          }
+        },
+        {
+          "run": "kd2-stage1-larger-train-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair1-optimized/build-source-binding.json",
+            "sha256": "f85bdddb878d9e92a4f4d25e3d7915ccadca50d80b603a6ad627b417c1c61052",
+            "bytes": 2566
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair1-optimized/report.json",
+            "sha256": "b7495e5ae16c65475215e3969eb49e5e71fc6eb2e79d15c440bc2b65ad10e0a0"
+          }
+        },
+        {
+          "run": "kd2-stage1-larger-train-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair1-baseline/build-source-binding.json",
+            "sha256": "04153c44c1f08ae4013536e32c2ccff9ce20468485db685c84f351df0ec88ba5",
+            "bytes": 2543
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair1-baseline/report.json",
+            "sha256": "ba80af1a00614830876ad00d33bc6198230f7c1ea6be30c4a8c2ce1185ac06b7"
+          }
+        },
+        {
+          "run": "kd2-stage1-larger-train-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair2-baseline/build-source-binding.json",
+            "sha256": "2e50f63fcadb24ec3525d48eb6eeadc290f950682714162463b2f11971981679",
+            "bytes": 2543
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair2-baseline/report.json",
+            "sha256": "1abbd5854f402a9be542fc1016ea57de2e1e5a56f777f0877e75ee4b1414e18f"
+          }
+        },
+        {
+          "run": "kd2-stage1-larger-train-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "15874113b18cad913941421b7ba189368722db96",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair2-optimized/build-source-binding.json",
+            "sha256": "69c3e93af433bc362d600cbbbf693302976e654cc34a9f7ff03170c7836c1644",
+            "bytes": 2566
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-stage1-larger-train/kd2-stage1-larger-train-pair2-optimized/report.json",
+            "sha256": "00d1653223b6849ca22e328da1c55eda61dceb1b1d1e3ece6aa5997e1243ee65"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage2-attribution/a-only-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage2-attribution/execution/a-only-summary.json",
+        "sha256": "c15f7bc67c066ea4f15460a6ac15a3bfacdbed3e9e8fca1e6188836fd17c48a5",
+        "bytes": 45994
+      },
+      "included_summary": "evidence/summaries/stage2-attribution/a-only-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/kd2-a-only-larger-train-plan.json",
+        "sha256": "70e8f0b70fdbef5c87d1053a4d05945ca72c81f29e0c573104befe7339537242",
+        "bytes": 9745
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "oldlazy",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-attribution-stage2/binary-map.json",
+            "sha256": "ab20abee1c0a85786fefadde3a0bdd0e61b89b6531e97a95d824f27c85723fc9"
+          }
+        },
+        "optimized": {
+          "revision": "ffacd9c4deb36e99cd77cd5249642000c133b2dc",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "a-only",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-a-only",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-a-only/build-replay-release/selected-attribution-stage2/binary-map.json",
+            "sha256": "5172bf6888b34cad2d4f20ff0f944c378ebd46c189f4dd99b6f5569e9f2bb4c5"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/kd_contract.py",
+        "sha256": "eef7f670f94638478a5789d0390f82060ec395917f0a2a8470d3897a6cb36b20"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd2-a-only-larger-train-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair0-baseline/build-source-binding.json",
+            "sha256": "af92cdbdf7f1fa174c631e5b7bb27cc5f1ca1a87081a97d91b0a75a7a03dc64b",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair0-baseline/report.json",
+            "sha256": "321e936c8a414c59e011f7c4176981fd2579d4ee35104470d15c1d2a39f876f4"
+          }
+        },
+        {
+          "run": "kd2-a-only-larger-train-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "ffacd9c4deb36e99cd77cd5249642000c133b2dc",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair0-optimized/build-source-binding.json",
+            "sha256": "ac97a647938e03f297da3c3c98d05e38f8e8cd6b1aeee903de4bd1f1f871abe0",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair0-optimized/report.json",
+            "sha256": "1810e8f30d81effd46663cebe7205ab3e0613ed1df06d750ff8738f3c3c0e43c"
+          }
+        },
+        {
+          "run": "kd2-a-only-larger-train-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "ffacd9c4deb36e99cd77cd5249642000c133b2dc",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair1-optimized/build-source-binding.json",
+            "sha256": "cc43ebad46ec1467512b768885b4bf614c85b068c4813265133221d3d0326aeb",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair1-optimized/report.json",
+            "sha256": "acaf2ed6809360cc49019d289866afcfc126199fc12b53c21fc8fd4eb4951db3"
+          }
+        },
+        {
+          "run": "kd2-a-only-larger-train-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair1-baseline/build-source-binding.json",
+            "sha256": "1c96fcc9a9475ba56ff2504b21a882f801a07a785eb29b137687950edde44d47",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair1-baseline/report.json",
+            "sha256": "67478902cbf728b384c7b72881dbdefc3f20071a52576f16e94e5ac99a91c03a"
+          }
+        },
+        {
+          "run": "kd2-a-only-larger-train-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair2-baseline/build-source-binding.json",
+            "sha256": "8816056d72074fae052e55b548dccea1fae557ba2d097996ad272367e66e25a9",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair2-baseline/report.json",
+            "sha256": "a30bff305dd4267e8be5aedee6087fce7df39b192b754c251c0bb919229bdc58"
+          }
+        },
+        {
+          "run": "kd2-a-only-larger-train-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "ffacd9c4deb36e99cd77cd5249642000c133b2dc",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair2-optimized/build-source-binding.json",
+            "sha256": "954a181eb44545b11146ec915f62495a0900ece0cb44f9c7c34bfa2db983e423",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-a-only-larger-train/kd2-a-only-larger-train-pair2-optimized/report.json",
+            "sha256": "07974260c0b700df732474b3f71b65a84caf7552ae6bf1705badcad4c54bb5f4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage2-attribution/b-only-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage2-attribution/execution/b-only-summary.json",
+        "sha256": "882e897cb8804be07fac0d92689d5bca9ff150612bd9c57c3ed450e4dc316541",
+        "bytes": 45996
+      },
+      "included_summary": "evidence/summaries/stage2-attribution/b-only-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/kd2-b-only-larger-train-plan.json",
+        "sha256": "0d550b97211b9fcad68349d412ccaceb0a032444b745b10cf2c7af80dd2a5697",
+        "bytes": 9745
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "oldlazy",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-attribution-stage2/binary-map.json",
+            "sha256": "ab20abee1c0a85786fefadde3a0bdd0e61b89b6531e97a95d824f27c85723fc9"
+          }
+        },
+        "optimized": {
+          "revision": "588a63e3903baaea8c18879b704b43a2dce259da",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "b-only",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-b-only",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-b-only/build-replay-release/selected-attribution-stage2/binary-map.json",
+            "sha256": "bbf5245502294ddb1b7a5d6b658a5ff89dd909a92df11366e254f6ee281e805e"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/kd_contract.py",
+        "sha256": "eef7f670f94638478a5789d0390f82060ec395917f0a2a8470d3897a6cb36b20"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd2-b-only-larger-train-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair0-baseline/build-source-binding.json",
+            "sha256": "d2cff91ceffecdf65038d3ae3a59166df31b28dd6271ca8298b61e857a2054b5",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair0-baseline/report.json",
+            "sha256": "974b2c602dd39134cb86526b1378d4bee78eb57fa7bb7239023bab1557cecc3a"
+          }
+        },
+        {
+          "run": "kd2-b-only-larger-train-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "588a63e3903baaea8c18879b704b43a2dce259da",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair0-optimized/build-source-binding.json",
+            "sha256": "31cb11c1277f584fafa65509607d8bf1c9e81a7b9182ac5ad7c513c05095c9e2",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair0-optimized/report.json",
+            "sha256": "6679f06a024a4d7f5e0f0b7dd22dc8d9dfee23f4c5db681e27859aba5bae854d"
+          }
+        },
+        {
+          "run": "kd2-b-only-larger-train-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "588a63e3903baaea8c18879b704b43a2dce259da",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair1-optimized/build-source-binding.json",
+            "sha256": "0ff3d23715b5888cb4f78f81cf95cb6a89b5f033e51fe01494d00fa6a29d4d51",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair1-optimized/report.json",
+            "sha256": "343c0fb3410debe997a403ea8a8e00b2864a0ffcc49f408501c37abbb86a4d6e"
+          }
+        },
+        {
+          "run": "kd2-b-only-larger-train-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair1-baseline/build-source-binding.json",
+            "sha256": "6b07fa1932626f8ae984bd18efade6e305c31e654f9e80bebebd97d3e38451f3",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair1-baseline/report.json",
+            "sha256": "aaafde71e9e24da73b0c46c40308a3876dbe6ae3fedc2ed1c288fa68ba6b4415"
+          }
+        },
+        {
+          "run": "kd2-b-only-larger-train-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair2-baseline/build-source-binding.json",
+            "sha256": "e9eb19a9ea888c9d16f2f6a44c997814cb1543af90589bcae8c5c2254c3a8315",
+            "bytes": 2595
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair2-baseline/report.json",
+            "sha256": "3fc6eddd9b8177e3f5dbdde8a789003e9d017f8c81c41accdf467bba9536ad87"
+          }
+        },
+        {
+          "run": "kd2-b-only-larger-train-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "588a63e3903baaea8c18879b704b43a2dce259da",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair2-optimized/build-source-binding.json",
+            "sha256": "778c47d572117f65e2c031f9f22c5124a8d562959a60e2441ef92b38ad1ef518",
+            "bytes": 2594
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd2-b-only-larger-train/kd2-b-only-larger-train-pair2-optimized/report.json",
+            "sha256": "12a4ce1fff694141e5d1fe7a66de92c83bf8292bcb5fb95cb88776e54256a1a6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/followup-legacy-before-vs-legacy-after-standard-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-legacy-before-vs-legacy-after-standard-summary.json",
+        "sha256": "3b9fddc57cc409ad68cd05684e8d052cf878f86110a48247bbcba8a493ffef12",
+        "bytes": 134262
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/followup-legacy-before-vs-legacy-after-standard-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-legacy-before-vs-legacy-after-standard-plan.json",
+        "sha256": "0d408d56ce280d8b9ea5549f6228b57cd7b5b07b4a5811170f5ad44c17a2b4d0",
+        "bytes": 10572
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "legacy-before",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-legacy-before/binary-map.json",
+            "sha256": "74fc7ae107849a334b31fbe6cc0f89a7a04cee45e717e229441fc68160499ad7"
+          }
+        },
+        "optimized": {
+          "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "legacy-after",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy/build-replay-release/selected-stage3-legacy-after/binary-map.json",
+            "sha256": "5ca132c35b3e4d9ef3e78737bd615295fe54a3927c8b82d679e3ae5ed427b5b0"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+        "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 58,
+        "censored": 6
+      },
+      "failure_counts": [
+        {
+          "phase": "check",
+          "status": "source_unverified",
+          "rows": 18
+        },
+        {
+          "phase": "source_oracle",
+          "status": "timeout",
+          "rows": 6
+        }
+      ],
+      "bound_runs": [
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair0-baseline/build-source-binding.json",
+            "sha256": "cb17db5f7f4d2fd489ea4de766c33a3f82ab7b5a6b443b60113eb31c60dd1b85",
+            "bytes": 2767
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair0-baseline/report.json",
+            "sha256": "fedf27a2b0c08aa0dd251470122c66134a28dc678535b0d4035573fc3638ce17"
+          }
+        },
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair0-optimized/build-source-binding.json",
+            "sha256": "8a88ac0f77862cb56dd18615f860c8df437f9d2fb7fc9f13b516054a7dc1b428",
+            "bytes": 2764
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair0-optimized/report.json",
+            "sha256": "854c3d187357df199e940da8e4dc479a0010bdd407ffc366e53c34914e6f8470"
+          }
+        },
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair1-optimized/build-source-binding.json",
+            "sha256": "f449ce4931770d08c8f7c2a2b06f8f65c9ad21183bb16e760af06f79813c6ff2",
+            "bytes": 2764
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair1-optimized/report.json",
+            "sha256": "a8dfa24a01d76d0f671d625de962d610a98036412326fa0bf8c5835e9fa75abc"
+          }
+        },
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair1-baseline/build-source-binding.json",
+            "sha256": "62f7565ce879f25542af269e536ccb08b96ee337e6d0c175dbbe4366cb2e736c",
+            "bytes": 2767
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair1-baseline/report.json",
+            "sha256": "6276436f351507a24a69c59d953b10f3ca2130e08024adc35e907a7e163f8bff"
+          }
+        },
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair2-baseline/build-source-binding.json",
+            "sha256": "b87b41279fb6dab913b4165b3b8296a20156e0899e7d00adc21fdffddd2f0c06",
+            "bytes": 2767
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair2-baseline/report.json",
+            "sha256": "2ec8ba682fc180967d825c02a9bcd5ba290f03a0fa1d588d81db690fa5e87f92"
+          }
+        },
+        {
+          "run": "kd3-selected-legacy-before-vs-legacy-after-standard-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair2-optimized/build-source-binding.json",
+            "sha256": "e1157ddcde34f430953bd95e85835299b5769f46aa4436d0df7fe8f93cc17c7a",
+            "bytes": 2764
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-legacy-before-vs-legacy-after-standard/kd3-selected-legacy-before-vs-legacy-after-standard-pair2-optimized/report.json",
+            "sha256": "3920dd61fe92db489e2ce181a5568d68ac894b06c04fcbd1f313faa06606e993"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/followup-newrank-vs-plain-larger-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-larger-summary.json",
+        "sha256": "160429baa950a2644293fc132a2130601fad7310725a1637a604f25455089496",
+        "bytes": 47001
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-larger-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-newrank-vs-plain-larger-plan.json",
+        "sha256": "c1201c49d72423681cfb3cf1eff5e20923f59c8291eeae96395fcac98190deca",
+        "bytes": 10185
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "d1c8d2c5dbe3fa2949cda1d40020266fd1dd675b6cf487dbb3827f86f8edb542",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair0-baseline/report.json",
+            "sha256": "1a79a4343e6999a9944c7898617d471ff1b74ab5695268ffafcb81c17f720add"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "b7b2e0bfce68c0ed64fb25dbdb165acd734355a913924b9fa64cb139b9ab483f",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair0-optimized/report.json",
+            "sha256": "6077c0b8b14e41a7f521df065524564fa64c12a98eb1b34218a1994c2e5cab2b"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "c0c2a825fd4f2f8f57b0eff73c07c6933d90bf71db81e5847941f416b1045cbe",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair1-optimized/report.json",
+            "sha256": "e9b002be864b81801f2c8b76d1ad897aa236bd8a49a49236f5e2bd0bdafe5ef7"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "2062be724f2df6c2a80947b413a6d03fc7af277bd80ce548443577c1c279b8cc",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair1-baseline/report.json",
+            "sha256": "3213d575c19cc12cf650da034f20ea481f252ad7bc0b6a8232a2e68f5014938c"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "0037721e45a66d7dd0355362824c45ad6dcc4b22ac8a4bbbf92ffe534901c5aa",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair2-baseline/report.json",
+            "sha256": "937541fc95e2f8164359cc5656060c8af3d12f07dacdc2b2af17743e938e46e0"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "2515416256559033119c9e641b8a396418079ecc85272549e3e9d997223729a4",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-larger/kd3-selected-newrank-vs-plain-larger-pair2-optimized/report.json",
+            "sha256": "843851c54eb08067d8fd3f6c4c2cf2672089785c12dd620a96182e7417b47bcb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/followup-newrank-vs-plain-standard-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-standard-summary.json",
+        "sha256": "104956bbee4595015b2bd70a6713fe33dffc57106063f3b1985cab4556895ba3",
+        "bytes": 136091
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-standard-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-newrank-vs-plain-standard-plan.json",
+        "sha256": "cedd746631fb58007be2a83f3d5bfe6a38e03927a166ad1bb4e828eb9435a9be",
+        "bytes": 10218
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+        "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 58,
+        "censored": 6
+      },
+      "failure_counts": [
+        {
+          "phase": "check",
+          "status": "source_unverified",
+          "rows": 18
+        },
+        {
+          "phase": "source_oracle",
+          "status": "timeout",
+          "rows": 6
+        }
+      ],
+      "bound_runs": [
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair0-baseline/build-source-binding.json",
+            "sha256": "05d82b2d38a84551cc924dbb629768f7e99926deb6d6507a9305a715a2eaece5",
+            "bytes": 2695
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair0-baseline/report.json",
+            "sha256": "c236bc87833906ec60d1c576b7729bb16dada0dc4b8a3dcc338c3d6a62c04610"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair0-optimized/build-source-binding.json",
+            "sha256": "3893d4e93fe27769763e1aeb08560f53ec8d653a723df954389f905805d60330",
+            "bytes": 2690
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair0-optimized/report.json",
+            "sha256": "548ea10986bb156bd7527cfabd5dc2507bbc8824fba4dc7e185dad8c27b91381"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair1-optimized/build-source-binding.json",
+            "sha256": "0e1d4a170d5376af7b7ce89a9c0e94fcffa98d1fd3dbd40221fde78bbc494f73",
+            "bytes": 2690
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair1-optimized/report.json",
+            "sha256": "7e82573c1ffda411805cdc72f27889156ff48c5407dfc79816e6a2fd20565d59"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair1-baseline/build-source-binding.json",
+            "sha256": "da0121ed62efa003be2fc506c10affba89ff93190e4bd713ebfb5814462255b1",
+            "bytes": 2695
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair1-baseline/report.json",
+            "sha256": "0ee238c0c0714fe799197a3052333ec1fc59dcd915ffda92bd3b148838395472"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair2-baseline/build-source-binding.json",
+            "sha256": "4ade282f752acc2103e6262cad0bbd08744a6a77de05919c755202a6d3836293",
+            "bytes": 2695
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair2-baseline/report.json",
+            "sha256": "18c03baa7ba331298816ab1392201783e50f03c2047d384ddd1b74073d15052e"
+          }
+        },
+        {
+          "run": "kd3-selected-newrank-vs-plain-standard-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair2-optimized/build-source-binding.json",
+            "sha256": "8d1cfa3fe6d06f3c6a7aac6d6eb68ca17d3bedf340444bd1a84ba13ea386aaf6",
+            "bytes": 2690
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-newrank-vs-plain-standard/kd3-selected-newrank-vs-plain-standard-pair2-optimized/report.json",
+            "sha256": "8198f35870954ddb6e2edf43d925a0801fc72a384e26bff52ecfbafc64faba04"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/followup-oldrank-vs-plain-larger-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-oldrank-vs-plain-larger-summary.json",
+        "sha256": "aa06ce563303415b7ed5bc1e423b500d2df3d892f3e17da67b499a064a73da2a",
+        "bytes": 47023
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/followup-oldrank-vs-plain-larger-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-oldrank-vs-plain-larger-plan.json",
+        "sha256": "5edbb05989a86272de1c1d16c39216ee27686a2d8f23fe71f411c5d25a812963",
+        "bytes": 10185
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "kd_source_role": "oldrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank/build-replay-release/selected-stage3-oldrank/binary-map.json",
+            "sha256": "ad79b3793b51922498a78550295ee27414e222381a3d9feb48221f5912402e5b"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "5c3df1212246955888d5d3fe6f9ac36721409ae481ec3fbef3da186bec8f494e",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair0-baseline/report.json",
+            "sha256": "33ff41d04f0493a7278d90ef49aa54d0ce445c81bb282780cee5b7b5533ed6c2"
+          }
+        },
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "bb0431dc137960da7ea1af100df4611d6a5a1483cacdd62b0a292f05c6c5497c",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair0-optimized/report.json",
+            "sha256": "d31754f368a05085e20c897428c6d3ac8954845b0f05520e66f2c312b1e0168a"
+          }
+        },
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "af8343019bd8d68ea991536de401ac73ea2a36d15587a2ac592ddfcb39736b5d",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair1-optimized/report.json",
+            "sha256": "180901a7c91079c5a9731b7b795fe77b63a905930d9fdfe39ca517352cafc1a6"
+          }
+        },
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "a58370e3b8b1f56049be635ec0decf0e22e96882a1277f410181f3dab31f49fc",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair1-baseline/report.json",
+            "sha256": "f3cbbf42a226ccbea06d56f4fe00303b9d2c2ee98ae62bce7552e7bb558aa780"
+          }
+        },
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "1069e66c772c6fdaa7334f3cfc536bb9d872e4b974d27a4b09ed315a9234f4c0",
+            "bytes": 2683
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair2-baseline/report.json",
+            "sha256": "e7bfec0d4971b845f3818ddeaa5ead24ff557d903d1da4abe68e8e72f5f0ffc4"
+          }
+        },
+        {
+          "run": "kd3-selected-oldrank-vs-plain-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "16eeb02fe662edab530cf9e008816c335cc1e0ac5e83fa601877900cf6d1e90b",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-selected-oldrank-vs-plain-larger/kd3-selected-oldrank-vs-plain-larger-pair2-optimized/report.json",
+            "sha256": "d53a3f8b30b0942e1e33fe5a70aa23ddb270f47b6dca138e807a1a718864af29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/k2scalar-vs-k2simd-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/k2scalar-vs-k2simd-summary.json",
+        "sha256": "004a3eba1e41106b4db2c2c3bee64477a0a31955ab798d54cf69bd578a61df36",
+        "bytes": 46977
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/k2scalar-vs-k2simd-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-k2scalar-vs-k2simd-larger-plan.json",
+        "sha256": "25a7f16fd61f4c7c509700f5d314f00fa4a249778aba6eedf2a77cdc6149aec5",
+        "bytes": 9982
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_scalar",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2scalar/binary-map.json",
+            "sha256": "db3844f9d71bdb50ba31a91eeeb995285c68639147397f227806274009e20f86"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "d037c7b63945a0106af70298422be1130565ee94e6286f3c8995b35528ab203f",
+            "bytes": 2637
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair0-baseline/report.json",
+            "sha256": "d96953397bb62512136d101c590e92ac24b28859a3665a2feafe6b9713a1a53b"
+          }
+        },
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "b63cbc4e08b5cdabc66b009deb55133a89cc704083bc568638390a7c66727bbc",
+            "bytes": 2638
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair0-optimized/report.json",
+            "sha256": "42aa9d715712a92b2f6e67175591d55d65c6348d1d20a1b3ca4e5726f2556774"
+          }
+        },
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "27606096e85a7e4fc2229e150ed26a658398cf088ab1e50f6d8b56ba83d51a30",
+            "bytes": 2638
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair1-optimized/report.json",
+            "sha256": "c52f0b82ec5a925f17973b06f864623628e994b61ecfeb91be7513cac4f1e7c5"
+          }
+        },
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "51329ecc88b1c1d2e832ad622aded2849d6071bd274481e314131c5e6caf7742",
+            "bytes": 2637
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair1-baseline/report.json",
+            "sha256": "b3078f0ad2eeff49ddab0d5257bf9eda492e031c223905aedfa37c159a5d0240"
+          }
+        },
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "aff458c6bad35e521457cab5b771befa4263cc4bb8d6389fe18bc00888bef547",
+            "bytes": 2637
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair2-baseline/report.json",
+            "sha256": "87cc6dec7dbee0b31bd159a210413fe1559a35c49c22c707250956dba0cc06fb"
+          }
+        },
+        {
+          "run": "kd3-k2scalar-vs-k2simd-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "9e0791b5fa01584786a581747f4d742d4ed6b006659a96bdd059568a60b82967",
+            "bytes": 2638
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-k2scalar-vs-k2simd-larger/kd3-k2scalar-vs-k2simd-larger-pair2-optimized/report.json",
+            "sha256": "1dd1eb4ad144bcca378393eebcfdc4713c50f596979f396d1e76a9ebc4f93d43"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/legacy-before-vs-after-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/legacy-before-vs-after-summary.json",
+        "sha256": "167cffdaa73b6ad82e3c0a63eb2bafcdd1a85f08727d6edc8300253e7542b5e0",
+        "bytes": 79455
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/legacy-before-vs-after-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-legacy-before-vs-after-larger-plan.json",
+        "sha256": "dde6222f069ec5fbe8fe737ecc122e6dc335564791b38511c82681af700d87c6",
+        "bytes": 10059
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "legacy-before",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-legacy-before/binary-map.json",
+            "sha256": "74fc7ae107849a334b31fbe6cc0f89a7a04cee45e717e229441fc68160499ad7"
+          }
+        },
+        "optimized": {
+          "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "legacy-after",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy/build-replay-release/selected-stage3-legacy-after/binary-map.json",
+            "sha256": "5ca132c35b3e4d9ef3e78737bd615295fe54a3927c8b82d679e3ae5ed427b5b0"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [
+        {
+          "phase": "check",
+          "status": "timeout",
+          "rows": 14
+        }
+      ],
+      "bound_runs": [
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "848ad9f8ab5d19f1ca8d2d3c31bb5344743b6fce9a3d32555cb05d4cb2c69bc7",
+            "bytes": 2659
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair0-baseline/report.json",
+            "sha256": "a03a432e002415646cd2e47d241a2b2f1ce616516e3882acf5ab4949c4901250"
+          }
+        },
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "dfd042df50932b867f45ffa32c8bc404e60a2551edfcb185e7b4b5dd56041d08",
+            "bytes": 2656
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair0-optimized/report.json",
+            "sha256": "f1b7807722056335d15c864214e02a19adc162c9d29492ecc2d5221f82bca716"
+          }
+        },
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "d52e3cb1c73348630bd4353925eb5535a9d13707c33872f4f8f17a8a6b38381b",
+            "bytes": 2656
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair1-optimized/report.json",
+            "sha256": "f29eedf6a921576b3289bde38f42d987ef1687bc14708719a25f36b678cc8491"
+          }
+        },
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "3f2b961336bcef16db2e343cfe616251acc32a437de74568a7fbaaed15bb82b9",
+            "bytes": 2659
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair1-baseline/report.json",
+            "sha256": "a68c78aa92372e743b3a48f5c4928e586036620d68c11cb95c8dad15b287c42d"
+          }
+        },
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "38043c346281fd2daa9c6c31835a0be4662fef25c20f6f886dfc3ff761a92a84",
+            "bytes": 2659
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair2-baseline/report.json",
+            "sha256": "9b2fcebef4a9749ebcea42d027552394d3368426fbbe3c9a7b0ef886c598d429"
+          }
+        },
+        {
+          "run": "kd3-legacy-before-vs-after-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "d763f853ecb9d871dcdcd71846f247f2349b453ac8cd5b3af0d6f09e2e9edcbf",
+            "bytes": 2656
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-legacy-before-vs-after-larger/kd3-legacy-before-vs-after-larger-pair2-optimized/report.json",
+            "sha256": "f5b50fe56e223f8e1554033024f65b30f5b42fc33b562e827143e74ab99c4310"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/newrank-vs-k2simd-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/newrank-vs-k2simd-summary.json",
+        "sha256": "562564ea3461eef05b1ad6ca46d828c60b342a7cd3b152af984c7ffaa0e242cd",
+        "bytes": 46969
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/newrank-vs-k2simd-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-newrank-vs-k2simd-larger-plan.json",
+        "sha256": "7d5a677e1965718a27a1cfc5bf7d6de0d3c7f8387d7f584435dfad52ceea0b51",
+        "bytes": 9959
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "f4c62bf1c834e87f2e3c58c9315106e8dcf664f278200b7c22b6fdbe3024257c",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair0-baseline/report.json",
+            "sha256": "f0fd2faa6971c0fc7232ede25f2a1c59f8e154a13e671cd087d983b96709f99c"
+          }
+        },
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "f26db8ed93613501c0d6a38411502b23d16aefcf0808954c206810cd420b4467",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair0-optimized/report.json",
+            "sha256": "9cc402d1568e0d42d4b0a6c60fae0a28dee3eeb20798d872a304ddda11056b93"
+          }
+        },
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "61bd414eeadd643cc64818624b77408cc4535751c05e1724cf8b781b2cd1427f",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair1-optimized/report.json",
+            "sha256": "a0bd83b23e2b3e49464f09e9a82d58710235a3e68d424eafbf9b6af9d2f73b0b"
+          }
+        },
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "763365ac903754e26501dc60216c3889ae8cfbbf81952f737984db62037616be",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair1-baseline/report.json",
+            "sha256": "86fd655f23576cae69d2690f232557db1c805e23f3b034e61041b7e869670b93"
+          }
+        },
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "68a84c478e3f41dedb2b4746f13bf604f14ddd1e4275c1b36e0f4bcb7e6d17a1",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair2-baseline/report.json",
+            "sha256": "1537a934d09899e7e04c2224c9f920f2ea20458d895d0f58551a11d311ac7587"
+          }
+        },
+        {
+          "run": "kd3-newrank-vs-k2simd-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "1c127d5f1c339f2b8be26cebed393e9c1aad6025e5c83e64f93553fc5f6fd230",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-newrank-vs-k2simd-larger/kd3-newrank-vs-k2simd-larger-pair2-optimized/report.json",
+            "sha256": "552e83bd6643095c0b3f79c2aca939fdbe6f30f083ac41cebdfa6fc2a9ab48ab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/oldlazy-vs-plain-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json",
+        "sha256": "23ab26d7ca6c206ec27cf9afd149c55911870b39227bdac6efde0c8860a3fb52",
+        "bytes": 46291
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/oldlazy-vs-plain-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldlazy-vs-plain-larger-plan.json",
+        "sha256": "37235fcccc38ee4b86543edaf2ae261c70460ef24fe5e90e407186493732e4e0",
+        "bytes": 9879
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "oldlazy",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-oldlazy/binary-map.json",
+            "sha256": "0a757e3a6eb822d91b0c46f4e356bf7ad3eb53cb41e91a7c30903d9516d10522"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "02035ff8044102365d666b6bf1a6f288f7692389aac3b310bb853bdf216c0fa0",
+            "bytes": 2611
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair0-baseline/report.json",
+            "sha256": "f84a60e668d0ddbdec5fc3df221b0b3c15bb594a0a14b0990f0e0f873623bd90"
+          }
+        },
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "03028bd39ec58c6b9b5ffb38d2c28e22e709e6fcfb88dd72d9a2b546cfa0ba90",
+            "bytes": 2624
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair0-optimized/report.json",
+            "sha256": "4c3c3027a711a537409871f4beaa38c2d0abe24c2bbce4aa104a3c7f3b8a5d88"
+          }
+        },
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "6a139aa6ec80507850f96d0f8fbf3c4e56efcf0859af2c2aae935fdcc68f0cc6",
+            "bytes": 2624
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair1-optimized/report.json",
+            "sha256": "5cd6bbb47d900dd8da1e9f9834d5a25238ceb06296b43d860c78d74539915945"
+          }
+        },
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "40e340019c41461c2830f55be6ec8b30ab0b7070915877288164789312fa540b",
+            "bytes": 2611
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair1-baseline/report.json",
+            "sha256": "69de788808212f6e45d1ab850660dd859351e7a0be1be94ec49dd9e46fd0b44d"
+          }
+        },
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "2e4bcf02b7bb7800fd1c897465ddba72d05ca375bf833b3a3d6e41e9dcca6f9e",
+            "bytes": 2611
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair2-baseline/report.json",
+            "sha256": "3b8e528274476bfb8bf04e3696a399b97fccb5680357836d50621e7f073b61af"
+          }
+        },
+        {
+          "run": "kd3-oldlazy-vs-plain-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "987bf07d3afca83c4dc32f65fae910cb594d95ad2a8a20439d4a6beaca39e686",
+            "bytes": 2624
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldlazy-vs-plain-larger/kd3-oldlazy-vs-plain-larger-pair2-optimized/report.json",
+            "sha256": "6820b638d3ff9a96c33692ee8ac97ed65fc9432fcf2a5881613ec90f30311f8b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/oldrank-vs-k2simd-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldrank-vs-k2simd-summary.json",
+        "sha256": "a9277b2c63304a35e35443e86e5e3fe0144e66fad00cf64db2654c608b50291f",
+        "bytes": 46995
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/oldrank-vs-k2simd-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldrank-vs-k2simd-larger-plan.json",
+        "sha256": "136921f00babbd8920939b1b8a6bf464cd674f94474ed70c318d9c5ee01d1d39",
+        "bytes": 9959
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "kd_source_role": "oldrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank/build-replay-release/selected-stage3-oldrank/binary-map.json",
+            "sha256": "ad79b3793b51922498a78550295ee27414e222381a3d9feb48221f5912402e5b"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "890d09c5d634f1f0780a6bb143a5d060b462add8947ec4804a419184b762b29e",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-baseline/report.json",
+            "sha256": "6d4c6a25c29b0e606e0c0a63a17acd4c4bdbf37051b6c564593b4a72f8f8f068"
+          }
+        },
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "c1811eec61145b554aa4cb842e3d7f5c5c9d2beac47b3fb8cdf360cb51dd7804",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair0-optimized/report.json",
+            "sha256": "44d54985c77fed1bf977e5a8594c7e2eb3efecd9de172ce6d3f1f0fb40083d4e"
+          }
+        },
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "d1d6a606eefc833ae3ab06c053a03982e381925837a154f8432803e864f11437",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-optimized/report.json",
+            "sha256": "db580a38e4285e2b0d5c9d4e014c0e26f9e6bdeb6ba9345cef0b23c322cf6ba6"
+          }
+        },
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "da32c354f8612cf70ad4d42a90625988a26549105c73c9809d36ef41b36d43b1",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair1-baseline/report.json",
+            "sha256": "26b6996833dae718eb4aeabc384ce8582a315e1ff85784bbe568d37c21e981bd"
+          }
+        },
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "c1cb5a2ca14f4877521119ac0c677803b2f99c9d8e3cb5e29b523d41b77790d4",
+            "bytes": 2635
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-baseline/report.json",
+            "sha256": "85992b6d2859e31ac57ccddc8c6fcb24fabb4fa04d341026b84f2a74e4f71643"
+          }
+        },
+        {
+          "run": "kd3-oldrank-vs-k2simd-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "40da09710faf9368a0587d29bb8d32b8d799b08e0afbfdce9e435bc00db54723",
+            "bytes": 2632
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-oldrank-vs-k2simd-larger/kd3-oldrank-vs-k2simd-larger-pair2-optimized/report.json",
+            "sha256": "55abce8160c011ff49bc6eef3cd89cadb7c936bf8870ee66aa1b1832813cb0dc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/plain-vs-k2scalar-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2scalar-summary.json",
+        "sha256": "3149ed75d6865abbb40cdbf467a599a83ceb3c7c4147e7009c10f1e4427d65db",
+        "bytes": 46677
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/plain-vs-k2scalar-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-plain-vs-k2scalar-larger-plan.json",
+        "sha256": "60a85491d082f0041ef688dbb1bee302da36ad5e4bc07704e405d6a2617bad4c",
+        "bytes": 9938
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_scalar",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2scalar/binary-map.json",
+            "sha256": "db3844f9d71bdb50ba31a91eeeb995285c68639147397f227806274009e20f86"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "16e368653db1f725c2d8371754b98df919638bf4afe7a299b84262e5b461c720",
+            "bytes": 2625
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair0-baseline/report.json",
+            "sha256": "6031d2ddb38f3b9a6c36e17b1371a0cf0204823effddd416092ef1a87da755ed"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "1345f3649e0bf50ef0966648fe0219a7a2d43f80a9448819e1c9ddc9957fb464",
+            "bytes": 2636
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair0-optimized/report.json",
+            "sha256": "59da88df5388a8a83039a8af22970141567061b1278b09eeeff6edff5066f08e"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "c56d44f46add4cd2b1a7129d1fd555b327edb6d48a3324f1ee33fba60b8cb3a0",
+            "bytes": 2636
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair1-optimized/report.json",
+            "sha256": "f20f768dedcf4255d3fd919c02a33cb916a7c1b76bc388b9ab6d98b8d3be144d"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "674e74ba2d0e441ac84a455d8119a837f7cad916b2cc30741b565defcb810c59",
+            "bytes": 2625
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair1-baseline/report.json",
+            "sha256": "cf4c88f45fb244a5647361335dd65ce4dabf1a46dd3bcb401fa449c11aab0b05"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "8524a5edb7b9c52a24f15e076ff9777b163975648f468930a1fac5477463cf41",
+            "bytes": 2625
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair2-baseline/report.json",
+            "sha256": "c966c8e233f6491436167d47fdd95f0696a8ace4f7840f3fd81df8332c05321c"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2scalar-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "1183122f2c9e4dc7f6af86898a346cf51e6867acc476ce50929915570fb7f560",
+            "bytes": 2636
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2scalar-larger/kd3-plain-vs-k2scalar-larger-pair2-optimized/report.json",
+            "sha256": "7de4bb9c5436394e3c2a69a04afe60dfc26998b5778a48917f08d0f4d394e646"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage3-matrix/plain-vs-k2simd-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2simd-summary.json",
+        "sha256": "b4b26bd2a0fc2ae6cd56c3b55d9fba6c29daaca466fdcd61a9f9817b6e8df256",
+        "bytes": 46523
+      },
+      "included_summary": "evidence/summaries/stage3-matrix/plain-vs-k2simd-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-plain-vs-k2simd-larger-plan.json",
+        "sha256": "93433425024f5cd2f3ada3457221a6dc988ba34abd1f4e46137085b8add0d3e0",
+        "bytes": 9870
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        },
+        "optimized": {
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+        "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+        "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "18a3070408cd3768fd29f6618002a143c1a93643f5e777ba7abf76dafcfaeaa5",
+            "bytes": 2613
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair0-baseline/report.json",
+            "sha256": "d4ee7b7f2122c31b24049b7cc69e60d065eed4579ed9c7600bddc8b89c369c2d"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "f9cde6a2e3342d65a7959e2c16912236c2e3e871ccead51bbb3f4cd23e782203",
+            "bytes": 2620
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair0-optimized/report.json",
+            "sha256": "348cf1ef417ce4d454f0425707b97aa258ee49fa8c701ee2456e3a0ab107785d"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "0ee7b95add0c9515c1155194b2c9397f6d61d5b37ffe3eca4072746553a7a305",
+            "bytes": 2620
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair1-optimized/report.json",
+            "sha256": "f4f2eb8906d610c7c1b70f1d56c26d26c153aeea9281ca214a7da51567d264aa"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "83d23a317937a6cc6638c0cedcdeed50ca97cc8ada791682d56bdc2d709c60dc",
+            "bytes": 2613
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair1-baseline/report.json",
+            "sha256": "32a63c65b24835a728702e579a540f3f2097bc6561048d16da276f2948996c91"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "6c7dafe5513f11a4c66a177600ba2690ed32cbd6622b2d6447847b4ad79af9a2",
+            "bytes": 2613
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair2-baseline/report.json",
+            "sha256": "496dd2f3c5e500e8d021fd0fa3dd22283e18722369d8f9586acd56f3acb370d3"
+          }
+        },
+        {
+          "run": "kd3-plain-vs-k2simd-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "cf34bce9f88a45788819681a779edf8640daa4083d138b1ba9fdddde00c54406",
+            "bytes": 2620
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd3-plain-vs-k2simd-larger/kd3-plain-vs-k2simd-larger-pair2-optimized/report.json",
+            "sha256": "2f2adcf0e490e017f38dd924a6fb0ee2baf88e177d44fd6404ff8a2a554ea0fa"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage4-offset/offset-only-summary.json",
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage4-offset/execution/offset-only-summary.json",
+        "sha256": "d3e342056fe3a8e77feabb460a4f76d2b10ef9d1d52a22d32fc193035280de9d",
+        "bytes": 46447
+      },
+      "included_summary": "evidence/summaries/stage4-offset/offset-only-summary.json",
+      "paired_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/kd4-oldlazy-vs-offset-only-larger-plan.json",
+        "sha256": "0cde40f93cfe1e744c08251296ccde430545b791d21c48d30f2b92258e8056d1",
+        "bytes": 10158
+      },
+      "actual_arms": {
+        "baseline": {
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "oldlazy",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-offset-baseline",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-offset-baseline/build-replay-release/selected-offset-oldlazy/binary-map.json",
+            "sha256": "16abf8e304a3ed54ea45897340814962ef62619a0613aba24547bb0192d9e21c"
+          }
+        },
+        "optimized": {
+          "revision": "e71e1d4b5c2b91000ebac714e118cbd75f616b9c",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-offset-e71e1d4",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-offset-e71e1d4/build-replay-release/selected-offset-offset-only/binary-map.json",
+            "sha256": "092f1cc7c436c2f2ab6490298eaef7cfe439add70e2180364930e726e5c80e45"
+          }
+        }
+      },
+      "trace_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+        "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+      },
+      "method": "A/B,B/A,A/B; full declared universe shuffled before qualification; all failures retained",
+      "driver": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/posets-matrix.py",
+        "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+      },
+      "orchestrator": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/run-paired-replay-stop-on-correctness.py",
+        "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+      },
+      "contract": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/kd_contract.py",
+        "sha256": "0f55bae50bc5465e84f2f94cb7993b2bc5c6758366228525502804617cd38d00"
+      },
+      "plan_writer": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/prepare-paired-replay.py",
+        "sha256": "1b9490c1f555e9a29c5b6d0cb4957cb930985574292338a03ed975f1c62a3537"
+      },
+      "summarizer_sha256": "b0b5511d6253bfa5521aba08fe8552d5e29eca9c58d82303f1938a5fc71adc43",
+      "cell_status_counts": {
+        "paired": 22
+      },
+      "failure_counts": [],
+      "bound_runs": [
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair0-baseline",
+          "variant": "baseline",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair0-baseline/build-source-binding.json",
+            "sha256": "f116be5323aabe8e4c251f1011b8bce322314c01f7ced35010c30e516c701c63",
+            "bytes": 2668
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair0-baseline/report.json",
+            "sha256": "5da0da4e312fcfd21af2c686b1da4d5e2dc030fa3aa1f08f7d0967a95133ad3e"
+          }
+        },
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair0-optimized",
+          "variant": "optimized",
+          "pair": 0,
+          "seed": 260617,
+          "source_revision": "e71e1d4b5c2b91000ebac714e118cbd75f616b9c",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair0-optimized/build-source-binding.json",
+            "sha256": "fdb5680556db75740c0d4f125f0204d1c3789076cd5726277958d8e82c62c802",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair0-optimized/report.json",
+            "sha256": "e699c557de783484edca419bb57682fc68144f6181456c24a3b1592e7d7251db"
+          }
+        },
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair1-optimized",
+          "variant": "optimized",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "e71e1d4b5c2b91000ebac714e118cbd75f616b9c",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair1-optimized/build-source-binding.json",
+            "sha256": "cb267ac2a3bbce0af8cbd2cebd44fa8743149b3b24aea07cab811884ebe03634",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair1-optimized/report.json",
+            "sha256": "b07a752dea7d8ba1384e029111372191f7a38b56b990223e2b92642ec70b881b"
+          }
+        },
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair1-baseline",
+          "variant": "baseline",
+          "pair": 1,
+          "seed": 260618,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair1-baseline/build-source-binding.json",
+            "sha256": "f2f10a3fa82691f1e020e30ed9cde8f6264c674db202018726be8e3a1bf7c4b7",
+            "bytes": 2668
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair1-baseline/report.json",
+            "sha256": "1f1131465442ba908acce69f709af0e4e5c9f5e4d4344fe6976385e79fb6546f"
+          }
+        },
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair2-baseline",
+          "variant": "baseline",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair2-baseline/build-source-binding.json",
+            "sha256": "c4644dbd0bfa0b85987c046f7ae6224a649c896e7a6cea09ab3646f9868b07be",
+            "bytes": 2668
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair2-baseline/report.json",
+            "sha256": "ba8c76a8aab68b5ff160c30ca8e71beb7259c492ae7a3a798c0c17f7561751c2"
+          }
+        },
+        {
+          "run": "kd4-oldlazy-vs-offset-only-larger-pair2-optimized",
+          "variant": "optimized",
+          "pair": 2,
+          "seed": 260619,
+          "source_revision": "e71e1d4b5c2b91000ebac714e118cbd75f616b9c",
+          "source_binding": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair2-optimized/build-source-binding.json",
+            "sha256": "dfe3363d9f1ce16ba86dfd76d83925144acbea10f7e0aa26b6a6a6c8bb7abfc8",
+            "bytes": 2678
+          },
+          "report": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-results/kd4-oldlazy-vs-offset-only-larger/kd4-oldlazy-vs-offset-only-larger-pair2-optimized/report.json",
+            "sha256": "5c02907426a1ed53ae783e445e3afebd8022ffd614a86e411efd0ee33b62ef0e"
+          }
+        }
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "path": "patches/legacy-scratch.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+      "status": "retained legacy change",
+      "sha256": "5485928661fab5d343e450a54f9106e30304e72741699488c78543f4047f6714",
+      "bytes": 9538
+    },
+    {
+      "path": "patches/rejected-A-contained-intersection.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-candidate",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "ffacd9c4deb36e99cd77cd5249642000c133b2dc",
+      "status": "rejected maintenance A",
+      "sha256": "7499c7b0a989dbe960bd598cc78816737caf16eddad993d5febce9df468483ba",
+      "bytes": 10211
+    },
+    {
+      "path": "patches/rejected-B-transition-retirement.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-b-only",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "588a63e3903baaea8c18879b704b43a2dce259da",
+      "status": "rejected maintenance B",
+      "sha256": "ebdf5d4987220d41a0bb8b5a16b1b903b1e42a60c840c0eb2e5d6612e251f7e5",
+      "bytes": 5218
+    },
+    {
+      "path": "patches/rejected-offset-only.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-layout-control",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "e71e1d4b5c2b91000ebac714e118cbd75f616b9c",
+      "status": "rejected exact offset-only control; all three CPre pairs slower in both widths",
+      "sha256": "35eff91136f1b9533f26fa3c477c752201a06f960ac6d24f366f1f2c7fc5f196",
+      "bytes": 4629
+    },
+    {
+      "path": "patches/rejected-packed-catalogs.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-layout-control",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "73019f9072031620e4974a4622d9cc210d1914a3",
+      "status": "offset and packed bridge metadata",
+      "sha256": "578591ed54bf8b2478be9530b5078e10ec01ebc87f2d99c0410f798f9badc63a",
+      "bytes": 12438
+    },
+    {
+      "path": "patches/rejected-filter-on-packed-catalogs.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-layout-control",
+      "from_revision": "73019f9072031620e4974a4622d9cc210d1914a3",
+      "to_revision": "683205e7fc0b16f4d9c3ce918b372c1c497999aa",
+      "status": "scalar/SIMD leaf filter, applied after packed-catalog patch",
+      "sha256": "78980556da51385150e509ae29988289cb5af0eb2e3b00cbe194bbc6f272a32d",
+      "bytes": 39258
+    },
+    {
+      "path": "patches/rejected-complete-layout-filter.patch",
+      "source_repository": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-layout-control",
+      "from_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "to_revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+      "status": "complete measured layout/filter tree",
+      "sha256": "5bc7a5a90fcf55b700da0c9cb02bc1336f56f66b2da86c204ba2f2e837c14ff9",
+      "bytes": 48297
+    }
+  ],
+  "profile_external_evidence": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/profile-execution-v2/analysis-data.json",
+      "sha256": "8a402690b6578528dceb15de2e9ea90533726f297030040ffedcb26337a735ed",
+      "bytes": 360990
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/profile-execution-v2/freeze-001/completion.json",
+      "sha256": "4c11a0b4470ef39673a2cb268bf1a9218cef2963cfe55e04f4617b1cb7ff1656",
+      "bytes": 2186229
+    }
+  ],
+  "pending": [],
+  "privacy": "No ELF, build cache, corpus, unrestricted environment, raw process log, original WIP or original checkout status is copied. Raw report/build/dependency evidence remains externally located and hash-bound.",
+  "ready_for_publication": true,
+  "validation_evidence": {
+    "legacy": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/legacy-execution/completion.json",
+      "sha256": "127e8b0dd4d076e588db8c2ce8ed3f3ce67c54c27a515f334e5e0d6ede1539cb",
+      "bytes": 3639
+    },
+    "layout_filter": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/layout-validation-v1/CHECKPOINT.json",
+      "sha256": "5bd4463d8b5fdea0d76cf8c0cf6fa5c603acd65bc25bece8718925d43c890cf0",
+      "bytes": 17833
+    },
+    "scope": "Prior completed source-bound checks. This package preparation did not execute or repeat them."
+  },
+  "protocol_helper_and_trace_plan_bindings_checked": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/posets-matrix.py",
+      "sha256": "ad6dbe75b5a63cbc3ed2647c9c42b92c6b7f3a811897ff2c0a9a522dd71ed138"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/run-paired-replay-stop-on-correctness.py",
+      "sha256": "65e038dd38ba27379cdc14080fd7fb1787fe603693adcccd8f27b046d873cbaf"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/kd_contract.py",
+      "sha256": "bc8427aeb03a3255882d6f04b4489f01782dc7635147c0e6378e3c09aa013c5b"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools/prepare-paired-replay.py",
+      "sha256": "6ee5c25c5ab2d08a29c6619dc219660d03a225d4b1cf06d0da4e74256426571c"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/initial-train-traces.json",
+      "sha256": "c7acf8f8592f36f2b561eb01037f0b166800c632fd6b9cb767597d6bd34a5d2d"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft/trace-plans/larger5-eligible.json",
+      "sha256": "fd9c45470cff49b42d54fe23ada4bd27717a24e5df31fce37b21afad1a0eb6f9"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/posets-matrix.py",
+      "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/run-paired-replay-stop-on-correctness.py",
+      "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/kd_contract.py",
+      "sha256": "eef7f670f94638478a5789d0390f82060ec395917f0a2a8470d3897a6cb36b20"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage2/prepare-paired-replay.py",
+      "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/posets-matrix.py",
+      "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/run-paired-replay-stop-on-correctness.py",
+      "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd_contract.py",
+      "sha256": "041a4870adf5301729f2afaa78b6ae1c0555480d91fe87fe29d0baf4bfe72d2f"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/prepare-paired-replay.py",
+      "sha256": "2d59ded3ac7f78e5fc171a5ace359844cdaf2d4616db5e9fa2c3f78dee4283ca"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/posets-matrix.py",
+      "sha256": "dad1d8b9197ce1fcfc92a852a3963f5321b26e88a43ff265c5e237325ea1ef45"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/run-paired-replay-stop-on-correctness.py",
+      "sha256": "5a4c1effbcded0d64fce058e67d68ca2038f0c8e6bd24c04f4e927043284efbf"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/kd_contract.py",
+      "sha256": "0f55bae50bc5465e84f2f94cb7993b2bc5c6758366228525502804617cd38d00"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-offset/prepare-paired-replay.py",
+      "sha256": "1b9490c1f555e9a29c5b6d0cb4957cb930985574292338a03ed975f1c62a3537"
+    }
+  ],
+  "selection": {
+    "retained": [
+      "legacy scratch restoration at d363b9f901b927575ee1544b19820a146c2479d9"
+    ],
+    "rejected": [
+      "A contained-intersection maintenance",
+      "B transition retirement",
+      "packed catalogs",
+      "two-column scalar and SIMD filters",
+      "offset-only e71 catalog layout"
+    ],
+    "no_default_backend_switch": true,
+    "offset_result": {
+      "completion": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage4-offset/execution/completion.json",
+        "sha256": "2289da2ef323a31ec71af18a7593b98d2e9447254ac33792db73e7ca4d938862",
+        "bytes": 9489
+      },
+      "clean_calls": 60,
+      "valid_scope_memory_records": 180,
+      "paired_metric_groups": 22,
+      "censored_metric_groups": 0,
+      "failure_rows": 0,
+      "oom_invocations": 0,
+      "compatible_cpre_median_paired_ratio": 1.0409970223668075,
+      "native_cpre_median_paired_ratio": 1.0052426695318268,
+      "all_three_cpre_pairs_slower_each_width": true,
+      "constructor_regressions": 8,
+      "second_construction_regressions": 7,
+      "constructor_groups": 10,
+      "allocation_measurements": "No offset-only heap/allocation pass. Earlier allocation expectations remain unmeasured static hypotheses."
+    }
+  },
+  "prior_draft": {
+    "manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-draft-v2/MANIFEST.json",
+      "sha256": "6e12414b6c881cccd7d49c54695436d8159b6aa55b23ff0295aa9cd9b48d4b5d",
+      "bytes": 7636
+    },
+    "preserved_unchanged": true
+  },
+  "public_head": "d363b9f901b927575ee1544b19820a146c2479d9",
+  "acacia_completed_preparation": {
+    "source_pins": {
+      "baseline-default": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+      "kd-scratch-restored": "d363b9f901b927575ee1544b19820a146c2479d9",
+      "optimized-default": "30e66853832d98bcfaada296d892157b95a8150d"
+    },
+    "fixed_protocol": {
+      "all_unsolved_PAR2_s": 34,
+      "baseline": "baseline-default",
+      "batch_size": 32,
+      "cap_s": 17,
+      "flags": [
+        "",
+        "",
+        ""
+      ],
+      "fresh_output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+      "instances_per_arm": 1524,
+      "labels": [
+        "baseline-default",
+        "optimized-default",
+        "kd-scratch-restored"
+      ],
+      "preset": "otf_sparse_formula_parity",
+      "rows": 4572,
+      "seed": 260617,
+      "strict_wall_solved_rule": "native decisive and seconds<=17"
+    },
+    "gate_summary": "acacia/gate-summary.json",
+    "artifact_closure": "acacia/actual-artifact-closure.json",
+    "new_kd_provenance": "acacia/kd-scratch-restored-provenance.json",
+    "launch_snapshot": "acacia/START-CHECKPOINT.json",
+    "approval_and_execution": "acacia/APPROVAL-AND-EXECUTION.json",
+    "review_scopes": "acacia/review-scopes.json",
+    "private_preservation_policy": "Only acacia/original-checkouts-redacted-proof.json is included. Raw preservation status, diff and WIP filenames are excluded.",
+    "prior_default_evidence": "Controls are the genuine previously frozen binaries; reuse their bound evidence references in arms/closure rather than copying old default build/provenance trees.",
+    "status": "Build, gate and release snapshots are complete historical records. Completed solver outcomes and both outcome audits are recorded separately."
+  },
+  "implementation_ci": {
+    "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+    "run_id": 42729670700,
+    "event": "push",
+    "conclusion": "success",
+    "jobs": 3,
+    "job_names": [
+      "macOS arm64 (GCC 15)",
+      "test",
+      "Linux x86-64 baseline (no ISA flags)"
+    ],
+    "run_record": "ci/ci-d363b9f-run.json",
+    "jobs_record": "ci/ci-d363b9f-jobs.json",
+    "url": "https://github.com/michaelcadilhac/posets/actions/runs/42729670700",
+    "scope": "Implementation d363 only. This does not claim green CI for a later documentation/package HEAD. No exact test counts inferred from job status."
+  },
+  "solver_outcomes": {
+    "table": "outcomes/solver-comparison.json",
+    "rows": [
+      {
+        "arm": "baseline-default",
+        "solved": 1368,
+        "instances": 1524,
+        "par2_total_s": 5945.136669,
+        "baseline_gains": 0,
+        "baseline_losses": 0,
+        "baseline_par2_delta_s": 0.0,
+        "optimized_gains": 1,
+        "optimized_losses": 0,
+        "optimized_par2_delta_s": -14.821476,
+        "cpu_observed_rows": 1524,
+        "cpu_total_s": 14005.055232,
+        "scope_peak_observed_rows": 1524,
+        "scope_peak_max_bytes": 4244758528,
+        "scope_peak_median_bytes": 106059776.0,
+        "process_rss_observed_rows": 1524,
+        "process_rss_max_bytes": 3977715712,
+        "process_rss_median_bytes": 61808640.0,
+        "wall_cap_overruns": 0,
+        "native_outcomes": {
+          "REALIZABLE": 629,
+          "TIMEOUT": 156,
+          "UNREALIZABLE": 739
+        },
+        "failure_subtypes": {
+          "AUDIT-ERROR": 0,
+          "CRASH": 0,
+          "ERROR": 0,
+          "MEMOUT": 0,
+          "SYFCO-FAIL": 0,
+          "TIMEOUT": 156,
+          "UNKNOWN": 0
+        },
+        "memory_events_observed_rows": 1524,
+        "memory_events_missing_rows": 0,
+        "oom_kill_observed_rows": 0,
+        "native_TIMEOUT_with_oom_kill": 0
+      },
+      {
+        "arm": "optimized-default",
+        "solved": 1367,
+        "instances": 1524,
+        "par2_total_s": 5959.958145,
+        "baseline_gains": 0,
+        "baseline_losses": 1,
+        "baseline_par2_delta_s": 14.821476,
+        "optimized_gains": 0,
+        "optimized_losses": 0,
+        "optimized_par2_delta_s": 0.0,
+        "cpu_observed_rows": 1524,
+        "cpu_total_s": 14000.96839,
+        "scope_peak_observed_rows": 1524,
+        "scope_peak_max_bytes": 4244234240,
+        "scope_peak_median_bytes": 106856448.0,
+        "process_rss_observed_rows": 1524,
+        "process_rss_max_bytes": 3977621504,
+        "process_rss_median_bytes": 61739008.0,
+        "wall_cap_overruns": 0,
+        "native_outcomes": {
+          "REALIZABLE": 629,
+          "TIMEOUT": 157,
+          "UNREALIZABLE": 738
+        },
+        "failure_subtypes": {
+          "AUDIT-ERROR": 0,
+          "CRASH": 0,
+          "ERROR": 0,
+          "MEMOUT": 0,
+          "SYFCO-FAIL": 0,
+          "TIMEOUT": 157,
+          "UNKNOWN": 0
+        },
+        "memory_events_observed_rows": 1524,
+        "memory_events_missing_rows": 0,
+        "oom_kill_observed_rows": 0,
+        "native_TIMEOUT_with_oom_kill": 0
+      },
+      {
+        "arm": "kd-scratch-restored",
+        "solved": 1365,
+        "instances": 1524,
+        "par2_total_s": 6010.86808,
+        "baseline_gains": 0,
+        "baseline_losses": 3,
+        "baseline_par2_delta_s": 65.731411,
+        "optimized_gains": 0,
+        "optimized_losses": 2,
+        "optimized_par2_delta_s": 50.909935,
+        "cpu_observed_rows": 1524,
+        "cpu_total_s": 14040.773485,
+        "scope_peak_observed_rows": 1524,
+        "scope_peak_max_bytes": 8589934592,
+        "scope_peak_median_bytes": 106078208.0,
+        "process_rss_observed_rows": 1524,
+        "process_rss_max_bytes": 8360685568,
+        "process_rss_median_bytes": 61739008.0,
+        "wall_cap_overruns": 0,
+        "native_outcomes": {
+          "MEMOUT": 2,
+          "REALIZABLE": 627,
+          "TIMEOUT": 157,
+          "UNREALIZABLE": 738
+        },
+        "failure_subtypes": {
+          "AUDIT-ERROR": 0,
+          "CRASH": 0,
+          "ERROR": 0,
+          "MEMOUT": 2,
+          "SYFCO-FAIL": 0,
+          "TIMEOUT": 157,
+          "UNKNOWN": 0
+        },
+        "memory_events_observed_rows": 1524,
+        "memory_events_missing_rows": 0,
+        "oom_kill_observed_rows": 7,
+        "native_TIMEOUT_with_oom_kill": 5
+      }
+    ],
+    "comparisons": {
+      "baseline-default": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [],
+          "par2_delta_s": 0.0
+        },
+        "optimized-default": {
+          "gains": [
+            "load_balancer_unreal1_pb_6_4_pe_.ltl"
+          ],
+          "losses": [],
+          "par2_delta_s": -14.821476
+        }
+      },
+      "optimized-default": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [
+            "load_balancer_unreal1_pb_6_4_pe_.ltl"
+          ],
+          "par2_delta_s": 14.821476
+        },
+        "optimized-default": {
+          "gains": [],
+          "losses": [],
+          "par2_delta_s": 0.0
+        }
+      },
+      "kd-scratch-restored": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [
+            "generalized_buffer_pb_4_pe_.ltl",
+            "load_balancer_unreal1_pb_6_4_pe_.ltl",
+            "simple_arbiter_enc_pb_11_pe_.ltl"
+          ],
+          "par2_delta_s": 65.731411
+        },
+        "optimized-default": {
+          "gains": [],
+          "losses": [
+            "generalized_buffer_pb_4_pe_.ltl",
+            "simple_arbiter_enc_pb_11_pe_.ltl"
+          ],
+          "par2_delta_s": 50.909935
+        }
+      }
+    },
+    "native_rows": 4572,
+    "scored_rows": 4572,
+    "resource_coverage": {
+      "cpu": 4572,
+      "kernel_events_missing": 0,
+      "kernel_events_observed": 4572,
+      "native_MEMOUT": 2,
+      "native_TIMEOUT_with_oom_kill": 5,
+      "oom_kill_rows": 7,
+      "oom_rows": 7,
+      "process_rss": 4572,
+      "scope_peak": 4572,
+      "sum_observed_kernel_counters": {
+        "oom": 24,
+        "oom_kill": 15
+      }
+    },
+    "summary_only_byte_identical": true,
+    "evidence_closure": "outcomes/evidence-closure.json",
+    "archive": "outcomes/archive/acacia-kd-three-arm-numerical.tar.gz",
+    "outcome_reviews": "acacia/review-scopes.json"
+  },
+  "content_complete": true,
+  "ready_for_parent_final_review": true,
+  "publication": {
+    "state": "Completed content; root final prose/package review complete; ready for publication",
+    "url": "https://github.com/michaelcadilhac/posets/tree/codex/block-sharingtrie/experiments/posets-2026-11/kd-round2",
+    "history": "Containing Git commit and PR40",
+    "ci_scope": "Green claim covers exact implementation d363 only; no status is asserted for a later evidence-only HEAD."
+  },
+  "ranked_header_identity": {
+    "path": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+    "revisions": [
+      "30e66853832d98bcfaada296d892157b95a8150d",
+      "d363b9f901b927575ee1544b19820a146c2479d9"
+    ],
+    "result": "Exact Git diff is empty, as checked by root",
+    "scope": "This header only; not all source files, ELF bytes or dependencies."
+  },
+  "root_final_prose_package_review_complete": true
+}

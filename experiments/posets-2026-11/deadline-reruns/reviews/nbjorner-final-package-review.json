@@ -1,0 +1,51 @@
+{
+  "decision": "APPROVE the exact assembled publication package for parent-controlled publication. No material privacy, copy/projection, inventory, numerical-summary or attribution blocker found. This is not a new experiment, source-code approval or latest-head CI result.",
+  "package": "work/posets/experiments/posets-2026-11/deadline-reruns",
+  "staging": "work/deadline-reruns-v1/publication-prep/final-assembly-v3/deadline-reruns",
+  "bindings": {
+    "MANIFEST": "6ce5c8f3a9c0392289f3eea1e6b71ddf301cc1e9e8e00e09a1a9b341cced99be",
+    "SHA256SUMS": "abbeb98b7b0d96c4b6151f6e960b01f756c25dfb065b1aec6ea738c583554ead",
+    "origins": "2792c81043dfb6e511b25ae11a9e94b45f173ee202ba48841644c55d5dff5676",
+    "numerical_archive": "987cff73888acf29288bf52e4bddace378aadb778e743183199b990e34182e30",
+    "archive_extraction_proof": "b89605938bfd79c3879632829b55c61f148e75cb24e78bf98ee212669cf42101",
+    "README": "801da6edf2d99c59a4d61dbb77c7cac797f47c90aba2f60a924f0d1465ac1f21",
+    "REPORT": "b4aa8bcdb90a7820f40a73764caadbd5f971107957253df10a4433ee31de3399",
+    "RECREATE": "58d26b63cc733b28e51a3dcae7303988232e3ccdccdab11b217d99b3b870236f",
+    "source_and_protocol": "dd4bcbd297011ad0f0eaa4d3da24fccb8d9eba2147feabbfb17ad2db1fc303b5",
+    "final_experience_addendum": "da46de3c080f3cfd7e09a5ab509be896bce05a7365dcf386a7626acbd6140d65",
+    "accepted_final30_outcome_audit": "0ca7827deb4dadaef3e3cb542eb8e6da6fc29bf547ae65be7231b98db46a9879"
+  },
+  "independent_copy_and_inventory_checks": {
+    "package_files": 104,
+    "package_bytes": 3252436,
+    "manifest_payload_entries": 102,
+    "checksummed_files_excluding_SHA256SUMS": 103,
+    "source_origins": 95,
+    "exact_source_copies": 86,
+    "declared_JSON_projections": 9,
+    "JSON_files_parsed": 72,
+    "public_and_staging_inventories_and_bytes_equal": true,
+    "all_manifest_sizes_and_hashes_match": true,
+    "checksum_inventory_complete": true,
+    "all_exact_copy_source_hashes_and_bytes_match": true,
+    "all_projections_equal_source_after_only_declared_pointer_deletions": true,
+    "symlinks_or_ELF_payloads_observed": false
+  },
+  "privacy_and_scope": [
+    "All nine explicit projections retain the original source descriptor/hash and list exact omitted pointers. The nested actual_invocation/environment_overrides and primary_command/environment_overrides deletions match their sources exactly. Public JSON has no nonempty environment/environment_overrides dictionary; source17 host details are explicitly projected rather than silently rewriting original evidence.",
+    "Known private preservation/WIP locators are absent from inspected public payloads. Only the redacted checkout-preservation proof is included. Historical task/build/corpus absolute locators remain explicit external references; they do not claim those private files are bundled or portable.",
+    "The public numerical archive hash/size matches its extraction proof and external member manifest. That proof records14 safe regular members and3820native plus3820memory rows over450repeat,10forest,3048final17 and312conditional30 observations. The reviewer did not extract the archive or rerun the assembly; accepted saved source-authority/arithmetic reviews and the creator's fresh byte-for-byte extraction proof support this bounded archive check.",
+    "Read the assembly source's fresh-directory, explicit-copy/projection, privacy, archive-member and source-byte guards. git status showed only the new untracked deadline-reruns directory, with no tracked source or older-package changes. No original Acacia/WIP writes were performed."
+  ],
+  "prose_and_attribution_checks": [
+    "README/REPORT keep originale167 distinct from historical789 and optimized30e, and retained lazycc distinct from a fresh-current rebuild. Final17/conditional30 counts, exactPAR2 orientation, same solved sets, nativeERROR versusTIMEOUT, zero kernelOOM and processRSS versus scope peaks match accepted independent audits.",
+    "The first uncapturedERROR is explicitly adjudicated by its bound old record plus a separate diagnostic. Three later errors have exact captured signatures; diagnostics are unscored.205+107,156perarm and the interrupted pair remain explicit. No uniform30s full-corpus, uninterrupted156-pair or censor-survivor ratio claim is made.",
+    "Forest0/5maps versus5/5stamps is case-specific and censored, not an invented speedup ratio or every-wrapper benefit. Cross-backend deadline signals are not relabeled as causal source regressions. Unselected control patches stay proposals, rejectedKD experiments are not represented as shipped code, and current production/default selection is unchanged.",
+    "16-lane full Acacia scope, separate mixed64-lane TRAIN replay, no measured route fraction, index-epoch amortization limits and whole-configuration causality limits remain stated. RECREATE distinguishes native corpus materialization from FUZZ decoding and exact historical evidence from a prospective rebuilt treatment. No more target calls are requested.",
+    "The experience closing addendum correctly shares independentERROR-guard discovery between Nbjorner and Barbosa; credits continuation/outcome audits as validation; disclaims a controlled skill/cost ranking and researcher participation; and says the later evidence is not retroactively part of merged skillPR19. No exclusive discovery or superiority correction is needed.",
+    "CI is pinned to recorded implementationd363b9f and does not claim the later evidence-only HEAD is green. Historical pending statements in exact copied reviews/preparations are explicitly described as historical; current package/publication status is separate."
+  ],
+  "findings": [],
+  "limits": "Parent still controls commit/push/publication and later CI. This audit approves these exact package bytes only; an amended package needs a bounded delta/hash closure. The full original private dependency/invariance graphs remain external, not self-contained replay artifacts.",
+  "review_execution": "Read-only source/prose/JSON/checksum inspection and small standard-library hash/projection checks. One initial reviewer-only checksum command had a syntax error before checking files; the corrected read-only command completed successfully. No helper import, tests, build, solver, profile, archive extraction or package mutation; only this outside-package review note was created."
+}

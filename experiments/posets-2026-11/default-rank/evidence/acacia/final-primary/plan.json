@@ -1,0 +1,42 @@
+{
+  "status": "completed raw data exact hashes verified against reviewed derivation; independent outcome reviews in progress",
+  "frozen_sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb",
+  "table": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-default-comparison-v3/solver-comparison.json",
+    "sha256": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf",
+    "bytes": 8615
+  },
+  "handoff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/FINAL-HANDOFF.json",
+    "sha256": "cf9c9d6e8c028ea2139ac0f37b72299bf1c814009ef600c7f352dd19921b9fd7",
+    "bytes": 19364
+  },
+  "members": [
+    {
+      "arm": "baseline-default",
+      "native": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv",
+        "sha256": "e76a24d423b2376d950336f92ccf19de138e25fb95620a94400e9e2f7ef1b0a4",
+        "bytes": 591385
+      },
+      "memory_sidecar": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/baseline-default.tsv.memory.tsv",
+        "sha256": "49f52d816b79a8431f365e79b3c7c22595d01279c3ff2373494c2776fa7fc9b6",
+        "bytes": 882037
+      }
+    },
+    {
+      "arm": "optimized-default",
+      "native": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv",
+        "sha256": "9d2389a2a242e7f782a6f7b9fe27c46b88f769e6733d4c2a484c28497401a380",
+        "bytes": 592933
+      },
+      "memory_sidecar": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv.memory.tsv",
+        "sha256": "2d2419274db58bc5e3396edaf70910ad54bde5559ecdd6b915851f24a4165099",
+        "bytes": 883582
+      }
+    }
+  ]
+}

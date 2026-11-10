@@ -1,0 +1,147 @@
+{
+  "adjudication": [
+    {
+      "PAR2_s": 60,
+      "adjudication_source": "separate diagnostic; original primary stderr was not recovered",
+      "classification": "SPOT_ACCEPTANCE_LIMIT_32",
+      "diagnostic": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/diagnostics/exit3-ltl2dba-R12-v1/DIAGNOSTIC-COMPLETE.json",
+        "sha256": "c96efc3998c5c8ec37204fc83b3d8b0986fff58a9a078d597d5b73676d5d65da"
+      },
+      "native_result": "ERROR",
+      "original_visit_index": 204,
+      "primary_record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-v2/legs/0102/anchor-e167/record.json",
+        "sha256": "b5929f053491d1fd2da9c5432e2e23ec0adc1b820cad461bb63c23611c1b24e8"
+      }
+    }
+  ],
+  "amendment": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/amendment.json",
+    "sha256": "f5570dc6159e811462ed2bb06dfc08749aa12059d0c4bc629f5c4b193ef996e2"
+  },
+  "capture": "Original native call delegates unchanged arguments/default capture/timing; full stdout/stderr persist after RunResult, which is returned unchanged. No new solver flags/deadline/route/phase variables.",
+  "checked_utc": "2026-11-10T13:42:19.268609+00:00",
+  "dry_run": "Unsupported; no invented flag or run-as-probe. Actual prepare qualified source/prefix and wrote only lists/amendment.",
+  "exact_counts": {
+    "cases_per_arm": 156,
+    "diagnostic_scored_rows": 0,
+    "final_primary_rows": 312,
+    "immutable_old_records": 205,
+    "new_target_calls": 107
+  },
+  "future_capture_and_record_dirs_absent": true,
+  "gates": [
+    {
+      "helper": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-offline-attempt1.helper.py",
+        "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+      },
+      "log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-offline-attempt1.log",
+        "sha256": "a85ddd08c0a94daf538e868cd4f0b0d5c83b1777712250f108b576b1990acc9b"
+      },
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-offline-attempt1.json",
+        "sha256": "842fae3b31d963b0e02c6762b4febe313e4713651d7e35e03dcd0e78f1d3ce4d"
+      },
+      "result": {
+        "cpu_seconds": 0.6011029999999999,
+        "max_process_rss_bytes": 34054144,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2297667-2f4a121c98f0.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 27635712,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2297667-2f4a121c98f0.scope",
+        "seconds": 0.7160917699802667,
+        "stderr": "",
+        "stderr_bytes": 1388,
+        "stdout": "",
+        "stdout_bytes": 0,
+        "timed_out": false
+      },
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/offline-spec.json",
+        "sha256": "e9f558a2eb04c72bf2cf2648c3f5b518f060c41b93a76fa4595c30e17edb95aa"
+      }
+    },
+    {
+      "helper": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-prepare-attempt1.helper.py",
+        "sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43"
+      },
+      "log": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-prepare-attempt1.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "record": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/records/continuation-prepare-attempt1.json",
+        "sha256": "9f2972d1f5a99ddb4071b60fecbee8696c944eddbd3e9e1df9ef1b9ef9e20adf"
+      },
+      "result": {
+        "cpu_seconds": 0.9289000000000001,
+        "max_process_rss_bytes": 50782208,
+        "max_process_rss_missing_reason": "",
+        "max_process_rss_source": "Linux wait4.ru_maxrss (maximum reaped process; not scope peak)",
+        "memory_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/acacia-posets-setup-2297825-77a945ede753.scope/invocation",
+        "memory_oom_group": "false",
+        "memory_peak_bytes": 39563264,
+        "resource_limited": false,
+        "returncode": 0,
+        "scope_memory_events": "{\"high\": 0, \"low\": 0, \"max\": 0, \"oom\": 0, \"oom_group_kill\": 0, \"oom_kill\": 0, \"sock_throttled\": 0}",
+        "scope_memory_events_missing_reason": "",
+        "scope_memory_events_source": "cgroup-v2/memory.events",
+        "scope_memory_peak_missing_reason": "",
+        "scope_memory_peak_source": "cgroup-v2/memory.peak",
+        "scope_unit": "acacia-posets-setup-2297825-77a945ede753.scope",
+        "seconds": 1.0166402619797736,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 0,
+        "timed_out": false
+      },
+      "spec": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/continuation-runtime-templates-v1/prepare-spec.json",
+        "sha256": "c3550bc70f68235521c438b15ed152ea8228dd970a5830e7cec0157326ac9e63"
+      }
+    }
+  ],
+  "index_policy": "Exactly original205..311 in order; no old row replacement or repeat. First pending is lazy-fc counterpart on ltl2dba_R_pb_12_pe_.ltl.",
+  "pair_gap": {
+    "limit": "One pair spans STOP/diagnostic/adjudication; not all 156 pairs were uninterrupted adjacent.",
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "prefix_record_raw_memory_hashes_match": true,
+  "primary_command": {
+    "arguments": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/followup30-continuation-draft-v1/continue30.py",
+      "--run",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-timeout-followup30-continuation-v1/amendment.json",
+      "--release",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/CONTINUATION-ROOT-RELEASE.json"
+    ],
+    "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo",
+    "runtime": "Direct controller owns shared host/output locks; native calls own30s8G0scope. No competing workload."
+  },
+  "review_conditions": "Nb actual source/gates/amendment acceptance AND Barbosa independent actual signature/adjudication/plan acceptance before delegated release; material blocker wakes root.",
+  "root_release_created": false,
+  "signature_policy": "Only exact1080-byte knownSpot32 stderr plus identity/resource/capture guards; nativeERROR unchanged and separate category/PAR2=60. All unknown/mixed errors STOP.",
+  "status": "eight-fixture-and-actual-preparation-pass-targets-held-for-both-actual-approvals",
+  "time_budget": {
+    "nominal_cap_seconds": 3210,
+    "overhead": "Scope/CLI/capture/provenance overhead additional; early outcomes can shorten the53min30scapbudget."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "Root accepts actual frozen manifest for unchanged primary and subsequent strict table derivation; no result acceptance yet",
+  "created_utc": "2026-11-09T19:32:14.455042+00:00",
+  "frozen": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/frozen.json",
+    "sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb"
+  },
+  "prelaunch_release_sha256": "25a38c536562a44717f0d7593d0dee7b88f028a1dfe628c33f643fe039802899",
+  "expected_rows": 3048,
+  "expected_cases_per_arm": 1524,
+  "required_postconditions": [
+    "campaign completion",
+    "existing summary-only and final invariance",
+    "unchanged strict table source and passing six fixtures",
+    "saved-row result review"
+  ]
+}

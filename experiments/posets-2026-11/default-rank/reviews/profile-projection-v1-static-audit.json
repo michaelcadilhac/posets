@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Static review complete: projection bindings are coherent, but current stdout acceptor has one incomplete-schema/numeric-validation blocker. Freeze a correction before profile content is accepted; no projection/import/workload executed.",
+  "exact_inputs": {
+    "source-manifest.json": "6b1a91583fbc99c58efba203e411ac8bb03afed9c45adbfc92e8035958fb7598",
+    "project_profiles.py": "a3cb0b81039145fc0a258ba7578fb4b450da2bb0811bc93200a2b64abc380321",
+    "test_project_profiles.py": "bc43fc1b529e1005c06bd9810186604bba0d7bf066beab6d782a1206b73de6e3",
+    "README.md": "7ca39e7d35cd0103875a96f1a8b22e7ee04c324d9a3feea06cfa5167d0888f42",
+    "input-bindings.json": "7545287a6cfc3bc7b64d84295a6479108c737d10cd16ca98c9223e841dea5fbd",
+    "source.patch": "eaac51cb8919feefa544348864f2e20a45ca8cba233b18b241ed65dd6e22a6a4"
+  },
+  "bindings_checked": {
+    "source_inventory_and_authority_hash_size_checks": 10,
+    "mismatches": []
+  },
+  "findings": [
+    {
+      "id": "PROFILE-PROJECTION-01",
+      "priority": "P2",
+      "title": "Require the complete emitted profile schema and valid numeric tokens",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-projection-v1/project_profiles.py",
+      "lines": "54-81",
+      "actual_producer": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-draft-v2/rank-profile.cc",
+      "producer_lines": "117-160,244-246,263",
+      "problem": "Required phase keys cover only a subset of always-emitted fields. Removing vector_copy_attempts, rank_active_coordinates_completed or last_intersection_first_failed_query from an otherwise plausible successful row still passes. Layout, counters, descriptor and cleanup values are mostly unchecked strings, so a nonnumeric token can be accepted as completed diagnostic evidence. The synthetic positive fixture currently omits most actual fields, so it cannot expose the gap.",
+      "minimal_fix": "Require all fields actually emitted by the frozen printf schema and validate their lexical types: unsigned counts/descriptors, signed deltas, explicit null-or-index and reason/phase tokens. Validate layout/cleanup fields as well as phase fields, preserving duplicate/missing detection and successful tuple/kernel/ROI checks. Update synthetic fixtures to complete actual schema; add missing-field and malformed-number negatives.",
+      "do_not_add": [
+        "Do not require cleanup_live_delta==0 or per-row entry_live==exit_live.",
+        "Do not treat has_result0 placeholders as retained size/capacity; preserve unavailable/null regardless of a zero or nonzero placeholder.",
+        "Do not infer a new exact operations ordering/count contract beyond the already reviewed per-call phase policy.",
+        "Do not add backend/counter-value semantics or change C++ sources/builds for this parser-only correction."
+      ],
+      "attribution": "Overlapping detection: this reviewer independently identified/sent the schema gap while root sent its own notice. No unique discovery credit is claimed."
+    }
+  ],
+  "positive_source_assessment": [
+    "Hard-pinned eligibility80b5, closure d097 and reviewd308 authorities are rechecked; source roles/clean HEADs and checked source/trace/dependency/ELF/library identities are preserved.",
+    "All204 pass rows are retained. Exactly192 eligible rows get the actual four-argument PROFILE_ELF TRACE vector operations|roi spec;12 unprofiled rows receive no command/spec/record. All four qualifications are required again before projection.",
+    "Specs retain isolated cwd, bound shipping env,30s timeout and original8G/no-swap wrapper. Fresh output/exclusive JSON writes preserve partial projection evidence; no executor/scheduler is introduced.",
+    "Expected metadata binds role-selected ELF context, vector/pass/dimension/numeric/before/actions and selector/lanes/element bytes. ROI enforces exact contains3-region or CPre4-region sequence; successful phases and final kernel marker remain required.",
+    "has_result0 descriptors becomeNone and first-failed-query null becomesNone. Cleanup/work deltas are retained without zero assumptions. Clean measurement statuses remain attached unchanged and are not recomputed/upgraded.",
+    "No other concrete projection bug found in the bounded review. Actual executor still must validate process/spec/cwd/env/helper/resource and input/artifact bindings before content acceptance, retain failed/partial outputs and stop."
+  ],
+  "test_source_assessment": "Existing synthetic cases cover metadata lane mismatch, phase failure, missing ROI region, missing kernel record and one missing field. They are unexecuted and must be strengthened with complete producer-schema positives and numeric/missing-field negatives; no real profile data or runtime success is claimed.",
+  "limits": [
+    "Reviewer used source/text/JSON/hash reads only; no helper import, parse/compile/test/projection, ELF execution or profile workload.",
+    "Accepted core/artifact/eligibility gates remain unchanged; this parser correction does not require rebuilding them.",
+    "No clean-clock/censor change, profile performance claim or runnable execution authorization follows from this review."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "sources": [
+    {
+      "label": "baseline",
+      "production_base_revision": "7c407128326583abbb137fd3832857ed506e20fb",
+      "measurement_revision": "6bc77ccf5d113edcdc62d9128bb6628565f19c7d",
+      "source_dir": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-baseline-7c40712",
+      "selector_overlay": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/selector.patch",
+        "sha256": "2e19003c71b87dcb6dbafbe3eee99fa3e8fa6aec1d2fcf14904f3317a670d6b4"
+      },
+      "setup_spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-baseline-setup-spec.json"
+    },
+    {
+      "label": "final",
+      "production_base_revision": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+      "measurement_revision": "c03dfb076b4321a60a9dca728e2cfee0050cb40b",
+      "source_dir": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/posets-selector-v2-final-cc058ca",
+      "selector_overlay": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/selector.patch",
+        "sha256": "2e19003c71b87dcb6dbafbe3eee99fa3e8fa6aec1d2fcf14904f3317a670d6b4"
+      },
+      "setup_spec": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/per-backend-v2-final-setup-spec.json"
+    }
+  ],
+  "approved_checkpoint": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/per-backend-replay-v2/checkpoint.json",
+    "sha256": "6fc9a4a2e732c73592c46dc4e2e5fd1c8b7521ac6b2ccf74d4c5b5a5746577ce"
+  },
+  "scope": "fresh V2 clean local measurement commits; V1 sources/artifacts untouched; no push"
+}

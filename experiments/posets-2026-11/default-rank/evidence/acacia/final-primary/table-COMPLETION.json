@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "native_rows_verified": 3048,
+  "scored_rows_verified": 3048,
+  "outcomes_rescored_by_this_script": false,
+  "outputs": {
+    "solver-comparison.json": "c9484a25aa4325a99f168c4f03218ce539aa4502cd95360fcd7cc814605599cf",
+    "solver-comparison.csv": "d1f3289bf37a67f01ec243c3786926e2da08e4a45b86c65fe19196922ca3ae07",
+    "oom-event-observations.json": "89387f76a85b67a47635fd356884a8634dca414bfe0de91b1966c9cc3a67f092"
+  }
+}

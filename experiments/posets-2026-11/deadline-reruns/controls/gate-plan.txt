@@ -1,0 +1,63 @@
+Control-only validation plan. Nothing here has been executed or added to tests.
+Production tests and all frozen fixtures remain unchanged.
+
+Rank control
+
+Keep the independent integer, finite-float and wide-coordinate dominance/algebra
+oracles, exact tie/iteration checks, both parallel-array allocation failures and
+retry, covering insertion at full capacity, comparison failure/reuse, and throwing
+Vector staging tests. Cached-rank work counts and covered-intersection zero-copy/
+zero-allocation are optimized treatment sentinels, not the negative control's
+semantics. A separately reviewed control fixture may change only those treatment
+expectations; self-operation zero-work and late failure guarantees stay intact.
+
+Forest map-cache control
+
+The existing check_forest first checks paths, duplicates, path count and scalar
+strict/non-strict expectations. Keep those checks. The later warmed repetition
+block currently sets allocations_left=0; for the CONTROL-ONLY copy, leave allocations
+enabled and retain the same eight repetitions and every oracle comparison.
+The production stamp-backed fixture keeps its zero-allocation requirement.
+
+Do not skip forest-kd-layout or only run its first case. Preserve wide_forest,
+shared_suffixes and union_lifecycle, including child ordering, large growth/high
+fanout, old and new roots, clear/rebuild and draft-lifetime semantics. Also retain
+its KD and simple-wrapper allocation-propagation checks. The two sharing wrappers
+need their independent set-algebra/Boolean gates as well.
+
+Add a bounded positive allocation-failure/retry sweep for map queries:
+
+1. Build the forest, query Vector, expected scalar result and a snapshot of its
+   generators before the failure scope. Choose a nontrivial query known to visit
+   cached nodes; empty/dimension-zero/no-traversal cases cannot prove hook coverage.
+2. Warm query stack capacity and map buckets outside the failure scope. A warmed
+   covers query still clears map nodes and inserts again in this control.
+3. Increase the allocation budget across successive attempts. Limit the charged
+   region to covers_vector itself. Catch only the intended bad_alloc, reset the
+   budget before any verification, and count failures. Require failures > 0 and a
+   successful attempt before the bounded sweep ends; do not accept an all-zero-hook
+   or never-completed sweep as coverage.
+4. After each failure, query the SAME root again with allocations enabled and check
+   strict/non-strict answers against the independent oracle. Check materialized
+   generators, count and child ordering outside the failure window. The next query
+   must clear partial cache state and remain reusable; no rebuild/reassignment may
+   hide corruption between the failing query and retry.
+5. Keep all full semantic cases running after this sweep. Do not infer allocation
+   semantics from timing, or count oracle/setup/report allocations as query faults.
+
+Legacy KD control
+
+Use current repeated-axis, strict/non-strict, repeated successful/failed query,
+relabel/move and injected coordinate/order failure followed by retry checks.
+The before-source has entry clearing; the current source restores on normal exit.
+Both must preserve the same observable answers and source values.
+
+Execution and attribution
+
+These source/gate proposals still need review. Only after root's repeat decision
+and lane release may the owner create a control-only test copy, bind its exact delta,
+build serially and execute through the existing 8 GiB/no-swap wrapper and host lock.
+No blanket assertion/check suppression, whole-file disabling or historical-binary
+relabelling is permitted. Matched performance builds share exact dependency/core/
+compiler/runtime context and leave instrumentation disabled. No production rollback
+is authorized by a gate adaptation or a relative rank-versus-tree timing gap.

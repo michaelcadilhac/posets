@@ -1,0 +1,11 @@
+{
+  "actual_per_role_hash_authority": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/acacia-preparation-v3/materialized-sources.json",
+    "sha256": "5ac7b6c2c446ead88d68d8cd68caa2fcde5992c5a9145d0884af3e87c36129d2"
+  },
+  "baseline_actual_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+  "baseline_include_lib_byte_equal_to": "cc058ca96ebc667f727ea2f0c2360b77d60192d3",
+  "candidate_actual_revision": "30e66853832d98bcfaada296d892157b95a8150d",
+  "only_candidate_production_delta": "include/posets/downsets/rank_bucketed_vector_backed.hh",
+  "production_files": 274
+}

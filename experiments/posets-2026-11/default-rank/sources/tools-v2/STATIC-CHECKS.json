@@ -1,0 +1,107 @@
+{
+  "scope": "Static source/text/hash/diff assertions only; no target import, parse/syntax compile, test collection, fixture/model/helper/compiler/test/lint/profile/timing executed",
+  "preserved_v1_source_manifest_sha256": "12baf6b28f47be03066ac1e58ca3d428a6b2a7ea1af16258710256a5133b23cb",
+  "original_helper_test_sources_unchanged": 9,
+  "shared_support_sources_unchanged": 4,
+  "authority": {
+    "core_v3_manifest_sha256": "93e77732baec145529cd48fece48647db7e4312ee3c296751aa440536d260f02",
+    "core_v3_patch_sha256": "889f94fef69e5dcb263e2370c4b9b5b96cd542df6cea4294cab997affc97461d",
+    "source_approved_by_both_reviews": true,
+    "helper_v2_review_pending": true
+  },
+  "unchanged_from_v1": [
+    "prepare-per-backend-build.py",
+    "run-per-backend-build.py",
+    "prepare-paired-replay.py",
+    "summarize-paired-replay.py",
+    "posets-matrix.py",
+    "freeze_replay.py"
+  ],
+  "unchanged_original_driver_function_bytes": [
+    "replay",
+    "normalized_command",
+    "inspect_binary",
+    "abi_key",
+    "selector_source",
+    "combined_provenance",
+    "metrics",
+    "status",
+    "output_identity",
+    "load_traces",
+    "capture_identity",
+    "frozen_identity",
+    "unchanged",
+    "save_logs",
+    "process_record"
+  ],
+  "both_controllers_have_actual_seed_check": true,
+  "canonical_command_changes": "One strict required option schema; values returned to plan checker; no equals-form/abbreviation/duplicate or extra token accepted. Source reasoning only.",
+  "negative_sources": "Drafted canonical CLI, refreshed plan/spec overrides, actual report seed JSON-type checks and direct mapped_variants positive/link/library refreshed-context cases; none imported/executed.",
+  "no_trailing_source_whitespace": true,
+  "actual_maps_anchors_revisions_builds_or_results_created": false,
+  "diffstat_from_originals": [
+    {
+      "path": "prepare-per-backend-build.py",
+      "added": 33,
+      "removed": 13
+    },
+    {
+      "path": "run-per-backend-build.py",
+      "added": 25,
+      "removed": 13
+    },
+    {
+      "path": "prepare-paired-replay.py",
+      "added": 61,
+      "removed": 14
+    },
+    {
+      "path": "run-paired-replay.py",
+      "added": 12,
+      "removed": 2
+    },
+    {
+      "path": "run-paired-replay-stop-on-correctness.py",
+      "added": 12,
+      "removed": 2
+    },
+    {
+      "path": "summarize-paired-replay.py",
+      "added": 6,
+      "removed": 2
+    },
+    {
+      "path": "posets-matrix.py",
+      "added": 65,
+      "removed": 16
+    },
+    {
+      "path": "test_posets_matrix.py",
+      "added": 448,
+      "removed": 2
+    },
+    {
+      "path": "freeze_replay.py",
+      "added": 28,
+      "removed": 5
+    },
+    {
+      "path": "rank_contract.py",
+      "added": 183,
+      "removed": 0
+    },
+    {
+      "path": "README.md",
+      "added": 192,
+      "removed": 0
+    }
+  ],
+  "pending": [
+    "Both exact helper V2 static reviews",
+    "Explicit root runtime lane release",
+    "Scoped offline negative suite and actual configured tool lint",
+    "Actual matched source/anchor/two-cell build/ELF/semantic pilots before replay"
+  ],
+  "actual_candidate_revision_reported_by_root": "30e66853832d98bcfaada296d892157b95a8150d",
+  "revision_note": "Root committed unchanged reviewed CoreV3 source bytes after gates; no helper artifact/revision was fabricated by this draft."
+}

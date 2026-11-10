@@ -1,0 +1,66 @@
+The strongest current choice is to keep the ranked-vector backend. The default itself has been optimized, and the separate comparison of that optimization is complete and did not show a full-solver gain: the optimized build solved one fewer case. The new lazy fractional-cascading KD tree is the closest alternative; block tries and the existing tree/trie backends did not establish a reason to replace the default in the full-solver campaign.
+
+The first campaign ran all 1,524 SYNTCOMP26 cases for each of 15 configurations: 22,860 solver invocations. Each used the same shipping preset, 17-second strict wall cap and 8 GiB/no swap. PAR2 below is summed seconds: every unsolved case costs 34 seconds, so lower is better. This campaign predates the focused ranked-vector optimization.
+
+Both saved campaign-start snapshots report an Intel Core i7-11850H with 8 physical cores and 16 logical CPUs. Primary solver runs were serial with no CPU-affinity or quota override; the separate hardware-counter companion used CPU 2. The processor's model-name frequency is not a measured or fixed runtime clock. The hardware companion file preserves selected snapshot fields and source hashes.
+
+| Configuration | Solved / 1,524 | PAR2 seconds | Invocations with OOM-kill evidence |
+|---|---:|---:|---:|
+| Original Acacia/Posets anchor | 1,368 | 5,944.021 | 0 |
+| Candidate default, before focused optimization | 1,369 | 5,926.861 | 0 |
+| Existing KD | 1,365 | 6,010.087 | 7 |
+| KD with narrow indices | 1,366 | 5,996.635 | 7 |
+| Scalar sharingtrie | 1,365 | 6,014.395 | 7 |
+| Compact sharingtrie | 1,365 | 6,016.873 | 7 |
+| Compressed trie | 1,365 | 6,013.668 | 7 |
+| Compressed trie with SIMD query | 1,365 | 6,014.120 | 7 |
+| Block sharingtrie, width 8 | 1,365 | 6,012.232 | 7 |
+| Block sharingtrie, width 8, no suffix cache | 1,367 | 5,979.528 | 7 |
+| Block sharingtrie, width 16 | 1,366 | 5,997.109 | 7 |
+| Lazy KD with fractional cascading | 1,369 | 5,922.578 | 0 |
+| Lazy KD with independent leaf search | 1,368 | 5,939.522 | 0 |
+| Sharingtree | 1,367 | 5,995.329 | 0 |
+| Simple sharingtree | 1,366 | 6,008.873 | 7 |
+
+Fractional cascading and the candidate default solved exactly the same set. The PAR2 gap is only 4.283 seconds, or 0.072%, in a single campaign; no measured noise floor makes that a reliable speed advantage. No alternative solved a case that the candidate default missed. Several differences hinge on cases near the cap: one default solve finished at 16.952 seconds. Native labels and kernel memory evidence differ: 25 MEMOUT labels plus 45 TIMEOUT labels account for the 70 OOM-kill-positive invocations. All ten affected arms hit the same seven cases. A larger MEMOUT count for block16 therefore does not mean more OOM invocations.
+
+The focused default follow-up compares Posets 789bf99 with 30e6685 in two fresh Acacia builds, with the same 1,524 cases and resource protocol. This is a separate campaign and should not be pooled with the table above.
+
+| Default implementation | Solved / 1,524 | PAR2 seconds | Native timeouts | OOM-kill observations |
+|---|---:|---:|---:|---:|
+| Baseline, 789bf99 | 1,369 | 5,926.875 | 155 | 0 |
+| Optimized, 30e6685 | 1,368 | 5,943.112 | 156 | 0 |
+
+The optimized build had no gains and one loss, robot_repair5.ltl. The baseline returned UNREALIZABLE in 16.287 seconds; the optimized build reached an actual native timeout at 17.118 seconds and incurred the unchanged 34-second penalty. This was not a decisive answer converted into a timeout by scoring. Total PAR2 was 16.237269 seconds (0.274%) worse. All 3,048 CPU, cgroup-peak, process-RSS and memory-event records are valid; there were no contradictory answers, errors, MEMOUT labels, OOM events or decisive wall-cap overruns. Total CPU was 14,005.477 versus 14,001.094 seconds, and maximum cgroup peak was 4,047.621 versus 4,041.449 MiB. These whole-process quantities do not isolate downset memory or establish a memory improvement.
+
+The single observed loss is real under the fixed cap. One unrepeated campaign does not establish a general regression or identify its cause. The replay and instruction reductions therefore remain useful component-level evidence, but they did not earn an end-to-end performance claim here. No rerun, retuning or selective rescoring followed the result. I would keep the ranked-vector backend; this evidence does not justify switching to a new backend or promising a synthesis speedup from the focused default patch.
+
+The Biere/Lemire pass retained the default's two contiguous arrays and added no per-element metadata. Union and intersection reuse cached ranks; conservative exact-integral reasoning skips unnecessary equal-rank retirement tests; intersection output is deferred until containment fails. Floating and generic coordinates retain the safe fallback and tie order. Allocation/exception handling was also repaired. No additional tuning followed the measured results.
+
+Three matched clean replay pairs show useful but uneven gains. At Acacia-compatible SIMD128, the larger round-robin predecessor improves about 4.6%, and constructing the 6,446-element full-arbiter frontier improves about 30%. Full-arbiter predecessor evidence remains unavailable: the standard cpre-6 trace timed out in source qualification, whereas the larger cpre-7 frame was structurally excluded before qualification. Smaller round-robin construction regresses about 7.8%; native SIMD512 collector predecessor regresses about 19.1%, both with mixed directions across repetitions. These percentages are medians of paired ratios, not ratios of separate medians. The report retains all 80 complete metric groups, six source-censored groups and unfavorable observations.
+
+All 192 qualified work/heap profile calls passed. Across 990 matched phase pairs, allocation counts, requested bytes, extra tracked peak and net live-byte changes were identical. Observable result sizes and capacities matched. Rank scans and comparison attempts never increased; move assignments increased in 267 phases. The fixed four-cell hardware companion completed 24 calls with 96 usable event readings. Instructions and user cycles fell in every pair, but collector L1D read misses rose in every pair and LLC results were variable. Those pinned instrumented counters do not explain away the clean elapsed-time regressions. The default optimization reduces measured work; these captures do not establish lower heap use or a universal cache benefit.
+
+Memory and locality were reviewed across the other backends too. The following selected instrumented constructor measurements compare the earlier d139fb3 → cc058ca optimization, separately from the default's 789bf99 → 30e6685 follow-up. Extra tracked peak means requested C++ payload above live payload at entry to the measured region, after caller Vector materialization; it is neither process RSS nor cgroup peak.
+
+| Backend / measured case | Allocation calls, before → after | Extra tracked peak bytes, before → after | Interpretation |
+|---|---:|---:|---|
+| Scalar sharingtrie, collector | 138,833 → 4,681 | 3,246,672 → 3,244,488 | Far fewer small allocations; peak and retained geometry nearly unchanged |
+| Cached block8 trie, collector | 25,041 → 71 | 1,730,440 → 1,142,931 | Flat coloring and simpler temporary storage reduce construction overhead |
+| Uncached block8 trie, collector | 69 → 53 | 1,072,128 → 809,984 | Lower transient storage; retained geometry unchanged |
+| Lazy fractional-cascading KD, full-arbiter constructor | 603 → 45 | 141,852 → 71,352 | One index build instead of eleven on this case |
+| Lazy independent-search KD, same constructor | 427 → 25 | 122,396 → 61,624 | Smaller catalog footprint; cascading trades space for search work |
+
+Existing KD nodes now use 511 rather than 1,024 slots at 256 points, with capacity reuse; at 257 points the new allocation needs 1,023 slots, so reduced headroom is a tradeoff. Compressed trie nodes are 16 bytes, with bounded pending-sibling scratch. Block labels and child ranges are packed, and SIMD compares fixed coordinate blocks with safe tails. Sharing forests use generation stamps instead of per-query hash maps; stamps retain capacity over historical nodes, and dead historical roots are not automatically collected. These layout changes do not imply every workload becomes faster.
+
+The lazy KD implementation keeps live payloads dense, uses stable IDs and live counts to skip retired subtrees, buffers new points, and rebuilds globally when configured buffer/dead-history thresholds are reached. Sampled catalogs and lower-bound bridges propagate a root search through the tree. The independent-search control uses the same geometry and leaf order. This is lazy deletion with global rebuilding, not a locally balanced dynamic KD tree with a proved amortized bound. The bulk-construction cutoff remains a heuristic.
+
+The TLSF/fuzzer → Acacia → operation-replay pipeline used the existing cgroup infrastructure. The declared capture cohort contained 12 native and 64 decoded fuzzer inputs, split into 56 training and 20 held-out inputs before execution. Historical mutation ancestry was unavailable; these are not globally unseen benchmark families. All capture outcomes, incomplete frames, source/backend qualification timeouts and unexecuted placeholders are retained. Held-out replay fixed the candidate before observation and did not trigger tuning. The new default follow-up reuses previously seen TRAIN traces and benchmark cases.
+
+The public code commit 30e6685 passed all CI suites; each full suite reported 82 passes and one intentional expected failure. Targeted fault-injection, portable compiler, positive allocation-hook and Memcheck checks also passed. The two fresh Acacia arms each passed 87 unit tests, 88 declared Boolean cases and version/realizable/unrealizable integration checks. Release NO_VERBOSE builds do not establish runtime route frequencies. Matched source/dependency revisions and compiler settings do not mean every independently built Rust dependency byte is identical, so small solver differences should not be assigned a precise causal explanation.
+
+The unchanged summary-only pass reproduced the solver result exactly, and the final audit verified 14,981 file bindings, including 1,211 files from the earlier phase-one evidence. The separate final read-only preservation check matched all six recorded fields in each of the five original Acacia/main/nested checkouts: HEAD, status, index, binary HEAD diff, tracked content and tracked-file count. Ignored and untracked file bytes were not compared. Raw status text and WIP filenames remain outside the public evidence package. All development and builds used task-owned copies; the original Acacia work was not an edit or build destination.
+
+Both independent outcome reviews reproduced the negative result and accepted its evidence and limits. The implementation and evidence accompany Posets PR40: https://github.com/michaelcadilhac/posets/pull/40. No Acacia backend switch is proposed.
+
+The companion reports retain complete comparison tables, censored replay results, memory/cache denominators, raw numerical solver archives, artifact bindings and the Nbjorner-versus-Barbosa review experience. Requested C++ payload, retained metadata, process RSS, cgroup peak and hardware cache misses are separate measurements. The package is an audit and recreation companion, not a self-contained corpus/build/binary archive. Earlier intermediate publications remain unchanged and are superseded by this final status.

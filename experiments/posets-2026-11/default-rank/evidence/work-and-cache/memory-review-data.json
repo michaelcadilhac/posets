@@ -1,0 +1,1903 @@
+{
+  "accepted_hashes_verified": 192,
+  "aggregate_sum_limitation": "Field sums include separate operations/ROI passes over repeated trace replays; not per-replay totals, independent samples, memory totals or a performance estimator.",
+  "all192_cleanup_live_delta_zero": true,
+  "completion": {
+    "path": "work/default-optimization/profile-trace-execution-v2/COMPLETION.json",
+    "sha256": "64b83bb5ac50ca6a67beff8c1255985933ac8c81aa87039836a48113a04cf2ee"
+  },
+  "completion_counts": {
+    "pass_rows": 204,
+    "runnable_specs": 192,
+    "unprofiled": 12
+  },
+  "cross_vector_width_groups": 64,
+  "cross_vector_width_selected_work_differences": [],
+  "data_only_analysis": true,
+  "fields": {
+    "allocations": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 874992,
+      "sum_candidate": 874992
+    },
+    "extra_peak": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 94085853,
+      "sum_candidate": 94085853
+    },
+    "last_intersection_queries": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 32592,
+      "sum_candidate": 32592
+    },
+    "live_delta": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 60381008,
+      "sum_candidate": 60381008
+    },
+    "rank_active_coordinates_completed": {
+      "equal": 639,
+      "higher": 0,
+      "lower": 351,
+      "sum_baseline": 347664618,
+      "sum_candidate": 322013598
+    },
+    "rank_completed": {
+      "equal": 639,
+      "higher": 0,
+      "lower": 351,
+      "sum_baseline": 901914,
+      "sum_candidate": 850662
+    },
+    "rank_existing_elements_removed": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 13638,
+      "sum_candidate": 13638
+    },
+    "rank_insert_attempts": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 869226,
+      "sum_candidate": 869226
+    },
+    "rank_insert_rejected_dominated": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 503898,
+      "sum_candidate": 503898
+    },
+    "rank_intersection_short_circuits": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 17910,
+      "sum_candidate": 17910
+    },
+    "rank_partial_order_calls": {
+      "equal": 651,
+      "higher": 0,
+      "lower": 339,
+      "sum_baseline": 984449856,
+      "sum_candidate": 871423368
+    },
+    "rank_started": {
+      "equal": 639,
+      "higher": 0,
+      "lower": 351,
+      "sum_baseline": 901914,
+      "sum_candidate": 850662
+    },
+    "requested_bytes": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 404458505,
+      "sum_candidate": 404458505
+    },
+    "vector_copy_attempts": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 17910,
+      "sum_candidate": 17910
+    },
+    "vector_meet_attempts": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 19080,
+      "sum_candidate": 19080
+    },
+    "vector_move_assignments_completed": {
+      "equal": 723,
+      "higher": 267,
+      "lower": 0,
+      "sum_baseline": 123015012,
+      "sum_candidate": 123171264
+    },
+    "vector_move_constructions_completed": {
+      "equal": 990,
+      "higher": 0,
+      "lower": 0,
+      "sum_baseline": 1310895,
+      "sum_candidate": 1310895
+    }
+  },
+  "final_invariance_checked_files": 3204,
+  "intersections": {
+    "baseline": {
+      "changed_count_sum": 48,
+      "completed_count_sum": 48,
+      "completed_phase_rows": 48,
+      "noop_count_sum": 0
+    },
+    "candidate": {
+      "changed_count_sum": 48,
+      "completed_count_sum": 48,
+      "completed_phase_rows": 48,
+      "noop_count_sum": 0
+    }
+  },
+  "last_intersection_reason_and_first_failed_position_all990_equal": true,
+  "layouts": [
+    [
+      "compatible",
+      "simd_vector_backed",
+      "{\"move_assign_noexcept\": \"1\", \"move_construct_noexcept\": \"1\", \"vector_alignment\": \"8\", \"vector_bytes\": \"32\"}"
+    ],
+    [
+      "compatible",
+      "vector_backed",
+      "{\"move_assign_noexcept\": \"1\", \"move_construct_noexcept\": \"1\", \"vector_alignment\": \"8\", \"vector_bytes\": \"32\"}"
+    ],
+    [
+      "native",
+      "simd_vector_backed",
+      "{\"move_assign_noexcept\": \"1\", \"move_construct_noexcept\": \"1\", \"vector_alignment\": \"8\", \"vector_bytes\": \"32\"}"
+    ]
+  ],
+  "move_assignments_by_phase": {
+    "apply": {
+      "delta_sum": 417,
+      "equal": 276,
+      "higher": 51,
+      "lower": 0,
+      "pairs": 327
+    },
+    "build_normalized": {
+      "delta_sum": 37035,
+      "equal": 15,
+      "higher": 33,
+      "lower": 0,
+      "pairs": 48
+    },
+    "constructor_only_caller_alive": {
+      "delta_sum": 74073,
+      "equal": 51,
+      "higher": 69,
+      "lower": 0,
+      "pairs": 120
+    },
+    "contains": {
+      "delta_sum": 0,
+      "equal": 96,
+      "higher": 0,
+      "lower": 0,
+      "pairs": 96
+    },
+    "cpre_after_rhs_destruction_net": {
+      "delta_sum": 4053,
+      "equal": 6,
+      "higher": 18,
+      "lower": 0,
+      "pairs": 24
+    },
+    "intersection_rhs_still_alive": {
+      "delta_sum": 3486,
+      "equal": 6,
+      "higher": 18,
+      "lower": 0,
+      "pairs": 24
+    },
+    "rebuild_normalized_first_alive": {
+      "delta_sum": 37038,
+      "equal": 12,
+      "higher": 36,
+      "lower": 0,
+      "pairs": 48
+    },
+    "union_rhs_still_alive": {
+      "delta_sum": 150,
+      "equal": 261,
+      "higher": 42,
+      "lower": 0,
+      "pairs": 303
+    }
+  },
+  "operation_result_pairs": 822,
+  "operation_result_size_capacity_equal": true,
+  "phase_pairs": 990,
+  "plan": {
+    "path": "work/default-optimization/profile-trace-specs-v2/plan.json",
+    "sha256": "137f2e93460b2437a14143bf8ea1cf1a436b2073d1a2e87230454040dec9aa64"
+  },
+  "record_pairs": 96,
+  "representatives": [
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/074-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "7bfb9d512d0d41179be3f37645ddac948643cf0164c0aab596e0c52c9a1aceee"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/080-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "938962ddd7b5fdf28bc704d9b1cc8eb2913d964d12f30778a45948288cc97a83"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "constructor_only_caller_alive",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/contains-6.tsv",
+      "trace_identity_sha256": "18cd7c833e3459a02b7a9351ce7756fa8a7561460ca3a4ddffec8a4f7a336810",
+      "values": {
+        "allocations": {
+          "baseline": "18",
+          "candidate": "18"
+        },
+        "extra_peak": {
+          "baseline": "13312",
+          "candidate": "13312"
+        },
+        "generator_capacity": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "10240",
+          "candidate": "10240"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "133888",
+          "candidate": "133888"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "38947",
+          "candidate": "32640"
+        },
+        "rank_started": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "requested_bytes": {
+          "baseline": "20440",
+          "candidate": "20440"
+        },
+        "size": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6307"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "511",
+          "candidate": "511"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/075-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "869e34104a56b724027047ff7e1b476314ba88d506d59855e7e434236d5dd68e"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/081-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "e27b1c47945cb69d43ff9c648fc94fc3c31f14e2dbfd042d46a81f65eb4e47e4"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "build_normalized",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/contains-6.tsv",
+      "trace_identity_sha256": "18cd7c833e3459a02b7a9351ce7756fa8a7561460ca3a4ddffec8a4f7a336810",
+      "values": {
+        "allocations": {
+          "baseline": "539",
+          "candidate": "539"
+        },
+        "extra_peak": {
+          "baseline": "156672",
+          "candidate": "156672"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "145408",
+          "candidate": "145408"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "133888",
+          "candidate": "133888"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "38947",
+          "candidate": "32640"
+        },
+        "rank_started": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "requested_bytes": {
+          "baseline": "305848",
+          "candidate": "305848"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6307"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1022",
+          "candidate": "1022"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/075-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "869e34104a56b724027047ff7e1b476314ba88d506d59855e7e434236d5dd68e"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/081-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "e27b1c47945cb69d43ff9c648fc94fc3c31f14e2dbfd042d46a81f65eb4e47e4"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "contains",
+      "phase_index": 1,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/contains-6.tsv",
+      "trace_identity_sha256": "18cd7c833e3459a02b7a9351ce7756fa8a7561460ca3a4ddffec8a4f7a336810",
+      "values": {
+        "allocations": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "extra_peak": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "523",
+          "candidate": "523"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "1",
+          "candidate": "1"
+        },
+        "rank_started": {
+          "baseline": "1",
+          "candidate": "1"
+        },
+        "requested_bytes": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/075-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "869e34104a56b724027047ff7e1b476314ba88d506d59855e7e434236d5dd68e"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/081-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "e27b1c47945cb69d43ff9c648fc94fc3c31f14e2dbfd042d46a81f65eb4e47e4"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "rebuild_normalized_first_alive",
+      "phase_index": 2,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/contains-6.tsv",
+      "trace_identity_sha256": "18cd7c833e3459a02b7a9351ce7756fa8a7561460ca3a4ddffec8a4f7a336810",
+      "values": {
+        "allocations": {
+          "baseline": "539",
+          "candidate": "539"
+        },
+        "extra_peak": {
+          "baseline": "156672",
+          "candidate": "156672"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "145408",
+          "candidate": "145408"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "133888",
+          "candidate": "133888"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "38947",
+          "candidate": "32640"
+        },
+        "rank_started": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "requested_bytes": {
+          "baseline": "305848",
+          "candidate": "305848"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6307"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1022",
+          "candidate": "1022"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/002-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "48af53cbe76a671eb24095e24fbf0f3cd7181c17a039838cb034c67760528880"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/008-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "243f4afd8a5ec9163dd87bd89752f6f4212558e7c4add2a6a446066af3144d90"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "constructor_only_caller_alive",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "18",
+          "candidate": "18"
+        },
+        "extra_peak": {
+          "baseline": "13312",
+          "candidate": "13312"
+        },
+        "generator_capacity": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "10240",
+          "candidate": "10240"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "133888",
+          "candidate": "133888"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "38947",
+          "candidate": "32640"
+        },
+        "rank_started": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "requested_bytes": {
+          "baseline": "20440",
+          "candidate": "20440"
+        },
+        "size": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6307"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "511",
+          "candidate": "511"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/002-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "48af53cbe76a671eb24095e24fbf0f3cd7181c17a039838cb034c67760528880"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/008-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "243f4afd8a5ec9163dd87bd89752f6f4212558e7c4add2a6a446066af3144d90"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "union_rhs_still_alive",
+      "phase_index": 4,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "2",
+          "candidate": "2"
+        },
+        "extra_peak": {
+          "baseline": "16384",
+          "candidate": "16384"
+        },
+        "generator_capacity": {
+          "baseline": "512",
+          "candidate": "512"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "10240",
+          "candidate": "10240"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "523",
+          "candidate": "0"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "257",
+          "candidate": "256"
+        },
+        "rank_started": {
+          "baseline": "1",
+          "candidate": "0"
+        },
+        "requested_bytes": {
+          "baseline": "20480",
+          "candidate": "20480"
+        },
+        "size": {
+          "baseline": "257",
+          "candidate": "257"
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "0",
+          "candidate": "1"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "257",
+          "candidate": "257"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/002-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "48af53cbe76a671eb24095e24fbf0f3cd7181c17a039838cb034c67760528880"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/008-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "243f4afd8a5ec9163dd87bd89752f6f4212558e7c4add2a6a446066af3144d90"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "intersection_rhs_still_alive",
+      "phase_index": 5,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "532",
+          "candidate": "532"
+        },
+        "extra_peak": {
+          "baseline": "162320",
+          "candidate": "162320"
+        },
+        "generator_capacity": {
+          "baseline": "512",
+          "candidate": "512"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": "255",
+          "candidate": "255"
+        },
+        "last_intersection_queries": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "live_delta": {
+          "baseline": "10768",
+          "candidate": "10768"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "401664",
+          "candidate": "134411"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "255",
+          "candidate": "255"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "52588",
+          "candidate": "46280"
+        },
+        "rank_started": {
+          "baseline": "768",
+          "candidate": "257"
+        },
+        "requested_bytes": {
+          "baseline": "311256",
+          "candidate": "311256"
+        },
+        "size": {
+          "baseline": "257",
+          "candidate": "257"
+        },
+        "vector_copy_attempts": {
+          "baseline": "255",
+          "candidate": "255"
+        },
+        "vector_meet_attempts": {
+          "baseline": "257",
+          "candidate": "257"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6308"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "768",
+          "candidate": "768"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/003-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "45e26696e9766a4946a6cee7f819ff684fda168768275d8033113ea44a15cd18"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/009-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "2084737eecb49fda8d2a77664ef59a425e9245c2e28545dcdfaae091a5c37a55"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "build_normalized",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "539",
+          "candidate": "539"
+        },
+        "extra_peak": {
+          "baseline": "156672",
+          "candidate": "156672"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "145408",
+          "candidate": "145408"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "133888",
+          "candidate": "133888"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "38947",
+          "candidate": "32640"
+        },
+        "rank_started": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "requested_bytes": {
+          "baseline": "305848",
+          "candidate": "305848"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6307"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1022",
+          "candidate": "1022"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/003-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "45e26696e9766a4946a6cee7f819ff684fda168768275d8033113ea44a15cd18"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/009-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "2084737eecb49fda8d2a77664ef59a425e9245c2e28545dcdfaae091a5c37a55"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "cpre_after_rhs_destruction_net",
+      "phase_index": 1,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "1069",
+          "candidate": "1069"
+        },
+        "extra_peak": {
+          "baseline": "318496",
+          "candidate": "318496"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": "255",
+          "candidate": "255"
+        },
+        "last_intersection_queries": {
+          "baseline": "256",
+          "candidate": "256"
+        },
+        "live_delta": {
+          "baseline": "10768",
+          "candidate": "10768"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "670486",
+          "candidate": "402710"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "510",
+          "candidate": "510"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "92047",
+          "candidate": "79431"
+        },
+        "rank_started": {
+          "baseline": "1282",
+          "candidate": "770"
+        },
+        "requested_bytes": {
+          "baseline": "623120",
+          "candidate": "623120"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "255",
+          "candidate": "255"
+        },
+        "vector_meet_attempts": {
+          "baseline": "257",
+          "candidate": "257"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "12408",
+          "candidate": "12616"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1538",
+          "candidate": "1538"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/003-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "45e26696e9766a4946a6cee7f819ff684fda168768275d8033113ea44a15cd18"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/009-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "2084737eecb49fda8d2a77664ef59a425e9245c2e28545dcdfaae091a5c37a55"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "contains",
+      "phase_index": 2,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "2",
+          "candidate": "2"
+        },
+        "extra_peak": {
+          "baseline": "1051",
+          "candidate": "1051"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "523",
+          "candidate": "523"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "1",
+          "candidate": "1"
+        },
+        "rank_started": {
+          "baseline": "1",
+          "candidate": "1"
+        },
+        "requested_bytes": {
+          "baseline": "1051",
+          "candidate": "1051"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 256,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/003-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "45e26696e9766a4946a6cee7f819ff684fda168768275d8033113ea44a15cd18"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/009-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "2084737eecb49fda8d2a77664ef59a425e9245c2e28545dcdfaae091a5c37a55"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 523,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "rebuild_normalized_first_alive",
+      "phase_index": 3,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/collector_v1_pb_9_pe_.ltl/snapshots/aut-3681796-0/cpre-19.tsv",
+      "trace_identity_sha256": "cd7e2a321cd61bc9217780ed548e70c5818875856c1035f2c6abb66fc803fe78",
+      "values": {
+        "allocations": {
+          "baseline": "544",
+          "candidate": "544"
+        },
+        "extra_peak": {
+          "baseline": "178704",
+          "candidate": "178704"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "156176",
+          "candidate": "156176"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "134411",
+          "candidate": "134411"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "39204",
+          "candidate": "32896"
+        },
+        "rank_started": {
+          "baseline": "257",
+          "candidate": "257"
+        },
+        "requested_bytes": {
+          "baseline": "343763",
+          "candidate": "343763"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "6204",
+          "candidate": "6308"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1536",
+          "candidate": "1536"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 1009,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/086-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "cc4cc91ea9bd80e8c55ad13228f585b510fcebb31a7bbe16c6a3b399df15f474"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/092-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "3d5bba99c7ee8dddab5f68762e7b85f131ba3a1b0985e4e41239af635b1a70be"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 43,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "constructor_only_caller_alive",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/contains-5.tsv",
+      "trace_identity_sha256": "f62668ce2ac761122c3abb8fb7e5d643bb61701afc84018c192255790d8fc123",
+      "values": {
+        "allocations": {
+          "baseline": "22",
+          "candidate": "22"
+        },
+        "extra_peak": {
+          "baseline": "53248",
+          "candidate": "53248"
+        },
+        "generator_capacity": {
+          "baseline": "1024",
+          "candidate": "1024"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "40960",
+          "candidate": "40960"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "43387",
+          "candidate": "43387"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "637127",
+          "candidate": "508536"
+        },
+        "rank_started": {
+          "baseline": "1009",
+          "candidate": "1009"
+        },
+        "requested_bytes": {
+          "baseline": "81880",
+          "candidate": "81880"
+        },
+        "size": {
+          "baseline": "1009",
+          "candidate": "1009"
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "128124",
+          "candidate": "128591"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "2032",
+          "candidate": "2032"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 1009,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/087-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "55de715b447ae1fb48470984b9e82b59338d163a22694b1a85edd6755f2b6075"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/093-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "5f07a221b02f2b445feb6dd654739dd154558c989703a8c30c60669651d76221"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 43,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "build_normalized",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/contains-5.tsv",
+      "trace_identity_sha256": "f62668ce2ac761122c3abb8fb7e5d643bb61701afc84018c192255790d8fc123",
+      "values": {
+        "allocations": {
+          "baseline": "2051",
+          "candidate": "2051"
+        },
+        "extra_peak": {
+          "baseline": "134448",
+          "candidate": "134448"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "89392",
+          "candidate": "89392"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "43387",
+          "candidate": "43387"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "637127",
+          "candidate": "508536"
+        },
+        "rank_started": {
+          "baseline": "1009",
+          "candidate": "1009"
+        },
+        "requested_bytes": {
+          "baseline": "239203",
+          "candidate": "239203"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "128124",
+          "candidate": "128591"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "4064",
+          "candidate": "4064"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 552,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/014-baseline-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "a9a90dd920127361b9977bd2f8daa3878692f014dde57ea69958f22c8c80edbf"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/020-candidate-compatible-simd_vector_backed-operations.accepted.json",
+          "sha256": "dca3122e4d7c1596ac9edc4f8c67b71ed7207a629bd2c5b31a5c9065d57f9c88"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 453,
+      "mode": "compatible",
+      "pass": "operations",
+      "phase": "constructor_only_caller_alive",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-19.tsv",
+      "trace_identity_sha256": "fd6b7830cc8285434de186f3ecc961fdecf2c6f41976a68ae23d85ccca3da76b",
+      "values": {
+        "allocations": {
+          "baseline": "22",
+          "candidate": "22"
+        },
+        "extra_peak": {
+          "baseline": "53248",
+          "candidate": "53248"
+        },
+        "generator_capacity": {
+          "baseline": "1024",
+          "candidate": "1024"
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "40960",
+          "candidate": "40960"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "250056",
+          "candidate": "250056"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "154954",
+          "candidate": "152076"
+        },
+        "rank_started": {
+          "baseline": "552",
+          "candidate": "552"
+        },
+        "requested_bytes": {
+          "baseline": "81880",
+          "candidate": "81880"
+        },
+        "size": {
+          "baseline": "552",
+          "candidate": "552"
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "2863",
+          "candidate": "2878"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1575",
+          "candidate": "1575"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 552,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/015-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "d6636b822172ac28e98f4036c7a3351bf13d33f355c632b6539f045eb651bb93"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/021-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "4533980516e774b555d804a59fba69b9648233de8d03ae01e0c6619265e45174"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 453,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "build_normalized",
+      "phase_index": 0,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-19.tsv",
+      "trace_identity_sha256": "fd6b7830cc8285434de186f3ecc961fdecf2c6f41976a68ae23d85ccca3da76b",
+      "values": {
+        "allocations": {
+          "baseline": "1137",
+          "candidate": "1137"
+        },
+        "extra_peak": {
+          "baseline": "342144",
+          "candidate": "342144"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "297088",
+          "candidate": "297088"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "250056",
+          "candidate": "250056"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "154954",
+          "candidate": "152076"
+        },
+        "rank_started": {
+          "baseline": "552",
+          "candidate": "552"
+        },
+        "requested_bytes": {
+          "baseline": "653568",
+          "candidate": "653568"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "2863",
+          "candidate": "2878"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "3150",
+          "candidate": "3150"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 552,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/015-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "d6636b822172ac28e98f4036c7a3351bf13d33f355c632b6539f045eb651bb93"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/021-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "4533980516e774b555d804a59fba69b9648233de8d03ae01e0c6619265e45174"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 453,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "cpre_after_rhs_destruction_net",
+      "phase_index": 1,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-19.tsv",
+      "trace_identity_sha256": "fd6b7830cc8285434de186f3ecc961fdecf2c6f41976a68ae23d85ccca3da76b",
+      "values": {
+        "allocations": {
+          "baseline": "9723",
+          "candidate": "9723"
+        },
+        "extra_peak": {
+          "baseline": "214128",
+          "candidate": "214128"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "last_intersection_queries": {
+          "baseline": "552",
+          "candidate": "552"
+        },
+        "live_delta": {
+          "baseline": "-84512",
+          "candidate": "-84512"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "4633284",
+          "candidate": "4188891"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "300",
+          "candidate": "300"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "8943",
+          "candidate": "8943"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "152332",
+          "candidate": "148746"
+        },
+        "rank_started": {
+          "baseline": "10228",
+          "candidate": "9247"
+        },
+        "requested_bytes": {
+          "baseline": "4524704",
+          "candidate": "4524704"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "414",
+          "candidate": "414"
+        },
+        "vector_meet_attempts": {
+          "baseline": "414",
+          "candidate": "414"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "41057",
+          "candidate": "41153"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1249",
+          "candidate": "1249"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 552,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/015-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "d6636b822172ac28e98f4036c7a3351bf13d33f355c632b6539f045eb651bb93"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/021-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "4533980516e774b555d804a59fba69b9648233de8d03ae01e0c6619265e45174"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 453,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "contains",
+      "phase_index": 2,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-19.tsv",
+      "trace_identity_sha256": "fd6b7830cc8285434de186f3ecc961fdecf2c6f41976a68ae23d85ccca3da76b",
+      "values": {
+        "allocations": {
+          "baseline": "2",
+          "candidate": "2"
+        },
+        "extra_peak": {
+          "baseline": "917",
+          "candidate": "917"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "453",
+          "candidate": "453"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "176",
+          "candidate": "176"
+        },
+        "rank_started": {
+          "baseline": "1",
+          "candidate": "1"
+        },
+        "requested_bytes": {
+          "baseline": "917",
+          "candidate": "917"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "0",
+          "candidate": "0"
+        }
+      },
+      "vector": "simd_vector_backed"
+    },
+    {
+      "before": 552,
+      "bindings": {
+        "baseline": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/015-baseline-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "d6636b822172ac28e98f4036c7a3351bf13d33f355c632b6539f045eb651bb93"
+        },
+        "candidate": {
+          "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/profile-trace-specs-v2/results/021-candidate-compatible-simd_vector_backed-roi.accepted.json",
+          "sha256": "4533980516e774b555d804a59fba69b9648233de8d03ae01e0c6619265e45174"
+        }
+      },
+      "cohort": "standard12",
+      "dimension": 453,
+      "mode": "compatible",
+      "pass": "roi",
+      "phase": "rebuild_normalized_first_alive",
+      "phase_index": 3,
+      "trace": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_bm-logs.posets/capture-20261108-initial/round_robin_arbiter_pb_4_pe_.ltl/snapshots/aut-3681818-0/cpre-19.tsv",
+      "trace_identity_sha256": "fd6b7830cc8285434de186f3ecc961fdecf2c6f41976a68ae23d85ccca3da76b",
+      "values": {
+        "allocations": {
+          "baseline": "858",
+          "candidate": "858"
+        },
+        "extra_peak": {
+          "baseline": "235104",
+          "candidate": "235104"
+        },
+        "generator_capacity": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_first_failed_query": {
+          "baseline": null,
+          "candidate": null
+        },
+        "last_intersection_queries": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "live_delta": {
+          "baseline": "212576",
+          "candidate": "212576"
+        },
+        "rank_active_coordinates_completed": {
+          "baseline": "187542",
+          "candidate": "187542"
+        },
+        "rank_existing_elements_removed": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_insert_rejected_dominated": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "rank_partial_order_calls": {
+          "baseline": "87974",
+          "candidate": "85491"
+        },
+        "rank_started": {
+          "baseline": "414",
+          "candidate": "414"
+        },
+        "requested_bytes": {
+          "baseline": "453294",
+          "candidate": "453294"
+        },
+        "size": {
+          "baseline": null,
+          "candidate": null
+        },
+        "vector_copy_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_meet_attempts": {
+          "baseline": "0",
+          "candidate": "0"
+        },
+        "vector_move_assignments_completed": {
+          "baseline": "2439",
+          "candidate": "2483"
+        },
+        "vector_move_constructions_completed": {
+          "baseline": "1850",
+          "candidate": "1850"
+        }
+      },
+      "vector": "simd_vector_backed"
+    }
+  ],
+  "resource_coverage": {
+    "CPU_seconds_sum": 24.888918,
+    "max_scope_memory_peak_bytes": 42618880,
+    "total": 192,
+    "valid": 192
+  },
+  "roi_descriptor_unavailable_pairs": 168,
+  "within_pair_layout_metadata_equal": true
+}

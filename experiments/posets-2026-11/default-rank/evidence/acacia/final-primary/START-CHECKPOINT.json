@@ -1,0 +1,64 @@
+{
+  "approval_execution": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-execution-v3/APPROVAL-AND-EXECUTION.json",
+    "sha256": "99a8e54a96cf4767bdf7069e2b21770cf18164cfd8ec12fc458d4d9ca66a05ad"
+  },
+  "current_progress": {
+    "arm": "optimized-default",
+    "batch": 0,
+    "command": [
+      "/usr/bin/python3",
+      "-u",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py",
+      "--bin",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/default-acacia-candidate-reviewed/build-default/src/acacia-bonsai",
+      "--solver-label",
+      "optimized-default",
+      "--list",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/lists/0000.list",
+      "--tlsf-map",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/tlsf-sources.tsv",
+      "--tlsf-corpus",
+      "/home/gperez/GIT-repos/acacia-bonsai/tlsf-corpus",
+      "--status-exceptions",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/syntcomp26-status-exceptions.tsv",
+      "--caps",
+      "17",
+      "--memory-max",
+      "8G",
+      "--memory-swap-max",
+      "0",
+      "--output",
+      "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/raw/optimized-default.tsv",
+      "--resume",
+      "--conflict-policy",
+      "stop",
+      "--acacia-sha",
+      "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+      "--preset",
+      "otf_sparse_formula_parity",
+      "--collect-rusage",
+      "--flags="
+    ],
+    "completed": {
+      "baseline-default": 0,
+      "optimized-default": 11
+    },
+    "expected_per_arm": 1524,
+    "log": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/logs/0000-optimized-default-60d6405f.log",
+    "status": "running"
+  },
+  "frozen": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/frozen.json",
+    "sha256": "548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb"
+  },
+  "full_rows": 3048,
+  "host": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/final-primary-default-rank-v3/host.json",
+    "sha256": "ec149a58d076b9d2e8cf3c98a614ce89cee432089acb97aa1787e060ba81054e"
+  },
+  "recorded_utc": "2026-11-09T19:31:23.682616+00:00",
+  "source_attribution_limit": "Independent privateRust artifacts; source-treatment comparison, notbyte-identical nonrank executables",
+  "status": "running; officialfreeze verified, no score inspection",
+  "timing_only": true
+}

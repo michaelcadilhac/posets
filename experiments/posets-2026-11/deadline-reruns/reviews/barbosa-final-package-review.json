@@ -1,0 +1,80 @@
+{
+  "reviewer": "Barbosa skill-guided agent; not the actual researcher",
+  "scope": "Final exact public evidence package privacy/prose/numerical-integrity review and current concisePR wording. No source/target workload, external publication or remote action.",
+  "verdict": "approve exact104-file public package and factualPR wording; no concrete correction needed",
+  "findings": [],
+  "package": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns",
+    "files": 104,
+    "bytes": 3252436,
+    "manifest_sha256": "6ce5c8f3a9c0392289f3eea1e6b71ddf301cc1e9e8e00e09a1a9b341cced99be",
+    "checksums_sha256": "abbeb98b7b0d96c4b6151f6e960b01f756c25dfb065b1aec6ea738c583554ead",
+    "origins_sha256": "2792c81043dfb6e511b25ae11a9e94b45f173ee202ba48841644c55d5dff5676",
+    "archive_sha256": "987cff73888acf29288bf52e4bddace378aadb778e743183199b990e34182e30",
+    "archive_bytes": 599170,
+    "assembly_handoff": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/final-assembly-v3/ASSEMBLY-HANDOFF.json",
+      "sha256": "7ab9e83ea1bd456c0d6047f176631bbe63c8aabf07413e3bf913a9aeb07509b0"
+    }
+  },
+  "independent_check": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/reviews/barbosa-publication-package-v3-independent-check.json",
+    "sha256": "35d34868eb538e3ec9d76e129e236293cf7c757842eb746f1705ca3e669c18cc",
+    "issues": []
+  },
+  "content_bindings": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/README.md",
+      "sha256": "801da6edf2d99c59a4d61dbb77c7cac797f47c90aba2f60a924f0d1465ac1f21"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/REPORT.txt",
+      "sha256": "b4aa8bcdb90a7820f40a73764caadbd5f971107957253df10a4433ee31de3399"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/RECREATE.txt",
+      "sha256": "58d26b63cc733b28e51a3dcae7303988232e3ccdccdab11b217d99b3b870236f"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/source-and-protocol.json",
+      "sha256": "dd4bcbd297011ad0f0eaa4d3da24fccb8d9eba2147feabbfb17ad2db1fc303b5"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/reviews/experience-final-addendum.txt",
+      "sha256": "da46de3c080f3cfd7e09a5ab509be896bce05a7365dcf386a7626acbd6140d65"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/posets/experiments/posets-2026-11/deadline-reruns/numerical/extraction-verification.json",
+      "sha256": "b89605938bfd79c3879632829b55c61f148e75cb24e78bf98ee212669cf42101"
+    }
+  ],
+  "verification": [
+    "All104public file paths/bytes equal the frozen staging tree. Payloadmanifest102entries plusMANIFEST/SHA256SUMS exactly covers tree; all file sizes/checksums match. No unmanifested payload.",
+    "All86declared exactcopies match source bytes/hashes. All9JSONprojections equal originals with exactly the declared omitted pointers removed; no other field/number changed. Top-levelcpu_host, nestedrelease/readinessenvironment overrides and other graph/private omissions are explicitly recorded; originals remain external with hashes.",
+    "Archive987cff73 is599170bytes,14unique regular safe relative members,zero uid/gid and blank user/group names. Its checksums and external/membermanifest match. All12numerical tables independently recombined from1548 source descriptors byte-for-byte, preserving headers, row tokens and source order.3820native+3820resource rows remain in separate450repeat/10forest/3048final17/312conditional30 stages.",
+    "Owner fresh-extraction proof is bound and consistent with independent in-memoryarchive verification; reviewer did not execute assembler or extract/write archive members.",
+    "Positive provenance allowlist, declared projections and recursiveJSON scan found no actual nonemptyenvironment/environment_overrides/LD_LIBRARY_PATH dictionaries or known privateWIP locator tokens. No raw privatecheckouts/status/diffs, executable, environmentdump, corpus or cache payload. Only redacted5x6preservationproofs included; ignored/untracked-byte limits remain explicit."
+  ],
+  "prose_and_inference": [
+    "README/REPORT use genuineoriginale167 versus actualfrozencc lazyFC, not a newly rebuiltcurrentHEAD.17s1368samecases,conditional30s8samecases,scoreorientation and exactDecimalPAR2 match accepted outcome audits. Small single-run differences do not establishwinner/defaultswitch/isolatedsourcecause.",
+    "Conditional156-case30s denominator,60unsolvedpenalty,4nativeSpot32ERRORs,externaldiagnostic0scored,oldmissingstderr and3exactnewprimarycaptures preserved.205+107accounting and102/seam/53pair disclosure remain; no rescore17 or fresh1524x30 claim.",
+    "312resource observations and memorydefinitions remain honest: maximumreaped-processRSS versus wholecgrouppeak versus backend-retainedheap are distinct. CPUcumulative notwall; kernelOOM separate from nativeTIMEOUT/MEMOUT/ERROR. No cache/PMUmechanism or fixedclock claim.",
+    "450repeat screens on sixselectedseen names, not29source regressions. MatchedAlarmregularforestmap0/5 versusstamps5/5 retainscensoredmaptime/no ratio and singlecase/wrapper scope. Unselectedcontrolpatches are proposals, not executedcontrols or productionreverts.",
+    "Recorded16signed-charlane128bit fullAcacia context distinct from64-laneTRAINreplay. Mixedwidthreplay/routeconditions are not measuredfullsolverroute shares or a nativewidthcampaign. PrivateRust/static/compiler/integration/NO_VERBOSE wholeconfiguration limits remain.",
+    "Originalimplementationd363CI is a historicalspecificrun, not evidence that a laterdocsHEADpassed. Earlier789label correction and frozenoldpackages remain unchanged. Historicalpendingpreparation/review wording is explicitly dated in README; assembly-stage pendingpublication records are snapshots, not new missingoutcomes."
+  ],
+  "experience_credit": "Final closingaddendum correctly gives shared independentERROR-acceptance credit to Nbjorner+Barbosa; source/gates/outcomevalidation do not become newdefectcounts. Earlierforestsentinel/fault-retry gap remains in historicalv1. Researchers didnotparticipate, no controlledskill/cost/superiority claim. PR19alreadymerged is not falselysaid toinclude thislaterround.",
+  "PR_body": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/publication-prep/PR-BODY-final-v1.md",
+    "sha256": "c8145c5dcf2b4dffc0914842bcea512b656a76dce54aa08e9a4c41122817781c",
+    "status": "Factuallyacceptable at these bytes; threeearlierscope/disclosureclarifications present. No furtherwording request."
+  },
+  "privacy_limits": "This is a bounded allowlist/projection/evidence inspection, not a general secret-detection guarantee. Historicalabsolute tasksourcepaths and sourcehashlocators intentionally remain and are disclosed. Private rawWIP/status/diff contents and actual environmentpayloads are excluded; reviewer didnot inspect originalprivate snapshots.",
+  "checks_not_performed": [
+    "No test/build/probe/solver/profile/benchmark/summaryreplay or helper import/execution",
+    "No remotePR/issue/CI/website update, commit/push or publication",
+    "No newmeasurement or sourcechange; no claim of independent fullprivatebuildgraph/ELF/corpus rehash"
+  ],
+  "approval_boundary": "Exactmanifest6ce5c8f3/checksumabbeb98b/archive987cff73 only. Root owns finalpublication and latest-headCI bookkeeping. A substantivepackage/source/number change requires a newly bound review; noadditionalexperiment is requested.",
+  "credit": "Independent finalpackage/claim/privacy/numericalbytevalidation, not a newimplementationdefect or anothermeasurement. Owner/coder producedarchive/projections and executedassembly/extraction gates."
+}

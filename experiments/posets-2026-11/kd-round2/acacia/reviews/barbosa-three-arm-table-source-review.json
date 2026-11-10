@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "verdict": "APPROVE exact three-arm saved-row derivative source before outcomes. No concrete finding. Prepared fixture execution, actual completed manifest binding and outcome audit remain separate.",
+  "bindings": {
+    "checkpoint": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/SOURCE-REVIEW-CHECKPOINT.json",
+      "sha256": "12bf01df708e2b0dc4c17fa61f4a73c5e8b0762b5c410538ffe72ed1cab4fa90"
+    },
+    "manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/source-manifest.json",
+      "sha256": "1d906613fd7b373df9e08b13ad0cd67414b68abf4c2b88ad62a39b50cb6047c3"
+    },
+    "delta": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/changes.patch",
+      "sha256": "4abed49e6b8bf3deab1a2f5a14d97b6f105e7e0da3963e1cba0a6f656d5ab51d"
+    },
+    "script": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/make-three-arm-table.py",
+      "sha256": "f5d2b4e105f1d17ad1ace9fc82bdd176f763c794b6bcc3d48812397c7aa84861"
+    },
+    "fixtures": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/test_three_arm_table.py",
+      "sha256": "586fcb28796f7e9b03710d7126f34a6ebb5639be060c449ec735144cd1133e68"
+    },
+    "offline_spec": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/offline-tests-spec.json",
+      "sha256": "5103ee4701ba2c58ecb34e019387e2c8da259848f47c961bc442ccc9419006fb"
+    },
+    "basis_manifest": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/solver-table-draft-v1/source-manifest.json",
+      "sha256": "9e0f60012a012c86bebf087860723372076ce6decb505a0d5dca30da03ec06e8"
+    }
+  },
+  "source_inventory": {
+    "baseline-default": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "optimized-default": "30e66853832d98bcfaada296d892157b95a8150d",
+    "kd-scratch-restored": "d363b9f901b927575ee1544b19820a146c2479d9"
+  },
+  "static_contract_checks": [
+    "Exactly3 ordered manifest arms,3 summary series, complete3x1524 progress and each raw/scored/sidecar unique1524 case universe; no historical observations or extra/missing arms silently joined. Future --frozen-sha256 must externally bind actual completed manifest; none invented now.",
+    "Both comparator maps use gains=KDsolved minus comparator solved, losses=reverse, PAR2delta=candidate minus comparator. CSV exposes both directions/counts; JSON retains exact case names for every comparison. Asymmetric synthetic fixture pins signs, both nonempty gains/losses and no input mutation.",
+    "Manifest/source/preset/empty flags/Acacia86dd/resource identity and corpus/list/hash chain remain. Native raw/scored treatment equality is checked for every row; common-arm truth includes decisive native responses beyond strict cap. Over-cap strict scoring changes only result toTIMEOUT, not raw verdict/time/exit, and all unsolved cost34s.",
+    "Native TIMEOUT/MEMOUT/UNKNOWN/ERROR/CRASH/SYFCO failures are included, failures/censors and exactlosses preserved; unusable/conflicting/malformed records reject instead of silently dropping. Native/scored failure counts and baseline comparison reconcile unchanged campaign summary.",
+    "Original memory helper keys/schema/provenance bind exact sidecars; raw/scored memory equal. CPU/memory partial coverage keeps null aggregates. OOM/OOMkill invocation rows, kernel counter sums, missingeventcoverage, native labels and nativeTIMEOUT-with-kill remain separate; no outcome relabeling.",
+    "No campaign.py changes; six existing saved-row/event/provenance fixtures are preserved and one direct3arm inventory/comparator fixture added. Offline spec is bounded60s through existing wrapper later; no executions or passing test claims now.",
+    "Output directory creation exclusive and final source-binding recheck preserve evidence. Instrumented payload/operation ROI and solver CPU/RSS/cgroup fields are not conflated; no significance or isolatedKDheader causal claim."
+  ],
+  "unchanged_helper_functions": [
+    "require",
+    "sha",
+    "read_binding",
+    "load_memory_helper",
+    "check_identity",
+    "audit_events"
+  ],
+  "checks_performed": "Full narrow diff and static saved-row code/fixture inspection,5checkpoint file hashes plus manifest basis hash and unchanged campaign/memoryhelper hashes; helper bodies byte-equal to accepted two-arm basis. No imports, fixtures/tests, syntax compilation, campaign/solver/profiler/timing or table derivation execution.",
+  "findings": [],
+  "limits": "Source review only. Actual3arm manifest/artifacts and completed4572row evidence do not yet exist in this review. All executed fixture/actual outcome acceptance remains later. Original frozen reports and user WIP untouched.",
+  "attribution": "Independent source/methodology validation only; no new defect discovery or implementation/runtime credit."
+}

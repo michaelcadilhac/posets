@@ -1,0 +1,95 @@
+{
+  "status": "APPROVE exact matched replay artifacts and two TRAIN plans for parent-controlled release; one nonblocking checkpoint wording clarification recorded",
+  "scope": "Focused static saved-evidence release audit. No imports/tests/helper calls, ELF metadata probes, compilers, solvers, models or timing executed. Historical core/helper reviews were not repeated.",
+  "reviewer": "Barbosa-guided /root/barbosa_review",
+  "exact_inputs": {
+    "work/default-optimization/replay-preparation-v3/REVIEW-CHECKPOINT.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/replay-preparation-v3/REVIEW-CHECKPOINT.json",
+      "sha256": "1b1d79204f5589ae1a05d037bf15c5911614a99a401cba91545497f85f4ae017"
+    },
+    "work/default-optimization/tools-v2/default-rank-v3-train-plan.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-train-plan.json",
+      "sha256": "dad182529e3cb748345094766cde7e59d14a9ee3a62613630855d9c62ee176a3"
+    },
+    "work/default-optimization/tools-v2/default-rank-v3-large-train-plan.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/default-optimization/tools-v2/default-rank-v3-large-train-plan.json",
+      "sha256": "6cfb4ec94f2b2f79d5bccf4af3f5c71d9fae132c60aae075103f2e000b578cdb"
+    }
+  },
+  "integrity_and_fairness": {
+    "checkpoint_artifact_bindings_checked": 162,
+    "all_match": true,
+    "source_roles": "Actual789baseline/30e6685candidate, common experiment base789; baseline production headerscc-equivalent, candidate has approved rank-header delta. No candidate-headers-unchanged or historical-source relabelling claim.",
+    "actual_artifacts": "Two actual-revision full24 compatible/native/max anchors and two actual selected maps with two real singleton entries each. Saved report proofs match selected16/64lane SIMD type/size/alignment/compiler/kernel hash/runtime libraries to original probes. Native/max equality is proven from those probes, with max alias retained.",
+    "source_oracle": "Matching actual-revision full24compatible ELF, distinct from selected backend ELF.",
+    "compile_link": "Actual selected compile and link argv match between roles after exact source/build-prefix normalization. No rank-statistics definition; all8successful scoped compile/link invocation records retain8G/no-swap. Saved ABI/library contexts equal across roles."
+  },
+  "pilot_counts": {
+    "standard_source_qualified_each_role": "11of12",
+    "larger_source_qualified_each_role": "5of5eligible",
+    "source_rows": 34,
+    "source_pass": 32,
+    "source_timeout": 2,
+    "backend_slots": 102,
+    "backend_pass": 96,
+    "source_unverified_placeholders": 6,
+    "planned_rows": 136,
+    "executed_rows": 130,
+    "measure_rows": 0,
+    "pass_rows": 128,
+    "correctness_rejections": 0,
+    "OOM_rows": 0,
+    "resource_limit_rows": 0,
+    "scope_memory_valid": 130,
+    "cpu_valid": 130,
+    "max_scope_memory_bytes": 28827648,
+    "cpu_total_seconds": 77.635931
+  },
+  "vector_and_width_coverage": "For every source-qualified pilot trace, successful identity-verified backend checks cover compatible scalar vector_backed, compatible simd_vector_backed and native simd_vector_backed. The scalar control runs once; both original vector types and both effective SIMD widths remain.",
+  "qualification_and_censoring": {
+    "retained_standard_timeout": "Both roles source-timeout at30s on the same standard full_arbiter_enc_pb_8_pe_.ltl/snapshots/aut-3681840-0/cpre-6.tsv, traceid2. No backend checks executed for that source; their3placeholders per role remain source_unverified. This is not a backend disagreement.",
+    "distinct_structural_exclusion": "LargerTRAIN5of6 complete-frame eligibility excludes cpre-7.tsv, original traceid3/fourth original row, with existing frame audit/hash/IDmapping. Original failed partial-capture epoch stays diagnostic/unpooled.",
+    "no_pilot_based_pruning": "Both planned tiers retain all12standard/all5eligiblelarger traces and requalify every trace on each of6runs. Pilot11of12 is not a permanently frozen qualification set. Preserve all future failures/censors and form paired ratios only for common fully qualified cells.",
+    "data_status": "All TRAIN/prior heldout are already seen evaluation data; no fresh-heldout claim."
+  },
+  "plans": {
+    "standard_sha256": "dad182529e3cb748345094766cde7e59d14a9ee3a62613630855d9c62ee176a3",
+    "larger_sha256": "6cfb4ec94f2b2f79d5bccf4af3f5c71d9fae132c60aae075103f2e000b578cdb",
+    "all12_effective_argv_checked": true,
+    "order_each_tier": "baseline/optimized, optimized/baseline, baseline/optimized",
+    "seeds_each_tier": [
+      260617,
+      260618,
+      260619
+    ],
+    "source_check_timing_caps_seconds": [
+      30,
+      2,
+      2
+    ],
+    "rounds": 1,
+    "repetitions": 1,
+    "memory": "8G/no-swap",
+    "backend": "rank_bucketed_vector_backed only",
+    "controller": "Reviewed stop-on-correctness18a0697f0247beb9811218677be2212821f24325776208ccb10f8bbfc927d5ea",
+    "driver": "Reviewed43654da981ba74ca060734c0a3f58fed94389e39fed9c0eb46357ccce60cc494",
+    "all_map_source_trace_output_seed_bindings_match": true,
+    "all12_unique_future_outputs_and_records_absent_at_audit": true
+  },
+  "nonblocking_reporting_points": [
+    {
+      "rank": "venial",
+      "location": "REVIEW-CHECKPOINT.json notes[5]",
+      "issue": "Frozen note says incomplete full-arbiterCPre6th trace; bound exclusion actually identifies cpre-7.tsv, original traceid3/fourth original row, from the original6-trace cohort. Avoid conflation with retained standard cpre-6 source timeout.",
+      "resolution": "Parent accepted a separate bound clarification while preserving frozen checkpoint SHA and every actual plan/spec/trace path. No execution hold or rerun required."
+    },
+    {
+      "rank": "reporting requirement, not a broken execution guard",
+      "location": "Generated paired plan generic scope and future summary",
+      "note": "Carry this checkpoint/eligibility context alongside future summaries: generic plan scope does not itself inline5of6/lost-CPre provenance or pilot11of12 qualification. Distinguish eligibility, source qualification and paired metric coverage."
+    }
+  ],
+  "material_findings": [],
+  "limits": "This readiness approval is not a speedup result, future qualification guarantee or default recommendation. Parent retains run authorization/scheduling; actual timing has not occurred. No solver/broad-suite conclusion follows from these96checks.",
+  "attribution": "Independent evidence/protocol validation; only originated contribution here is the minor6th-trace wording clarification. No new source, correctness or measurement defect found."
+}

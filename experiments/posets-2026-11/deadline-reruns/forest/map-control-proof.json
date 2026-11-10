@@ -1,0 +1,111 @@
+{
+  "NO_VERBOSE_limit": "Source/type/configuration and requested smoke route; no observed route-frequency claim.",
+  "actual_build_records": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/records/10-control-solve_game_vector-a1.json",
+      "sha256": "369ed90c174093c85d2d05120197e1d490f37a25003594fa844700f5a17f61d3"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/records/10-control-version-a1.json",
+      "sha256": "9c7accb24992017379fbe19f6156dd65e727efac84c812b1f29b5819d674af5f"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/records/11-control-link-a1.json",
+      "sha256": "e6555b152078826a0de03fe1f26dabfd8dec8252881c8a63390add6f47d5c899"
+    }
+  ],
+  "backend": "sharingtree",
+  "binary": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/acacia-bonsai-deadline-sharingtree-control",
+  "binary_sha256": "8f7266802a851c8fe175bb6ee856206cf3a3e401aaf2f61c86b2d37f0fd64f58",
+  "common_context": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/common-context.json",
+    "sha256": "ef8c28f2cd3e4b6d1a09c7371bb6c36d392570b6367d78a87bbd26b8486cc269"
+  },
+  "compiled_benchmark_label": "sharingtree",
+  "expected_downset": "sharingtree_backed",
+  "expected_simd_lanes": 16,
+  "flags": "",
+  "forest_overlay": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/overlays/sharingtree/control/include/posets/utils/sharingforest.hh",
+    "sha256": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a"
+  },
+  "forest_overlay_sha256": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a",
+  "label": "forest-map-control",
+  "ldd_stdout": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/evidence/control-a3/ldd.stdout",
+    "sha256": "2ea058cd627d6a605f630fc8846480a8db7e9fc300099cfcd88bc802e0bfb82c"
+  },
+  "preset": "otf_sparse_formula_parity",
+  "runtime_libraries": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libspot.so.0.0.0",
+      "sha256": "7b4aaff93a1cd358d88f28e6f363497decd32b2d5818eefe97f5a9ffe1c36f99"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/spot/lib/libbddx.so.0.0.0",
+      "sha256": "41ecd1d4cfd09fd1adcec92965544a5c1630c9a0a08c791be51061472d96082b"
+    },
+    {
+      "path": "/usr/lib64/libstdc++.so.6.0.36",
+      "sha256": "fc224ee3cc56b9b3e58453bfb9a0cac3a696e60fd33ba48b6a30eb22b76cc867"
+    },
+    {
+      "path": "/usr/lib64/libm.so.6",
+      "sha256": "16a03ce6d24c8a46742206d4a9c1d35bb6577ae2384f153dc6ef4a4b62b5357f"
+    },
+    {
+      "path": "/usr/lib64/libgcc_s-16-20260819.so.1",
+      "sha256": "c71a62b5ef442ab8cf4470874dee6f2383d73a744f0006b6d287412f131c2e09"
+    },
+    {
+      "path": "/usr/lib64/libc.so.6",
+      "sha256": "a5c5ad9d59d3c69eda93aa8f82930ba06cc4e893a113e66c85ad6e96243d53c8"
+    },
+    {
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "sha256": "4e5d39355699e90fa29313d3100e82af4a23290028c58c364d6a249ef6a78e5e"
+    },
+    {
+      "path": "/usr/lib64/libmvec.so.1",
+      "sha256": "82ddf7efbb88b2eaf5570fa6c0ec41565d9c32a2dbd095200ceead862af0f3dc"
+    }
+  ],
+  "selected_dependencies": [
+    {
+      "depfile": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/deadline-sharingtree-control.p/solver_solve_game_vector.cc.o.d",
+        "sha256": "a72040b8e08287dc9239ea16b5802e34ec2211e99d04647b9b3fc20de1ec439e"
+      },
+      "forest_headers": [
+        "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/overlays/sharingtree/control/include/posets/utils/sharingforest.hh"
+      ],
+      "object": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/deadline-sharingtree-control.p/solver_solve_game_vector.cc.o",
+        "sha256": "8c392235fae763a0504d2169d459d559027b8177788939cdebf586a3eb74c3a0"
+      }
+    },
+    {
+      "depfile": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/deadline-sharingtree-control.p/version.cc.o.d",
+        "sha256": "fbbd856e866b975f89b222d835a7469e44b15422f9caa54a6a7f8977017f847b"
+      },
+      "forest_headers": [],
+      "object": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/deadline-attribution-common-v1/build-matched/src/deadline-sharingtree-control.p/version.cc.o",
+        "sha256": "efcab15453fa6618fb0399ef9cab2bf32200733e71010c069df167e5b7e3cdfb"
+      }
+    }
+  ],
+  "source_pins": {
+    "acacia": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+    "oxidd": "288a6efcf553f18fe4bf722635157f2453bb2618",
+    "posets": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+    "tlsf": "2debd5fc87e24de2ae0fb6008b3f7a7779432ff3"
+  },
+  "status": "Actual source/header-dependency/shared-object/ELF/runtime/version proof passed; verdict smokes and final closure separate",
+  "verifier": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/forest-memoization-execution-v1/verify-built-side.py",
+    "sha256": "7a5e6611a8f8e604d518e3ac811fbfa389ee9f415b557aa1a8819c8bc66da9c8"
+  },
+  "version_output": "Version: 86dd487-dirty\nConfiguration: otf_sparse_formula_parity\nPosets benchmark: sharingtree downset=sharingtree_backed simd_lanes=16 kd_narrow=0 trie_compact=0 comptrie_simd=0\n"
+}

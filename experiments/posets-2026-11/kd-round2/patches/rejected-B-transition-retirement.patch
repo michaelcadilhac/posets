@@ -1,0 +1,110 @@
+diff --git a/README.md b/README.md
+index 39f92acbd03754e3605521bace83d5afa4dbca6d..49d33b36f89863ed8908b5d45674f6681e386cd4 100644
+--- a/README.md
++++ b/README.md
+@@ -384,7 +384,10 @@ The non-owning `utils::bucket_kdtree<V, Cascade>` utility exposes the frozen
+ index for independent testing. Its rebuild input IDs must be unique; its caller
+ keeps each live payload valid and supplies consistent access/live predicates.
+ `retire(id)` is idempotent. No ID may acquire another payload without rebuilding
+-all geometry and catalogs. The utility ID-to-leaf map scales with the supplied
++all geometry and catalogs. Leaves count remaining points; internal nodes count
++nonempty children, so retirement propagates only when a child becomes empty.
++`live_size()` separately retains the exact remaining point count.
++The utility ID-to-leaf map scales with the supplied
+ ID span; the owning backend freezes densely renumbered IDs. `check_bridges(key, upper)` checks exact cascaded
+ positions against independent standard-library searches.
+ 
+diff --git a/include/posets/utils/bucket_kdtree.hh b/include/posets/utils/bucket_kdtree.hh
+index baf894970eadefec39d805e1a89080ecd3387030..7fb363914fb3f899989deded7ea65eb9c320041d 100644
+--- a/include/posets/utils/bucket_kdtree.hh
++++ b/include/posets/utils/bucket_kdtree.hh
+@@ -46,6 +46,7 @@ namespace posets::utils {
+       using key_type = V::value_type;
+       struct node {
+           id_type first, second;  // children, or leaf ID span (start, length)
++          // Leaf live counts points; internal live counts nonempty children.
+           id_type parent, live, axis;
+           id_type catalog, length;
+           key_type split;
+@@ -62,6 +63,7 @@ namespace posets::utils {
+       std::vector<id_type> link_start;
+       size_t dimension {0};
+       size_t bucket_size {16};
++      size_t live_points {0};
+ #if POSETS_LAZY_KDTREE_STATS
+       mutable query_stats query_counts;
+ #endif
+@@ -101,6 +103,7 @@ namespace posets::utils {
+         nodes[index].second = right;
+         nodes[index].axis = axis;
+         nodes[index].split = split;
++        nodes[index].live = 2;
+         if constexpr (Cascade) {
+           const auto a = nodes[left];
+           const auto b = nodes[right];
+@@ -257,6 +260,7 @@ namespace posets::utils {
+         swap (link_start, other.link_start);
+         swap (dimension, other.dimension);
+         swap (bucket_size, other.bucket_size);
++        swap (live_points, other.live_points);
+ #if POSETS_LAZY_KDTREE_STATS
+         swap (query_counts, other.query_counts);
+ #endif
+@@ -286,6 +290,7 @@ namespace posets::utils {
+           }
+           replacement.build_node (0, replacement.ids.size (), 0, none, get);
+         }
++        replacement.live_points = replacement.ids.size ();
+         swap (replacement);
+       }
+       void retire (id_type id) noexcept {
+@@ -295,9 +300,12 @@ namespace posets::utils {
+         if (index == none)
+           return;
+         leaf_for_id[id] = none;
++        assert (live_points > 0);
++        --live_points;
+         while (index != none) {
+           assert (nodes[index].live > 0);
+-          --nodes[index].live;
++          if (--nodes[index].live != 0)
++            break;
+           index = nodes[index].parent;
+         }
+       }
+@@ -351,7 +359,7 @@ namespace posets::utils {
+                 (leaf_for_id.capacity () + link_start.capacity ()) * sizeof (id_type)};
+       }
+       [[nodiscard]] size_t frozen_size () const { return ids.size (); }
+-      [[nodiscard]] size_t live_size () const { return nodes.empty () ? 0 : nodes[0].live; }
++      [[nodiscard]] size_t live_size () const { return live_points; }
+ 
+       // Test the FC invariant independently of geometric pruning and liveness.
+       [[nodiscard]] bool check_bridges (key_type key, bool upper) const {
+diff --git a/tests/lazy-kdtree.cc b/tests/lazy-kdtree.cc
+index a810b5faffe83f790c63fc1d92b44f7beb584d31..4470c912e4493505308e276b5a3237e75bc138a9 100644
+--- a/tests/lazy-kdtree.cc
++++ b/tests/lazy-kdtree.cc
+@@ -398,6 +398,22 @@ namespace {
+         require (tree.live_size () ==
+                      static_cast<size_t> (std::count (alive.begin (), alive.end (), true)),
+                  "live counts differ");
++        for (const auto& query : rows) {
++          const auto value = vector<scalar_vector> (query);
++          for (const bool strict : {false, true}) {
++            const bool expected = std::ranges::any_of (ids, [&] (uint32_t candidate) {
++              return alive[candidate] and below (query, unpack (*points[candidate])) and
++                     (not strict or query != unpack (*points[candidate]));
++            });
++            require (tree.dominates (value, get, live, strict) == expected,
++                     "retired leaf/branch incorrectly pruned a surviving witness");
++          }
++        }
++        T copied = tree;
++        T moved (std::move (copied));
++        require (copied.live_size () == 0 and moved.live_size () == tree.live_size (),
++                 "utility move lost or duplicated the exact frozen live count");
++        tree.swap (moved);
+       }
+       require (not tree.dominates (vector<scalar_vector> ({-128, -128}), get, live),
+                "dead subtree answered");

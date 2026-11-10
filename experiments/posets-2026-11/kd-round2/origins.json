@@ -1,0 +1,535 @@
+{
+  "exact_copies": [
+    {
+      "destination": "evidence/summaries/stage1-execution/train-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage1-execution/train-summary.json",
+        "sha256": "b52fa6de57f9cdc26a4f67932e954c7010fee3c4c93253cbb8929d4a41276db1",
+        "bytes": 129208
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage1-execution/larger-train-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage1-execution/larger-train-summary.json",
+        "sha256": "ca40ccd3f53540a8373c5c165b096d5a1dafa974e7472a2c98b070c78ad954da",
+        "bytes": 44633
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage2-attribution/a-only-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage2-attribution/execution/a-only-summary.json",
+        "sha256": "c15f7bc67c066ea4f15460a6ac15a3bfacdbed3e9e8fca1e6188836fd17c48a5",
+        "bytes": 45994
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage2-attribution/b-only-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage2-attribution/execution/b-only-summary.json",
+        "sha256": "882e897cb8804be07fac0d92689d5bca9ff150612bd9c57c3ed450e4dc316541",
+        "bytes": 45996
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/followup-legacy-before-vs-legacy-after-standard-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-legacy-before-vs-legacy-after-standard-summary.json",
+        "sha256": "3b9fddc57cc409ad68cd05684e8d052cf878f86110a48247bbcba8a493ffef12",
+        "bytes": 134262
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-larger-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-larger-summary.json",
+        "sha256": "160429baa950a2644293fc132a2130601fad7310725a1637a604f25455089496",
+        "bytes": 47001
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-standard-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-standard-summary.json",
+        "sha256": "104956bbee4595015b2bd70a6713fe33dffc57106063f3b1985cab4556895ba3",
+        "bytes": 136091
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/followup-oldrank-vs-plain-larger-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-oldrank-vs-plain-larger-summary.json",
+        "sha256": "aa06ce563303415b7ed5bc1e423b500d2df3d892f3e17da67b499a064a73da2a",
+        "bytes": 47023
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/k2scalar-vs-k2simd-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/k2scalar-vs-k2simd-summary.json",
+        "sha256": "004a3eba1e41106b4db2c2c3bee64477a0a31955ab798d54cf69bd578a61df36",
+        "bytes": 46977
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/legacy-before-vs-after-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/legacy-before-vs-after-summary.json",
+        "sha256": "167cffdaa73b6ad82e3c0a63eb2bafcdd1a85f08727d6edc8300253e7542b5e0",
+        "bytes": 79455
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/newrank-vs-k2simd-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/newrank-vs-k2simd-summary.json",
+        "sha256": "562564ea3461eef05b1ad6ca46d828c60b342a7cd3b152af984c7ffaa0e242cd",
+        "bytes": 46969
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/oldlazy-vs-plain-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json",
+        "sha256": "23ab26d7ca6c206ec27cf9afd149c55911870b39227bdac6efde0c8860a3fb52",
+        "bytes": 46291
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/oldrank-vs-k2simd-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldrank-vs-k2simd-summary.json",
+        "sha256": "a9277b2c63304a35e35443e86e5e3fe0144e66fad00cf64db2654c608b50291f",
+        "bytes": 46995
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/plain-vs-k2scalar-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2scalar-summary.json",
+        "sha256": "3149ed75d6865abbb40cdbf467a599a83ceb3c7c4147e7009c10f1e4427d65db",
+        "bytes": 46677
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage3-matrix/plain-vs-k2simd-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2simd-summary.json",
+        "sha256": "b4b26bd2a0fc2ae6cd56c3b55d9fba6c29daaca466fdcd61a9f9817b6e8df256",
+        "bytes": 46523
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage1-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage1-execution/completion.json",
+        "sha256": "7624de3f6417dff92ee6bfd1e33db1af268f2a6ff119e5479ca5f255e52b3cd0",
+        "bytes": 36556
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage2-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage2-attribution/execution/completion.json",
+        "sha256": "ad2d60223850e577f4989c7d012c7f664735949c092f6ea8965036ff5f04fbfd",
+        "bytes": 17604
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage3-larger-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/larger-completion.json",
+        "sha256": "8eded6c31dea73f96153be5e4cf49a97768f4619ae8d4a4f8d5ba1fc4e88242f",
+        "bytes": 59754
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage3-followup-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-completion.json",
+        "sha256": "4c69c6a6a39df3530a33d11efd3390531c3739a3e175ce9f15065dfb9547a97e",
+        "bytes": 96032
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage3-selector-policy.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/selector-policy.json",
+        "sha256": "3e333dc882f0f70b3147159ff44e47325177bab0cac2283ba18d52f965624b8e",
+        "bytes": 2573
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "profiles/report-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/profile-execution-v2/report-completion.json",
+        "sha256": "b4f28e595083ffb16c785fbe327f5b0da7d5b0edb0e5e86e5505d5b1f9243d8b",
+        "bytes": 2123
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "profiles/phase-table.tsv",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/profile-execution-v2/phase-table.tsv",
+        "sha256": "3cfd0ef7c65b29b20378460963f8ec2f03dd81788381b521b5538571a01dec99",
+        "bytes": 34227
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "profiles/findings.txt",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/profile-execution-v2/findings.txt",
+        "sha256": "c6ba5ed6963aabc6056610e76c68ae4276ddf1e3281334044b69beee71a9363f",
+        "bytes": 7759
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/summaries/stage4-offset/offset-only-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage4-offset/execution/offset-only-summary.json",
+        "sha256": "d3e342056fe3a8e77feabb460a4f76d2b10ef9d1d52a22d32fc193035280de9d",
+        "bytes": 46447
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage4-offset-completion.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage4-offset/execution/completion.json",
+        "sha256": "2289da2ef323a31ec71af18a7593b98d2e9447254ac33792db73e7ca4d938862",
+        "bytes": 9489
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "evidence/stage3-actual-arm-identities.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/actual-arm-identities.json",
+        "sha256": "33939742b89077a44142295010e9f4488d5ed8e3f95b98fffe5ac52b91c532fb",
+        "bytes": 26339
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/arms.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/arms.json",
+        "sha256": "02410434cc7f55fabe8e5cebce4168b42f16954b57bbd13cf2050aac94abc169",
+        "bytes": 10433
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/actual-artifact-closure.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/actual-artifact-closure.json",
+        "sha256": "a44bee09d174f6d233e13c052bac761380a1c732b5b5a30ecd1fe305a26c94ad",
+        "bytes": 11734
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/gate-summary.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/gate-summary.json",
+        "sha256": "7262225dd319d07603d5c80b40b0417cd7caf3fe27cf8003dc396f405ebcbeb5",
+        "bytes": 2716
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/kd-scratch-restored-provenance.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/kd-scratch-restored-provenance.json",
+        "sha256": "9af26ec89594d23f957416d999662bf3138a5f5bdec7c03f497c07ba77d15e2b",
+        "bytes": 10471
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/START-CHECKPOINT.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/START-CHECKPOINT.json",
+        "sha256": "0107eda31e9ac061babb2f2af90713302411b75893b0bab93b69385d98eca1ec",
+        "bytes": 1047
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/APPROVAL-AND-EXECUTION.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/APPROVAL-AND-EXECUTION.json",
+        "sha256": "3c130e43fa6fe0d51172612e4d8950d3bc400e657171d8c90e450efc57cd8a8b",
+        "bytes": 2329
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/nbjorner-acacia-completed-gates-review.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/nbjorner-acacia-completed-gates-review.json",
+        "sha256": "f03d4098a8a51eb0e6488158cdb23806281b26c07c0804f4825e01c42c3586b5",
+        "bytes": 5497
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/nbjorner-acacia-three-arm-release-review.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/nbjorner-acacia-three-arm-release-review.json",
+        "sha256": "14047f6731da93a6b07d79a852d97622965b3cb323248cee74a7b65e1ae86dbe",
+        "bytes": 3269
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/barbosa-acacia-preparation-source-spec-review.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/barbosa-acacia-preparation-source-spec-review.json",
+        "sha256": "86185c68ed638c24e33e2efbfbc137197d533842942c66f0282b591b8739332e",
+        "bytes": 10978
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/barbosa-three-arm-table-source-review.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/barbosa-three-arm-table-source-review.json",
+        "sha256": "ef08dd6fc085e0223d72d05d23e6cef7ce8366a060f647e6b5a81434c92f41ba",
+        "bytes": 5242
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/original-checkouts-redacted-proof.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-execution-v1/original-checkouts-redacted-proof.json",
+        "sha256": "025c76f84c42b56c38f420138e98d645c9f7a956e9e2af3f3b275a3e66988b1b",
+        "bytes": 1933
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/legacy-actual-acacia.patch",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/legacy-actual-acacia.patch",
+        "sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5",
+        "bytes": 75259
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "ci/ci-d363b9f-run.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/ci-d363b9f-run.json",
+        "sha256": "92c299153170735b7cdad32c434891c93bac46112721a1e640a8fd7096000ff9",
+        "bytes": 288
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "ci/ci-d363b9f-jobs.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/ci-d363b9f-jobs.json",
+        "sha256": "3e24a288e8db02684395c4db673c5cdff2726017506d5fd04644e5af684777ff",
+        "bytes": 4815
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/solver-comparison.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1/solver-comparison.json",
+        "sha256": "f3d110f1b9e8da645fa8f5bec5c211ffa94cce76587d6907bef8c97c498b7bda",
+        "bytes": 11689
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/solver-comparison.csv",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1/solver-comparison.csv",
+        "sha256": "2c855269bc6f5d12b9fd1fe92c5d5638b29d0f963302281385166d4044f5e525",
+        "bytes": 1495
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/oom-event-observations.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1/oom-event-observations.json",
+        "sha256": "5ae9cd54a167236e2ddb02b76dc1d6465e43aef996d74bf7c44a2f91fd0f4f09",
+        "bytes": 8051
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/COMPLETION.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1/COMPLETION.json",
+        "sha256": "8ed8c1e7f47f07682e8d452a5959a84fdfdb6fdbc207fea77636a0cd19143e04",
+        "bytes": 453
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/frozen.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/frozen.json",
+        "sha256": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+        "bytes": 79487
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/summary.txt",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/summary.txt",
+        "sha256": "0a2d599fd81b6f1a7064f464c97527167e560016fd1020dc9050f2f226918320",
+        "bytes": 1233
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/archive/acacia-kd-three-arm-numerical.tar.gz",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/acacia-kd-three-arm-numerical.tar.gz",
+        "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156",
+        "bytes": 1084624
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/archive/extraction-verification.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/extraction-verification.json",
+        "sha256": "05f16b9107bbdb02f3c41335d14ecd5178ab277421822d4468e4c87154876979",
+        "bytes": 813
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/archive/member-manifest.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/MANIFEST.json",
+        "sha256": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+        "bytes": 7112
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/archive/member-SHA256SUMS",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/SHA256SUMS",
+        "sha256": "23d1e7fcdcb36c2973b23df61bfce07fda46b09f208d72929c936c5ca94caa27",
+        "bytes": 2586
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/final-invariance-incident.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-INCIDENT.json",
+        "sha256": "9bc0a63db2c1d59e54f304a875673bb58544da625cbd8dfdf0a1055ec9e7ea21",
+        "bytes": 2005
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "outcomes/final-invariance-v1-v2.patch",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/final-invariance-v1-v2.patch",
+        "sha256": "1d9d9ceffceeaf21ab0f68bb079ae8feed545aa3387c140557e5d2da544bfd70",
+        "bytes": 1427
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/original-checkouts-final-redacted-proof.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/original-checkouts-final-redacted-proof.json",
+        "sha256": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1",
+        "bytes": 1931
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/nbjorner-three-arm-final-outcome-review.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/nbjorner-three-arm-final-outcome-review.json",
+        "sha256": "9033327674e287ff501546d2b492d94e5c1876406e9ce4cb73ab392356ef8450",
+        "bytes": 5817
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/barbosa-final-three-arm-outcome-archive-audit.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/barbosa-final-three-arm-outcome-archive-audit.json",
+        "sha256": "e2a766ed049118e3e9fd19339827ba9c8a11a65f194e5e079dd069498db7ed2c",
+        "bytes": 14111
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "acacia/reviews/barbosa-preliminary-completed-evidence-audit.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/barbosa-preliminary-completed-evidence-audit.json",
+        "sha256": "9f20b9fdb67f1aeaa63781d80f8e365ed57a65f491d4d515be2b9e96201ba093",
+        "bytes": 8622
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "reporting/make-three-arm-table.py",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/make-three-arm-table.py",
+        "sha256": "f5d2b4e105f1d17ad1ace9fc82bdd176f763c794b6bcc3d48812397c7aa84861",
+        "bytes": 20283
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "reporting/test_three_arm_table.py",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/test_three_arm_table.py",
+        "sha256": "586fcb28796f7e9b03710d7126f34a6ebb5639be060c449ec735144cd1133e68",
+        "bytes": 7405
+      },
+      "exact_copy": true
+    },
+    {
+      "destination": "reporting/offline-tests-record.json",
+      "origin": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/offline-tests-record.json",
+        "sha256": "fefdce3a492fd8d6fd949a12a77d6462c7baef88ef2499933da7ded389ce85d1",
+        "bytes": 2753
+      },
+      "exact_copy": true
+    }
+  ]
+}

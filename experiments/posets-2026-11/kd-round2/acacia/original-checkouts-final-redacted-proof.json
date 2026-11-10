@@ -1,0 +1,66 @@
+{
+  "all_five_checkouts_all_six_fields_matched": true,
+  "checked_at_utc": "2026-11-10T04:11:13.910114+00:00",
+  "checker_sha256": "2702534c704bfc58a906dc84f45511f7ea7c0861e2f4101dccf11c2bc9e59ea4",
+  "checkouts": [
+    {
+      "alias": "checkout-1",
+      "matches": {
+        "diff_sha256": true,
+        "head": true,
+        "index_entries_sha256": true,
+        "status": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "alias": "checkout-2",
+      "matches": {
+        "diff_sha256": true,
+        "head": true,
+        "index_entries_sha256": true,
+        "status": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "alias": "checkout-3",
+      "matches": {
+        "diff_sha256": true,
+        "head": true,
+        "index_entries_sha256": true,
+        "status": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "alias": "checkout-4",
+      "matches": {
+        "diff_sha256": true,
+        "head": true,
+        "index_entries_sha256": true,
+        "status": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    },
+    {
+      "alias": "checkout-5",
+      "matches": {
+        "diff_sha256": true,
+        "head": true,
+        "index_entries_sha256": true,
+        "status": true,
+        "tracked_content_sha256": true,
+        "tracked_files_hashed": true
+      }
+    }
+  ],
+  "log_sha256": "8f7367877c2624595af29671d4f1ec8916771acfa0ee519186b1540b0227e4f2",
+  "publication_policy": "Only aliases, matching booleans, check time and source/record hashes; full status/diff details remain private.",
+  "record_sha256": "97464fbad54bce08b3d53b4f782ff6b96341dc8c5ae502cd4cf59905f03c1fcf",
+  "scope": "Redacted final preservation proof; ignored/untracked file bytes are outside this comparison"
+}

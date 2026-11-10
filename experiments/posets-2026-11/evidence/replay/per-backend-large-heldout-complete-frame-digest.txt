@@ -1,0 +1,57 @@
+Held-out complete-frame subcohort:11 of12 originally selected traces; excluded incomplete stratum:finding_nemo CPre2763D/N9586. Performance sealed until parent choice freeze. heldout paired replay; per-backend selector with original scalar+SIMD vectors; production bases 7c407128326583abbb137fd3832857ed506e20fb versus cc058ca96ebc667f727ea2f0c2360b77d60192d3
+6 matched runs, 7681.631s scoped wall total; widths128/512. AB/BA/AB, seeds260617-19, source/check/measure caps30/2/2s,8G/no swap.
+Counts: {"check": {"pass": 2231, "source_unverified": 432, "timeout": 2089}, "measure": {"pass": 1563, "timeout": 13}, "source_oracle": {"pass": 60, "timeout": 6}}
+Metric coverage: 521/1200 fully paired; 679 censored. All 2540 nonpass rows preserved.
+Resources: all 5962 memory peaks valid, max 937332736 bytes; zero OOM. CPU coverage 5962/5962.
+Estimator: median of3 exact-pair FINAL/BASE operation ratios; <1 faster. Three observations, no significance claim.
+Descriptors are BEFORE cardinality. CPre reconstruction uses AFTER cardinality, not in-place maintenance. Full three-pair values and lifetimes in digestJSON.
+
+Trace0 robot_grid cpre: before_maxima=16384, after_maxima=32768, dimension=1074, source={'timeout': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | CENSORED | CENSORED
+KD | CENSORED | CENSORED
+lazy-FC | CENSORED | CENSORED
+lazy-search | CENSORED | CENSORED
+trie | CENSORED | CENSORED
+comp | CENSORED | CENSORED
+block8 cached | CENSORED | CENSORED
+block8 uncached | CENSORED | CENSORED
+sharingtree | CENSORED | CENSORED
+simple-sharingtree | CENSORED | CENSORED
+
+Trace1 robot_grid contains: before_maxima=16384, after_maxima=None, dimension=1074, source={'pass': 6}
+Trace2 robot_grid contains: before_maxima=16384, after_maxima=None, dimension=1074, source={'pass': 6}
+Trace3 workstation_resupply cpre: before_maxima=6570, after_maxima=3098, dimension=169, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 0.9994 | CENSORED
+KD | CENSORED | CENSORED
+lazy-FC | CENSORED | CENSORED
+lazy-search | CENSORED | CENSORED
+trie | CENSORED | CENSORED
+comp | CENSORED | CENSORED
+block8 cached | CENSORED | CENSORED
+block8 uncached | CENSORED | CENSORED
+sharingtree | CENSORED | CENSORED
+simple-sharingtree | CENSORED | CENSORED
+
+Trace4 workstation_resupply contains: before_maxima=6570, after_maxima=None, dimension=169, source={'pass': 6}
+Trace5 workstation_resupply contains: before_maxima=6570, after_maxima=None, dimension=169, source={'pass': 6}
+Trace6 finding_nemo contains: before_maxima=9586, after_maxima=None, dimension=2763, source={'pass': 6}
+Trace7 finding_nemo contains: before_maxima=9586, after_maxima=None, dimension=2763, source={'pass': 6}
+Trace8 generalized_buffer cpre: before_maxima=4315, after_maxima=4370, dimension=91, source={'pass': 6}
+Whole-CPre: backend |128 ratio |512 ratio
+rank | 1.0030 | 1.0109
+KD | CENSORED | CENSORED
+lazy-FC | 0.9934 | 0.9901
+lazy-search | 1.2303 | 0.9891
+trie | CENSORED | CENSORED
+comp | CENSORED | CENSORED
+block8 cached | CENSORED | CENSORED
+block8 uncached | CENSORED | CENSORED
+sharingtree | CENSORED | CENSORED
+simple-sharingtree | CENSORED | CENSORED
+
+Trace9 generalized_buffer contains: before_maxima=4315, after_maxima=None, dimension=91, source={'pass': 6}
+Trace10 generalized_buffer contains: before_maxima=4315, after_maxima=None, dimension=91, source={'pass': 6}
+All construction/reconstruction results and exact three-pair ratios retained in digestJSON; all24 backends/full failures retained in bound summary.
+Single-query contains clocks omitted; whole-process scope peaks are not retained storage or allocation counts. No tuning or full Acacia execution performed.

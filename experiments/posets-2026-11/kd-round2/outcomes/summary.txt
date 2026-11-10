@@ -1,0 +1,17 @@
+17-second SYNTCOMP26: 1524 instances per arm.
+
+| Arm | Solved | PAR2 total s | CPU s | Peak MiB | Conflicts | Wall overruns | Native failure kinds |
+|---|---:|---:|---:|---:|---:|---:|---|
+| baseline-default | 1368 | 5945.137 | 14005.055 | 4048.117 | 0 | 0 | TIMEOUT=156 |
+| optimized-default | 1367 | 5959.958 | 14000.968 | 4047.617 | 0 | 0 | TIMEOUT=157 |
+| kd-scratch-restored | 1365 | 6010.868 | 14040.773 | 8192.0 | 0 | 0 | TIMEOUT=157, MEMOUT=2 |
+
+Candidate gains/losses against baseline-default; PAR2 delta is candidate minus baseline.
+
+- optimized-default: 0 gains, 1 losses; PAR2 +14.821 s.
+- kd-scratch-restored: 0 gains, 3 losses; PAR2 +65.731 s.
+
+All nonanswers are charged 34 seconds in PAR2. No noise floor was measured.
+Strict-wall scoring requires measured seconds <= 17. Successful native overruns are a separate wall-cap-overrun category; the scoring view calls them TIMEOUT without claiming the native timer fired. Native verdicts/times remain unchanged and participate in truth-conflict checks.
+Peak/median memory and total CPU are reported only with all 1524 valid observations.
+CPU host details, source/binary hashes, commands, memory gaps, conflicts and per-instance pairs are in summary.json and frozen.json.

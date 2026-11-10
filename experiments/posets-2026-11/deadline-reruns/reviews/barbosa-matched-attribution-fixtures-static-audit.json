@@ -1,0 +1,76 @@
+{
+  "reviewer": "Barbosa skill-guided subagent; not the actual researcher",
+  "scope": "Focused static rank/forest control-only fixture contracts; complementary to Nbjorner build/dependency/ODR/provenance review. No control pair selected or future runtime bindings accepted.",
+  "verdict": "approve fixture source for conditional later materialization and validation; no concrete new defect found",
+  "exact_inputs": [
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/SOURCE-MANIFEST.json",
+      "sha256": "5501c9556109e149a22def73d67d4a13ccf6cfb1b658c6db0dc6ddd41c0954bb"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/control-fixtures.patch",
+      "sha256": "503ce35fdad813d621a08ab36c62c89f071fd688b7ec51231999625c86ba8041"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/README.txt",
+      "sha256": "f05a9f37acee74526cfa99c5610f49166ab0226025e8c8fa2abb048e3e265607"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/fixtures/forest-map-control.cc",
+      "sha256": "422db1ef7854e6be2bda80f91fc4e1b25939b45aeadb9af37e41d7f6e0e89f87"
+    },
+    {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/matched-attribution-preparation-v1/fixtures/rank-control.cc",
+      "sha256": "a137903c0e378d002377246eb1ea46a37b0a3d3623d77a9e55d7efab16ba79b8"
+    }
+  ],
+  "findings": [],
+  "prior_finding": {
+    "id": "DEADLINE-B01",
+    "origin": "Barbosa originated the map-control conflict with production zero-allocation sentinel; coder implemented this separate control fixture. This review validates that correction; no new discovery credit.",
+    "status": "resolved in fixture source; actual fault/success and Memcheck evidence remain pending"
+  },
+  "forest_review": [
+    {
+      "lines": "fixtures/forest-map-control.cc:38-65",
+      "conclusion": "Only the control copy removes allocations_left=0 from the repeated semantic loop. Independent scalar oracle, duplicate/path/count checks, both strict modes and all repeated comparisons remain; production fixture stays untouched."
+    },
+    {
+      "lines": "fixtures/forest-map-control.cc:68-106",
+      "conclusion": "Forest, root, query and expected scalar answer are established before the charged window. Each budget charges only covers_vector; RAII restores unlimited allocations before answer checks, materialization, geometry checks and retry. Same forest/root is retained across every failure and budget. Both strict modes require failures>0 AND eventual completion, so a missing hook or never-success sweep fails."
+    },
+    {
+      "lines": "fixtures/forest-map-control.cc:109-244",
+      "conclusion": "Wide/high-fanout, shared suffix/strictness, old/new root, clear/rebuild, union/lifetime, KD capacity and simple-wrapper exception-propagation function bodies match production byte-for-byte. New main invokes positive query-failure sweep before those retained tests."
+    }
+  ],
+  "rank_review": [
+    {
+      "lines": "fixtures/rank-control.cc:250-340",
+      "conclusion": "Restored eager scratch path is allowed to allocate/copy, with separately required bad_alloc and copy faults; subject and RHS contents and original capacity are checked after each failure. Successful covered intersection does not publish the unused scratch, preserving capacity/tie order. Self-operation no-work sentinels remain. Late-changing intersection failure/retry and exact tie-order tests remain."
+    },
+    {
+      "lines": "fixtures/rank-control.cc:342-379",
+      "conclusion": "Only control-specific work expectations change: RHS rank reread and eager containment/output insertion rank scans. These are prospective deterministic checks, not executed work-count results."
+    },
+    {
+      "lines": "fixtures/rank-control.cc:1-249,382-end",
+      "conclusion": "Independent oracle/differential/floating/wide-domain/vector-fault prefix and full bit-pair/capacity/allocation/comparison/staging suffix match production byte-for-byte."
+    }
+  ],
+  "checks_performed": [
+    "Read small manifest, fixture patch, affected fixture source, README gate contracts and allocation hook/header-control dependencies",
+    "Hash/size checked seven small local source/document/origin files against declared manifest; all matched",
+    "Compared preserved rank prefix/suffix and forest semantic-function suffix byte-for-byte; all matched"
+  ],
+  "not_performed": [
+    "No helper import, syntax check, tests, build, target, runtime, profile or timing",
+    "No live450-run outcome read, pair selection, broad inventory hashing, ELF/dependency inspection or actual command execution"
+  ],
+  "remaining_conditions": [
+    "Root selects only justified same-backend attribution pair(s); four available questions are not an eight-build release",
+    "Actual materialized source/command/header/compiler/assertion/stats/ELF/runtime bindings remain separate gates",
+    "Execute relevant assertion-enabled fixtures, positive fault/success guards and portable allocation Memcheck with hook environment before any performance interpretation"
+  ],
+  "scope_limit": "Source-only conditional readiness, not evidence of a passing fixture, preserved runtime invariants, performance regression, rollback authorization or attribution result."
+}

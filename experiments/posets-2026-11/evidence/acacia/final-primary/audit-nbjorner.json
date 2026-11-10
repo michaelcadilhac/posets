@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "reviewer": "nbjorner-guided independent reviewer (/root/review)",
+  "workflow": "legendary-nbjorner",
+  "status": "Completed phase-one data/table arithmetic approved in the checked scope. One concrete resource-label reporting distinction identified and sent to root; native rows/scoring remain unchanged. No solver/compiler/test/profile execution.",
+  "exact_evidence": {
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/summary.json": "2bd0a88d55a0ad611f7cdcac7372f25f8b807bedb2cf47946133c2f499ad0b04",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/frozen.json": "99a05fd894b5994d86759aebe56a42846a820019e1431b86e18639cce034f9ec",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-15-20261109/progress.json": "db39cb8778df4a833ffe012e59e4e720b280e8ed4b49131d1105bc4a5c57637c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/completion.json": "9f81100c6e6708381578e7d1a26189575cd821fc935fdf89c91af01a61da5314",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-execution-20261109/final-invariance-audit.json": "9e3bf2b2a4cb0b1097fec2c05e66ba25795fffd42cb87d6a105fff043cd6edd3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.json": "27df181d4c2262154adba7eebae907925fb69c2016b4371af442d92ed67ba6b7",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/solver-comparison.csv": "108329ec96193b4c6072b774a1ab57cf0b366fa915b075b8b06fdb7918a4d604",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/make-final-table.py": "8aea9df468454ab081689a9638489212852ad4b2d5ff84f53e660f783aa7184c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-table-comparators.txt": "36fec37a9a9de7a1a1a311f11b5dcd8ad236b96d131915d926d1744d82de500c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-primary-independent-row-arithmetic.json": "29d53a958fcae37a8148480119541de0cd2c2e5bd4a1e5b052b617258ec50223",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-oom-event-observations.json": "a05eea93159a60ae622f39d965591b3516c4c27a1c8acadb5ac67e17fce3af69",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-primary-schedule-audit.json": "20cfbf14fb5f5182af77fe6d511fc6e5af4cf87d328b327a02e77903a456e6d3"
+  },
+  "checks": {
+    "raw_and_scored_rows": 22860,
+    "arms": 15,
+    "instances_per_arm": 1524,
+    "independent_arithmetic_mismatches": [],
+    "resource_and_raw_scored_bindings_checked": 63,
+    "completion_invariance_crossbindings_checked": 13,
+    "crossbinding_mismatches": [],
+    "small_owner_bound_files_rehashed": 229,
+    "small_code_files_in_that_subset": 153,
+    "small_binding_mismatches": [],
+    "saved_native_invocations_checked": 720,
+    "frozen_batches_checked": 48,
+    "schedule_and_exact_treatment_errors": [],
+    "csv_matches_json_all_fields": true,
+    "known_expected_instances": 851,
+    "unresolved_or_unknown_status_instances": 673,
+    "corpus_sha256_recomputed": "e2077833ffd3f2a616d8ca6286d1f22e5e09416f732ff174bc988629de4d96a1",
+    "native_cross_arm_verdict_conflicts": 0,
+    "known_status_conflicts": 0,
+    "decisive_wall_cap_overruns": 0
+  },
+  "arithmetic_definition": "Solved means native REALIZABLE/UNREALIZABLE with measured wall seconds <=17; each other outcome costs34 seconds. Summed all native times with decimal arithmetic; checked strict scoring rows, solved sets, PAR2, CPU sums, scope peaks/medians, process RSS aggregates, sidecar joins and both full-universe comparators. Raw and scored rows/sidecar hashes are identical because there are no decisive overruns.",
+  "resource_coverage": {
+    "cpu_valid_rows": 22860,
+    "scope_peak_valid_rows": 22860,
+    "process_rss_valid_rows": 22860,
+    "raw_scope_sidecar_join_rows": 22860,
+    "missing_peak_reasons": 0,
+    "native_outcomes": {
+      "UNREALIZABLE": 11082,
+      "REALIZABLE": 9414,
+      "TIMEOUT": 2339,
+      "MEMOUT": 25
+    },
+    "native_MEMOUT_outcomes": 25,
+    "invocation_rows_with_oom_kill": 70,
+    "native_TIMEOUT_rows_with_oom_kill": 45,
+    "no_native_decisive_row_with_oom_kill": true,
+    "same_seven_oom_affected_instances_in_all_ten_affected_arms": true,
+    "per_arm_oom_rows_and_labels": {
+      "anchor-e167": {
+        "oom_kill_observed_rows": 0,
+        "native_MEMOUT": 0,
+        "native_TIMEOUT": 0
+      },
+      "candidate-default": {
+        "oom_kill_observed_rows": 0,
+        "native_MEMOUT": 0,
+        "native_TIMEOUT": 0
+      },
+      "kd": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "kd-narrow": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "trie": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 3,
+        "native_TIMEOUT": 4
+      },
+      "trie-compact": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "comp": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "comp-simd": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "block8": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "block8-uncached": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      },
+      "block16": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 6,
+        "native_TIMEOUT": 1
+      },
+      "lazy-fc": {
+        "oom_kill_observed_rows": 0,
+        "native_MEMOUT": 0,
+        "native_TIMEOUT": 0
+      },
+      "lazy-search": {
+        "oom_kill_observed_rows": 0,
+        "native_MEMOUT": 0,
+        "native_TIMEOUT": 0
+      },
+      "sharingtree": {
+        "oom_kill_observed_rows": 0,
+        "native_MEMOUT": 0,
+        "native_TIMEOUT": 0
+      },
+      "simple-sharingtree": {
+        "oom_kill_observed_rows": 7,
+        "native_MEMOUT": 2,
+        "native_TIMEOUT": 5
+      }
+    },
+    "evidence": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/review-probes/phase-one-oom-event-observations.json"
+  },
+  "resource_reporting_correction": {
+    "origin": "This reviewer independently identified the event/outcome distinction from final native memory sidecars; root acknowledged and is updating the report. Native labels are owner observations and were not changed.",
+    "required_wording": "25 native MEMOUT outcomes;70 invocations recorded an OOM kill,45 of which ultimately carry native TIMEOUT labels. All remain unsolved and cost34 seconds. Each of ten affected alternatives has the same seven OOM-affected cases.",
+    "avoid": "Block16 has6 MEMOUT labels, not more OOM-affected invocation rows than the other nine affected arms. Do not infer greater OOM case frequency or a worse memory ranking from its larger MEMOUT label count.",
+    "unaffected_arms": [
+      "anchor-e167",
+      "candidate-default",
+      "lazy-fc",
+      "lazy-search",
+      "sharingtree"
+    ]
+  },
+  "interpretation": {
+    "decision": "Keeping the existing ranked-vector default is supported as a conservative choice; this campaign does not establish a superior switch.",
+    "lazy_fc": {
+      "solved": 1369,
+      "same_solved_set_as_current_default": true,
+      "default_par2_total_s": 5926.861275,
+      "fc_par2_total_s": 5922.578472,
+      "fc_lower_par2_s": 4.282803,
+      "fc_lower_par2_pct": 0.07226089495405066,
+      "limit": "One unrepeated full campaign, no measured noise floor/significance; this is a small observed difference, not an established FC advantage."
+    },
+    "other_alternatives": "All nondefault alternatives have zero solved gains against candidate-default; excluding tied FC, lazy-search loses one case, and the remaining alternatives lose two to four. The inspected report draft already uses one-to-four correctly.",
+    "robot_repair5": {
+      "raw_rows": {
+        "anchor-e167": {
+          "result": "TIMEOUT",
+          "seconds": "17.118035037070513",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout",
+          "cpu_seconds": "84.954078",
+          "scope_memory_peak_bytes": "2513240064",
+          "timestamp_utc": "2026-11-09T14:46:15.843950Z"
+        },
+        "candidate-default": {
+          "result": "UNREALIZABLE",
+          "seconds": "16.95217512291856",
+          "exit_code": "1",
+          "timed_out": "false",
+          "resource_reason": "",
+          "cpu_seconds": "84.039383",
+          "scope_memory_peak_bytes": "2513149952",
+          "timestamp_utc": "2026-11-09T14:27:13.502819Z"
+        },
+        "lazy-fc": {
+          "result": "UNREALIZABLE",
+          "seconds": "16.81789881386794",
+          "exit_code": "1",
+          "timed_out": "false",
+          "resource_reason": "",
+          "cpu_seconds": "83.407139",
+          "scope_memory_peak_bytes": "2512474112",
+          "timestamp_utc": "2026-11-09T14:29:36.105908Z"
+        },
+        "lazy-search": {
+          "result": "TIMEOUT",
+          "seconds": "17.106662242906168",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout",
+          "cpu_seconds": "84.916554",
+          "scope_memory_peak_bytes": "2529243136",
+          "timestamp_utc": "2026-11-09T14:31:59.035551Z"
+        }
+      },
+      "default_margin_inside_17_ms": 47.82487708144,
+      "limit": "Default and FC return UNREALIZABLE narrowly before the deadline; anchor/search are native timeouts. Timeout wall observations include wrapper teardown and are not completed-solver runtimes. This threshold crossing is not a general backend or FC benefit."
+    },
+    "default_attribution": "Phase one does not contain the new ranked-default optimization. The ranked-container header is identical between e167 andcc, but generic.hh/vector_mm.hh and complete binaries differ. Do not call the whole default stack identical, attribute the extra solve to the absent optimization, or isolate all anchor-versus-candidate difference to one backend.",
+    "scope_limits": [
+      "Shipping portfolio preset and empty flags remain the primary treatment; NO_VERBOSE and lack of runtime route traces prevent reconstructing backend entry/frequency.",
+      "Serial invocation scheduling does not mean a single-threaded solver; CPU seconds aggregate the scoped process tree. No explicit affinity/quota was set.",
+      "Scope peaks include parsing, workers and auxiliary state; they are not retained index memory or allocation counts.",
+      "Do not pool full-solver observations with combined/per-backend replay ratios or isolated allocation/layout improvements. Already seen traces remain seen."
+    ]
+  },
+  "source_and_integrity_assessment": {
+    "approved_checkpoint": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-acacia-gate/proposed/review-checkpoint.json",
+      "sha256": "e3a69722d7972f61ac5d9b6185cd9d4221f6468dcee94a01addee80753eb49af"
+    },
+    "pins": "Acacia86dd487 plus the recorded integration patch, candidate Posetscc058ca, pristine anchor Posetse167; shared preset otf_sparse_formula_parity, compatible16 lanes, empty flags,17 seconds,8G/no swap.",
+    "source_header_hashes": {
+      "anchor_e167": {
+        "include/posets/downsets/rank_bucketed_vector_backed.hh": "346a917307ea3ae818968b426f672489a54ad7ac61403fa91ae10b83a4dad064",
+        "include/posets/vectors/generic.hh": "29810f6a71e47e77a396d5a50017a11c44efe03d5ac3e5e29ead280f8ba69480",
+        "include/posets/utils/vector_mm.hh": "67b29efce0799167c2c3615ceee898e31f27fb8a9b6bddff88c7cf2b9c15d129"
+      },
+      "candidate_cc": {
+        "include/posets/downsets/rank_bucketed_vector_backed.hh": "346a917307ea3ae818968b426f672489a54ad7ac61403fa91ae10b83a4dad064",
+        "include/posets/vectors/generic.hh": "abc6d393d20a9d944e930bd461de435a3834034dbaa825ef0a20e97782f74f70",
+        "include/posets/utils/vector_mm.hh": "7479c4a683d452846f7765d6a4a979df557169609c1a5a1d97d507bc92b91f75"
+      }
+    },
+    "owner_final_record_scope": {
+      "status": "pass",
+      "verified_checkpoint_bindings": 431,
+      "compiled_source_files": 180,
+      "binaries": 15,
+      "runtime_libraries": 8,
+      "helpers": 10,
+      "native_commands_and_log_hashes": 720,
+      "summary_only_identical_to_automatic": true
+    },
+    "reviewer_scope_limit": "Independently rehashed the63 input/result/resource bindings,13 top-level crossbindings and229 small final-audit-bound files plus the direct header contrasts and table/script bindings. Did not reread all large ELF/runtime-library/native-log contents during the compiler lane. Their closing hashes are the owner final record and prior431-binding approval, not a new complete reviewer rehash.",
+    "original_WIP_limit": "Final original-checkout closing snapshot remains root-owned; this review did not mutate or claim to close original Acacia/nested WIP."
+  },
+  "prose_review": {
+    "draft_path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/final-primary-comparison-20261109/report-draft.txt",
+    "draft_sha256_at_read": "ead4a0291ae049e14a2dd4021eb2a96264a74f519b5055d40b5b753c172e25d0",
+    "assessment": "Decision, source/default-stack caveat, threshold case, one-to-four loss range, no-noise-floor limitation and separate default follow-up wording are conservative/correct. Add the OOM-event column/distinction above; do not relabel rows. Report draft remains parent-owned and mutable."
+  },
+  "remaining_material_arithmetic_blockers": [],
+  "separation": "The unexecuted selected-rank helper protocol finding is a separate prospective tool snapshot; it was not used for this campaign or table. New default implementation/runtime/style/performance gates remain separate and pending.",
+  "execution_limit": "Only small saved-record/source reads, CSV/JSON/decimal arithmetic and hashes were evaluated. No solver, compiler, test, profile, timing or existing derivation/helper script was run."
+}

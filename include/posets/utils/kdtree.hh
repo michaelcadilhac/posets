@@ -9,10 +9,13 @@
 #include <numeric>
 #include <optional>
 #include <ranges>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/config.hh>
+#include <posets/utils/storage_stats.hh>
 
 /*
  * This is Shrisha Rao's version of a kd-tree for variable dimension. The
@@ -34,23 +37,29 @@ namespace posets::utils {
     private:
       using value_type = typename V::value_type;
       using axis_type = std::uint32_t;
+#if POSETS_KDTREE_NARROW_INDICES
+      using leaf_index_type = std::uint32_t;
+#else
+      using leaf_index_type = size_t;
+#endif
+      static constexpr leaf_index_type internal_node =
+          std::numeric_limits<leaf_index_type>::max ();
       using lower_bound_type = std::optional<value_type>;
 
       struct kdtree_node;
       using kdtree_node_ptr = kdtree_node*;
 
       struct kdtree_node {
-          // SIZE_MAX marks an internal node; any other value is a leaf index.
-          // Using a sentinel instead of std::optional<size_t> saves 16 bytes
-          // of overhead and avoids the extra boolean flag in the struct.
-          size_t value_idx;     // leaf: index into vector_set; internal: SIZE_MAX
+          // The maximum index marks an internal node.
+          leaf_index_type value_idx;
           axis_type axis;       // the dimension at which we split
           value_type location;  // the value at which we split
           bool clean_split;     // whether the split is s.t. to the left all is
                                 // smaller
       };
 
-      size_t dim;
+      size_t dim {0};
+      size_t allocated_nodes {0};
       kdtree_node_ptr tree;
       // Reused across dominates() calls to avoid a heap allocation per call.
       mutable std::vector<lower_bound_type> lbounds_cache;
@@ -67,7 +76,13 @@ namespace posets::utils {
       }
 
       static size_t tree_capacity (size_t element_count) {
-        return size_t {4} * std::bit_floor (element_count);
+        if (element_count == 0)
+          return 0;
+        if (element_count > (std::numeric_limits<size_t>::max () / 2) + 1)
+          throw std::length_error ("kdtree node capacity exceeded");
+        // Floor/ceil subtree sizes need at most ceil(log2(n)) levels below the root.
+        const size_t leaves = std::bit_ceil (element_count);
+        return leaves + (leaves - 1);
       }
 
       // NOLINTBEGIN(misc-no-recursion)
@@ -92,7 +107,7 @@ namespace posets::utils {
 
         // if the list of elements is now a singleton, we make a leaf
         if (length == 1) {
-          this->tree[result].value_idx = *begin_it;
+          this->tree[result].value_idx = static_cast<leaf_index_type> (*begin_it);
           return;  // location/axis/clean_split unused for leaves
         }
 
@@ -127,7 +142,7 @@ namespace posets::utils {
         const size_t next_axis = (axis + 1) % this->dim;
         // we can now prepare the information of the root node and then
         // recursively prepare the left and right children
-        this->tree[result].value_idx = std::numeric_limits<size_t>::max ();
+        this->tree[result].value_idx = internal_node;
         this->tree[result].location = loc;
         this->tree[result].axis = static_cast<axis_type> (axis);
         this->tree[result].clean_split = clean;
@@ -156,7 +171,7 @@ namespace posets::utils {
         kdtree_node_ptr node = this->tree + node_idx;
 
         // if we are at a leaf, just check if it dominates
-        if (node->value_idx != std::numeric_limits<size_t>::max ()) {
+        if (node->value_idx != internal_node) {
           auto po = v.partial_order (this->vector_set[node->value_idx]);
           if (strict)
             return po.leq () and not po.geq ();
@@ -169,7 +184,9 @@ namespace posets::utils {
         const lower_bound_type old_bound = lbounds[node->axis];
         size_t still_to_dom = dims_to_dom;
         assert (not old_bound.has_value () or node->location >= old_bound.value ());
-        if ((node->location > v[node->axis] and bound_leq_value (old_bound, v[node->axis])) or
+        // Equality already credits an axis in a non-strict query.
+        if ((strict and node->location > v[node->axis] and
+             bound_leq_value (old_bound, v[node->axis])) or
             (not strict and node->location >= v[node->axis] and
              bound_lt_value (old_bound, v[node->axis])))
           still_to_dom--;
@@ -180,11 +197,11 @@ namespace posets::utils {
         // if we got here, we need to check on the right recursively
         const bool r_succ =
             recursive_dominates (v, strict, (2 * node_idx) + 2, lbounds, still_to_dom);
+        lbounds[node->axis] = old_bound;
         if (r_succ)
           return true;
 
         // all that's left is to check on the left recursively, if pertinent
-        lbounds[node->axis] = old_bound;
         if (v[node->axis] > node->location or
             (v[node->axis] == node->location and node->clean_split)) {
           return false;
@@ -200,16 +217,14 @@ namespace posets::utils {
       template <std::ranges::input_range R, class Proj = std::identity>
       void relabel_tree (R&& elements, Proj proj = {}) {
         assert (elements.size () > 0);
+        if (elements.size () > static_cast<size_t> (internal_node))
+          throw std::length_error ("kdtree leaf index capacity exceeded");
         this->dim = (proj (*elements.begin ()).size ());
 
         // sanity checks
         assert (this->dim > 0);
         assert (this->dim <= std::numeric_limits<axis_type>::max ());
 
-        // Let n be the size of vector_set, the no. of leaves in the tree is
-        // 2^{floor(lg(n)) + 1}, so this times 2 is the size of the full
-        // binary tree we will be labelling
-        const size_t oldsize = tree_capacity (this->vector_set.size ());
         const size_t tsize = tree_capacity (elements.size ());
 
         // moving the given elements to the internal data structure
@@ -228,9 +243,12 @@ namespace posets::utils {
         // NOLINTBEGIN(boost-use-ranges)
         std::iota (points.begin (), points.end (), 0);
         // NOLINTEND(boost-use-ranges)
-        if (this->tree == nullptr or oldsize < tsize) {
+        if (this->tree == nullptr or this->allocated_nodes < tsize) {
+          // Keep destruction safe on allocation failure; relabel has already moved values.
+          auto* replacement = new kdtree_node[tsize];
           delete[] this->tree;
-          this->tree = new kdtree_node[tsize];
+          this->tree = replacement;
+          this->allocated_nodes = tsize;
         }
         recursive_build (0, points.begin (), points.end (), points.size (), 0);
         this->lbounds_cache.resize (this->dim);
@@ -247,8 +265,10 @@ namespace posets::utils {
       kdtree (size_t dim, size_t initsize) : dim (dim), tree (nullptr) {
         assert (dim <= std::numeric_limits<axis_type>::max ());
         const size_t tsize = tree_capacity (initsize);
-        if (tsize > 0)
+        if (tsize > 0) {
           this->tree = new kdtree_node[tsize];
+          this->allocated_nodes = tsize;
+        }
       }
 
       template <std::ranges::input_range R, class Proj = std::identity>
@@ -261,6 +281,7 @@ namespace posets::utils {
       kdtree (const kdtree& other) = delete;
       kdtree (kdtree&& other) noexcept
         : dim (other.dim),
+          allocated_nodes (std::exchange (other.allocated_nodes, 0)),
           tree (other.tree),
           lbounds_cache (std::move (other.lbounds_cache)),
           vector_set (std::move (other.vector_set)) {
@@ -270,6 +291,9 @@ namespace posets::utils {
       ~kdtree () { delete[] this->tree; }
 
       kdtree& operator= (kdtree&& other) noexcept {
+        if (this == &other)
+          return *this;
+        this->allocated_nodes = std::exchange (other.allocated_nodes, 0);
         this->dim = other.dim;
         this->vector_set = std::move (other.vector_set);
         this->lbounds_cache = std::move (other.lbounds_cache);
@@ -286,15 +310,30 @@ namespace posets::utils {
         return *this;
       }
 
+      [[nodiscard]] storage_stats storage () const {
+        return {sizeof (*this),
+                sizeof (kdtree_node),
+                vector_set.empty () ? 0 : (2 * vector_set.size ()) - 1,
+                allocated_nodes,
+                allocated_nodes * sizeof (kdtree_node),
+                0,
+                vector_set.empty () ? 0 : (vector_set.size () - 1) * sizeof (value_type),
+                vector_set.capacity () * sizeof (V),
+                lbounds_cache.capacity () * sizeof (lower_bound_type),
+                0};
+      }
       [[nodiscard]] auto& get_backing_vector () { return vector_set; }
 
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
-        // lbounds_cache is a mutable member pre-sized to dim in relabel_tree(),
-        // so no heap allocation is needed here.
-        std::ranges::fill (this->lbounds_cache, std::nullopt);
-        return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
+        // Traversal restores bounds on normal exits; throwing Vector operations may not.
+        try {
+          return this->recursive_dominates (v, strict, 0, this->lbounds_cache.data (), this->dim);
+        } catch (...) {
+          std::ranges::fill (this->lbounds_cache, std::nullopt);
+          throw;
+        }
       }
 
       [[nodiscard]] bool is_antichain () const {

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "meson",
+    "setup",
+    "--reconfigure",
+    "build-posets",
+    "-Dbuild_tests=true",
+    "-Dacacia_posets_benchmarks=true",
+    "-Dacacia_enable_diagnostics=false"
+  ],
+  "cwd": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval",
+  "environment_file": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/build-env.json",
+  "timeout": 300
+}

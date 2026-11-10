@@ -11,6 +11,9 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/config.hh>
+#include <posets/utils/block_compare.hh>
+#include <posets/utils/storage_stats.hh>
 
 namespace posets::utils {
   // A path-compressed left-child/right-sibling trie.  Stored vectors stay in
@@ -23,7 +26,6 @@ namespace posets::utils {
           uint32_t label_len;
           int32_t son;
           int32_t bro;
-          int32_t color;
       };
 
       std::vector<V> vector_set;
@@ -31,6 +33,9 @@ namespace posets::utils {
       std::vector<typename V::value_type> label_pool;
       std::shared_ptr<const std::vector<uint32_t>> perm;
       int32_t root {-1};
+#if POSETS_COMPTRIE_SIMD_PATHS
+      mutable std::vector<typename V::value_type> packed_query;
+#endif
       mutable std::vector<std::tuple<int32_t, uint32_t, bool>> dominates_stack;
       static std::map<size_t, std::weak_ptr<const std::vector<uint32_t>>> perm_map;
 
@@ -97,7 +102,7 @@ namespace posets::utils {
           const uint32_t label_off = label_pool.size ();
           for (uint32_t offset = 0; offset < span; ++offset)
             label_pool.push_back (vector_set[order[group_begin]][(*perm)[depth + offset]]);
-          nodes.push_back ({label_off, span, -1, -1, -1});
+          nodes.push_back ({label_off, span, -1, -1});
           if (first == -1)
             first = current;
           if (previous != -1)
@@ -111,26 +116,6 @@ namespace posets::utils {
         return first;
       }
       // NOLINTEND(misc-no-recursion)
-
-      void color_as_dfa () {
-        // Equal compressed suffixes receive equal colors.  The color is only
-        // metadata for generation-stamped query caches and diagnostics; node
-        // identity remains its stable vector index.
-        std::map<std::vector<int64_t>, int32_t> colors;
-        int32_t next_color = 0;
-        for (size_t reverse = nodes.size (); reverse > 0; --reverse) {
-          auto& current = nodes[reverse - 1];
-          std::vector<int64_t> signature;
-          signature.reserve (current.label_len + 2);
-          for (uint32_t i = 0; i < current.label_len; ++i)
-            signature.push_back (label_pool[current.label_off + i]);
-          signature.push_back (current.son < 0 ? -1 : nodes[current.son].color);
-          auto [it, inserted] = colors.emplace (std::move (signature), next_color);
-          current.color = it->second;
-          if (inserted)
-            ++next_color;
-        }
-      }
 
     public:
       comptrie () = default;
@@ -157,11 +142,21 @@ namespace posets::utils {
           return false;
         });
         root = build_level (order, 0, order.size (), 0);
-        color_as_dfa ();
-        dominates_stack.reserve (nodes.size ());
+        // One deferred sibling per coordinate bounds the query stack.
+        dominates_stack.reserve (std::min (nodes.size (), perm->size ()));
+#if POSETS_COMPTRIE_SIMD_PATHS
+        packed_query.resize (perm->size ());
+#endif
       }
 
       [[nodiscard]] bool dominates (const V& value, bool strict = false) const {
+        if (root < 0)
+          return false;
+#if POSETS_COMPTRIE_SIMD_PATHS
+        // Pay permutation and packing once per query, including on early failures.
+        for (size_t d = 0; d < perm->size (); ++d)
+          packed_query[d] = value[(*perm)[d]];
+#endif
         dominates_stack.clear ();
         dominates_stack.emplace_back (root, 0, strict);
         while (not dominates_stack.empty ()) {
@@ -178,6 +173,12 @@ namespace posets::utils {
           if (current.bro >= 0)
             dominates_stack.emplace_back (current.bro, depth, owe_strict);
 
+#if POSETS_COMPTRIE_SIMD_PATHS
+          using T = typename V::value_type;
+          const bool matches = dominates_block<T, simd_traits<T>::simd_size> (
+              label_pool.data () + current.label_off, packed_query.data () + depth,
+              current.label_len, owe_strict);
+#else
           bool matches = true;
           for (uint32_t offset = 0; offset < current.label_len; ++offset) {
             const auto label = label_pool[current.label_off + offset];
@@ -189,6 +190,7 @@ namespace posets::utils {
             if (label > query)
               owe_strict = false;
           }
+#endif
           if (not matches)
             continue;
           if (current.son < 0) {
@@ -201,6 +203,24 @@ namespace posets::utils {
         return false;
       }
 
+      [[nodiscard]] storage_stats storage () const {
+        return {sizeof (*this),
+                sizeof (ct_node),
+                nodes.size (),
+                nodes.capacity (),
+                nodes.capacity () * sizeof (ct_node),
+                label_pool.capacity () * sizeof (typename V::value_type),
+                label_pool.size () * sizeof (typename V::value_type),
+                vector_set.capacity () * sizeof (V),
+                (dominates_stack.capacity () *
+                 sizeof (typename decltype (dominates_stack)::value_type)) +
+                    (perm ? perm->capacity () * sizeof (uint32_t) : 0)
+#if POSETS_COMPTRIE_SIMD_PATHS
+                    + packed_query.capacity () * sizeof (typename V::value_type)
+#endif
+                    ,
+                0};
+      }
       [[nodiscard]] size_t size () const { return vector_set.size (); }
       [[nodiscard]] size_t node_count () const { return nodes.size (); }
       [[nodiscard]] size_t label_count () const { return label_pool.size (); }

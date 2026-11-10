@@ -105,7 +105,7 @@ sharing_allocation_env.append('VALGRIND_OPTS',
   '--soname-synonyms=somalloc=nouserintercepts', separator: ' ')
 test('antichains/sharing allocation failures', sharing_allocation_exe, env: sharing_allocation_env)
 
-# Keep the 14-backend matrix on the two dynamic vector representations. Synthetic
+# Keep the 24-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 # GCC on Darwin/arm64 does not accept -march=native. Keep that flag on x86,
 # where it exercises wider registers; other targets use their compiler default.
@@ -132,7 +132,7 @@ foreach mode : ['compatible', 'native', 'max']
   test('matrix/BBox signed algebra/' + mode, matrix_exe,
        args: ['--check=nonempty', 'bboxtree_backed', 'all'])
   test('matrix/recorded operations/' + mode, find_program('python3'),
-       args: [meson.current_source_dir() / 'matrix-trace-check.py', matrix_exe], timeout: 60)
+       args: [meson.current_source_dir() / 'matrix-trace-check.py', matrix_exe], timeout: 120)
   tail_exe = executable('simd-tail-' + mode, 'simd-tail-check.cc',
                        dependencies: [posets_dep], cpp_args: matrix_args)
   test('matrix/packed Boolean tails/' + mode, tail_exe)
@@ -146,6 +146,15 @@ foreach mode : ['compatible', 'native', 'max']
   sharing_antichain_exe = executable('sharing-antichain-' + mode, 'sharing-antichain.cc',
     dependencies: [posets_dep], cpp_args: matrix_args)
   test('antichains/sharing backends/' + mode, sharing_antichain_exe)
+endforeach
+
+selected_kd_matrix_exe = executable('downset-matrix-kd-selected', 'downset-bm.cc',
+  dependencies: [posets_dep], cpp_args: ['-DPOSETS_MATRIX_ONLY',
+    '-DPOSETS_MATRIX_BACKEND=posets::downsets::kdtree_backed',
+    '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE'] + matrix_target_args)
+foreach vector : ['vector_backed', 'simd_vector_backed']
+  test('matrix/single-backend registration/' + vector, selected_kd_matrix_exe,
+    args: ['--check=nonempty', 'kdtree_backed', vector + '<test_value_type>'])
 endforeach
 
 native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
@@ -178,3 +187,73 @@ sharingtrie_allocation_exe = executable('sharingtrie-allocation',
   cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
 test('antichains/sharingtrie allocation failures', sharingtrie_allocation_exe,
   env: sharing_allocation_env, timeout: 120)
+
+block_allocation_exe = executable('block-sharingtrie-allocation',
+  'sharingtrie-allocation.cc', dependencies: [posets_dep],
+  cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX', '-DPOSETS_TEST_BLOCK_SHARINGTRIE'])
+test('antichains/block sharingtrie allocation failures', block_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)
+foreach mode : ['compatible', 'native', 'max']
+  block_exe = executable('block-sharingtrie-' + mode, 'block-sharingtrie.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args)
+  test('antichains/block sharingtrie/' + mode, block_exe, timeout: 120)
+endforeach
+
+layout_controls = [
+  ['baseline', []],
+  ['trie-compact', ['-DPOSETS_SHARINGTRIE_COMPACT_NODES=1']],
+  ['kd-narrow', ['-DPOSETS_KDTREE_NARROW_INDICES=1']],
+  ['comp-simd', ['-DPOSETS_COMPTRIE_SIMD_PATHS=1']],
+]
+foreach control : layout_controls
+  layout_exe = executable('layout-check-' + control[0], 'layout-check.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args)
+  test('layout/oracle and accounting/' + control[0], layout_exe)
+  layout_bm = executable('layout-bm-' + control[0], 'layout-bm.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args)
+  layout_memory = executable('layout-memory-' + control[0], 'layout-bm.cc',
+    dependencies: [posets_dep], cpp_args: control[1] + matrix_target_args + ['-DPOSETS_TRACK_ALLOCATIONS=1'])
+  test('layout/memory and shape oracles/' + control[0], find_program('python3'),
+    args: [meson.current_source_dir() / 'layout-smoke.py', layout_memory],
+    env: sharing_allocation_env, timeout: 120)
+endforeach
+compact_allocation_exe = executable('sharingtrie-compact-allocation',
+  'sharingtrie-allocation.cc', dependencies: [posets_dep],
+  cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX', '-DPOSETS_SHARINGTRIE_COMPACT_NODES=1'])
+test('layout/sharingtrie compact allocation failures', compact_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)
+
+foreach mode : ['compatible', 'native', 'max']
+  lazy_kd_exe = executable('lazy-kdtree-' + mode, 'lazy-kdtree.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_LAZY_KDTREE_STATS=1'] + matrix_target_args)
+  test('antichains/lazy KD oracle and FC/' + mode, lazy_kd_exe, timeout: 120)
+endforeach
+lazy_allocation_exe = executable('lazy-kdtree-allocation', 'lazy-kdtree-allocation.cc',
+  dependencies: [posets_dep], cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])
+test('antichains/lazy KD allocation failures', lazy_allocation_exe,
+  env: sharing_allocation_env, timeout: 120)
+lazy_policy_exe = executable('lazy-kdtree-policy', 'lazy-kdtree-policy.cc',
+  dependencies: [posets_dep], cpp_args: ['-Ofast', '-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_COMPATIBLE'])
+test('antichains/lazy KD policy fast math', lazy_policy_exe)
+
+forest_kd_layout_exe = executable('forest-kd-layout', 'forest-kd-layout.cc',
+  dependencies: [posets_dep])
+test('layout/forest cache and KD capacity', forest_kd_layout_exe,
+  env: sharing_allocation_env, timeout: 120)
+
+foreach mode : ['baseline', 'narrow']
+  kd_scratch_args = mode == 'narrow' ? ['-DPOSETS_KDTREE_NARROW_INDICES=1'] : []
+  kd_scratch_exe = executable('kdtree-scratch-' + mode, 'kdtree-scratch.cc',
+    dependencies: [posets_dep], cpp_args: kd_scratch_args)
+  test('layout/KD scratch restoration/' + mode, kd_scratch_exe)
+endforeach
+
+foreach mode : ['compatible', 'native', 'max']
+  ranked_default_exe = executable('rank-bucketed-' + mode, 'rank-bucketed.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_RANK_STATS'] + matrix_target_args)
+  test('antichains/ranked default oracle and failures/' + mode, ranked_default_exe,
+    env: sharing_allocation_env, timeout: 120)
+endforeach

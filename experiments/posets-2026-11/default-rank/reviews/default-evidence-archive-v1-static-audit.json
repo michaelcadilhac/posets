@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "Narrow source adaptation approved; execution and publication remain held until completed campaign/table/invariance and owner release",
+  "bindings": {
+    "directory": "work/default-optimization/default-evidence-archive-v1",
+    "source-manifest.json": "368768adf1952fcf395519f943cabee8a987df3ed1d0f31d884b2669565d42db",
+    "build_archive.py": "a50096bd42fed0da0bdc8e65676b81b432b5e528c85e9c92c9ce500fe2248046",
+    "changes.patch": "fea7f0f27c226f50528e7d1960e7d2386489d2b38819817bc20978b8f1bfaba2",
+    "archive-spec.json": "b794ce8166f54f3a7f2290509d66e3b768418430876bc3e25a7a69a61dc76e5d",
+    "unchanged_origin": "47d85ea4639c351119b1607542c3113385a782e192e0ef91b1ca3917f9c010f2"
+  },
+  "checks": [
+    "Manifest/origin/all three source bindings match, and changes.patch is exactly the diff from the accepted phase-one mechanism. No target script import/execution or archive access.",
+    "ROOT depth resolves to the task root; RAW selects only the new default-rank-v3 campaign raw directory. New plan/outputs stay under this separate archive directory; old phase-one sources/data/archive are untouched.",
+    "Plan must have exactly baseline-default then optimized-default and frozen SHA548ee0e77b9518a9f96a5f187b8f761966399509607c4fc393fa94a58e1cc5bb. Exactly two native and two memory-sidecar files are copied; every supplied source digest is checked and source must be a nonsymlink file directly in the exact RAW directory.",
+    "Four uniquely named raw/ data members plus README.txt and SHA256SUMS give six regular archive members. No stale15arm/30data/32member/22860rows assumption remains; mention of preceding15arm comparison is the intended separation.",
+    "The accepted mechanism retains the shared nonblocking host lock, fresh exclusive archive creation, fresh extraction, deterministic tar/gzip metadata, basename-only source names, regular relative member/path checks, exact extracted bytes/hashes/sizes and1524unique cases plus exact arm label per data member. Totals are3048native and3048memory-sidecar rows, not3048combined data rows.",
+    "README gives neutral role/source pins, actual frozen hash, native byte preservation and OOM-event/native-label separation; it fabricates no future outcome, memory ranking, summary digest or saved capture access. Four numerical TSVs do not publish environment blobs, source trees, corpus, executable/build payload or original WIP.",
+    "No plan.json/archive/extraction exists at review time. Future owner must supply reviewed exact source TSV bindings after campaign/table/invariance, and use the approved assertion-enabled /usr/bin/python3 -B invocation under the unchanged8G/noSwap scoped wrapper. This is a byte-preservation archiver, not a substitute for that results review."
+  ],
+  "findings": [],
+  "attribution": "Independent static adaptation validation; no new defect, workload or publication. Accepted existing mechanism reused without a new gate suite."
+}

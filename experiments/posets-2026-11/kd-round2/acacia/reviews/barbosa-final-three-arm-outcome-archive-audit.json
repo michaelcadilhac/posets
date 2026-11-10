@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "verdict": "APPROVE exact completed three-arm outcome evidence, frozen handoff and numerical archive/extraction scope. No concrete finding. Final public prose/staged publication is outside this approval.",
+  "reviewer": "Barbosa-guided independent evidence audit; not the actual researcher",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "bindings": {
+    "handoff": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-HANDOFF.json",
+      "sha256": "6a0cbd21da561b5c0004dea0e35c3fdb1a779540e42f54a7d539d69506c1673c"
+    },
+    "table": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1/solver-comparison.json",
+      "sha256": "f3d110f1b9e8da645fa8f5bec5c211ffa94cce76587d6907bef8c97c498b7bda"
+    },
+    "invariance": {
+      "bytes": 6179013,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-v2.json",
+      "sha256": "9b8026dfc85e4e9238741720825e1d445670aa8d2237a004e2ad6900d0d481a9"
+    },
+    "redacted_preservation": {
+      "bytes": 1931,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/original-checkouts-final-redacted-proof.json",
+      "sha256": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1"
+    },
+    "archive": {
+      "bytes": 1084624,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/acacia-kd-three-arm-numerical.tar.gz",
+      "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156"
+    },
+    "extraction_verification": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/extraction-verification.json",
+      "sha256": "05f16b9107bbdb02f3c41335d14ecd5178ab277421822d4468e4c87154876979"
+    },
+    "independent_row_recalculation": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/reviews/barbosa-three-arm-outcome-recalculation.json",
+      "sha256": "41778baabff5823d93b5e1248e025c6256bc5a11be6362d6804bb75e4cd64dd2"
+    }
+  },
+  "independent_complete_data_audit": {
+    "native_rows": 4572,
+    "scored_rows": 4572,
+    "resource_event_joins": 4572,
+    "per_arm": 1524,
+    "rows_and_scores_recomputed": true,
+    "raw_and_scored_identical": true,
+    "results": [
+      {
+        "arm": "baseline-default",
+        "solved": 1368,
+        "par2_total_s": 5945.136669,
+        "cpu_total_s": 14005.055232,
+        "scope_peak_max_bytes": 4244758528,
+        "scope_peak_median_bytes": 106059776.0,
+        "process_rss_max_bytes": 3977715712,
+        "process_rss_median_bytes": 61808640.0,
+        "native_outcomes": {
+          "UNREALIZABLE": 739,
+          "REALIZABLE": 629,
+          "TIMEOUT": 156
+        },
+        "wall_cap_overruns": 0,
+        "oom_kill_invocations": 0,
+        "oom_invocations": 0,
+        "event_counter_sums": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      },
+      {
+        "arm": "optimized-default",
+        "solved": 1367,
+        "par2_total_s": 5959.958145,
+        "cpu_total_s": 14000.96839,
+        "scope_peak_max_bytes": 4244234240,
+        "scope_peak_median_bytes": 106856448.0,
+        "process_rss_max_bytes": 3977621504,
+        "process_rss_median_bytes": 61739008.0,
+        "native_outcomes": {
+          "UNREALIZABLE": 738,
+          "REALIZABLE": 629,
+          "TIMEOUT": 157
+        },
+        "wall_cap_overruns": 0,
+        "oom_kill_invocations": 0,
+        "oom_invocations": 0,
+        "event_counter_sums": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        }
+      },
+      {
+        "arm": "kd-scratch-restored",
+        "solved": 1365,
+        "par2_total_s": 6010.86808,
+        "cpu_total_s": 14040.773485,
+        "scope_peak_max_bytes": 8589934592,
+        "scope_peak_median_bytes": 106078208.0,
+        "process_rss_max_bytes": 8360685568,
+        "process_rss_median_bytes": 61739008.0,
+        "native_outcomes": {
+          "UNREALIZABLE": 738,
+          "REALIZABLE": 627,
+          "TIMEOUT": 157,
+          "MEMOUT": 2
+        },
+        "wall_cap_overruns": 0,
+        "oom_kill_invocations": 7,
+        "oom_invocations": 7,
+        "event_counter_sums": {
+          "high": 0,
+          "low": 0,
+          "max": 637,
+          "oom": 24,
+          "oom_group_kill": 0,
+          "oom_kill": 15,
+          "sock_throttled": 0
+        }
+      }
+    ],
+    "comparisons": {
+      "baseline-default": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [],
+          "par2_delta_s": 0.0
+        },
+        "optimized-default": {
+          "gains": [
+            "load_balancer_unreal1_pb_6_4_pe_.ltl"
+          ],
+          "losses": [],
+          "par2_delta_s": -14.821476
+        }
+      },
+      "optimized-default": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [
+            "load_balancer_unreal1_pb_6_4_pe_.ltl"
+          ],
+          "par2_delta_s": 14.821476
+        },
+        "optimized-default": {
+          "gains": [],
+          "losses": [],
+          "par2_delta_s": 0.0
+        }
+      },
+      "kd-scratch-restored": {
+        "baseline-default": {
+          "gains": [],
+          "losses": [
+            "generalized_buffer_pb_4_pe_.ltl",
+            "load_balancer_unreal1_pb_6_4_pe_.ltl",
+            "simple_arbiter_enc_pb_11_pe_.ltl"
+          ],
+          "par2_delta_s": 65.731411
+        },
+        "optimized-default": {
+          "gains": [],
+          "losses": [
+            "generalized_buffer_pb_4_pe_.ltl",
+            "simple_arbiter_enc_pb_11_pe_.ltl"
+          ],
+          "par2_delta_s": 50.909935
+        }
+      }
+    },
+    "source_and_run_identity": "Genuine frozen789/30e default ELF hashes and freshd363KD f5dfd11...; all3same1524case/run-index map, emptyflags/shippingpreset/17s/8Gnoswap/batch32/seed260617/noaffinity/quota. Whole-process CPU, scope peak and RSS recalculated; complete event coverage.",
+    "contradictory_decisive_answers": 0,
+    "decisive_wall_cap_overruns": 0,
+    "errors_unknown_crashes": 0
+  },
+  "critical_resource_interpretation": {
+    "KD_oom_kill_invocations": 7,
+    "KD_native_MEMOUT": 2,
+    "KD_native_TIMEOUT_with_oom_kill": 5,
+    "kernel_oom_counter_sum": 24,
+    "kernel_oom_kill_counter_sum": 15,
+    "missing_event_rows": 0,
+    "both_default_oom_rows": 0,
+    "losses": "All3KDlosses vsoriginal (2vsoptimized) are actual nativeTIMEOUT withoutOOMkill. All7kill-positive rows are distinct common-unsolved cases. Kernel counter sum15 is not15invocations; native labels/34s penalties stay unchanged. Censored wrapper durations above17 are not completed solver times.",
+    "case_evidence": {
+      "generalized_buffer_pb_4_pe_.ltl": {
+        "baseline-default": {
+          "result": "REALIZABLE",
+          "seconds": "10.205775034148246",
+          "exit_code": "0",
+          "timed_out": "false",
+          "resource_reason": ""
+        },
+        "optimized-default": {
+          "result": "REALIZABLE",
+          "seconds": "7.340700060129166",
+          "exit_code": "0",
+          "timed_out": "false",
+          "resource_reason": ""
+        },
+        "kd-scratch-restored": {
+          "result": "TIMEOUT",
+          "seconds": "17.045695310924202",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout"
+        }
+      },
+      "load_balancer_unreal1_pb_6_4_pe_.ltl": {
+        "baseline-default": {
+          "result": "UNREALIZABLE",
+          "seconds": "16.581656716996804",
+          "exit_code": "1",
+          "timed_out": "false",
+          "resource_reason": ""
+        },
+        "optimized-default": {
+          "result": "TIMEOUT",
+          "seconds": "17.115468508098274",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout"
+        },
+        "kd-scratch-restored": {
+          "result": "TIMEOUT",
+          "seconds": "17.091781995957717",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout"
+        }
+      },
+      "simple_arbiter_enc_pb_11_pe_.ltl": {
+        "baseline-default": {
+          "result": "REALIZABLE",
+          "seconds": "14.69866317906417",
+          "exit_code": "0",
+          "timed_out": "false",
+          "resource_reason": ""
+        },
+        "optimized-default": {
+          "result": "REALIZABLE",
+          "seconds": "14.655415461864322",
+          "exit_code": "0",
+          "timed_out": "false",
+          "resource_reason": ""
+        },
+        "kd-scratch-restored": {
+          "result": "TIMEOUT",
+          "seconds": "17.219592125853524",
+          "exit_code": "124",
+          "timed_out": "true",
+          "resource_reason": "timeout"
+        }
+      }
+    },
+    "kill_positive_rows": [
+      {
+        "label": "kd-scratch-restored",
+        "instance": "prioritized_arbiter_enc_pb_14_pe_.ltl",
+        "native_result": "MEMOUT",
+        "oom_kill": 3,
+        "oom": 3
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "simple_arbiter_enc_pb_15_pe_.ltl",
+        "native_result": "TIMEOUT",
+        "oom_kill": 2,
+        "oom": 7
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "simple_arbiter_enc_pb_16_pe_.ltl",
+        "native_result": "TIMEOUT",
+        "oom_kill": 1,
+        "oom": 1
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "simple_arbiter_enc_pb_13_pe_.ltl",
+        "native_result": "TIMEOUT",
+        "oom_kill": 1,
+        "oom": 1
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "prioritized_arbiter_enc_pb_15_pe_.ltl",
+        "native_result": "TIMEOUT",
+        "oom_kill": 2,
+        "oom": 4
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "simple_arbiter_enc_pb_14_pe_.ltl",
+        "native_result": "TIMEOUT",
+        "oom_kill": 2,
+        "oom": 3
+      },
+      {
+        "label": "kd-scratch-restored",
+        "instance": "prioritized_arbiter_enc_pb_13_pe_.ltl",
+        "native_result": "MEMOUT",
+        "oom_kill": 4,
+        "oom": 5
+      }
+    ]
+  },
+  "archive_acceptance": {
+    "handoff_direct_bindings_checked": 72,
+    "archive_sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156",
+    "archive_bytes": 1084624,
+    "members_checked": 26,
+    "numerical_files": 24,
+    "numerical_original_bytes": 9312481,
+    "checksum_lines": 25,
+    "independent_check": "Read-only tar member streaming, no extraction or helper execution: all regular safe relative members unique; archived MANIFEST and SHA256SUMS digests match extraction proof; every file digest and exact bytes match completed original numerical source; native/frozen/summary/binary/source identities match handoff.",
+    "owner_extraction_record": "Frozen proof records actual extraction/byte equality/checksums and source preservation; its exact hash checked. Reviewer did not run a second extraction workload."
+  },
+  "closing_evidence": {
+    "summary_only": "Automatic and unchanged summary-only summary bytes are identical.",
+    "owner_invariance_inventory": 22366,
+    "owner_historical_files_rechecked": 14981,
+    "owner_proposal_bindings": 141,
+    "own_invariance_scope": "Bound passing owner record and direct handoff bindings; did not personally rehash all22366 inventory entries or rerun source/compiler/runtime validation. Owning review scopes remain distinct.",
+    "incident": "First closing-audit attempt failedStopIteration due inherited /src/acacia-bonsai selector. Independently checked old\u2192v2 text differs only in exact declared /src/acacia-bonsai-kd selector and versioned result path. Other assertions unchanged; failed record/script/spec/log retained and hash-bound, corrected record0exit. No solver rerun, source/flag/cap change or acceptance-policy weakening.",
+    "preservation": "Separate redacted af5da20d proof has5checkouts x6matched fields. Reviewer checked saved proof/hash, not fresh originalWIP scan. Ignored/untracked bytes excluded and private status/diff filenames not published."
+  },
+  "interpretation": "Observed KD has0gains/3losses and PAR2+65.731411s(+1.105633%) vsoriginal,0gains/2losses and+50.909935s(+0.854200%) vsoptimized. This prospective single campaign provides no demonstrated basis to switch the ranked backend. It does not compare d363againstoldKD as a matched whole-solver arm, prove a general regression, isolate the scratch-header cause, or license tuning/reruns. Different privateRust archives and NO_VERBOSE route observability limits retained.",
+  "performed": "Static saved-data/source/metadata reads and independent arithmetic/hashing only. All4572rows and exact sidecar joins recomputed without invoking table/helper code.72direct handoff files + archive/source members checked. No targets, tests, compilers, ELF/solver/profiling/timing workloads or source/publication edits.",
+  "findings": [],
+  "scope_boundary": "This closes actual outcome/archive evidence only. Previous Acacia source/spec/table-source reviews do not become retroactive actual build/release approval. No unstaged or later public prose/package bytes are approved here.",
+  "attribution": "Independent validation only; no new defect discovery or measurement execution credit. SevenOOM-vs-label and separate-loss clarification independently confirmed, Nb had independently notified root. Closing selector error originated owner and was transparently corrected; no reviewer discovery claim."
+}

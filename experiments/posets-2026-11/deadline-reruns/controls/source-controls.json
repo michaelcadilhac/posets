@@ -1,0 +1,55 @@
+{
+  "base_revision": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+  "status": "Source-only attribution proposals, not applied to any repository or validated by compiler/runtime",
+  "controls": [
+    {
+      "role": "rank-correctness-control",
+      "changed_files": [
+        "include/posets/downsets/rank_bucketed_vector_backed.hh"
+      ],
+      "base_revision": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+      "before_sha256": "ba1253f2c29ea3f976f7921f6be09a62013724c518464b9fb5f8caddaf5b812b",
+      "after_sha256": "3d71e53fde59b1f19dff3cb2567c252fb1af7a4da1e582f4216dc840f1d4ee6f",
+      "patch": "rank-correctness-control.patch",
+      "patch_sha256": "2a95fe46c1fac90525b415fff2ba58c4aaf4fce0521eb453e7bac67e33ea237d",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/rank-correctness-control/include/posets/downsets/rank_bucketed_vector_backed.hh"
+    },
+    {
+      "role": "legacy-pre-scratch",
+      "changed_files": [
+        "include/posets/utils/kdtree.hh"
+      ],
+      "base_revision": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+      "before_sha256": "b3618de120fb5fec89f339c21f9933abab02434e1dec1a8e4b17c77e94ef8173",
+      "after_sha256": "43a93dcbf80a863698c58c2faf0177c4e92757e0d9da2b058bdca4dd7fddaa53",
+      "patch": "legacy-pre-scratch.patch",
+      "patch_sha256": "a3aa2c2fe7eab0ce58466c21fd211e6924ae796b4dbaed5ffed9ec2f42a44c3b",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/legacy-pre-scratch/include/posets/utils/kdtree.hh"
+    },
+    {
+      "role": "forest-map-cache",
+      "changed_files": [
+        "include/posets/utils/sharingforest.hh"
+      ],
+      "base_revision": "1c46713273c2e33cb7a1f5f7106861c0979a930a",
+      "before_sha256": "67d6ce5584dc577b394a9b3a1e76c2c6c0db14df2055e33b5e0345da3799400a",
+      "after_sha256": "2390a321258702a3b26dd5181ecd9377e7a416610b2ec455c91fefddd2eefe6a",
+      "patch": "forest-map-cache.patch",
+      "patch_sha256": "6f9591f03ae1d0beb89b950203b85af5b859b44c0a4412a3251f074f665a75ff",
+      "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/attribution-controls-v1/forest-map-cache/include/posets/utils/sharingforest.hh"
+    }
+  ],
+  "unchanged_source_policy": "Every other file comes from the exact common current source/dependency context. No public or frozen source modified.",
+  "revert_authority": "Production rollback still requires severity/attribution evidence and review.",
+  "no_build_test_helper_target_execution": true,
+  "primary_repeat_policy": "45 fixed cells /450 historical solver invocations before conditional matched attribution; do not build all initial configurations",
+  "rank_control_behavior": "All three performance units off, including eager scratch intersections; current insertion/exception safety retained. Allocation-free covered-intersection performance assertions intentionally do not describe this control.",
+  "dependent_gates": "No build/test result claimed. Independent semantic and hardening fixtures required; optimized-only work assertions must be kept distinct.",
+  "forest_control_gate_caveat": {
+    "reported_by": "Barbosa independent static review",
+    "production_fixture": "tests/forest-kd-layout.cc:50\u201365 warmed allocation reuse block",
+    "control_expected_difference": "Query-cleared maps can allocate on each query; the optimized zero-allocation assertion is not a semantic oracle.",
+    "required_control_only_adaptation": "Keep repeated oracle/strictness checks with allocations enabled, retain every wide/shared-suffix/union/lifetime test, and add positive query-allocation-failure/retry coverage.",
+    "production_tests_unchanged": true
+  }
+}

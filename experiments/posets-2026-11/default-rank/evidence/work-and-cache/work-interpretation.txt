@@ -1,0 +1,125 @@
+Actual default-rank work/heap interpretation v1
+
+Recommendation: the fixed4-cell PMU companion is justified. Complete counters
+confirm structural rank/PO savings but do not explain compatible/native timing
+reversals. No production change, event expansion or flag/annotation rescue is
+justified by these observations. Root has activated build/check stages only;
+the24 measurements still require acceptance of their new artifact/check closure.
+
+Completion/integrity:
+192 accepted profiles,12 qualification-censored pass rows without calls; owner
+reports no failure/timeout/OOM and3204-file final invariance. Independently paired
+all96 role-pairs/990 phase pairs and rehashed all576 accepted/record/spec files.
+Every kernel_check passes; every relative kernel cleanup delta is0. All rank
+coordinate charges equal completed rank calls times active dimension.
+Completion SHA25664b83bb5ac50ca6a67beff8c1255985933ac8c81aa87039836a48113a04cf2ee.
+Actual plan SHA256137f2e93460b2437a14143bf8ea1cf1a436b2073d1a2e87230454040dec9aa64.
+All80 clean paired metric groups retain their own three time pairs and two
+estimators, linked only to their corresponding single ROI work observation.
+The6 clean source-censored metric cells remain censored with no counter zero.
+
+What changed across the COMPLETE counter data:
+- Rank calls/coordinates and partial-order attempts never increase.
+- Copy attempts, meet attempts and move constructions never change.
+- Allocation count, requested bytes, extra peak and live_delta never change
+  within a matched vector/width in ANY of990 phases (822 operations,168 ROI).
+  These duplicate vector controls/widths/passes are not independent workloads.
+  Thus no captured TRAIN memory/allocation improvement is demonstrated.
+- Move assignments increase in267 paired windows (180 operations+87 ROI); this
+  is a real work tradeoff, not universally less work. Other move assignments
+  are unchanged; no reduced copy/meet/relocation count should be invented.
+- Every logical counter, including move assignments and intersection positions,
+  agrees exactly between compatible/native SIMD for each role/trace/pass.
+  Requested bytes may differ BETWEEN widths because payload padding differs;
+  that is separate from the unchanged within-width treatment deltas.
+- All24 paired operation intersections (8 distinct CPre traces by3 V/width cells)
+  change the frontier and query actual rows; none is a no-op/self/empty shortcut.
+  The verified positive equal-intersection selfcheck proves a dormant path, not
+  an allocation saving exercised by this TRAIN capture. Collector fails at255,
+  AMBA at1, the others at0. Baseline/candidate query counts and positions agree.
+
+Representative whole-CPre logical work (compatible SIMD; native identical):
+cohort trace rank_calls baseline->candidate PO_attempts baseline->candidate move_assignments baseline->candidate copies meets first_failed_query
+S	0	1282->770	92047->79431	12408->12616	255	257	255
+S	1	10228->9247	152332->148746	41057->41153	414	414	0
+S	3	403->333	1724->1499	608->697	14	60	0
+S	4	560->513	1405->1271	349->372	8	128	1
+S	5	90->58	1087->623	430->476	0	25	0
+S	8	6->4	1->1	0->0	0	1	0
+S	9	4->3	0->0	0->0	0	1	0
+L	0	82600->75703	5376016->5273875	1753759->1754648	2294	2294	0
+
+Collector CPre:
+1282->770 ranks,670486->402710 coordinate charges,92047->79431 PO attempts.
+Rank saving decomposes into intersection768->257 (cached query/copy ranks) and
+union1->0; apply remains512->512. Copies255 and meets257 are unchanged because
+the intersection really changes late. Assignments12408->12616 increase1.68%;
+allocation1069, requested623120B and extra_peak318496B are unchanged at128
+(native672320B/343168B also unchanged by treatment).
+This supports a plausible structural contribution to compatible gains but is
+not a measured cycle/cache explanation. Native CPre paired ratios remain
+1.2057/1.1910/.8880; the counters cannot account for that sign reversal.
+
+RR552:
+Build rank552/250056 coordinates unchanged; PO154954->152076 (-1.86%);
+assignments2863->2878 (+.52%);1137 allocations and requested/peak unchanged.
+Whole CPre rank10228->9247, PO152332->148746. Apply8832->8832 ranks; union15->0;
+intersection1380->414. Copies/meets414 each remain. These same deltas occur at
+both widths, so compatible buildP1.0777 versus nativeP.8807 stays unexplained.
+LargeRR CPre82600->75703 ranks and5376016->5273875 PO, with an additional889
+assignments and no heap change, is consistent with useful rank/PO savings;
+it does not turn the mixed near-flat compatible largeRR constructors into wins.
+
+Full-arbiter validated contains constructors:
+N1009 rank1009 unchanged, PO637127->508536 (-20.18%), assignments128124->128591.
+N6446 rank6446 unchanged, PO25206832->20772235 (-17.59%), assignments4428989->
+4434597. Copies/meet/constructor moves/heap unchanged. Thus rank caching is NOT
+the constructor explanation: lower PO work is consistent with the repeatable
+constructor timing gains. No source-unverified full-arbiter CPre is inferred.
+
+Residual tradeoffs stay disclosed:
+Native06/small singleton constructor costs are still observed in clean data.
+For06 build,1 rank/13609 coordinates,0 PO,2 move constructions,0 assignments and
+5 allocations are exactly unchanged; no work-counter explanation is present.
+Small absolute timing regressions are not erased by larger-frontier gains.
+No broader counter contradiction invalidates the four-cell PMU scope, but
+that scope will not explain every microsecond cell. PO attempts do not measure
+scanned SIMD blocks, instructions, allocation latency or cache misses.
+
+Memory/lifetime discipline:
+These are instrumentation-enabled requested C++ payloads, not RSS/allocator
+overhead or exact shipping sizeof. has_result0 leaves size/capacity null,
+not0 and not reconstructible from rank_peak_backing_size. Preserve operation
+RHS/caller-alive versus normalized ROI lifetimes; whole-CPre delta is net
+new-minus-old retained storage including persistent scratch, not absolute
+frontier storage. RR's negative CPre delta is shrinkage, not negative memory.
+Zero cleanup deltas are relative to still-alive parsed metadata/input, not an
+automatic leak verdict. No instrumented phase/process clock is interpreted.
+
+Future reserve option, conceptual only (requested root question):
+The additional assignments are consistent with reserve-before-insert: growth
+can relocate the old array and then shift an interior suffix, where allocating
+std::vector::insert could construct into final positions. Counters do not mark
+individual growth sites, so this is source-supported, not a proven timing cause.
+For safe_moves only, a no-victim insertion could reserve ranks first, allow the
+vector insertion itself to allocate, and then insert the trivial int64 rank
+without allocation. With all comparisons finished and rank capacity prepared,
+allocation/length failure of the vector insert can leave logical contents
+unchanged; noexcept V moves and nonallocating int64 insertion permit publication.
+This is not achieved by simply deleting vector reserve in the current try:
+mutated=true is set BEFORE vector_set.insert, so its bad_alloc would reach a
+catch that clears both live arrays, violating the declared early-failure
+guarantee. A future design must isolate the prepublication growth branch or
+adjust its commit tracking, preserve cached-rank tie ordering/capacity-change
+contract and the generic throwing-move staged fallback, and independently
+exercise allocation/exception cases. Vector capacity growth is implementation
+defined, so memory behavior also needs matched measurement. No code change or
+measured benefit is asserted; consider only after the approved PMU evidence.
+
+All paired raw counter values/deltas, nulls, layouts, actual accepted/record/spec/
+ELF/source/trace bindings and separate clean links:
+  work/default-optimization/lemire/profile-work-heap-data-v1.json
+  SHA2561c9da3c037cb8e0a9c9e8143673eb5fc94b8ce3fbba7be5f5232a0ec7b9f161e
+
+No new workload, compiler, PMU event or solver run was executed for this analysis.
+Only bounded saved JSON/TSV/file-hash reads and derived output writes were used.

@@ -1,0 +1,57 @@
+Lemire-inspired static review: default-rank profiling companion
+
+Reviewed frozen manifest:
+  work/default-optimization/profile-draft/source-manifest.json
+  SHA256 fb5d6803f06a0ab83c0019138cfd41d7093bc0c803008402254b37d588726596
+Baseline 789bf99346d41a30f1b454ff58385b6f8a2961a9; candidate 30e66853832d98bcfaada296d892157b95a8150d.
+
+Result: no actionable instrumentation-logic defect found. One documentation
+clarification is needed before interpreting contains allocation rows; no change
+to the operation body or counter design is requested.
+
+Finding D1 (documentation, low): README.md:54-56 describes the final CPre query
+temporary as inside the contains window without limiting that statement to roi
+mode. In operations mode rank-profile.cc:188-191 starts the phase inside
+measured_set::contains: argument materialization is already complete and its
+destruction follows the method return. Thus operations-mode contains excludes
+the temporary query's allocation/destruction. In roi mode the original kernel's
+timed lambda creates and destroys that temporary before STOP (matrix-cpre.hh:384),
+so its contains region includes both. State the two meanings explicitly; retain
+mode on every derived row and never compare these two contains allocation counts
+as if their lifetimes matched. Captured-query membership traces construct the
+query outside either contains window. No raw/frozen draft file was modified.
+
+Verified by narrow static reads/comparisons:
+- Allocation header is byte-identical to the previously verified 4080-byte hook
+  (SHA256 18e8b12537fb3feb44853f44ec0bfb3b772a05fc382e7e23d62ebff22b69aeeb).
+  Both pinned matrix-cpre.hh files hash ec80bfbee63b2e483769a34ebbcaface6c2fb368d1789deed59cc6047e55a18f;
+  both matrix-check.hh files hash 9d1f910391ad1c2bf26796315fab629b2ec9d012dc5e78150b1600f71ef82069.
+  The actual replay/oracle bodies are included unchanged.
+- Both overlay diffs contain only hooks/locals at existing rank/intersection
+  sites. No additional partial-order/contains call or mutation reordering.
+  Candidate's already-failed row is not queried again by instrumentation.
+- Thin vector adapter adds no fields; source assertions guard sizeof/alignment,
+  value type and both noexcept-move traits. PO/copy/meet attempts and completed
+  relocations/base adoptions have distinct labels. Rank hooks charge logical
+  coordinates once per actual rank_of, not actioner/padded-lane reads.
+- Snapshots close before result-capacity inspection/stdio. Counter/intersection
+  frames use fixed storage. Separate operations/roi processes prevent inner
+  resets from erasing whole-CPre peaks. Existing 3/4-region sequence is checked.
+  Whole-CPre includes temporary destruction; build/rebuild staging is gone at
+  STOP. Changed-set deltas are net retention, not absolute backend size; private
+  rank capacity is not inferred. The preliminary parsed trace copy is disclosed.
+- Selfcheck is nonvacuous: both vector flavors, baseline positive copies and
+  allocations versus candidate zero on equal intersection, actual late failed
+  query index, logical answer, positive rank/coordinate/build-allocation checks,
+  and normalized cleanup. It is not represented as already executed.
+- Plan keeps all17 seen TRAIN identities, three unique vector/width cells and
+  two independent passes. Actual-pin source/backend qualification must precede
+  the hard-coded source_verified=true; kernel_check=pass is also mandatory.
+  Missing/failed/partial output remains missing, not zero. Instrumented 30s cap,
+  8GiB/no swap and serial scope are separate from clean caps. Clocks are discarded;
+  no cache/PMU/clean-timing or new production-optimization claim is made.
+
+Execution not performed: no draft import, compilation, tests, probes, profiling,
+timing or corpus work. Compile-time traits, selfcheck/Memcheck, dependency/ELF/
+library bindings and actual-pin eligibility remain runtime gates. Approval here
+is static design acceptance subject to D1 clarification and those existing gates.

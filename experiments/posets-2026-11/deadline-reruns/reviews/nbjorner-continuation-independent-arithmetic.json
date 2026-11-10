@@ -1,0 +1,122 @@
+{
+  "conditional_PAR2_delta_lazy_minus_anchor_seconds_decimal": "0.141481206752360",
+  "conditional_PAR2_delta_percent_decimal": "0.001562586768078107147649637581",
+  "continued_primary_records": 107,
+  "diagnostic_scored_rows": 0,
+  "gains_lazy_vs_anchor": [],
+  "joined_native_memory_rows": 312,
+  "library_limit_native_ERROR_rows": [
+    {
+      "adjudication": "separate diagnostic; original stderr absent",
+      "arm": "anchor-e167",
+      "case": "ltl2dba_R_pb_12_pe_.ltl",
+      "category": "SPOT_ACCEPTANCE_LIMIT_32",
+      "exit_code": "3",
+      "index": 204,
+      "native_result": "ERROR",
+      "seconds": "20.121184411924332"
+    },
+    {
+      "adjudication": "exact primary capture",
+      "arm": "lazy-fc",
+      "case": "ltl2dba_R_pb_12_pe_.ltl",
+      "category": "SPOT_ACCEPTANCE_LIMIT_32",
+      "exit_code": "3",
+      "index": 205,
+      "native_result": "ERROR",
+      "seconds": "18.415432973997667"
+    },
+    {
+      "adjudication": "exact primary capture",
+      "arm": "lazy-fc",
+      "case": "ltl2dba_R_pb_14_pe_.ltl",
+      "category": "SPOT_ACCEPTANCE_LIMIT_32",
+      "exit_code": "3",
+      "index": 206,
+      "native_result": "ERROR",
+      "seconds": "25.371328962035477"
+    },
+    {
+      "adjudication": "exact primary capture",
+      "arm": "anchor-e167",
+      "case": "ltl2dba_R_pb_14_pe_.ltl",
+      "category": "SPOT_ACCEPTANCE_LIMIT_32",
+      "exit_code": "3",
+      "index": 207,
+      "native_result": "ERROR",
+      "seconds": "25.354979562107474"
+    }
+  ],
+  "limits": "Conditional156-case follow-up, not uniform30s full1524; no original17 score changes; originalERROR204 is separately adjudicated rather than primary-text recognition; one paused pair; whole-configuration comparison.",
+  "losses_lazy_vs_anchor": [],
+  "new_full_captures": 107,
+  "newly_solved_sets": {
+    "anchor-e167": [
+      "arbiter_with_cancel_pb_7_pe_.ltl",
+      "collector_v3_pb_10_pe_.ltl",
+      "full_arbiter_enc_pb_10_pe_.ltl",
+      "g-unreal-314.ltl",
+      "lift_pb_8_pe_.ltl",
+      "ltl2dba_R_pb_10_pe_.ltl",
+      "robot_repair5.ltl",
+      "workstation_resupply_pb_5_pe_.ltl"
+    ],
+    "lazy-fc": [
+      "arbiter_with_cancel_pb_7_pe_.ltl",
+      "collector_v3_pb_10_pe_.ltl",
+      "full_arbiter_enc_pb_10_pe_.ltl",
+      "g-unreal-314.ltl",
+      "lift_pb_8_pe_.ltl",
+      "ltl2dba_R_pb_10_pe_.ltl",
+      "robot_repair5.ltl",
+      "workstation_resupply_pb_5_pe_.ltl"
+    ]
+  },
+  "original_primary_records": 205,
+  "pairing_limit": {
+    "limit": "One pair spans STOP/diagnostic/adjudication; not all 156 pairs were uninterrupted adjacent.",
+    "split_original_case_index": 102,
+    "uninterrupted_prefix_pairs": 102,
+    "uninterrupted_suffix_pairs": 53
+  },
+  "primary_positions": 312,
+  "raw_truth_conflicts": 0,
+  "record_inventory_files_rehashed": 2612,
+  "results": {
+    "anchor-e167": {
+      "CPU_seconds_sum_decimal": "19462.935455",
+      "all_oom_event_invocations": 0,
+      "cases": 156,
+      "conditional_PAR2_seconds_decimal": "9054.294432966038586",
+      "max_process_RSS_bytes": 4280414208,
+      "max_scope_peak_bytes": 6136221696,
+      "native_outcomes": {
+        "ERROR": 2,
+        "REALIZABLE": 5,
+        "TIMEOUT": 146,
+        "UNREALIZABLE": 3
+      },
+      "oom_kill_invocations": 0,
+      "solved": 8
+    },
+    "lazy-fc": {
+      "CPU_seconds_sum_decimal": "19465.618834",
+      "all_oom_event_invocations": 0,
+      "cases": 156,
+      "conditional_PAR2_seconds_decimal": "9054.435914172790946",
+      "max_process_RSS_bytes": 4280303616,
+      "max_scope_peak_bytes": 6165204992,
+      "native_outcomes": {
+        "ERROR": 2,
+        "REALIZABLE": 5,
+        "TIMEOUT": 146,
+        "UNREALIZABLE": 3
+      },
+      "oom_kill_invocations": 0,
+      "solved": 8
+    }
+  },
+  "scope": "Independent saved-row/capture/resource arithmetic only; no imported helper or target execution",
+  "strict30_decisive_overruns": [],
+  "summary_sha256": "c85d105d4b7e2772428c7139fdc85b0c8b4a51aabef543793fe377b15dd6665f"
+}

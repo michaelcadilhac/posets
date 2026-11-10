@@ -1,0 +1,215 @@
+diff --git a/README.md b/README.md
+index 39f92acbd03754e3605521bace83d5afa4dbca6d..56ebe8c1958f1327e2604e4ff179753202ad9109 100644
+--- a/README.md
++++ b/README.md
+@@ -369,8 +369,10 @@ logical update. The fast path requires both nothrow move construction and move
+ assignment; otherwise survivors are copied into unpublished storage. Whole union
+ is incremental and provides the **basic** guarantee: earlier accepted insertions
+ remain if a later one throws. Its RHS stays unchanged until success, then becomes
+-empty. Apply and intersection stream into fresh epochs; intersection publishes
+-only a complete result. Empty sets and safe moved-from reuse are supported;
++empty. Apply and changing intersections stream into fresh epochs; intersection
++publishes only a complete result. Contained intersections retain their storage
++and counters, although RHS containment-query counters may advance.
++Empty sets and safe moved-from reuse are supported;
+ nonempty zero-dimensional inputs and inconsistent dimensions are rejected.
+ Iteration and `get_backing_vector()` expose the dense live generators. As for
+ existing indexed backends, arbitrary external generator edits invalidate the
+@@ -397,7 +399,7 @@ calls in bulk construction, including duplicate rejection; it excludes the coord
+ comparisons used for lexicographic sorting. Frozen index counters restart on
+ index replacement, whereas pending and bulk comparison counters persist until
+ `reset_query_statistics()` (which clears all three) or object clearing/replacement.
+-Successful intersection installs the counters of its fresh streaming result. Use a
++Changing intersection installs the counters of its fresh streaming result. Use a
+ Vector-level partial-order counter for total construction work across paths;
+ query counters cannot recover work discarded by intermediate index replacements.
+ Reset statistics after construction to measure later query phases. Storage output records
+diff --git a/include/posets/downsets/lazy_kdtree_backed.hh b/include/posets/downsets/lazy_kdtree_backed.hh
+index 00c9a3373112e9f0d0e5dd796185a36fdbb8b30f..e2ed84caf5a7e58d41d9d696910a503b7713f904 100644
+--- a/include/posets/downsets/lazy_kdtree_backed.hh
++++ b/include/posets/downsets/lazy_kdtree_backed.hh
+@@ -459,13 +459,28 @@ namespace posets::downsets {
+       void intersect_with (const lazy_kdtree_backed& other) {
+         if (this == &other or maxima.empty ())
+           return;
++        if (other.empty ()) {
++          clear ();
++          return;
++        }
++        size_t first = 0;
++        for (; first < maxima.size (); ++first)
++          if (not other.contains (maxima[first]))
++            break;
++        if (first == maxima.size ())
++          return;
++
+         lazy_kdtree_backed result (policy, empty_tag {});
+-        for (const auto& value : maxima)
+-          if (other.contains (value))
++        for (size_t i = 0; i < first; ++i)
++          result.insert (maxima[i].copy ());
++        for (size_t i = first; i < maxima.size (); ++i) {
++          const auto& value = maxima[i];
++          if (i != first and other.contains (value))
+             result.insert (value.copy ());
+           else
+             for (const auto& rhs : other)
+               result.insert (value.meet (rhs));
++        }
+         swap (result);
+       }
+       [[nodiscard]] auto query_statistics () const {
+diff --git a/tests/lazy-kdtree-allocation.cc b/tests/lazy-kdtree-allocation.cc
+index 488dad15c69eceef1c221106969152827f13c087..306a0ef6a31c1d3785f811d1a847bf236605c1f4 100644
+--- a/tests/lazy-kdtree-allocation.cc
++++ b/tests/lazy-kdtree-allocation.cc
+@@ -102,7 +102,10 @@ namespace {
+         values.push_back (vector<V> (v));
+       S subject (std::move (values), policy);
+       subject.rebuild ();
+-      auto other = build<S> (rhs);
++      const region right = operation == 6
++                               ? region {{11, 0, -1}, {10, 1, -1}, {9, 2, -1}, {-1, -1, -1}}
++                               : rhs;
++      auto other = build<S> (right);
+       const logical new_raw = operation == 1 ? logical {20, 20, 20} : logical {-1, -1, 20};
+       auto candidate = vector<V> (new_raw);
+       std::optional<S> result;
+@@ -112,7 +115,8 @@ namespace {
+           case 1:
+           case 2: subject.insert (std::move (candidate)); break;
+           case 3: subject.rebuild (); break;
+-          case 4: subject.intersect_with (other); break;
++          case 4:
++          case 6: subject.intersect_with (other); break;
+           case 5: subject.union_with (std::move (other)); break;
+           default: throw std::runtime_error ("unknown operation");
+         }
+@@ -126,7 +130,7 @@ namespace {
+       }
+       allocations_left = -1;
+       if (threw) {
+-        require (canonical (other) == maxima (rhs), "failure consumed RHS");
++        require (canonical (other) == maxima (right), "failure consumed RHS");
+         if (operation != 5) {
+           check (subject, initial, initial);
+           require (unpack (candidate) == new_raw, "failure moved candidate");
+@@ -145,10 +149,10 @@ namespace {
+       region expected = initial;
+       if (operation == 1 or operation == 2)
+         expected.push_back (new_raw);
+-      if (operation == 4) {
++      if (operation == 4 or operation == 6) {
+         expected.clear ();
+         for (const auto& a : initial)
+-          for (const auto& b : rhs)
++          for (const auto& b : right)
+             expected.push_back (
+                 {std::min (a[0], b[0]), std::min (a[1], b[1]), std::min (a[2], b[2])});
+       }
+@@ -217,17 +221,51 @@ namespace {
+       }
+   };
+   static_assert (posets::Vector<throwing_move>);
++
++  template <class V, bool Cascade>
++  void contained_intersection () {
++    using set_type = posets::downsets::lazy_kdtree_backed<V, Cascade>;
++    for (const size_t minimum : {3U, 100U}) {
++      posets::downsets::lazy_kdtree_policy policy;
++      policy.min_index_size = minimum;
++      policy.leaf_size = 2;
++      std::vector<V> input;
++      for (const auto& row : original ())
++        input.push_back (vector<V> (row));
++      set_type subject (std::move (input), policy);
++      subject.rebuild ();
++      auto other = build<set_type> ({{20, 20, 20}});
++      const auto* backing = subject.get_backing_vector ().data ();
++      const auto before = subject.storage ();
++      allocations_left = 0;
++      subject.intersect_with (other);
++      subject.intersect_with (subject);
++      allocations_left = -1;
++      const auto after = subject.storage ();
++      require (subject.get_backing_vector ().data () == backing and
++                   before.known_retained_bytes == after.known_retained_bytes and
++                   before.rebuilds == after.rebuilds and before.compactions == after.compactions and
++                   before.created_ids == after.created_ids,
++               "contained intersection rebuilt or replaced its backing storage");
++      check (subject, original (), original ());
++      check (other, {{20, 20, 20}}, original ());
++    }
++  }
++
+   template <class V, bool Cascade>
+   void test () {
+     for (int mode = 0; mode < 7; ++mode)
+       std::cout << "cascade=" << Cascade << " construction_mode=" << mode
+                 << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";
+-    for (int operation = 0; operation < 6; ++operation)
++    for (int operation = 0; operation < 7; ++operation)
+       std::cout << "cascade=" << Cascade << " operation=" << operation
+                 << " injected_sites=" << sweep<V, Cascade> (operation) << " PASS\n";
+   }
+ }
+ int main () try {
++  contained_intersection<posets::vectors::vector_backed<int8_t>, true> ();
++  contained_intersection<posets::vectors::vector_backed<int8_t>, false> ();
++  contained_intersection<posets::vectors::simd_vector_backed<int8_t>, true> ();
+   test<posets::vectors::vector_backed<int8_t>, false> ();
+   test<posets::vectors::vector_backed<int8_t>, true> ();
+   test<posets::vectors::simd_vector_backed<int8_t>, true> ();
+diff --git a/tests/lazy-kdtree.cc b/tests/lazy-kdtree.cc
+index a810b5faffe83f790c63fc1d92b44f7beb584d31..50cf5f6ddb229914731dfe88f505eeaa9dffd5c4 100644
+--- a/tests/lazy-kdtree.cc
++++ b/tests/lazy-kdtree.cc
+@@ -300,6 +300,37 @@ namespace {
+     }
+   }
+ 
++  template <class V, bool Cascade>
++  void intersection_prefix () {
++    using set_type = posets::downsets::lazy_kdtree_backed<V, Cascade>;
++    posets::downsets::lazy_kdtree_policy policy;
++    policy.leaf_size = 2;
++    policy.min_index_size = 3;
++    const region rows {{4, 0, 0}, {3, 1, 0}, {2, 2, 0}, {1, 3, 0}, {0, 4, 0}};
++    for (const size_t prefix : {0U, 2U, 4U}) {
++      std::vector<V> values;
++      for (const auto& row : rows)
++        values.push_back (vector<V> (row));
++      set_type subject (std::move (values), policy);
++      region rhs (rows.begin (), rows.begin () + static_cast<std::ptrdiff_t> (prefix));
++      rhs.push_back ({-1, -1, -1});
++      auto other = build<set_type> (rhs);
++      region expected;
++      for (const auto& lhs : rows)
++        for (const auto& right : rhs) {
++          logical met;
++          for (size_t d = 0; d < lhs.size (); ++d)
++            met.push_back (std::min (lhs[d], right[d]));
++          expected.push_back (std::move (met));
++        }
++      subject.intersect_with (other);
++      auto probes = expected;
++      probes.insert (probes.end (), rows.begin (), rows.end ());
++      observe (subject, expected, probes);
++      observe (other, rhs, probes);
++    }
++  }
++
+   template <bool Cascade>
+   void stable_ids_and_tiny_history () {
+     using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
+@@ -513,6 +544,10 @@ int main () try {
+   random_algebra<posets::vectors::simd_vector_backed<int8_t>, false> ();
+   random_algebra<posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<int8_t>, 3>,
+                  true> ();
++  intersection_prefix<scalar_vector, true> ();
++  intersection_prefix<scalar_vector, false> ();
++  intersection_prefix<posets::vectors::simd_vector_backed<int8_t>, true> ();
++  intersection_prefix<posets::vectors::simd_vector_backed<int8_t>, false> ();
+   stable_ids_and_tiny_history<true> ();
+   stable_ids_and_tiny_history<false> ();
+   catalogs<true> ();

@@ -1,0 +1,79 @@
+{
+  "scope": "Independent saved final17 arithmetic/resource/identity joins; owner final closure reviewed separately",
+  "summary_sha256": "0f7d51ee6bad59eb590e10576ef782d766ef14af7d23282e94a2d88d801870f3",
+  "frozen_sha256": "7d7e069cd75eecc6e9b7842fad4f31d08897a92a9328f80eb3a511fdd3209801",
+  "input_bindings": {
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/anchor-e167.tsv.memory.tsv": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv": "29ab6065a68e6eefd35559f862f134624486bf7e3193fab883946da62f8802b8",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/anchor-e167.tsv.memory.tsv": "b5536f702534337b073e96577c3c55aa96ecbc1d35dbb5fb306e1c52ede6bbd8",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/raw/lazy-fc.tsv.memory.tsv": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv": "f2b7e09d9aae3d7aaac0db8d2ef0d40cf616ab62121f9d8b7ca49db9348c5830",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/deadline-reruns-v1/final-kd-vs-original-17s-v1/strict-wall-scoring/lazy-fc.tsv.memory.tsv": "ba2e401562c3119b3dbcbff662ea706ca7787d980fb23ce03946cf22f03c08e5"
+  },
+  "counts": {
+    "native_rows": 3048,
+    "raw_memory_scored_joins": 3048,
+    "unique_scope_units": 3048,
+    "instances_per_arm": 1524,
+    "solved_sets_identical": true,
+    "shared_solved": 1368,
+    "shared_TIMEOUT_union": 156,
+    "candidate_gains": 0,
+    "candidate_losses": 0,
+    "native_errors": 0,
+    "decisive_truth_conflicts": 0,
+    "decisive_wall_overruns": 0
+  },
+  "arms": {
+    "anchor-e167": {
+      "native_and_memory_rows": 1524,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "strict_solved": 1368,
+      "PAR2_sum_decimal": "5946.65522641432471894",
+      "PAR2_rounded6": "5946.655226",
+      "solved_wall_sum_decimal": "642.65522641432471894",
+      "CPU_seconds_sum_decimal": "14011.778712",
+      "process_RSS_max_bytes": 3976986624,
+      "process_RSS_median_bytes": 61609984.0,
+      "scope_peak_max_bytes": 4239486976,
+      "scope_peak_median_bytes": 106481664.0,
+      "complete_resource_rows": 1524,
+      "OOM_kill_observed_rows": 0,
+      "OOM_kill_counter_sum": 0,
+      "OOM_counter_sum": 0
+    },
+    "lazy-fc": {
+      "native_and_memory_rows": 1524,
+      "native_outcomes": {
+        "UNREALIZABLE": 739,
+        "REALIZABLE": 629,
+        "TIMEOUT": 156
+      },
+      "strict_solved": 1368,
+      "PAR2_sum_decimal": "5940.16634506871923785",
+      "PAR2_rounded6": "5940.166345",
+      "solved_wall_sum_decimal": "636.16634506871923785",
+      "CPU_seconds_sum_decimal": "13979.571882",
+      "process_RSS_max_bytes": 3977768960,
+      "process_RSS_median_bytes": 61751296.0,
+      "scope_peak_max_bytes": 4243906560,
+      "scope_peak_median_bytes": 106770432.0,
+      "complete_resource_rows": 1524,
+      "OOM_kill_observed_rows": 0,
+      "OOM_kill_counter_sum": 0,
+      "OOM_counter_sum": 0
+    }
+  },
+  "candidate_minus_original_PAR2_decimal": "-6.48888134560548109",
+  "candidate_minus_original_PAR2_percent_decimal": "-0.1091181697701701857464852181",
+  "precision": "Summary rounds totals/delta to6decimals; independently summed all stored wall strings above",
+  "orientation": "candidate_vs_baseline is lazy minus anchor. Generic paired section reverses orientation because new=anchor-e167; do not use its positive delta as a candidate regression.",
+  "inference": "Equal solved sets and one unrepeated0.109percent PAR2 difference establish no reliable performance winner; no noise floor is supplied. Whole configuration comparison, not isolated lazyheader causality. RSS maximum reaped process and whole cgroup peak are distinct; neither is retained backend heap.",
+  "future30": "156 common nativeTIMEOUT inputs, both arms,312futurecalls subject to actual plan/root release. Preserve17s rows, scores and denominator; no30s outcomes yet."
+}

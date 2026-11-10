@@ -1,10 +1,8 @@
 #pragma once
 
 #include <type_traits>
-#include <unordered_map>
 
 #include <algorithm>
-#include <boost/functional/hash.hpp>
 #include <cassert>
 #include <iostream>
 #include <limits>
@@ -16,7 +14,9 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/config.hh>
 #include <posets/utils/antichain.hh>
+#include <posets/utils/storage_stats.hh>
 
 namespace posets::utils {
 
@@ -40,6 +40,8 @@ namespace posets::utils {
       // to a DFA/DAG, instead storing the intermediate trie).
       size_t dim {0};
       int root {-1};
+      size_t allocated_nodes {0};
+      size_t reachable_nodes {0};
       struct st_node {
           typename V::value_type label;
           int color;
@@ -58,15 +60,6 @@ namespace posets::utils {
       mutable std::vector<unsigned> dominates_stamp;
       mutable unsigned dominates_gen {0};
       mutable std::vector<std::tuple<int, short, bool>> dominates_stack;
-
-      // We need to compare subtrees (assuming the trie construction
-      // has been applied)
-      using signature_type = std::vector<std::common_type_t<typename V::value_type, int>>;
-      struct signature_hash {
-          std::size_t operator() (const signature_type& v) const {
-            return boost::hash_range (v.begin (), v.end ());
-          }
-      };
 
       // We change the sibling pointers/indices of children of nodes[start..end)
       // so that they form a single set of siblings
@@ -167,6 +160,56 @@ namespace posets::utils {
         }
       }
 
+#if POSETS_SHARINGTRIE_COMPACT_NODES
+      void compact_nodes () {
+        std::vector<int> pending;
+        pending.reserve (dim);
+        pending.push_back (root);
+        size_t count = 0;
+        while (not pending.empty ()) {
+          const auto& current = bin_tree[pending.back ()];
+          pending.pop_back ();
+          ++count;
+          if (current.bro >= 0)
+            pending.push_back (current.bro);
+          if (current.son >= 0)
+            pending.push_back (current.son);
+        }
+        if (count == allocated_nodes)
+          return;
+        auto compact = std::make_unique_for_overwrite<node_array> (count);
+        struct link {
+            int old;
+            int parent;
+            bool sibling;
+        };
+        std::vector<link> links;
+        links.reserve (dim);
+        links.push_back ({root, -1, false});
+        int next = 0;
+        while (not links.empty ()) {
+          const auto [old, parent, sibling] = links.back ();
+          links.pop_back ();
+          const auto& current = bin_tree[old];
+          const int index = next++;
+          compact[index] = {current.label, 0, -1, -1};
+          if (parent >= 0) {
+            if (sibling)
+              compact[parent].bro = index;
+            else
+              compact[parent].son = index;
+          }
+          if (current.bro >= 0)
+            links.push_back ({current.bro, index, true});
+          if (current.son >= 0)
+            links.push_back ({current.son, index, false});
+        }
+        bin_tree.swap (compact);
+        root = 0;
+        allocated_nodes = count;
+      }
+#endif
+
       void color_as_dfa () {
         std::vector<std::vector<int>> layer (dim);
 
@@ -215,27 +258,38 @@ namespace posets::utils {
           }
         }
 
-        // Color equal suffix languages bottom-up. Assign each color at its
-        // first signature, avoiding a separate vector of indices per class.
-        // Reuse signature scratch and hash buckets between layers.
+        for (const auto& entries : layer)
+          reachable_nodes += entries.size ();
+
+        // Children are already colored and immutable; own colors never enter this ordering.
+        const auto signature_less = [this] (int lhs, int rhs) {
+          const auto& left = bin_tree[lhs];
+          const auto& right = bin_tree[rhs];
+          if (left.label != right.label)
+            return left.label < right.label;
+          int left_child = left.son;
+          int right_child = right.son;
+          while (left_child >= 0 and right_child >= 0) {
+            const auto& lc = bin_tree[left_child];
+            const auto& rc = bin_tree[right_child];
+            if (lc.color != rc.color)
+              return lc.color < rc.color;
+            left_child = lc.bro;
+            right_child = rc.bro;
+          }
+          return left_child < 0 and right_child >= 0;
+        };
+        // Sort exact signatures within each depth, avoiding per-color allocations.
         int nxt_color = 0;
-        signature_type k;
-        std::unordered_map<signature_type, int, signature_hash> colors;
         for (int i = this->dim - 1; i >= 0; i--) {
-          colors.clear ();
+          std::ranges::sort (layer[i], signature_less);
+          int previous = -1;
+          int color = -1;
           for (const int idx : layer[i]) {
-            const st_node* cur = this->bin_tree.get () + idx;
-            k.clear ();
-            k.push_back (cur->label);
-            int son_idx = cur->son;
-            while (son_idx > -1) {
-              cur = this->bin_tree.get () + son_idx;
-              k.push_back (cur->color);
-              son_idx = cur->bro;
-            }
-            const auto [entry, inserted] = colors.try_emplace (k, nxt_color);
-            this->bin_tree[idx].color = entry->second;
-            nxt_color += static_cast<int> (inserted);
+            if (previous < 0 or signature_less (previous, idx))
+              color = nxt_color++;
+            this->bin_tree[idx].color = color;
+            previous = idx;
           }
         }
         // Set up the generation-stamp cache and DFS stack for dominates()
@@ -256,6 +310,7 @@ namespace posets::utils {
         if (this->dim > static_cast<size_t> (std::numeric_limits<int>::max ()) / elements.size ())
           throw std::length_error ("sharingtrie node index capacity exceeded");
         this->bin_tree = std::make_unique_for_overwrite<node_array> (this->dim * elements.size ());
+        this->allocated_nodes = this->dim * elements.size ();
         this->root = 0;
 
         // creating linear trees with their roots being siblings
@@ -292,6 +347,9 @@ namespace posets::utils {
         // now, we make a trie/suffix tree (making sure the children are in
         // decreasing label order)
         this->to_trie ();
+#if POSETS_SHARINGTRIE_COMPACT_NODES
+        compact_nodes ();
+#endif
 
         // Color equivalent suffix languages and prepare the query caches.
         this->color_as_dfa ();
@@ -339,6 +397,7 @@ namespace posets::utils {
       sharingtrie (size_t dim) : dim (dim) {}
       sharingtrie (size_t dim, size_t initsize)
         : dim (dim),
+          allocated_nodes (initsize),
           bin_tree (std::make_unique_for_overwrite<node_array> (initsize)) {}
       sharingtrie (const sharingtrie&) = delete;
       sharingtrie (sharingtrie&& other) noexcept { swap (other); }
@@ -354,6 +413,8 @@ namespace posets::utils {
         using std::swap;
         swap (dim, other.dim);
         swap (root, other.root);
+        swap (allocated_nodes, other.allocated_nodes);
+        swap (reachable_nodes, other.reachable_nodes);
         swap (bin_tree, other.bin_tree);
         swap (vector_set, other.vector_set);
         swap (dominates_stamp, other.dominates_stamp);
@@ -504,6 +565,19 @@ namespace posets::utils {
         return res;
       }
 
+      [[nodiscard]] storage_stats storage () const {
+        return {
+            sizeof (*this),
+            sizeof (st_node),
+            reachable_nodes,
+            allocated_nodes,
+            allocated_nodes * sizeof (st_node),
+            0,
+            reachable_nodes * sizeof (typename V::value_type),
+            vector_set.capacity () * sizeof (V),
+            dominates_stack.capacity () * sizeof (typename decltype (dominates_stack)::value_type),
+            dominates_stamp.capacity () * sizeof (unsigned)};
+      }
       [[nodiscard]] auto& get_backing_vector () { return vector_set; }
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
       [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
