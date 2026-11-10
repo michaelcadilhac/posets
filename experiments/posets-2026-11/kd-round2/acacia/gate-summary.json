@@ -1,0 +1,62 @@
+{
+  "NO_VERBOSE_limit": "requested routes/source/type/config/verdict only; no observed route frequency",
+  "closure_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/records/21-verify-gates.json",
+    "sha256": "98c708ee527a401e5e1f77792739c9f9c8f81dfae0328f5177d247c3763d323d"
+  },
+  "expected_labels": [
+    "baseline-default",
+    "optimized-default",
+    "kd-scratch-restored"
+  ],
+  "gate_completion": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/GATES-COMPLETE.json",
+    "sha256": "368239d50158023fa9e6aa7f86e88f2ea91438190238a7c5e4f149236be636a8"
+  },
+  "new_KD": {
+    "Boolean_cases": 88,
+    "exact_V_and_R_UR": "passed",
+    "unit_tests": 87,
+    "version_suite": 1
+  },
+  "original_preservation_public": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-execution-v1/original-checkouts-redacted-proof.json",
+    "sha256": "025c76f84c42b56c38f420138e98d645c9f7a956e9e2af3f3b275a3e66988b1b"
+  },
+  "primary_protocol": {
+    "all_unsolved_PAR2_s": 34,
+    "baseline": "baseline-default",
+    "batch_size": 32,
+    "cap_s": 17,
+    "flags": [
+      "",
+      "",
+      ""
+    ],
+    "fresh_output": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+    "instances_per_arm": 1524,
+    "labels": [
+      "baseline-default",
+      "optimized-default",
+      "kd-scratch-restored"
+    ],
+    "preset": "otf_sparse_formula_parity",
+    "rows": 4572,
+    "seed": 260617,
+    "strict_wall_solved_rule": "native decisive and seconds<=17"
+  },
+  "reporting_fixtures": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/offline-tests-record.json",
+    "sha256": "fefdce3a492fd8d6fd949a12a77d6462c7baef88ef2499933da7ded389ce85d1"
+  },
+  "reporting_source": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/solver-table-draft-v1/SOURCE-REVIEW-CHECKPOINT.json",
+    "sha256": "12bf01df708e2b0dc4c17fa61f4a73c5e8b0762b5c410538ffe72ed1cab4fa90"
+  },
+  "reused_controls": {
+    "current_V_R_UR": "passed for both genuine frozen binaries",
+    "historical_file_bindings_rechecked": 14981
+  },
+  "source_attribution_limit": "The genuine frozen defaults have different private Rust archive bytes. The new KD is built separately. This is a source-treatment comparison, not an exact static dependency closure or isolated KD causal proof.",
+  "status": "All21 gates passed; exact three-arm primary remains held"
+}

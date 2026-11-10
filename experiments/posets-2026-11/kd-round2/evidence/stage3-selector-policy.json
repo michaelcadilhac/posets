@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "fixed-stage3-exploratory-TRAIN-selector-policy",
+  "declared_before": "Any stage3 larger-tier timing results",
+  "context": "Prior A+B/A-only/B-only evidence was already observed; all stage3 TRAIN frames are previously seen data, not new heldout evidence",
+  "primary_metric": {"mode": "compatible", "metric": "cpre", "comparison": "Exact same complete larger-five TRAIN frame and matched external pair"},
+  "improvement_guard": {"median_paired_optimized_over_baseline_maximum": 0.95, "all_three_pair_ratios_strictly_below": 1.0, "correctness_or_resource_failure_allowed": false, "complete_three_pairs_required": true},
+  "selection": [
+    "Default to compact plain K0",
+    "K2 scalar is eligible only when its direct K0-to-K2-scalar compatible whole-CPre comparison passes the improvement guard",
+    "K2 SIMD is eligible only when its direct K0-to-K2-SIMD compatible whole-CPre comparison passes the improvement guard",
+    "Select eligible K2 SIMD only when the direct K2-scalar-to-K2-SIMD compatible whole-CPre comparison also passes the same improvement guard for its added complexity",
+    "Otherwise select eligible K2 scalar; if neither filtered choice meets these conditions retain K0"
+  ],
+  "unconditional_larger_pairs": ["oldlazy-vs-plain", "plain-vs-k2scalar", "plain-vs-k2simd", "k2scalar-vs-k2simd", "oldrank-vs-k2simd", "newrank-vs-k2simd", "legacy-before-vs-after"],
+  "conditional_larger_followup": {"if_selected": "plain K0", "pairs": ["oldrank-vs-plain", "newrank-vs-plain"], "purpose": "Directly assess the selected candidate against both defaults; no transitive timing inference", "same_complete_cohort_and_protocol": true},
+  "standard_followup": {"always": "legacy-before-vs-after on the complete standard TRAIN cohort", "selected_KD": "Selected KD versus optimized ranked default on the complete standard TRAIN cohort", "if_no_filter_qualifies": "plain K0 versus optimized ranked default", "freeze": "Actual source/map/spec-bound plans fixed and reviewed before any standard-tier execution"},
+  "preservation": "Retain every constructor/rebuild metric, native-width observation, unfavorable outcome and censor; selection uses only the stated compatible whole-CPre guard",
+  "no_other_tuning": "No K1, axis, cutoff, leaf-size, cap, scoring, trace or rerun tuning; additional work needs root coordination",
+  "limitations": "This fixed threshold is an engineering choice for exploratory seen-TRAIN selection, not a significance test, population noise estimate, solver-speedup proof or backend-switch decision"
+}

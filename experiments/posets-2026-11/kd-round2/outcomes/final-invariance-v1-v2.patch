@@ -1,0 +1,20 @@
+--- /home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/check-final-invariance.py
++++ /home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/check-final-invariance-v2.py
+@@ -98,7 +98,7 @@
+     proof_path = Path(provenance["postbuild_proof"]["path"])
+     proof = read(proof_path)
+     bindings(proof)
+-    binary = next(item["path"] for item in proof["artifacts"] if item["path"].endswith("/src/acacia-bonsai"))
++    binary = next(item["path"] for item in proof["artifacts"] if item["path"].endswith("/src/acacia-bonsai-kd"))
+     ldd = subprocess.run(["ldd", binary], capture_output=True, text=True, check=True)
+     assert not ldd.stderr and "not found" not in ldd.stdout
+     libraries = []
+@@ -152,7 +152,7 @@
+           "source_attribution_limit": execution["source_attribution_limit"],
+           "original_checkouts_closing_snapshot": "root owns separate original-WIP closing check",
+           "all_verified_file_sha256": dict(sorted(verified.items()))}
+-with (HERE / "FINAL-INVARIANCE.json").open("x") as stream:
++with (HERE / "FINAL-INVARIANCE-v2.json").open("x") as stream:
+     json.dump(result, stream, indent=2, sort_keys=True)
+     stream.write("\n")
+ print(json.dumps({key: value for key, value in result.items() if key not in {"all_verified_file_sha256", "roles"}}, sort_keys=True))

@@ -1,0 +1,219 @@
+{
+  "scope": "One complete three-arm KD/default campaign; strict measured-wall <=17 scoring; all unsolved cost34s. KD is compared with both ranked defaults. No significance or isolated-header causal claim.",
+  "summary": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/summary.json",
+    "sha256": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7"
+  },
+  "manifest": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/frozen.json",
+    "sha256": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9"
+  },
+  "derivation_script_sha256": "f5d2b4e105f1d17ad1ace9fc82bdd176f763c794b6bcc3d48812397c7aa84861",
+  "rows": [
+    {
+      "arm": "baseline-default",
+      "solved": 1368,
+      "instances": 1524,
+      "par2_total_s": 5945.136669,
+      "baseline_gains": 0,
+      "baseline_losses": 0,
+      "baseline_par2_delta_s": 0.0,
+      "optimized_gains": 1,
+      "optimized_losses": 0,
+      "optimized_par2_delta_s": -14.821476,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14005.055232,
+      "scope_peak_observed_rows": 1524,
+      "scope_peak_max_bytes": 4244758528,
+      "scope_peak_median_bytes": 106059776.0,
+      "process_rss_observed_rows": 1524,
+      "process_rss_max_bytes": 3977715712,
+      "process_rss_median_bytes": 61808640.0,
+      "wall_cap_overruns": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 156,
+        "UNKNOWN": 0
+      },
+      "memory_events_observed_rows": 1524,
+      "memory_events_missing_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "native_TIMEOUT_with_oom_kill": 0
+    },
+    {
+      "arm": "optimized-default",
+      "solved": 1367,
+      "instances": 1524,
+      "par2_total_s": 5959.958145,
+      "baseline_gains": 0,
+      "baseline_losses": 1,
+      "baseline_par2_delta_s": 14.821476,
+      "optimized_gains": 0,
+      "optimized_losses": 0,
+      "optimized_par2_delta_s": 0.0,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14000.96839,
+      "scope_peak_observed_rows": 1524,
+      "scope_peak_max_bytes": 4244234240,
+      "scope_peak_median_bytes": 106856448.0,
+      "process_rss_observed_rows": 1524,
+      "process_rss_max_bytes": 3977621504,
+      "process_rss_median_bytes": 61739008.0,
+      "wall_cap_overruns": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 157,
+        "UNREALIZABLE": 738
+      },
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 157,
+        "UNKNOWN": 0
+      },
+      "memory_events_observed_rows": 1524,
+      "memory_events_missing_rows": 0,
+      "oom_kill_observed_rows": 0,
+      "native_TIMEOUT_with_oom_kill": 0
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "solved": 1365,
+      "instances": 1524,
+      "par2_total_s": 6010.86808,
+      "baseline_gains": 0,
+      "baseline_losses": 3,
+      "baseline_par2_delta_s": 65.731411,
+      "optimized_gains": 0,
+      "optimized_losses": 2,
+      "optimized_par2_delta_s": 50.909935,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14040.773485,
+      "scope_peak_observed_rows": 1524,
+      "scope_peak_max_bytes": 8589934592,
+      "scope_peak_median_bytes": 106078208.0,
+      "process_rss_observed_rows": 1524,
+      "process_rss_max_bytes": 8360685568,
+      "process_rss_median_bytes": 61739008.0,
+      "wall_cap_overruns": 0,
+      "native_outcomes": {
+        "MEMOUT": 2,
+        "REALIZABLE": 627,
+        "TIMEOUT": 157,
+        "UNREALIZABLE": 738
+      },
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 2,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 157,
+        "UNKNOWN": 0
+      },
+      "memory_events_observed_rows": 1524,
+      "memory_events_missing_rows": 0,
+      "oom_kill_observed_rows": 7,
+      "native_TIMEOUT_with_oom_kill": 5
+    }
+  ],
+  "comparisons": {
+    "baseline-default": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [],
+        "par2_delta_s": 0.0
+      },
+      "optimized-default": {
+        "gains": [
+          "load_balancer_unreal1_pb_6_4_pe_.ltl"
+        ],
+        "losses": [],
+        "par2_delta_s": -14.821476
+      }
+    },
+    "optimized-default": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [
+          "load_balancer_unreal1_pb_6_4_pe_.ltl"
+        ],
+        "par2_delta_s": 14.821476
+      },
+      "optimized-default": {
+        "gains": [],
+        "losses": [],
+        "par2_delta_s": 0.0
+      }
+    },
+    "kd-scratch-restored": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [
+          "generalized_buffer_pb_4_pe_.ltl",
+          "load_balancer_unreal1_pb_6_4_pe_.ltl",
+          "simple_arbiter_enc_pb_11_pe_.ltl"
+        ],
+        "par2_delta_s": 65.731411
+      },
+      "optimized-default": {
+        "gains": [],
+        "losses": [
+          "generalized_buffer_pb_4_pe_.ltl",
+          "simple_arbiter_enc_pb_11_pe_.ltl"
+        ],
+        "par2_delta_s": 50.909935
+      }
+    }
+  },
+  "source_pins": {
+    "baseline-default": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+    "optimized-default": "30e66853832d98bcfaada296d892157b95a8150d",
+    "kd-scratch-restored": "d363b9f901b927575ee1544b19820a146c2479d9"
+  },
+  "memory_helper_sha256": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+  "progress": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/progress.json",
+    "sha256": "97ea702329fe216662f96b40308be50c659aa1cbe4fa24e72a93fdc3a412aa82"
+  },
+  "input_bindings": {
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/frozen.json": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/progress.json": "97ea702329fe216662f96b40308be50c659aa1cbe4fa24e72a93fdc3a412aa82",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/summary.json": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-campaign/campaign.py": "20724d11b3b364ccc416ef24927a641fdf706f45f6ec923f10b7864cdfab0a1e",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/benchlib.py": "0e18c08c753786c07974d80cf47a1c46d95b0c0fea9616e4468eee3de28c239c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/cactus-report.py": "9929471d26f69a44b05b2737e28c9f1d0a1e0a330c40c5ec4e46842c65c2aad1",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/family_names.py": "26dd858dba18cd4e5d889800167bcd2898783984440210767407c7318605871c",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/make-panel.py": "950ca408bbe2267e8e33dc313375e61ac46c0b383dee5f4a763c0b2a6207bbfd",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/run-syntcomp26-coverage.py": "5580179c1e3b48e1dc03f3c5f84fda51bd94be498cc5350bf74caabba4f577e2",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/scope_memory.py": "74b2ddffe7a07de7d36b74fcb35ef93ad553027a3b05adb77dbd0d17e7971a90",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/suite_paths.py": "262c750c2ff0f51ec508ecebd52b08438e08ed0fda1a31dcc76d7076cd0ad872",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/all.list": "0226e5cd2cadc033544f0901bd900dd31dd7add813ef216558826468e0b7b5c7",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/benchmarking/syntcomp26-status-exceptions.tsv": "80b634c70a3ef4aecd92e1ae6ce0c0c8deec375f2a06f485a470be472ce32866",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/tests/suites/benchmarks/syntcomp26/tlsf-sources.tsv": "9fbc4007b18065296d592f14bd9ef0e9e95a4893a4d4477e0153013fa531f92f",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/baseline-default.tsv": "2ae2e822ed2e9ff6c51551def87eef864652df8bf8bea9e4c4d71433ff2ce5de",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/baseline-default.tsv.memory.tsv": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/baseline-default.tsv": "2ae2e822ed2e9ff6c51551def87eef864652df8bf8bea9e4c4d71433ff2ce5de",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/baseline-default.tsv.memory.tsv": "385bfc16b5d1c318a65319ac79fe5b5ad6c13faf58b5f285390006ced5c662a3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/optimized-default.tsv": "a5bd501c33a509b643cd7e95d855ce955bbaf13a71218ed9e7950d97d7de571f",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/optimized-default.tsv.memory.tsv": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/optimized-default.tsv": "a5bd501c33a509b643cd7e95d855ce955bbaf13a71218ed9e7950d97d7de571f",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/optimized-default.tsv.memory.tsv": "c3be862a1929b6cf1fd894d15c08277bd420929fcc6c689ce2f188a48e0c9fc3",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/kd-scratch-restored.tsv": "fba7cc753f5130e8342f16e6b104e996a2d575c578b1555c0c4d3b26193b1c02",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/raw/kd-scratch-restored.tsv.memory.tsv": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/kd-scratch-restored.tsv": "fba7cc753f5130e8342f16e6b104e996a2d575c578b1555c0c4d3b26193b1c02",
+    "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/strict-wall-scoring/kd-scratch-restored.tsv.memory.tsv": "e250b56e3593a9846aa57c9b34c300214bd1a9bb5429766406a602b5506cdd78"
+  }
+}

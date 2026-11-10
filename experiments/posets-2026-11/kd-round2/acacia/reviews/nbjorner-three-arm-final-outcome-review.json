@@ -1,0 +1,38 @@
+{
+  "scope": "Final bounded independent saved-outcome/archive/provenance audit. This closes the prior pending handoff only; it is not approval of future publication prose. No target/helper execution, imports of target code, builds, tests, solver reruns or new measurements.",
+  "decision": "Approved within the stated evidence-integrity/outcome scope. Frozen completion, source invariance, preserved audit incident, numerical archive and redacted preservation now close the previous pending items. No actionable remaining numerical or provenance defect found.",
+  "exact_bindings": {
+    "FINAL-HANDOFF.json": "6a0cbd21da561b5c0004dea0e35c3fdb1a779540e42f54a7d539d69506c1673c",
+    "frozen.json": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+    "summary.json": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+    "solver-comparison.json": "f3d110f1b9e8da645fa8f5bec5c211ffa94cce76587d6907bef8c97c498b7bda",
+    "oom-event-observations.json": "5ae9cd54a167236e2ddb02b76dc1d6465e43aef996d74bf7c44a2f91fd0f4f09",
+    "FINAL-INVARIANCE-v2.json": "9b8026dfc85e4e9238741720825e1d445670aa8d2237a004e2ad6900d0d481a9",
+    "original-checkouts-final-redacted-proof.json": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1",
+    "acacia-kd-three-arm-numerical.tar.gz": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156",
+    "archive_MANIFEST.json": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+    "extraction-verification.json": "05f16b9107bbdb02f3c41335d14ecd5178ab277421822d4468e4c87154876979"
+  },
+  "numerical_audit": {
+    "path": "work/kd-round2/reviews/nbjorner-three-arm-outcome-static-review-pending-closure.json",
+    "sha256": "a36189baec7c4e5cc91cdf9b8e2b217c4f8e0f86a0bbe369b71d0067bb648243",
+    "continued_validity": "All numerical inputs remain those independently audited bytes. Its pending-closeout status is superseded by this final handoff approval; its exact arithmetic and limitations remain unchanged.",
+    "summary": "4572 native/scored observations,1524 per arm, complete CPU/scope/RSS/kernel-event joins, strict17second solved rule and34second unsolved PAR2. Old rank789 solves1368/PAR25945.136669; new rank30e1367/5959.958145; KDd3631365/6010.868080. KD has0gains/3losses versus old and0gains/2losses versus new, with PAR2 deltas+65.731411/+50.909935seconds. Zero native decisive overruns and opposing decisive verdicts; all native labels preserved.",
+    "OOM": "KD has7 kill-observed invocation rows:2nativeMEMOUT plus5nativeTIMEOUT. The summed15oom_kill and24oom counters are kernel counts, not invocation counts. Both defaults have0kill-observed rows. All three lost KD cases are non-OOM TIMEOUTs, separate from those seven common-unsolved cases."
+  },
+  "handoff_checks": [
+    "All72 direct final-handoff file bindings independently match their current hashes and declared sizes. Completed results/comparators, immutable frozen source identities789/30e/d363 and the previously accepted21-gate evidence agree with the numerical audit.",
+    "The source audit reports22366 unchanged source/artifact/helper/library/evidence files, including14981 historical files, and all144 scheduled native invocations. Failed v1 selector audit, exact two-line v2 correction, both specs/records/logs and the incident explanation remain bound and preserved. No solver rerun or acceptance-policy weakening occurred. The reviewer checked the correction and saved audit results rather than re-running the source auditor or rehashing its complete historical inventory.",
+    "Archive hash/size1084624bytes matches the handoff and saved extraction proof. Read-only archive streaming independently confirms exactly26 unique regular relative members:24 numerical files plus MANIFEST and SHA256SUMS, all expected bytes/hashes and25checksum entries matching. No extraction was performed by the reviewer. The owner's separate bound extraction proof confirms original source bytes stayed unchanged.",
+    "Archive source/binary/cap/summary hashes match the audited campaign. Exact raw/scored rows, resource sidecars, native conflicts/caps/summary TSVs, comparison CSV and event audit are retained; no corpus, ELF, build tree, unrestricted environment or private preservation status/diff is included. Historical evidence paths remain provenance.",
+    "Final redacted preservation proof records all five aliases matching all six compared tracked-state fields; private status/diff details remain outside public evidence. Its declared ignored/untracked byte limitation is retained rather than represented as a stronger content audit."
+  ],
+  "interpretation_limits": [
+    "The observed full campaign supports retaining the default rather than switching to KD on this evidence. It is one trial without measured noise floor or significance claim.",
+    "The three genuine source treatments have different private Rust archives. There is no contemporaneous before-KD arm, so the full campaign does not isolate the causal effect of the retained legacy bound-restoration optimization.",
+    "NO_VERBOSE gates establish requested routes/source/type/config/verdicts, not runtime route frequency. Prior favorable same-backend microbenchmarks are kept separate from this negative full-solver comparison.",
+    "This audit approves completed evidence and numerical interpretation boundaries, not the later final report/package wording or an unreviewed source change."
+  ],
+  "attribution": "Independent verification, not origin credit for implementation, measured findings or the owner's artifact-selector fix. The original immutable contribution ledger was not modified.",
+  "preservation": "Only this work-directory review artifact was written; original Acacia/WIP, frozen sources/results/helpers and archive bytes are unchanged."
+}

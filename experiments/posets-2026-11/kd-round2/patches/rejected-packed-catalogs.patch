@@ -1,0 +1,253 @@
+diff --git a/README.md b/README.md
+index 39f92acbd03754e3605521bace83d5afa4dbca6d..722aa6586363f45c8a89d55759678209aea838cb 100644
+--- a/README.md
++++ b/README.md
+@@ -387,6 +387,12 @@ keeps each live payload valid and supplies consistent access/live predicates.
+ all geometry and catalogs. The utility ID-to-leaf map scales with the supplied
+ ID span; the owning backend freezes densely renumbered IDs. `check_bridges(key, upper)` checks exact cascaded
+ positions against independent standard-library searches.
++Leaf keys occupy the first frozen-point-count slots. Internal catalogs append
++after them and map directly to bridge entries, without a per-node offset array.
++Internal catalog lengths are bounded by leaf size. Buckets up to 255 therefore
++use two one-byte bridge positions; larger policies retain two full-width positions.
++Both layouts share one byte buffer and use explicit byte copying for wide reads.
++Storage reports the selected bridge-entry width and actual retained buffer bytes.
+ 
+ Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
+ collect query/node/leaf visits, full comparisons, binary searches and bridge
+diff --git a/include/posets/downsets/lazy_kdtree_backed.hh b/include/posets/downsets/lazy_kdtree_backed.hh
+index 00c9a3373112e9f0d0e5dd796185a36fdbb8b30f..cbe76642f42a10fc3311d15de45a724ce5d9eb00 100644
+--- a/include/posets/downsets/lazy_kdtree_backed.hh
++++ b/include/posets/downsets/lazy_kdtree_backed.hh
+@@ -161,6 +161,7 @@ namespace posets::downsets {
+                       << " reachable=" << s.frozen.nodes << " capacity=" << s.frozen.node_capacity
+                       << " catalog_keys=" << s.frozen.keys << " key_bytes=" << s.frozen.key_bytes
+                       << " bridge_bytes=" << s.frozen.bridge_bytes
++                      << " bridge_entry_bytes=" << s.frozen.bridge_entry_bytes
+                       << " point_id_bytes=" << s.frozen.point_id_bytes
+                       << " leaf_map_bytes=" << s.frozen.leaf_map_bytes
+                       << " generator_objects=" << s.generator_object_bytes
+diff --git a/include/posets/utils/bucket_kdtree.hh b/include/posets/utils/bucket_kdtree.hh
+index baf894970eadefec39d805e1a89080ecd3387030..b006572dc429f7c07c808b802857e04c66c410f3 100644
+--- a/include/posets/utils/bucket_kdtree.hh
++++ b/include/posets/utils/bucket_kdtree.hh
+@@ -3,6 +3,7 @@
+ #include <algorithm>
+ #include <cassert>
+ #include <cstdint>
++#include <cstring>
+ #include <limits>
+ #include <numeric>
+ #include <span>
+@@ -34,6 +35,7 @@ namespace posets::utils {
+       struct statistics {
+           size_t object_bytes, node_size, nodes, node_capacity;
+           size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes;
++          size_t bridge_entry_bytes;
+           [[nodiscard]] size_t bytes () const {
+             return object_bytes + (node_size * node_capacity) + key_bytes + bridge_bytes +
+                    point_id_bytes + leaf_map_bytes;
+@@ -50,40 +52,66 @@ namespace posets::utils {
+           id_type catalog, length;
+           key_type split;
+       };
+-      struct bridge {
+-          id_type left, right;
+-      };
+       std::vector<node> nodes;
+       std::vector<id_type> ids;
+       std::vector<id_type> leaf_for_id;
+       std::vector<key_type> keys;
+       // One pair per INTERNAL catalog entry; leaf entries have no bridge storage.
+-      std::vector<bridge> links;
+-      std::vector<id_type> link_start;
++      std::vector<uint8_t> links;
+       size_t dimension {0};
+       size_t bucket_size {16};
+ #if POSETS_LAZY_KDTREE_STATS
+       mutable query_stats query_counts;
+ #endif
+ 
++      [[nodiscard]] size_t bridge_stride () const {
++        return bucket_size <= std::numeric_limits<uint8_t>::max () ? 2 : 2 * sizeof (id_type);
++      }
++      void append_bridge (id_type left, id_type right) {
++        const size_t stride = bridge_stride ();
++        if (stride > links.max_size () - links.size ())
++          throw std::length_error ("bucket_kdtree bridge capacity exceeded");
++        const size_t start = links.size ();
++        links.resize (start + stride);
++        if (stride == 2) {
++          assert (left <= std::numeric_limits<uint8_t>::max () and
++                  right <= std::numeric_limits<uint8_t>::max ());
++          links[start] = static_cast<uint8_t> (left);
++          links[start + 1] = static_cast<uint8_t> (right);
++        }
++        else {
++          std::memcpy (links.data () + start, &left, sizeof (left));
++          std::memcpy (links.data () + start + sizeof (left), &right, sizeof (right));
++        }
++      }
++      [[nodiscard]] id_type read_bridge (size_t entry, bool right) const {
++        const size_t stride = bridge_stride ();
++        assert (entry < links.size () / stride);
++        const size_t start = entry * stride;
++        if (stride == 2)
++          return links[start + static_cast<size_t> (right)];
++        id_type result;
++        std::memcpy (&result, links.data () + start + (right ? sizeof (id_type) : 0),
++                     sizeof (result));
++        return result;
++      }
++
+       // Recursion is bounded by balanced tree height, independent of dimension.
+       // NOLINTBEGIN(misc-no-recursion)
+       template <class Get>
+       id_type build_node (size_t begin, size_t end, id_type axis, id_type parent, const Get& get) {
+         const auto index = static_cast<id_type> (nodes.size ());
+         nodes.push_back ({0, 0, parent, static_cast<id_type> (end - begin), none, 0, 0, {}});
+-        if constexpr (Cascade)
+-          link_start.push_back (0);
+         if (end - begin <= bucket_size) {
+           std::ranges::sort (std::span (ids).subspan (begin, end - begin),
+                              [&] (id_type a, id_type b) { return get (a)[0] < get (b)[0]; });
+           auto& current = nodes[index];
+           current.first = static_cast<id_type> (begin);
+           current.second = static_cast<id_type> (end - begin);
+-          current.catalog = static_cast<id_type> (keys.size ());
++          current.catalog = static_cast<id_type> (begin);
+           current.length = current.second;
+           for (size_t i = begin; i < end; ++i) {
+-            keys.push_back (get (ids[i])[0]);
++            keys[i] = get (ids[i])[0];
+             leaf_for_id[ids[i]] = index;
+           }
+           return index;
+@@ -105,7 +133,6 @@ namespace posets::utils {
+           const auto a = nodes[left];
+           const auto b = nodes[right];
+           const auto start = static_cast<id_type> (keys.size ());
+-          link_start[index] = static_cast<id_type> (links.size ());
+           size_t i = 1;
+           size_t j = 1;
+           size_t lower_a = 0;
+@@ -125,7 +152,8 @@ namespace posets::utils {
+             while (lower_b < b.length and keys[b.catalog + lower_b] < key)
+               ++lower_b;
+             keys.push_back (key);
+-            links.push_back ({static_cast<id_type> (lower_a), static_cast<id_type> (lower_b)});
++            // A merged half-sampled catalog is no longer than its leaf bucket.
++            append_bridge (static_cast<id_type> (lower_a), static_cast<id_type> (lower_b));
+           }
+           nodes[index].catalog = start;
+           nodes[index].length = static_cast<id_type> (keys.size () - start);
+@@ -159,8 +187,8 @@ namespace posets::utils {
+         const auto& c = nodes[child];
+         size_t result = c.length;
+         if (position < p.length) {
+-          const auto& link = links[link_start[parent] + position];
+-          result = right ? link.right : link.left;
++          // Leaf keys occupy [0,N); appended internal keys map 1:1 to links.
++          result = read_bridge ((p.catalog - ids.size ()) + position, right);
+         }
+         if (result > 0) {
+           const auto previous = keys[c.catalog + result - 1];
+@@ -254,7 +282,6 @@ namespace posets::utils {
+         swap (leaf_for_id, other.leaf_for_id);
+         swap (keys, other.keys);
+         swap (links, other.links);
+-        swap (link_start, other.link_start);
+         swap (dimension, other.dimension);
+         swap (bucket_size, other.bucket_size);
+ #if POSETS_LAZY_KDTREE_STATS
+@@ -272,6 +299,7 @@ namespace posets::utils {
+         replacement.dimension = dim;
+         replacement.bucket_size = leaf_size;
+         replacement.ids = std::move (points);
++        replacement.keys.resize (replacement.ids.size ());
+         if (not replacement.ids.empty ()) {
+           const auto maximum = std::ranges::max (replacement.ids);
+           if (maximum == none)
+@@ -346,9 +374,10 @@ namespace posets::utils {
+                 nodes.capacity (),
+                 keys.size (),
+                 keys.capacity () * sizeof (key_type),
+-                links.capacity () * sizeof (bridge),
++                links.capacity (),
+                 ids.capacity () * sizeof (id_type),
+-                (leaf_for_id.capacity () + link_start.capacity ()) * sizeof (id_type)};
++                leaf_for_id.capacity () * sizeof (id_type),
++                Cascade ? bridge_stride () : 0};
+       }
+       [[nodiscard]] size_t frozen_size () const { return ids.size (); }
+       [[nodiscard]] size_t live_size () const { return nodes.empty () ? 0 : nodes[0].live; }
+diff --git a/tests/lazy-kdtree.cc b/tests/lazy-kdtree.cc
+index a810b5faffe83f790c63fc1d92b44f7beb584d31..ea1b626ceecf64125ee61138ff2babe365a5856c 100644
+--- a/tests/lazy-kdtree.cc
++++ b/tests/lazy-kdtree.cc
+@@ -403,6 +403,56 @@ namespace {
+                "dead subtree answered");
+     }
+   }
++  template <bool Cascade>
++  void bridge_width_boundaries () {
++    using vector_type = posets::vectors::vector_backed<int16_t>;
++    using tree_type = posets::utils::bucket_kdtree<vector_type, Cascade>;
++    for (const size_t leaf_size : {1U, 16U, 255U, 256U})
++      for (const size_t count : {0U, 1U, 31U, 32U, 33U, 510U, 511U, 512U, 513U}) {
++        std::vector<vector_type> points;
++        std::vector<uint32_t> ids (count);
++        std::iota (ids.begin (), ids.end (), 0);
++        region rows;
++        for (size_t i = 0; i < count; ++i) {
++          rows.push_back ({i < count / 2 ? -10 : 10, static_cast<int> (i % 63) - 31});
++          points.push_back (vector<vector_type> (rows.back ()));
++        }
++        const auto get = [&] (uint32_t id) -> const vector_type& { return points[id]; };
++        const auto live = [] (uint32_t) { return true; };
++        tree_type tree;
++        tree.rebuild (ids, 2, leaf_size, get);
++        const auto stats = tree.storage ();
++        require (stats.bridge_entry_bytes == (Cascade ? (leaf_size <= 255 ? 2U : 8U) : 0U),
++                 "wrong selected FC bridge width");
++        if constexpr (not Cascade)
++          require (stats.bridge_bytes == 0, "independent search allocated bridges");
++        for (const int key : {-32768, -11, -10, -9, 0, 9, 10, 11, 32767}) {
++          require (tree.check_bridges (static_cast<int16_t> (key), false) and
++                       tree.check_bridges (static_cast<int16_t> (key), true),
++                   "packed/general bridge correction mismatch");
++          for (const int second : {-32, 0, 32}) {
++            const logical raw {key, second};
++            const auto query = vector<vector_type> (raw);
++            for (const bool strict : {false, true}) {
++              const bool expected = std::ranges::any_of (rows, [&] (const auto& row) {
++                return below (raw, row) and (not strict or raw != row);
++              });
++              require (tree.dominates (query, get, live, strict) == expected,
++                       "packed/general bridge dominance differs");
++            }
++            std::set<uint32_t> actual, expected;
++            tree.dominated_by (query, get, live, [&] (uint32_t id) {
++              require (actual.insert (id).second, "retirement report repeated an ID");
++            });
++            for (const auto id : ids)
++              if (below (rows[id], raw))
++                expected.insert (id);
++            require (actual == expected, "packed/general bridge report differs");
++          }
++        }
++      }
++  }
++
+   void search_attribution () {
+     std::vector<scalar_vector> values;
+     std::vector<uint32_t> ids (128);
+@@ -517,6 +567,8 @@ int main () try {
+   stable_ids_and_tiny_history<false> ();
+   catalogs<true> ();
+   catalogs<false> ();
++  bridge_width_boundaries<true> ();
++  bridge_width_boundaries<false> ();
+   search_attribution ();
+   policy_and_contracts ();
+   std::cout

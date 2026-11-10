@@ -1,0 +1,17 @@
+{
+  "SHA256SUMS_sha256": "23d1e7fcdcb36c2973b23df61bfce07fda46b09f208d72929c936c5ca94caa27",
+  "all_members_verified": true,
+  "all_source_bytes_unchanged": true,
+  "archive": {
+    "bytes": 1084624,
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/acacia-kd-three-arm-numerical.tar.gz",
+    "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156"
+  },
+  "manifest_sha256": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+  "members": 26,
+  "native_observations": 4572,
+  "original_bytes": 9312481,
+  "original_numerical_files": 24,
+  "private_preservation_details_included": false,
+  "status": "All archived members extracted; byte equality and SHA256SUMS passed; source files unchanged"
+}

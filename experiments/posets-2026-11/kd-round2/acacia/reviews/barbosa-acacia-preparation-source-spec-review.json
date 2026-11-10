@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "verdict": "APPROVE exact source/spec preparation for parent-authorized scoped offline/materialize/configure/build/gate handoff. No concrete source/spec blocker found. Not actual gate evidence, primary manifest or campaign launch approval.",
+  "skill": "/home/gperez/GIT-repos/agent-skills/skills/inspector-barbosa/SKILL.md",
+  "bindings": {
+    "checkpoint": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/SOURCE-SPEC-CHECKPOINT.json",
+      "sha256": "3740a9a49624ac0ae93a62244a156e346e9a8e6460fc242db1ca9d4321cb8ce4"
+    },
+    "plan": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/build-and-gates-plan.json",
+      "sha256": "e04c1539dc123b51bd02740962c7bec0b9a071149863789c4e7eb4adc446bc39"
+    },
+    "helper_derivation_patch": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-stage-v1/source-derivation.patch",
+      "sha256": "1baba45b90a96f5e59976d256819fb139c8b9adc6dd7969e27abcc3b4f69f249"
+    },
+    "verified_checkpoint_file_bindings": 44,
+    "derivation_basis_hashes_checked": true
+  },
+  "source_scope": "Fresh task-owned Acacia86dd with full measured98719patch except exact Posets gitlink; retained legacy Posetsd363 changes production kdtree.hh versus30e, and selected shippingacacia-bonsai-kd. Frozen789/30e defaults reused as real executables and re-run later, not historical result rows relabeled.",
+  "path_and_recipe_review": [
+    "Materializer uses fresh isolated source/private Cargo paths and exclusive create files; clone has no hardlinks/alternates, dependency copies reject symlinks and compare bytes/inodes. All mutations target new _deps clones/private cache or this new package; measured OLD is read-only input with final unchanged checks. No original user WIP is an edit/build destination.",
+    "Acacia measured patch omitted onlyPosets gitlink, TLSF2debd/OxiDD288a/private yyjson/Cargo input context preserved, no fetch. Pending actual environment is produced from checked expected values before later specs consume it; no fabricated artifacts.",
+    "Configuration keeps releaseO3/Ofast/native+LTO1/NDEBUG/NO_VERBOSE, shippingpreset/diagnosticsfalse/compatible128 and normal layout. Prior exact27-token guarded Spot RPATH equivalence retained; normalized full compiler rows/options/unit inventory checked before build.",
+    "Postbuild binds actual source diff/config/compile DB, KD target flags+enable macro, own generated version header, actual binary and verified OxiDD archive/stamp. Runtime library rows must match frozen context; independently built Rust archive hashes may differ and are explicitly not an isolated causal guarantee."
+  ],
+  "spec_inventory": [
+    {
+      "id": "01-materialize-sources",
+      "kind": "materialize",
+      "role": "legacy",
+      "spec_sha256": "d531ab744ce7c71fd50cb353041fcc6b7bad7ccd86b1ddec40f494b22588171d",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 600
+    },
+    {
+      "id": "02-legacy-configure",
+      "kind": "configure",
+      "role": "legacy",
+      "spec_sha256": "c51803329e8aed98af85ba2057de287efe4fec12de4d0f019aa6b7f5957fb0a6",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 300
+    },
+    {
+      "id": "03-verify-configuration",
+      "kind": "configuration-proof",
+      "role": "legacy",
+      "spec_sha256": "b9cb86238d52d23b31315b8fcee2690a960848e0b0e92338772d4eb9f97982a2",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 300
+    },
+    {
+      "id": "04-legacy-build",
+      "kind": "build",
+      "role": "legacy",
+      "spec_sha256": "96d3e8b75293618f6d2035655dcb4f36ea5823fbd556f08a910279c829cd624f",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 7200
+    },
+    {
+      "id": "05-legacy-postbuild",
+      "kind": "postbuild-proof",
+      "role": "legacy",
+      "spec_sha256": "fafa9c5f8d0f0837ca9562a4e6eab53e71262db03971fb1a0bee7e789e70f1b4",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 180
+    },
+    {
+      "id": "06-legacy-unit",
+      "kind": "unit",
+      "role": "legacy",
+      "spec_sha256": "b57b4ba42940cab1f17c78be4606c6faf7620a0d4be38fee6a2161b2c8277e02",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "07-legacy-preserve-unit-logs",
+      "kind": "preserve-unit",
+      "role": "legacy",
+      "spec_sha256": "90d35ee58bf3f9241676a472cd745daa881a81d042261910943c42419952a09d",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 60
+    },
+    {
+      "id": "08-legacy-boolean-mode0-build",
+      "kind": "boolean-build",
+      "role": "legacy",
+      "spec_sha256": "9e7f900a0681be14925bcf0d9c96c90993af70bf8ac3c625465dc38019d812b4",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 180
+    },
+    {
+      "id": "09-legacy-boolean-mode0-run",
+      "kind": "boolean-run",
+      "role": "legacy",
+      "spec_sha256": "dd91bf54ba54c3b62393757b36c16c7dc1a11e2e2d513dd2e74dfb279a10b01f",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 60
+    },
+    {
+      "id": "10-legacy-version-suite",
+      "kind": "version-suite",
+      "role": "legacy",
+      "spec_sha256": "5eb21b0d658cce6afe0dd38ee603490449e0ff8fd53f52d7298581c26a55ea42",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 180
+    },
+    {
+      "id": "11-legacy-preserve-version-logs",
+      "kind": "preserve-version",
+      "role": "legacy",
+      "spec_sha256": "d783ca41db62d7f83c040d360fa18fbcc2cd9034ff4ff4fd412a854bd57ad719",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 60
+    },
+    {
+      "id": "12-legacy-version-content",
+      "kind": "version-content",
+      "role": "legacy",
+      "spec_sha256": "30157ccea023ee4f66cc0c4f12e043f0ce5cd06e4fffc9e40fd254bc38d54be3",
+      "expected_exit_codes": [
+        2
+      ],
+      "timeout": 30
+    },
+    {
+      "id": "13-legacy-real-smoke",
+      "kind": "real-smoke",
+      "role": "legacy",
+      "spec_sha256": "2978d0b378fc1ac2850736f48bf634618a2b9f13dc95c3effda40218efb9f942",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "14-legacy-unreal-smoke",
+      "kind": "unreal-smoke",
+      "role": "legacy",
+      "spec_sha256": "0624d12b6a5b76a377428c59573f3761b21451328bf346edaffc5d5fb54371b8",
+      "expected_exit_codes": [
+        1
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "15-baseline-default-version-content",
+      "kind": "version-content",
+      "role": "baseline-default",
+      "spec_sha256": "5902eb42616bc60f6650b5476dc1fd8c6ddb60f63dbb7f124f60a0a6760e9a11",
+      "expected_exit_codes": [
+        2
+      ],
+      "timeout": 30
+    },
+    {
+      "id": "16-baseline-default-real-smoke",
+      "kind": "real-smoke",
+      "role": "baseline-default",
+      "spec_sha256": "e03cf8d738910448779307f58883bd0013d5ab2c02d5685dd8fd2d616d41ae36",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "17-baseline-default-unreal-smoke",
+      "kind": "unreal-smoke",
+      "role": "baseline-default",
+      "spec_sha256": "3a0ac4688df85fdc2ea8c21f1864a26320ed734455c0fadb781006caba5930a8",
+      "expected_exit_codes": [
+        1
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "18-optimized-default-version-content",
+      "kind": "version-content",
+      "role": "optimized-default",
+      "spec_sha256": "15d3fe8e0c1926dfa52827307c077301616aab038e6e403f7619a0e1c563dd09",
+      "expected_exit_codes": [
+        2
+      ],
+      "timeout": 30
+    },
+    {
+      "id": "19-optimized-default-real-smoke",
+      "kind": "real-smoke",
+      "role": "optimized-default",
+      "spec_sha256": "4b04d18cf6a6a762e418e2721568227cbbe3fadc874e45e112812c62015e7359",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "20-optimized-default-unreal-smoke",
+      "kind": "unreal-smoke",
+      "role": "optimized-default",
+      "spec_sha256": "f1e4bb9f65867dcdb55657996168aa94f1de334c6a3004f0886fd089ae4c494e",
+      "expected_exit_codes": [
+        1
+      ],
+      "timeout": 17
+    },
+    {
+      "id": "21-verify-gates",
+      "kind": "gate-closure",
+      "role": "legacy",
+      "spec_sha256": "c43f5d962cb72b7c66934b99622877c4a2e99c274d15d6f667751fca79d7a7e6",
+      "expected_exit_codes": [
+        0
+      ],
+      "timeout": 180
+    }
+  ],
+  "gate_contract": [
+    "Stage04 has58 distinct targets:57 unit dependencies including local default plus selectedKD; -j1. Local default dependency is not substituted for either genuine frozen control.",
+    "87 unit results must allOK/exit0 and preserved JSON/text/JUnit before subsequent version suite overwrites Meson logs. Mode0 Boolean preserves the approved original source and compares22 unique exact PASS markers plus completion marker, representing88 declared cases.",
+    "Three own-proof version strings use exact generated headers (dirty suffix preserved), compiled type/label/SIMD/layout metadata; expectedVexit2. ForcedRexit0/URexit1 use prior fixtures, real:small:backward and unreal:formula:backward plus disabled prepasses. NO_VERBOSE route-frequency limit explicit.",
+    "Existing wrapper and shared flock serial policy enforce8GiB/no swap. New saved-record closure checks every prior exact spec/log/helper/environment/result/resource/OOM/content record; its own21st scoped exit accepted separately. Failure sidecars retained, no overwrite/restart/sweep introduced.",
+    "Synthetic content fixture has positive updated-binding record set plus6 direct version/Boolean/verdict/unitcount/missingmemory/environment negatives; it claims no actual ELF/solver coverage and has not been executed by this reviewer.",
+    "Primary is still held: later actual new KD proof, exact3-arm manifest/selfcheck/dryrun and independent acceptance required. Future4572 rows/1524perarm, strict17s/34PAR2, empty flags, batch32/seed260617, genuine fresh observations and both ranked comparators remain explicit."
+  ],
+  "findings": [],
+  "performed": "Static helper derivation/readme/spec/fixture/report-plan reads, exact checkpoint/plan/derivation and all bound file streaming hashes, all21 spec role/exit/path/resource/target checks and derivation basis hashes. No helper imports, syntax compilation, configuration, tests, compiler, ELF/solver/profiling/timing execution.",
+  "limits": "Preparation only. Source/cache destinations and actual environment are absent at review; no actual source materialization/config/build/unit/Boolean/version/RUR or primary evidence claimed. Reused actual binaries/libraries will be rechecked by owner gates. No causal/general solver-gain claim.",
+  "attribution": "No new defect discovery; independent evidence-contract/source/spec validation. Owners prepared helpers/specs and will perform runtime work."
+}

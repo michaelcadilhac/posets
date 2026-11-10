@@ -1,0 +1,33 @@
+{
+  "acceptance_policy_changed": false,
+  "cause": "Default target-name selector inherited from the prior closing audit, while this declared artifact is acacia-bonsai-kd",
+  "changes": [
+    "Match the exact declared KD executable name",
+    "Use a new versioned result filename; no prior output overwritten"
+  ],
+  "corrected_script": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/check-final-invariance-v2.py",
+    "sha256": "ee64770a70aa8694cc42c5cccb8cb8b706f8332815b576fc81bec851408354bd"
+  },
+  "diff": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/final-invariance-v1-v2.patch",
+    "sha256": "1d9d9ceffceeaf21ab0f68bb079ae8feed545aa3387c140557e5d2da544bfd70"
+  },
+  "original_log": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/final-invariance-record.log",
+    "sha256": "f30114513c5556ea6b9f2eeb137801484b1048f77702d57babbc6eabf293a601"
+  },
+  "original_record": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/final-invariance-record.json",
+    "sha256": "c3f56801d300313316e96847f55bb085f307348f04dbcce2051971b7c9b1a7ce"
+  },
+  "original_script": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/check-final-invariance.py",
+    "sha256": "818d84d47b2357e19584ac331f5b9f5f57b18631b1939fb9bc3f405be57e520c"
+  },
+  "original_spec": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/final-invariance-spec.json",
+    "sha256": "1e105756ce9a2e766fc9eee46bbba7d97f6051033bf0588b935ab148f503473a"
+  },
+  "scope": "Audit bookkeeping only; all original attempt bytes retained; no solver rerun"
+}

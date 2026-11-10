@@ -1,0 +1,93 @@
+{
+  "status": "Complete frozen solver evidence; root final prose/package review complete",
+  "handoff_original": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-HANDOFF.json",
+    "sha256": "6a0cbd21da561b5c0004dea0e35c3fdb1a779540e42f54a7d539d69506c1673c",
+    "bytes": 42257
+  },
+  "handoff_projection": {
+    "kind": "Explicit public metadata projection, not an exact copy",
+    "original": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-HANDOFF.json",
+      "sha256": "6a0cbd21da561b5c0004dea0e35c3fdb1a779540e42f54a7d539d69506c1673c",
+      "bytes": 42257
+    },
+    "projection": {
+      "path": "outcomes/final-handoff-projection.json",
+      "sha256": "a92ca63f4dc04c0de78b42f73d054da412301967f3c3e4b2350e508edd918890"
+    },
+    "omitted_json_pointers": [
+      "/bindings"
+    ],
+    "all_other_keys_and_values_preserved": true,
+    "original_retained_unchanged": true
+  },
+  "summary_projection": {
+    "kind": "Explicit public metadata projection, not an exact copy",
+    "original": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1/summary.json",
+      "sha256": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+      "bytes": 33663
+    },
+    "projection": {
+      "path": "outcomes/summary-without-host-details.json",
+      "sha256": "fc9a0d6fa12dcafac85d24fc2f9be61aafde428965944baf986cacbb91365b56"
+    },
+    "omitted_json_pointers": [
+      "/cpu_host"
+    ],
+    "all_other_keys_and_values_preserved": true,
+    "original_retained_unchanged": true
+  },
+  "summary_only_byte_identical_to_automatic": true,
+  "invariance": {
+    "historical_control_phase_one_files": 14981,
+    "preserved_failed_attempt_and_selector_correction": {
+      "bytes": 2005,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-INCIDENT.json",
+      "sha256": "9bc0a63db2c1d59e54f304a875673bb58544da625cbd8dfdf0a1055ec9e7ea21"
+    },
+    "proposal_bindings": 141,
+    "result": {
+      "bytes": 6179013,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-v2.json",
+      "sha256": "9b8026dfc85e4e9238741720825e1d445670aa8d2237a004e2ad6900d0d481a9"
+    },
+    "verified_files": 22366
+  },
+  "invariance_full_manifest_policy": "The 6.18 MB full private binding inventory is referenced by path/hash, not copied. The incident and exact selector correction are included.",
+  "exact_order_and_commands_verified": true,
+  "archive_verification": {
+    "SHA256SUMS_sha256": "23d1e7fcdcb36c2973b23df61bfce07fda46b09f208d72929c936c5ca94caa27",
+    "all_members_verified": true,
+    "all_source_bytes_unchanged": true,
+    "archive": {
+      "bytes": 1084624,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/acacia-kd-three-arm-numerical.tar.gz",
+      "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156"
+    },
+    "manifest_sha256": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+    "members": 26,
+    "native_observations": 4572,
+    "original_bytes": 9312481,
+    "original_numerical_files": 24,
+    "private_preservation_details_included": false,
+    "status": "All archived members extracted; byte equality and SHA256SUMS passed; source files unchanged"
+  },
+  "preservation": {
+    "five_checkouts_all_six_fields_matched": true,
+    "note": "Separate authorized final preservation scope followed the invariance audit; the older audit ownership sentence is historical workflow wording.",
+    "private_details_remain_in_task_work": true,
+    "public_proof": {
+      "bytes": 1931,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/original-checkouts-final-redacted-proof.json",
+      "sha256": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1"
+    }
+  },
+  "source_attribution_limit": [
+    "One prospective campaign; no noise floor, repeats, tuning or significance claim.",
+    "Different private Rust archives: source-treatment comparison, not isolated KD-header causal proof.",
+    "NO_VERBOSE gates show requested routes/source/type/configuration/verdicts, not observed route frequency."
+  ],
+  "no_new_solver_runs_or_tests_for_packaging": true
+}

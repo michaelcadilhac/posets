@@ -1,0 +1,632 @@
+{
+  "KD_adverse_case_evidence": {
+    "baseline-default": {
+      "generalized_buffer_pb_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "41.650380",
+          "exit_code": "0",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "generalized_buffer_pb_4_pe_.ltl",
+          "max_process_rss_bytes": "203390976",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "",
+          "result": "REALIZABLE",
+          "run_index": "415",
+          "scope_memory_peak_bytes": "391270400",
+          "scope_unit": "acacia-syntcomp26-coverage-3693657-429badc22ae9.scope",
+          "seconds": "10.205775034148246",
+          "solver_label": "baseline-default",
+          "stderr_bytes": "111",
+          "stdout_bytes": "11",
+          "timed_out": "false",
+          "timestamp_utc": "2026-11-10T02:03:54.648893Z",
+          "tlsf_file": "generalized_buffer_pb_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "load_balancer_unreal1_pb_6_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "74.122164",
+          "exit_code": "1",
+          "expectation_source": "status",
+          "flags": "",
+          "instance": "load_balancer_unreal1_pb_6_4_pe_.ltl",
+          "max_process_rss_bytes": "807763968",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "",
+          "result": "UNREALIZABLE",
+          "run_index": "1019",
+          "scope_memory_peak_bytes": "1723592704",
+          "scope_unit": "acacia-syntcomp26-coverage-4167994-8010a86cd04d.scope",
+          "seconds": "16.581656716996804",
+          "solver_label": "baseline-default",
+          "stderr_bytes": "0",
+          "stdout_bytes": "13",
+          "timed_out": "false",
+          "timestamp_utc": "2026-11-10T03:06:42.354073Z",
+          "tlsf_file": "load_balancer_unreal1_pb_6_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "simple_arbiter_enc_pb_11_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "78.325429",
+          "exit_code": "0",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "simple_arbiter_enc_pb_11_pe_.ltl",
+          "max_process_rss_bytes": "728645632",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "",
+          "result": "REALIZABLE",
+          "run_index": "875",
+          "scope_memory_peak_bytes": "1455976448",
+          "scope_unit": "acacia-syntcomp26-coverage-4046161-167d284a9112.scope",
+          "seconds": "14.69866317906417",
+          "solver_label": "baseline-default",
+          "stderr_bytes": "0",
+          "stdout_bytes": "11",
+          "timed_out": "false",
+          "timestamp_utc": "2026-11-10T02:50:15.366914Z",
+          "tlsf_file": "simple_arbiter_enc_pb_11_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      }
+    },
+    "kd-scratch-restored": {
+      "generalized_buffer_pb_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "68.889176",
+          "exit_code": "124",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "generalized_buffer_pb_4_pe_.ltl",
+          "max_process_rss_bytes": "243126272",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "timeout",
+          "result": "TIMEOUT",
+          "run_index": "415",
+          "scope_memory_peak_bytes": "551567360",
+          "scope_unit": "acacia-syntcomp26-coverage-3690316-c26729396932.scope",
+          "seconds": "17.045695310924202",
+          "solver_label": "kd-scratch-restored",
+          "stderr_bytes": "119",
+          "stdout_bytes": "0",
+          "timed_out": "true",
+          "timestamp_utc": "2026-11-10T02:02:19.410421Z",
+          "tlsf_file": "generalized_buffer_pb_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "load_balancer_unreal1_pb_6_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "79.796498",
+          "exit_code": "124",
+          "expectation_source": "status",
+          "flags": "",
+          "instance": "load_balancer_unreal1_pb_6_4_pe_.ltl",
+          "max_process_rss_bytes": "874754048",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "timeout",
+          "result": "TIMEOUT",
+          "run_index": "1019",
+          "scope_memory_peak_bytes": "1794752512",
+          "scope_unit": "acacia-syntcomp26-coverage-4174452-8b28d5b563a5.scope",
+          "seconds": "17.091781995957717",
+          "solver_label": "kd-scratch-restored",
+          "stderr_bytes": "8",
+          "stdout_bytes": "0",
+          "timed_out": "true",
+          "timestamp_utc": "2026-11-10T03:07:55.958501Z",
+          "tlsf_file": "load_balancer_unreal1_pb_6_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "simple_arbiter_enc_pb_11_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "89.730582",
+          "exit_code": "124",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "simple_arbiter_enc_pb_11_pe_.ltl",
+          "max_process_rss_bytes": "4471566336",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "timeout",
+          "result": "TIMEOUT",
+          "run_index": "875",
+          "scope_memory_peak_bytes": "5365911552",
+          "scope_unit": "acacia-syntcomp26-coverage-4040881-fd95239211dc.scope",
+          "seconds": "17.219592125853524",
+          "solver_label": "kd-scratch-restored",
+          "stderr_bytes": "8",
+          "stdout_bytes": "0",
+          "timed_out": "true",
+          "timestamp_utc": "2026-11-10T02:47:48.970206Z",
+          "tlsf_file": "simple_arbiter_enc_pb_11_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      }
+    },
+    "optimized-default": {
+      "generalized_buffer_pb_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "30.072896",
+          "exit_code": "0",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "generalized_buffer_pb_4_pe_.ltl",
+          "max_process_rss_bytes": "203108352",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "",
+          "result": "REALIZABLE",
+          "run_index": "415",
+          "scope_memory_peak_bytes": "323383296",
+          "scope_unit": "acacia-syntcomp26-coverage-3691270-f031ff2d8957.scope",
+          "seconds": "7.340700060129166",
+          "solver_label": "optimized-default",
+          "stderr_bytes": "111",
+          "stdout_bytes": "11",
+          "timed_out": "false",
+          "timestamp_utc": "2026-11-10T02:03:05.462681Z",
+          "tlsf_file": "generalized_buffer_pb_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "load_balancer_unreal1_pb_6_4_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "76.384967",
+          "exit_code": "124",
+          "expectation_source": "status",
+          "flags": "",
+          "instance": "load_balancer_unreal1_pb_6_4_pe_.ltl",
+          "max_process_rss_bytes": "874729472",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "timeout",
+          "result": "TIMEOUT",
+          "run_index": "1019",
+          "scope_memory_peak_bytes": "1807831040",
+          "scope_unit": "acacia-syntcomp26-coverage-4161544-fc8aff61383e.scope",
+          "seconds": "17.115468508098274",
+          "solver_label": "optimized-default",
+          "stderr_bytes": "8",
+          "stdout_bytes": "0",
+          "timed_out": "true",
+          "timestamp_utc": "2026-11-10T03:05:28.643053Z",
+          "tlsf_file": "load_balancer_unreal1_pb_6_4_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      },
+      "simple_arbiter_enc_pb_11_pe_.ltl": {
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0,
+          "sock_throttled": 0
+        },
+        "native": {
+          "acacia_sha": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+          "allowed_cpus": "",
+          "binary_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af",
+          "cap_s": "17",
+          "collect_rusage": "true",
+          "cpu_quota": "",
+          "cpu_seconds": "78.180820",
+          "exit_code": "0",
+          "expectation_source": "none",
+          "flags": "",
+          "instance": "simple_arbiter_enc_pb_11_pe_.ltl",
+          "max_process_rss_bytes": "728936448",
+          "memory_max": "8G",
+          "memory_swap_max": "0",
+          "preset": "otf_sparse_formula_parity",
+          "resource_reason": "",
+          "result": "REALIZABLE",
+          "run_index": "875",
+          "scope_memory_peak_bytes": "1455210496",
+          "scope_unit": "acacia-syntcomp26-coverage-4043548-d87832a8a410.scope",
+          "seconds": "14.655415461864322",
+          "solver_label": "optimized-default",
+          "stderr_bytes": "0",
+          "stdout_bytes": "11",
+          "timed_out": "false",
+          "timestamp_utc": "2026-11-10T02:49:02.143934Z",
+          "tlsf_file": "simple_arbiter_enc_pb_11_pe_.tlsf",
+          "worker_records_dir": ""
+        }
+      }
+    }
+  },
+  "campaign": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+  "comparisons": {
+    "baseline-default": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [],
+        "par2_delta_s": 0.0
+      },
+      "optimized-default": {
+        "gains": [
+          "load_balancer_unreal1_pb_6_4_pe_.ltl"
+        ],
+        "losses": [],
+        "par2_delta_s": -14.821476
+      }
+    },
+    "kd-scratch-restored": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [
+          "generalized_buffer_pb_4_pe_.ltl",
+          "load_balancer_unreal1_pb_6_4_pe_.ltl",
+          "simple_arbiter_enc_pb_11_pe_.ltl"
+        ],
+        "par2_delta_s": 65.731411
+      },
+      "optimized-default": {
+        "gains": [],
+        "losses": [
+          "generalized_buffer_pb_4_pe_.ltl",
+          "simple_arbiter_enc_pb_11_pe_.ltl"
+        ],
+        "par2_delta_s": 50.909935
+      }
+    },
+    "optimized-default": {
+      "baseline-default": {
+        "gains": [],
+        "losses": [
+          "load_balancer_unreal1_pb_6_4_pe_.ltl"
+        ],
+        "par2_delta_s": 14.821476
+      },
+      "optimized-default": {
+        "gains": [],
+        "losses": [],
+        "par2_delta_s": 0.0
+      }
+    }
+  },
+  "completed_utc": "2026-11-10T04:16:17.775771+00:00",
+  "exact_order_and_commands_verified": true,
+  "frozen_sha256": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+  "host_lock_available_at_release": true,
+  "invariance": {
+    "historical_control_phase_one_files": 14981,
+    "preserved_failed_attempt_and_selector_correction": {
+      "bytes": 2005,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-INCIDENT.json",
+      "sha256": "9bc0a63db2c1d59e54f304a875673bb58544da625cbd8dfdf0a1055ec9e7ea21"
+    },
+    "proposal_bindings": 141,
+    "result": {
+      "bytes": 6179013,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/FINAL-INVARIANCE-v2.json",
+      "sha256": "9b8026dfc85e4e9238741720825e1d445670aa8d2237a004e2ad6900d0d481a9"
+    },
+    "verified_files": 22366
+  },
+  "limits": [
+    "One prospective campaign; no noise floor, repeats, tuning or significance claim.",
+    "Different private Rust archives: source-treatment comparison, not isolated KD-header causal proof.",
+    "NO_VERBOSE gates show requested routes/source/type/configuration/verdicts, not observed route frequency."
+  ],
+  "native_invocations": 144,
+  "native_rows": 4572,
+  "no_further_measurements": true,
+  "numerical_archive": {
+    "SHA256SUMS_sha256": "23d1e7fcdcb36c2973b23df61bfce07fda46b09f208d72929c936c5ca94caa27",
+    "all_members_verified": true,
+    "all_source_bytes_unchanged": true,
+    "archive": {
+      "bytes": 1084624,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-numerical-archive-v1/acacia-kd-three-arm-numerical.tar.gz",
+      "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156"
+    },
+    "manifest_sha256": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+    "members": 26,
+    "native_observations": 4572,
+    "original_bytes": 9312481,
+    "original_numerical_files": 24,
+    "private_preservation_details_included": false,
+    "status": "All archived members extracted; byte equality and SHA256SUMS passed; source files unchanged"
+  },
+  "preservation": {
+    "five_checkouts_all_six_fields_matched": true,
+    "note": "Separate authorized final preservation scope followed the invariance audit; the older audit ownership sentence is historical workflow wording.",
+    "private_details_remain_in_task_work": true,
+    "public_proof": {
+      "bytes": 1931,
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-primary-execution-v1/original-checkouts-final-redacted-proof.json",
+      "sha256": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1"
+    }
+  },
+  "resource_coverage": {
+    "cpu": 4572,
+    "kernel_events_missing": 0,
+    "kernel_events_observed": 4572,
+    "native_MEMOUT": 2,
+    "native_TIMEOUT_with_oom_kill": 5,
+    "oom_kill_rows": 7,
+    "oom_rows": 7,
+    "process_rss": 4572,
+    "scope_peak": 4572,
+    "sum_observed_kernel_counters": {
+      "oom": 24,
+      "oom_kill": 15
+    }
+  },
+  "results": [
+    {
+      "arm": "baseline-default",
+      "baseline_gains": 0,
+      "baseline_losses": 0,
+      "baseline_par2_delta_s": 0.0,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14005.055232,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 156,
+        "UNKNOWN": 0
+      },
+      "instances": 1524,
+      "memory_events_missing_rows": 0,
+      "memory_events_observed_rows": 1524,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 156,
+        "UNREALIZABLE": 739
+      },
+      "oom_kill_observed_rows": 0,
+      "optimized_gains": 1,
+      "optimized_losses": 0,
+      "optimized_par2_delta_s": -14.821476,
+      "par2_total_s": 5945.136669,
+      "process_rss_max_bytes": 3977715712,
+      "process_rss_median_bytes": 61808640.0,
+      "process_rss_observed_rows": 1524,
+      "scope_peak_max_bytes": 4244758528,
+      "scope_peak_median_bytes": 106059776.0,
+      "scope_peak_observed_rows": 1524,
+      "solved": 1368,
+      "wall_cap_overruns": 0
+    },
+    {
+      "arm": "optimized-default",
+      "baseline_gains": 0,
+      "baseline_losses": 1,
+      "baseline_par2_delta_s": 14.821476,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14000.96839,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 0,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 157,
+        "UNKNOWN": 0
+      },
+      "instances": 1524,
+      "memory_events_missing_rows": 0,
+      "memory_events_observed_rows": 1524,
+      "native_TIMEOUT_with_oom_kill": 0,
+      "native_outcomes": {
+        "REALIZABLE": 629,
+        "TIMEOUT": 157,
+        "UNREALIZABLE": 738
+      },
+      "oom_kill_observed_rows": 0,
+      "optimized_gains": 0,
+      "optimized_losses": 0,
+      "optimized_par2_delta_s": 0.0,
+      "par2_total_s": 5959.958145,
+      "process_rss_max_bytes": 3977621504,
+      "process_rss_median_bytes": 61739008.0,
+      "process_rss_observed_rows": 1524,
+      "scope_peak_max_bytes": 4244234240,
+      "scope_peak_median_bytes": 106856448.0,
+      "scope_peak_observed_rows": 1524,
+      "solved": 1367,
+      "wall_cap_overruns": 0
+    },
+    {
+      "arm": "kd-scratch-restored",
+      "baseline_gains": 0,
+      "baseline_losses": 3,
+      "baseline_par2_delta_s": 65.731411,
+      "cpu_observed_rows": 1524,
+      "cpu_total_s": 14040.773485,
+      "failure_subtypes": {
+        "AUDIT-ERROR": 0,
+        "CRASH": 0,
+        "ERROR": 0,
+        "MEMOUT": 2,
+        "SYFCO-FAIL": 0,
+        "TIMEOUT": 157,
+        "UNKNOWN": 0
+      },
+      "instances": 1524,
+      "memory_events_missing_rows": 0,
+      "memory_events_observed_rows": 1524,
+      "native_TIMEOUT_with_oom_kill": 5,
+      "native_outcomes": {
+        "MEMOUT": 2,
+        "REALIZABLE": 627,
+        "TIMEOUT": 157,
+        "UNREALIZABLE": 738
+      },
+      "oom_kill_observed_rows": 7,
+      "optimized_gains": 0,
+      "optimized_losses": 2,
+      "optimized_par2_delta_s": 50.909935,
+      "par2_total_s": 6010.86808,
+      "process_rss_max_bytes": 8360685568,
+      "process_rss_median_bytes": 61739008.0,
+      "process_rss_observed_rows": 1524,
+      "scope_peak_max_bytes": 8589934592,
+      "scope_peak_median_bytes": 106078208.0,
+      "scope_peak_observed_rows": 1524,
+      "solved": 1365,
+      "wall_cap_overruns": 0
+    }
+  ],
+  "rows_per_arm": 1524,
+  "schema_version": 1,
+  "scored_rows": 4572,
+  "status": "COMPLETE; all authorized measurements/checks/archive finished; runtime lane released",
+  "summary_only_byte_identical_to_automatic": true,
+  "summary_sha256": "2e20c40419cd45dde67e0922606628e79530946b12a67f5d0c13a304709f88a7",
+  "table": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-three-arm-comparison-v1",
+  "truth_conflicts": [],
+  "wall_cap_overruns": {
+    "baseline-default": [],
+    "kd-scratch-restored": [],
+    "optimized-default": []
+  },
+  "wall_seconds_launch_to_complete_progress": 10089.15793967247
+}

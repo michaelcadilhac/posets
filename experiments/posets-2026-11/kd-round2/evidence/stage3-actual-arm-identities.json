@@ -1,0 +1,391 @@
+{
+  "status": "Derived reporting clarification only; all frozen summaries/plans/timing runs unchanged",
+  "limitation": "Generic scope sentences describe base pins and can obscure actual arm HEAD identities. Actual arms below are read from each hash-bound plan, not inferred from labels. No timing result is relabelled.",
+  "comparisons": [
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-legacy-before-vs-legacy-after-standard-summary.json",
+        "sha256": "3b9fddc57cc409ad68cd05684e8d052cf878f86110a48247bbcba8a493ffef12"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-legacy-before-vs-legacy-after-standard-plan.json",
+        "sha256": "0d408d56ce280d8b9ea5549f6228b57cd7b5b07b4a5811170f5ad44c17a2b4d0"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "legacy-before",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-legacy-before/binary-map.json",
+            "sha256": "74fc7ae107849a334b31fbe6cc0f89a7a04cee45e717e229441fc68160499ad7"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "legacy-after",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy",
+          "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy/build-replay-release/selected-stage3-legacy-after/binary-map.json",
+            "sha256": "5ca132c35b3e4d9ef3e78737bd615295fe54a3927c8b82d679e3ae5ed427b5b0"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-larger-summary.json",
+        "sha256": "160429baa950a2644293fc132a2130601fad7310725a1637a604f25455089496"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-newrank-vs-plain-larger-plan.json",
+        "sha256": "c1201c49d72423681cfb3cf1eff5e20923f59c8291eeae96395fcac98190deca"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-newrank-vs-plain-standard-summary.json",
+        "sha256": "104956bbee4595015b2bd70a6713fe33dffc57106063f3b1985cab4556895ba3"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-newrank-vs-plain-standard-plan.json",
+        "sha256": "cedd746631fb58007be2a83f3d5bfe6a38e03927a166ad1bb4e828eb9435a9be"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/followup-oldrank-vs-plain-larger-summary.json",
+        "sha256": "aa06ce563303415b7ed5bc1e423b500d2df3d892f3e17da67b499a064a73da2a"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-selected-oldrank-vs-plain-larger-plan.json",
+        "sha256": "5edbb05989a86272de1c1d16c39216ee27686a2d8f23fe71f411c5d25a812963"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "oldrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank",
+          "revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank/build-replay-release/selected-stage3-oldrank/binary-map.json",
+            "sha256": "ad79b3793b51922498a78550295ee27414e222381a3d9feb48221f5912402e5b"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/k2scalar-vs-k2simd-summary.json",
+        "sha256": "004a3eba1e41106b4db2c2c3bee64477a0a31955ab798d54cf69bd578a61df36"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-k2scalar-vs-k2simd-larger-plan.json",
+        "sha256": "25a7f16fd61f4c7c509700f5d314f00fa4a249778aba6eedf2a77cdc6149aec5"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_scalar",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2scalar/binary-map.json",
+            "sha256": "db3844f9d71bdb50ba31a91eeeb995285c68639147397f227806274009e20f86"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/legacy-before-vs-after-summary.json",
+        "sha256": "167cffdaa73b6ad82e3c0a63eb2bafcdd1a85f08727d6edc8300253e7542b5e0"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-legacy-before-vs-after-larger-plan.json",
+        "sha256": "dde6222f069ec5fbe8fe737ecc122e6dc335564791b38511c82681af700d87c6"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "legacy-before",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-legacy-before/binary-map.json",
+            "sha256": "74fc7ae107849a334b31fbe6cc0f89a7a04cee45e717e229441fc68160499ad7"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "legacy-after",
+          "actual_backend": "kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy",
+          "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-legacy/build-replay-release/selected-stage3-legacy-after/binary-map.json",
+            "sha256": "5ca132c35b3e4d9ef3e78737bd615295fe54a3927c8b82d679e3ae5ed427b5b0"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/newrank-vs-k2simd-summary.json",
+        "sha256": "562564ea3461eef05b1ad6ca46d828c60b342a7cd3b152af984c7ffaa0e242cd"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-newrank-vs-k2simd-larger-plan.json",
+        "sha256": "7d5a677e1965718a27a1cfc5bf7d6de0d3c7f8387d7f584435dfad52ceea0b51"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "newrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank",
+          "revision": "30e66853832d98bcfaada296d892157b95a8150d",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-newrank/build-replay-release/selected-stage3-newrank/binary-map.json",
+            "sha256": "cf80443624cd3bf94e0964c4ab752b9b65c95716271fddeb962e6592a807ae44"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldlazy-vs-plain-summary.json",
+        "sha256": "23ab26d7ca6c206ec27cf9afd149c55911870b39227bdac6efde0c8860a3fb52"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldlazy-vs-plain-larger-plan.json",
+        "sha256": "37235fcccc38ee4b86543edaf2ae261c70460ef24fe5e90e407186493732e4e0"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "oldlazy",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline",
+          "revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-baseline/build-replay-release/selected-stage3-oldlazy/binary-map.json",
+            "sha256": "0a757e3a6eb822d91b0c46f4e356bf7ad3eb53cb41e91a7c30903d9516d10522"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/oldrank-vs-k2simd-summary.json",
+        "sha256": "a9277b2c63304a35e35443e86e5e3fe0144e66fad00cf64db2654c608b50291f"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-oldrank-vs-k2simd-larger-plan.json",
+        "sha256": "136921f00babbd8920939b1b8a6bf464cd674f94474ed70c318d9c5ee01d1d39"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases 789bf99346d41a30f1b454ff58385b6f8a2961a9 versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "oldrank",
+          "actual_backend": "rank_bucketed_vector_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank",
+          "revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "production_base_revision": "789bf99346d41a30f1b454ff58385b6f8a2961a9",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-oldrank/build-replay-release/selected-stage3-oldrank/binary-map.json",
+            "sha256": "ad79b3793b51922498a78550295ee27414e222381a3d9feb48221f5912402e5b"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2scalar-summary.json",
+        "sha256": "3149ed75d6865abbb40cdbf467a599a83ceb3c7c4147e7009c10f1e4427d65db"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-plain-vs-k2scalar-larger-plan.json",
+        "sha256": "60a85491d082f0041ef688dbb1bee302da36ad5e4bc07704e405d6a2617bad4c"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_scalar",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2scalar/binary-map.json",
+            "sha256": "db3844f9d71bdb50ba31a91eeeb995285c68639147397f227806274009e20f86"
+          }
+        }
+      }
+    },
+    {
+      "summary": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/stage3-matrix/execution/plain-vs-k2simd-summary.json",
+        "sha256": "b4b26bd2a0fc2ae6cd56c3b55d9fba6c29daaca466fdcd61a9f9817b6e8df256"
+      },
+      "actual_plan": {
+        "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/tools-stage3/kd3-plain-vs-k2simd-larger-plan.json",
+        "sha256": "93433425024f5cd2f3ada3457221a6dc988ba34abd1f4e46137085b8add0d3e0"
+      },
+      "frozen_scope_label": "train paired replay; selected singleton per-backend selector with original scalar+SIMD vectors; production bases aa61043b1227f65bbee1252aa51198de0dbceaab versus aa61043b1227f65bbee1252aa51198de0dbceaab",
+      "actual_arms": {
+        "baseline": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "lazy_kdtree_backed",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-plain/binary-map.json",
+            "sha256": "7fb7b01f515df0665fd7e8af7eb773212b2b1048ed347a22c79fec69225a4a20"
+          }
+        },
+        "optimized": {
+          "kd_source_role": "hybrid",
+          "actual_backend": "block_lazy_kdtree_2_simd",
+          "source": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final",
+          "revision": "dda25715d1b2538825eb4d3840576c60cda0d765",
+          "production_base_revision": "aa61043b1227f65bbee1252aa51198de0dbceaab",
+          "binary_map": {
+            "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/acacia-posets-eval/_deps/kd-round2-stage3-final/build-replay-release/selected-stage3-k2simd/binary-map.json",
+            "sha256": "ab61cf6451b8e654840383e70813a43e93e9829c6adecf215fcf1137703e6959"
+          }
+        }
+      }
+    }
+  ]
+}

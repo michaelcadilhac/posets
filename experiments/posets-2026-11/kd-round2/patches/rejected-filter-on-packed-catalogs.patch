@@ -1,0 +1,824 @@
+diff --git a/README.md b/README.md
+index 722aa6586363f45c8a89d55759678209aea838cb..35093e58dbe58a779619bd7ece51c7b1f139e0c5 100644
+--- a/README.md
++++ b/README.md
+@@ -394,6 +394,36 @@ use two one-byte bridge positions; larger policies retain two full-width positio
+ Both layouts share one byte buffer and use explicit byte copying for wide reads.
+ Storage reports the selected bridge-entry width and actual retained buffer bytes.
+ 
++`block_lazy_kdtree_backed<V, Columns=2, Simd=true, Cascade=true>` is an optional
++leaf filter on the same lazy KD engine. Named unary controls are
++`block_lazy_kdtree_1_scalar`, `_1_simd`, `_2_scalar`, and `_2_simd`. They retain
++the same geometry, labels and candidate order. The original lazy backend has
++zero columns. Signed integral coordinates up to 64 bits cache coordinates 1 and
++(for two-column mode) dimension/2, deduplicating dimensions 2/3. Dimension 1 has
++no useful extra coordinate. Floating and unsupported coordinates use the ordinary
++path without column allocation or a column-vector header. The ordinary zero-column
++backend likewise has no filter-vector header. Integral dimension-1 filtered
++variants retain an empty vector header and query wrapper; they are not byte-identical
++to the plain backend. No raw Vector storage or wrapper layout is assumed.
++
++The column labels are immutable in leaf-ID order until staged rebuild publication.
++Retirement never reads a dead payload; a filter survivor must still pass the live
++predicate before its full partial-order comparison. Strictness comes only from
++that full comparison. SIMD compares different points, with at most 16 selected
++lanes. It loads only complete valid stored-leaf chunks, clips candidate enumeration
++to the exact coordinate-0 bound, and uses a scalar tail. There is no padding read,
++query heap scratch or unused floating-point column buffer. Scalar controls use
++the same columns and may still be compiler auto-vectorized.
++
++Storage reports actual retained filter bytes, effective columns and selected
++filter lanes. Existing opt-in query statistics count loaded SIMD chunks and their
++active lanes, scalar active lanes, pre-liveness filter survivors and empty active
++masks. SIMD survivor counts include computed active lanes after an early exact
++witness and may include retired IDs; they are not payload accesses or confirmed
++dominance matches. `comparisons` counts actual live full-order attempts. All filter
++counters are compiled out with the existing statistics gate disabled. These are
++experimental controls; no speedup or default switch is implied.
++
+ Define `POSETS_LAZY_KDTREE_STATS=1` consistently across translation units to
+ collect query/node/leaf visits, full comparisons, binary searches and bridge
+ corrections. Index query counts exclude requests answered by the pending
+diff --git a/include/meson.build b/include/meson.build
+index 0d083b3c5bccceca7c6e7d6c14bfbb113f77ee7f..0b1c904dbae0859899db50f8650190a378a016f2 100644
+--- a/include/meson.build
++++ b/include/meson.build
+@@ -9,6 +9,7 @@ header_files = [
+   'posets/downsets/cst_backed.hh',
+   'posets/downsets/bboxtree_backed.hh',
+   'posets/downsets/block_sharingtrie_backed.hh',
++  'posets/downsets/block_lazy_kdtree_backed.hh',
+   'posets/downsets/comptrie_backed.hh',
+   'posets/downsets/filtered_vector_backed.hh',
+   'posets/downsets/full_set.hh',
+diff --git a/include/posets/concept_checks/downsets.hh b/include/posets/concept_checks/downsets.hh
+index 554e8b1ba2351b8fd6c3b79337f9d239598690bc..d3398a5f56c9277125c205e70d8dba301256944b 100644
+--- a/include/posets/concept_checks/downsets.hh
++++ b/include/posets/concept_checks/downsets.hh
+@@ -3,6 +3,7 @@
+ #include <posets/concept_checks/vectors.hh>
+ #include <posets/downsets/bboxtree_backed.hh>
+ #include <posets/downsets/block_sharingtrie_backed.hh>
++#include <posets/downsets/block_lazy_kdtree_backed.hh>
+ #include <posets/downsets/comptrie_backed.hh>
+ #include <posets/downsets/cst_backed.hh>
+ #include <posets/downsets/filtered_vector_backed.hh>
+@@ -24,6 +25,8 @@ namespace posets::downsets::concept_checks {
+   using vector_test_int = posets::vectors::concept_checks::vector_test_int;
+ 
+   static_assert (posets::Downset<block_sharingtrie_backed<vector_test_int>>);
++  static_assert (posets::Downset<block_lazy_kdtree_backed<vector_test_int>>);
++  static_assert (posets::Downset<block_lazy_kdtree_backed<vector_test_int, 1, false, false>>);
+   static_assert (posets::Downset<full_set<vector_test_int>>);
+   static_assert (posets::Downset<bboxtree_backed<vector_test_int>>);
+   static_assert (posets::Downset<comptrie_backed<vector_test_int>>);
+diff --git a/include/posets/config.hh b/include/posets/config.hh
+index bf15ef76fef7ecdcd916ead97e8010df8d4d5ac6..7953fe8beed899d12600a96c5035c46ff7cf6e01 100644
+--- a/include/posets/config.hh
++++ b/include/posets/config.hh
+@@ -149,6 +149,9 @@
+ #ifndef POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED
+ # define POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED POSETS_COMPILE_ALL_COMPONENTS
+ #endif
++#ifndef POSETS_ENABLE_DOWNSET_BLOCK_LAZY_KDTREE_BACKED
++# define POSETS_ENABLE_DOWNSET_BLOCK_LAZY_KDTREE_BACKED POSETS_COMPILE_ALL_COMPONENTS
++#endif
+ #ifndef POSETS_LAZY_KDTREE_STATS
+ # define POSETS_LAZY_KDTREE_STATS 0
+ #endif
+diff --git a/include/posets/downsets.hh b/include/posets/downsets.hh
+index 9dcb4fab3dac3c5dcc1744d6ab107f1e53bb92f9..c4342e13e10bdff6a70ee434b7db52e86e421a20 100644
+--- a/include/posets/downsets.hh
++++ b/include/posets/downsets.hh
+@@ -7,6 +7,9 @@
+ #if POSETS_ENABLE_DOWNSET_BLOCK_SHARINGTRIE_BACKED
+ # include <posets/downsets/block_sharingtrie_backed.hh>
+ #endif
++#if POSETS_ENABLE_DOWNSET_BLOCK_LAZY_KDTREE_BACKED
++# include <posets/downsets/block_lazy_kdtree_backed.hh>
++#endif
+ #if POSETS_ENABLE_DOWNSET_BBOXTREE_BACKED
+ # include <posets/downsets/bboxtree_backed.hh>
+ #endif
+diff --git a/include/posets/downsets/block_lazy_kdtree_backed.hh b/include/posets/downsets/block_lazy_kdtree_backed.hh
+new file mode 100644
+index 0000000000000000000000000000000000000000..740c658403f449e04e8d47edd7ace7d152f8c395
+--- /dev/null
++++ b/include/posets/downsets/block_lazy_kdtree_backed.hh
+@@ -0,0 +1,19 @@
++#pragma once
++
++#include <posets/downsets/lazy_kdtree_backed.hh>
++
++namespace posets::downsets {
++  // Optional frozen-leaf coordinate filter. Scalar and SIMD modes retain the
++  // same columns/geometry and confirm every surviving live point with full order.
++  template <Vector V, size_t Columns = 2, bool Simd = true, bool Cascade = true>
++  using block_lazy_kdtree_backed = lazy_kdtree_backed<V, Cascade, Columns, Simd>;
++
++  template <Vector V>
++  using block_lazy_kdtree_1_scalar = block_lazy_kdtree_backed<V, 1, false>;
++  template <Vector V>
++  using block_lazy_kdtree_1_simd = block_lazy_kdtree_backed<V, 1, true>;
++  template <Vector V>
++  using block_lazy_kdtree_2_scalar = block_lazy_kdtree_backed<V, 2, false>;
++  template <Vector V>
++  using block_lazy_kdtree_2_simd = block_lazy_kdtree_backed<V, 2, true>;
++}
+diff --git a/include/posets/downsets/lazy_kdtree_backed.hh b/include/posets/downsets/lazy_kdtree_backed.hh
+index cbe76642f42a10fc3311d15de45a724ce5d9eb00..19f0f637f583b22a17a68fe84faef8ae74b60beb 100644
+--- a/include/posets/downsets/lazy_kdtree_backed.hh
++++ b/include/posets/downsets/lazy_kdtree_backed.hh
+@@ -33,9 +33,9 @@ namespace posets::downsets {
+   // dense slots may be reused, but IDs are renumbered only with a full rebuild.
+   // Mutable generator access has the same index-invalidation restriction as
+   // existing indexed backends; use clear()/reassignment instead of editing it.
+-  template <Vector V, bool Cascade = true>
++  template <Vector V, bool Cascade = true, size_t FilterColumns = 0, bool FilterSimd = true>
+   class lazy_kdtree_backed {
+-      using index_type = utils::bucket_kdtree<V, Cascade>;
++      using index_type = utils::bucket_kdtree<V, Cascade, FilterColumns, FilterSimd>;
+       using id_type = index_type::id_type;
+       static constexpr id_type none = index_type::none;
+       static constexpr bool safe_moves =
+@@ -162,6 +162,10 @@ namespace posets::downsets {
+                       << " catalog_keys=" << s.frozen.keys << " key_bytes=" << s.frozen.key_bytes
+                       << " bridge_bytes=" << s.frozen.bridge_bytes
+                       << " bridge_entry_bytes=" << s.frozen.bridge_entry_bytes
++                      << " filter_requested_columns=" << FilterColumns
++                      << " filter_columns=" << s.frozen.filter_columns
++                      << " filter_lanes=" << s.frozen.filter_lanes
++                      << " filter_bytes=" << s.frozen.filter_bytes
+                       << " point_id_bytes=" << s.frozen.point_id_bytes
+                       << " leaf_map_bytes=" << s.frozen.leaf_map_bytes
+                       << " generator_objects=" << s.generator_object_bytes
+diff --git a/include/posets/utils/bucket_kdtree.hh b/include/posets/utils/bucket_kdtree.hh
+index b006572dc429f7c07c808b802857e04c66c410f3..f1439225315e5934c3e15f9a66890534b2d7c5a5 100644
+--- a/include/posets/utils/bucket_kdtree.hh
++++ b/include/posets/utils/bucket_kdtree.hh
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include <algorithm>
++#include <array>
+ #include <cassert>
+ #include <cstdint>
+ #include <cstring>
+@@ -8,11 +9,13 @@
+ #include <numeric>
+ #include <span>
+ #include <stdexcept>
++#include <type_traits>
+ #include <utility>
+ #include <vector>
+ 
+ #include <posets/concepts.hh>
+ #include <posets/config.hh>
++#include <posets/utils/simd_traits.hh>
+ 
+ namespace posets::utils {
+   // Non-owning frozen geometry. IDs, unlike dense generator slots, remain stable
+@@ -21,14 +24,20 @@ namespace posets::utils {
+   // not mutate/rebuild geometry during traversal. Dominates finds stored >= query
+   // (strict means unequal); dominated_by reports stored <= query inclusively.
+   // The accessor is called only after the live predicate succeeds.
+-  template <Vector V, bool Cascade = true>
++  template <Vector V, bool Cascade = true, size_t FilterColumns = 0, bool FilterSimd = true>
+   class bucket_kdtree {
++      static_assert (FilterColumns <= 2);
++
+     public:
+       using id_type = std::uint32_t;
+       static constexpr id_type none = std::numeric_limits<id_type>::max ();
+       struct query_stats {
+           uint64_t queries {0}, node_visits {0}, leaf_visits {0}, comparisons {0};
+           uint64_t binary_searches {0}, bridge_steps {0}, corrections {0}, pending_comparisons {0};
++          uint64_t filter_simd_chunks {0}, filter_simd_active_lanes {0},
++              filter_scalar_active_lanes {0};
++          // Active pre-liveness mask survivors, including lanes after an early witness.
++          uint64_t filter_survivors {0}, filter_empty_chunks {0};
+       };
+       // Plain diagnostic record.
+       // NOLINTBEGIN(misc-non-private-member-variables-in-classes)
+@@ -36,9 +45,10 @@ namespace posets::utils {
+           size_t object_bytes, node_size, nodes, node_capacity;
+           size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes;
+           size_t bridge_entry_bytes;
++          size_t filter_bytes, filter_columns, filter_lanes;
+           [[nodiscard]] size_t bytes () const {
+             return object_bytes + (node_size * node_capacity) + key_bytes + bridge_bytes +
+-                   point_id_bytes + leaf_map_bytes;
++                   point_id_bytes + leaf_map_bytes + filter_bytes;
+           }
+       };
+ 
+@@ -46,6 +56,27 @@ namespace posets::utils {
+ 
+     private:
+       using key_type = V::value_type;
++      static constexpr bool filter_supported =
++          FilterColumns > 0 and std::is_integral_v<key_type>and std::is_signed_v<key_type> and
++          sizeof (key_type) <= 8;
++      struct column_storage {
++          std::vector<key_type> values;
++      };
++      struct empty_storage {};
++      [[no_unique_address]] std::conditional_t<filter_supported, column_storage, empty_storage>
++          filters;
++      class filter_query {
++          friend class bucket_kdtree;
++          const V& value;
++          std::array<key_type, 2> columns {};
++          explicit filter_query (const V& source) : value (source) {}
++
++        public:
++          [[nodiscard]] decltype (auto) operator[] (size_t d) const { return value[d]; }
++          [[nodiscard]] auto partial_order (const V& other) const {
++            return value.partial_order (other);
++          }
++      };
+       struct node {
+           id_type first, second;  // children, or leaf ID span (start, length)
+           id_type parent, live, axis;
+@@ -64,6 +95,123 @@ namespace posets::utils {
+       mutable query_stats query_counts;
+ #endif
+ 
++      [[nodiscard]] size_t column_count () const {
++        if constexpr (filter_supported)
++          return dimension <= 1 ? 0
++                                : 1 + static_cast<size_t> (FilterColumns == 2 and dimension > 3);
++        return 0;
++      }
++      [[nodiscard]] size_t column_axis (size_t column) const {
++        return column == 0 ? 1 : dimension / 2;
++      }
++      [[nodiscard]] static constexpr size_t filter_width () {
++        if constexpr (filter_supported and FilterSimd)
++          return std::min (size_t {16}, static_cast<size_t> (simd_traits<key_type>::simd_size));
++        return 1;
++      }
++      [[nodiscard]] filter_query pack_query (const V& value) const {
++        filter_query result (value);
++        for (size_t k = 0; k < column_count (); ++k)
++          result.columns[k] = value[column_axis (k)];
++        return result;
++      }
++      template <class Get>
++      void build_columns (const Get& get) {
++        if constexpr (filter_supported) {
++          const size_t count = column_count ();
++          if (count == 0)
++            return;
++          if (ids.size () > filters.values.max_size () / count)
++            throw std::length_error ("bucket_kdtree filter capacity exceeded");
++          filters.values.resize (ids.size () * count);
++          for (const auto& current : nodes)
++            if (current.axis == none)
++              for (size_t k = 0; k < count; ++k)
++                for (size_t i = 0; i < current.length; ++i)
++                  filters.values[(count * current.first) + (k * current.length) + i] =
++                      get (ids[current.first + i])[column_axis (k)];
++        }
++      }
++
++      template <bool Report, class Get, class Live, class Emit>
++      [[nodiscard]] bool filtered_leaf (const node& current, size_t begin, size_t end,
++                                        const filter_query& value, bool strict, const Get& get,
++                                        const Live& live, const Emit& emit) const {
++        const size_t count = column_count ();
++        const auto matches = [&] (size_t i) {
++          const id_type id = ids[current.first + i];
++          if (not live (id))
++            return false;
++#if POSETS_LAZY_KDTREE_STATS
++          ++query_counts.comparisons;
++#endif
++          auto order = value.partial_order (get (id));
++          if (not(Report ? order.geq () : order.leq ()) or
++              (strict and (Report ? order.leq () : order.geq ())))
++            return false;
++          if constexpr (Report)
++            emit (id);
++          return true;
++        };
++        size_t i = begin;
++        if constexpr (FilterSimd and filter_width () > 1) {
++          using simd = std::experimental::fixed_size_simd<key_type, filter_width ()>;
++          size_t chunk = (begin / filter_width ()) * filter_width ();
++          for (; chunk < end and current.length - chunk >= filter_width ();
++               chunk += filter_width ()) {
++            typename simd::mask_type possible (true);
++            for (size_t k = 0; k < count; ++k) {
++              const simd labels (
++                  filters.values.data () + (count * current.first) + (k * current.length) + chunk,
++                  std::experimental::element_aligned);
++              const simd query (value.columns[k]);
++              possible and_eq Report ? labels <= query : labels >= query;
++            }
++            const size_t first_lane = std::max (begin, chunk) - chunk;
++            const size_t last_lane = std::min (end - chunk, filter_width ());
++#if POSETS_LAZY_KDTREE_STATS
++            ++query_counts.filter_simd_chunks;
++            query_counts.filter_simd_active_lanes += last_lane - first_lane;
++            size_t survivors = 0;
++            for (size_t lane = first_lane; lane < last_lane; ++lane)
++              if (possible[lane])
++                ++survivors;
++            query_counts.filter_survivors += survivors;
++            query_counts.filter_empty_chunks += survivors == 0;
++#endif
++            if (std::experimental::none_of (possible))
++              continue;
++            for (size_t lane = first_lane; lane < last_lane; ++lane)
++              if (possible[lane] and matches (chunk + lane))
++                if constexpr (not Report)
++                  return true;
++          }
++          i = std::max (begin, chunk);
++        }
++        for (; i < end; ++i) {
++#if POSETS_LAZY_KDTREE_STATS
++          ++query_counts.filter_scalar_active_lanes;
++#endif
++          bool possible = true;
++          for (size_t k = 0; k < count; ++k) {
++            const auto label = filters.values[(count * current.first) + (k * current.length) + i];
++            if (Report ? label > value.columns[k] : label < value.columns[k]) {
++              possible = false;
++              break;
++            }
++          }
++          if (possible) {
++#if POSETS_LAZY_KDTREE_STATS
++            ++query_counts.filter_survivors;
++#endif
++            if (matches (i))
++              if constexpr (not Report)
++                return true;
++          }
++        }
++        return false;
++      }
++
+       [[nodiscard]] size_t bridge_stride () const {
+         return bucket_size <= std::numeric_limits<uint8_t>::max () ? 2 : 2 * sizeof (id_type);
+       }
+@@ -204,8 +352,8 @@ namespace posets::utils {
+ 
+       // Reporting emits IDs; its boolean sentinel is intentionally ignored.
+       // NOLINTBEGIN(misc-no-recursion,modernize-use-nodiscard)
+-      template <bool Report, class Get, class Live, class Emit>
+-      bool visit (id_type index, size_t position, const V& value, bool strict, const Get& get,
++      template <bool Report, class Query, class Get, class Live, class Emit>
++      bool visit (id_type index, size_t position, const Query& value, bool strict, const Get& get,
+                   const Live& live, const Emit& emit) const {
+ #if POSETS_LAZY_KDTREE_STATS
+         ++query_counts.node_visits;
+@@ -221,6 +369,9 @@ namespace posets::utils {
+             position = bound (index, value[0], Report);
+           const size_t begin = Report ? 0 : position;
+           const size_t end = Report ? position : current.length;
++          if constexpr (filter_supported)
++            if (column_count () != 0)
++              return filtered_leaf<Report> (current, begin, end, value, strict, get, live, emit);
+           for (size_t i = begin; i < end; ++i) {
+             const id_type id = ids[current.first + i];
+             if (not live (id))
+@@ -284,6 +435,8 @@ namespace posets::utils {
+         swap (links, other.links);
+         swap (dimension, other.dimension);
+         swap (bucket_size, other.bucket_size);
++        if constexpr (filter_supported)
++          swap (filters.values, other.filters.values);
+ #if POSETS_LAZY_KDTREE_STATS
+         swap (query_counts, other.query_counts);
+ #endif
+@@ -313,6 +466,7 @@ namespace posets::utils {
+               throw std::invalid_argument ("bucket_kdtree dimension mismatch");
+           }
+           replacement.build_node (0, replacement.ids.size (), 0, none, get);
++          replacement.build_columns (get);
+         }
+         swap (replacement);
+       }
+@@ -340,7 +494,11 @@ namespace posets::utils {
+         ++query_counts.queries;
+ #endif
+         const size_t position = Cascade ? bound (0, value[0], false) : 0;
+-        return visit<false> (0, position, value, strict, get, live, [] (id_type) {});
++        if constexpr (filter_supported)
++          return visit<false> (0, position, pack_query (value), strict, get, live,
++                               [] (id_type) {});
++        else
++          return visit<false> (0, position, value, strict, get, live, [] (id_type) {});
+       }
+       template <class Get, class Live, class Emit>
+       void dominated_by (const V& value, const Get& get, const Live& live,
+@@ -353,7 +511,10 @@ namespace posets::utils {
+         ++query_counts.queries;
+ #endif
+         const size_t position = Cascade ? bound (0, value[0], true) : 0;
+-        visit<true> (0, position, value, false, get, live, emit);
++        if constexpr (filter_supported)
++          visit<true> (0, position, pack_query (value), false, get, live, emit);
++        else
++          visit<true> (0, position, value, false, get, live, emit);
+       }
+       [[nodiscard]] query_stats query_statistics () const {
+ #if POSETS_LAZY_KDTREE_STATS
+@@ -368,6 +529,12 @@ namespace posets::utils {
+ #endif
+       }
+       [[nodiscard]] statistics storage () const {
++        const size_t filter_bytes = [&] {
++          if constexpr (filter_supported)
++            return filters.values.capacity () * sizeof (key_type);
++          else
++            return size_t {0};
++        }();
+         return {sizeof (*this),
+                 sizeof (node),
+                 nodes.size (),
+@@ -377,7 +544,10 @@ namespace posets::utils {
+                 links.capacity (),
+                 ids.capacity () * sizeof (id_type),
+                 leaf_for_id.capacity () * sizeof (id_type),
+-                Cascade ? bridge_stride () : 0};
++                Cascade ? bridge_stride () : 0,
++                filter_bytes,
++                column_count (),
++                column_count () == 0 ? 0 : filter_width ()};
+       }
+       [[nodiscard]] size_t frozen_size () const { return ids.size (); }
+       [[nodiscard]] size_t live_size () const { return nodes.empty () ? 0 : nodes[0].live; }
+diff --git a/tests/block-lazy-kdtree.cc b/tests/block-lazy-kdtree.cc
+new file mode 100644
+index 0000000000000000000000000000000000000000..b63474ef6f930254a6da7d0d52d9e7a9854c4b40
+--- /dev/null
++++ b/tests/block-lazy-kdtree.cc
+@@ -0,0 +1,229 @@
++#include "matrix-check.hh"
++
++#include <iostream>
++#include <limits>
++#include <optional>
++#include <set>
++#include <type_traits>
++
++#include <posets/downsets/block_lazy_kdtree_backed.hh>
++#include <posets/vectors.hh>
++
++size_t posets::vectors::bool_threshold = 0;
++size_t posets::vectors::bitset_threshold = 0;
++
++namespace {
++  using matrix_check::require;
++  template <class Row>
++  bool below (const Row& a, const Row& b) {
++    for (size_t d = 0; d < a.size (); ++d)
++      if (a[d] > b[d])
++        return false;
++    return true;
++  }
++
++  template <class V, bool Cascade, size_t Columns, bool Simd>
++  void oracle (bool boolean = false, bool extremes = false) {
++    using coordinate_type = V::value_type;
++    using row_type = std::vector<coordinate_type>;
++    using tree_type = posets::utils::bucket_kdtree<V, Cascade, Columns, Simd>;
++    using plain_type = posets::utils::bucket_kdtree<V, Cascade>;
++    constexpr bool supported = Columns != 0 and std::is_integral_v<coordinate_type> and
++                               std::is_signed_v<coordinate_type> and sizeof (coordinate_type) <= 8;
++    if constexpr (not supported)
++      static_assert (sizeof (tree_type) == sizeof (plain_type));
++    for (const size_t dim : {1U, 2U, 3U, 17U, 33U, 65U})
++      for (const size_t count : {1U, 15U, 16U, 17U, 31U, 33U})
++        for (const size_t leaf : {2U, 15U, 16U, 17U, 31U}) {
++          std::vector<row_type> rows;
++          std::vector<std::optional<V>> points (count);
++          std::vector<uint32_t> ids (count);
++          std::vector<bool> alive (count, true);
++          std::vector<bool> registered (count, true);
++          for (size_t i = 0; i < count; ++i) {
++            ids[i] = static_cast<uint32_t> (i);
++            row_type row (dim);
++            for (size_t d = 0; d < dim; ++d) {
++              int coordinate;
++              if (boolean)
++                coordinate = static_cast<int> ((i + d) % 2) - 1;
++              else if (d == 0)
++                coordinate = static_cast<int> (i) - static_cast<int> (count / 2);
++              else if (d == 1)
++                coordinate = static_cast<int> (count / 2) - static_cast<int> (i);
++              else
++                coordinate = static_cast<int> ((i * (d + 3)) % 7) - 3;
++              row[d] = static_cast<coordinate_type> (coordinate);
++            }
++            if constexpr (std::is_floating_point_v<coordinate_type>)
++              for (auto& coordinate : row)
++                coordinate *= static_cast<coordinate_type> (0.25);
++            if (extremes and i < 3) {
++              const auto high = std::numeric_limits<coordinate_type>::max ();
++              std::ranges::fill (row,
++                                 i == 0 ? std::numeric_limits<coordinate_type>::lowest () : high);
++              if (i == 2)
++                row.back () = static_cast<coordinate_type> (high - 1);
++            }
++            rows.push_back (row);
++            points[i].emplace (std::span<const coordinate_type> (row));
++          }
++          const auto get = [&] (uint32_t id) -> const V& {
++            require (alive[id] and points[id].has_value (), "filter accessed retired payload");
++            return *points[id];
++          };
++          const auto live = [&] (uint32_t id) { return alive[id]; };
++          tree_type tree;
++          tree.rebuild (ids, dim, leaf, get);
++          const auto storage = tree.storage ();
++          const size_t expected_columns =
++              supported and dim > 1 ? 1 + static_cast<size_t> (Columns == 2 and dim > 3) : 0;
++          require (storage.filter_columns == expected_columns, "wrong effective filter axes");
++          require (storage.filter_bytes >= count * expected_columns * sizeof (coordinate_type),
++                   "filter capacity accounting omitted labels");
++          if (expected_columns == 0)
++            require (storage.filter_bytes == 0, "fallback allocated unused filter columns");
++          tree_type live_copy = tree;
++          tree_type live_move (std::move (live_copy));
++          // The utility promises empty, reusable moved-from state.
++          // NOLINTNEXTLINE(bugprone-use-after-move,clang-analyzer-cplusplus.Move)
++          require (live_copy.live_size () == 0 and live_move.live_size () == count,
++                   "live filter move lost its registered points");
++          tree_type swapped;
++          swapped.swap (live_move);
++          tree = std::move (swapped);
++
++          auto queries = rows;
++          queries.emplace_back (dim, static_cast<coordinate_type> (boolean ? -1 : -4));
++          queries.emplace_back (dim, static_cast<coordinate_type> (boolean ? 0 : 4));
++          const auto check = [&] {
++            for (const auto& raw : queries) {
++              const V query {std::span<const coordinate_type> (raw)};
++              for (const bool strict : {false, true}) {
++                const bool expected = std::ranges::any_of (ids, [&] (uint32_t id) {
++                  return alive[id] and below (raw, rows[id]) and (not strict or raw != rows[id]);
++                });
++                require (tree.dominates (query, get, live, strict) == expected,
++                         "leaf filter changed exact/strict dominance");
++              }
++              std::set<uint32_t> expected;
++              std::set<uint32_t> actual;
++              for (const auto id : ids)
++                if (alive[id] and below (rows[id], raw))
++                  expected.insert (id);
++              tree.dominated_by (query, get, live, [&] (uint32_t id) {
++                require (actual.insert (id).second, "leaf filter reported an ID twice");
++              });
++              require (actual == expected, "leaf filter changed dominated-ID reporting");
++            }
++          };
++          check ();
++          // Live may be stricter than the tree's registered retirement count.
++          alive[count / 2] = false;
++          points[count / 2].reset ();
++          check ();
++          size_t remaining = count;
++          for (const auto id : ids) {
++            alive[id] = false;
++            points[id].reset ();
++            if (registered[id]) {
++              registered[id] = false;
++              --remaining;
++            }
++            tree.retire (id);
++            tree.retire (id);
++            require (tree.live_size () == remaining, "filter retirement changed exact count");
++            if (remaining == count / 2 or remaining == 0)
++              check ();
++          }
++          tree_type copied = tree;
++          tree_type moved (std::move (copied));
++          tree = std::move (moved);
++          // Check both documented moved-from utility states.
++          // NOLINTNEXTLINE(bugprone-use-after-move)
++          require (copied.live_size () == 0 and moved.live_size () == 0 and tree.live_size () == 0,
++                   "filter move/copy duplicated liveness");
++#if POSETS_LAZY_KDTREE_STATS
++          const auto stats = tree.query_statistics ();
++          require (stats.filter_survivors <=
++                       stats.filter_simd_active_lanes + stats.filter_scalar_active_lanes,
++                   "filter survivor accounting exceeds active candidates");
++          if (storage.filter_lanes <= 1)
++            require (stats.filter_simd_chunks == 0, "scalar filter executed SIMD chunks");
++          if (storage.filter_lanes > 1 and count == 17 and leaf == 31)
++            require (stats.filter_simd_chunks > 0, "whole-leaf filter never used SIMD");
++#endif
++        }
++  }
++
++  template <class V>
++  void algebra () {
++    using set_type = posets::downsets::block_lazy_kdtree_backed<V>;
++    static_assert (posets::Downset<set_type>);
++    using namespace matrix_check;
++    region rows;
++    for (size_t i = 0; i < 17; ++i) {
++      logical row (17, -1);
++      row[i] = 0;
++      rows.push_back (std::move (row));
++    }
++    posets::downsets::lazy_kdtree_policy policy;
++    policy.min_index_size = 2;
++    policy.leaf_size = 17;
++    std::vector<V> input;
++    for (const auto& row : rows)
++      input.push_back (vector<V> (row));
++    set_type subject (std::move (input), policy);
++    check (subject, rows, rows);
++    auto image = subject.apply ([] (const V& value) { return value.copy (); });
++    check (image, rows, rows);
++    auto moved = std::move (image);
++    // The downset promises an empty, reusable moved-from state.
++    // NOLINTNEXTLINE(bugprone-use-after-move)
++    require (image.empty (), "moved block-lazy source is not empty");
++    auto* self = &moved;
++    moved = std::move (*self);
++    subject.intersect_with (moved);
++    check (subject, rows, rows);
++    subject.union_with (std::move (moved));
++    // Successful union consumes the RHS and clears its index state.
++    // NOLINTNEXTLINE(bugprone-use-after-move)
++    require (moved.empty (), "block-lazy union retained RHS");
++    check (subject, rows, rows);
++    subject.clear ();
++    require (subject.empty () and subject.storage ().frozen.filter_bytes == 0,
++             "clear retained block-lazy geometry");
++    subject.insert (vector<V> (rows.front ()));
++    check (subject, {rows.front ()}, rows);
++  }
++}
++
++int main () try {
++  using vector_type = posets::vectors::vector_backed<int16_t>;
++  oracle<vector_type, false, 0, false> ();
++  oracle<vector_type, false, 0, true> ();
++  oracle<vector_type, true, 0, false> ();
++  oracle<vector_type, true, 0, true> ();
++  oracle<vector_type, false, 1, false> ();
++  oracle<vector_type, false, 1, true> ();
++  oracle<vector_type, true, 1, false> ();
++  oracle<vector_type, true, 1, true> ();
++  oracle<vector_type, false, 2, false> ();
++  oracle<vector_type, false, 2, true> ();
++  oracle<vector_type, true, 2, false> ();
++  oracle<vector_type, true, 2, true> ();
++  oracle<posets::vectors::simd_vector_backed<int8_t>, true, 2, true> (false, true);
++  oracle<posets::vectors::vector_backed<int32_t>, true, 2, true> (false, true);
++  oracle<posets::vectors::vector_backed<int64_t>, true, 2, true> (false, true);
++  oracle<posets::vectors::vector_backed<float>, true, 2, true> ();
++  using wrapped_type =
++      posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<int8_t>, 3>;
++  oracle<wrapped_type, true, 2, true> (true);
++  algebra<posets::vectors::simd_vector_backed<int8_t>> ();
++  algebra<wrapped_type> ();
++  std::cout
++      << "Block-lazy scalar/SIMD columns, live guards, signed bounds, tails and algebra PASS\n";
++} catch (const std::exception& error) {
++  std::cerr << error.what () << '\n';
++  return 1;
++}
+diff --git a/tests/downset-bm.cc b/tests/downset-bm.cc
+index ea01396f8aa12f077386a69bd064070045f50ab6..2de0e034c17668e2f077bc2ba51c7413f670bb95 100644
+--- a/tests/downset-bm.cc
++++ b/tests/downset-bm.cc
+@@ -402,11 +402,14 @@ struct set_name<posets::downsets::block_sharingtrie_backed<V, B, Simd, Cache>> {
+              (Simd ? "_simd" : "_scalar") + (Cache ? "" : "_nocache");
+     }
+ };
+-template <class V, bool Cascade>
+-struct set_name<posets::downsets::lazy_kdtree_backed<V, Cascade>> {
++template <class V, bool Cascade, size_t Columns, bool Simd>
++struct set_name<posets::downsets::lazy_kdtree_backed<V, Cascade, Columns, Simd>> {
+     static std::string get () {
+-      return Cascade ? "posets::downsets::lazy_kdtree_backed"
+-                     : "posets::downsets::lazy_kdtree_uncascaded";
++      if constexpr (Columns == 0)
++        return Cascade ? "posets::downsets::lazy_kdtree_backed"
++                       : "posets::downsets::lazy_kdtree_uncascaded";
++      return "posets::downsets::block_lazy_kdtree_" + std::to_string (Columns) +
++             (Simd ? "_simd" : "_scalar") + (Cascade ? "" : "_uncascaded");
+     }
+ };
+ namespace {
+diff --git a/tests/lazy-kdtree-allocation.cc b/tests/lazy-kdtree-allocation.cc
+index 488dad15c69eceef1c221106969152827f13c087..650df16d6e31aa490ebfe221a544a0eafceb40f9 100644
+--- a/tests/lazy-kdtree-allocation.cc
++++ b/tests/lazy-kdtree-allocation.cc
+@@ -25,9 +25,9 @@ namespace {
+       result.insert (unpack (v));
+     return result;
+   }
+-  template <class V, bool Cascade>
++  template <class V, bool Cascade, size_t Columns = 0, bool Simd = true>
+   long construction_sweep (int mode) {
+-    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
++    using S = posets::downsets::lazy_kdtree_backed<V, Cascade, Columns, Simd>;
+     auto expected = original ();
+     expected.insert (expected.end (), rhs.begin (), rhs.end ());
+     expected.push_back (expected.front ());
+@@ -38,6 +38,9 @@ namespace {
+       expected = region (8, logical {1, 1, -1});
+     else if (mode == 6)
+       expected = {{0, 0, -1}, {1, 1, -1}, {1, 1, -1}, {2, 2, 0}, {3, 0, 0}, {4, 4, 0}};
++    else if (mode == 7)
++      for (auto& row : expected)
++        row.resize (5, 0);
+     posets::downsets::lazy_kdtree_policy policy;
+     policy.leaf_size = 2;
+     policy.min_index_size = mode == 0 ? 1000 : 3;
+@@ -85,9 +88,9 @@ namespace {
+     }
+     throw std::runtime_error ("lazy constructor allocation sweep did not finish");
+   }
+-  template <class V, bool Cascade>
++  template <class V, bool Cascade, size_t Columns = 0, bool Simd = true>
+   long sweep (int operation) {
+-    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
++    using S = posets::downsets::lazy_kdtree_backed<V, Cascade, Columns, Simd>;
+     posets::downsets::lazy_kdtree_policy policy;
+     policy.leaf_size = 2;
+     policy.min_index_size = 3;
+@@ -217,22 +220,52 @@ namespace {
+       }
+   };
+   static_assert (posets::Vector<throwing_move>);
+-  template <class V, bool Cascade>
++
++  void filtered_query_allocations () {
++    using vector_type = posets::vectors::simd_vector_backed<int8_t>;
++    using set_type = posets::downsets::lazy_kdtree_backed<vector_type, true, 2, true>;
++    posets::downsets::lazy_kdtree_policy policy;
++    policy.min_index_size = 2;
++    policy.leaf_size = 17;
++    std::vector<vector_type> rows;
++    for (size_t i = 0; i < 17; ++i) {
++      logical row (17, -1);
++      row[i] = 0;
++      rows.push_back (vector<vector_type> (row));
++    }
++    set_type subject (std::move (rows), policy);
++    const auto bottom = vector<vector_type> (logical (17, -1));
++    allocations_left = 0;
++    require (subject.contains (bottom) and subject.dominates (bottom, true),
++             "filtered bottom query");
++    for (const auto& value : subject)
++      require (subject.contains (value) and not subject.dominates (value, true),
++               "filtered exact query allocated or supplied false strictness");
++    allocations_left = -1;
++  }
++
++  template <class V, bool Cascade, size_t Columns = 0, bool Simd = true>
+   void test () {
+-    for (int mode = 0; mode < 7; ++mode)
+-      std::cout << "cascade=" << Cascade << " construction_mode=" << mode
+-                << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";
++    for (int mode = 0; mode < 8; ++mode)
++      std::cout << "cascade=" << Cascade << " construction_mode=" << mode << " columns=" << Columns
++                << " simd=" << Simd
++                << " injected_sites=" << construction_sweep<V, Cascade, Columns, Simd> (mode)
++                << " PASS\n";
+     for (int operation = 0; operation < 6; ++operation)
+-      std::cout << "cascade=" << Cascade << " operation=" << operation
+-                << " injected_sites=" << sweep<V, Cascade> (operation) << " PASS\n";
++      std::cout << "cascade=" << Cascade << " operation=" << operation << " columns=" << Columns
++                << " simd=" << Simd
++                << " injected_sites=" << sweep<V, Cascade, Columns, Simd> (operation) << " PASS\n";
+   }
+ }
+ int main () try {
++  filtered_query_allocations ();
+   test<posets::vectors::vector_backed<int8_t>, false> ();
+   test<posets::vectors::vector_backed<int8_t>, true> ();
+   test<posets::vectors::simd_vector_backed<int8_t>, true> ();
+   test<throwing_move, false> ();
+   test<throwing_move, true> ();
++  test<posets::vectors::simd_vector_backed<int8_t>, true, 2, true> ();
++  test<throwing_move, false, 2, false> ();
+ } catch (const std::exception& error) {
+   allocations_left = -1;
+   std::cerr << error.what () << '\n';
+diff --git a/tests/meson.build b/tests/meson.build
+index d23ec2e521bd798b8b97932695314deddd434f4b..b50ed06ddbe976512156d1acc666132b8baf2463 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -229,6 +229,10 @@ foreach mode : ['compatible', 'native', 'max']
+     dependencies: [posets_dep], cpp_args:
+       ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_LAZY_KDTREE_STATS=1'] + matrix_target_args)
+   test('antichains/lazy KD oracle and FC/' + mode, lazy_kd_exe, timeout: 120)
++  block_lazy_exe = executable('block-lazy-kdtree-' + mode, 'block-lazy-kdtree.cc',
++    dependencies: [posets_dep], cpp_args:
++      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_LAZY_KDTREE_STATS=1'] + matrix_target_args)
++  test('antichains/block lazy KD oracle/' + mode, block_lazy_exe, timeout: 180)
+ endforeach
+ lazy_allocation_exe = executable('lazy-kdtree-allocation', 'lazy-kdtree-allocation.cc',
+   dependencies: [posets_dep], cpp_args: ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_MAX'])

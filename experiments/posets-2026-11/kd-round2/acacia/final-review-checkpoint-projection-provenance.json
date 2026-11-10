@@ -1,0 +1,17 @@
+{
+  "kind": "Explicit public metadata projection, not an exact copy",
+  "original": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/acacia-proposed-v1/FINAL-REVIEW-CHECKPOINT.json",
+    "sha256": "59dab0d4ee84652bf71e18d70b821922de4e53fb2619b7c2216f9a678db80765",
+    "bytes": 43092
+  },
+  "projection": {
+    "path": "acacia/final-review-checkpoint-projection.json",
+    "sha256": "f41c36761a5bdae4e9527a8b58be90dfd37ad3cc7dda491f2901e372dfa1ce39"
+  },
+  "omitted_json_pointers": [
+    "/bindings"
+  ],
+  "all_other_keys_and_values_preserved": true,
+  "reason": "The original binding list includes private preservation-record filenames. The external original is retained unchanged. Only the redacted preservation proof is copied."
+}

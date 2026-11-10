@@ -1,0 +1,26 @@
+{
+  "scope": "Bounded static final enrollment delta after the approved completed21-gate review; no re-execution, helper imports, builds, tests or timing.",
+  "decision": "Approved for the exact three-arm primary under root authorization. No unresolved blocker, source change or protocol change requested.",
+  "exact_inputs": {
+    "FINAL-REVIEW-CHECKPOINT.json": "59dab0d4ee84652bf71e18d70b821922de4e53fb2619b7c2216f9a678db80765",
+    "arms.json": "02410434cc7f55fabe8e5cebce4168b42f16954b57bbd13cf2050aac94abc169",
+    "actual-artifact-closure.json": "a44bee09d174f6d233e13c052bac761380a1c732b5b5a30ecd1fe305a26c94ad",
+    "gate-summary.json": "7262225dd319d07603d5c80b40b0417cd7caf3fe27cf8003dc396f405ebcbeb5",
+    "kd-scratch-restored-provenance.json": "9af26ec89594d23f957416d999662bf3138a5f5bdec7c03f497c07ba77d15e2b",
+    "campaign-selfcheck-record.json": "5352b726db062a3a6d6191494d8ed7b7869f2b83c83cd52cdac50cf06c003f7f",
+    "campaign-dry-run-record.json": "ab0f6e740d9aae89efcc275d5fd1e02513d65d10eeb98293a74a91ee1bee3f77"
+  },
+  "checked": [
+    "Exactly three distinct arms: baseline-default789bf99, optimized-default30e6685 and normal KD scratch-restored d363b9f. Baseline is baseline-default; both control arm objects are unchanged from the completed source/build plan, and all three actual provenance arm projections match. No A/B, packed/filter composition or alias detour is enrolled.",
+    "Every arm has empty flags, otf_sparse_formula_parity, compatible16 lanes and optional controls0/0/0. KD artifacts exactly match the approved actual proof and all three runtime-library lists match the declared closure. The three genuine private Rust archives remain distinct and are explicitly disclosed.",
+    "Critical final-checkpoint bindings match the actual arm, closure, gate, selfcheck, dry-run and reporting fixture/source files. Prior21-gate closure remains the completed evidence; it was not re-run or re-opened.",
+    "Saved selfcheck and dry-run record/log bindings match. Both return0 without timeout/resource limit or max/OOM/OOM-kill events under the unchanged wrapper8G/0swap. Selfcheck reports the existing strict-wall/native-raw/conflict/censor guards; dry-run parses as exact three actual arms with1524instances each and48batches.",
+    "The future primary command is the unchanged campaign with exact proposed arms/output, batch-size32 and seed260617. Saved native command uses17second cap,8G/0swap and stop-on-conflict. The fixed strict-wall/PAR2 treatment remains17/34. Universe is4572rows, serial with no affinity/quota override. Official output is actually absent at review time."
+  ],
+  "prior_gate_audit": {
+    "path": "work/kd-round2/reviews/nbjorner-acacia-completed-gates-review.json",
+    "sha256": "f03d4098a8a51eb0e6488158cdb23806281b26c07c0804f4825e01c42c3586b5"
+  },
+  "limits": "Release approves measurement execution, not an unrun outcome, backend recommendation or isolated KD/header causal claim. NO_VERBOSE evidence binds requested route/source/type/config/verdict, not observed route frequency. Original sources/WIP, old controls and earlier evidence remain preserved.",
+  "communication": "Explicit release approval sent to root and benchmark agent for this exact checkpoint under root's conditional authorization."
+}

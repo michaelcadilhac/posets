@@ -1,0 +1,48 @@
+{
+  "status": "Completed evidence; root final prose/package review complete; ready for publication",
+  "official_output_locator": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/final-primary-three-arms-v1",
+  "protocol": {
+    "arms": [
+      "baseline-default",
+      "optimized-default",
+      "kd-scratch-restored"
+    ],
+    "instances_per_arm": 1524,
+    "expected_rows": 4572,
+    "cap_seconds": 17,
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "primary_flags": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "completed_solver_summary": "outcomes/summary-without-host-details.json",
+  "summary_only_and_invariance": "outcomes/evidence-closure.json",
+  "final_table": "outcomes/solver-comparison.json",
+  "raw_numerical_archive": "outcomes/archive/acacia-kd-three-arm-numerical.tar.gz",
+  "outcome_reviews": {
+    "nbjorner": "acacia/reviews/nbjorner-three-arm-final-outcome-review.json",
+    "barbosa": "acacia/reviews/barbosa-final-three-arm-outcome-archive-audit.json"
+  },
+  "ci": {
+    "revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+    "run_id": 42729670700,
+    "event": "push",
+    "conclusion": "success",
+    "jobs": 3,
+    "job_names": [
+      "macOS arm64 (GCC 15)",
+      "test",
+      "Linux x86-64 baseline (no ISA flags)"
+    ],
+    "run_record": "ci/ci-d363b9f-run.json",
+    "jobs_record": "ci/ci-d363b9f-jobs.json",
+    "url": "https://github.com/michaelcadilhac/posets/actions/runs/42729670700",
+    "scope": "Implementation d363 only. This does not claim green CI for a later documentation/package HEAD. No exact test counts inferred from job status."
+  },
+  "note": "Frozen final results and root final prose/package review are complete. START-CHECKPOINT remains an exact historical launch snapshot. Publication history is in the containing Git commit and PR40; no later-HEAD CI status is asserted.",
+  "ready_for_publication": true,
+  "root_final_prose_package_review_complete": true
+}

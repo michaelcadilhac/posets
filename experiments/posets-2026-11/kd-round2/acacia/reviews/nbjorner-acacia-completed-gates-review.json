@@ -1,0 +1,41 @@
+{
+  "scope": "Bounded static review of finished actual Acacia gate evidence, complementing the separate source/spec review. No helper/target execution, imports of target code, builds, tests or measurements. Only saved-record reads, hashes, small independent counts and read-only Git identity checks.",
+  "gates_complete_sha256": "368239d50158023fa9e6aa7f86e88f2ea91438190238a7c5e4f149236be636a8",
+  "new_kd_proof_sha256": "a3203591dd375883f63b2309bccf73ea5d6e60f449a13c768448e127ae33b702",
+  "closure_stage_record_sha256": "98c708ee527a401e5e1f77792739c9f9c8f81dfae0328f5177d247c3763d323d",
+  "actual_configuration_sha256": "63d17440cfe6e805baa36966a1ecde81f9db9aa4418bd73ba151ec4541e27460",
+  "decision": "Completed build/gate evidence approved within this scope; no blocker found. All twenty prior gate records and the separately saved21st closure record passed their declared content and expected-exit checks. Actual three-arm enrollment, closure/selfcheck/dry-run and primary launch remain a separate pending checkpoint.",
+  "actual_source_and_build": {
+    "posets_revision": "d363b9f901b927575ee1544b19820a146c2479d9",
+    "posets_clean": true,
+    "legacy_header_sha256": "b3618de120fb5fec89f339c21f9933abab02434e1dec1a8e4b17c77e94ef8173",
+    "acacia_base": "86dd487001dc75a3c1c0dfa9db50a9882a532db1",
+    "kd_elf_sha256": "f5dfd11bc7305ae439b77b4a57a7547f38faf0c10ce77695f6d3d7ae3c58c1f9",
+    "generated_configuration_sha256": "0ea192e63ba2c985a4f3eb42e985947b67817c8e0702895ab3283dcbdd85a824",
+    "compile_commands_sha256": "9e4158f1d982f95037738b907f5d5da1e0e8d7f30849d11a818235961fab7e5c",
+    "checked": "Actual d363 checkout is clean and its legacy header matches the reviewed source. Reconstructed Acacia base plus task integration patch is explicitly bound. Selected KD solve/version compile rows use normal kdtree_backed, O3/Ofast/LTO1/native ISA, NO_VERBOSE and NDEBUG with compatible16-lane Vector configuration; optional KD narrow/trie compact/comp SIMD controls are zero. Generated configuration keeps otf_sparse_formula_parity, diagnostics0 and the shipping portfolio. Target-local KD selection is separate from the generated normal ranked-default fallback."
+  },
+  "completed_content": {
+    "unit_tests": "87 distinct saved Meson JSON results, allOK; retained unit log says87/87 and0failures.",
+    "version_suite": "One saved Meson JSON result, OK.",
+    "Boolean": "22 unique exact PASS lines: eleven base backend configurations times two actual Vector flavors, each dimensions1/17/33/65 and numeric_prefix0, totaling88cases. The bound assertion-enabled mode0 compile uses the actual d363 include tree; no optional-control coverage beyond mode0 is implied.",
+    "V_R_UR": "For each of KD and both frozen defaults, exact version output plus REALIZABLE and UNREALIZABLE contents match. Expected exit codes are2 for V,0 for R and1 for UR; successful gates do not imply every command returned0. KD reports86dd487-dirty, kdtree_backed,16lanes and all three optional controls0. Dirty version is the recorded task patch, not relaxed matching.",
+    "NO_VERBOSE_limit": "Requested route/source/type/config and verdict validation only; no runtime route frequency or isolated engine speed claim."
+  },
+  "resource_evidence": {
+    "scoped_stages": 21,
+    "wrapper_sha256": "9fa7a6777374552f2b0ea95556896757f97cf5396689cdc2ef3026a795688e43",
+    "memory_max": "8G",
+    "memory_swap_max": "0",
+    "observed_max_scope_peak_bytes": 1491406848,
+    "sum_saved_cpu_seconds": 874.580611,
+    "checks": "Prior twenty record/spec/log hashes and actual spec/result bindings match. The separate21st record/spec/log binding matches. Saved scopes have valid CPU/peak/event data, declared expected exit, no timeout or resource limit, and no max/OOM/OOM-kill events. CPU/peak are gate diagnostics, not solver performance measurements."
+  },
+  "frozen_controls": [
+    {"role": "baseline-default", "posets": "789bf99346d41a30f1b454ff58385b6f8a2961a9", "actual_elf_sha256": "d6c15c695faff81cd66350ed385c0b5c34290d3d61d01896a9701834d9d5bced", "private_rust_archive_sha256": "66382eaef453c258f2d1ef85e2e7e9835c623bb963c86858e40df261d24da00c"},
+    {"role": "optimized-default", "posets": "30e66853832d98bcfaada296d892157b95a8150d", "actual_elf_sha256": "e08ac3853afd9d79cc79669ae4ee90ab2ce7d698cc6c58c688ef014d182151af", "private_rust_archive_sha256": "452544d67ce57780e8ff68e3e4fe49d8fbd70edbd249b549b7943d5e4bb653d6"}
+  ],
+  "control_and_attribution_limits": "Both actual default ELF and generated-version-header hashes still match the genuine previously frozen controls. New KD artifact/config/library hashes match its proof, including eight runtime libraries. New private Rust archive e40ef50f02086b7d9db546e99032991d03749dc61bb836c390e7ad0e1c4d65ca differs from both control archives. Therefore comparisons are source treatments; they cannot isolate a header/KD-only causal effect. The successful owner closure also rechecks14981 historical files; this bounded reviewer pass does not claim to independently rehash that whole historical inventory.",
+  "actual_vs_planned": "Earlier plan/configuration snapshots retain their truthful historical pending wording. GATES-COMPLETE and its separately bound21st record supply completed runtime evidence. No actual three-arm freeze, official campaign result or new performance conclusion is manufactured from those older snapshots.",
+  "preservation": "Original Acacia/WIP, control binaries, frozen sources and prior evidence were not modified."
+}

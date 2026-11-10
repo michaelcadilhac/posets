@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "verdict": "LIMITED PRELIMINARY ACCEPTANCE of completed replay/profile/CI and staging claims; no concrete issue found. Solver campaign outcomes and final publication remain PENDING and were not inspected.",
+  "bindings": {
+    "MANIFEST.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/MANIFEST.json",
+      "sha256": "a5eab6e7133c3788861dde464bc25aa07f213c165b86b60a509fafe0249ea4a9"
+    },
+    "REPORT.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/REPORT.txt",
+      "sha256": "b559cc76304e6d39374e43a6a9af18cf7393d88b3e4fc248e88577cf331b9c9b"
+    },
+    "README.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/README.txt",
+      "sha256": "f3f8bc446aaec41624aad7504c014dfefebe54e719bfa3dc3ab6e1d44042a13f"
+    },
+    "source-and-protocol.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/source-and-protocol.json",
+      "sha256": "688422819f809aeb3ff6f64068bb7197259b73ef94f0e05fc453ac6d45764814"
+    },
+    "timing-rows.tsv": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/timing-rows.tsv",
+      "sha256": "2acc224aabc47863099a34de3f7bcd4f53076a1121d3ebae8131cc1420ed3e7f"
+    },
+    "PENDING-RESULTS.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/PENDING-RESULTS.json",
+      "sha256": "7baaa9178968205d0538b4a7089b21b3225dcec8e17295068a9dbe805c43f916"
+    },
+    "profiles/findings.txt": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/profiles/findings.txt",
+      "sha256": "c6ba5ed6963aabc6056610e76c68ae4276ddf1e3281334044b69beee71a9363f"
+    },
+    "profiles/phase-table.tsv": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/profiles/phase-table.tsv",
+      "sha256": "3cfd0ef7c65b29b20378460963f8ec2f03dd81788381b521b5538571a01dec99"
+    },
+    "profiles/report-completion.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/profiles/report-completion.json",
+      "sha256": "b4f28e595083ffb16c785fbe327f5b0da7d5b0edb0e5e86e5505d5b1f9243d8b"
+    },
+    "acacia/review-scopes.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/acacia/review-scopes.json",
+      "sha256": "f945184b78754aaa4405dd9fb369f9f16073796d93f44a5eea55844252f920a5"
+    },
+    "acacia/final-review-checkpoint-projection.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/acacia/final-review-checkpoint-projection.json",
+      "sha256": "f41c36761a5bdae4e9527a8b58be90dfd37ad3cc7dda491f2901e372dfa1ce39"
+    },
+    "acacia/final-review-checkpoint-projection-provenance.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/acacia/final-review-checkpoint-projection-provenance.json",
+      "sha256": "9b95bf49e99351831b9de008ee580a11e3e9eb71fb2ba6beb8c0634974bb4342"
+    },
+    "ci/ci-d363b9f-run.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/ci/ci-d363b9f-run.json",
+      "sha256": "92c299153170735b7cdad32c434891c93bac46112721a1e640a8fd7096000ff9"
+    },
+    "ci/ci-d363b9f-jobs.json": {
+      "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-final-staging/kd-round2/ci/ci-d363b9f-jobs.json",
+      "sha256": "3e24a288e8db02684395c4db673c5cdff2726017506d5fd04644e5af684777ff"
+    }
+  },
+  "completed_replay_checks": [
+    "All478 flat cells matched their16 exact saved summaries,460paired/18censored, each paired ratio recomputed from3matched candidate/baseline observations; actual source revisions/armmaps match saved plans. Quoted largerRR ratios and regression denominators match all retained rows.",
+    "A+B15/16 usable CPre regressions, B9/10 second-construction regressions, legacy12/14 CPre improvements plus2named losses and9/22 construction/second-construction regressions reconcile. Exact offset-only2CPre losses(all3pairs eachwidth),8/10 construction and7/10 second-construction losses retained.",
+    "Previously seenTRAIN/fixed seeds/caps/widths, complete censors and rejected experiments remain explicit. No end-to-end inference or offset-only heap claim; historical generic scope-label corrections use separately checked actual-arm maps without rewriting raw summaries."
+  ],
+  "completed_profile_checks": {
+    "calls": 56,
+    "binaries": 8,
+    "raw_scope_records_checked": 80,
+    "saved_clean_qualification_reports": 6,
+    "qualified_lazy_variants": [
+      "oldlazy plain",
+      "layout plain",
+      "layoutK2scalar",
+      "layoutK2SIMD"
+    ],
+    "rank_controls": "original789 and optimized30e, compatible only",
+    "checks": "All56 saved call gates have matching source pins/directories, unique passing source/backend/SIMDvector/mode identities, actual metadata lanes, report\u2192inputs hashes and current trace/meta/capture byte chain. All80 scope records bind hashes,exit0,8G/noSwap,no timeout/resource limit and zero max/OOM/OOMkill/group-kill counters. Actual work sums and quoted selected occupancy/heap figures checked from completed raw phases/table.",
+    "CPre_work": "Recomputed whole-CPre wrapper interval (bottom constructor + apply/union/intersection, excluding initial frontier, derived query and second construction) equals10149479 attempts in all4lazy arms/both widths,5376016/5273875 for original/optimized ranks. Compatible allocation sums81163/80831/80852/80852 and38480535/38240082/38265930/38265930 requested bytes match.",
+    "limits": "Profile phase table is a compact phase selection; full subphase records remain externally hash-bound in completion/analysis. Surviving-epoch counters not cumulative; pre-liveness/lookahead survivors not hits; modeled lanes not hardware loads. Caller-materialization ROI, capacities/stats object bytes, opaque Vector heaps, whole-process RSS/cgroup and clean timings remain distinct. No PMU/cache cause/universal heap benefit claimed."
+  },
+  "ci_snapshot": "Saved connector run42729670700 binds exact implementationd363b9f, push event completed/success; all3job records and native/portable-Valgrind/style steps succeeded. Does not claim later documentation/package HEAD or infer exact suite counts. This review inspected saved CI records, not a fresh remote query.",
+  "review_credit_and_privacy": "Acacia/review-scopes correctly limits Barbosa to preparation source/specs and table derivative source; no separate actual Acacia build/release or solver outcome approval claimed. Shared/owner attribution unchanged. Public checkpoint projection verified equal to original59dab0d minus only/bindings, omission labeled; private raw preservation list not republished.",
+  "package_scope": "All57 current payload manifest bindings hash-match; completed source summaries/profile/copies match external locators. Mutable staging with publicationfalse, PENDING solver outputs, historical v1/v2 untouched; checksum acceptance is not final publication approval.",
+  "findings": [],
+  "performed": "Read-only saved source/JSON/TSV/log-metadata reads, streaming hashes and independent numerical joins/arithmetic. No target helper imports/tests/builds/profiles/solver/timing workloads; no source/package edits or publication. Did not open active solver scores/progress/summary/raw outcomes.",
+  "remaining": "Await frozen completed three-arm archive/summary and actual outcome review. Neither numerical solver results nor backend switch nor final package approved yet.",
+  "attribution": "Independent completed-evidence/claim validation only; no new defect discovery and no execution credit. Owner performed experiments, CI and source/package work."
+}

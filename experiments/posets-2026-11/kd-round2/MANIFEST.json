@@ -1,0 +1,428 @@
+{
+  "schema": 1,
+  "status": "Completed evidence; root final prose/package review complete; ready for publication",
+  "content_complete": true,
+  "ready_for_parent_final_review": true,
+  "ready_for_publication": true,
+  "public_url": "https://github.com/michaelcadilhac/posets/tree/codex/block-sharingtrie/experiments/posets-2026-11/kd-round2",
+  "implementation_ci": "Green at exact d363b9f; no claim for future evidence-only HEAD",
+  "path_base": "this kd-round2 directory",
+  "inventory_excludes": [
+    "MANIFEST.json",
+    "SHA256SUMS"
+  ],
+  "files": [
+    {
+      "path": "FINAL-RESULTS.json",
+      "sha256": "9fc2b4bfa4cbac93632a383b41337a2d014231d1e743d5591352aab6f7f050f2",
+      "bytes": 1974
+    },
+    {
+      "path": "README.txt",
+      "sha256": "4e96b4713add5d00ffe538b3fdc93ae22d0dd6634fae1b70b0d0ae60b087568f",
+      "bytes": 4830
+    },
+    {
+      "path": "REPORT.txt",
+      "sha256": "d98a47c088e55d1c88c452ef8e71ae07412a1b56476e3ffe5cd2686b19c04e37",
+      "bytes": 12012
+    },
+    {
+      "path": "STATIC-CHECKS.json",
+      "sha256": "1301b861c4ed4d6940f9d253f3ff6398e789dabc0afc56193a4985189ef783ac",
+      "bytes": 1754
+    },
+    {
+      "path": "acacia/APPROVAL-AND-EXECUTION.json",
+      "sha256": "3c130e43fa6fe0d51172612e4d8950d3bc400e657171d8c90e450efc57cd8a8b",
+      "bytes": 2329
+    },
+    {
+      "path": "acacia/START-CHECKPOINT.json",
+      "sha256": "0107eda31e9ac061babb2f2af90713302411b75893b0bab93b69385d98eca1ec",
+      "bytes": 1047
+    },
+    {
+      "path": "acacia/actual-artifact-closure.json",
+      "sha256": "a44bee09d174f6d233e13c052bac761380a1c732b5b5a30ecd1fe305a26c94ad",
+      "bytes": 11734
+    },
+    {
+      "path": "acacia/arms.json",
+      "sha256": "02410434cc7f55fabe8e5cebce4168b42f16954b57bbd13cf2050aac94abc169",
+      "bytes": 10433
+    },
+    {
+      "path": "acacia/final-review-checkpoint-projection-provenance.json",
+      "sha256": "9b95bf49e99351831b9de008ee580a11e3e9eb71fb2ba6beb8c0634974bb4342",
+      "bytes": 790
+    },
+    {
+      "path": "acacia/final-review-checkpoint-projection.json",
+      "sha256": "f41c36761a5bdae4e9527a8b58be90dfd37ad3cc7dda491f2901e372dfa1ce39",
+      "bytes": 4258
+    },
+    {
+      "path": "acacia/gate-summary.json",
+      "sha256": "7262225dd319d07603d5c80b40b0417cd7caf3fe27cf8003dc396f405ebcbeb5",
+      "bytes": 2716
+    },
+    {
+      "path": "acacia/kd-scratch-restored-provenance.json",
+      "sha256": "9af26ec89594d23f957416d999662bf3138a5f5bdec7c03f497c07ba77d15e2b",
+      "bytes": 10471
+    },
+    {
+      "path": "acacia/legacy-actual-acacia.patch",
+      "sha256": "53615dd28a9a0ed390d696de2e5370f440083d598b3babe10528a173bb86a0e5",
+      "bytes": 75259
+    },
+    {
+      "path": "acacia/original-checkouts-final-redacted-proof.json",
+      "sha256": "af5da20d673e0841fb443b5322442ac58839be7470ac6984579d7d0670fbc8b1",
+      "bytes": 1931
+    },
+    {
+      "path": "acacia/original-checkouts-redacted-proof.json",
+      "sha256": "025c76f84c42b56c38f420138e98d645c9f7a956e9e2af3f3b275a3e66988b1b",
+      "bytes": 1933
+    },
+    {
+      "path": "acacia/review-scopes.json",
+      "sha256": "840c6a8975a15a3fcd64e7845597733b48133fdbebf84b60ad7b56e8c14435b6",
+      "bytes": 1896
+    },
+    {
+      "path": "acacia/reviews/barbosa-acacia-preparation-source-spec-review.json",
+      "sha256": "86185c68ed638c24e33e2efbfbc137197d533842942c66f0282b591b8739332e",
+      "bytes": 10978
+    },
+    {
+      "path": "acacia/reviews/barbosa-final-three-arm-outcome-archive-audit.json",
+      "sha256": "e2a766ed049118e3e9fd19339827ba9c8a11a65f194e5e079dd069498db7ed2c",
+      "bytes": 14111
+    },
+    {
+      "path": "acacia/reviews/barbosa-preliminary-completed-evidence-audit.json",
+      "sha256": "9f20b9fdb67f1aeaa63781d80f8e365ed57a65f491d4d515be2b9e96201ba093",
+      "bytes": 8622
+    },
+    {
+      "path": "acacia/reviews/barbosa-three-arm-table-source-review.json",
+      "sha256": "ef08dd6fc085e0223d72d05d23e6cef7ce8366a060f647e6b5a81434c92f41ba",
+      "bytes": 5242
+    },
+    {
+      "path": "acacia/reviews/nbjorner-acacia-completed-gates-review.json",
+      "sha256": "f03d4098a8a51eb0e6488158cdb23806281b26c07c0804f4825e01c42c3586b5",
+      "bytes": 5497
+    },
+    {
+      "path": "acacia/reviews/nbjorner-acacia-three-arm-release-review.json",
+      "sha256": "14047f6731da93a6b07d79a852d97622965b3cb323248cee74a7b65e1ae86dbe",
+      "bytes": 3269
+    },
+    {
+      "path": "acacia/reviews/nbjorner-three-arm-final-outcome-review.json",
+      "sha256": "9033327674e287ff501546d2b492d94e5c1876406e9ce4cb73ab392356ef8450",
+      "bytes": 5817
+    },
+    {
+      "path": "ci/ci-d363b9f-jobs.json",
+      "sha256": "3e24a288e8db02684395c4db673c5cdff2726017506d5fd04644e5af684777ff",
+      "bytes": 4815
+    },
+    {
+      "path": "ci/ci-d363b9f-run.json",
+      "sha256": "92c299153170735b7cdad32c434891c93bac46112721a1e640a8fd7096000ff9",
+      "bytes": 288
+    },
+    {
+      "path": "evidence/stage1-completion.json",
+      "sha256": "7624de3f6417dff92ee6bfd1e33db1af268f2a6ff119e5479ca5f255e52b3cd0",
+      "bytes": 36556
+    },
+    {
+      "path": "evidence/stage2-completion.json",
+      "sha256": "ad2d60223850e577f4989c7d012c7f664735949c092f6ea8965036ff5f04fbfd",
+      "bytes": 17604
+    },
+    {
+      "path": "evidence/stage3-actual-arm-identities.json",
+      "sha256": "33939742b89077a44142295010e9f4488d5ed8e3f95b98fffe5ac52b91c532fb",
+      "bytes": 26339
+    },
+    {
+      "path": "evidence/stage3-followup-completion.json",
+      "sha256": "4c69c6a6a39df3530a33d11efd3390531c3739a3e175ce9f15065dfb9547a97e",
+      "bytes": 96032
+    },
+    {
+      "path": "evidence/stage3-larger-completion.json",
+      "sha256": "8eded6c31dea73f96153be5e4cf49a97768f4619ae8d4a4f8d5ba1fc4e88242f",
+      "bytes": 59754
+    },
+    {
+      "path": "evidence/stage3-selector-policy.json",
+      "sha256": "3e333dc882f0f70b3147159ff44e47325177bab0cac2283ba18d52f965624b8e",
+      "bytes": 2573
+    },
+    {
+      "path": "evidence/stage4-offset-completion.json",
+      "sha256": "2289da2ef323a31ec71af18a7593b98d2e9447254ac33792db73e7ca4d938862",
+      "bytes": 9489
+    },
+    {
+      "path": "evidence/summaries/stage1-execution/larger-train-summary.json",
+      "sha256": "ca40ccd3f53540a8373c5c165b096d5a1dafa974e7472a2c98b070c78ad954da",
+      "bytes": 44633
+    },
+    {
+      "path": "evidence/summaries/stage1-execution/train-summary.json",
+      "sha256": "b52fa6de57f9cdc26a4f67932e954c7010fee3c4c93253cbb8929d4a41276db1",
+      "bytes": 129208
+    },
+    {
+      "path": "evidence/summaries/stage2-attribution/a-only-summary.json",
+      "sha256": "c15f7bc67c066ea4f15460a6ac15a3bfacdbed3e9e8fca1e6188836fd17c48a5",
+      "bytes": 45994
+    },
+    {
+      "path": "evidence/summaries/stage2-attribution/b-only-summary.json",
+      "sha256": "882e897cb8804be07fac0d92689d5bca9ff150612bd9c57c3ed450e4dc316541",
+      "bytes": 45996
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/followup-legacy-before-vs-legacy-after-standard-summary.json",
+      "sha256": "3b9fddc57cc409ad68cd05684e8d052cf878f86110a48247bbcba8a493ffef12",
+      "bytes": 134262
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-larger-summary.json",
+      "sha256": "160429baa950a2644293fc132a2130601fad7310725a1637a604f25455089496",
+      "bytes": 47001
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/followup-newrank-vs-plain-standard-summary.json",
+      "sha256": "104956bbee4595015b2bd70a6713fe33dffc57106063f3b1985cab4556895ba3",
+      "bytes": 136091
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/followup-oldrank-vs-plain-larger-summary.json",
+      "sha256": "aa06ce563303415b7ed5bc1e423b500d2df3d892f3e17da67b499a064a73da2a",
+      "bytes": 47023
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/k2scalar-vs-k2simd-summary.json",
+      "sha256": "004a3eba1e41106b4db2c2c3bee64477a0a31955ab798d54cf69bd578a61df36",
+      "bytes": 46977
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/legacy-before-vs-after-summary.json",
+      "sha256": "167cffdaa73b6ad82e3c0a63eb2bafcdd1a85f08727d6edc8300253e7542b5e0",
+      "bytes": 79455
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/newrank-vs-k2simd-summary.json",
+      "sha256": "562564ea3461eef05b1ad6ca46d828c60b342a7cd3b152af984c7ffaa0e242cd",
+      "bytes": 46969
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/oldlazy-vs-plain-summary.json",
+      "sha256": "23ab26d7ca6c206ec27cf9afd149c55911870b39227bdac6efde0c8860a3fb52",
+      "bytes": 46291
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/oldrank-vs-k2simd-summary.json",
+      "sha256": "a9277b2c63304a35e35443e86e5e3fe0144e66fad00cf64db2654c608b50291f",
+      "bytes": 46995
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/plain-vs-k2scalar-summary.json",
+      "sha256": "3149ed75d6865abbb40cdbf467a599a83ceb3c7c4147e7009c10f1e4427d65db",
+      "bytes": 46677
+    },
+    {
+      "path": "evidence/summaries/stage3-matrix/plain-vs-k2simd-summary.json",
+      "sha256": "b4b26bd2a0fc2ae6cd56c3b55d9fba6c29daaca466fdcd61a9f9817b6e8df256",
+      "bytes": 46523
+    },
+    {
+      "path": "evidence/summaries/stage4-offset/offset-only-summary.json",
+      "sha256": "d3e342056fe3a8e77feabb460a4f76d2b10ef9d1d52a22d32fc193035280de9d",
+      "bytes": 46447
+    },
+    {
+      "path": "origins.json",
+      "sha256": "e226aba9d41cc382bfde0c8314172d01b06634df028e4dae17562b8f2830334a",
+      "bytes": 23745
+    },
+    {
+      "path": "outcomes/COMPLETION.json",
+      "sha256": "8ed8c1e7f47f07682e8d452a5959a84fdfdb6fdbc207fea77636a0cd19143e04",
+      "bytes": 453
+    },
+    {
+      "path": "outcomes/archive/acacia-kd-three-arm-numerical.tar.gz",
+      "sha256": "221954d51aca542f9bd1ee0005677f5e22d8da9911dbce77575a90cc80b62156",
+      "bytes": 1084624
+    },
+    {
+      "path": "outcomes/archive/extraction-verification.json",
+      "sha256": "05f16b9107bbdb02f3c41335d14ecd5178ab277421822d4468e4c87154876979",
+      "bytes": 813
+    },
+    {
+      "path": "outcomes/archive/member-SHA256SUMS",
+      "sha256": "23d1e7fcdcb36c2973b23df61bfce07fda46b09f208d72929c936c5ca94caa27",
+      "bytes": 2586
+    },
+    {
+      "path": "outcomes/archive/member-manifest.json",
+      "sha256": "7d1afc3b322d974dbaf52e73576e6fcc9d58c69cedb55316d513fb7137d2ebd9",
+      "bytes": 7112
+    },
+    {
+      "path": "outcomes/evidence-closure.json",
+      "sha256": "3c94e8f32ee3d0d407578afc402933020e1bca340cbc1848dcbbbd2f3605a1fd",
+      "bytes": 4652
+    },
+    {
+      "path": "outcomes/final-handoff-projection-projection-provenance.json",
+      "sha256": "a4387b20136e843bb1c68cfcd0b87ac13ebb992c1e953e4d4a1ac271ac2433d3",
+      "bytes": 638
+    },
+    {
+      "path": "outcomes/final-handoff-projection.json",
+      "sha256": "a92ca63f4dc04c0de78b42f73d054da412301967f3c3e4b2350e508edd918890",
+      "bytes": 22181
+    },
+    {
+      "path": "outcomes/final-invariance-incident.json",
+      "sha256": "9bc0a63db2c1d59e54f304a875673bb58544da625cbd8dfdf0a1055ec9e7ea21",
+      "bytes": 2005
+    },
+    {
+      "path": "outcomes/final-invariance-v1-v2.patch",
+      "sha256": "1d9d9ceffceeaf21ab0f68bb079ae8feed545aa3387c140557e5d2da544bfd70",
+      "bytes": 1427
+    },
+    {
+      "path": "outcomes/frozen.json",
+      "sha256": "75a624bf71f7d6132173ab85c5c66415f4df64cebfded7a63f64c692637dfab9",
+      "bytes": 79487
+    },
+    {
+      "path": "outcomes/oom-event-observations.json",
+      "sha256": "5ae9cd54a167236e2ddb02b76dc1d6465e43aef996d74bf7c44a2f91fd0f4f09",
+      "bytes": 8051
+    },
+    {
+      "path": "outcomes/solver-comparison.csv",
+      "sha256": "2c855269bc6f5d12b9fd1fe92c5d5638b29d0f963302281385166d4044f5e525",
+      "bytes": 1495
+    },
+    {
+      "path": "outcomes/solver-comparison.json",
+      "sha256": "f3d110f1b9e8da645fa8f5bec5c211ffa94cce76587d6907bef8c97c498b7bda",
+      "bytes": 11689
+    },
+    {
+      "path": "outcomes/summary-without-host-details-projection-provenance.json",
+      "sha256": "61bc7bbc8bb9e4d4bf22350173adcdf846118c1d3a8baa0697b2498d8c1ae576",
+      "bytes": 636
+    },
+    {
+      "path": "outcomes/summary-without-host-details.json",
+      "sha256": "fc9a0d6fa12dcafac85d24fc2f9be61aafde428965944baf986cacbb91365b56",
+      "bytes": 27701
+    },
+    {
+      "path": "outcomes/summary.txt",
+      "sha256": "0a2d599fd81b6f1a7064f464c97527167e560016fd1020dc9050f2f226918320",
+      "bytes": 1233
+    },
+    {
+      "path": "patches/legacy-scratch.patch",
+      "sha256": "5485928661fab5d343e450a54f9106e30304e72741699488c78543f4047f6714",
+      "bytes": 9538
+    },
+    {
+      "path": "patches/rejected-A-contained-intersection.patch",
+      "sha256": "7499c7b0a989dbe960bd598cc78816737caf16eddad993d5febce9df468483ba",
+      "bytes": 10211
+    },
+    {
+      "path": "patches/rejected-B-transition-retirement.patch",
+      "sha256": "ebdf5d4987220d41a0bb8b5a16b1b903b1e42a60c840c0eb2e5d6612e251f7e5",
+      "bytes": 5218
+    },
+    {
+      "path": "patches/rejected-complete-layout-filter.patch",
+      "sha256": "5bc7a5a90fcf55b700da0c9cb02bc1336f56f66b2da86c204ba2f2e837c14ff9",
+      "bytes": 48297
+    },
+    {
+      "path": "patches/rejected-filter-on-packed-catalogs.patch",
+      "sha256": "78980556da51385150e509ae29988289cb5af0eb2e3b00cbe194bbc6f272a32d",
+      "bytes": 39258
+    },
+    {
+      "path": "patches/rejected-offset-only.patch",
+      "sha256": "35eff91136f1b9533f26fa3c477c752201a06f960ac6d24f366f1f2c7fc5f196",
+      "bytes": 4629
+    },
+    {
+      "path": "patches/rejected-packed-catalogs.patch",
+      "sha256": "578591ed54bf8b2478be9530b5078e10ec01ebc87f2d99c0410f798f9badc63a",
+      "bytes": 12438
+    },
+    {
+      "path": "profiles/findings.txt",
+      "sha256": "c6ba5ed6963aabc6056610e76c68ae4276ddf1e3281334044b69beee71a9363f",
+      "bytes": 7759
+    },
+    {
+      "path": "profiles/phase-table.tsv",
+      "sha256": "3cfd0ef7c65b29b20378460963f8ec2f03dd81788381b521b5538571a01dec99",
+      "bytes": 34227
+    },
+    {
+      "path": "profiles/report-completion.json",
+      "sha256": "b4f28e595083ffb16c785fbe327f5b0da7d5b0edb0e5e86e5505d5b1f9243d8b",
+      "bytes": 2123
+    },
+    {
+      "path": "reporting/make-three-arm-table.py",
+      "sha256": "f5d2b4e105f1d17ad1ace9fc82bdd176f763c794b6bcc3d48812397c7aa84861",
+      "bytes": 20283
+    },
+    {
+      "path": "reporting/offline-tests-record.json",
+      "sha256": "fefdce3a492fd8d6fd949a12a77d6462c7baef88ef2499933da7ded389ce85d1",
+      "bytes": 2753
+    },
+    {
+      "path": "reporting/test_three_arm_table.py",
+      "sha256": "586fcb28796f7e9b03710d7126f34a6ebb5639be060c449ec735144cd1133e68",
+      "bytes": 7405
+    },
+    {
+      "path": "source-and-protocol.json",
+      "sha256": "cd1487388d4cc025dabf9c0afd113ae6e654ac89ea3d15b297b4b83ce3d3607e",
+      "bytes": 182444
+    },
+    {
+      "path": "timing-rows.tsv",
+      "sha256": "2acc224aabc47863099a34de3f7bcd4f53076a1121d3ebae8131cc1420ed3e7f",
+      "bytes": 271591
+    }
+  ],
+  "payload_bytes": 3427597,
+  "prior_frozen_draft": {
+    "path": "/home/gperez/Documents/Codex/2026-11-08/look-into-the-posets-sibling-repo/work/kd-round2/public-package-draft-v2/MANIFEST.json",
+    "sha256": "6e12414b6c881cccd7d49c54695436d8159b6aa55b23ff0295aa9cd9b48d4b5d",
+    "bytes": 7636
+  },
+  "root_final_prose_package_review_complete": true
+}
