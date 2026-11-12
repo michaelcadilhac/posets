@@ -107,7 +107,7 @@ namespace matrix_check {
   }
   template <class S>
   void run (const std::string& which) {
-    using vector_type = typename S::value_type;
+    using vector_type = S::value_type;
     if (which == "vectors") {
       vectors<vector_type> ();
       return;
@@ -171,9 +171,11 @@ namespace matrix_check {
       for (size_t i = 0; i < dim; ++i) {
         const bool boolean = i >= dim / 2;
         for (size_t j = 0; j < left.size (); ++j)
-          left[j][i] = boolean ? int ((i + j) % 2) - 1 : int ((i + j) % 4) - 1;
+          left[j][i] = boolean ? static_cast<int> ((i + j) % 2) - 1
+                               : static_cast<int> ((i + j) % 4) - 1;
         for (size_t j = 0; j < right.size (); ++j)
-          right[j][i] = boolean ? int ((i + j + 1) % 2) - 1 : int ((i + 2 * j) % 4) - 1;
+          right[j][i] = boolean ? static_cast<int> ((i + j + 1) % 2) - 1
+                                : static_cast<int> ((i + (2 * j)) % 4) - 1;
       }
       left.back () = left.front ();  // Duplicate plus sharing/repeated-coordinate patterns.
       left.emplace_back (dim, -1);
@@ -187,8 +189,8 @@ namespace matrix_check {
         for (size_t code = 0; code < (size_t {1} << (2 * dim)); ++code) {
           logical query;
           for (size_t i = 0; i < dim; ++i)
-            query.push_back (i >= dim / 2 ? int ((code >> (2 * i)) & 1) - 1
-                                          : int ((code >> (2 * i)) & 3) - 1);
+            query.push_back (i >= dim / 2 ? static_cast<int> ((code >> (2 * i)) & 1) - 1
+                                          : static_cast<int> ((code >> (2 * i)) & 3) - 1);
           queries.push_back (std::move (query));
         }
       }

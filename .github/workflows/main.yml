@@ -8,16 +8,18 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get -y install zsh git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config libglib2.0-dev libffi-dev autoconf automake libtool bison flex valgrind clang-format-18 clang-tidy-18
+        sudo apt-get -y install zsh git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config libglib2.0-dev libffi-dev autoconf automake libtool bison flex valgrind
         sudo pip install --upgrade meson
     - name: Checkout repository and submodules
       uses: actions/checkout@v5
       with:
         submodules: recursive
+    - name: Install pinned lint tools
+      run: python3 -m pip install -r .github/requirements-lint.txt
     - name: Test that everything is tidy
       run: |
-        clang-tidy-18 tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20 || exit 1
-        .github/run-clang-format.py --clang-format-executable clang-format-18 -r include || exit 1
+        clang-tidy tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20 || exit 1
+        .github/run-clang-format.py --clang-format-executable clang-format -r include || exit 1
     - name: Setup configuration
       run: |
         CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug

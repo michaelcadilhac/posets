@@ -101,6 +101,7 @@ namespace posets::vectors {
 
 namespace std {
   template <posets::Vector V>
+  // NOLINTNEXTLINE(bugprone-std-namespace-modification): Keep stream lookup for all Vector types.
   inline std::ostream& operator<< (std::ostream& os, const V& v) {
     return v.print (os);
   }

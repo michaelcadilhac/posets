@@ -26,7 +26,7 @@ namespace posets::vectors {
   template <typename Data>
   struct basic_malloc {
       static Data* construct () { return new Data (); }
-      static void destroy (Data* d) { delete (d); }
+      static void destroy (Data* d) { delete d; }
   };
 
   template <bool EmbedsData, typename Data>

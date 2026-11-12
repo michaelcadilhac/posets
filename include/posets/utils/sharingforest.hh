@@ -48,7 +48,7 @@ namespace posets::utils {
       size_t dim;
 
       struct st_node {
-          typename V::value_type label;
+          V::value_type label;
           uint32_t numchild;
           size_t cbuffer_offset;
       };
@@ -594,7 +594,7 @@ namespace posets::utils {
         // Else all nodes should have the same value at index currentLayer - 1, so
         // we just use the first
         const typename V::value_type label {current_layer == 0
-                                                ? static_cast<typename V::value_type> (-1)
+                                                ? static_cast<V::value_type> (-1)
                                                 : element_vec[vecs[start]][current_layer - 1]};
         st_node new_node {label, 0};
         // We have not reached the last layer - so add children
@@ -815,7 +815,7 @@ namespace posets::utils {
         const st_node root_nod_e1 = layers[0][root1];
         const st_node root_nod_e2 = layers[0][root2];
         layers[0].emplace_back (
-            static_cast<typename V::value_type> (-1), 0,
+            static_cast<V::value_type> (-1), 0,
             add_children (size_t {root_nod_e1.numchild} + root_nod_e2.numchild));
 
         // We are ready to start a stack-simulated DFS of the synchronized-product

@@ -14,7 +14,7 @@ namespace posets::vectors {
   template <typename X>
   class x_and_boolvec {
     public:
-      using value_type = typename X::value_type;
+      using value_type = X::value_type;
 
       x_and_boolvec (size_t k)
         : k {k},
@@ -218,7 +218,7 @@ namespace posets::vectors {
       std::ostream& print (std::ostream& os) const {
         os << "{ ";
         for (size_t i = 0; i < this->size (); ++i)
-          os << (int) (*this)[i] << " ";
+          os << static_cast<int> ((*this)[i]) << " ";
         os << "}";
         return os;
       }

@@ -1,6 +1,9 @@
 # -*- yaml -*-
 --- 
 # Keep the established pragma-once header policy with newer clang-tidy versions.
+# Allow mixed if/else braces, including single-statement if constexpr branches.
+# Namespace-scope benchmark defaults and streams intentionally initialize before main.
+# Fixed random seeds keep benchmarks and skiplist layouts reproducible.
 Checks: >
   -*,
   abseil-*,
@@ -15,12 +18,15 @@ Checks: >
   clang-analyzer-*,
   bugprone-*,
   -bugprone-easily-swappable-parameters,
+  -bugprone-throwing-static-initialization,
+  -bugprone-random-generator-seed,
   performance-*,
   readability-*,
   portability-*,
   -portability-avoid-pragma-once,
   -readability-magic-numbers,
   -readability-braces-around-statements,
+  -readability-inconsistent-ifelse-braces,
   -readability-inconsistent-declaration-parameter-name,
   -readability-named-parameter,
   -readability-identifier-length,

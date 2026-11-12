@@ -10,7 +10,7 @@
 namespace posets::vectors {
 
   static constexpr size_t nbools_to_nbitsets (size_t nbools) {
-    return (nbools + sizeof (unsigned long) * 8 - 1) / (sizeof (unsigned long) * 8);
+    return (nbools + (sizeof (unsigned long) * 8) - 1) / (sizeof (unsigned long) * 8);
   }
 
   static constexpr size_t nbitsets_to_nbools (size_t nbitsets) {
@@ -20,7 +20,7 @@ namespace posets::vectors {
   template <typename X, size_t NBitsets, size_t Bools = nbitsets_to_nbools (NBitsets)>
   class x_and_bitset {
     public:
-      using value_type = typename X::value_type;
+      using value_type = X::value_type;
 
       x_and_bitset (size_t k) : k {k}, x {std::min (bitset_threshold, k)}, sum {0} {}
 
@@ -204,7 +204,7 @@ namespace posets::vectors {
       std::ostream& print (std::ostream& os) const {
         os << "{ ";
         for (size_t i = 0; i < this->size (); ++i)
-          os << (int) (*this)[i] << " ";
+          os << static_cast<int> ((*this)[i]) << " ";
         os << "}";
         return os;
       }

@@ -29,6 +29,18 @@ meson test -C build --no-rebuild --num-processes 1 --print-errorlogs
 See [issue #1](https://github.com/michaelcadilhac/posets/issues/1) for the
 original macOS toolchain diagnosis.
 
+## Linting
+
+Use LLVM 22.1.8, matching CI (install `python3-venv` on Debian/Ubuntu):
+
+```sh
+python3 -m venv ~/.cache/posets-lint
+. ~/.cache/posets-lint/bin/activate
+python3 -m pip install -r .github/requirements-lint.txt
+clang-tidy tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20
+.github/run-clang-format.py --clang-format-executable clang-format -r include
+```
+
 ## SIMD widths
 
 `POSETS_SIMD_WIDTH` selects the compile-time lane count:

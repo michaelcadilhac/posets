@@ -28,7 +28,7 @@ namespace posets {
         { t1.join_with (t2) } -> std::same_as<void>;
       };
 
-  template <typename T, typename V = typename T::value_type>
+  template <typename T, typename V = T::value_type>
   concept Downset =
       std::ranges::range<T> and not std::is_default_constructible_v<T> and
       // std::is_constructible_v<T, size_t> and          // give the dimension
