@@ -14,7 +14,9 @@
 template <class V>
 void check () {
   using T = V::value_type;
-  static_assert (requires (V& v) { *v.begin () = 2; });
+  // Cached-sum vectors are read-only through iterators (see check_cached).
+  static_assert (requires (V& v) { *v.begin () = 2; } or
+                 requires (const V& v) { v.cached_sum (); });
   constexpr auto low = std::numeric_limits<T>::min ();
   constexpr auto high = std::numeric_limits<T>::max ();
   for (size_t dimension : {0u, 1u, 7u, 8u, 9u, 15u, 16u, 17u, 31u, 32u, 33u, 63u, 64u, 65u})
