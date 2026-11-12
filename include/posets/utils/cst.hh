@@ -352,7 +352,7 @@ namespace posets::utils {
               // path[1..dim] are the prefix sums; coord i-1 = path[i] - path[i-1].
             }
             for (size_t i = 1; i < path.size (); ++i)
-              tmp.push_back (static_cast<typename V::value_type> (path[i] - path[i - 1]));
+              tmp.push_back (static_cast<V::value_type> (path[i] - path[i - 1]));
             res.emplace_back (V (std::move (tmp)));
             path.pop_back ();
           }

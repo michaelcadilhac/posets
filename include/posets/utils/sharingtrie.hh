@@ -43,7 +43,7 @@ namespace posets::utils {
       size_t allocated_nodes {0};
       size_t reachable_nodes {0};
       struct st_node {
-          typename V::value_type label;
+          V::value_type label;
           int color;
           int son;
           int bro;

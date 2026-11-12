@@ -46,6 +46,7 @@ namespace posets::utils {
       void set_prefix (std::string s) { prefix = std::move(s); }
   };
 
+  // NOLINTNEXTLINE(misc-multiple-inheritance): std::ostream supplies the standard stream hierarchy.
   class voutstream : public std::ostream {
     private:
       prefixstringbuf buf;

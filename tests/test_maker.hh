@@ -65,7 +65,7 @@ struct set_name {
 template <typename S>
 struct full_name {
     static auto get () {
-      using value_type = typename S::value_type;
+      using value_type = S::value_type;
       return get_set_name (S) + "<" + get_vector_name (value_type) + ">";
     }
 };
@@ -135,8 +135,8 @@ template <bool CreateAll = true, template <typename V> typename SetType, typenam
           typename VecType2, typename... VecTypes>
 void register_maker (type_list<VecType, VecType2, VecTypes...>*, SetType<VecType>* = nullptr) {
   set_names.insert (get_set_name (SetType<VecType>));
-  register_maker<CreateAll, SetType> ((type_list<VecType>*) nullptr);
-  register_maker<CreateAll, SetType> ((type_list<VecType2, VecTypes...>*) nullptr);
+  register_maker<CreateAll, SetType> (static_cast<type_list<VecType>*> (nullptr));
+  register_maker<CreateAll, SetType> (static_cast<type_list<VecType2, VecTypes...>*> (nullptr));
 }
 
 // Multiple sets, multiple vectors

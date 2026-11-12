@@ -63,9 +63,9 @@ namespace matrix_cpre {
     trace result;
     auto meta = complete_file (path.parent_path () / "meta.tsv");
     std::string line;
-    require (bool (std::getline (meta, line)), "missing trace metadata");
+    require (static_cast<bool> (std::getline (meta, line)), "missing trace metadata");
     const auto names = fields (line);
-    require (bool (std::getline (meta, line)), "missing trace metadata row");
+    require (static_cast<bool> (std::getline (meta, line)), "missing trace metadata row");
     const auto values = fields (line);
     require (values.size () == names.size (), "malformed trace metadata");
     std::map<std::string, std::string> metadata;
@@ -79,12 +79,12 @@ namespace matrix_cpre {
     require (dimension > 0 and numeric >= 0 and numeric <= dimension and initial >= 0 and
                  initial < dimension,
              "invalid trace dimension/Boolean suffix/initial state");
-    result.dimension = size_t (dimension);
-    result.numeric = size_t (numeric);
-    result.initial = size_t (initial);
+    result.dimension = static_cast<size_t> (dimension);
+    result.numeric = static_cast<size_t> (numeric);
+    result.initial = static_cast<size_t> (initial);
 
     auto input = complete_file (path);
-    require (bool (std::getline (input, line)) and line.starts_with ("# "), "missing CPre header");
+    require (static_cast<bool> (std::getline (input, line)) and line.starts_with ("# "), "missing CPre header");
     std::map<std::string, int64_t> header;
     std::istringstream words (line.substr (2));
     for (std::string word; words >> word;) {
@@ -106,7 +106,7 @@ namespace matrix_cpre {
     }
     const auto bound = header.at ("k");
     require (bound > 0 and bound <= 127, "trace bound exceeds signed8-bit domain");
-    result.k = int (bound);
+    result.k = static_cast<int> (bound);
     if (header.at ("schema_version") == 1) {
       result.membership = true;
       require (header.size () == 8 and not result.origin.empty () and header.at ("maxima") >= 0 and
@@ -117,22 +117,22 @@ namespace matrix_cpre {
       const auto hits = header.at ("hits");
       size_t bin = 0;
       for (const auto mark : {16, 64, 256, 1024, 4096, 16384})
-        bin += size_t (header.at ("maxima") >= mark);
+        bin += static_cast<size_t> (header.at ("maxima") >= mark);
       require (header.at ("loop") >= 0 and std::cmp_equal (header.at ("bin"), bin) and
                    ordinal > 0 and hits >= 0 and hits <= ordinal and
                    (result.expected_answer ? hits > 0 : hits < ordinal),
                "inconsistent query ordinal/bin/hits");
-      require (bool (std::getline (input, line)) and line == "[query]", "missing query section");
-      require (bool (std::getline (input, line)), "missing query rank");
+      require (static_cast<bool> (std::getline (input, line)) and line == "[query]", "missing query section");
+      require (static_cast<bool> (std::getline (input, line)), "missing query rank");
       for (const auto& value : fields (line)) {
         const auto coordinate = integer (value);
         // Actual forward queries can exceed zero in the Boolean suffix: those
         // are valid membership misses, not values to coerce into packed bits.
         require (coordinate >= -1 and coordinate <= result.k, "query out of rank bounds");
-        result.query.push_back (int (coordinate));
+        result.query.push_back (static_cast<int> (coordinate));
       }
       require (result.query.size () == result.dimension, "query dimension mismatch");
-      require (bool (std::getline (input, line)) and line == "[generators]",
+      require (static_cast<bool> (std::getline (input, line)) and line == "[generators]",
                "missing generator section");
       bool ended = false;
       while (std::getline (input, line)) {
@@ -147,12 +147,12 @@ namespace matrix_cpre {
           const auto coordinate = integer (columns[i]);
           require (coordinate >= -1 and coordinate <= (i < result.numeric ? result.k - 1 : 0),
                    "generator out of numeric/Boolean bounds");
-          rank.push_back (int (coordinate));
+          rank.push_back (static_cast<int> (coordinate));
         }
         result.before.push_back (std::move (rank));
       }
       require (ended and not std::getline (input, line) and
-                   result.before.size () == size_t (header.at ("maxima")),
+                   result.before.size () == static_cast<size_t> (header.at ("maxima")),
                "incomplete/trailing query trace");
       const bool answer = std::ranges::any_of (result.before, [&] (const auto& value) {
         return matrix_check::below (result.query, value);
@@ -183,7 +183,8 @@ namespace matrix_cpre {
         require (after_count >= 0, "negative after count");
       }
       else if (line.starts_with ("action\t")) {
-        require (section == 2 and integer (line.substr (7)) == int (result.actions.size ()),
+        require (section == 2 and
+                     integer (line.substr (7)) == static_cast<int> (result.actions.size ()),
                  "action index gap");
         result.actions.emplace_back ();
       }
@@ -197,7 +198,8 @@ namespace matrix_cpre {
           require (destination >= 0 and destination < dimension and source >= 0 and
                        source < dimension and (increment == 0 or increment == 1),
                    "action edge out of bounds");
-          result.actions.back ().emplace_back (size_t (destination), size_t (source), increment);
+          result.actions.back ().emplace_back (static_cast<size_t> (destination),
+                                               static_cast<size_t> (source), increment);
         }
         else {
           require ((section == 1 or section == 3) and columns.size () == result.dimension,
@@ -207,15 +209,15 @@ namespace matrix_cpre {
             const auto value = integer (columns[i]);
             require (value >= -1 and value <= (i < result.numeric ? result.k - 1 : 0),
                      "rank outside numeric/Boolean domain");
-            rank.push_back (int (value));
+            rank.push_back (static_cast<int> (value));
           }
           (section == 1 ? result.before : result.after).push_back (std::move (rank));
         }
       }
     }
-    require (section == 3 and result.before.size () == size_t (header.at ("before")) and
-                 result.actions.size () == size_t (header.at ("actions")) and
-                 result.after.size () == size_t (after_count),
+    require (section == 3 and result.before.size () == static_cast<size_t> (header.at ("before")) and
+                 result.actions.size () == static_cast<size_t> (header.at ("actions")) and
+                 result.after.size () == static_cast<size_t> (after_count),
              "incomplete CPre trace");
     return result;
   }
@@ -269,7 +271,7 @@ namespace matrix_cpre {
     if (verify_only and not source_verified)
       validate_source (input);
     posets::vectors::bool_threshold = posets::vectors::bitset_threshold = input.numeric;
-    using vector_type = typename S::value_type;
+    using vector_type = S::value_type;
     std::map<std::string, double> result;
     const auto timed = [&] (const std::string& key, auto work) {
       if (verify_only or
@@ -284,7 +286,7 @@ namespace matrix_cpre {
         const auto wall_end = std::chrono::steady_clock::now ();
         const auto cpu_end = std::clock ();
         result[key] += std::chrono::duration<double> (wall_end - wall).count ();
-        result[key + "_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
+        result[key + "_cpu"] += static_cast<double> (cpu_end - cpu) / CLOCKS_PER_SEC;
       };
       if constexpr (std::is_void_v<decltype (work ())>) {
         work ();
@@ -309,10 +311,10 @@ namespace matrix_cpre {
             timed ("rebuild", [&] { return matrix_check::build<S> (input.before); });
       }
       if (not verify_only) {
-        result["rounds"] = double (rounds);
-        result["dimension"] = double (input.dimension);
-        result["boolean_tail"] = double (input.dimension - input.numeric);
-        result["before_maxima"] = double (input.before.size ());
+        result["rounds"] = static_cast<double> (rounds);
+        result["dimension"] = static_cast<double> (input.dimension);
+        result["boolean_tail"] = static_cast<double> (input.dimension - input.numeric);
+        result["before_maxima"] = static_cast<double> (input.before.size ());
         result["actual_query"] = 1;
         result["expected_answer"] = input.expected_answer;
       }
@@ -370,7 +372,7 @@ namespace matrix_cpre {
         const auto wall_end = std::chrono::steady_clock::now ();
         const auto cpu_end = std::clock ();
         result["cpre"] += std::chrono::duration<double> (wall_end - start).count ();
-        result["cpre_cpu"] += double (cpu_end - cpu) / CLOCKS_PER_SEC;
+        result["cpre_cpu"] += static_cast<double> (cpu_end - cpu) / CLOCKS_PER_SEC;
       }
       std::set<logical> actual;
       const auto& completed = frontier;
@@ -391,13 +393,13 @@ namespace matrix_cpre {
           timed ("rebuild", [&] { return matrix_check::build<S> (input.after); });
     }
     if (not verify_only) {
-      result["rounds"] = double (rounds);
+      result["rounds"] = static_cast<double> (rounds);
       result["detail"] = detail;
-      result["dimension"] = double (input.dimension);
-      result["boolean_tail"] = double (input.dimension - input.numeric);
-      result["before_maxima"] = double (input.before.size ());
-      result["after_maxima"] = double (input.after.size ());
-      result["actions"] = double (input.actions.size ());
+      result["dimension"] = static_cast<double> (input.dimension);
+      result["boolean_tail"] = static_cast<double> (input.dimension - input.numeric);
+      result["before_maxima"] = static_cast<double> (input.before.size ());
+      result["after_maxima"] = static_cast<double> (input.after.size ());
+      result["actions"] = static_cast<double> (input.actions.size ());
     }
     return result;
   }

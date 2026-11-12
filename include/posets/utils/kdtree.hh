@@ -35,7 +35,7 @@ namespace posets::utils {
   template <Vector V>
   class kdtree {
     private:
-      using value_type = typename V::value_type;
+      using value_type = V::value_type;
       using axis_type = std::uint32_t;
 #if POSETS_KDTREE_NARROW_INDICES
       using leaf_index_type = std::uint32_t;

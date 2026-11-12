@@ -22,9 +22,9 @@ namespace posets::vectors {
     requires HasData<Data>
   class generic : private sum_member<HasSum>, private malloc_member<EmbedsData, Data> {
     public:
-      using block_type = typename Data::value_type;
+      using block_type = Data::value_type;
       using value_type = block_type::value_type;
-      static const auto uses_simd = [] () { return IsDataSimd<Data>; }();
+      static constexpr auto uses_simd = IsDataSimd<Data>;
 
       static constexpr auto items_per_block = [] () {
         if constexpr (uses_simd)
@@ -38,7 +38,7 @@ namespace posets::vectors {
       }
 
     private:
-      static const bool is_resizable = ([] () { return requires (Data d) { d.resize (42); }; }) ();
+      static constexpr bool is_resizable = requires (Data d) { d.resize (42); };
 
       static_assert (not is_resizable or EmbedsData,
                      "Resizable data should be embeded, as they are already managed by pointers.");
@@ -317,7 +317,7 @@ namespace posets::vectors {
       auto& print (std::ostream& os) const {
         os << "{ ";
         for (size_t i = 0; i < k; ++i)
-          os << (int) (*this)[i] << " ";
+          os << static_cast<int> ((*this)[i]) << " ";
         os << "}";
         return os;
       }
@@ -342,7 +342,7 @@ namespace posets::vectors {
         public:
           using iterator_concept = std::random_access_iterator_tag;
           using iterator_category = std::random_access_iterator_tag;
-          using value_type = typename generic::value_type;
+          using value_type = generic::value_type;
           using difference_type = std::ptrdiff_t;
           using reference = decltype (std::declval<owner_type&> ().at (size_t {}));
           using pointer = void;

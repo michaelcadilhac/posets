@@ -109,14 +109,13 @@ namespace {
       size_t t3_sz;
       size_t t4_sz;
   } test_chk = {};
+
+  template <class T, class = void>
+  struct has_insert : std::false_type {};
+
+  template <class T>
+  struct has_insert<T, std::void_t<decltype(std::declval<T>().insert (std::declval<typename T::value_type> ()))>> : std::true_type {};
 }
-
-
-template <class T, class = void>
-struct has_insert : std::false_type {};
-
-template <class T>
-struct has_insert<T, std::void_t<decltype(std::declval<T>().insert (std::declval<typename T::value_type> ()))>> : std::true_type {};
 
 #define chk(Field, Value, Fail)                                                              \
   do {                                                                                       \
@@ -132,8 +131,8 @@ struct has_insert<T, std::void_t<decltype(std::declval<T>().insert (std::declval
 
 template <typename SetType>
 struct test_t : public generic_test<result_t> {
-    using v_type = typename SetType::value_type;
-    using value_type = typename v_type::value_type;
+    using v_type = SetType::value_type;
+    using value_type = v_type::value_type;
 
     SetType vec_to_set (std::vector<v_type>&& v) {
       if constexpr (has_insert<SetType>::value) {
@@ -491,9 +490,9 @@ int main (int argc, char* argv[]) try {
   const char* prog = argv[0];
 
 #if defined(POSETS_MATRIX_ONLY) && defined(POSETS_MATRIX_BACKEND)
-  register_maker<false, POSETS_MATRIX_BACKEND> ((vector_types*) nullptr);
+  register_maker<false, POSETS_MATRIX_BACKEND> (static_cast<vector_types*> (nullptr));
 #else
-  register_maker<false> ((vector_types*) nullptr, (set_types*) nullptr);
+  register_maker<false> (static_cast<vector_types*> (nullptr), static_cast<set_types*> (nullptr));
 #endif
 
   while (true) {
@@ -517,7 +516,7 @@ int main (int argc, char* argv[]) try {
                   << ",\"native_lanes\":" << std::experimental::simd_size_v<test_value_type,
                        std::experimental::simd_abi::native<test_value_type>>
                   << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
-                  << ",\"block_bytes\":" << sizeof (typename traits::fssimd)
+                  << ",\"block_bytes\":" << sizeof (traits::fssimd)
                   << ",\"width_selector\":" << POSETS_SIMD_WIDTH
                   << ",\"alignment\":" << traits::memory_alignment_v
 #ifdef NDEBUG
@@ -530,7 +529,7 @@ int main (int argc, char* argv[]) try {
 #else
                   << ",\"stdlib_assertions\":false"
 #endif
-                  << ",\"simd_type\":" << std::quoted (typeid (typename traits::fssimd).name ())
+                  << ",\"simd_type\":" << std::quoted (typeid (traits::fssimd).name ())
                   << ",\"hybrid_policy\":" << std::quoted (POSETS_MATRIX_STRING (KD_THRESH (M, D)))
                   << ",\"backends\":[";
         bool first = true;
@@ -584,7 +583,7 @@ int main (int argc, char* argv[]) try {
     return 0;
   }
 
-  const decltype (distrib)::param_type distrib_params (0, (int32_t) params["maxval"]);
+  const decltype (distrib)::param_type distrib_params (0, static_cast<int32_t> (params["maxval"]));
   distrib.param (distrib_params);
 
   if (argc - optind != 2)

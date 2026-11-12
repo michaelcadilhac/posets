@@ -25,7 +25,7 @@ namespace posets::downsets {
   template <Vector V>
   class filtered_vector_backed {
       using self = filtered_vector_backed;
-      using coord_t = typename V::value_type;
+      using coord_t = V::value_type;
       using word_t = std::uint64_t;
       static constexpr size_t word_bits = 64;
 
