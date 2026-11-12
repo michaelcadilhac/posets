@@ -5,6 +5,7 @@
 #include <iostream>
 #include <optional>
 #include <set>
+#include <utility>
 
 #include <posets/downsets/lazy_kdtree_backed.hh>
 #include <posets/vectors.hh>
@@ -181,6 +182,56 @@ namespace {
     }
     throw std::runtime_error ("lazy allocation sweep did not finish");
   }
+  template <class V, bool Cascade>
+  void seal_sweep () {
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    for (const auto [count, min_index] :
+         {std::pair {15U, 10000U}, {31U, 10000U}, {33U, 10000U}, {33U, 1U}}) {
+      posets::downsets::lazy_kdtree_policy policy;
+      policy.min_buffer = 10000;
+      policy.min_index_size = min_index;
+      region initial;
+      for (size_t i = 0; i < count; ++i)
+        initial.push_back ({static_cast<int> (i), 64 - static_cast<int> (i), -1});
+      bool completed = false;
+      for (long fail = 0; fail < 8192; ++fail) {
+        S subject (std::vector<V> {}, policy);
+        for (const auto& row : initial)
+          subject.insert (vector<V> (row));
+        require (subject.storage ().pending_slots == count, "seal sweep lost its pending tail");
+        const logical raw {-1, -1, 1};
+        auto candidate = vector<V> (raw);
+        bool threw = false;
+        try {
+          allocations_left = fail;
+          if (count == 33)
+            subject.rebuild ();
+          else
+            subject.insert (std::move (candidate));
+        } catch (const std::bad_alloc&) {
+          threw = true;
+        }
+        allocations_left = -1;
+        if (threw) {
+          check (subject, initial, initial);
+          require (unpack (candidate) == raw, "failed seal consumed candidate");
+          if (count == 33)
+            subject.rebuild ();
+          else
+            subject.insert (std::move (candidate));
+        }
+        auto expected = initial;
+        if (count != 33)
+          expected.push_back (raw);
+        check (subject, expected, expected);
+        if (not threw) {
+          completed = true;
+          break;
+        }
+      }
+      require (completed, "pending seal allocation sweep did not finish");
+    }
+  }
   class throwing_move : public posets::vectors::vector_backed<int8_t> {
       using base = posets::vectors::vector_backed<int8_t>;
       static base&& checked (throwing_move& value) {
@@ -219,6 +270,7 @@ namespace {
   static_assert (posets::Vector<throwing_move>);
   template <class V, bool Cascade>
   void test () {
+    seal_sweep<V, Cascade> ();
     for (int mode = 0; mode < 7; ++mode)
       std::cout << "cascade=" << Cascade << " construction_mode=" << mode
                 << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";

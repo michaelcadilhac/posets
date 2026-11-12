@@ -9,7 +9,9 @@
 #include <cstdint>
 #include <limits>
 #include <numeric>
+#include <optional>
 #include <ostream>
+#include <span>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -24,7 +26,8 @@ namespace posets::downsets {
       size_t min_buffer {32};
       double buffer_fraction {0.25};
       double dead_fraction {0.25};
-      size_t max_index_bytes {0};     // Maintenance trigger, not a hard allocation limit.
+      size_t max_index_bytes {0};  // Maintenance trigger, not a hard allocation limit.
+      size_t pending_block_size {16};
       size_t bulk_scan_limit {4096};  // Larger inputs use indexed insertion; 0 forces it.
   };
 
@@ -44,10 +47,12 @@ namespace posets::downsets {
       lazy_kdtree_policy policy;
       std::vector<V> maxima;
       std::vector<id_type> id_at_slot, slot_of_id, pending;
+      using bounds_type = std::pair<V, V>;
+      std::vector<bounds_type> pending_bounds;
       index_type index;
       size_t rebuild_count {0}, compact_count {0};
 #if POSETS_LAZY_KDTREE_STATS
-      mutable uint64_t pending_comparisons {0};
+      mutable typename index_type::query_stats pending_counts;
       mutable uint64_t bulk_comparisons {0};
 #endif
 
@@ -77,6 +82,7 @@ namespace posets::downsets {
       }
       static void validate (const lazy_kdtree_policy& settings) {
         if (settings.leaf_size == 0 or settings.min_index_size == 0 or settings.min_buffer == 0 or
+            settings.pending_block_size == 0 or
             not valid_fraction<true> (settings.buffer_fraction) or
             not valid_fraction<false> (settings.dead_fraction))
           throw std::invalid_argument ("invalid lazy_kdtree rebuild policy");
@@ -87,6 +93,74 @@ namespace posets::downsets {
           throw std::length_error ("lazy_kdtree vector capacity exceeded");
         if (needed > values.capacity ())
           values.reserve (std::min (values.max_size (), needed + (needed / 2)));
+      }
+      template <class Get>
+      [[nodiscard]] std::vector<bounds_type> bound_pending (const std::vector<id_type>& ids,
+                                                            const Get& get) const {
+        std::vector<bounds_type> result;
+        const size_t block_size = policy.pending_block_size;
+        result.reserve (ids.size () / block_size);
+        for (size_t begin = 0; begin + block_size <= ids.size (); begin += block_size) {
+          auto lower = get (ids[begin]).copy ();
+          auto upper = lower.copy ();
+          for (size_t i = begin + 1; i < begin + block_size; ++i) {
+            lower.meet_with (get (ids[i]));
+            upper.join_with (get (ids[i]));
+          }
+          result.emplace_back (std::move (lower), std::move (upper));
+        }
+        return result;
+      }
+      template <bool Report, bool Tail, class Emit>
+      [[nodiscard]] bool scan_pending_span (size_t begin, size_t end, const V& value, bool strict,
+                                            const Emit& emit) const {
+        for (size_t i = begin; i < end; ++i) {
+          const auto id = pending[i];
+          if (not live (id))
+            continue;
+#if POSETS_LAZY_KDTREE_STATS
+          ++pending_counts.pending_comparisons;
+          index.record (&index_type::query_stats::pending_comparisons);
+          if constexpr (Tail) {
+            ++pending_counts.tail_comparisons;
+            index.record (&index_type::query_stats::tail_comparisons);
+          }
+#endif
+          auto order = value.partial_order (point (id));
+          const bool matches = Report ? order.geq () : order.leq ();
+          if (matches and (not strict or not order.geq ())) {
+            if constexpr (Report)
+              emit (id);
+            else
+              return true;
+          }
+        }
+        return false;
+      }
+      template <bool Report, class Emit>
+      [[nodiscard]] bool scan_pending (const V& value, bool strict, const Emit& emit) const {
+        const size_t block_size = policy.pending_block_size;
+        for (size_t block = 0; block < pending_bounds.size (); ++block) {
+#if POSETS_LAZY_KDTREE_STATS
+          ++pending_counts.pending_blocks;
+          index.record (&index_type::query_stats::pending_blocks);
+#endif
+          const auto& [lower, upper] = pending_bounds[block];
+          const bool possible =
+              Report ? utils::bound_leq (lower, value) : utils::bound_leq (value, upper);
+          if (not possible) {
+#if POSETS_LAZY_KDTREE_STATS
+            ++pending_counts.pending_prunes;
+            index.record (&index_type::query_stats::pending_prunes);
+#endif
+            continue;
+          }
+          if (scan_pending_span<Report, false> (block * block_size, (block + 1) * block_size,
+                                                value, strict, emit))
+            return true;
+        }
+        return scan_pending_span<Report, true> (pending_bounds.size () * block_size,
+                                                pending.size (), value, strict, emit);
       }
       template <class Get>
       void rebuild_from (size_t count, size_t dimension, const Get& get) {
@@ -101,7 +175,9 @@ namespace posets::downsets {
           replacement.rebuild (dense, dimension, policy.leaf_size, get);
         else
           buffer = dense;
+        auto buffer_bounds = bound_pending (buffer, get);
         index.swap (replacement);
+        pending_bounds.swap (buffer_bounds);
         id_at_slot.swap (dense);
         slot_of_id.swap (positions);
         pending.swap (buffer);
@@ -154,6 +230,7 @@ namespace posets::downsets {
           index_type::statistics frozen;
           size_t live, created_ids, pending_slots, pending_live, retired_ids;
           size_t generator_object_bytes, map_bytes, known_retained_bytes, rebuilds, compactions;
+          size_t pending_bound_object_bytes;
           size_t bulk_scan_limit;
           uint64_t bulk_comparisons;
           friend std::ostream& operator<< (std::ostream& os, const statistics& s) {
@@ -169,6 +246,8 @@ namespace posets::downsets {
                       << " map_bytes=" << s.map_bytes
                       << " known_retained=" << s.known_retained_bytes << " rebuilds=" << s.rebuilds
                       << " compactions=" << s.compactions
+                      << " pending_bound_objects=" << s.pending_bound_object_bytes
+                      << " bound_objects=" << s.frozen.bound_object_bytes
                       << " bulk_scan_limit=" << s.bulk_scan_limit
                       << " query_stats_enabled=" << POSETS_LAZY_KDTREE_STATS
                       << " bulk_comparisons=" << s.bulk_comparisons;
@@ -283,11 +362,12 @@ namespace posets::downsets {
         swap (id_at_slot, other.id_at_slot);
         swap (slot_of_id, other.slot_of_id);
         swap (pending, other.pending);
+        swap (pending_bounds, other.pending_bounds);
         index.swap (other.index);
         swap (rebuild_count, other.rebuild_count);
         swap (compact_count, other.compact_count);
 #if POSETS_LAZY_KDTREE_STATS
-        swap (pending_comparisons, other.pending_comparisons);
+        swap (pending_counts, other.pending_counts);
         swap (bulk_comparisons, other.bulk_comparisons);
 #endif
       }
@@ -301,15 +381,8 @@ namespace posets::downsets {
           return false;
         if (value.size () != maxima.front ().size ())
           throw std::invalid_argument ("lazy_kdtree query dimension mismatch");
-        for (const auto id : pending)
-          if (live (id)) {
-#if POSETS_LAZY_KDTREE_STATS
-            ++pending_comparisons;
-#endif
-            auto order = value.partial_order (point (id));
-            if (order.leq () and (not strict or not order.geq ()))
-              return true;
-          }
+        if (scan_pending<false> (value, strict, [] (id_type) {}))
+          return true;
         return index.dominates (
             value, [this] (id_type id) -> const V& { return point (id); },
             [this] (id_type id) { return live (id); }, strict);
@@ -337,14 +410,7 @@ namespace posets::downsets {
             value, [this] (id_type id) -> const V& { return point (id); },
             [this] (id_type id) { return live (id); },
             [&] (id_type id) { retired.push_back (id); });
-        for (const auto id : pending)
-          if (live (id)) {
-#if POSETS_LAZY_KDTREE_STATS
-            ++pending_comparisons;
-#endif
-            if (value.partial_order (point (id)).geq ())
-              retired.push_back (id);
-          }
+        (void) scan_pending<true> (value, false, [&] (id_type id) { retired.push_back (id); });
         const auto new_id = static_cast<id_type> (slot_of_id.size ());
         const size_t final_size = maxima.size () + 1 - retired.size ();
         size_t retired_pending = 0;
@@ -372,6 +438,8 @@ namespace posets::downsets {
         std::vector<id_type> dense_ids;
         std::vector<id_type> dense_slots;
         std::vector<id_type> replacement_pending;
+        std::vector<bounds_type> replacement_bounds;
+        std::optional<bounds_type> sealed;
         if (reset) {
           dense_ids.resize (final_size);
           std::iota (dense_ids.begin (), dense_ids.end (), 0);
@@ -384,6 +452,9 @@ namespace posets::downsets {
           }
           else {
             replacement_pending = dense_ids;
+            replacement_bounds = bound_pending (replacement_pending, [&] (id_type id) -> const V& {
+              return order[id] == new_id ? value : point (order[id]);
+            });
           }
         }
         std::vector<V> replacement_values;
@@ -393,6 +464,27 @@ namespace posets::downsets {
           for (const auto id : order)
             replacement_values.push_back ((id == new_id ? value : point (id)).copy ());
         if (not reset) {
+          if ((pending.size () + 1) % policy.pending_block_size == 0) {
+            // Stage the seal while payloads and the candidate are still intact.
+            // Already dead tail IDs are omitted; later retirement only widens it.
+            auto lower = value.copy ();
+            auto upper = value.copy ();
+            for (size_t i = pending_bounds.size () * policy.pending_block_size;
+                 i < pending.size (); ++i)
+              if (live (pending[i])) {
+                lower.meet_with (point (pending[i]));
+                upper.join_with (point (pending[i]));
+              }
+            sealed.emplace (std::move (lower), std::move (upper));
+            if constexpr (safe_moves)
+              reserve_growing (pending_bounds, pending_bounds.size () + 1);
+            else {
+              replacement_bounds.reserve (pending_bounds.size () + 1);
+              for (const auto& [old_lower, old_upper] : pending_bounds)
+                replacement_bounds.emplace_back (old_lower.copy (), old_upper.copy ());
+              replacement_bounds.push_back (std::move (*sealed));
+            }
+          }
           reserve_growing (pending, pending.size () + 1);
           if constexpr (safe_moves) {
             reserve_growing (maxima, maxima.size () + 1);
@@ -410,6 +502,7 @@ namespace posets::downsets {
           id_at_slot.swap (dense_ids);
           slot_of_id.swap (dense_slots);
           pending.swap (replacement_pending);
+          pending_bounds.swap (replacement_bounds);
           index.swap (replacement_index);
           ++compact_count;
           rebuild_count += index.frozen_size () != 0;
@@ -430,6 +523,14 @@ namespace posets::downsets {
             slot_of_id.swap (positions);
           }
           pending.push_back (new_id);
+          if constexpr (safe_moves) {
+            if (sealed)
+              // clang-tidy 18 misses the check above through if constexpr.
+              // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
+              pending_bounds.push_back (std::move (*sealed));
+          }
+          else if (sealed)
+            pending_bounds.swap (replacement_bounds);
         }
         return true;
       }
@@ -473,14 +574,17 @@ namespace posets::downsets {
       [[nodiscard]] auto query_statistics () const {
         auto result = index.query_statistics ();
 #if POSETS_LAZY_KDTREE_STATS
-        result.pending_comparisons = pending_comparisons;
+        result.pending_comparisons = pending_counts.pending_comparisons;
+        result.pending_blocks = pending_counts.pending_blocks;
+        result.pending_prunes = pending_counts.pending_prunes;
+        result.tail_comparisons = pending_counts.tail_comparisons;
 #endif
         return result;
       }
       void reset_query_statistics () const {
         index.reset_query_statistics ();
 #if POSETS_LAZY_KDTREE_STATS
-        pending_comparisons = 0;
+        pending_counts = {};
         bulk_comparisons = 0;
 #endif
       }
@@ -503,9 +607,11 @@ namespace posets::downsets {
                 slot_of_id.size () - maxima.size (),
                 objects,
                 maps,
-                sizeof (*this) + frozen.bytes () - sizeof (index_type) + objects + maps,
+                sizeof (*this) + frozen.bytes () - sizeof (index_type) + objects + maps +
+                    pending_bounds.capacity () * sizeof (bounds_type),
                 rebuild_count,
                 compact_count,
+                pending_bounds.capacity () * sizeof (bounds_type),
                 policy.bulk_scan_limit,
                 bulk_count};
       }
