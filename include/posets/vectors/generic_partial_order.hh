@@ -27,7 +27,7 @@ namespace posets::vectors {
       }
 
     private:
-      [[gnu::always_inline]] bool compute_geq () const {
+      [[nodiscard, gnu::always_inline]] bool compute_geq () const {
         if constexpr (requires { lhs.sum; })
           if (lhs.sum < rhs.sum)
             return false;
@@ -41,14 +41,14 @@ namespace posets::vectors {
           }
           else {
             for (size_t i = 0; i < Vec::items_per_block; ++i)
-              if (not (l[b][i] >= r[b][i]))
+              if (not(l[b][i] >= r[b][i]))
                 return false;
           }
         }
         return true;
       }
 
-      [[gnu::always_inline]] bool compute_leq () const {
+      [[nodiscard, gnu::always_inline]] bool compute_leq () const {
         if constexpr (requires { lhs.sum; })
           if (lhs.sum > rhs.sum)
             return false;
@@ -62,7 +62,7 @@ namespace posets::vectors {
           }
           else {
             for (size_t i = 0; i < Vec::items_per_block; ++i)
-              if (not (l[b][i] <= r[b][i]))
+              if (not(l[b][i] <= r[b][i]))
                 return false;
           }
         }

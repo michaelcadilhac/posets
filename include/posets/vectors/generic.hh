@@ -134,7 +134,7 @@ namespace posets::vectors {
             std::array<value_type, items_per_block> tail {};
             std::copy_n (v.data () + offset, v.size () - offset, tail.data ());
             data ()[offset / items_per_block].copy_from (tail.data (),
-                                                       std::experimental::element_aligned);
+                                                         std::experimental::element_aligned);
           }
         }
         else
