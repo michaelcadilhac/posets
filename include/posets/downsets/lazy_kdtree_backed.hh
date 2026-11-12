@@ -525,6 +525,8 @@ namespace posets::downsets {
           pending.push_back (new_id);
           if constexpr (safe_moves) {
             if (sealed)
+              // clang-tidy 18 misses the check above through if constexpr.
+              // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
               pending_bounds.push_back (std::move (*sealed));
           }
           else if (sealed)
