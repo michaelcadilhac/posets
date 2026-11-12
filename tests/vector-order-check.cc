@@ -58,6 +58,13 @@ int main () {
   static_assert (posets::Vector<custom>);
   check<custom> ();
   check_type<std::int8_t> ();
+  // These full-range sums fit the cached int, including fixed-storage padding.
+  check<posets::vectors::vector_backed_sum<std::int8_t>> ();
+  check<posets::vectors::array_backed_sum<std::int8_t, 65>> ();
+  check<posets::vectors::array_ptr_backed_sum<std::int8_t, 65>> ();
+  check<posets::vectors::simd_vector_backed_sum<std::int8_t>> ();
+  check<posets::vectors::simd_array_backed_sum<std::int8_t, 65>> ();
+  check<posets::vectors::simd_array_ptr_backed_sum<std::int8_t, 65>> ();
   check_type<std::int16_t> ();
   check_type<std::int32_t> ();
   check_type<std::int64_t> ();

@@ -109,7 +109,9 @@ namespace posets::downsets {
         rebuild_count += index.frozen_size () != 0;
       }
       [[nodiscard]] bool live (id_type id) const {
-        return id < slot_of_id.size () and slot_of_id[id] != none;
+        // Pending and frozen IDs belong to the current append-only epoch.
+        assert (id < slot_of_id.size ());
+        return slot_of_id[id] != none;
       }
       [[nodiscard]] const V& point (id_type id) const {
         assert (live (id));
