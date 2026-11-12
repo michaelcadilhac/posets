@@ -69,23 +69,12 @@ namespace posets::vectors {
       }
 
       void clear_back () {
-        if constexpr (is_resizable) {
-          if (k % items_per_block != 0) {
-            if constexpr (uses_simd)
-              data ()[data_size () - 1] = block_type (0);
-            else
-              data ()[data_size () - 1].fill (0);
-          }
-        }
-        else {
-          if (k == data_size () * items_per_block)
-            return;
-          for (size_t block = k / items_per_block; block < data_size (); ++block)
-            if constexpr (uses_simd)
-              data ()[block] = block_type (0);
-            else
-              data ()[block].fill (0);
-        }
+        // Cached vectors start at zero; uncached vectors only need zero padding.
+        for (size_t block = HasSum ? 0 : k / items_per_block; block < data_size (); ++block)
+          if constexpr (uses_simd)
+            data ()[block] = block_type (0);
+          else
+            data ()[block].fill (0);
       }
 
     public:
@@ -348,7 +337,7 @@ namespace posets::vectors {
           template <bool>
           friend class basic_iterator;
 
-          using owner_type = std::conditional_t<IsConst, const generic, generic>;
+          using owner_type = std::conditional_t<IsConst or HasSum, const generic, generic>;
 
         public:
           using iterator_concept = std::random_access_iterator_tag;
@@ -424,7 +413,7 @@ namespace posets::vectors {
           difference_type position {0};
       };
 
-      using iterator = basic_iterator<false>;
+      using iterator = basic_iterator<HasSum>;
       using const_iterator = basic_iterator<true>;
 
       iterator begin () { return iterator (this, 0); }
