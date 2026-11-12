@@ -14,6 +14,18 @@
 #include <posets/config.hh>
 
 namespace posets::utils {
+  template <Vector V>
+  [[nodiscard, gnu::always_inline]] inline bool bound_leq (const V& lhs, const V& rhs) {
+    if constexpr (requires { lhs.partial_order (rhs).leq_coordinates (); })
+      return lhs.partial_order (rhs).leq_coordinates ();
+    else {
+      for (size_t i = 0; i < lhs.size (); ++i)
+        if (not(lhs[i] <= rhs[i]))
+          return false;
+      return true;
+    }
+  }
+
   // Non-owning frozen geometry. IDs, unlike dense generator slots, remain stable
   // until rebuild. Rebuild requires unique IDs and common positive dimension.
   // Access/live predicates must agree and keep live payloads valid; callbacks may
@@ -28,15 +40,17 @@ namespace posets::utils {
       struct query_stats {
           uint64_t queries {0}, node_visits {0}, leaf_visits {0}, comparisons {0};
           uint64_t binary_searches {0}, bridge_steps {0}, corrections {0}, pending_comparisons {0};
+          uint64_t node_prunes {0}, pending_blocks {0}, pending_prunes {0};
+          uint64_t tail_comparisons {0}, rebuilds {0};
       };
       // Plain diagnostic record.
       // NOLINTBEGIN(misc-non-private-member-variables-in-classes)
       struct statistics {
           size_t object_bytes, node_size, nodes, node_capacity;
-          size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes;
+          size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes, bound_object_bytes;
           [[nodiscard]] size_t bytes () const {
             return object_bytes + (node_size * node_capacity) + key_bytes + bridge_bytes +
-                   point_id_bytes + leaf_map_bytes;
+                   point_id_bytes + leaf_map_bytes + bound_object_bytes;
           }
       };
 
@@ -54,6 +68,9 @@ namespace posets::utils {
           id_type left, right;
       };
       std::vector<node> nodes;
+      // Reverse node order is bottom-up: both children precede their parent.
+      // Deletions only shrink a subtree, so these bounds may remain stale.
+      std::vector<std::pair<V, V>> bounds;
       std::vector<id_type> ids;
       std::vector<id_type> leaf_for_id;
       std::vector<key_type> keys;
@@ -64,6 +81,9 @@ namespace posets::utils {
       size_t bucket_size {16};
 #if POSETS_LAZY_KDTREE_STATS
       mutable query_stats query_counts;
+      // Diagnostic totals survive index replacement and destruction. Like the
+      // per-index counters, these opt-in counters require single-threaded queries.
+      inline static query_stats cumulative_counts;
 #endif
 
       // Recursion is bounded by balanced tree height, independent of dimension.
@@ -135,9 +155,33 @@ namespace posets::utils {
 
       // NOLINTEND(misc-no-recursion)
 
+      template <class Get>
+      void build_bounds (const Get& get) {
+        bounds.reserve (nodes.size ());
+        for (size_t i = nodes.size (); i-- > 0;) {
+          const auto& current = nodes[i];
+          if (current.axis == none) {
+            const auto& first = get (ids[current.first]);
+            auto lower = first.copy ();
+            auto upper = first.copy ();
+            for (size_t j = 1; j < current.second; ++j) {
+              const auto& point = get (ids[current.first + j]);
+              lower.meet_with (point);
+              upper.join_with (point);
+            }
+            bounds.emplace_back (std::move (lower), std::move (upper));
+          }
+          else {
+            const auto& left = bounds[nodes.size () - 1 - current.first];
+            const auto& right = bounds[nodes.size () - 1 - current.second];
+            bounds.emplace_back (left.first.meet (right.first), left.second.join (right.second));
+          }
+        }
+      }
+
       [[nodiscard]] size_t bound (id_type index, key_type key, bool upper) const {
 #if POSETS_LAZY_KDTREE_STATS
-        ++query_counts.binary_searches;
+        record (&query_stats::binary_searches);
 #endif
         const auto& current = nodes[index];
         const auto catalog = std::span (keys).subspan (current.catalog, current.length);
@@ -152,7 +196,7 @@ namespace posets::utils {
       [[nodiscard]] size_t cascade (id_type parent, size_t position, bool right, key_type key,
                                     bool upper) const {
 #if POSETS_LAZY_KDTREE_STATS
-        ++query_counts.bridge_steps;
+        record (&query_stats::bridge_steps);
 #endif
         const auto& p = nodes[parent];
         const id_type child = right ? p.second : p.first;
@@ -167,7 +211,7 @@ namespace posets::utils {
           if (upper ? previous > key : previous >= key) {
             --result;
 #if POSETS_LAZY_KDTREE_STATS
-            ++query_counts.corrections;
+            record (&query_stats::corrections);
 #endif
           }
         }
@@ -180,14 +224,27 @@ namespace posets::utils {
       bool visit (id_type index, size_t position, const V& value, bool strict, const Get& get,
                   const Live& live, const Emit& emit) const {
 #if POSETS_LAZY_KDTREE_STATS
-        ++query_counts.node_visits;
+        record (&query_stats::node_visits);
 #endif
         const auto& current = nodes[index];
-        if (current.live == 0)
+        if (current.live == 0) {
+#if POSETS_LAZY_KDTREE_STATS
+          record (&query_stats::node_prunes);
+#endif
           return false;
+        }
+        const auto& [lower, upper] = bounds[nodes.size () - 1 - index];
+        // A passing bound is never a witness, including after lazy retirement.
+        const bool possible = Report ? bound_leq (lower, value) : bound_leq (value, upper);
+        if (not possible) {
+#if POSETS_LAZY_KDTREE_STATS
+          record (&query_stats::node_prunes);
+#endif
+          return false;
+        }
         if (current.axis == none) {
 #if POSETS_LAZY_KDTREE_STATS
-          ++query_counts.leaf_visits;
+          record (&query_stats::leaf_visits);
 #endif
           if constexpr (not Cascade)
             position = bound (index, value[0], Report);
@@ -198,7 +255,7 @@ namespace posets::utils {
             if (not live (id))
               continue;
 #if POSETS_LAZY_KDTREE_STATS
-            ++query_counts.comparisons;
+            record (&query_stats::comparisons);
 #endif
             auto order = value.partial_order (get (id));
             const bool matches = Report ? order.geq () : order.leq ();
@@ -236,9 +293,37 @@ namespace posets::utils {
       // NOLINTEND(misc-no-recursion,modernize-use-nodiscard)
 
     public:
+#if POSETS_LAZY_KDTREE_STATS
+      void record (uint64_t query_stats::* field, uint64_t amount = 1) const {
+        query_counts.*field += amount;
+        cumulative_counts.*field += amount;
+      }
+      [[nodiscard]] static query_stats cumulative_statistics () { return cumulative_counts; }
+#endif
       bucket_kdtree () = default;
-      bucket_kdtree (const bucket_kdtree&) = default;
-      bucket_kdtree& operator= (const bucket_kdtree&) = default;
+      bucket_kdtree (const bucket_kdtree& other)
+        : nodes (other.nodes),
+          ids (other.ids),
+          leaf_for_id (other.leaf_for_id),
+          keys (other.keys),
+          links (other.links),
+          link_start (other.link_start),
+          dimension (other.dimension),
+          bucket_size (other.bucket_size) {
+        bounds.reserve (other.bounds.size ());
+        for (const auto& [lower, upper] : other.bounds)
+          bounds.emplace_back (lower.copy (), upper.copy ());
+#if POSETS_LAZY_KDTREE_STATS
+        query_counts = other.query_counts;
+#endif
+      }
+      bucket_kdtree& operator= (const bucket_kdtree& other) {
+        if (this != &other) {
+          bucket_kdtree replacement (other);
+          swap (replacement);
+        }
+        return *this;
+      }
       bucket_kdtree (bucket_kdtree&& other) noexcept { swap (other); }
       bucket_kdtree& operator= (bucket_kdtree&& other) noexcept {
         if (this != &other) {
@@ -250,6 +335,7 @@ namespace posets::utils {
       void swap (bucket_kdtree& other) noexcept {
         using std::swap;
         swap (nodes, other.nodes);
+        swap (bounds, other.bounds);
         swap (ids, other.ids);
         swap (leaf_for_id, other.leaf_for_id);
         swap (keys, other.keys);
@@ -285,8 +371,12 @@ namespace posets::utils {
               throw std::invalid_argument ("bucket_kdtree dimension mismatch");
           }
           replacement.build_node (0, replacement.ids.size (), 0, none, get);
+          replacement.build_bounds (get);
         }
         swap (replacement);
+#if POSETS_LAZY_KDTREE_STATS
+        record (&query_stats::rebuilds);
+#endif
       }
       void retire (id_type id) noexcept {
         if (id >= leaf_for_id.size ())
@@ -309,7 +399,7 @@ namespace posets::utils {
         if (value.size () != dimension)
           throw std::invalid_argument ("bucket_kdtree query dimension mismatch");
 #if POSETS_LAZY_KDTREE_STATS
-        ++query_counts.queries;
+        record (&query_stats::queries);
 #endif
         const size_t position = Cascade ? bound (0, value[0], false) : 0;
         return visit<false> (0, position, value, strict, get, live, [] (id_type) {});
@@ -322,7 +412,7 @@ namespace posets::utils {
         if (value.size () != dimension)
           throw std::invalid_argument ("bucket_kdtree query dimension mismatch");
 #if POSETS_LAZY_KDTREE_STATS
-        ++query_counts.queries;
+        record (&query_stats::queries);
 #endif
         const size_t position = Cascade ? bound (0, value[0], true) : 0;
         visit<true> (0, position, value, false, get, live, emit);
@@ -348,7 +438,8 @@ namespace posets::utils {
                 keys.capacity () * sizeof (key_type),
                 links.capacity () * sizeof (bridge),
                 ids.capacity () * sizeof (id_type),
-                (leaf_for_id.capacity () + link_start.capacity ()) * sizeof (id_type)};
+                (leaf_for_id.capacity () + link_start.capacity ()) * sizeof (id_type),
+                bounds.capacity () * sizeof (bounds[0])};
       }
       [[nodiscard]] size_t frozen_size () const { return ids.size (); }
       [[nodiscard]] size_t live_size () const { return nodes.empty () ? 0 : nodes[0].live; }

@@ -403,13 +403,84 @@ namespace {
                "dead subtree answered");
     }
   }
+  template <class V, bool Cascade>
+  void block_boundaries () {
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    for (const size_t dim : {3U, 17U, 33U, 65U, 129U}) {
+      posets::vectors::bool_threshold = posets::vectors::bitset_threshold = dim - 1;
+      posets::downsets::lazy_kdtree_policy policy;
+      policy.min_buffer = 10000;
+      policy.pending_block_size = 16;
+      policy.min_index_size = 1;
+      policy.leaf_size = 3;
+      S subject (std::vector<V> {}, policy);
+      region wanted;
+      for (int i = 0; i < 33; ++i) {
+        logical row (dim, -1);
+        row[0] = i - 64;
+        row[1] = 64 - i;
+        row.back () = i % 2 - 1;
+        require (subject.insert (vector<V> (row)) == insert_oracle (wanted, row),
+                 "pending boundary insertion differs");
+        if (i == 14 or i == 15 or i == 16 or i >= 30) {
+          observe (subject, wanted, wanted);
+          auto identity = subject.apply ([] (const V& value) { return value.copy (); });
+          observe (identity, wanted, wanted);
+          require (not subject.insert (vector<V> (row)), "pending duplicate accepted");
+        }
+      }
+      require (subject.storage ().pending_slots == 33, "boundary fixture rebuilt too early");
+      auto high = logical (dim, 100);
+      high.back () = 0;
+      S doomed (std::vector<V> {}, policy);
+      for (const auto& row : wanted)
+        doomed.insert (vector<V> (row));
+      doomed.insert (vector<V> (high));
+      require (doomed.storage ().pending_slots == 34 and doomed.storage ().pending_live == 1,
+               "all-deleted sealed blocks were not exercised");
+      auto outside = high;
+      outside[0] = 101;
+      doomed.reset_query_statistics ();
+      observe (doomed, {high}, {high, outside, wanted.front ()});
+#if POSETS_LAZY_KDTREE_STATS
+      const auto counts = doomed.query_statistics ();
+      require (
+          counts.pending_blocks > 0 and counts.pending_prunes > 0 and counts.tail_comparisons > 0,
+          "pending block/tail counters omitted boundary work");
+#endif
+      // Rebuilding transfers sealed blocks and a nonempty tail in one epoch.
+      subject.rebuild ();
+      observe (subject, wanted, wanted);
+      require (subject.storage ().pending_slots == 0, "rebuild kept pending metadata");
+      for (int i = 33; i < 50; ++i) {
+        logical row (dim, -1);
+        row[0] = i - 64;
+        row[1] = 64 - i;
+        row.back () = i % 2 - 1;
+        subject.insert (vector<V> (row));
+        insert_oracle (wanted, row);
+      }
+      require (subject.storage ().pending_slots == 17, "nonempty tail fixture is missing");
+      subject.rebuild ();
+      observe (subject, wanted, wanted);
+      // Both bounds pass for a hole between incomparable maxima. Neither bound
+      // may become a positive witness or a bulk-retirement shortcut.
+      logical hole (dim, 0);
+      hole[0] = -40;
+      hole[1] = 41;
+      observe (subject, wanted, {hole, high});
+      require (subject.insert (vector<V> (hole)) == insert_oracle (wanted, hole),
+               "bounds changed retirement semantics");
+      observe (subject, wanted, wanted);
+    }
+  }
   void search_attribution () {
     std::vector<scalar_vector> values;
     std::vector<uint32_t> ids (128);
     std::iota (ids.begin (), ids.end (), 0);
     for (size_t i = 0; i < ids.size (); ++i) {
       logical row (16, 0);
-      row.back () = -1;
+      row[14 + i % 2] = -1;
       values.push_back (vector<scalar_vector> (row));
     }
     const auto get = [&] (uint32_t id) -> const scalar_vector& { return values[id]; };
@@ -432,6 +503,109 @@ namespace {
 #endif
     require (off.storage ().bridge_bytes == 0 and off.storage ().keys == ids.size (),
              "off allocated catalogs");
+  }
+  void bound_statistics () {
+    using T = posets::utils::bucket_kdtree<scalar_vector>;
+    std::vector<scalar_vector> values;
+    std::vector<uint32_t> ids (32);
+    std::iota (ids.begin (), ids.end (), 0);
+    for (const auto id : ids)
+      values.push_back (vector<scalar_vector> ({static_cast<int> (id), 32 - int (id), -1}));
+    const auto get = [&] (uint32_t id) -> const scalar_vector& { return values[id]; };
+    const auto live = [] (uint32_t) { return true; };
+    T tree;
+    tree.rebuild (ids, 3, 4, get);
+    auto copy = tree;
+    T assigned;
+    assigned = copy;
+    const auto query = vector<scalar_vector> ({0, 0, 0});
+    require (not tree.dominates (query, get, live) and not assigned.dominates (query, get, live),
+             "upper bound rejection differs after copying the index");
+#if POSETS_LAZY_KDTREE_STATS
+    require (
+        tree.query_statistics ().node_visits == 1 and tree.query_statistics ().node_prunes == 1 and
+            tree.query_statistics ().comparisons == 0 and tree.query_statistics ().rebuilds == 1,
+        "frozen bound counters omitted the root rejection");
+#endif
+    tree.reset_query_statistics ();
+    size_t retired = 0;
+    tree.dominated_by (vector<scalar_vector> ({-1, -1, -1}), get, live,
+                       [&] (uint32_t) { ++retired; });
+    require (retired == 0, "lower bound retired an incomparable point");
+#if POSETS_LAZY_KDTREE_STATS
+    require (
+        tree.query_statistics ().node_prunes == 1 and tree.query_statistics ().comparisons == 0,
+        "lower bound counters omitted the root rejection");
+#endif
+  }
+  using cached_sum_vector = posets::vectors::simd_vector_backed_sum<int64_t>;
+  [[nodiscard]] cached_sum_vector cached_sum_row (int64_t x, int64_t y) {
+    const std::array<int64_t, 2> values {x, y};
+    return cached_sum_vector (std::span<const int64_t> (values));
+  }
+  template <bool Cascade>
+  void cached_sum_upper_bounds (bool frozen) {
+    using V = cached_sum_vector;
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    const int64_t high = std::numeric_limits<int>::max ();
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.min_index_size = 2;
+    policy.min_buffer = 10000;
+    S subject (std::vector<V> {}, policy);
+    if (frozen) {
+      subject.insert (cached_sum_row (high, 0));
+      subject.insert (cached_sum_row (0, high));
+      subject.rebuild ();
+      require (subject.storage ().frozen.nodes > 0, "cached-sum fixture is not frozen");
+    }
+    else {
+      for (int64_t i = 0; i < 16; ++i)
+        subject.insert (cached_sum_row (high - i, i));
+      require (subject.storage ().pending_slots == 16, "cached-sum fixture is not pending");
+    }
+    // Every generator's sum fits in int; the synthesized upper bound's does not.
+    require (subject.contains (cached_sum_row (0, 1)), "overflowed upper bound rejected a member");
+    require (not subject.insert (cached_sum_row (0, 1)) and subject.size () == (frozen ? 2U : 16U),
+             "overflowed upper bound accepted a redundant generator");
+  }
+  template <bool Cascade>
+  void cached_sum_lower_bounds () {
+    using V = cached_sum_vector;
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    const int64_t low = std::numeric_limits<int>::min ();
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.min_index_size = 2;
+    policy.min_buffer = 10000;
+    std::vector<V> values;
+    values.push_back (cached_sum_row (low, 0));
+    values.push_back (cached_sum_row (0, low));
+    S subject (std::move (values), policy);
+    require (subject.storage ().frozen.nodes > 0, "lower-bound fixture is not frozen");
+    require (subject.insert (cached_sum_row (low + 1, 0)) and subject.size () == 2,
+             "overflowed lower bound skipped generator retirement");
+    for (const auto& value : subject)
+      require (value[0] != low or value[1] != 0, "dominated frozen generator survived");
+  }
+  template <bool Cascade>
+  void pending_statistics () {
+#if POSETS_LAZY_KDTREE_STATS
+    using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
+    posets::downsets::lazy_kdtree_policy policy;
+    policy.min_index_size = 1;
+    S subject (vector<scalar_vector> ({1, 1}), policy);
+    subject.reset_query_statistics ();
+    require (subject.contains (vector<scalar_vector> ({0, 1})), "pending counter membership");
+    require (subject.query_statistics ().pending_comparisons == 1,
+             "pending query was not counted");
+    subject.rebuild ();
+    require (subject.query_statistics ().pending_comparisons == 1,
+             "rebuild lost lifetime pending comparison totals");
+    require (subject.query_statistics ().tail_comparisons == 1,
+             "rebuild lost lifetime tail comparison totals");
+    subject.reset_query_statistics ();
+    require (subject.query_statistics ().pending_comparisons == 0,
+             "statistics reset retained pending comparisons");
+#endif
   }
   void policy_and_contracts () {
     using S = posets::downsets::lazy_kdtree_backed<scalar_vector>;
@@ -517,7 +691,22 @@ int main () try {
   stable_ids_and_tiny_history<false> ();
   catalogs<true> ();
   catalogs<false> ();
+  block_boundaries<scalar_vector, true> ();
+  block_boundaries<scalar_vector, false> ();
+  block_boundaries<posets::vectors::simd_vector_backed<int8_t>, true> ();
+  block_boundaries<posets::vectors::simd_vector_backed_sum<int8_t>, true> ();
+  block_boundaries<posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<int8_t>, 3>,
+                   true> ();
   search_attribution ();
+  bound_statistics ();
+  cached_sum_upper_bounds<true> (true);
+  cached_sum_upper_bounds<false> (true);
+  cached_sum_upper_bounds<true> (false);
+  cached_sum_upper_bounds<false> (false);
+  cached_sum_lower_bounds<true> ();
+  cached_sum_lower_bounds<false> ();
+  pending_statistics<true> ();
+  pending_statistics<false> ();
   policy_and_contracts ();
   std::cout
       << "Lazy KD FC/independent searches, stable IDs, strict oracle, algebra and history PASS\n";
