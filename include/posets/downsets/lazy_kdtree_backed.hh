@@ -523,12 +523,12 @@ namespace posets::downsets {
             slot_of_id.swap (positions);
           }
           pending.push_back (new_id);
-          if (sealed) {
-            if constexpr (safe_moves)
+          if constexpr (safe_moves) {
+            if (sealed)
               pending_bounds.push_back (std::move (*sealed));
-            else
-              pending_bounds.swap (replacement_bounds);
           }
+          else if (sealed)
+            pending_bounds.swap (replacement_bounds);
         }
         return true;
       }
