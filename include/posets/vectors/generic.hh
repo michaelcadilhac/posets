@@ -3,6 +3,7 @@
 #include <type_traits>
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <compare>
 #include <experimental/simd>
@@ -128,8 +129,17 @@ namespace posets::vectors {
             data ()[block] = loaded;
           }
         }
-        for (; offset < v.size (); ++offset)
-          at (offset) = v[offset];
+        if constexpr (uses_simd) {
+          if (offset < v.size ()) {
+            std::array<value_type, items_per_block> tail {};
+            std::copy_n (v.data () + offset, v.size () - offset, tail.data ());
+            data ()[offset / items_per_block].copy_from (tail.data (),
+                                                       std::experimental::element_aligned);
+          }
+        }
+        else
+          for (; offset < v.size (); ++offset)
+            at (offset) = v[offset];
       }
 
       generic () = delete;

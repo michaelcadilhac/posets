@@ -1,98 +1,77 @@
 #pragma once
 
 namespace posets::vectors {
+  // Both directions are computed lazily and cached, so a caller that asks for
+  // one direction pays for one pass with early exit, and a caller that asks
+  // for both pays for at most two.  Antichain scans ask for one direction and
+  // mostly find incomparable pairs, so the first violating block decides.
   template <typename Vec>
   class generic_partial_order {
     public:
-      generic_partial_order (const Vec& lhs, const Vec& rhs)
-        : lhs {lhs},
-          rhs {rhs},
-          nblocks {lhs.data_size ()} {
-        if constexpr (requires { lhs.sum; }) {
-          bgeq = (lhs.sum >= rhs.sum);
-          if (not bgeq)
-            has_bgeq = true;
+      generic_partial_order (const Vec& lhs, const Vec& rhs) : lhs {lhs}, rhs {rhs} {}
 
-          bleq = (lhs.sum <= rhs.sum);
-          if (not bleq)
-            has_bleq = true;
-
-          if (has_bgeq or has_bleq)
-            return;
-        }
-        for (up_to = 0; up_to < nblocks; ++up_to) {
-          if constexpr (Vec::uses_simd) {
-            bgeq = bgeq and (std::experimental::all_of (lhs.data ()[up_to] >= rhs.data ()[up_to]));
-            bleq = bleq and (std::experimental::all_of (lhs.data ()[up_to] <= rhs.data ()[up_to]));
-          }
-          else {
-            for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              const auto left = lhs.data ()[up_to][i];
-              const auto right = rhs.data ()[up_to][i];
-              bgeq = bgeq and (left >= right);
-              bleq = bleq and (left <= right);
-            }
-          }
-
-          if (not bgeq)
-            has_bgeq = true;
-          if (not bleq)
-            has_bleq = true;
-          if (has_bgeq or has_bleq)
-            return;
-        }
-        has_bgeq = true;
-        has_bleq = true;
-      }
-
-      bool geq () {
-        if (has_bgeq)
-          return bgeq;
-        assert (has_bleq);
-        has_bgeq = true;
-        for (; up_to < nblocks; ++up_to) {
-          if constexpr (Vec::uses_simd)
-            bgeq = bgeq and (std::experimental::all_of (lhs.data ()[up_to] >= rhs.data ()[up_to]));
-          else
-            for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              const auto left = lhs.data ()[up_to][i];
-              const auto right = rhs.data ()[up_to][i];
-              bgeq = bgeq and (left >= right);
-            }
-
-          if (not bgeq)
-            break;
+      [[gnu::always_inline]] bool geq () {
+        if (not has_bgeq) {
+          has_bgeq = true;
+          bgeq = compute_geq ();
         }
         return bgeq;
       }
 
-      bool leq () {
-        if (has_bleq)
-          return bleq;
-        assert (has_bgeq);
-        has_bleq = true;
-        for (; up_to < nblocks; ++up_to) {
-          if constexpr (Vec::uses_simd)
-            bleq = bleq and (std::experimental::all_of (lhs.data ()[up_to] <= rhs.data ()[up_to]));
-          else
-            for (size_t i = 0; i < Vec::items_per_block; ++i) {
-              const auto left = lhs.data ()[up_to][i];
-              const auto right = rhs.data ()[up_to][i];
-              bleq = bleq and (left <= right);
-            }
-
-          if (not bleq)
-            break;
+      [[gnu::always_inline]] bool leq () {
+        if (not has_bleq) {
+          has_bleq = true;
+          bleq = compute_leq ();
         }
         return bleq;
       }
 
     private:
+      [[gnu::always_inline]] bool compute_geq () const {
+        if constexpr (requires { lhs.sum; })
+          if (lhs.sum < rhs.sum)
+            return false;
+        const size_t nblocks = lhs.data_size ();
+        const auto* const l = lhs.data ();
+        const auto* const r = rhs.data ();
+        for (size_t b = 0; b < nblocks; ++b) {
+          if constexpr (Vec::uses_simd) {
+            if (not std::experimental::all_of (l[b] >= r[b]))
+              return false;
+          }
+          else {
+            for (size_t i = 0; i < Vec::items_per_block; ++i)
+              if (not (l[b][i] >= r[b][i]))
+                return false;
+          }
+        }
+        return true;
+      }
+
+      [[gnu::always_inline]] bool compute_leq () const {
+        if constexpr (requires { lhs.sum; })
+          if (lhs.sum > rhs.sum)
+            return false;
+        const size_t nblocks = lhs.data_size ();
+        const auto* const l = lhs.data ();
+        const auto* const r = rhs.data ();
+        for (size_t b = 0; b < nblocks; ++b) {
+          if constexpr (Vec::uses_simd) {
+            if (not std::experimental::all_of (l[b] <= r[b]))
+              return false;
+          }
+          else {
+            for (size_t i = 0; i < Vec::items_per_block; ++i)
+              if (not (l[b][i] <= r[b][i]))
+                return false;
+          }
+        }
+        return true;
+      }
+
       const Vec& lhs;
       const Vec& rhs;
-      const size_t nblocks;
       bool bgeq = true, bleq = true;
       bool has_bgeq = false, has_bleq = false;
-      size_t up_to = 0;
   };
 }
