@@ -253,4 +253,8 @@ foreach mode : ['compatible', 'native', 'max']
       ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper(), '-DPOSETS_RANK_STATS'] + matrix_target_args)
   test('antichains/ranked default oracle and failures/' + mode, ranked_default_exe,
     env: sharing_allocation_env, timeout: 120)
+  signed_domains_exe = executable('signed-domains-' + mode, 'signed-domains.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args)
+  test('antichains/signed bins and exact sums/' + mode, signed_domains_exe, timeout: 120)
 endforeach

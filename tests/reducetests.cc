@@ -24,7 +24,7 @@ std::vector<V> make_vectors (const std::vector<std::vector<value_type>>& raw) {
 
 template <typename V>
 void check_reduce (const std::vector<std::vector<value_type>>& raw) {
-  std::vector<long> keys;
+  std::vector<posets::utils::sum_t<value_type>> keys;
   auto reduced = posets::utils::reduce_to_maxima (make_vectors<V> (raw), &keys);
   assert (keys.size () == reduced.size ());
   assert (std::ranges::is_sorted (keys, std::greater<> {}));
@@ -96,13 +96,13 @@ int main () {
   // dwarf the structure-assisted path for this threshold-sized input,
   // especially under Valgrind.  This data contains every point of {0..3}^3
   // repeatedly, so its unique maximum is known exactly.
-  std::vector<long> keys;
+  std::vector<posets::utils::sum_t<value_type>> keys;
   auto reduced = posets::utils::reduce_to_maxima (make_vectors<with_sum> (large), &keys);
   constexpr std::array<value_type, 3> expected_data {3, 3, 3};
   with_sum expected {std::span<const value_type> (expected_data)};
   assert (reduced.size () == 1);
   assert (reduced.front () == expected);
-  assert (keys == std::vector<long> {9});
+  assert (keys == std::vector<posets::utils::sum_t<value_type>> {9});
 
   const std::vector<std::vector<value_type>> relabel_raw {
       {1, 0, 0},

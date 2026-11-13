@@ -41,6 +41,42 @@ clang-tidy tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20
 .github/run-clang-format.py --clang-format-executable clang-format -r include
 ```
 
+## Sum and bin domains
+
+Cached sums, reducer keys, rank buckets, skiplist keys and BBox keys share
+`posets::utils::sum_t<T>` (or `vector_sum_t<V>` for a vector type). Signed
+8/16/32-bit coordinates use `int64_t`, with maximum dimensions of
+`2^56`, `2^48`, and `2^32` respectively. Cached constructors check the full
+dimension before allocation or payload access; sum-using helpers and containers
+also check custom vectors. Unsupported dimensions throw `std::length_error`.
+With d coordinate value bits and p accumulator value bits, `k <= 2^(p-d)`
+puts every intermediate sum in `[-2^p, 2^p-1]`, including all-negative inputs.
+Signed 64-bit coordinates use GCC/Clang's signed 128-bit integer and admit every
+`size_t` dimension: `(2^64 - 1) * 2^63 < 2^127`. Exact paths require signed
+integral coordinates of at most 64 bits and `size_t` of at most 64 bits
+(checked at compile time).
+
+Boolean wrappers report the actual coordinate sum; their tails encode `-1/0`.
+Custom `cached_sum()` implementations must also return the exact coordinate
+sum. Key arrays passed to the reducer or BBox builder use
+`std::vector<posets::utils::vector_sum_t<V>>`. Narrow-coordinate object layouts
+and key widths are retained; full-width cached vectors and keys grow.
+
+Uncached nonintegral vectors remain supported by rank buckets through a
+constant rank and inclusive component comparisons; they do not use the
+integral equal-rank shortcut. Nonintegral cached sums and sum-based reducers
+are rejected at compile time.
+
+`vector_backed_bin` uses `max(0, sum) / dimension` for cached vectors and
+`max(0, first_coordinate) / dimension` for uncached integral vectors. These
+keys clamp negatives to zero and saturate at `SIZE_MAX` before conversion,
+so they are monotone on every supported `size_t` width. Bin-count growth is
+checked before insertion; unrepresentable counts throw `std::length_error`.
+Zero-dimensional and nonintegral vectors use bin zero. Within the admitted
+dimension domain, answers for previously valid sums are preserved; signed-bin
+misses and overflowing sums are corrected. Acacia's signed-char dimensions
+remain within the `2^56` bound.
+
 ## SIMD widths
 
 `POSETS_SIMD_WIDTH` selects the compile-time lane count:

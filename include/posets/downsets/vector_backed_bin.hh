@@ -7,6 +7,7 @@
 #include <list>
 #include <set>
 #include <sstream>
+#include <stdexcept>
 #include <vector>
 
 #include <posets/concepts.hh>
@@ -19,13 +20,13 @@ namespace posets::downsets {
       using value_type = V;
 
       vector_backed_bin (V&& v) {
-        bins.resize (v.size ());
+        bins.resize (std::max (size_t {1}, v.size ()));
         insert (std::move (v));
       }
 
-      vector_backed_bin (std::vector<V>&& elements) noexcept {
+      vector_backed_bin (std::vector<V>&& elements) {
         assert (not elements.empty ());
-        bins.resize (elements[0].size ());
+        bins.resize (std::max (size_t {1}, elements[0].size ()));
         for (auto&& e : elements)
           insert (std::move (e));
       }
@@ -57,6 +58,9 @@ namespace posets::downsets {
 
       bool insert (V&& v, bool antichain = true) {
         const size_t bin = bin_of (v);
+        // Check before removing victims: bin + 1 must be a valid bin count.
+        if (bin >= bins.max_size ()) [[unlikely]]
+          throw std::length_error {"bin index exceeds container capacity"};
 
         if (antichain) {
           auto start = std::min (bin, bins.size () - 1);

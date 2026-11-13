@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/sum.hh>
 #include <posets/utils/vector_mm.hh>
 #include <posets/vectors/traits.hh>
 
@@ -20,7 +21,7 @@ namespace posets::vectors {
       using value_type = X::value_type;
 
       x_and_wordvec (size_t k)
-        : k {k},
+        : k {checked_dimension (k)},
           x {std::min (bool_threshold, k)},
           bool_count {k - std::min (bool_threshold, k)},
           bools (words_for (bool_count), 0),
@@ -29,7 +30,7 @@ namespace posets::vectors {
       }
 
       x_and_wordvec (std::span<const value_type> v)
-        : k {v.size ()},
+        : k {checked_dimension (v.size ())},
           x {std::span (v.data (), std::min (k, bool_threshold))},
           bool_count {k - std::min (k, bool_threshold)},
           bools (words_for (bool_count), 0),
@@ -52,8 +53,14 @@ namespace posets::vectors {
       x_and_wordvec (x_and_wordvec&& other) = default;
 
     private:
+      static size_t checked_dimension (size_t k) {
+        if constexpr (requires (const X& inner) { inner.cached_sum (); })
+          utils::check_sum_dimension<value_type> (k);
+        return k;
+      }
+
       x_and_wordvec (size_t k, size_t bool_count, X&& x, std::vector<uint64_t>&& bs)
-        : k {k},
+        : k {checked_dimension (k)},
           x {std::move (x)},
           bool_count {bool_count},
           bools {std::move (bs)},
@@ -64,7 +71,7 @@ namespace posets::vectors {
       }
 
       x_and_wordvec (size_t k, size_t bool_count, X&& x, std::vector<uint64_t>&& bs, size_t sum)
-        : k {k},
+        : k {checked_dimension (k)},
           x {std::move (x)},
           bool_count {bool_count},
           bools {std::move (bs)},
@@ -214,10 +221,12 @@ namespace posets::vectors {
         sum = popcount ();
       }
 
-      [[nodiscard]] long cached_sum () const
+      [[nodiscard]] utils::sum_t<value_type> cached_sum () const
         requires requires (const X& inner) { inner.cached_sum (); }
       {
-        return static_cast<long> (sum) + static_cast<long> (x.cached_sum ());
+        // Active tail bits encode 0; inactive bits encode -1.
+        return static_cast<utils::sum_t<value_type>> (x.cached_sum ()) -
+               static_cast<utils::sum_t<value_type>> ((k - x.size ()) - sum);
       }
 
       bool operator< (const x_and_wordvec& rhs) const {

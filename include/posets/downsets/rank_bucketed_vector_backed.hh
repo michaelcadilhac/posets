@@ -11,6 +11,7 @@
 
 #include <posets/concepts.hh>
 #include <posets/utils/rank_stats.hh>
+#include <posets/utils/sum.hh>
 
 namespace posets::downsets {
   template <Vector V>
@@ -18,10 +19,13 @@ namespace posets::downsets {
       // Indexed generators share a possibly zero dimension. Parallel arrays have
       // equal sizes, ranks[i] == rank_of(vector_set[i]), and nondecreasing ranks.
       // Const Vector operations preserve sources; copy() also preserves values.
-      // Coordinate casts and every intermediate rank_t sum must be representable.
-      // These prerequisites do not repair external raw mutation or rank overflow.
+      // Integral ranks are exact throughout utils::vector_sum_t<V>'s documented domain.
+      // Nonintegral coordinates use rank zero and inclusive comparisons.
+      // External raw mutation still invalidates the index.
       using self = rank_bucketed_vector_backed;
-      using rank_t = std::int64_t;
+      using rank_t = utils::vector_sum_t<V>;
+      static_assert (not std::is_integral_v<typename V::value_type> or
+                     utils::EXACT_SUM_COORDINATE<typename V::value_type>);
 
     public:
       using value_type = V;
@@ -42,11 +46,11 @@ namespace posets::downsets {
       static constexpr bool safe_moves =
           std::is_nothrow_move_constructible_v<V> and std::is_nothrow_move_assignable_v<V>;
 
-      static rank_t rank_of (const V& v) {
-        rank_t sum = 0;
-        for (size_t i = 0; i < v.size (); ++i)
-          sum += static_cast<rank_t> (v[i]);
-        return sum;
+      [[nodiscard]] static rank_t rank_of (const V& v) {
+        if constexpr (utils::EXACT_SUM_COORDINATE<typename V::value_type>)
+          return utils::coordinate_sum (v);
+        else
+          return 0;
       }
 
       [[nodiscard]] size_t lower_rank_pos (rank_t r) const {
@@ -57,24 +61,8 @@ namespace posets::downsets {
         return static_cast<size_t> (std::ranges::upper_bound (ranks, r) - ranks.begin ());
       }
 
-      static bool exact_rank_domain (const V& v) {
-        using coordinate_type = V::value_type;
-        if constexpr (std::is_integral_v<coordinate_type> and
-                      std::numeric_limits<coordinate_type>::digits <=
-                          std::numeric_limits<rank_t>::digits) {
-          if constexpr (std::numeric_limits<coordinate_type>::digits ==
-                        std::numeric_limits<rank_t>::digits) {
-            return v.size () <= 1;
-          }
-          else {
-            return v.size () <=
-                   static_cast<std::uint64_t> (std::numeric_limits<rank_t>::max ()) /
-                       (std::uint64_t {1} << std::numeric_limits<coordinate_type>::digits);
-          }
-        }
-        else {
-          return false;
-        }
+      [[nodiscard]] static constexpr bool exact_rank_domain () {
+        return utils::EXACT_SUM_COORDINATE<typename V::value_type>;
       }
 
       template <typename T>
@@ -108,8 +96,8 @@ namespace posets::downsets {
 
       void insert_accepted (V&& v, rank_t rv, size_t first_possible_dominator) {
         // Equal integral sums imply equality for comparable vectors only in a
-        // proven exact domain. Floating/truncated and wide sums keep the fallback.
-        const size_t stop = exact_rank_domain (v) ? first_possible_dominator : upper_rank_pos (rv);
+        // proven exact domain. Nonintegral coordinates keep the inclusive fallback.
+        const size_t stop = exact_rank_domain () ? first_possible_dominator : upper_rank_pos (rv);
         size_t first_removed = 0;
         for (; first_removed < stop; ++first_removed) {
           POSETS_RANK_STAT_ADD (partial_order_calls, 1);
