@@ -47,8 +47,7 @@ namespace posets::downsets {
       // Build a temp tree, harvest its antichain via covers (strict mode),
       // then rebuild a clean tree with only those.  Same pattern as
       // simple_sharingtree_backed::reset_tree.
-      // NOLINTNEXTLINE(bugprone-exception-escape): Keep the existing noexcept contract.
-      void reset_tree (std::vector<V>&& elements) noexcept {
+      void reset_tree (std::vector<V>&& elements) {
         this->vector_set = utils::reduce_to_maxima (std::move (elements));
         std::vector<V> antichain;
         antichain.reserve (this->vector_set.size ());
@@ -76,7 +75,7 @@ namespace posets::downsets {
       cst_backed& operator= (const cst_backed&) = delete;
       cst_backed& operator= (cst_backed&&) = default;
 
-      cst_backed (std::vector<V>&& elements) noexcept {
+      cst_backed (std::vector<V>&& elements) {
         if (elements.empty ())
           return;
         init_forest (elements.begin ()->size ());
