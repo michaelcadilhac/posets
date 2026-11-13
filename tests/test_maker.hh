@@ -1,10 +1,12 @@
 #pragma once
 
-#include <iostream>
-#include <functional>
-#include <map>
 #include <type_traits>
+
 #include <cxxabi.h>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <set>
 #include <string>
 
 #include <posets/concepts.hh>
@@ -30,13 +32,13 @@ class test_t;
 
 template <typename ResType>
 struct generic_test {
-    virtual ResType operator () () = 0;  // NOLINT(portability-template-virtual-member-function)
+    virtual ResType operator() () = 0;  // NOLINT(portability-template-virtual-member-function)
     virtual ~generic_test () = default;
 };
 
 template <typename ResType>
 struct test_list {
-    static inline std::map<std::string, std::function<ResType ()> > list;
+    static inline std::map<std::string, std::function<ResType ()>> list;
 };
 
 template <typename... Types>
@@ -45,16 +47,17 @@ struct type_list;
 template <template <typename Arg> typename... Types>
 struct template_type_list;
 
-template <typename T> struct vector_name;
+template <typename T>
+struct vector_name;
 static std::set<std::string> set_names, vector_names;
 
-
-#define get_vector_name(V) std::string {vector_name<V>::str}
+#define get_vector_name(V) \
+  std::string { vector_name<V>::str }
 template <typename S>
 struct set_name {
     static std::string get () {
       int status;
-      char* name = abi::__cxa_demangle (typeid(S).name (), nullptr, nullptr, &status);
+      char* name = abi::__cxa_demangle (typeid (S).name (), nullptr, nullptr, &status);
       const std::string result (name);
       free (name);
       return result.substr (0, result.find_first_of ('<'));
@@ -71,14 +74,20 @@ struct full_name {
 };
 #define get_full_name(S) full_name<S>::get ()
 
-#define DEFINE_VECTOR_NAME(V) template <> struct vector_name<V> { static constexpr auto str = #V; };
-#define DEFINE_VECTOR_NAMES(...)
-#define VECTOR_TYPES(...) FOR_EACH(DEFINE_VECTOR_NAME, __VA_ARGS__)     \
+#define DEFINE_VECTOR_NAME(V)         \
+  template <>                         \
+  struct vector_name<V> {             \
+      static constexpr auto str = #V; \
+  };
+#define VECTOR_TYPES(...)                    \
+  FOR_EACH (DEFINE_VECTOR_NAME, __VA_ARGS__) \
   using vector_types = type_list<__VA_ARGS__>;
 
 namespace posets::downsets {
   template <typename VecType>
-  struct all { using value_type = VecType; };
+  struct all {
+      using value_type = VecType;
+  };
 }
 
 namespace posets::vectors {
@@ -95,7 +104,7 @@ template <bool CreateAll = true, template <typename V> typename SetType, typenam
 void register_maker (type_list<VecType>*, SetType<VecType>* = nullptr) {
   vector_names.insert (vector_name<VecType>::str);
 
-  using res_t = decltype(std::declval<test_t<SetType<VecType>>> () ());
+  using res_t = decltype (std::declval<test_t<SetType<VecType>>> () ());
   auto ts = get_full_name (SetType<VecType>);
   auto test = [ts] () {
     std::cout << "[--] running tests for " << ts << std::endl << std::flush;
@@ -110,20 +119,18 @@ void register_maker (type_list<VecType>*, SetType<VecType>* = nullptr) {
     }
   };
 
-  auto& tests = test_list<std::invoke_result_t<decltype(test)>>::list;
+  auto& tests = test_list<std::invoke_result_t<decltype (test)>>::list;
   tests[ts] = test;
 
   if constexpr (CreateAll) {
     auto setallvec = get_set_name (SetType<VecType>) + "<posets::vectors::all>";
 
-    for (auto&& ts : {
-        get_full_name (posets::downsets::all<VecType>),
-        setallvec,
-        get_full_name (posets::downsets::all<posets::vectors::all>)
-      }) {
+    for (auto&& ts : {get_full_name (posets::downsets::all<VecType>), setallvec,
+                      get_full_name (posets::downsets::all<posets::vectors::all>)}) {
       auto prev = tests[ts];
       tests[ts] = [prev, test] () {
-        if (prev) prev ();
+        if (prev)
+          prev ();
         return test ();
       };
     }

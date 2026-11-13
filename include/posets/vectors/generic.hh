@@ -439,10 +439,6 @@ namespace posets::vectors {
     private:
       friend generic_partial_order<generic>;
 
-      // template <template <typename> typename D, typename T>
-      // requires IsGenericVector<D<T>> or IsGenericVector<D<T, 42>>
-      // friend struct traits<D, T>;
-
       size_t k;
       std::conditional_t<EmbedsData, Data, Data*> datap;
   };

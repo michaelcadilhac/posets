@@ -608,7 +608,7 @@ namespace posets::downsets {
                 objects,
                 maps,
                 sizeof (*this) + frozen.bytes () - sizeof (index_type) + objects + maps +
-                    pending_bounds.capacity () * sizeof (bounds_type),
+                    (pending_bounds.capacity () * sizeof (bounds_type)),
                 rebuild_count,
                 compact_count,
                 pending_bounds.capacity () * sizeof (bounds_type),

@@ -157,10 +157,6 @@ foreach vector : ['vector_backed', 'simd_vector_backed']
     args: ['--check=nonempty', 'kdtree_backed', vector + '<test_value_type>'])
 endforeach
 
-native_precedence_exe = executable('simd-native-precedence', 'simd-native-mode.cc',
-  dependencies: [posets_dep], cpp_args: ['-DSIMD_IS_NATIVE=1', '-DSIMD_IS_MAX=1'])
-test('matrix/native overrides legacy max', native_precedence_exe)
-
 # Exercise defaults and every legacy setting independently of the new selector.
 legacy_modes = [
   ['default', [], 'NATIVE'],
@@ -169,6 +165,7 @@ legacy_modes = [
   ['legacy-native-off', ['-DSIMD_IS_NATIVE=0'], 'COMPATIBLE'],
   ['legacy-both-off', ['-DSIMD_IS_NATIVE=0', '-DSIMD_IS_MAX=0'], 'COMPATIBLE'],
   ['legacy-native', ['-DSIMD_IS_NATIVE=true'], 'NATIVE'],
+  ['native-overrides-legacy-max', ['-DSIMD_IS_NATIVE=1', '-DSIMD_IS_MAX=1'], 'NATIVE'],
   ['legacy-max', ['-DSIMD_IS_MAX=1'], 'MAX'],
   ['legacy-max-native-off', ['-DSIMD_IS_NATIVE=0', '-DSIMD_IS_MAX=1'], 'MAX'],
   ['explicit-overrides-legacy', ['-DPOSETS_SIMD_WIDTH=0', '-DSIMD_IS_NATIVE=1',
@@ -176,9 +173,9 @@ legacy_modes = [
 ]
 foreach mode : legacy_modes
   mode_args = mode[1] + ['-DPOSETS_EXPECT_WIDTH=POSETS_SIMD_WIDTH_' + mode[2]] + matrix_target_args
-  width_exe = executable('simd-width-' + mode[0], 'simd-width-check.cc',
+  selector_exe = executable('simd-selector-' + mode[0], 'simd-selector-check.cc',
     dependencies: [posets_dep], cpp_args: mode_args)
-  test('matrix/SIMD selector/' + mode[0], width_exe)
+  test('matrix/SIMD selector/' + mode[0], selector_exe)
 endforeach
 
 # Max mode forces over-aligned SIMD allocation even on the portable SSE target.

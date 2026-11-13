@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include <posets/concepts.hh>
@@ -12,15 +13,6 @@
 // FIXME? the theory says it should be (exp (dim) < m)
 #ifndef KD_THRESH
 # define KD_THRESH(M, D) ((D) * 2 < (M))
-#endif
-
-#ifdef AC_DATA
-# define data_do(acts...) \
-   do {                   \
-     acts;                \
-   } while (0)
-#else
-# define data_do(x...)
 #endif
 
 namespace posets::downsets {
@@ -119,12 +111,10 @@ namespace posets::downsets {
         // kd-tree
         const size_t m = this->size ();
         const size_t dim = this->vector_dim ();
-        data_do (std::cout << "|VEKD: downset_size=" << dim << "," << m << "|" << std::endl);
         if (this->kdtree == nullptr and KD_THRESH (m, dim)) {
           this->kdtree =
               std::make_unique<kdtree_backed<V>> (std::move (this->vector->get_backing_vector ()));
           this->vector = nullptr;
-          data_do (std::cout << "VEKD: upgraded to kd-tree downset" << std::endl);
         }
       }
 
@@ -137,20 +127,15 @@ namespace posets::downsets {
         assert (not elements.empty ());
         const size_t m = elements.size ();
         const size_t dim = elements[0].size ();
-        data_do (std::cout << "|VEKD: downset_size=" << dim << "," << m << "|" << std::endl);
 
         // NOTE: we are checking the size BEFORE we actually create the
         // downset container; their respective constructors may reduce the
         // size by removing dominated elements... it's easier and clearer
         // to do the check here though
-        if (KD_THRESH (m, dim)) {
+        if (KD_THRESH (m, dim))
           this->kdtree = std::make_unique<kdtree_backed<V>> (std::move (elements));
-          data_do (std::cout << "VEKD: created kd-tree downset" << std::endl);
-        }
-        else {
+        else
           this->vector = std::make_unique<vector_backed<V>> (std::move (elements));
-          data_do (std::cout << "VEKD: created vector downset" << std::endl);
-        }
       }
 
       vector_or_kdtree_backed (V&& el) {

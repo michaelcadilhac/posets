@@ -5,6 +5,7 @@
 #include <functional>
 #include <ostream>
 #include <span>
+#include <vector>
 
 namespace posets {
   template <typename T>
@@ -31,8 +32,6 @@ namespace posets {
   template <typename T, typename V = T::value_type>
   concept Downset =
       std::ranges::range<T> and not std::is_default_constructible_v<T> and
-      // std::is_constructible_v<T, size_t> and          // give the dimension
-      // std::is_constructible_v<T, size_t, size_t> and  // and give the size guess
       std::is_constructible_v<T, V&&> and std::is_constructible_v<T, std::vector<V>&&> and
       not std::is_copy_constructible_v<T> and not std::is_copy_assignable_v<T> and
       std::is_move_constructible_v<T> and std::is_move_assignable_v<T> and

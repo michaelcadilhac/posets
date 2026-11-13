@@ -294,7 +294,7 @@ namespace posets::utils {
 
     public:
 #if POSETS_LAZY_KDTREE_STATS
-      void record (uint64_t query_stats::*field, uint64_t amount = 1) const {
+      void record (uint64_t query_stats::* field, uint64_t amount = 1) const {
         query_counts.*field += amount;
         cumulative_counts.*field += amount;
       }

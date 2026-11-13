@@ -31,10 +31,8 @@ namespace posets::downsets {
       set_backed& operator= (set_backed&&) = default;
 
       [[nodiscard]] bool contains (const V& v) const {
-        for (const auto& e : vector_set)
-          if (v.partial_order (e).leq ())
-            return true;
-        return false;
+        return std::ranges::any_of (vector_set,
+                                    [&] (const auto& e) { return v.partial_order (e).leq (); });
       }
 
       [[nodiscard]] auto size () const { return vector_set.size (); }
@@ -88,17 +86,7 @@ namespace posets::downsets {
       }
 
       template <typename F>
-      void apply_inplace (const F& lambda) {
-        std::set<V> new_set;
-        for (auto&& el : vector_set) {
-          auto&& changed_el = lambda (el);
-          new_set.insert (changed_el);
-        }
-        vector_set = std::move (new_set);
-      }
-
-      template <typename F>
-      set_backed apply (const F& lambda) const {
+      [[nodiscard]] set_backed apply (const F& lambda) const {
         set_backed res;
         for (const auto& el : vector_set)
           res.insert (lambda (el));

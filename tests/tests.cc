@@ -1,19 +1,19 @@
-#include <cassert>
-#include <array>
-#include <algorithm>
-#include <random>
-#include <span>
-#include <memory>
-#include <ostream>
-#include <sstream>
-#include <set>
-#include <vector>
-#include <string>
+#include "test_maker.hh"
 #include <type_traits>
+
+#include <algorithm>
+#include <array>
+#include <cassert>
 #include <cstdint>
 #include <cxxabi.h>
-
-#include "test_maker.hh"
+#include <memory>
+#include <ostream>
+#include <random>
+#include <set>
+#include <span>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #include <posets/concepts.hh>
 #include <posets/downsets.hh>
@@ -26,261 +26,262 @@ using test_value_type = std::int8_t;
 
 #define il std::initializer_list<test_value_type>
 
-template <typename Lhs, typename Rhs>
-void assert_same_vector_values (const Lhs& lhs, const Rhs& rhs) {
-  assert (lhs.size () == rhs.size ());
-  for (size_t i = 0; i < lhs.size (); ++i)
-    assert (lhs[i] == rhs[i]);
+namespace {
+  template <typename Lhs, typename Rhs>
+  void assert_same_vector_values (const Lhs& lhs, const Rhs& rhs) {
+    assert (lhs.size () == rhs.size ());
+    for (size_t i = 0; i < lhs.size (); ++i)
+      assert (lhs[i] == rhs[i]);
 
-  std::vector<test_value_type> lhs_values (lhs.size ());
-  std::vector<test_value_type> rhs_values (rhs.size ());
-  lhs.to_vector (lhs_values);
-  rhs.to_vector (rhs_values);
-  assert (lhs_values == rhs_values);
-}
-
-void test_x_and_wordvec () {
-  using inner_type = posets::vectors::vector_backed_sum<test_value_type>;
-  using bool_type = posets::vectors::x_and_boolvec<inner_type>;
-  using word_type = posets::vectors::x_and_wordvec<inner_type>;
-
-  const size_t previous_bool_threshold = posets::vectors::bool_threshold;
-  constexpr size_t inner_size = 7;
-  posets::vectors::bool_threshold = inner_size;
-
-  std::mt19937_64 random {0x58a6d17b2c9043efULL};
-  std::uniform_int_distribution<int> inner_value {-8, 8};
-  std::uniform_int_distribution<int> bool_value {-1, 0};
-  constexpr std::array<size_t, 6> tail_lengths {0, 1, 63, 64, 65, 1000};
-
-  for (size_t tail_length : tail_lengths) {
-    const size_t vector_size = inner_size + tail_length;
-
-    word_type sized (vector_size);
-    assert (sized.unused_trailing_bits_are_zero ());
-
-    for (size_t round = 0; round < 48; ++round) {
-      std::vector<test_value_type> lhs_values (vector_size);
-      std::vector<test_value_type> rhs_values (vector_size);
-      for (size_t i = 0; i < inner_size; ++i) {
-        lhs_values[i] = static_cast<test_value_type> (inner_value (random));
-        rhs_values[i] = static_cast<test_value_type> (inner_value (random));
-      }
-      for (size_t i = inner_size; i < vector_size; ++i) {
-        lhs_values[i] = static_cast<test_value_type> (bool_value (random));
-        rhs_values[i] = static_cast<test_value_type> (bool_value (random));
-      }
-
-      // In addition to unrelated pairs, force both domination directions and equality.
-      switch (round % 4) {
-        case 1:
-          for (size_t i = 0; i < vector_size; ++i)
-            rhs_values[i] = std::min (lhs_values[i], rhs_values[i]);
-          break;
-        case 2:
-          for (size_t i = 0; i < vector_size; ++i)
-            rhs_values[i] = std::max (lhs_values[i], rhs_values[i]);
-          break;
-        case 3: rhs_values = lhs_values; break;
-        default: break;
-      }
-
-      bool_type bool_lhs {std::span<const test_value_type> {lhs_values}};
-      bool_type bool_rhs {std::span<const test_value_type> {rhs_values}};
-      word_type word_lhs {std::span<const test_value_type> {lhs_values}};
-      word_type word_rhs {std::span<const test_value_type> {rhs_values}};
-
-      assert (word_lhs.unused_trailing_bits_are_zero ());
-      assert (word_rhs.unused_trailing_bits_are_zero ());
-      assert_same_vector_values (word_lhs, bool_lhs);
-      assert_same_vector_values (word_rhs, bool_rhs);
-      assert (word_lhs.cached_sum () == bool_lhs.cached_sum ());
-      assert (word_rhs.cached_sum () == bool_rhs.cached_sum ());
-      assert (word_lhs.bin () == bool_lhs.bin ());
-      assert (word_rhs.bin () == bool_rhs.bin ());
-
-      {
-        auto word_order = word_lhs.partial_order (word_rhs);
-        auto bool_order = bool_lhs.partial_order (bool_rhs);
-        assert (word_order.leq () == bool_order.leq ());
-        assert (word_order.geq () == bool_order.geq ());
-      }
-      {
-        auto word_order = word_rhs.partial_order (word_lhs);
-        auto bool_order = bool_rhs.partial_order (bool_lhs);
-        assert (word_order.geq () == bool_order.geq ());
-        assert (word_order.leq () == bool_order.leq ());
-      }
-
-      assert ((word_lhs == word_rhs) == (bool_lhs == bool_rhs));
-      assert ((word_lhs != word_rhs) == (bool_lhs != bool_rhs));
-      assert ((word_lhs < word_rhs) == (bool_lhs < bool_rhs));
-      assert ((word_rhs < word_lhs) == (bool_rhs < bool_lhs));
-
-      auto word_meet = word_lhs.meet (word_rhs);
-      auto bool_meet = bool_lhs.meet (bool_rhs);
-      assert (word_meet.unused_trailing_bits_are_zero ());
-      assert_same_vector_values (word_meet, bool_meet);
-      assert (word_meet.cached_sum () == bool_meet.cached_sum ());
-
-      auto word_join = word_lhs.join (word_rhs);
-      auto bool_join = bool_lhs.join (bool_rhs);
-      assert (word_join.unused_trailing_bits_are_zero ());
-      assert_same_vector_values (word_join, bool_join);
-      assert (word_join.cached_sum () == bool_join.cached_sum ());
-
-      auto word_meet_in_place = word_lhs.copy ();
-      auto bool_meet_in_place = bool_lhs.copy ();
-      word_meet_in_place.meet_with (word_rhs);
-      bool_meet_in_place.meet_with (bool_rhs);
-      assert (word_meet_in_place.unused_trailing_bits_are_zero ());
-      assert (word_meet_in_place == word_meet);
-      assert_same_vector_values (word_meet_in_place, bool_meet_in_place);
-
-      auto word_join_in_place = word_lhs.copy ();
-      auto bool_join_in_place = bool_lhs.copy ();
-      word_join_in_place.join_with (word_rhs);
-      bool_join_in_place.join_with (bool_rhs);
-      assert (word_join_in_place.unused_trailing_bits_are_zero ());
-      assert (word_join_in_place == word_join);
-      assert_same_vector_values (word_join_in_place, bool_join_in_place);
-
-      auto word_copy = word_lhs.copy ();
-      assert (word_copy.unused_trailing_bits_are_zero ());
-      assert (word_copy == word_lhs);
-      auto word_moved = std::move (word_copy);
-      assert (word_moved.unused_trailing_bits_are_zero ());
-      assert_same_vector_values (word_moved, bool_lhs);
-      word_moved = word_rhs.copy ();
-      assert (word_moved.unused_trailing_bits_are_zero ());
-      assert_same_vector_values (word_moved, bool_rhs);
-
-      std::ostringstream word_output;
-      std::ostringstream bool_output;
-      word_lhs.print (word_output);
-      bool_lhs.print (bool_output);
-      assert (word_output.str () == bool_output.str ());
-    }
+    std::vector<test_value_type> lhs_values (lhs.size ());
+    std::vector<test_value_type> rhs_values (rhs.size ());
+    lhs.to_vector (lhs_values);
+    rhs.to_vector (rhs_values);
+    assert (lhs_values == rhs_values);
   }
 
-  posets::vectors::bool_threshold = 2;
-  word_type word_initialized (il {4, -3, -1, 0, -1});
-  bool_type bool_initialized (il {4, -3, -1, 0, -1});
-  assert (word_initialized.unused_trailing_bits_are_zero ());
-  assert_same_vector_values (word_initialized, bool_initialized);
+  void test_x_and_wordvec () {
+    using inner_type = posets::vectors::vector_backed_sum<test_value_type>;
+    using bool_type = posets::vectors::x_and_boolvec<inner_type>;
+    using word_type = posets::vectors::x_and_wordvec<inner_type>;
 
-  posets::vectors::bool_threshold = previous_bool_threshold;
+    const size_t previous_bool_threshold = posets::vectors::bool_threshold;
+    constexpr size_t inner_size = 7;
+    posets::vectors::bool_threshold = inner_size;
+
+    std::mt19937_64 random {0x58a6d17b2c9043efULL};
+    std::uniform_int_distribution<int> inner_value {-8, 8};
+    std::uniform_int_distribution<int> bool_value {-1, 0};
+    constexpr std::array<size_t, 6> tail_lengths {0, 1, 63, 64, 65, 1000};
+
+    for (const size_t tail_length : tail_lengths) {
+      const size_t vector_size = inner_size + tail_length;
+
+      const word_type sized (vector_size);
+      assert (sized.unused_trailing_bits_are_zero ());
+
+      for (size_t round = 0; round < 48; ++round) {
+        std::vector<test_value_type> lhs_values (vector_size);
+        std::vector<test_value_type> rhs_values (vector_size);
+        for (size_t i = 0; i < inner_size; ++i) {
+          lhs_values[i] = static_cast<test_value_type> (inner_value (random));
+          rhs_values[i] = static_cast<test_value_type> (inner_value (random));
+        }
+        for (size_t i = inner_size; i < vector_size; ++i) {
+          lhs_values[i] = static_cast<test_value_type> (bool_value (random));
+          rhs_values[i] = static_cast<test_value_type> (bool_value (random));
+        }
+
+        // In addition to unrelated pairs, force both domination directions and equality.
+        switch (round % 4) {
+          case 1:
+            for (size_t i = 0; i < vector_size; ++i)
+              rhs_values[i] = std::min (lhs_values[i], rhs_values[i]);
+            break;
+          case 2:
+            for (size_t i = 0; i < vector_size; ++i)
+              rhs_values[i] = std::max (lhs_values[i], rhs_values[i]);
+            break;
+          case 3: rhs_values = lhs_values; break;
+          default: break;
+        }
+
+        const bool_type bool_lhs {std::span<const test_value_type> {lhs_values}};
+        const bool_type bool_rhs {std::span<const test_value_type> {rhs_values}};
+        const word_type word_lhs {std::span<const test_value_type> {lhs_values}};
+        const word_type word_rhs {std::span<const test_value_type> {rhs_values}};
+
+        assert (word_lhs.unused_trailing_bits_are_zero ());
+        assert (word_rhs.unused_trailing_bits_are_zero ());
+        assert_same_vector_values (word_lhs, bool_lhs);
+        assert_same_vector_values (word_rhs, bool_rhs);
+        assert (word_lhs.cached_sum () == bool_lhs.cached_sum ());
+        assert (word_rhs.cached_sum () == bool_rhs.cached_sum ());
+        assert (word_lhs.bin () == bool_lhs.bin ());
+        assert (word_rhs.bin () == bool_rhs.bin ());
+
+        {
+          auto word_order = word_lhs.partial_order (word_rhs);
+          auto bool_order = bool_lhs.partial_order (bool_rhs);
+          assert (word_order.leq () == bool_order.leq ());
+          assert (word_order.geq () == bool_order.geq ());
+        }
+        {
+          auto word_order = word_rhs.partial_order (word_lhs);
+          auto bool_order = bool_rhs.partial_order (bool_lhs);
+          assert (word_order.geq () == bool_order.geq ());
+          assert (word_order.leq () == bool_order.leq ());
+        }
+
+        assert ((word_lhs == word_rhs) == (bool_lhs == bool_rhs));
+        assert ((word_lhs != word_rhs) == (bool_lhs != bool_rhs));
+        assert ((word_lhs < word_rhs) == (bool_lhs < bool_rhs));
+        assert ((word_rhs < word_lhs) == (bool_rhs < bool_lhs));
+
+        auto word_meet = word_lhs.meet (word_rhs);
+        auto bool_meet = bool_lhs.meet (bool_rhs);
+        assert (word_meet.unused_trailing_bits_are_zero ());
+        assert_same_vector_values (word_meet, bool_meet);
+        assert (word_meet.cached_sum () == bool_meet.cached_sum ());
+
+        auto word_join = word_lhs.join (word_rhs);
+        auto bool_join = bool_lhs.join (bool_rhs);
+        assert (word_join.unused_trailing_bits_are_zero ());
+        assert_same_vector_values (word_join, bool_join);
+        assert (word_join.cached_sum () == bool_join.cached_sum ());
+
+        auto word_meet_in_place = word_lhs.copy ();
+        auto bool_meet_in_place = bool_lhs.copy ();
+        word_meet_in_place.meet_with (word_rhs);
+        bool_meet_in_place.meet_with (bool_rhs);
+        assert (word_meet_in_place.unused_trailing_bits_are_zero ());
+        assert (word_meet_in_place == word_meet);
+        assert_same_vector_values (word_meet_in_place, bool_meet_in_place);
+
+        auto word_join_in_place = word_lhs.copy ();
+        auto bool_join_in_place = bool_lhs.copy ();
+        word_join_in_place.join_with (word_rhs);
+        bool_join_in_place.join_with (bool_rhs);
+        assert (word_join_in_place.unused_trailing_bits_are_zero ());
+        assert (word_join_in_place == word_join);
+        assert_same_vector_values (word_join_in_place, bool_join_in_place);
+
+        auto word_copy = word_lhs.copy ();
+        assert (word_copy.unused_trailing_bits_are_zero ());
+        assert (word_copy == word_lhs);
+        auto word_moved = std::move (word_copy);
+        assert (word_moved.unused_trailing_bits_are_zero ());
+        assert_same_vector_values (word_moved, bool_lhs);
+        word_moved = word_rhs.copy ();
+        assert (word_moved.unused_trailing_bits_are_zero ());
+        assert_same_vector_values (word_moved, bool_rhs);
+
+        std::ostringstream word_output;
+        std::ostringstream bool_output;
+        word_lhs.print (word_output);
+        bool_lhs.print (bool_output);
+        assert (word_output.str () == bool_output.str ());
+      }
+    }
+
+    posets::vectors::bool_threshold = 2;
+    const word_type word_initialized (il {4, -3, -1, 0, -1});
+    const bool_type bool_initialized (il {4, -3, -1, 0, -1});
+    assert (word_initialized.unused_trailing_bits_are_zero ());
+    assert_same_vector_values (word_initialized, bool_initialized);
+
+    posets::vectors::bool_threshold = previous_bool_threshold;
+  }
 }
 
-template<typename SetType>
+template <typename SetType>
 struct test_t : public generic_test<void> {
-    using VType = typename SetType::value_type;
+    using v_type = SetType::value_type;
 
-    std::vector<VType> vvtovv (const std::vector<std::vector<test_value_type>>& vv) {
-      std::vector<VType> out;
-      //out.reserve (vv.size ());
+    std::vector<v_type> vvtovv (const std::vector<std::vector<test_value_type>>& vv) {
+      std::vector<v_type> out;
+      out.reserve (vv.size ());
 
-      for (size_t i = 0; i < vv.size (); ++i)
-        out.emplace_back(VType (std::move (vv[i]))); //out[i] = VType<VType> (vv[i]);
+      for (const auto& value : vv)
+        out.emplace_back (v_type (value));
       return out;
     }
 
-    SetType vec_to_set (std::vector<VType>&& v) {
-      return SetType (std::move (v));
-    }
+    SetType vec_to_set (std::vector<v_type>&& v) { return SetType (std::move (v)); }
 
-    void twodim() {
-      std::cout << "Create set" << std::endl;
+    void twodim () {
+      std::cout << "Create set" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {0, -1}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {0, -1}));
 
         vec_to_set (std::move (e1));
       }
-      std::cout << "Create set" << std::endl;
+      std::cout << "Create set" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {0, -1}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {0, -1}));
 
         vec_to_set (std::move (e1));
       }
-      std::cout << "Create set" << std::endl;
+      std::cout << "Create set" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {0, -1}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {0, -1}));
 
         vec_to_set (std::move (e1));
       }
-      std::cout << "Create set" << std::endl;
+      std::cout << "Create set" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 0}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 0}));
 
         vec_to_set (std::move (e1));
       }
 
-      std::cout << "Create set loop" << std::endl;
+      std::cout << "Create set loop" << '\n';
       {
         for (int i = 1; i <= 8; ++i) {
           std::cout << "Inserting " << i << " (-1, 0)\n";
-          std::vector<VType> e1;
+          std::vector<v_type> e1;
+          e1.reserve (static_cast<size_t> (i) + 1);
           for (int j = 0; j < i; ++j)
-            e1.emplace_back (VType (il {-1, 0}));
-          e1.emplace_back (VType (il {0, -1}));
+            e1.emplace_back (v_type (il {-1, 0}));
+          e1.emplace_back (v_type (il {0, -1}));
           vec_to_set (std::move (e1));
         }
       }
 
-      std::cout << "Create set 5" << std::endl;
+      std::cout << "Create set 5" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {0, -1}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {0, -1}));
 
         vec_to_set (std::move (e1));
       }
     }
 
-    void threedim() {
-      VType v1 (il {1, 2, 3});
-      VType v2 (il {2, 5, 1});
-      VType v3 (il {4, 1, 1});
-      VType v4 (il {0, 1, 2});
+    void threedim () {
+      const v_type v1 (il {1, 2, 3});
+      const v_type v2 (il {2, 5, 1});
+      const v_type v3 (il {4, 1, 1});
+      const v_type v4 (il {0, 1, 2});
 
       auto meet = v1.meet (v2);
       auto join = v1.join (v2);
-      assert (meet == VType (il {1, 2, 1}));
-      assert (join == VType (il {2, 5, 3}));
+      assert (meet == v_type (il {1, 2, 1}));
+      assert (join == v_type (il {2, 5, 3}));
       auto meet_in_place = v1.copy ();
       meet_in_place.meet_with (v2);
       assert (meet_in_place == meet);
@@ -289,8 +290,8 @@ struct test_t : public generic_test<void> {
       assert (join_in_place == join);
 
       // singleton checks
-      std::cout << "Singleton checks" << std::endl;
-      assert(v1.size () > 0);
+      std::cout << "Singleton checks" << '\n';
+      assert (v1.size () > 0);
 
       SetType set_one_elt (v1.copy ());
       assert (set_one_elt.contains (v1));
@@ -299,9 +300,9 @@ struct test_t : public generic_test<void> {
       assert (not set_one_elt.contains (v3));
 
       {
-        std::vector<VType> e1;
-        e1.emplace_back(v1.copy ());
-        e1.emplace_back(v1.copy ());
+        std::vector<v_type> e1;
+        e1.emplace_back (v1.copy ());
+        e1.emplace_back (v1.copy ());
         SetType set = vec_to_set (std::move (e1));
         assert (set.contains (v1));
         assert (set.contains (v4));
@@ -310,7 +311,7 @@ struct test_t : public generic_test<void> {
       }
 
       // singleton union test
-      std::cout << "Singleton union test" << std::endl;
+      std::cout << "Singleton union test" << '\n';
       SetType set_one_elt_cpy (v1.copy ());
       set_one_elt.union_with (std::move (set_one_elt_cpy));
       assert (set_one_elt.size () == 1);
@@ -319,37 +320,38 @@ struct test_t : public generic_test<void> {
       assert (not set_one_elt.contains (v2));
       assert (not set_one_elt.contains (v3));
 
-      std::cout << "Intersect that has duplicate meet" << std::endl;
+      std::cout << "Intersect that has duplicate meet" << '\n';
       {
-        VType v1 (il {2, 2, 4});
-        VType v2 (il {2, 1, 5});
-        VType v3 (il {1, 3, 0});
-        VType v4 (il {3, 1, 0});
+        const v_type v1 (il {2, 2, 4});
+        const v_type v2 (il {2, 1, 5});
+        const v_type v3 (il {1, 3, 0});
+        const v_type v4 (il {3, 1, 0});
 
-        std::vector<VType> e1;
-        e1.emplace_back(v1.copy ());
-        e1.emplace_back(v2.copy ());
+        std::vector<v_type> e1;
+        e1.emplace_back (v1.copy ());
+        e1.emplace_back (v2.copy ());
         SetType set = vec_to_set (std::move (e1));
 
-        std::vector<VType> e2;
-        e2.emplace_back(v3.copy ());
-        e2.emplace_back(v4.copy ());
+        std::vector<v_type> e2;
+        e2.emplace_back (v3.copy ());
+        e2.emplace_back (v4.copy ());
         SetType set2 = vec_to_set (std::move (e2));
 
         set.intersect_with (std::move (set2));
 
-        assert (set.contains (VType (il {1, 1, 0})));
-        assert (not set.contains (VType (il {1, 3, 0})));
+        assert (set.contains (v_type (il {1, 1, 0})));
+        assert (not set.contains (v_type (il {1, 3, 0})));
       }
 
-      std::cout << "Intersect that reduces to a single element" << std::endl;
+      std::cout << "Intersect that reduces to a single element" << '\n';
       {
-        VType v1 (il {2, 4, 1, 8, 5, 4, 1, 8, 1, 8});
-        VType v2 (il {2, 4, 1, 8, 7, 4, 1, 10, 2, 8});
-        std::vector<VType> e1, e2;
-        e1.emplace_back(v1.copy ());
+        const v_type v1 (il {2, 4, 1, 8, 5, 4, 1, 8, 1, 8});
+        const v_type v2 (il {2, 4, 1, 8, 7, 4, 1, 10, 2, 8});
+        std::vector<v_type> e1;
+        std::vector<v_type> e2;
+        e1.emplace_back (v1.copy ());
         SetType s1 = vec_to_set (std::move (e1));
-        e2.emplace_back(v2.copy ());
+        e2.emplace_back (v2.copy ());
         SetType s2 = vec_to_set (std::move (e2));
 
         s1.intersect_with (std::move (s2));
@@ -359,28 +361,28 @@ struct test_t : public generic_test<void> {
         assert (s1.size () == 1);
       }
 
-      std::cout << "Create set" << std::endl;
+      std::cout << "Create set" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {-1, 1}));
-        e1.emplace_back (VType (il {-1, 0}));
-        e1.emplace_back (VType (il {0, -1}));
+        std::vector<v_type> e1;
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {-1, 1}));
+        e1.emplace_back (v_type (il {-1, 0}));
+        e1.emplace_back (v_type (il {0, -1}));
 
         vec_to_set (std::move (e1));
       }
 
       // simple intersect
-      std::cout << "Simple intersection test" << std::endl;
+      std::cout << "Simple intersection test" << '\n';
       {
-        std::vector<VType> e1;
-        e1.emplace_back(v1.copy ());
-        e1.emplace_back(v1.copy ());
+        std::vector<v_type> e1;
+        e1.emplace_back (v1.copy ());
+        e1.emplace_back (v1.copy ());
         SetType set = vec_to_set (std::move (e1));
-        std::vector<VType> e2;
-        e2.emplace_back(v4.copy ());
+        std::vector<v_type> e2;
+        e2.emplace_back (v4.copy ());
         set.intersect_with (vec_to_set (std::move (e2)));
         assert (not set.contains (v1));
         assert (set.contains (v4));
@@ -389,173 +391,151 @@ struct test_t : public generic_test<void> {
       }
 
       // appply test
-      std::cout << "Apply test" << std::endl;
+      std::cout << "Apply test" << '\n';
 
       SetType set_one_elt_cpy2 (v1.copy ());
       set_one_elt.intersect_with (std::move (set_one_elt_cpy2));
-      set_one_elt = set_one_elt.apply ([] (const VType& v) { return v.copy (); });
+      set_one_elt = set_one_elt.apply ([] (const v_type& v) { return v.copy (); });
       assert (set_one_elt.contains (v1));
       assert (set_one_elt.contains (v4));
       assert (not set_one_elt.contains (v2));
       assert (not set_one_elt.contains (v3));
 
       // construction test
-      std::cout << "Construction test" << std::endl;
-      std::vector<VType> elements;
-      elements.emplace_back(v1.copy ());
-      elements.emplace_back(v2.copy ());
-      elements.emplace_back(v3.copy ());
+      std::cout << "Construction test" << '\n';
+      std::vector<v_type> elements;
+      elements.emplace_back (v1.copy ());
+      elements.emplace_back (v2.copy ());
+      elements.emplace_back (v3.copy ());
       SetType set = vec_to_set (std::move (elements));
-      VType v5 (il {1, 1, 10});
-      assert(set.contains(v1));
-      assert(set.contains(v3));
-      assert(set.contains(v4));
-      assert(!set.contains(v5));
-      assert(set.contains(v2));
+      const v_type v5 (il {1, 1, 10});
+      assert (set.contains (v1));
+      assert (set.contains (v3));
+      assert (set.contains (v4));
+      assert (not set.contains (v5));
+      assert (set.contains (v2));
 
       // union test
-      std::cout << "Union test" << std::endl;
-      std::vector<VType> elements_cpy;
-      elements_cpy.emplace_back(v1.copy ());
-      elements_cpy.emplace_back(v2.copy ());
-      elements_cpy.emplace_back(v3.copy ());
-      std::cout << "creating the union operand" << std::endl;
+      std::cout << "Union test" << '\n';
+      std::vector<v_type> elements_cpy;
+      elements_cpy.emplace_back (v1.copy ());
+      elements_cpy.emplace_back (v2.copy ());
+      elements_cpy.emplace_back (v3.copy ());
+      std::cout << "creating the union operand" << '\n';
       SetType set_cpy = vec_to_set (std::move (elements_cpy));
-      std::cout << "ready to union" << std::endl;
+      std::cout << "ready to union" << '\n';
       set.union_with (std::move (set_cpy));
 
       // More domination tests
-      std::cout << "Domination tests" << std::endl;
+      std::cout << "Domination tests" << '\n';
       auto tree = vec_to_set (vvtovv ({
-            {1, 2, 3},
-            {2, 5, 1},
-            {4, 1, 1},
-          }));
-      //assert (tree.size () == 3);
-      assert (tree.contains (VType (il {1, 2, 1})));
-      assert (tree.contains (VType (il {1, 1, 1})));
-      assert (tree.contains (VType (il {2, 1, 1})));
+          {1, 2, 3},
+          {2, 5, 1},
+          {4, 1, 1},
+      }));
+      // assert (tree.size () == 3);
+      assert (tree.contains (v_type (il {1, 2, 1})));
+      assert (tree.contains (v_type (il {1, 1, 1})));
+      assert (tree.contains (v_type (il {2, 1, 1})));
 
       // Another apply test
-      std::cout << "Apply test" << std::endl;
-      set = set.apply ([] (const VType& v) { return v.copy (); });
-      assert(set.contains(v2));
-      assert(set.contains(v4));
-      assert(!set.contains(v5));
+      std::cout << "Apply test" << '\n';
+      set = set.apply ([] (const v_type& v) { return v.copy (); });
+      assert (set.contains (v2));
+      assert (set.contains (v4));
+      assert (not set.contains (v5));
 
       // More union tests
-      std::cout << "Union tests" << std::endl;
-      std::vector<VType> others;
-      others.emplace_back(v4.copy ());
-      others.emplace_back(v5.copy ());
-      std::cout << "creating union operand" << std::endl;
+      std::cout << "Union tests" << '\n';
+      std::vector<v_type> others;
+      others.emplace_back (v4.copy ());
+      others.emplace_back (v5.copy ());
+      std::cout << "creating union operand" << '\n';
       SetType set2 = vec_to_set (std::move (others));
-      std::cout << "ready to union" << std::endl;
+      std::cout << "ready to union" << '\n';
       set.union_with (std::move (set2));
 
-      assert(set.contains(v2));
-      assert(set.contains(v4));
-      assert(set.contains(v5));
+      assert (set.contains (v2));
+      assert (set.contains (v4));
+      assert (set.contains (v5));
 
       // More construction and domination tests
-      std::cout << "Construction + domination tests" << std::endl;
-      std::vector<VType> others2;
-      others2.emplace_back(v4.copy ());
-      others2.emplace_back(v5.copy ());
+      std::cout << "Construction + domination tests" << '\n';
+      std::vector<v_type> others2;
+      others2.emplace_back (v4.copy ());
+      others2.emplace_back (v5.copy ());
       SetType other_set = vec_to_set (std::move (others2));
-      assert(!other_set.contains(v2));
-      assert(other_set.contains(v4));
-      assert(other_set.contains(v5));
-
+      assert (not other_set.contains (v2));
+      assert (other_set.contains (v4));
+      assert (other_set.contains (v5));
     }
 
-    void fivedim() {
-      std::cout << "Final tests" << std::endl;
+    void fivedim () {
+      std::cout << "Final tests" << '\n';
       {
-        auto tree = vec_to_set (vvtovv ({
-              {7, 0, 9, 9, 7},
-              {8, 0, 7, 7, 8},
-              {8, 0, 9, 9, 8},
-              {9, 0, 7, 7, 9}
-            }));
-        //assert (tree.size () == 4);
-        assert (tree.contains (VType (il {0, 0, 0, 0, 0})));
-        assert (tree.contains (VType (il {6, 0, 9, 9, 7})));
-        assert (tree.contains (VType (il {7, 0, 9, 9, 7})));
+        auto tree = vec_to_set (
+            vvtovv ({{7, 0, 9, 9, 7}, {8, 0, 7, 7, 8}, {8, 0, 9, 9, 8}, {9, 0, 7, 7, 9}}));
+        // assert (tree.size () == 4);
+        assert (tree.contains (v_type (il {0, 0, 0, 0, 0})));
+        assert (tree.contains (v_type (il {6, 0, 9, 9, 7})));
+        assert (tree.contains (v_type (il {7, 0, 9, 9, 7})));
       }
 
+      auto first = vec_to_set (vvtovv ({{7, 0, 9, 9, 7}, {8, 0, 9, 9, 6}, {9, 0, 7, 7, 9}}));
+      auto frontier = vec_to_set (vvtovv ({{7, 0, 9, 9, 7}, {8, 0, 9, 9, 5}, {9, 0, 7, 7, 9}}));
 
-      // Full set is so slow, this will never finish.
-      if constexpr (std::is_same<SetType, posets::downsets::full_set<VType>>::value)
-        return;
+      std::cout << "Preparing to intersect" << '\n';
+      frontier.intersect_with (std::move (first));
 
-
-      auto F1i = vec_to_set (vvtovv ({
-            {7, 0, 9, 9, 7},
-            {8, 0, 9, 9, 6},
-            {9, 0, 7, 7, 9}
-          }));
-      auto F = vec_to_set (vvtovv ({
-            {7, 0, 9, 9, 7},
-            {8, 0, 9, 9, 5},
-            {9, 0, 7, 7, 9}
-          }));
-
-      std::cout << "Preparing to intersect" << std::endl;
-      F.intersect_with (std::move (F1i));
-
-      assert (F.contains (VType (il {8, 0, 9 ,9, 4})));
-      assert (F.contains (VType (il {8, 0, 9 ,9, 5})));
-      assert (not F.contains (VType (il {8, 0, 9 ,9, 6})));
-      assert (F.contains (VType (il {7, 0, 9 ,9, 7})));
-      assert (not F.contains (VType (il {7, 0, 9 ,9, 8})));
-      assert (F.contains (VType (il {9, 0, 7 ,7, 9})));
-      assert (not F.contains (VType (il {9, 0, 7 ,7, 10})));
-
+      assert (frontier.contains (v_type (il {8, 0, 9, 9, 4})));
+      assert (frontier.contains (v_type (il {8, 0, 9, 9, 5})));
+      assert (not frontier.contains (v_type (il {8, 0, 9, 9, 6})));
+      assert (frontier.contains (v_type (il {7, 0, 9, 9, 7})));
+      assert (not frontier.contains (v_type (il {7, 0, 9, 9, 8})));
+      assert (frontier.contains (v_type (il {9, 0, 7, 7, 9})));
+      assert (not frontier.contains (v_type (il {9, 0, 7, 7, 10})));
     }
 
-    void sixteendim() {
-      auto F = vec_to_set (vvtovv ({
-            {0, 7, 0, 0, 9, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 8, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 8, -1, 0, 9, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 7, -1, 0, -1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-          }));
-      assert (F.contains (VType (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})));
-      assert (not F.contains (VType (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0})));
+    void sixteendim () {
+      auto frontier = vec_to_set (vvtovv ({{0, 7, 0, 0, 9, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {0, 8, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 8, -1, 0, 9, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 7, -1, 0, -1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                           {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}));
+      assert (frontier.contains (v_type (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})));
+      assert (
+          not frontier.contains (v_type (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0})));
     }
 
-    void operator() () {
-      twodim();
-      threedim();
-      fivedim();
-      sixteendim();
+    void operator() () override {
+      twodim ();
+      threedim ();
+      fivedim ();
+      sixteendim ();
     }
-
 };
 
+namespace {
+  void usage (const char* progname) {
+    std::cout << "usage: " << progname << " SETTYPE VECTYPE" << '\n';
 
+    std::cout << "  SETTYPE:\n  - all" << '\n';
+    for (auto&& s : set_names) {
+      auto start = s.find_last_of (':') + 1;
+      std::cout << "  - " << s.substr (start, s.find_first_of ('<') - start) << '\n';
+    }
 
-void usage (const char* progname) {
-  std::cout << "usage: " << progname << " SETTYPE VECTYPE" << std::endl;
+    std::cout << "  VECTYPE:\n  - all" << '\n';
+    for (auto&& s : vector_names) {
+      auto start = s.find_last_of (':') + 1;
+      std::cout << "  - " << s.substr (start, s.find_first_of ('>') - start + 1) << '\n';
+    }
 
-  std::cout << "  SETTYPE:\n  - all" << std::endl;
-  for (auto&& s : set_names) {
-    auto start = s.find_last_of (':') + 1;
-    std::cout << "  - " << s.substr (start, s.find_first_of ('<') - start) << std::endl;
+    exit (0);
   }
-
-  std::cout << "  VECTYPE:\n  - all" << std::endl;
-  for (auto&& s : vector_names) {
-    auto start = s.find_last_of (':') + 1;
-    std::cout << "  - " << s.substr (start, s.find_first_of ('>') - start + 1) << std::endl;
-  }
-
-  exit (0);
 }
 
 namespace posets::vectors {
@@ -578,19 +558,17 @@ namespace posets::vectors {
   using simd_array_ptr_backed_sum_fixed = posets::vectors::simd_array_ptr_backed_sum<T, 10>;
 
   template <typename T>
-  using simd_vector_and_bitset_backed = posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<T>, 1>;
+  using simd_vector_and_bitset_backed =
+      posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<T>, 1>;
 
   template <typename T>
-  using simd_vector_and_boolvec_backed = posets::vectors::x_and_boolvec<posets::vectors::simd_vector_backed<T>>;
+  using simd_vector_and_boolvec_backed =
+      posets::vectors::x_and_boolvec<posets::vectors::simd_vector_backed<T>>;
 
   template <typename T>
-  using simd_vector_and_wordvec_backed = posets::vectors::x_and_wordvec<posets::vectors::simd_vector_backed<T>>;
+  using simd_vector_and_wordvec_backed =
+      posets::vectors::x_and_wordvec<posets::vectors::simd_vector_backed<T>>;
 }
-
-#define DEFINE_VECTOR_NAME(V) template <> struct vector_name<V> { static constexpr auto str = #V; };
-#define DEFINE_VECTOR_NAMES(...)
-#define VECTOR_TYPES(...) FOR_EACH(DEFINE_VECTOR_NAME, __VA_ARGS__)     \
-  using vector_types = type_list<__VA_ARGS__>;
 
 VECTOR_TYPES (posets::vectors::vector_backed<test_value_type>,
               posets::vectors::array_backed_fixed<test_value_type>,
@@ -604,43 +582,34 @@ VECTOR_TYPES (posets::vectors::vector_backed<test_value_type>,
               posets::vectors::simd_vector_and_boolvec_backed<test_value_type>,
               posets::vectors::simd_vector_and_wordvec_backed<test_value_type>);
 
-using set_types = template_type_list<//posets::downsets::full_set, ; too slow.
-  posets::downsets::bboxtree_backed,
-  posets::downsets::comptrie_backed,
-  posets::downsets::sharingtree_backed,
-  posets::downsets::simple_sharingtree_backed,
-  posets::downsets::sharingtrie_backed,
-  posets::downsets::cst_backed,
-  posets::downsets::kdtree_backed,
-  posets::downsets::rank_bucketed_vector_backed,
-  posets::downsets::filtered_vector_backed,
-  posets::downsets::skiplist_backed,
-  posets::downsets::vector_or_kdtree_backed,
-  posets::downsets::set_backed,
-  posets::downsets::vector_backed,
-  posets::downsets::vector_backed_bin,
-  posets::downsets::vector_backed_one_dim_split_intersection_only>;
+using set_types = template_type_list<
+    posets::downsets::bboxtree_backed, posets::downsets::comptrie_backed,
+    posets::downsets::sharingtree_backed, posets::downsets::simple_sharingtree_backed,
+    posets::downsets::sharingtrie_backed, posets::downsets::cst_backed,
+    posets::downsets::kdtree_backed, posets::downsets::rank_bucketed_vector_backed,
+    posets::downsets::filtered_vector_backed, posets::downsets::skiplist_backed,
+    posets::downsets::vector_or_kdtree_backed, posets::downsets::set_backed,
+    posets::downsets::vector_backed, posets::downsets::vector_backed_bin,
+    posets::downsets::vector_backed_one_dim_split_intersection_only>;
 
-
-
-int main(int argc, char* argv[]) {
+int main (int argc, char* argv[]) {
   test_x_and_wordvec ();
-  register_maker ((vector_types*) 0, (set_types*) 0);
+  register_maker (static_cast<vector_types*> (nullptr), static_cast<set_types*> (nullptr));
 
   if (argc != 3)
     usage (argv[0]);
 
-  auto implem = std::string ("posets::downsets::") + argv[1]
-    + "<posets::vectors::" + argv[2] + ">";
+  auto implem =
+      std::string ("posets::downsets::") + argv[1] + "<posets::vectors::" + argv[2] + ">";
 
   try {
     posets::vectors::bool_threshold = 128;
     posets::vectors::bitset_threshold = 128;
     auto& tests = test_list<void>::list;
-    tests[implem] ();
+    tests[implem]();
     return 0;
   } catch (std::bad_function_call& e) {
-    std::cout << "error: no such implem: " << implem << std::endl;
+    std::cout << "error: no such implem: " << implem << '\n';
     return 1;
   }
 }

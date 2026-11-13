@@ -25,7 +25,6 @@
 #include <unordered_map>
 
 #include <algorithm>
-#include <boost/functional/hash.hpp>
 #include <cassert>
 #include <cstdint>
 #include <cstring>
@@ -103,24 +102,17 @@ namespace posets::utils {
       size_t cbuffer_nxt;
 
       std::vector<std::unordered_map<cst_node, size_t, cst_hash, cst_equal>> inverse;
-      std::vector<std::unordered_map<std::pair<size_t, size_t>, size_t,
-                                     boost::hash<std::pair<size_t, size_t>>>>
-          cached_union, cached_inter;
 
       // Reusable scratch buffers across calls
       mutable std::vector<std::tuple<size_t, size_t, size_t>> get_all_stack;
-      std::vector<std::tuple<size_t, size_t, size_t, size_t, size_t>> node_union_stack;
 
       void init (size_t d) {
         dim = d;
         // dim + 1 layers: layer 0 holds tree roots (sentinel), layer dim
         // holds leaves with m = total prefix sum.
         layers.resize (dim + 1);
-        for (size_t i = 0; i < dim + 1; ++i) {
+        for (size_t i = 0; i < dim + 1; ++i)
           inverse.emplace_back (CST_INIT_LAYER_SIZE, cst_hash (this), cst_equal (this));
-          cached_union.emplace_back ();
-          cached_inter.emplace_back ();
-        }
 
         cbuffer_size = CST_INIT_LAYER_SIZE * CST_INIT_MAX_CHILDREN;
         child_buffer = new size_t[cbuffer_size];
@@ -399,9 +391,6 @@ namespace posets::utils {
             meets.emplace_back (x.meet (y));
         if (meets.empty ())
           // Empty intersection: return an empty tree (root with no children).
-          // Construct a single sentinel by inserting a dim-sized zero vector
-          // and letting the downset wrapper handle empty semantics.  In
-          // practice downsets never call intersect on empty inputs.
           return add_vectors (std::vector<V> {});
         return add_vectors (std::move (meets));
       }
