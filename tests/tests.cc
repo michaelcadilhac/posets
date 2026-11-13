@@ -1,9 +1,10 @@
+#include "check.hh"
+
 #include "test_maker.hh"
 #include <type_traits>
 
 #include <algorithm>
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <cxxabi.h>
 #include <memory>
@@ -29,15 +30,15 @@ using test_value_type = std::int8_t;
 namespace {
   template <typename Lhs, typename Rhs>
   void assert_same_vector_values (const Lhs& lhs, const Rhs& rhs) {
-    assert (lhs.size () == rhs.size ());
+    CHECK (lhs.size () == rhs.size ());
     for (size_t i = 0; i < lhs.size (); ++i)
-      assert (lhs[i] == rhs[i]);
+      CHECK (lhs[i] == rhs[i]);
 
     std::vector<test_value_type> lhs_values (lhs.size ());
     std::vector<test_value_type> rhs_values (rhs.size ());
     lhs.to_vector (lhs_values);
     rhs.to_vector (rhs_values);
-    assert (lhs_values == rhs_values);
+    CHECK (lhs_values == rhs_values);
   }
 
   void test_x_and_wordvec () {
@@ -58,7 +59,7 @@ namespace {
       const size_t vector_size = inner_size + tail_length;
 
       const word_type sized (vector_size);
-      assert (sized.unused_trailing_bits_are_zero ());
+      CHECK (sized.unused_trailing_bits_are_zero ());
 
       for (size_t round = 0; round < 48; ++round) {
         std::vector<test_value_type> lhs_values (vector_size);
@@ -91,83 +92,83 @@ namespace {
         const word_type word_lhs {std::span<const test_value_type> {lhs_values}};
         const word_type word_rhs {std::span<const test_value_type> {rhs_values}};
 
-        assert (word_lhs.unused_trailing_bits_are_zero ());
-        assert (word_rhs.unused_trailing_bits_are_zero ());
+        CHECK (word_lhs.unused_trailing_bits_are_zero ());
+        CHECK (word_rhs.unused_trailing_bits_are_zero ());
         assert_same_vector_values (word_lhs, bool_lhs);
         assert_same_vector_values (word_rhs, bool_rhs);
-        assert (word_lhs.cached_sum () == bool_lhs.cached_sum ());
-        assert (word_rhs.cached_sum () == bool_rhs.cached_sum ());
-        assert (word_lhs.bin () == bool_lhs.bin ());
-        assert (word_rhs.bin () == bool_rhs.bin ());
+        CHECK (word_lhs.cached_sum () == bool_lhs.cached_sum ());
+        CHECK (word_rhs.cached_sum () == bool_rhs.cached_sum ());
+        CHECK (word_lhs.bin () == bool_lhs.bin ());
+        CHECK (word_rhs.bin () == bool_rhs.bin ());
 
         {
           auto word_order = word_lhs.partial_order (word_rhs);
           auto bool_order = bool_lhs.partial_order (bool_rhs);
-          assert (word_order.leq () == bool_order.leq ());
-          assert (word_order.geq () == bool_order.geq ());
+          CHECK (word_order.leq () == bool_order.leq ());
+          CHECK (word_order.geq () == bool_order.geq ());
         }
         {
           auto word_order = word_rhs.partial_order (word_lhs);
           auto bool_order = bool_rhs.partial_order (bool_lhs);
-          assert (word_order.geq () == bool_order.geq ());
-          assert (word_order.leq () == bool_order.leq ());
+          CHECK (word_order.geq () == bool_order.geq ());
+          CHECK (word_order.leq () == bool_order.leq ());
         }
 
-        assert ((word_lhs == word_rhs) == (bool_lhs == bool_rhs));
-        assert ((word_lhs != word_rhs) == (bool_lhs != bool_rhs));
-        assert ((word_lhs < word_rhs) == (bool_lhs < bool_rhs));
-        assert ((word_rhs < word_lhs) == (bool_rhs < bool_lhs));
+        CHECK ((word_lhs == word_rhs) == (bool_lhs == bool_rhs));
+        CHECK ((word_lhs != word_rhs) == (bool_lhs != bool_rhs));
+        CHECK ((word_lhs < word_rhs) == (bool_lhs < bool_rhs));
+        CHECK ((word_rhs < word_lhs) == (bool_rhs < bool_lhs));
 
         auto word_meet = word_lhs.meet (word_rhs);
         auto bool_meet = bool_lhs.meet (bool_rhs);
-        assert (word_meet.unused_trailing_bits_are_zero ());
+        CHECK (word_meet.unused_trailing_bits_are_zero ());
         assert_same_vector_values (word_meet, bool_meet);
-        assert (word_meet.cached_sum () == bool_meet.cached_sum ());
+        CHECK (word_meet.cached_sum () == bool_meet.cached_sum ());
 
         auto word_join = word_lhs.join (word_rhs);
         auto bool_join = bool_lhs.join (bool_rhs);
-        assert (word_join.unused_trailing_bits_are_zero ());
+        CHECK (word_join.unused_trailing_bits_are_zero ());
         assert_same_vector_values (word_join, bool_join);
-        assert (word_join.cached_sum () == bool_join.cached_sum ());
+        CHECK (word_join.cached_sum () == bool_join.cached_sum ());
 
         auto word_meet_in_place = word_lhs.copy ();
         auto bool_meet_in_place = bool_lhs.copy ();
         word_meet_in_place.meet_with (word_rhs);
         bool_meet_in_place.meet_with (bool_rhs);
-        assert (word_meet_in_place.unused_trailing_bits_are_zero ());
-        assert (word_meet_in_place == word_meet);
+        CHECK (word_meet_in_place.unused_trailing_bits_are_zero ());
+        CHECK (word_meet_in_place == word_meet);
         assert_same_vector_values (word_meet_in_place, bool_meet_in_place);
 
         auto word_join_in_place = word_lhs.copy ();
         auto bool_join_in_place = bool_lhs.copy ();
         word_join_in_place.join_with (word_rhs);
         bool_join_in_place.join_with (bool_rhs);
-        assert (word_join_in_place.unused_trailing_bits_are_zero ());
-        assert (word_join_in_place == word_join);
+        CHECK (word_join_in_place.unused_trailing_bits_are_zero ());
+        CHECK (word_join_in_place == word_join);
         assert_same_vector_values (word_join_in_place, bool_join_in_place);
 
         auto word_copy = word_lhs.copy ();
-        assert (word_copy.unused_trailing_bits_are_zero ());
-        assert (word_copy == word_lhs);
+        CHECK (word_copy.unused_trailing_bits_are_zero ());
+        CHECK (word_copy == word_lhs);
         auto word_moved = std::move (word_copy);
-        assert (word_moved.unused_trailing_bits_are_zero ());
+        CHECK (word_moved.unused_trailing_bits_are_zero ());
         assert_same_vector_values (word_moved, bool_lhs);
         word_moved = word_rhs.copy ();
-        assert (word_moved.unused_trailing_bits_are_zero ());
+        CHECK (word_moved.unused_trailing_bits_are_zero ());
         assert_same_vector_values (word_moved, bool_rhs);
 
         std::ostringstream word_output;
         std::ostringstream bool_output;
         word_lhs.print (word_output);
         bool_lhs.print (bool_output);
-        assert (word_output.str () == bool_output.str ());
+        CHECK (word_output.str () == bool_output.str ());
       }
     }
 
     posets::vectors::bool_threshold = 2;
     const word_type word_initialized (il {4, -3, -1, 0, -1});
     const bool_type bool_initialized (il {4, -3, -1, 0, -1});
-    assert (word_initialized.unused_trailing_bits_are_zero ());
+    CHECK (word_initialized.unused_trailing_bits_are_zero ());
     assert_same_vector_values (word_initialized, bool_initialized);
 
     posets::vectors::bool_threshold = previous_bool_threshold;
@@ -280,45 +281,45 @@ struct test_t : public generic_test<void> {
 
       auto meet = v1.meet (v2);
       auto join = v1.join (v2);
-      assert (meet == v_type (il {1, 2, 1}));
-      assert (join == v_type (il {2, 5, 3}));
+      CHECK (meet == v_type (il {1, 2, 1}));
+      CHECK (join == v_type (il {2, 5, 3}));
       auto meet_in_place = v1.copy ();
       meet_in_place.meet_with (v2);
-      assert (meet_in_place == meet);
+      CHECK (meet_in_place == meet);
       auto join_in_place = v1.copy ();
       join_in_place.join_with (v2);
-      assert (join_in_place == join);
+      CHECK (join_in_place == join);
 
       // singleton checks
       std::cout << "Singleton checks" << '\n';
-      assert (v1.size () > 0);
+      CHECK (v1.size () > 0);
 
       SetType set_one_elt (v1.copy ());
-      assert (set_one_elt.contains (v1));
-      assert (set_one_elt.contains (v4));
-      assert (not set_one_elt.contains (v2));
-      assert (not set_one_elt.contains (v3));
+      CHECK (set_one_elt.contains (v1));
+      CHECK (set_one_elt.contains (v4));
+      CHECK (not set_one_elt.contains (v2));
+      CHECK (not set_one_elt.contains (v3));
 
       {
         std::vector<v_type> e1;
         e1.emplace_back (v1.copy ());
         e1.emplace_back (v1.copy ());
         SetType set = vec_to_set (std::move (e1));
-        assert (set.contains (v1));
-        assert (set.contains (v4));
-        assert (not set.contains (v2));
-        assert (not set.contains (v3));
+        CHECK (set.contains (v1));
+        CHECK (set.contains (v4));
+        CHECK (not set.contains (v2));
+        CHECK (not set.contains (v3));
       }
 
       // singleton union test
       std::cout << "Singleton union test" << '\n';
       SetType set_one_elt_cpy (v1.copy ());
       set_one_elt.union_with (std::move (set_one_elt_cpy));
-      assert (set_one_elt.size () == 1);
-      assert (set_one_elt.contains (v1));
-      assert (set_one_elt.contains (v4));
-      assert (not set_one_elt.contains (v2));
-      assert (not set_one_elt.contains (v3));
+      CHECK (set_one_elt.size () == 1);
+      CHECK (set_one_elt.contains (v1));
+      CHECK (set_one_elt.contains (v4));
+      CHECK (not set_one_elt.contains (v2));
+      CHECK (not set_one_elt.contains (v3));
 
       std::cout << "Intersect that has duplicate meet" << '\n';
       {
@@ -339,8 +340,8 @@ struct test_t : public generic_test<void> {
 
         set.intersect_with (std::move (set2));
 
-        assert (set.contains (v_type (il {1, 1, 0})));
-        assert (not set.contains (v_type (il {1, 3, 0})));
+        CHECK (set.contains (v_type (il {1, 1, 0})));
+        CHECK (not set.contains (v_type (il {1, 3, 0})));
       }
 
       std::cout << "Intersect that reduces to a single element" << '\n';
@@ -356,9 +357,9 @@ struct test_t : public generic_test<void> {
 
         s1.intersect_with (std::move (s2));
 
-        assert (s1.contains (v1));
-        assert (not s1.contains (v2));
-        assert (s1.size () == 1);
+        CHECK (s1.contains (v1));
+        CHECK (not s1.contains (v2));
+        CHECK (s1.size () == 1);
       }
 
       std::cout << "Create set" << '\n';
@@ -384,10 +385,10 @@ struct test_t : public generic_test<void> {
         std::vector<v_type> e2;
         e2.emplace_back (v4.copy ());
         set.intersect_with (vec_to_set (std::move (e2)));
-        assert (not set.contains (v1));
-        assert (set.contains (v4));
-        assert (not set.contains (v2));
-        assert (not set.contains (v3));
+        CHECK (not set.contains (v1));
+        CHECK (set.contains (v4));
+        CHECK (not set.contains (v2));
+        CHECK (not set.contains (v3));
       }
 
       // appply test
@@ -396,10 +397,10 @@ struct test_t : public generic_test<void> {
       SetType set_one_elt_cpy2 (v1.copy ());
       set_one_elt.intersect_with (std::move (set_one_elt_cpy2));
       set_one_elt = set_one_elt.apply ([] (const v_type& v) { return v.copy (); });
-      assert (set_one_elt.contains (v1));
-      assert (set_one_elt.contains (v4));
-      assert (not set_one_elt.contains (v2));
-      assert (not set_one_elt.contains (v3));
+      CHECK (set_one_elt.contains (v1));
+      CHECK (set_one_elt.contains (v4));
+      CHECK (not set_one_elt.contains (v2));
+      CHECK (not set_one_elt.contains (v3));
 
       // construction test
       std::cout << "Construction test" << '\n';
@@ -409,11 +410,11 @@ struct test_t : public generic_test<void> {
       elements.emplace_back (v3.copy ());
       SetType set = vec_to_set (std::move (elements));
       const v_type v5 (il {1, 1, 10});
-      assert (set.contains (v1));
-      assert (set.contains (v3));
-      assert (set.contains (v4));
-      assert (not set.contains (v5));
-      assert (set.contains (v2));
+      CHECK (set.contains (v1));
+      CHECK (set.contains (v3));
+      CHECK (set.contains (v4));
+      CHECK (not set.contains (v5));
+      CHECK (set.contains (v2));
 
       // union test
       std::cout << "Union test" << '\n';
@@ -433,17 +434,17 @@ struct test_t : public generic_test<void> {
           {2, 5, 1},
           {4, 1, 1},
       }));
-      // assert (tree.size () == 3);
-      assert (tree.contains (v_type (il {1, 2, 1})));
-      assert (tree.contains (v_type (il {1, 1, 1})));
-      assert (tree.contains (v_type (il {2, 1, 1})));
+      // CHECK (tree.size () == 3);
+      CHECK (tree.contains (v_type (il {1, 2, 1})));
+      CHECK (tree.contains (v_type (il {1, 1, 1})));
+      CHECK (tree.contains (v_type (il {2, 1, 1})));
 
       // Another apply test
       std::cout << "Apply test" << '\n';
       set = set.apply ([] (const v_type& v) { return v.copy (); });
-      assert (set.contains (v2));
-      assert (set.contains (v4));
-      assert (not set.contains (v5));
+      CHECK (set.contains (v2));
+      CHECK (set.contains (v4));
+      CHECK (not set.contains (v5));
 
       // More union tests
       std::cout << "Union tests" << '\n';
@@ -455,9 +456,9 @@ struct test_t : public generic_test<void> {
       std::cout << "ready to union" << '\n';
       set.union_with (std::move (set2));
 
-      assert (set.contains (v2));
-      assert (set.contains (v4));
-      assert (set.contains (v5));
+      CHECK (set.contains (v2));
+      CHECK (set.contains (v4));
+      CHECK (set.contains (v5));
 
       // More construction and domination tests
       std::cout << "Construction + domination tests" << '\n';
@@ -465,9 +466,9 @@ struct test_t : public generic_test<void> {
       others2.emplace_back (v4.copy ());
       others2.emplace_back (v5.copy ());
       SetType other_set = vec_to_set (std::move (others2));
-      assert (not other_set.contains (v2));
-      assert (other_set.contains (v4));
-      assert (other_set.contains (v5));
+      CHECK (not other_set.contains (v2));
+      CHECK (other_set.contains (v4));
+      CHECK (other_set.contains (v5));
     }
 
     void fivedim () {
@@ -475,10 +476,10 @@ struct test_t : public generic_test<void> {
       {
         auto tree = vec_to_set (
             vvtovv ({{7, 0, 9, 9, 7}, {8, 0, 7, 7, 8}, {8, 0, 9, 9, 8}, {9, 0, 7, 7, 9}}));
-        // assert (tree.size () == 4);
-        assert (tree.contains (v_type (il {0, 0, 0, 0, 0})));
-        assert (tree.contains (v_type (il {6, 0, 9, 9, 7})));
-        assert (tree.contains (v_type (il {7, 0, 9, 9, 7})));
+        // CHECK (tree.size () == 4);
+        CHECK (tree.contains (v_type (il {0, 0, 0, 0, 0})));
+        CHECK (tree.contains (v_type (il {6, 0, 9, 9, 7})));
+        CHECK (tree.contains (v_type (il {7, 0, 9, 9, 7})));
       }
 
       auto first = vec_to_set (vvtovv ({{7, 0, 9, 9, 7}, {8, 0, 9, 9, 6}, {9, 0, 7, 7, 9}}));
@@ -487,13 +488,13 @@ struct test_t : public generic_test<void> {
       std::cout << "Preparing to intersect" << '\n';
       frontier.intersect_with (std::move (first));
 
-      assert (frontier.contains (v_type (il {8, 0, 9, 9, 4})));
-      assert (frontier.contains (v_type (il {8, 0, 9, 9, 5})));
-      assert (not frontier.contains (v_type (il {8, 0, 9, 9, 6})));
-      assert (frontier.contains (v_type (il {7, 0, 9, 9, 7})));
-      assert (not frontier.contains (v_type (il {7, 0, 9, 9, 8})));
-      assert (frontier.contains (v_type (il {9, 0, 7, 7, 9})));
-      assert (not frontier.contains (v_type (il {9, 0, 7, 7, 10})));
+      CHECK (frontier.contains (v_type (il {8, 0, 9, 9, 4})));
+      CHECK (frontier.contains (v_type (il {8, 0, 9, 9, 5})));
+      CHECK (not frontier.contains (v_type (il {8, 0, 9, 9, 6})));
+      CHECK (frontier.contains (v_type (il {7, 0, 9, 9, 7})));
+      CHECK (not frontier.contains (v_type (il {7, 0, 9, 9, 8})));
+      CHECK (frontier.contains (v_type (il {9, 0, 7, 7, 9})));
+      CHECK (not frontier.contains (v_type (il {9, 0, 7, 7, 10})));
     }
 
     void sixteendim () {
@@ -505,8 +506,8 @@ struct test_t : public generic_test<void> {
                                            {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                            {-1, 8, -1, 0, -1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                            {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}));
-      assert (frontier.contains (v_type (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})));
-      assert (
+      CHECK (frontier.contains (v_type (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})));
+      CHECK (
           not frontier.contains (v_type (il {-1, 9, -1, 0, -1, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0})));
     }
 

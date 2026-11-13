@@ -1,4 +1,5 @@
-#include <cassert>
+#include "check.hh"
+
 #include <cstdint>
 #include <random>
 #include <span>
@@ -35,9 +36,9 @@ int main () {
     reference.push_back (value.copy ());
 
   posets::utils::comptrie<V> trie (std::move (maxima));
-  assert (trie.get_all ().size () == reference.size ());
-  assert (not trie.has_single_child_chain ());
-  assert (trie.node_count () * 4 < reference.size () * dim);
+  CHECK (trie.get_all ().size () == reference.size ());
+  CHECK (not trie.has_single_child_chain ());
+  CHECK (trie.node_count () * 4 < reference.size () * dim);
 
   for (size_t round = 0; round < 1000; ++round) {
     std::vector<value_type> coords (dim);
@@ -51,7 +52,7 @@ int main () {
       dominated or_eq po.leq ();
       strictly_dominated or_eq po.leq () and not po.geq ();
     }
-    assert (trie.dominates (query) == dominated);
-    assert (trie.dominates (query, true) == strictly_dominated);
+    CHECK (trie.dominates (query) == dominated);
+    CHECK (trie.dominates (query, true) == strictly_dominated);
   }
 }

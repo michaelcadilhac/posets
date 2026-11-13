@@ -1,5 +1,6 @@
+#include "check.hh"
+
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <span>
 #include <vector>
@@ -21,16 +22,16 @@ int main () {
   antichain.emplace_back (std::span<const std::int8_t> (b_data));
   auto trusted = downset::from_antichain_unchecked (std::move (antichain));
 
-  assert (trusted.size () == 2);
-  assert (trusted.contains (a));
-  assert (trusted.contains (b));
+  CHECK (trusted.size () == 2);
+  CHECK (trusted.contains (a));
+  CHECK (trusted.contains (b));
 
   std::vector<vector> reduced_input;
   reduced_input.emplace_back (std::span<const std::int8_t> (a_data));
   reduced_input.emplace_back (std::span<const std::int8_t> (b_data));
   downset reduced {std::move (reduced_input)};
   for (const auto& maximal : trusted)
-    assert (reduced.contains (maximal));
+    CHECK (reduced.contains (maximal));
   for (const auto& maximal : reduced)
-    assert (trusted.contains (maximal));
+    CHECK (trusted.contains (maximal));
 }

@@ -1,5 +1,10 @@
 #pragma once
 
+#include <type_traits>
+
+#include <cstddef>
+#include <utility>
+
 namespace posets::vectors {
   // This is the position at and after which all state counters are boolean.
   // Set to the vector size to disable this.

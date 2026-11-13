@@ -72,16 +72,18 @@ empty_downsets_test_exe = executable ('empty-downsets-test',
 vector_move_exe = executable ('vector-move', 'vector-move.cc',
                               dependencies : [posets_dep ])
 
-test('antichains/vectors random', downsetbm_exe,
+# Benchmark kernels warn on cross-backend size differences; these are CLI smoke.
+# Independent semantic coverage lives in the matrix/* oracle tests below.
+test('benchmarks/downsets smoke', downsetbm_exe,
      args : ['all', 'all',
              '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2' ])
-test('antichains/vectors random d128', downsetbm_d128_exe,
+test('benchmarks/downsets smoke d128', downsetbm_d128_exe,
      args : ['all', 'all',
              '--params=build=5,query=5,transfer=5,intersection=5,union=5,cpre=5,cpre_actions=2,bitset_tail=32' ])
-test('antichains/vectors simd benchmark', simdbm_smoke_exe,
+test('benchmarks/SIMD kernel smoke', simdbm_smoke_exe,
      args : ['vector_backed', 'simd_array_backed_sum_fixed<test_value_type>'])
-test('benchmarks/reject unknown SIMD implementation', simdbm_exe,
-     args: ['vector_backed', 'unknown'], should_fail: true)
+test('benchmarks/SIMD CLI validation', find_program('python3'),
+     args: [meson.current_source_dir() / 'cli-check.py', simdbm_exe])
 test('antichains/vectors implementations', tests_exe, args : ['all', 'all'])
 test('antichains/vectors kdtests', kdtests_exe)
 test('antichains/vectors sttests', sttests_exe)
@@ -264,3 +266,18 @@ foreach mode : ['compatible', 'native', 'max']
       ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args)
   test('antichains/signed bins and exact sums/' + mode, signed_domains_exe, timeout: 120)
 endforeach
+
+# Check the declared install list against the source tree and compile each header
+# without an umbrella include. Staged compilation gets only installed paths.
+cpp = meson.get_compiler('cpp')
+test('headers/source consumption', find_program('python3'),
+  suite: 'packaging',
+  args: [meson.current_source_dir() / 'header-check.py',
+         '--include-dir', meson.project_source_root() / 'include',
+         '--boost-dir', meson.project_source_root() / 'lib',
+         '--reference-dir', meson.project_source_root() / 'include',
+         '--compiler'] + cpp.cmd_array(), timeout: 180)
+test('headers/staged install', find_program('python3'),
+  suite: 'packaging',
+  args: [meson.current_source_dir() / 'install-smoke.py',
+         meson.project_build_root()] + cpp.cmd_array(), timeout: 180)

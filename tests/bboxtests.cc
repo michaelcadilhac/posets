@@ -1,4 +1,5 @@
-#include <cassert>
+#include "check.hh"
+
 #include <cstdint>
 #include <span>
 #include <vector>
@@ -43,22 +44,22 @@ int main () {
 
   posets::utils::bboxtree<V, 2> tree;
   tree.assign_and_build (std::move (values));
-  assert (tree.size () == 3);
-  assert (tree.is_antichain ());
-  assert (not tree.corners_built ());
-  assert (tree.node_count () == 0);
+  CHECK (tree.size () == 3);
+  CHECK (tree.is_antichain ());
+  CHECK (not tree.corners_built ());
+  CHECK (tree.node_count () == 0);
   auto low = make ({2, 2, 2});
   auto exact = make ({6, 3, 2});
   auto high = make ({7, 7, 7});
-  assert (tree.dominates (low));
-  assert (tree.dominates (low, true));
-  assert (tree.dominates (exact));
-  assert (not tree.dominates (exact, true));
-  assert (not tree.dominates (high));
+  CHECK (tree.dominates (low));
+  CHECK (tree.dominates (low, true));
+  CHECK (tree.dominates (exact));
+  CHECK (not tree.dominates (exact, true));
+  CHECK (not tree.dominates (high));
   auto forces_tree = make ({0, 7, 0});
-  assert (not tree.dominates (forces_tree));
-  assert (tree.corners_built ());
-  assert (tree.node_count () > 0);
+  CHECK (not tree.dominates (forces_tree));
+  CHECK (tree.corners_built ());
+  CHECK (tree.node_count () > 0);
 
   std::vector<V> queries;
   queries.push_back (make ({5, 4, 3}));
@@ -68,42 +69,42 @@ int main () {
   queries.push_back (make ({7, 3, 2}));
   for (const auto& query : queries)
     for (const bool strict : {false, true})
-      assert (tree.dominates (query, strict) == brute_dominates (tree, query, strict));
+      CHECK (tree.dominates (query, strict) == brute_dominates (tree, query, strict));
 
   auto small_values = make_antichain (8);
   std::vector<posets::utils::vector_sum_t<V>> small_keys;
   small_values = posets::utils::reduce_to_maxima (std::move (small_values), &small_keys);
   posets::utils::bboxtree<V> small_tree;
   small_tree.assign_and_build (std::move (small_values), std::move (small_keys));
-  assert (small_tree.corners_built ());
-  assert (small_tree.node_count () == 0);
+  CHECK (small_tree.corners_built ());
+  CHECK (small_tree.node_count () == 0);
   auto equal_sum = make ({3, 4});
   auto above_max_sum = make ({8, 0});
   auto below_all = make ({0, 0});
-  assert (small_tree.dominates (equal_sum));
-  assert (not small_tree.dominates (equal_sum, true));
-  assert (not small_tree.dominates (above_max_sum));
-  assert (small_tree.dominates (below_all));
+  CHECK (small_tree.dominates (equal_sum));
+  CHECK (not small_tree.dominates (equal_sum, true));
+  CHECK (not small_tree.dominates (above_max_sum));
+  CHECK (small_tree.dominates (below_all));
 
   using downset = posets::downsets::bboxtree_backed<V>;
   downset applied_source (make_antichain (17));
-  assert (not applied_source.corners_built ());
+  CHECK (not applied_source.corners_built ());
   auto applied = applied_source.apply ([] (const V& value) { return value.copy (); });
-  assert (not applied.corners_built ());
-  assert (applied.contains (below_all));
+  CHECK (not applied.corners_built ());
+  CHECK (applied.contains (below_all));
   auto forces_applied_tree = make ({-1, 17});
-  assert (not applied.contains (forces_applied_tree));
-  assert (applied.corners_built ());
+  CHECK (not applied.contains (forces_applied_tree));
+  CHECK (applied.corners_built ());
 
   downset running_union (make_antichain (17));
   downset dominated (make ({0, 0}));
   running_union.union_with (std::move (dominated));
-  assert (running_union.size () == 17);
-  assert (running_union.contains (below_all));
+  CHECK (running_union.size () == 17);
+  CHECK (running_union.contains (below_all));
 
   downset steal_target (make ({-1, -1}));
   downset steal_source (make_antichain (17));
   steal_target.union_with (std::move (steal_source));
-  assert (steal_target.size () == 17);
-  assert (steal_target.contains (below_all));
+  CHECK (steal_target.size () == 17);
+  CHECK (steal_target.contains (below_all));
 }
