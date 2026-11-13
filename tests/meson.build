@@ -11,6 +11,9 @@ sttests_exe = executable ('sttests', 'sttests.cc',
 csttests_exe = executable ('csttests', 'csttests.cc',
                            dependencies : [posets_dep ])
 
+cst_arithmetic_exe = executable ('cst-arithmetic', 'cst-arithmetic.cc',
+                                dependencies : [posets_dep ])
+
 simdbm_exe = executable ('simd-bm', 'simd-bm.cc',
                          dependencies : [posets_dep ])
 
@@ -83,6 +86,9 @@ test('antichains/vectors implementations', tests_exe, args : ['all', 'all'])
 test('antichains/vectors kdtests', kdtests_exe)
 test('antichains/vectors sttests', sttests_exe)
 test('antichains/vectors csttests', csttests_exe)
+foreach mode : ['prefix', 'arity', 'narrowing', 'extremes', 'oracle', 'domain']
+  test('antichains/CST arithmetic/' + mode, cst_arithmetic_exe, args: [mode])
+endforeach
 test('antichains/vectors lcrstests', lcrstests_exe)
 test('antichains/vectors reduce', reducetests_exe)
 test('antichains/vectors bboxtree', bboxtests_exe)

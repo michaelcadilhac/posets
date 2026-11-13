@@ -32,10 +32,13 @@
 #include <numeric>
 #include <optional>
 #include <ranges>
+#include <stdexcept>
+#include <string>
 #include <tuple>
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/sum.hh>
 
 namespace posets::utils {
 
@@ -49,16 +52,20 @@ namespace posets::utils {
   template <Vector V>
   class cst {
     public:
-      // Prefix sums can grow well past V::value_type's range (e.g. char *
-      // dim * maxval for benchmark inputs); use a wider integer.
-      using sum_t = int32_t;
+      // The dimension guard below uses the same exact-sum domain as vectors.
+      // With d coordinate bits and p sum bits, k <= 2^(p-d) bounds an
+      // ell-prefix by [-ell*2^d, ell*(2^d-1)], inside sum_t's range.
+      // Every coordinate converts exactly; every prefix fits in sum_t. An
+      // adjacent-prefix subtraction is exactly one original coordinate, so
+      // it fits both sum_t and V::value_type (including in get_all).
+      using sum_t = vector_sum_t<V>;
 
     private:
       size_t dim;
 
       struct cst_node {
           sum_t m;                // prefix sum of |M|_1 along the path from root
-          uint32_t numchild;      // number of children in next layer
+          size_t numchild;        // number of children in next layer
           size_t cbuffer_offset;  // offset into flat child_buffer
       };
 
@@ -66,14 +73,26 @@ namespace posets::utils {
       class cst_hash {
           cst* f;
 
+          [[nodiscard]] static size_t combine (size_t seed, size_t value) {
+            // Unsigned arithmetic is modulo 2^word_bits; both shifts are
+            // constant and smaller than any supported size_t width.
+            return seed ^ (value + size_t {0x9e3779b9} + (seed << 6) + (seed >> 2));
+          }
+
         public:
           cst_hash (cst* that) : f {that} {}
 
-          size_t operator() (const cst_node& k) const {
-            size_t res = std::hash<sum_t> () (k.m);
+          [[nodiscard]] size_t operator() (const cst_node& k) const {
+            // Strict C++20 has no std::hash<__int128_t>. Hash both 64-bit
+            // halves after a defined modulo conversion to unsigned.
+            size_t res = std::hash<uint64_t> () (static_cast<uint64_t> (k.m));
+            if constexpr (sizeof (sum_t) > sizeof (uint64_t))
+              res = combine (res, std::hash<uint64_t> () (static_cast<uint64_t> (
+                                      static_cast<__uint128_t> (k.m) >> 64)));
+            res = combine (res, std::hash<size_t> () (k.numchild));
             const size_t* children = f->child_buffer + k.cbuffer_offset;
             for (size_t i = 0; i < k.numchild; ++i)
-              res ^= std::hash<size_t> () (children[i]) << (i + 1);
+              res = combine (res, std::hash<size_t> () (children[i]));
             return res;
           }
       };
@@ -107,7 +126,9 @@ namespace posets::utils {
       mutable std::vector<std::tuple<size_t, size_t, size_t>> get_all_stack;
 
       void init (size_t d) {
-        dim = d;
+        dim = check_sum_dimension<typename V::value_type> (d);
+        if (dim >= layers.max_size ())
+          throw std::length_error {"CST dimension exceeds layer capacity"};
         // dim + 1 layers: layer 0 holds tree roots (sentinel), layer dim
         // holds leaves with m = total prefix sum.
         layers.resize (dim + 1);
@@ -148,6 +169,11 @@ namespace posets::utils {
       }
 
       size_t add_node (cst_node& node, size_t layer) {
+        // At a fixed layer, equal m and equal ordered child IDs describe
+        // exactly the same suffix paths. Interning only these equal keys
+        // preserves the generator language by induction from the leaves.
+        // Hash collisions are resolved by cst_equal; equal keys feed the
+        // same prefix, child count and child sequence to cst_hash.
         auto it = inverse[layer].find (node);
         if (it != inverse[layer].end ())
           return it->second;
@@ -217,6 +243,9 @@ namespace posets::utils {
       size_t add_vectors (R&& elements) {
         assert (not layers.empty ());
         auto element_vec = std::forward<R> (elements);
+        for (const auto& v : element_vec)
+          if (v.size () != dim)
+            throw std::invalid_argument {"CST generator dimension mismatch"};
         std::vector<size_t> vector_ids (element_vec.size ());
         for (size_t i = 0; i < vector_ids.size (); ++i)
           vector_ids[i] = i;
@@ -224,6 +253,11 @@ namespace posets::utils {
       }
 
       // Cover check using the paper's prune heuristics, simplified by w=0.
+      // Siblings share a parent prefix, so descending m is descending
+      // coordinate value, even for signed inputs. The DFS visits exactly
+      // the paths satisfying every query[i] <= generator[i]; owe_strict
+      // holds exactly while all coordinates seen so far are equal. Thus a
+      // leaf succeeds iff it covers the query and, in strict mode, differs.
       // Pre-computes msum[ell] = sum of M'[0..ell-1] and mmax[ell] = max
       // of M'[0..ell-1].  At a node v on a layer < dim with parent prefix
       // sum p_m and child prefix v.m, we have M(ell) = v.m - p_m so we
@@ -231,6 +265,8 @@ namespace posets::utils {
       // layer-residual heuristic compares msum[dim] - v.m against the
       // remaining query mass, mirroring the wsum/msum tests in Section 6.
       bool covers_vector (size_t root, const V& covered, bool strict = false) const {
+        if (covered.size () != dim)
+          throw std::invalid_argument {"CST query dimension mismatch"};
         // Pre-compute msum and mmax for the query M'.
         std::vector<sum_t> msum (dim + 1, 0);
         std::vector<sum_t> mmax (dim + 1, 0);
@@ -408,11 +444,24 @@ namespace posets::utils {
         return true;
       }
 
+      // NOLINTNEXTLINE(misc-no-recursion): Debug traversal advances one layer per call.
       void print_layer (size_t root, size_t lay = 0) const {
 #ifndef NDEBUG
         const cst_node& n = layers[lay][root];
-        std::cout << std::string (lay, '\t') << lay << "." << root << " [m=" << n.m << "] -> "
-                  << (lay == dim ? "" : "(\n");
+        std::cout << std::string (lay, '\t') << lay << "." << root << " [m=";
+        // Decimal output also supports the 128-bit sum type. Taking each
+        // signed remainder avoids negating the minimum representable sum.
+        auto value = n.m;
+        std::string digits;
+        do {
+          const auto digit = value % 10;
+          digits.push_back (static_cast<char> ('0' + (digit < 0 ? -digit : digit)));
+          value /= 10;
+        } while (value != 0);
+        if (n.m < 0)
+          std::cout << '-';
+        std::ranges::reverse (digits);
+        std::cout << digits << "] -> " << (lay == dim ? "" : "(\n");
         const size_t* ch = child_buffer + n.cbuffer_offset;
         for (size_t i = 0; i < n.numchild; ++i)
           print_layer (ch[i], lay + 1);
