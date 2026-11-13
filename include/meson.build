@@ -37,6 +37,7 @@ header_files = [
   'posets/utils/sharingforest.hh',
   'posets/utils/sharingtrie.hh',
   'posets/utils/ref_ptr_cmp.hh',
+  'posets/utils/rank_stats.hh',
   'posets/utils/reduce.hh',
   'posets/utils/sum.hh',
   'posets/utils/simd_traits.hh',
@@ -53,4 +54,7 @@ header_files = [
 
 if not meson.is_subproject()
   install_headers(header_files, preserve_path: true)
+  # Installed consumers use the same Boost subset as source/subproject users.
+  install_subdir('../lib/boost', install_dir: get_option('includedir'))
+  install_data('../LICENSE.boost', install_dir: get_option('datadir') / 'licenses' / 'posets')
 endif

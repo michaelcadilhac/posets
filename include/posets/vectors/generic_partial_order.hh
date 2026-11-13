@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstddef>
+#include <experimental/simd>
+
 namespace posets::vectors {
   // Both directions are computed lazily and cached, so a caller that asks for
   // one direction pays for one pass with early exit, and a caller that asks

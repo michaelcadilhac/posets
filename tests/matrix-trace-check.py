@@ -3,6 +3,7 @@
 
 import json
 from pathlib import Path
+import re
 import resource
 import subprocess
 import sys
@@ -13,18 +14,29 @@ def no_core():
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
 
 
-def run(binary, path, backend="vector_backed", vector="simd_vector_backed", ok=True, source=False):
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def run(binary, path, backend="vector_backed", vector="simd_vector_backed", error=None, source=False):
     command = [binary, "--trace", str(path), "--check=" + ("trace-source" if source else "trace"),
                backend, vector + "<test_value_type>"]
     result = subprocess.run(command, capture_output=True, text=True, timeout=10, preexec_fn=no_core)
     # Validation failures return 1. Resource failures (2), signals and
     # Valgrind's error-exitcode=18 must never count as successful rejections.
-    allowed = (0,) if ok else (1,)
-    assert result.returncode in allowed, (command, result.returncode, result.stdout, result.stderr)
-    if ok and not source:
+    require(result.returncode == (0 if error is None else 1),
+            (command, result.returncode, result.stdout, result.stderr))
+    if error is not None:
+        # Keep CI's Valgrind child-process banners out of the program diagnostic.
+        diagnostic = re.sub(r'^==\d+==[^\n]*(?:\n|$)', '', result.stderr, flags=re.MULTILINE)
+        require(diagnostic == f"error: {error}\n", (command, result.stderr))
+    if error is None and not source:
         expected = f"[--] running tests for posets::downsets::{backend}<posets::vectors::{vector}<test_value_type>>"
-        assert [line for line in result.stdout.splitlines() if line.startswith("[--]")] == [expected]
-        assert not any(line.startswith("  - ") for line in result.stdout.splitlines()), "Correctness mode emitted timings"
+        require([line for line in result.stdout.splitlines() if line.startswith("[--]")] == [expected],
+                result.stdout)
+        require(not any(line.startswith("  - ") for line in result.stdout.splitlines()),
+                "Correctness mode emitted timings")
 
 
 def maxima(values):
@@ -101,27 +113,35 @@ def main():
                 member, text = contains(directory, query, before, answer)
                 for backend in backends:
                     run(binary, member, backend)
-                for bad in (text[:-1], text.replace("hits=1", "hits=3"),
-                            text.replace("bin=0", "bin=1"), text.replace("expected=" + str(int(answer)), "expected=" + str(int(not answer))),
-                            text.replace("origin=picker", "origin=unknown"), text.replace("[end]\n", "")):
+                for bad, error in ((text[:-1], "truncated trace file"),
+                                   (text.replace("hits=1", "hits=3"), "inconsistent query ordinal/bin/hits"),
+                                   (text.replace("bin=0", "bin=1"), "inconsistent query ordinal/bin/hits"),
+                                   (text.replace("expected=" + str(int(answer)), "expected=" + str(int(not answer))),
+                                    "source contains answer disagrees with scalar oracle"),
+                                   (text.replace("origin=picker", "origin=unknown"), "unknown query origin"),
+                                   (text.replace("[end]\n", ""), "incomplete/trailing query trace")):
                     member.write_text(bad)
-                    run(binary, member, ok=False)
+                    run(binary, member, error=error)
                 member.write_text(text)
-            for bad in (original[:-1], original.replace("[after]", "[missing]"),
-                        original.replace("actions=2", "actions=3"), original.replace("action\t1", "action\t3"),
-                        original.replace("k=2", "k=128"), original.replace("[before]\n", "[before]\n99999999999999999999\n")):
+            for bad, error in ((original[:-1], "truncated trace file"),
+                               (original.replace("[after]", "[missing]"), "malformed action edge"),
+                               (original.replace("actions=2", "actions=3"), "incomplete CPre trace"),
+                               (original.replace("action\t1", "action\t3"), "action index gap"),
+                               (original.replace("k=2", "k=128"), "trace bound exceeds signed8-bit domain"),
+                               (original.replace("[before]\n", "[before]\n99999999999999999999\n"),
+                                "malformed rank row")):
                 path.write_text(bad)
-                run(binary, path, ok=False)
+                run(binary, path, error=error)
             path.write_text(original)
             meta = directory / "meta.tsv"
             original_meta = meta.read_text()
             meta.write_text(original_meta.replace(f"3\t{dimension}\t", "3\t0\t"))
-            run(binary, path, ok=False)
+            run(binary, path, error="invalid trace dimension/Boolean suffix/initial state")
             meta.write_text(original_meta)
             copy = directory / "saved.tsv"
             path.rename(copy)
             path.symlink_to(copy)
-            run(binary, path, ok=False)
+            run(binary, path, error="nonregular trace file")
         print("validated exact backend dispatch, all-Boolean/padded replay, actual queries and malformed evidence")
 
 

@@ -1,5 +1,6 @@
+#include "check.hh"
+
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <span>
 #include <utility>
@@ -18,19 +19,19 @@ namespace {
       V source {std::span<const value_type> {values}};
       destination = std::move (source);
       source = expected.copy ();
-      assert (source == expected);
+      CHECK (source == expected);
     }
     V& alias = destination;
     destination = std::move (alias);
-    assert (destination.size () == values.size ());
+    CHECK (destination.size () == values.size ());
     for (size_t i = 0; i < values.size (); ++i)
-      assert (destination[i] == values[i]);
-    assert (destination == expected);
+      CHECK (destination[i] == values[i]);
+    CHECK (destination == expected);
     if constexpr (requires { destination.cached_sum (); })
-      assert (destination.cached_sum () == 2);
+      CHECK (destination.cached_sum () == 2);
 
     V moved {std::move (destination)};
-    assert (moved == expected);
+    CHECK (moved == expected);
   }
 }
 
@@ -45,10 +46,10 @@ int main () {
     vector_backed<value_type> source {std::span<const value_type> {values}};
     const auto* storage = &*source.begin ();
     destination = std::move (source);
-    assert (&*destination.begin () == storage);
+    CHECK (&*destination.begin () == storage);
   }
   for (size_t i = 0; i < values.size (); ++i)
-    assert (destination[i] == values[i]);
+    CHECK (destination[i] == values[i]);
 
   check_move_assignment<vector_backed<value_type>> ();
   check_move_assignment<vector_backed_sum<value_type>> ();

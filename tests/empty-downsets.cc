@@ -1,5 +1,6 @@
+#include "check.hh"
+
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <exception>
 #include <iostream>
@@ -28,53 +29,53 @@ namespace {
 
     auto empty = downset_type {std::vector<vector_type> {}};
     const auto query = vector (0, 0);
-    assert (empty.size () == 0);
-    assert (empty.begin () == empty.end ());
-    assert (not empty.contains (query));
+    CHECK (empty.size () == 0);
+    CHECK (empty.begin () == empty.end ());
+    CHECK (not empty.contains (query));
 
     auto mapped = empty.apply ([] (const auto& value) { return value.copy (); });
-    assert (mapped.size () == 0);
+    CHECK (mapped.size () == 0);
 
     empty.union_with (downset_type {std::vector<vector_type> {}});
-    assert (empty.size () == 0);
+    CHECK (empty.size () == 0);
     empty.intersect_with (downset_type {std::vector<vector_type> {}});
-    assert (empty.size () == 0);
+    CHECK (empty.size () == 0);
 
     empty.union_with (downset_type {vector (1, 2)});
-    assert (empty.size () == 1);
-    assert (empty.contains (query));
+    CHECK (empty.size () == 1);
+    CHECK (empty.contains (query));
 
     empty.union_with (downset_type {std::vector<vector_type> {}});
-    assert (empty.size () == 1);
+    CHECK (empty.size () == 1);
 
     const auto empty_rhs = downset_type {std::vector<vector_type> {}};
     empty.intersect_with (empty_rhs);
-    assert (empty.size () == 0);
+    CHECK (empty.size () == 0);
 
     const auto nonempty_rhs = downset_type {vector (2, 1)};
     empty.intersect_with (nonempty_rhs);
-    assert (empty.size () == 0);
+    CHECK (empty.size () == 0);
 
     {
       auto bottom = downset_type {vector (-1, -1)};
       empty.union_with (std::move (bottom));
     }
-    assert (empty.size () == 1);
-    assert (empty.contains (vector (-1, -1)));
-    assert (not empty.contains (query));
+    CHECK (empty.size () == 1);
+    CHECK (empty.contains (vector (-1, -1)));
+    CHECK (not empty.contains (query));
     auto owned = empty.apply ([] (const auto& value) { return value.copy (); });
     empty.intersect_with (empty_rhs);
-    assert (owned.size () == 1);
-    assert (owned.contains (vector (-1, -1)));
-    assert (empty.size () == 0);
+    CHECK (owned.size () == 1);
+    CHECK (owned.contains (vector (-1, -1)));
+    CHECK (empty.size () == 0);
   }
 }
 
 int main () try {
   auto trie = posets::utils::sharingtrie<vector_type> {std::vector<vector_type> {}};
-  assert (trie.size () == 0);
-  assert (trie.get_all ().empty ());
-  assert (not trie.dominates (vector (0, 0)));
+  CHECK (trie.size () == 0);
+  CHECK (trie.get_all ().empty ());
+  CHECK (not trie.dominates (vector (0, 0)));
 
   check_empty_downset<posets::downsets::sharingtrie_backed> ();
   check_empty_downset<posets::downsets::rank_bucketed_vector_backed> ();

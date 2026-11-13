@@ -1,5 +1,7 @@
 #pragma once
 
+#include <experimental/simd>
+
 #include <posets/utils/sum.hh>
 
 namespace posets::vectors {

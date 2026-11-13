@@ -42,7 +42,9 @@ jobs:
           build-valgrind/tests/downset-matrix-$mode --metadata
         done
         # Trace children so the Python replay checks' C++ processes are covered.
-        meson test -C build-valgrind --no-rebuild --num-processes 1 --timeout-multiplier 10 --print-errorlogs --wrap='valgrind --trace-children=yes --error-exitcode=18 --exit-on-first-error=yes'
+        # Normal suites cover packaging; those checks compile new programs and
+        # would otherwise run the compiler itself under Memcheck.
+        meson test -C build-valgrind --no-rebuild --num-processes 1 --no-suite packaging --timeout-multiplier 10 --print-errorlogs --wrap='valgrind --trace-children=yes --error-exitcode=18 --exit-on-first-error=yes'
 
   baseline:
     name: Linux x86-64 baseline (no ISA flags)
