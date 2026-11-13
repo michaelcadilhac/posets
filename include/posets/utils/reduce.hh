@@ -8,6 +8,7 @@
 
 #include <posets/concepts.hh>
 #include <posets/utils/kdtree.hh>
+#include <posets/utils/sum.hh>
 
 #ifndef POSETS_REDUCE_SCAN_THRESHOLD
 # define POSETS_REDUCE_SCAN_THRESHOLD 4096UL
@@ -15,24 +16,24 @@
 
 namespace posets::utils {
   template <Vector V>
-  [[nodiscard]] long sum_key (const V& v) {
+  [[nodiscard]] vector_sum_t<V> sum_key (const V& v) {
+    static_assert (EXACT_SUM_COORDINATE<typename V::value_type>,
+                   "sum-based reduction requires signed integral coordinates of at most 64 bits");
+    check_sum_dimension<typename V::value_type> (v.size ());
     if constexpr (requires {
-                    { v.cached_sum () } -> std::convertible_to<long>;
+                    { v.cached_sum () } -> std::convertible_to<vector_sum_t<V>>;
                   })
-      return static_cast<long> (v.cached_sum ());
-    else {
-      long sum = 0;
-      for (size_t i = 0; i < v.size (); ++i)
-        sum += static_cast<long> (v[i]);
-      return sum;
-    }
+      return static_cast<vector_sum_t<V>> (v.cached_sum ());
+    else
+      return coordinate_sum (v);
   }
 
   // Sort move-only vectors without repeatedly recomputing uncached sums from
   // all their coordinates in the comparison function.
   template <Vector V>
-  void sort_by_sum_desc (std::vector<V>& values, std::vector<long>* sorted_keys = nullptr) {
-    std::vector<long> keys;
+  void sort_by_sum_desc (std::vector<V>& values,
+                         std::vector<vector_sum_t<V>>* sorted_keys = nullptr) {
+    std::vector<vector_sum_t<V>> keys;
     keys.reserve (values.size ());
     for (const auto& value : values)
       keys.push_back (sum_key (value));
@@ -44,7 +45,7 @@ namespace posets::utils {
 
     std::vector<V> sorted;
     sorted.reserve (values.size ());
-    std::vector<long> reordered_keys;
+    std::vector<vector_sum_t<V>> reordered_keys;
     if (sorted_keys)
       reordered_keys.reserve (values.size ());
     for (const size_t i : order) {
@@ -62,9 +63,11 @@ namespace posets::utils {
   // dominated by an element already kept.  Equal sums make non-strict
   // domination equivalent to equality, so this also removes duplicates.
   template <Vector V>
-  [[nodiscard]] std::vector<V> reduce_to_maxima (std::vector<V>&& candidates,
-                                                 std::vector<long>* maxima_keys = nullptr) {
+  [[nodiscard]] std::vector<V> reduce_to_maxima (
+      std::vector<V>&& candidates, std::vector<vector_sum_t<V>>* maxima_keys = nullptr) {
     if (candidates.size () < 2) {
+      if (not candidates.empty ())
+        check_sum_dimension<typename V::value_type> (candidates.front ().size ());
       if (maxima_keys) {
         maxima_keys->clear ();
         if (not candidates.empty ())
@@ -73,7 +76,7 @@ namespace posets::utils {
       return std::move (candidates);
     }
 
-    std::vector<long> keys;
+    std::vector<vector_sum_t<V>> keys;
     sort_by_sum_desc (candidates, &keys);
 
     if (candidates.size () > POSETS_REDUCE_SCAN_THRESHOLD) {
@@ -89,7 +92,7 @@ namespace posets::utils {
         begin = end;
       }
       std::vector<V> unique_candidates;
-      std::vector<long> unique_keys;
+      std::vector<vector_sum_t<V>> unique_keys;
       unique_candidates.reserve (candidates.size ());
       unique_keys.reserve (candidates.size ());
       for (size_t i = 0; i < candidates.size (); ++i)
@@ -117,7 +120,7 @@ namespace posets::utils {
       }
 
       std::vector<V> maxima;
-      std::vector<long> kept_keys;
+      std::vector<vector_sum_t<V>> kept_keys;
       maxima.reserve (filter_tree.size ());
       kept_keys.reserve (filter_tree.size ());
       for (size_t i = 0; i < keep.size (); ++i)
@@ -133,7 +136,7 @@ namespace posets::utils {
     }
 
     std::vector<V> maxima;
-    std::vector<long> kept_keys;
+    std::vector<vector_sum_t<V>> kept_keys;
     maxima.reserve (candidates.size ());
     if (maxima_keys)
       kept_keys.reserve (candidates.size ());

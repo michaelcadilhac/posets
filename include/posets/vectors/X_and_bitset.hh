@@ -1,9 +1,11 @@
 #pragma once
+
 #include <bitset>
 #include <optional>
 #include <utility>
 
 #include <posets/concepts.hh>
+#include <posets/utils/sum.hh>
 #include <posets/utils/vector_mm.hh>
 #include <posets/vectors/traits.hh>
 
@@ -22,10 +24,13 @@ namespace posets::vectors {
     public:
       using value_type = X::value_type;
 
-      x_and_bitset (size_t k) : k {k}, x {std::min (bitset_threshold, k)}, sum {0} {}
+      x_and_bitset (size_t k)
+        : k {checked_dimension (k)},
+          x {std::min (bitset_threshold, k)},
+          sum {0} {}
 
       x_and_bitset (std::span<const value_type> v)
-        : k {v.size ()},
+        : k {checked_dimension (v.size ())},
           x {std::span (v.data (), std::min (bitset_threshold, k))},
           sum {0} {
         bools.reset ();
@@ -45,15 +50,21 @@ namespace posets::vectors {
       x_and_bitset (x_and_bitset&& other) = default;
 
     private:
+      static size_t checked_dimension (size_t k) {
+        if constexpr (requires (const X& inner) { inner.cached_sum (); })
+          utils::check_sum_dimension<value_type> (k);
+        return k;
+      }
+
       x_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools)
-        : k {k},
+        : k {checked_dimension (k)},
           x {std::move (x)},
           bools {std::move (bools)} {
         sum = this->bools.count ();
       }
 
       x_and_bitset (size_t k, X&& x, std::bitset<Bools>&& bools, size_t sum)
-        : k {k},
+        : k {checked_dimension (k)},
           x {std::move (x)},
           bools {std::move (bools)},
           sum {sum} {
@@ -176,10 +187,12 @@ namespace posets::vectors {
         sum = bools.count ();
       }
 
-      [[nodiscard]] long cached_sum () const
+      [[nodiscard]] utils::sum_t<value_type> cached_sum () const
         requires requires (const X& inner) { inner.cached_sum (); }
       {
-        return static_cast<long> (sum) + static_cast<long> (x.cached_sum ());
+        // Active tail bits encode 0; inactive bits encode -1.
+        return static_cast<utils::sum_t<value_type>> (x.cached_sum ()) -
+               static_cast<utils::sum_t<value_type>> ((k - x.size ()) - sum);
       }
 
       bool operator< (const x_and_bitset& rhs) const {

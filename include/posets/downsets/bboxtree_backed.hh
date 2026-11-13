@@ -35,7 +35,7 @@ namespace posets::downsets {
       }
 
       void reset_tree (std::vector<V>&& elements) {
-        std::vector<long> keys;
+        std::vector<utils::vector_sum_t<V>> keys;
         auto antichain = utils::reduce_to_maxima (std::move (elements), &keys);
         tree.assign_and_build (std::move (antichain), std::move (keys));
         assert (tree.is_antichain ());
@@ -48,7 +48,7 @@ namespace posets::downsets {
       explicit bboxtree_backed (std::vector<V>&& elements) { reset_tree (std::move (elements)); }
       explicit bboxtree_backed (V&& element) {
         std::vector<V> singleton;
-        std::vector<long> keys;
+        std::vector<utils::vector_sum_t<V>> keys;
         keys.push_back (utils::sum_key (element));
         singleton.push_back (std::move (element));
         tree.assign_and_build (std::move (singleton), std::move (keys));
@@ -73,7 +73,7 @@ namespace posets::downsets {
         std::vector<size_t> other_survivors;
         other_survivors.reserve (other_size);
         for (size_t i = 0; i < other_size; ++i) {
-          const long key = other.tree.get_keys ()[i];
+          const utils::vector_sum_t<V> key = other.tree.get_keys ()[i];
           if (key > tree.max_key () or
               not tree.dominates (other.tree.get_backing_vector ()[i], false, key))
             other_survivors.push_back (i);
@@ -84,7 +84,7 @@ namespace posets::downsets {
         std::vector<size_t> this_survivors;
         this_survivors.reserve (this_size);
         for (size_t i = 0; i < this_size; ++i) {
-          const long key = tree.get_keys ()[i];
+          const utils::vector_sum_t<V> key = tree.get_keys ()[i];
           if (key > other.tree.max_key () or
               not other.tree.dominates (tree.get_backing_vector ()[i], true, key))
             this_survivors.push_back (i);
@@ -96,7 +96,7 @@ namespace posets::downsets {
         }
 
         std::vector<V> merged;
-        std::vector<long> merged_keys;
+        std::vector<utils::vector_sum_t<V>> merged_keys;
         merged.reserve (this_survivors.size () + other_survivors.size ());
         merged_keys.reserve (this_survivors.size () + other_survivors.size ());
         size_t lhs = 0;

@@ -71,7 +71,7 @@ int main () {
       assert (tree.dominates (query, strict) == brute_dominates (tree, query, strict));
 
   auto small_values = make_antichain (8);
-  std::vector<long> small_keys;
+  std::vector<posets::utils::vector_sum_t<V>> small_keys;
   small_values = posets::utils::reduce_to_maxima (std::move (small_values), &small_keys);
   posets::utils::bboxtree<V> small_tree;
   small_tree.assign_and_build (std::move (small_values), std::move (small_keys));

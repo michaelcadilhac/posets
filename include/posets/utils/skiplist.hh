@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/sum.hh>
 
 // Tunable knobs (override at build time with -DSKIPLIST_MAX_LEVEL=N
 // and -DSKIPLIST_BRANCHING_INV=K, where the per-level promotion
@@ -24,7 +25,7 @@
 
 /*
  * A probabilistic skip list for variable-dimension vectors, sorted by
- * (L1 norm, then lexicographic).  The sort key enables pruning in dominance
+ * (coordinate sum, then lexicographic).  The sort key enables pruning in dominance
  * queries: only elements with sum >= sum(v) can dominate v.
  *
  * Storage layout: a single std::vector<node> holds every node contiguously
@@ -73,17 +74,12 @@ namespace posets::utils {
       size_t dim {0};
       mutable std::mt19937 rng {42};
 
-      int get_sum (const V& v) const {
-        int s = 0;
-        for (size_t i = 0; i < dim; ++i)
-          s += v[i];
-        return s;
-      }
+      [[nodiscard]] vector_sum_t<V> get_sum (const V& v) const { return coordinate_sum (v); }
 
       // Strict total order: (sum, lex).
       bool comes_before (const V& a, const V& b) const {
-        const int sa = get_sum (a);
-        const int sb = get_sum (b);
+        const vector_sum_t<V> sa = get_sum (a);
+        const vector_sum_t<V> sb = get_sum (b);
         if (sa != sb)
           return sa < sb;
         for (size_t i = 0; i < dim; ++i) {
@@ -205,6 +201,7 @@ namespace posets::utils {
 
       // Insert v without checking dominance (caller is responsible).
       void push (V&& v) {
+        check_sum_dimension<typename V::value_type> (v.size ());
         if (nodes.empty ())
           nodes.emplace_back ();
         if (dim == 0)
@@ -233,7 +230,7 @@ namespace posets::utils {
       [[nodiscard]] bool dominates (const V& v, bool strict = false) const {
         if (list_size == 0)
           return false;
-        const int sv = get_sum (v);
+        const vector_sum_t<V> sv = get_sum (v);
         // Fast-forward to the first element with sum >= sv via the upper
         // levels, then linear-scan at level 0.
         int32_t cur = header_idx;
@@ -256,7 +253,7 @@ namespace posets::utils {
       void remove_dominated_by (const V& v) {
         if (list_size == 0)
           return;
-        const int sv = get_sum (v);
+        const vector_sum_t<V> sv = get_sum (v);
         std::array<int32_t, max_level> update {};
         update.fill (header_idx);
 

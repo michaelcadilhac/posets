@@ -179,8 +179,8 @@ namespace {
     auto fallback = build<wide_vector> ({{2, 0}, {0, 2}});
     posets::utils::rank_stats_reset ();
     require (fallback.insert (vector<wide_vector> ({1, 1})), "wide equal-rank insertion");
-    require (posets::utils::rank_stats_current ().partial_order_calls == 4,
-             "wide two-dimensional input skipped inclusive fallback");
+    require (posets::utils::rank_stats_current ().partial_order_calls == 2,
+             "wide exact ranks should skip equal-rank victim comparisons");
 #endif
   }
 

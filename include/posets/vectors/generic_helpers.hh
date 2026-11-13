@@ -1,5 +1,7 @@
 #pragma once
 
+#include <posets/utils/sum.hh>
+
 namespace posets::vectors {
   template <typename T>
   concept HasData = requires (T t) {
@@ -14,13 +16,13 @@ namespace posets::vectors {
   };
 
   /// Optional cached sum for generic vectors.
-  template <bool HasSum>
+  template <bool HasSum, typename T>
   struct sum_member {
-      int sum = 0;
+      utils::sum_t<T> sum = 0;
   };
 
-  template <>
-  struct sum_member<false> {};
+  template <typename T>
+  struct sum_member<false, T> {};
 
   /// C++20 new/delete respect Data's alignment, including embedded SIMD arrays.
   template <typename Data>

@@ -41,7 +41,7 @@ namespace posets::utils {
       };
 
       std::vector<V> vector_set;
-      std::vector<long> keys;
+      std::vector<vector_sum_t<V>> keys;
       mutable std::vector<node> nodes;
       mutable std::vector<uint32_t> stack_cache;
       mutable bool corners_dirty {false};
@@ -123,17 +123,20 @@ namespace posets::utils {
       }
 
       void assign_and_build (std::vector<V>&& sorted_antichain) {
-        std::vector<long> sorted_keys;
+        std::vector<vector_sum_t<V>> sorted_keys;
         sorted_keys.reserve (sorted_antichain.size ());
         for (const auto& value : sorted_antichain)
           sorted_keys.push_back (sum_key (value));
         assign_and_build (std::move (sorted_antichain), std::move (sorted_keys));
       }
 
-      void assign_and_build (std::vector<V>&& sorted_antichain, std::vector<long>&& sorted_keys) {
+      void assign_and_build (std::vector<V>&& sorted_antichain,
+                             std::vector<vector_sum_t<V>>&& sorted_keys) {
         assert (sorted_antichain.size () <= UINT32_MAX);
         assert (sorted_antichain.size () == sorted_keys.size ());
         assert (std::ranges::is_sorted (sorted_keys, std::greater<> {}));
+        for (const auto& value : sorted_antichain)
+          check_sum_dimension<typename V::value_type> (value.size ());
         vector_set = std::move (sorted_antichain);
         keys = std::move (sorted_keys);
         nodes.clear ();
@@ -144,11 +147,13 @@ namespace posets::utils {
         if constexpr (not requires { v.cached_sum (); })
           return dominates (
               v, strict,
-              std::numeric_limits<long>::min ());  // NOLINT(boost-use-ranges,modernize-use-ranges)
+              std::numeric_limits<
+                  vector_sum_t<V>>::min ());  // NOLINT(boost-use-ranges,modernize-use-ranges)
         return dominates (v, strict, sum_key (v));
       }
 
-      [[nodiscard]] bool dominates (const V& v, bool strict, long query_key) const {
+      [[nodiscard]] bool dominates (const V& v, bool strict, vector_sum_t<V> query_key) const {
+        check_sum_dimension<typename V::value_type> (v.size ());
         const auto cutoff_it = std::ranges::upper_bound (keys, query_key, std::greater<> {});
         const auto cutoff = static_cast<uint32_t> (std::distance (keys.begin (), cutoff_it));
 #ifdef POSETS_BBOX_STATS
@@ -252,7 +257,7 @@ namespace posets::utils {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
       [[nodiscard]] auto& get_keys () { return keys; }
       [[nodiscard]] const auto& get_keys () const { return keys; }
-      [[nodiscard]] long max_key () const { return keys.front (); }
+      [[nodiscard]] vector_sum_t<V> max_key () const { return keys.front (); }
       [[nodiscard]] bool corners_built () const { return not corners_dirty; }
       [[nodiscard]] size_t node_count () const { return nodes.size (); }
 

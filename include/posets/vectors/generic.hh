@@ -20,10 +20,13 @@
 namespace posets::vectors {
   template <typename Data, bool HasSum, bool EmbedsData>
     requires HasData<Data>
-  class generic : private sum_member<HasSum>, private malloc_member<EmbedsData, Data> {
+  class generic : private sum_member<HasSum, typename Data::value_type::value_type>,
+                  private malloc_member<EmbedsData, Data> {
     public:
       using block_type = Data::value_type;
       using value_type = block_type::value_type;
+      static_assert (not HasSum or utils::EXACT_SUM_COORDINATE<value_type>,
+                     "cached sums require signed integral coordinates of at most 64 bits");
       static constexpr auto uses_simd = IsDataSimd<Data>;
 
       static constexpr auto items_per_block = [] () {
@@ -68,6 +71,12 @@ namespace posets::vectors {
         throw std::length_error {"vector size exceeds fixed storage capacity"};
       }
 
+      static size_t checked_dimension (size_t k) {
+        if constexpr (HasSum)
+          utils::check_sum_dimension<value_type> (k);
+        return k;
+      }
+
       void clear_back () {
         // Cached vectors start at zero; uncached vectors only need zero padding.
         for (size_t block = HasSum ? 0 : k / items_per_block; block < data_size (); ++block)
@@ -80,14 +89,14 @@ namespace posets::vectors {
     public:
       generic (size_t k)
         requires is_resizable
-        : k {k},
-          datap {blocks_for (k)} {
+        : k {checked_dimension (k)},
+          datap {blocks_for (this->k)} {
         clear_back ();
       }
 
       generic (size_t k)
         requires (not is_resizable)
-        : k {k} {
+        : k {checked_dimension (k)} {
         if constexpr (not EmbedsData)
           datap = this->malloc.construct ();
         if (k > data_size () * items_per_block) [[unlikely]] {
@@ -278,7 +287,8 @@ namespace posets::vectors {
 
       void meet_with (const generic& rhs) {
         assert (k == rhs.k);
-        int updated_sum = 0;  // NOLINT(misc-const-correctness): mutated only in HasSum variants.
+        // NOLINTNEXTLINE(misc-const-correctness): mutated only in HasSum variants.
+        utils::sum_t<value_type> updated_sum = 0;
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd)
             data ()[i] = std::experimental::min (data ()[i], rhs.data ()[i]);
@@ -296,7 +306,8 @@ namespace posets::vectors {
 
       void join_with (const generic& rhs) {
         assert (k == rhs.k);
-        int updated_sum = 0;  // NOLINT(misc-const-correctness): mutated only in HasSum variants.
+        // NOLINTNEXTLINE(misc-const-correctness): mutated only in HasSum variants.
+        utils::sum_t<value_type> updated_sum = 0;
         for (size_t i = 0; i < data_size (); ++i) {
           if constexpr (uses_simd)
             data ()[i] = std::experimental::max (data ()[i], rhs.data ()[i]);
@@ -423,14 +434,33 @@ namespace posets::vectors {
         return const_iterator (this, static_cast<std::ptrdiff_t> (k));
       }
 
-      [[nodiscard]] auto bin () const {
-        if constexpr (HasSum)
-          return std::abs (this->sum) / k;
-        else
-          return std::abs ((*this)[0]) / k;  // NOLINT(clang-diagnostic-absolute-value)
+      template <typename Index = size_t>
+      [[nodiscard]] Index bin () const {
+        static_assert (std::is_integral_v<Index> and std::is_unsigned_v<Index> and
+                       std::numeric_limits<Index>::digits <= 64);
+        // Clamping to zero preserves monotonicity on signed coordinates and
+        // representable old bins on nonnegative inputs. Saturation preserves
+        // order when the quotient exceeds Index. Nonintegral vectors use one bin.
+        if constexpr (utils::EXACT_SUM_COORDINATE<value_type>) {
+          if (k == 0)
+            return 0;
+          const utils::sum_t<value_type> key = [this] {
+            if constexpr (HasSum)
+              return this->sum;
+            else
+              return static_cast<utils::sum_t<value_type>> ((*this)[0]);
+          }();
+          if (key <= 0)
+            return 0;
+          const auto quotient = key / k;
+          if (quotient >= std::numeric_limits<Index>::max ())
+            return std::numeric_limits<Index>::max ();
+          return static_cast<Index> (quotient);
+        }
+        return 0;
       }
 
-      [[nodiscard]] int cached_sum () const
+      [[nodiscard]] utils::sum_t<value_type> cached_sum () const
         requires HasSum
       {
         return this->sum;

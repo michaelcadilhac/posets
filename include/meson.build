@@ -38,6 +38,7 @@ header_files = [
   'posets/utils/sharingtrie.hh',
   'posets/utils/ref_ptr_cmp.hh',
   'posets/utils/reduce.hh',
+  'posets/utils/sum.hh',
   'posets/utils/simd_traits.hh',
   'posets/utils/vector_mm.hh',
   'posets/vectors/generic.hh',
