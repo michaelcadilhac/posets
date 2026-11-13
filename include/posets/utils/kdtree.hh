@@ -236,7 +236,7 @@ namespace posets::utils {
 
         // WARNING: moved elements, so we can't really use it below! instead,
         // use this->vector_set
-        assert (this->vector_set.size () > 0);
+        assert (not this->vector_set.empty ());
 
         // We now prepare the list of indices to include in the tree
         std::vector<size_t> points (this->vector_set.size ());
@@ -255,9 +255,7 @@ namespace posets::utils {
       }
       // NOLINTEND(misc-no-recursion)
 
-      kdtree ()
-        : tree (nullptr) {}  // FIXME: shall we delete this? it makes a kdtree
-                             // without knowing the size of anything!
+      kdtree () : tree (nullptr) {}
       kdtree (size_t dim) : dim (dim), tree (nullptr) {
         assert (dim <= std::numeric_limits<axis_type>::max ());
       }

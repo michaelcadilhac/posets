@@ -15,7 +15,6 @@ namespace posets::downsets {
   template <Vector V>
   class simple_sharingtree_backed {
     private:
-      size_t dim;
       size_t root {};
       std::shared_ptr<utils::sharingforest<V>> forest;
       std::vector<V> vector_set;

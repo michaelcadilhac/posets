@@ -10,9 +10,21 @@
 #include <filesystem>
 #include <fstream>
 #include <map>
+#include <set>
 #include <sstream>
 #include <tuple>
 #include <utility>
+#include <vector>
+
+#include <posets/utils/vector_mm.hh>
+#include <posets/vectors/traits.hh>
+
+#if __has_include(<valgrind/callgrind.h>)
+# include <valgrind/callgrind.h>
+#else
+# define CALLGRIND_START_INSTRUMENTATION (void) 0
+# define CALLGRIND_STOP_INSTRUMENTATION (void) 0
+#endif
 
 namespace matrix_cpre {
   using matrix_check::logical;
@@ -84,7 +96,8 @@ namespace matrix_cpre {
     result.initial = static_cast<size_t> (initial);
 
     auto input = complete_file (path);
-    require (static_cast<bool> (std::getline (input, line)) and line.starts_with ("# "), "missing CPre header");
+    require (static_cast<bool> (std::getline (input, line)) and line.starts_with ("# "),
+             "missing CPre header");
     std::map<std::string, int64_t> header;
     std::istringstream words (line.substr (2));
     for (std::string word; words >> word;) {
@@ -122,7 +135,8 @@ namespace matrix_cpre {
                    ordinal > 0 and hits >= 0 and hits <= ordinal and
                    (result.expected_answer ? hits > 0 : hits < ordinal),
                "inconsistent query ordinal/bin/hits");
-      require (static_cast<bool> (std::getline (input, line)) and line == "[query]", "missing query section");
+      require (static_cast<bool> (std::getline (input, line)) and line == "[query]",
+               "missing query section");
       require (static_cast<bool> (std::getline (input, line)), "missing query rank");
       for (const auto& value : fields (line)) {
         const auto coordinate = integer (value);
@@ -215,7 +229,8 @@ namespace matrix_cpre {
         }
       }
     }
-    require (section == 3 and result.before.size () == static_cast<size_t> (header.at ("before")) and
+    require (section == 3 and
+                 result.before.size () == static_cast<size_t> (header.at ("before")) and
                  result.actions.size () == static_cast<size_t> (header.at ("actions")) and
                  result.after.size () == static_cast<size_t> (after_count),
              "incomplete CPre trace");

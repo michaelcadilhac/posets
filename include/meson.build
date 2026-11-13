@@ -11,7 +11,6 @@ header_files = [
   'posets/downsets/block_sharingtrie_backed.hh',
   'posets/downsets/comptrie_backed.hh',
   'posets/downsets/filtered_vector_backed.hh',
-  'posets/downsets/full_set.hh',
   'posets/downsets/kdtree_backed.hh',
   'posets/downsets/lazy_kdtree_backed.hh',
   'posets/downsets/rank_bucketed_vector_backed.hh',

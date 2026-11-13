@@ -1,73 +1,56 @@
-// TODO : Sorting and Selection in Posets | SIAM Journal on Computing | Vol. 40, No. 3 | Society for Industrial and Applied Mathematics
-// SORTING AND SELECTION IN POSETS
-// Th. 4.5
-// For vector_backed (insertion based) remove insert, and allow constructor on list
-// insert only if non dominated, this would replace it
-// dynamic data structure (vector vs kdtree) by gaperez
-// bm on syntcomp
+#include "timer.hh"
+#include <type_traits>
 
+#include <algorithm>
 #include <cassert>
-#include <span>
+#include <cstdint>
+#include <cxxabi.h>
+#include <getopt.h>
+#include <iomanip>
+#include <list>
 #include <memory>
 #include <new>
 #include <ostream>
-#include <set>
-#include <vector>
-#include <string>
-#include <type_traits>
-#include <cxxabi.h>
 #include <random>
 #include <ranges>
-#include <algorithm>
-#include <cstdint>
-
-#include <getopt.h>
-#include <iomanip>
-
-#include "timer.hh"
+#include <set>
+#include <span>
+#include <string>
+#include <vector>
 
 #undef NO_VERBOSE
+#include "matrix-check.hh"
+#include "matrix-cpre.hh"
+#include "test_maker.hh"
 #include "verbose.hh"
 
-#include <posets/utils/vector_mm.hh>
 #include <posets/downsets.hh>
+#include <posets/utils/vector_mm.hh>
 #include <posets/vectors.hh>
-
-#include "test_maker.hh"
-#include "matrix-check.hh"
-
-#if __has_include(<valgrind/callgrind.h>)
-  #include <valgrind/callgrind.h>
-#else
-  #define CALLGRIND_START_INSTRUMENTATION (void)0
-  #define CALLGRIND_STOP_INSTRUMENTATION (void)0  
-#endif
-
-#include "matrix-cpre.hh"
 
 using namespace std::literals;
 namespace utils = posets::utils;
 
 #ifndef DIMENSION
-# define DIMENSION 10UL // (128UL * 1024UL)
+# define DIMENSION 10UL
 #endif
 
 size_t posets::vectors::bool_threshold = DIMENSION;
 size_t posets::vectors::bitset_threshold = DIMENSION;
 
-int               utils::verbose = 0;
+int utils::verbose = 0;
 utils::voutstream utils::vout;
 
 using test_value_type = std::int8_t;
 
 #define POSETS_MATRIX_STRING_IMPL(...) #__VA_ARGS__
-#define POSETS_MATRIX_STRING(...) POSETS_MATRIX_STRING_IMPL(__VA_ARGS__)
+#define POSETS_MATRIX_STRING(...) POSETS_MATRIX_STRING_IMPL (__VA_ARGS__)
 
 using result_t = std::map<std::string, double>;
 
 // A named, emitted kernel lets the matrix record the instructions actually used.
-extern "C" [[gnu::noinline, gnu::used]] bool posets_matrix_compare (
-    const test_value_type* left, const test_value_type* right) {
+extern "C" [[gnu::noinline, gnu::used]] bool posets_matrix_compare (const test_value_type* left,
+                                                                    const test_value_type* right) {
   using simd = posets::utils::simd_traits<test_value_type>::fssimd;
   const simd a (left, std::experimental::element_aligned);
   const simd b (right, std::experimental::element_aligned);
@@ -80,18 +63,9 @@ namespace {
   std::filesystem::path trace_file;
 
   std::map<std::string, size_t> params = {
-    {"maxval", 12},
-    {"build", 10240 * 2},
-    {"query", 10240 * 4},
-    {"transfer", 1000000},
-    {"intersection", 256},
-    {"union", 512 * 20},
-    {"cpre", 128},
-    {"cpre_actions", 8},
-    {"bitset_tail", 0},
-    {"rounds", 1},
-    {"detail", 0}
-  };
+      {"maxval", 12},        {"build", 10240 * 2}, {"query", 10240 * 4}, {"transfer", 1000000},
+      {"intersection", 256}, {"union", 512 * 20},  {"cpre", 128},        {"cpre_actions", 8},
+      {"bitset_tail", 0},    {"rounds", 1},        {"detail", 0}};
 
   std::mt19937 rand_gen;
   std::uniform_int_distribution<uint32_t> distrib;
@@ -99,7 +73,7 @@ namespace {
   template <typename T>
   auto random_vector () {
     utils::vector_mm<T> v (DIMENSION);
-    std::generate (v.begin(), v.end(), [&] () { return distrib (rand_gen); });
+    std::generate (v.begin (), v.end (), [&] () { return distrib (rand_gen); });
     return v;
   }
 
@@ -114,20 +88,20 @@ namespace {
   struct has_insert : std::false_type {};
 
   template <class T>
-  struct has_insert<T, std::void_t<decltype(std::declval<T>().insert (std::declval<typename T::value_type> ()))>> : std::true_type {};
+  struct has_insert<T, std::void_t<decltype (std::declval<T> ().insert (
+                           std::declval<typename T::value_type> ()))>> : std::true_type {};
 }
 
 #define chk(Field, Value, Fail)                                                              \
   do {                                                                                       \
     if ((Field) == 0)                                                                        \
       (Field) = (Value);                                                                     \
-    else if ((Field) != (Value)) {                                                       \
+    else if ((Field) != (Value)) {                                                           \
       verb_do (0, vout << ((Fail) ? "[FAIL] " : "[WARN] ") << #Field " != " #Value << '\n'); \
       if (Fail)                                                                              \
         abort ();                                                                            \
     }                                                                                        \
   } while (0)
-
 
 template <typename SetType>
 struct test_t : public generic_test<result_t> {
@@ -172,9 +146,11 @@ struct test_t : public generic_test<result_t> {
                   << " cache=" << SetType::uses_cache << " query_packing=included\n";
       }
       if (not trace_file.empty ()) {
-        matrix_check::require (check_case.empty () or check_case == "trace" or check_case == "replay", "unknown trace check");
-        return matrix_cpre::run<SetType> (trace_file, params["rounds"], not check_case.empty (), params["detail"] != 0,
-                                         check_case == "replay");
+        matrix_check::require (
+            check_case.empty () or check_case == "trace" or check_case == "replay",
+            "unknown trace check");
+        return matrix_cpre::run<SetType> (trace_file, params["rounds"], not check_case.empty (),
+                                          params["detail"] != 0, check_case == "replay");
       }
       if (not check_case.empty ()) {
         matrix_check::run<SetType> (check_case);
@@ -371,23 +347,21 @@ namespace posets::vectors {
   template <typename T>
   using simd_array_sum_and_bitset_fixed =
       posets::vectors::x_and_bitset<posets::vectors::simd_array_backed_sum<T, DIMENSION>,
-                                   posets::vectors::nbools_to_nbitsets (DIMENSION)>;
+                                    posets::vectors::nbools_to_nbitsets (DIMENSION)>;
 }
 
 #ifdef POSETS_MATRIX_ONLY
 VECTOR_TYPES (posets::vectors::vector_backed<test_value_type>,
               posets::vectors::simd_vector_backed<test_value_type>);
 #else
-VECTOR_TYPES (
-  posets::vectors::array_backed_fixed<test_value_type>,
-  posets::vectors::array_ptr_backed_fixed<test_value_type>,
-  posets::vectors::simd_array_backed_fixed<test_value_type>,
-  posets::vectors::simd_array_ptr_backed_fixed<test_value_type>,
-  posets::vectors::simd_array_backed_sum_fixed<test_value_type>,
-  posets::vectors::simd_array_sum_and_bitset_fixed<test_value_type>,
-  posets::vectors::vector_backed<test_value_type>,
-  posets::vectors::simd_vector_backed<test_value_type>
-  );
+VECTOR_TYPES (posets::vectors::array_backed_fixed<test_value_type>,
+              posets::vectors::array_ptr_backed_fixed<test_value_type>,
+              posets::vectors::simd_array_backed_fixed<test_value_type>,
+              posets::vectors::simd_array_ptr_backed_fixed<test_value_type>,
+              posets::vectors::simd_array_backed_sum_fixed<test_value_type>,
+              posets::vectors::simd_array_sum_and_bitset_fixed<test_value_type>,
+              posets::vectors::vector_backed<test_value_type>,
+              posets::vectors::simd_vector_backed<test_value_type>);
 
 #endif
 
@@ -409,51 +383,51 @@ struct set_name<posets::downsets::lazy_kdtree_backed<V, Cascade>> {
     }
 };
 namespace {
-  template <class V> using lazy_kd_cascaded = posets::downsets::lazy_kdtree_backed<V, true>;
-  template <class V> using lazy_kd_uncascaded = posets::downsets::lazy_kdtree_backed<V, false>;
-  template <class V> using block_b1_scalar = posets::downsets::block_sharingtrie_backed<V, 1, false>;
-  template <class V> using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
-  template <class V> using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
-  template <class V> using block_b8_scalar = posets::downsets::block_sharingtrie_backed<V, 8, false>;
-  template <class V> using block_b8_simd = posets::downsets::block_sharingtrie_backed<V, 8>;
-  template <class V> using block_b16_scalar = posets::downsets::block_sharingtrie_backed<V, 16, false>;
-  template <class V> using block_b16_simd = posets::downsets::block_sharingtrie_backed<V, 16>;
-  template <class V> using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
+  template <class V>
+  using lazy_kd_cascaded = posets::downsets::lazy_kdtree_backed<V, true>;
+  template <class V>
+  using lazy_kd_uncascaded = posets::downsets::lazy_kdtree_backed<V, false>;
+  template <class V>
+  using block_b1_scalar = posets::downsets::block_sharingtrie_backed<V, 1, false>;
+  template <class V>
+  using block_b4_scalar = posets::downsets::block_sharingtrie_backed<V, 4, false>;
+  template <class V>
+  using block_b4_simd = posets::downsets::block_sharingtrie_backed<V, 4>;
+  template <class V>
+  using block_b8_scalar = posets::downsets::block_sharingtrie_backed<V, 8, false>;
+  template <class V>
+  using block_b8_simd = posets::downsets::block_sharingtrie_backed<V, 8>;
+  template <class V>
+  using block_b16_scalar = posets::downsets::block_sharingtrie_backed<V, 16, false>;
+  template <class V>
+  using block_b16_simd = posets::downsets::block_sharingtrie_backed<V, 16>;
+  template <class V>
+  using block_b8_nocache = posets::downsets::block_sharingtrie_backed<V, 8, true, false>;
 }
 
 using set_types = template_type_list<
-  posets::downsets::bboxtree_backed,
-  posets::downsets::comptrie_backed,
-  posets::downsets::kdtree_backed,
-  lazy_kd_cascaded,
-  lazy_kd_uncascaded,
-  posets::downsets::vector_or_kdtree_backed,
-  posets::downsets::vector_backed,
-  posets::downsets::rank_bucketed_vector_backed,
-  posets::downsets::filtered_vector_backed,
-  posets::downsets::vector_backed_bin,
-  posets::downsets::vector_backed_one_dim_split_intersection_only,
-  posets::downsets::sharingtree_backed,
-  posets::downsets::simple_sharingtree_backed,
-  posets::downsets::sharingtrie_backed,
-  block_b8_simd,
+    posets::downsets::bboxtree_backed, posets::downsets::comptrie_backed,
+    posets::downsets::kdtree_backed, lazy_kd_cascaded, lazy_kd_uncascaded,
+    posets::downsets::vector_or_kdtree_backed, posets::downsets::vector_backed,
+    posets::downsets::rank_bucketed_vector_backed, posets::downsets::filtered_vector_backed,
+    posets::downsets::vector_backed_bin,
+    posets::downsets::vector_backed_one_dim_split_intersection_only,
+    posets::downsets::sharingtree_backed, posets::downsets::simple_sharingtree_backed,
+    posets::downsets::sharingtrie_backed, block_b8_simd,
 #ifdef POSETS_MATRIX_ONLY
-  block_b1_scalar,
-  block_b4_scalar,
-  block_b4_simd,
-  block_b8_scalar,
-  block_b16_scalar,
-  block_b16_simd,
-  block_b8_nocache,
+    block_b1_scalar, block_b4_scalar, block_b4_simd, block_b8_scalar, block_b16_scalar,
+    block_b16_simd, block_b8_nocache,
 #endif
-  posets::downsets::skiplist_backed,
-  posets::downsets::cst_backed
-  >;
-
+    posets::downsets::skiplist_backed, posets::downsets::cst_backed>;
 
 namespace {
   void usage (const char* progname, bool error = true) {
-    std::cout << "usage: " << progname << " [-v -v -v...] [--params PARAMS] [--seed N] SETTYPE VECTYPE\n";
+    std::cout << "usage: " << progname
+              << " [-v -v -v...] [--params PARAMS] [--seed N] [--trace FILE] [--check CASE] "
+                 "SETTYPE VECTYPE\n"
+              << "       " << progname << " --check trace-source --trace FILE\n"
+              << "       " << progname << " --metadata | --help\n"
+              << "  CASE: vectors, empty, zero, nonempty; trace or replay with --trace FILE\n";
 
     std::cout << "List of parameters:\n";
     for (auto& [p, v] : params)
@@ -474,15 +448,15 @@ namespace {
     exit (error ? 1 : 0);
   }
 
-  const auto LONG_OPTIONS =
-      std::to_array<struct option> ({{.name="trace", .has_arg=required_argument, .flag=nullptr, .val='t'},
-                                     {.name="check", .has_arg=required_argument, .flag=nullptr, .val='c'},
-                                     {.name="metadata", .has_arg=no_argument, .flag=nullptr, .val='m'},
-                                     {.name="seed",    .has_arg=required_argument, .flag=nullptr, .val='s'},
-                                     {.name="verbose", .has_arg=no_argument,       .flag=nullptr, .val='v'},
-                                     {.name="params",  .has_arg=required_argument, .flag=nullptr, .val='p'},
-                                     {.name="help",    .has_arg=no_argument,       .flag=nullptr, .val='h'},
-                                     {.name=nullptr,   .has_arg=0,                 .flag=nullptr, .val= 0}});
+  const auto LONG_OPTIONS = std::to_array<struct option> (
+      {{.name = "trace", .has_arg = required_argument, .flag = nullptr, .val = 't'},
+       {.name = "check", .has_arg = required_argument, .flag = nullptr, .val = 'c'},
+       {.name = "metadata", .has_arg = no_argument, .flag = nullptr, .val = 'm'},
+       {.name = "seed", .has_arg = required_argument, .flag = nullptr, .val = 's'},
+       {.name = "verbose", .has_arg = no_argument, .flag = nullptr, .val = 'v'},
+       {.name = "params", .has_arg = required_argument, .flag = nullptr, .val = 'p'},
+       {.name = "help", .has_arg = no_argument, .flag = nullptr, .val = 'h'},
+       {.name = nullptr, .has_arg = 0, .flag = nullptr, .val = 0}});
 }
 
 // NOLINTBEGIN(bugprone-exception-escape)
@@ -500,52 +474,48 @@ int main (int argc, char* argv[]) try {
     if (c == -1)
       break;
     switch (c) {
-      case 't':
-        trace_file = optarg;
-        break;
-      case 'c':
-        check_case = optarg;
-        break;
+      case 't': trace_file = optarg; break;
+      case 'c': check_case = optarg; break;
       case 'm': {
         using traits = posets::utils::simd_traits<test_value_type>;
         std::array<test_value_type, traits::simd_size> values {};
-        matrix_check::require (posets_matrix_compare (values.data (), values.data ()), "SIMD probe");
-        std::cout << "{\"compiler\":" << std::quoted (__VERSION__) << ",\"element_bytes\":"
-                  << sizeof (test_value_type) << ",\"selected_lanes\":" << traits::simd_size
-                  << ",\"compatible_lanes\":" << std::experimental::simd_size_v<test_value_type>
-                  << ",\"native_lanes\":" << std::experimental::simd_size_v<test_value_type,
-                       std::experimental::simd_abi::native<test_value_type>>
-                  << ",\"max_fixed_lanes\":" << std::experimental::simd_abi::max_fixed_size<test_value_type>
-                  << ",\"block_bytes\":" << sizeof (traits::fssimd)
-                  << ",\"width_selector\":" << POSETS_SIMD_WIDTH
-                  << ",\"alignment\":" << traits::memory_alignment_v
+        matrix_check::require (posets_matrix_compare (values.data (), values.data ()),
+                               "SIMD probe");
+        std::cout
+            << "{\"compiler\":" << std::quoted (__VERSION__)
+            << ",\"element_bytes\":" << sizeof (test_value_type)
+            << ",\"selected_lanes\":" << traits::simd_size << ",\"compatible_lanes\":"
+            << std::experimental::simd_size_v<test_value_type> << ",\"native_lanes\":"
+            << std::experimental::simd_size_v<
+                   test_value_type,
+                   std::experimental::simd_abi::native<test_value_type>> << ",\"max_fixed_lanes\":"
+            << std::experimental::simd_abi::max_fixed_size<test_value_type> << ",\"block_bytes\":"
+            << sizeof (traits::fssimd) << ",\"width_selector\":" << POSETS_SIMD_WIDTH
+            << ",\"alignment\":" << traits::memory_alignment_v
 #ifdef NDEBUG
-                  << ",\"ndebug\":true"
+            << ",\"ndebug\":true"
 #else
-                  << ",\"ndebug\":false"
+            << ",\"ndebug\":false"
 #endif
 #if defined(_GLIBCXX_ASSERTIONS) && _GLIBCXX_ASSERTIONS
-                  << ",\"stdlib_assertions\":true"
+            << ",\"stdlib_assertions\":true"
 #else
-                  << ",\"stdlib_assertions\":false"
+            << ",\"stdlib_assertions\":false"
 #endif
-                  << ",\"simd_type\":" << std::quoted (typeid (traits::fssimd).name ())
-                  << ",\"hybrid_policy\":" << std::quoted (POSETS_MATRIX_STRING (KD_THRESH (M, D)))
-                  << ",\"backends\":[";
+            << ",\"simd_type\":" << std::quoted (typeid (traits::fssimd).name ())
+            << ",\"hybrid_policy\":" << std::quoted (POSETS_MATRIX_STRING (KD_THRESH (M, D)))
+            << ",\"backends\":[";
         bool first = true;
         for (const auto& name : set_names) {
-          std::cout << (first ? "" : ",") << std::quoted (name.substr (name.find_last_of (':') + 1));
+          std::cout << (first ? "" : ",")
+                    << std::quoted (name.substr (name.find_last_of (':') + 1));
           first = false;
         }
         std::cout << "]}\n";
         return 0;
       }
-      case 's':
-        starting_seed = std::strtoul (optarg, nullptr, 10);
-        break;
-      case 'v':
-        ++utils::verbose;
-        break;
+      case 's': starting_seed = std::strtoul (optarg, nullptr, 10); break;
+      case 'v': ++utils::verbose; break;
       case 'p':
         while (optarg != nullptr) {
           char* comma = strchr (optarg, ',');
@@ -568,11 +538,8 @@ int main (int argc, char* argv[]) try {
           optarg = (comma != nullptr) ? comma + 1 : nullptr;
         }
         break;
-      case 'h':
-        usage (prog, false);
-        break;
-      default:
-        usage (prog);
+      case 'h': usage (prog, false); break;
+      default: usage (prog);
     }
   }
 
@@ -596,11 +563,11 @@ int main (int argc, char* argv[]) try {
   std::list<std::string> vecs;
   auto& tests = test_list<result_t>::list;
   auto to_string_view = [] (auto&& str) {
-    return std::string_view(&*str.begin(), std::ranges::distance(str));
+    return std::string_view (&*str.begin (), std::ranges::distance (str));
   };
 
-  for (auto&& da : downarg | std::ranges::views::split (',') |
-                       std::ranges::views::transform (to_string_view))
+  for (auto&& da :
+       downarg | std::ranges::views::split (',') | std::ranges::views::transform (to_string_view))
     for (const auto& k : std::views::keys (tests))
       if (da == "all" or
           ((not trace_file.empty () or not check_case.empty ())
@@ -611,8 +578,8 @@ int main (int argc, char* argv[]) try {
           downs.push_back (sub);
       }
 
-  for (auto&& va : vecarg | std::ranges::views::split (',') |
-                       std::ranges::views::transform (to_string_view))
+  for (auto&& va :
+       vecarg | std::ranges::views::split (',') | std::ranges::views::transform (to_string_view))
     for (const auto& k : std::views::keys (tests)) {
       auto v = k.substr (k.find ('<'));
       if (va == "all" or v.starts_with ("<posets::vectors::"s + std::string (va)))
@@ -631,7 +598,7 @@ int main (int argc, char* argv[]) try {
       posets::vectors::bool_threshold = DIMENSION;
       posets::vectors::bitset_threshold =
           DIMENSION - std::min (params["bitset_tail"], static_cast<size_t> (DIMENSION));
-      all_res[ds + v] = tests[ds + v] ();
+      all_res[ds + v] = tests[ds + v]();
     }
   std::cout << std::setprecision (17);
   for (auto& res : all_res) {

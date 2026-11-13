@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <posets/concepts.hh>
 #include <posets/config.hh>
 #include <posets/vectors/generic.hh>

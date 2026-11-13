@@ -1,5 +1,6 @@
 #pragma once
 
+#include <compare>
 #include <numeric>
 #include <optional>
 #include <utility>
@@ -198,9 +199,9 @@ namespace posets::vectors {
 
       bool operator< (const x_and_boolvec& rhs) const {
         auto cmp = bools <=> rhs.bools;  // three-way comparison
-        if (cmp == 0)
+        if (std::is_eq (cmp))
           return (x < rhs.x);
-        return (cmp < 0);
+        return std::is_lt (cmp);
       }
 
       [[nodiscard]] auto bin () const {

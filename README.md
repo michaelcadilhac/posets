@@ -76,9 +76,9 @@ single hardware register. Storage uses lane counts rather than assumed byte
 sizes, scalar input loads are element-aligned, and C++20 allocators/new respect
 SIMD over-alignment (including arrays of embedded SIMD objects).
 
-Standalone matrix tests add `-march=native` by default on x86; other targets
-keep the compiler's default target without extra ISA flags. This test-only
-option does not change library or benchmark defaults. CI runs independent
+Standalone matrix, layout and related correctness executables add `-march=native`
+by default on x86; other targets keep the compiler's default target without extra
+ISA flags. This test-only option does not change library defaults. CI runs independent
 Linux x86-64 and macOS arm64 jobs, each printing all three modes' metadata:
 
 * Linux retains the native matrix suite and the portable Valgrind suite (with

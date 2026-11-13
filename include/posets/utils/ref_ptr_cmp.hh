@@ -1,5 +1,9 @@
 #pragma once
 
+#include <functional>
+#include <memory>
+#include <set>
+
 namespace posets::utils {
   template <typename T>
   struct ref_ptr_cmp {

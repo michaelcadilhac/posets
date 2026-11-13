@@ -19,9 +19,6 @@
 #if POSETS_ENABLE_DOWNSET_FILTERED_VECTOR_BACKED
 # include <posets/downsets/filtered_vector_backed.hh>
 #endif
-#if POSETS_ENABLE_DOWNSET_FULL_SET
-# include <posets/downsets/full_set.hh>
-#endif
 #if POSETS_ENABLE_DOWNSET_LAZY_KDTREE_BACKED
 # include <posets/downsets/lazy_kdtree_backed.hh>
 #endif

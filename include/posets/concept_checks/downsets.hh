@@ -6,7 +6,6 @@
 #include <posets/downsets/comptrie_backed.hh>
 #include <posets/downsets/cst_backed.hh>
 #include <posets/downsets/filtered_vector_backed.hh>
-#include <posets/downsets/full_set.hh>
 #include <posets/downsets/kdtree_backed.hh>
 #include <posets/downsets/lazy_kdtree_backed.hh>
 #include <posets/downsets/rank_bucketed_vector_backed.hh>
@@ -24,7 +23,6 @@ namespace posets::downsets::concept_checks {
   using vector_test_int = posets::vectors::concept_checks::vector_test_int;
 
   static_assert (posets::Downset<block_sharingtrie_backed<vector_test_int>>);
-  static_assert (posets::Downset<full_set<vector_test_int>>);
   static_assert (posets::Downset<bboxtree_backed<vector_test_int>>);
   static_assert (posets::Downset<comptrie_backed<vector_test_int>>);
   static_assert (posets::Downset<filtered_vector_backed<vector_test_int>>);
