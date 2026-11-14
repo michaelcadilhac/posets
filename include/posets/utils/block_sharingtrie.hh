@@ -1,7 +1,5 @@
 #pragma once
 
-#include <type_traits>
-
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -17,6 +15,7 @@
 #include <posets/utils/antichain.hh>
 #include <posets/utils/block_compare.hh>
 #include <posets/utils/storage_stats.hh>
+#include <posets/utils/trie_algebra.hh>
 
 namespace posets::utils {
   // Experimental fixed consecutive blocks. SIMD width and block size are independent.
@@ -184,28 +183,10 @@ namespace posets::utils {
       template <std::ranges::input_range R, class Proj = std::identity>
       void relabel_trie (R&& elements, Proj proj = {}) {
         block_sharingtrie replacement;
-        replacement.vector_set.reserve (elements.size ());
-        using projected_type =
-            std::invoke_result_t<Proj&, std::ranges::range_rvalue_reference_t<R>>;
-        if constexpr (std::is_same_v<projected_type, V&&> and
-                      std::is_nothrow_move_constructible_v<V>) {
-          // Resolve all projections before moving any values. This also makes
-          // late projection/traversal failures safe when sources alias *this.
-          std::vector<V*> sources;
-          sources.reserve (elements.size ());
-          for (auto&& e : elements | std::views::reverse) {
-            auto&& value = proj (std::move (e));
-            sources.push_back (std::addressof (value));
-          }
-          replacement.build_nodes (sources, [] (const V* value) -> const V& { return *value; });
-          for (auto* value : sources)
-            replacement.vector_set.push_back (std::move (*value));
-        }
-        else {
-          for (auto&& e : elements | std::views::reverse)
-            replacement.vector_set.push_back (proj (std::move (e)).copy ());
-          replacement.build_nodes (replacement.vector_set, std::identity {});
-        }
+        stage_trie_vectors (std::forward<R> (elements), proj, replacement.vector_set,
+                            [&replacement] (const auto& values, auto select) {
+                              replacement.build_nodes (values, select);
+                            });
         swap (replacement);
       }
 
