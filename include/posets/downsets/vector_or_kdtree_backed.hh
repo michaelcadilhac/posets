@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -38,72 +39,31 @@ namespace posets::downsets {
       }
 
       void boolop_with (vector_or_kdtree_backed&& other, bool inter = false) {
-        // four cases: 1. both are vectors, 2/3. one is a vector,
-        // 4. both are kdtrees
-        if (this->kdtree == nullptr and other.kdtree == nullptr) {
-          // case 1. just work with vectors
-          assert (other.vector != nullptr);
-          assert (this->vector != nullptr);
+        // Invariant: each unconsumed operand owns exactly one backing, and either
+        // backing exposes a maximal antichain. Normalize only the vector path,
+        // converting the LHS before consuming the RHS (also on exceptions).
+        const auto combine = [inter] (auto& lhs, auto& rhs) {
           if (inter)
-            this->vector->intersect_with (std::move (*(other.vector)));
+            lhs.intersect_with (std::move (rhs));
           else
-            this->vector->union_with (std::move (*(other.vector)));
-        }
-        else if (this->kdtree == nullptr and other.kdtree != nullptr) {
-          // case 2. reinterpret kdtree as vector
-          assert (this->vector != nullptr);
-          assert (other.vector == nullptr);
-          // this costs linear time already: reinterpret the kdtree as a
-          // vector
-          vector_backed<V> b = vector_backed<V> (std::move (other.kdtree->get_backing_vector ()));
-          if (inter)
-            this->vector->intersect_with (std::move (b));
-          else
-            this->vector->union_with (std::move (b));
-        }
-        else if (other.kdtree == nullptr and this->kdtree != nullptr) {
-          // case 3. again reinterpret kdtree as vector
-          assert (other.vector != nullptr);
-          assert (this->vector == nullptr);
-          this->vector =
-              std::make_unique<vector_backed<V>> (std::move (this->kdtree->get_backing_vector ()));
-          this->kdtree = nullptr;
-          if (inter)
-            this->vector->intersect_with (std::move (*(other.vector)));
-          else
-            this->vector->union_with (std::move (*(other.vector)));
-        }
+            lhs.union_with (std::move (rhs));
+        };
+        if (kdtree and other.kdtree and
+            static_cast<double> (std::max (size (), other.size ())) <
+                exp (static_cast<double> (std::min (size (), other.size ()))))
+          combine (*kdtree, *other.kdtree);
         else {
-          // case 4. we have two kdtrees, though we still
-          // need to check if reinterpreting them as vectors
-          // is easier
-          size_t m;
-          size_t n;
-          if (this->size () > other.size ()) {
-            m = other.size ();
-            n = this->size ();
+          if (kdtree) {
+            vector =
+                std::make_unique<vector_backed<V>> (std::move (kdtree->get_backing_vector ()));
+            kdtree = nullptr;
           }
-          else {
-            m = this->size ();
-            n = other.size ();
+          if (other.kdtree) {
+            vector_backed<V> rhs (std::move (other.kdtree->get_backing_vector ()));
+            combine (*vector, rhs);
           }
-          if (static_cast<double> (n) < exp (static_cast<double> (m))) {
-            if (inter)
-              this->kdtree->intersect_with (std::move (*(other.kdtree)));
-            else
-              this->kdtree->union_with (std::move (*(other.kdtree)));
-          }
-          else {
-            this->vector = std::make_unique<vector_backed<V>> (
-                std::move (this->kdtree->get_backing_vector ()));
-            this->kdtree = nullptr;
-            vector_backed<V> b =
-                vector_backed<V> (std::move (other.kdtree->get_backing_vector ()));
-            if (inter)
-              this->vector->intersect_with (std::move (b));
-            else
-              this->vector->union_with (std::move (b));
-          }
+          else
+            combine (*vector, *other.vector);
         }
 
         // one last thing to deal with: it could be that we ended up with a
