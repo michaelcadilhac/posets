@@ -65,6 +65,8 @@ namespace posets::downsets {
       simple_sharingtree_backed& operator= (simple_sharingtree_backed&&) = default;
 
       simple_sharingtree_backed (std::vector<V>&& elements) {
+        if (elements.empty ())
+          return;
         init_forest (elements.begin ()->size ());
         reset_tree (std::move (elements));
         assert (this->is_antichain ());
@@ -85,12 +87,17 @@ namespace posets::downsets {
       [[nodiscard]] const auto& get_backing_vector () const { return vector_set; }
 
       [[nodiscard]] bool contains (const V& v) const {
-        return this->forest->covers_vector (this->root, v);
+        return not this->vector_set.empty () and this->forest->covers_vector (this->root, v);
       }
 
       // Union in place
       void union_with (simple_sharingtree_backed&& other) {
-        assert (other.size () > 0);
+        if (other.size () == 0)
+          return;
+        if (this->size () == 0) {
+          *this = std::move (other);
+          return;
+        }
         std::vector<V*> undomd;
         undomd.reserve (this->size () + other.size ());
         // for all elements in this tree, if they are not strictly
@@ -125,6 +132,12 @@ namespace posets::downsets {
 
       // Intersection in place
       void intersect_with (const simple_sharingtree_backed& other) {
+        if (this->size () == 0)
+          return;
+        if (other.size () == 0) {
+          this->vector_set.clear ();
+          return;
+        }
         std::vector<V> intersection;
         bool smaller_set = false;
 

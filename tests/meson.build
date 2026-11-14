@@ -140,6 +140,10 @@ foreach mode : ['compatible', 'native', 'max']
        args: ['--check=vectors', 'vector_backed', 'all'])
   test('matrix/CST empty/' + mode, matrix_exe,
        args: ['--check=empty', 'cst_backed', 'all'])
+  test('matrix/simple sharingtree empty/' + mode, matrix_exe,
+       args: ['--check=empty', 'simple_sharingtree_backed', 'all'])
+  test('matrix/sharingtree empty/' + mode, matrix_exe,
+       args: ['--check=empty', 'sharingtree_backed', 'all'])
   test('matrix/BBox empty/' + mode, matrix_exe,
        args: ['--check=empty', 'bboxtree_backed', 'all'])
   test('matrix/BBox signed algebra/' + mode, matrix_exe,
