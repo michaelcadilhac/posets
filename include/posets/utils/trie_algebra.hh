@@ -1,6 +1,9 @@
 #pragma once
 
+#include <type_traits>
+
 #include <cassert>
+#include <functional>
 #include <memory>
 #include <ranges>
 #include <utility>
@@ -10,6 +13,34 @@
 #include <posets/utils/reduce.hh>
 
 namespace posets::utils {
+  // Invariant: destination is empty and build state is unpublished. Projections
+  // only select values, and movable sources are distinct. Build only reads
+  // sources and finishes every throwing step before live-source consumption;
+  // callers then publish with a nonthrowing swap.
+  template <class V, class R, class Proj, class Build>
+  void stage_trie_vectors (R&& elements, Proj& proj, std::vector<V>& destination, Build build) {
+    destination.reserve (elements.size ());
+    using projected_type = std::invoke_result_t<Proj&, std::ranges::range_rvalue_reference_t<R>>;
+    if constexpr (std::is_same_v<projected_type, V&&> and
+                  std::is_nothrow_move_constructible_v<V>) {
+      // Resolve projections before moving, including when sources alias the old trie.
+      std::vector<V*> sources;
+      sources.reserve (elements.size ());
+      for (auto&& e : elements | std::views::reverse) {
+        auto&& value = proj (std::move (e));
+        sources.push_back (std::addressof (value));
+      }
+      build (sources, [] (const V* value) -> const V& { return *value; });
+      for (auto* value : sources)
+        destination.push_back (std::move (*value));
+    }
+    else {
+      for (auto&& e : elements | std::views::reverse)
+        destination.push_back (proj (std::move (e)).copy ());
+      build (destination, std::identity {});
+    }
+  }
+
   template <class V>
   struct trie_value_projection {
       [[nodiscard]] const V& operator() (const V* value) const { return *value; }

@@ -60,8 +60,19 @@ namespace {
     return result;
   }
 
+  region generator_order (const auto& trie) {
+    region result;
+    for (const auto& value : trie)
+      result.push_back (matrix_check::unpack (value));
+    return result;
+  }
+
   template <class S>
   void check (const S& actual, const region& expected) {
+    using v = std::ranges::range_value_t<S>;
+    for (const auto& value : actual)
+      require (reinterpret_cast<std::uintptr_t> (std::addressof (value)) % alignof (v) == 0,
+               "misaligned generator storage");
     region queries = expected;
     queries.push_back (logical (expected.empty () ? 5 : expected.front ().size (), -1));
     queries.push_back (logical (queries.back ().size (), 5));
@@ -130,6 +141,9 @@ namespace {
       check (subject, original);
       check (other, rhs);
       check (trie, original);  // warm the DFS and stamp caches
+      const auto subject_order = generator_order (subject);
+      const auto other_order = generator_order (other);
+      const auto trie_order = generator_order (trie);
       auto run = [&] {
         switch (operation) {
           case 0: constructed.emplace (std::move (input)); break;
@@ -179,6 +193,9 @@ namespace {
       check (subject, original);
       check (other, rhs);
       check (trie, original);
+      require (generator_order (subject) == subject_order, "failed algebra changed left order");
+      require (generator_order (other) == other_order, "failed algebra changed right order");
+      require (generator_order (trie) == trie_order, "failed rebuild changed generator order");
       if (operation == 5)
         for (size_t i = 0; i < external.size (); ++i)
           require (matrix_check::unpack (external[i]) == rhs[i], "aliased external input moved");
@@ -213,21 +230,38 @@ namespace {
   template <class V>
   void projections () {
     using T = tested_trie<V>;
+    auto failures = [] (auto select) {
+      auto trie = T (values<V> (original));
+      const region reversed (original.rbegin (), original.rend ());
+      require (generator_order (trie) == reversed, "construction generator order changed");
+      std::vector<V*> aliases;
+      for (auto& value : trie)
+        aliases.push_back (&value);
+      for (size_t fail = 1; fail <= aliases.size (); ++fail) {
+        size_t left = fail;
+        try {
+          trie.relabel_trie (aliases, [&] (V* value) -> decltype(auto) {
+            if (--left == 0)
+              throw std::bad_alloc ();
+            return select (value);
+          });
+          require (false, "throwing projection was not reached");
+        } catch (const std::bad_alloc&) {
+          check (trie, original);
+          require (generator_order (trie) == reversed, "failed projection changed order");
+        }
+      }
+      trie.relabel_trie (aliases, select);
+      check (trie, original);
+      require (generator_order (trie) == original, "relabel generator order changed");
+    };
+    failures ([] (V* value) -> V&& { return std::move (*value); });
+    failures ([] (V* value) -> const V& { return *value; });
+    failures ([] (V* value) -> V { return value->copy (); });
     auto trie = T (values<V> (original));
     std::vector<V*> aliases;
     for (auto& value : trie)
       aliases.push_back (&value);
-    int left = aliases.size ();
-    try {
-      trie.relabel_trie (aliases, [&] (V* value) -> V&& {
-        if (--left == 0)
-          throw std::bad_alloc ();
-        return std::move (*value);
-      });
-      require (false, "throwing projection was not reached");
-    } catch (const std::bad_alloc&) {
-      check (trie, original);
-    }
     // Lvalue projections use the copy path, which also preserves aliased values
     // until a complete replacement (including caches) has been built.
     for (long fail = 0; fail < 4096; ++fail) {
