@@ -15,6 +15,7 @@
 
 #include <posets/concepts.hh>
 #include <posets/config.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/storage_stats.hh>
 
 /*
@@ -334,16 +335,7 @@ namespace posets::utils {
         }
       }
 
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = this->begin (); it != this->end (); ++it) {
-          for (auto it2 = it + 1; it2 != this->end (); ++it2) {
-            auto po = it->partial_order (*it2);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
       [[nodiscard]] bool operator== (const kdtree& other) const {
         return this->vector_set == other.vector_set;
       }

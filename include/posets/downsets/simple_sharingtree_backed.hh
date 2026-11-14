@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/reduce.hh>
 #include <posets/utils/sharingforest.hh>
 
@@ -52,16 +53,7 @@ namespace posets::downsets {
         this->root = this->forest->add_vectors (std::move (antichain), false);
       }
 
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = this->vector_set.begin (); it != this->vector_set.end (); ++it) {
-          for (auto it2 = it + 1; it2 != this->vector_set.end (); ++it2) {
-            auto po = it->partial_order (*it2);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
 
     public:
       using value_type = V;

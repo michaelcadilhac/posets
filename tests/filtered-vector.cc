@@ -20,6 +20,29 @@ namespace {
   }
 
   template <class V>
+  void misses () {
+    const auto rows = fixture ();
+    auto subject = build<downset<V>> (rows);
+    // Dimensions 0..3 have thresholds 0..15; dimensions 4..7 are constant
+    // and cannot filter. The 256 incomparable points activate the real cache.
+    const region queries {{16, 16, 16, 16, -1, 0, -1, 0},  // Above every selected threshold.
+                          {15, 15, 0, 0, -1, 0, -1, 0},  // Each mask nonempty, intersection empty.
+                          {0, 0, 0, 0, 0, 0, -1, 0}};    // Masks survive; full comparison rejects.
+    for (const auto& query : queries)
+      require (not subject.contains (vector<V> (query)), "filtered cold/warm miss");
+    check (subject, rows, queries);
+    // Preconstruct queries so a warm miss also proves query scratch stays free
+    // of allocations on all three rejection paths.
+    for (const auto& query : queries) {
+      const auto value = vector<V> (query);
+      allocations_left = 0;
+      const bool answer = subject.contains (value);
+      allocations_left = -1;
+      require (not answer, "warm filtered miss");
+    }
+  }
+
+  template <class V>
   void cache_failures (bool warm) {
     auto rows = fixture ();
     const logical added {16, -1, -1, 16, -1, 0, -1, 0};
@@ -124,6 +147,8 @@ namespace {
   }
 }
 int main () try {
+  misses<posets::vectors::vector_backed<int8_t>> ();
+  misses<posets::vectors::simd_vector_backed<int8_t>> ();
   construction_failure<posets::vectors::vector_backed<int8_t>> ();
   construction_failure<posets::vectors::simd_vector_backed<int8_t>> ();
   for (const bool warm : {false, true}) {
