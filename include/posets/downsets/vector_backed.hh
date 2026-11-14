@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 
 namespace posets::downsets {
   // A forward definition to allow for friend status
@@ -31,14 +32,10 @@ namespace posets::downsets {
 
       [[nodiscard]] bool debug_is_antichain () const {
 #ifndef NDEBUG
-        for (auto lhs = vector_set.begin (); lhs != vector_set.end (); ++lhs)
-          for (auto rhs = std::next (lhs); rhs != vector_set.end (); ++rhs) {
-            auto order = lhs->partial_order (*rhs);
-            if (order.leq () or order.geq ())
-              return false;
-          }
-#endif
+        return utils::is_antichain (vector_set);
+#else
         return true;
+#endif
       }
 
     public:
@@ -67,36 +64,7 @@ namespace posets::downsets {
 
       [[nodiscard]] auto size () const { return vector_set.size (); }
 
-      bool insert (V&& v) {
-        bool must_remove = false;
-
-        // This is like remove_if, but allows breaking.
-        auto result = vector_set.begin ();
-        auto end = vector_set.end ();
-
-        for (auto it = result; it != end; ++it) {
-          auto res = v.partial_order (*it);
-          if (not must_remove and res.leq ()) {  // v is dominated.
-            // if must_remove is true, since we started with an antichain,
-            // it's not possible that res.leq () holds.  Hence we don't check for
-            // leq if must_remove is true.
-            return false;
-          }
-          if (res.geq ()) {     // v dominates *it
-            must_remove = true; /* *it should be removed */
-          }
-          else {               // *it needs to be kept
-            if (result != it)  // This can be false only on the first element.
-              *result = std::move (*it);
-            ++result;
-          }
-        }
-
-        if (result != vector_set.end ())
-          vector_set.erase (result, vector_set.end ());
-        vector_set.push_back (std::move (v));
-        return true;
-      }
+      bool insert (V&& v) { return utils::insert_maximum (vector_set, std::move (v)); }
 
       void union_with (vector_backed&& other) {
         for (auto&& e : other.vector_set)

@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 
 #ifndef POSETS_FILTERED_VECTOR_MIN_SIZE
 # define POSETS_FILTERED_VECTOR_MIN_SIZE 128
@@ -218,33 +219,9 @@ namespace posets::downsets {
       [[nodiscard]] auto size () const { return vector_set.size (); }
 
       bool insert (V&& v) {
-        bool must_remove = false;
-
-        auto result = vector_set.begin ();
-        auto end = vector_set.end ();
-
-        for (auto it = result; it != end; ++it) {
-          auto res = v.partial_order (*it);
-          if (not must_remove and res.leq ())
-            return false;
-
-          if (res.geq ()) {
-            must_remove = true;
-            filter_dirty = true;
-          }
-          else {
-            if (result != it)
-              *result = std::move (*it);
-            ++result;
-          }
-        }
-
-        if (result != vector_set.end ())
-          vector_set.erase (result, vector_set.end ());
-
-        filter_dirty = true;
-        vector_set.push_back (std::move (v));
-        return true;
+        // Dirty before compaction or append can throw, but never on rejection.
+        return utils::insert_maximum (vector_set, std::move (v),
+                                      [this] () noexcept { filter_dirty = true; });
       }
 
       void union_with (self&& other) {

@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/reduce.hh>
 
 namespace posets::utils {
@@ -273,14 +274,6 @@ namespace posets::utils {
       }
 #endif
 
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = vector_set.begin (); it != vector_set.end (); ++it)
-          for (auto jt = it + 1; jt != vector_set.end (); ++jt) {
-            auto po = it->partial_order (*jt);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
   };
 }

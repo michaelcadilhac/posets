@@ -12,6 +12,7 @@
 
 #include <posets/concepts.hh>
 #include <posets/config.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/block_compare.hh>
 #include <posets/utils/storage_stats.hh>
 
@@ -246,15 +247,7 @@ namespace posets::utils {
         return false;
       }
 
-      [[nodiscard]] bool is_antichain () const {
-        for (auto it = vector_set.begin (); it != vector_set.end (); ++it)
-          for (auto jt = it + 1; jt != vector_set.end (); ++jt) {
-            auto po = it->partial_order (*jt);
-            if (po.leq () or po.geq ())
-              return false;
-          }
-        return true;
-      }
+      [[nodiscard]] bool is_antichain () const { return utils::is_antichain (vector_set); }
   };
 
   template <Vector V>

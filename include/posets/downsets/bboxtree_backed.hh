@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <posets/concepts.hh>
+#include <posets/utils/antichain.hh>
 #include <posets/utils/bboxtree.hh>
 #include <posets/utils/reduce.hh>
 
@@ -14,25 +15,6 @@ namespace posets::downsets {
   template <Vector V>
   class bboxtree_backed {
       utils::bboxtree<V> tree;
-
-      static void insert_maximum (std::vector<V>& maxima, V&& candidate) {
-        bool removing = false;
-        auto output = maxima.begin ();
-        for (auto current = maxima.begin (); current != maxima.end (); ++current) {
-          auto order = candidate.partial_order (*current);
-          if (not removing and order.leq ())
-            return;
-          if (order.geq ())
-            removing = true;
-          else {
-            if (output != current)
-              *output = std::move (*current);
-            ++output;
-          }
-        }
-        maxima.erase (output, maxima.end ());
-        maxima.push_back (std::move (candidate));
-      }
 
       void reset_tree (std::vector<V>&& elements) {
         std::vector<utils::vector_sum_t<V>> keys;
@@ -144,7 +126,7 @@ namespace posets::downsets {
           const bool dominated = other.tree.dominates (x, false, tree.get_keys ()[i]);
           if (dominated) {
             if (incremental)
-              insert_maximum (intersection, x.copy ());
+              (void) utils::insert_maximum (intersection, x.copy ());
             else
               intersection.push_back (x.copy ());
           }
@@ -152,7 +134,7 @@ namespace posets::downsets {
             for (const auto& y : other) {
               auto meet = x.meet (y);
               if (incremental)
-                insert_maximum (intersection, std::move (meet));
+                (void) utils::insert_maximum (intersection, std::move (meet));
               else
                 intersection.push_back (std::move (meet));
             }

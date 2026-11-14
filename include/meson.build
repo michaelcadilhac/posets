@@ -25,6 +25,7 @@ header_files = [
   'posets/downsets/vector_or_kdtree_backed.hh',
   'posets/downsets.hh',
   'posets/utils/antichain.hh',
+  'posets/utils/trie_algebra.hh',
   'posets/utils/cst.hh',
   'posets/utils/bboxtree.hh',
   'posets/utils/block_sharingtrie.hh',
