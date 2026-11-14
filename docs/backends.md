@@ -203,12 +203,33 @@ Default builds compile the increments and counter storage out.
 `storage()` reports actual node/key/bridge/ID-map capacities, pending/live/retired
 counts and rebuild/compaction counts. Known retained bytes include generator
 objects but exclude opaque Vector-owned heap payloads and allocator overhead.
-Each indexed node and sealed pending block owns two `V` bounds. With dynamic
-vectors, both bounds can own additional coordinate buffers that are excluded
-from the known-byte total. The reported bytes are not total index memory.
+Frozen nodes share one lower/upper coordinate slab; sealed pending blocks share
+another. Both slabs are separate from generator payloads, align their bases to
+64 bytes, and use zero padding for SIMD comparisons. Aligned C++ allocation keeps
+wide corners from straddling cache lines. They carry no cached sums. `bound_bytes` and
+`pending_bound_bytes` include their complete allocated capacities in the known-byte
+total. Building replacements and sealing a pending block finish all allocations
+and coordinate operations before publishing. Retirement can leave conservative
+bounds; passing a bound remains only permission to inspect live points.
 The existing layout tool adds `lazy-fc` and `lazy-search`; its memory variants
 retain the same construction/replacement peak accounting. The downset matrix
 adds `lazy_kdtree_backed` and `lazy_kdtree_uncascaded`, including existing
 contains/CPre operation replay. Allocation-failure tests cover resetting and
 non-resetting insertion, full rebuild, apply, intersection, partial union,
 throwing Vector moves/comparisons, allocation-free ordinary queries and moves.
+
+## Filtered vector cache
+
+`filtered_vector_backed` stores each selected dimension's threshold bitmaps in a
+contiguous word slab. A membership query intersects one word at a time and keeps
+only selected mask pointers on the stack; warm queries allocate no memory.
+Rebuilds stage all selected dimensions and publish only after successful
+construction. A failure leaves the cache dirty, so the next query retries.
+Construction and cache rebuilds propagate allocation failures.
+
+Iteration returns const generators. Requesting mutable `get_backing_vector()`
+permanently selects linear membership queries for that object, since a retained
+reference can change generator order or coordinates after any cache rebuild.
+Such edits must still preserve common dimensions and the caller's intended
+antichain invariant. Mutations and lazy cache rebuilding need external
+synchronization when an object is shared across threads.

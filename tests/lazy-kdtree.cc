@@ -515,6 +515,8 @@ namespace {
     const auto live = [] (uint32_t) { return true; };
     T tree;
     tree.rebuild (ids, 3, 4, get);
+    require (tree.storage ().bound_bytes == tree.storage ().nodes * 2 * 3 * sizeof (int8_t),
+             "frozen bounds must report the complete coordinate slab");
     auto copy = tree;
     T assigned;
     assigned = copy;

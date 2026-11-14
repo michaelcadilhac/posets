@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstdint>
 #include <limits>
+#include <new>
 #include <numeric>
 #include <span>
 #include <stdexcept>
@@ -14,16 +15,74 @@
 #include <posets/config.hh>
 
 namespace posets::utils {
+  // Wide SIMD corners stay within cache lines instead of straddling two.
+  template <class T>
+  struct bounds_allocator {
+      using value_type = T;
+      [[nodiscard]] T* allocate (size_t count) const {
+        if (count > std::numeric_limits<size_t>::max () / sizeof (T))
+          throw std::bad_array_new_length ();
+        return static_cast<T*> (::operator new (count * sizeof (T), std::align_val_t {64}));
+      }
+      void deallocate (T* memory, size_t) const noexcept {
+        ::operator delete (memory, std::align_val_t {64});
+      }
+      [[nodiscard]] bool operator== (const bounds_allocator&) const = default;
+  };
+  template <class T>
+  using bound_vector = std::vector<T, bounds_allocator<T>>;
+
+  // Bounds store coordinates only: synthesized corners have no valid cached sum.
   template <Vector V>
-  [[nodiscard, gnu::always_inline]] inline bool bound_leq (const V& lhs, const V& rhs) {
-    if constexpr (requires { lhs.partial_order (rhs).leq_coordinates (); })
-      return lhs.partial_order (rhs).leq_coordinates ();
+  [[nodiscard]] size_t bound_width (size_t dimension) {
+    if constexpr (requires (const V& value, std::span<const typename V::value_type> bound) {
+                    value.partial_order (value).template bounds_allow<false> (bound);
+                    V::uses_simd;
+                    V::items_per_block;
+                  }) {
+      if constexpr (V::uses_simd)
+        return ((dimension + V::items_per_block - 1) / V::items_per_block) * V::items_per_block;
+    }
+    return dimension;
+  }
+
+  template <bool Lower, Vector V>
+  [[nodiscard, gnu::always_inline]] inline bool bound_leq (
+      std::span<const typename V::value_type> bound, const V& value) {
+    if constexpr (requires { value.partial_order (value).template bounds_allow<Lower> (bound); })
+      return value.partial_order (value).template bounds_allow<Lower> (bound);
     else {
-      for (size_t i = 0; i < lhs.size (); ++i)
-        if (not(lhs[i] <= rhs[i]))
+      for (size_t i = 0; i < bound.size (); ++i)
+        if (not(Lower ? bound[i] <= value[i] : value[i] <= bound[i]))
           return false;
       return true;
     }
+  }
+
+  template <Vector V>
+  void extend_bounds (std::span<typename V::value_type> bounds, const V& value) {
+    if constexpr (requires { value.partial_order (value).extend_bounds (bounds); })
+      value.partial_order (value).extend_bounds (bounds);
+    else {
+      const size_t dim = bounds.size () / 2;
+      for (size_t d = 0; d < value.size (); ++d) {
+        const auto coordinate = value[d];
+        bounds[d] = std::min (bounds[d], coordinate);
+        bounds[dim + d] = std::max (bounds[dim + d], coordinate);
+      }
+    }
+  }
+
+  template <Vector V>
+  [[nodiscard]] bound_vector<typename V::value_type> point_bounds (const V& value) {
+    const size_t width = bound_width<V> (value.size ());
+    bound_vector<typename V::value_type> bounds;
+    if (width > bounds.max_size () / 2)
+      throw std::length_error ("lazy_kdtree bound capacity exceeded");
+    bounds.resize (2 * width);
+    value.to_vector (std::span (bounds).first (value.size ()));
+    std::copy_n (bounds.begin (), width, bounds.begin () + width);
+    return bounds;
   }
 
   // Non-owning frozen geometry. IDs, unlike dense generator slots, remain stable
@@ -47,10 +106,10 @@ namespace posets::utils {
       // NOLINTBEGIN(misc-non-private-member-variables-in-classes)
       struct statistics {
           size_t object_bytes, node_size, nodes, node_capacity;
-          size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes, bound_object_bytes;
+          size_t keys, key_bytes, bridge_bytes, point_id_bytes, leaf_map_bytes, bound_bytes;
           [[nodiscard]] size_t bytes () const {
             return object_bytes + (node_size * node_capacity) + key_bytes + bridge_bytes +
-                   point_id_bytes + leaf_map_bytes + bound_object_bytes;
+                   point_id_bytes + leaf_map_bytes + bound_bytes;
           }
       };
 
@@ -68,9 +127,9 @@ namespace posets::utils {
           id_type left, right;
       };
       std::vector<node> nodes;
-      // Reverse node order is bottom-up: both children precede their parent.
+      // One slab, indexed like nodes; construction visits children before parents.
       // Deletions only shrink a subtree, so these bounds may remain stale.
-      std::vector<std::pair<V, V>> bounds;
+      bound_vector<key_type> bounds;
       std::vector<id_type> ids;
       std::vector<id_type> leaf_for_id;
       std::vector<key_type> keys;
@@ -157,24 +216,26 @@ namespace posets::utils {
 
       template <class Get>
       void build_bounds (const Get& get) {
-        bounds.reserve (nodes.size ());
+        const size_t width = bound_width<V> (dimension);
+        if (nodes.size () > bounds.max_size () / 2 / width)
+          throw std::length_error ("bucket_kdtree bound capacity exceeded");
+        bounds.resize (nodes.size () * 2 * width);
         for (size_t i = nodes.size (); i-- > 0;) {
           const auto& current = nodes[i];
+          auto pair = std::span (bounds).subspan (i * 2 * width, 2 * width);
           if (current.axis == none) {
-            const auto& first = get (ids[current.first]);
-            auto lower = first.copy ();
-            auto upper = first.copy ();
-            for (size_t j = 1; j < current.second; ++j) {
-              const auto& point = get (ids[current.first + j]);
-              lower.meet_with (point);
-              upper.join_with (point);
-            }
-            bounds.emplace_back (std::move (lower), std::move (upper));
+            get (ids[current.first]).to_vector (pair.first (dimension));
+            std::ranges::copy (pair.first (width), pair.begin () + width);
+            for (size_t j = 1; j < current.second; ++j)
+              extend_bounds<V> (pair, get (ids[current.first + j]));
           }
           else {
-            const auto& left = bounds[nodes.size () - 1 - current.first];
-            const auto& right = bounds[nodes.size () - 1 - current.second];
-            bounds.emplace_back (left.first.meet (right.first), left.second.join (right.second));
+            const size_t left = static_cast<size_t> (current.first) * 2 * width;
+            const size_t right = static_cast<size_t> (current.second) * 2 * width;
+            for (size_t d = 0; d < width; ++d) {
+              pair[d] = std::min (bounds[left + d], bounds[right + d]);
+              pair[width + d] = std::max (bounds[left + width + d], bounds[right + width + d]);
+            }
           }
         }
       }
@@ -233,9 +294,12 @@ namespace posets::utils {
 #endif
           return false;
         }
-        const auto& [lower, upper] = bounds[nodes.size () - 1 - index];
+        const size_t width = bound_width<V> (dimension);
+        const auto pair =
+            std::span (bounds).subspan (static_cast<size_t> (index) * 2 * width, 2 * width);
         // A passing bound is never a witness, including after lazy retirement.
-        const bool possible = Report ? bound_leq (lower, value) : bound_leq (value, upper);
+        const bool possible = Report ? bound_leq<true, V> (pair.first (width), value)
+                                     : bound_leq<false, V> (pair.last (width), value);
         if (not possible) {
 #if POSETS_LAZY_KDTREE_STATS
           record (&query_stats::node_prunes);
@@ -303,6 +367,7 @@ namespace posets::utils {
       bucket_kdtree () = default;
       bucket_kdtree (const bucket_kdtree& other)
         : nodes (other.nodes),
+          bounds (other.bounds),
           ids (other.ids),
           leaf_for_id (other.leaf_for_id),
           keys (other.keys),
@@ -310,9 +375,6 @@ namespace posets::utils {
           link_start (other.link_start),
           dimension (other.dimension),
           bucket_size (other.bucket_size) {
-        bounds.reserve (other.bounds.size ());
-        for (const auto& [lower, upper] : other.bounds)
-          bounds.emplace_back (lower.copy (), upper.copy ());
 #if POSETS_LAZY_KDTREE_STATS
         query_counts = other.query_counts;
 #endif
