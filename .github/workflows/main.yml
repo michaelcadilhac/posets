@@ -1,9 +1,17 @@
 name: CI
 on: [push]
+
+# Keep default-branch runs separate so queued merges cannot cancel each other.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && github.run_id || '' }}
+  cancel-in-progress: ${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
+
 jobs:
   test:
     # Match the last passing toolchain; ubuntu-latest now selects Ubuntu 26.
     runs-on: ubuntu-24.04
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache-native
     steps:
     - name: Install packages
       run: |
@@ -20,6 +28,16 @@ jobs:
       run: |
         clang-tidy tests/downset-bm.cc -- -Iinclude -Ilib --std=c++20 || exit 1
         .github/run-clang-format.py --clang-format-executable clang-format -r include || exit 1
+    # Older ccache versions do not hash the host target behind -march=native.
+    - name: Identify native compiler target
+      id: native-target
+      run: |
+        c++ -DDIMENSION=100 -march=native -### -E -x c++ /dev/null 2>&1 | grep -F '/cc1plus ' > "$RUNNER_TEMP/native-target"
+        echo "key=$(sha256sum "$RUNNER_TEMP/native-target" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+    - uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: ci-test-native-${{ steps.native-target.outputs.key }}
+        max-size: 1G
     - name: Setup configuration
       run: |
         CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug
@@ -32,7 +50,13 @@ jobs:
           build/tests/downset-matrix-$mode --metadata
         done
         meson test -C build --no-rebuild --num-processes 1 --timeout-multiplier 2 --print-errorlogs
+    - uses: hendrikmuhs/ccache-action@v1
+      env:
+        CCACHE_DIR: ${{ github.workspace }}/.ccache-valgrind
+      with: {key: ci-test-valgrind, max-size: 1G}
     - name: Build portable instrumentation tests
+      env:
+        CCACHE_DIR: ${{ github.workspace }}/.ccache-valgrind
       run: |
         CXXFLAGS="-DDIMENSION=100 -march=x86-64 -mtune=generic" meson setup build-valgrind --buildtype debug -Dtest_native_isa=false
         meson compile -C build-valgrind
@@ -61,9 +85,11 @@ jobs:
         mkdir -p "$TMPDIR"
         sudo apt-get update
         sudo apt-get -y install g++ meson ninja-build
+    - uses: hendrikmuhs/ccache-action@v1
+      with: {key: ci-baseline, max-size: 1G}
     - name: Build baseline without target flags
       run: |
-        CXX=g++ CXXFLAGS="-DDIMENSION=100" meson setup build-baseline --buildtype debug -Dtest_native_isa=false
+        CXX="ccache g++" CXXFLAGS="-DDIMENSION=100" meson setup build-baseline --buildtype debug -Dtest_native_isa=false
         meson compile -C build-baseline -j1
     - name: Report baseline widths and run the full suite
       run: |
@@ -88,10 +114,12 @@ jobs:
         test "$(uname -m)" = arm64
         brew install gcc@15 meson ninja
         echo "CXX=$(brew --prefix gcc@15)/bin/g++-15" >> "$GITHUB_ENV"
+    - uses: hendrikmuhs/ccache-action@v1
+      with: {key: ci-macos-arm64-gcc15, max-size: 1G}
     - name: Build with libstdc++ and default test options
       run: |
         "$CXX" --version
-        CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug
+        CXX="ccache $CXX" CXXFLAGS="-DDIMENSION=100" meson setup build --buildtype debug
         meson compile -C build -j1
     - name: Report arm64 widths and run the full suite
       run: |
