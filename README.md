@@ -346,8 +346,9 @@ including after kd-tree shrinking and moves. The per-instance comptrie view
 charges its shared permutation capacity; summing multiple instances can double
 count that shared allocation. Allocator metadata, opaque Vector-owned heap
 payloads and the static permutation registry are excluded from `known_retained`.
-Lazy KD nodes and sealed pending blocks each hold two `V` bounds; their owned
-coordinate buffers are also excluded. These bounds can add many heap allocations.
+Lazy KD frozen-node and sealed-pending-block bounds use separate contiguous
+64-byte-aligned coordinate slabs, including zero padding for SIMD comparisons.
+Their complete allocated capacities are included as `bound_bytes` and `pending_bound_bytes`.
 `estimated_vector_payload_bytes` is separate: for this tool's scalar Vector it
 uses rounded block lengths and assumes no extra container capacity; it is not
 added to the known-byte total. Cache bytes describe software memoization storage,
@@ -377,9 +378,10 @@ Geometry, exact live counts, and conservative coordinate bounds on frozen
 subtrees and sealed pending blocks can prune. Passing a bound never proves
 membership. A sampled catalog's end never proves that a subtree is empty.
 
-Each indexed node and sealed pending block owns two `V` bounds. Dynamic vectors
-can give each bound its own coordinate buffer. Those buffers are excluded from
-`known_retained`; the byte count is not total index memory. The
+Frozen-node and sealed-pending-block lower/upper bounds occupy two separate
+coordinate slabs, away from generator payloads. Their capacities, including SIMD
+padding, are included in `known_retained`; generator-owned buffers and allocator
+metadata remain excluded. The
 [contract notes](docs/backends.md#lazy-bucket-kd-with-fractional-cascading) cover
 pending blocks, maintenance thresholds, statistics, and exception guarantees.
 

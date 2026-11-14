@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <experimental/simd>
+#include <span>
 
 namespace posets::vectors {
   // Both directions are computed lazily and cached, so a caller that asks for
@@ -46,6 +48,51 @@ namespace posets::vectors {
           }
         }
         return true;
+      }
+
+      // Slab bounds bypass cached sums; SIMD corners have zero-padded whole blocks.
+      template <bool Lower>
+      [[nodiscard, gnu::always_inline]] bool bounds_allow (
+          std::span<const typename Vec::value_type> bound) const {
+        if constexpr (Vec::uses_simd) {
+          using block = Vec::block_type;
+          constexpr size_t width = Vec::items_per_block;
+          for (size_t offset = 0; offset < bound.size (); offset += width) {
+            const block corner (bound.data () + offset, std::experimental::element_aligned);
+            const auto point = lhs.data ()[offset / width];
+            if (not std::experimental::all_of (Lower ? corner <= point : point <= corner))
+              return false;
+          }
+          return true;
+        }
+        else {
+          for (size_t i = 0; i < bound.size (); ++i)
+            if (not(Lower ? bound[i] <= lhs[i] : lhs[i] <= bound[i]))
+              return false;
+          return true;
+        }
+      }
+
+      void extend_bounds (std::span<typename Vec::value_type> bounds) const {
+        const size_t width = bounds.size () / 2;
+        if constexpr (Vec::uses_simd) {
+          using block = Vec::block_type;
+          for (size_t offset = 0; offset < width; offset += Vec::items_per_block) {
+            const auto point = lhs.data ()[offset / Vec::items_per_block];
+            const block lower (bounds.data () + offset, std::experimental::element_aligned);
+            const block upper (bounds.data () + width + offset,
+                               std::experimental::element_aligned);
+            std::experimental::min (lower, point)
+                .copy_to (bounds.data () + offset, std::experimental::element_aligned);
+            std::experimental::max (upper, point)
+                .copy_to (bounds.data () + width + offset, std::experimental::element_aligned);
+          }
+        }
+        else
+          for (size_t d = 0; d < lhs.size (); ++d) {
+            bounds[d] = std::min (bounds[d], lhs[d]);
+            bounds[width + d] = std::max (bounds[width + d], lhs[d]);
+          }
       }
 
     private:

@@ -281,3 +281,11 @@ test('headers/staged install', find_program('python3'),
   suite: 'packaging',
   args: [meson.current_source_dir() / 'install-smoke.py',
          meson.project_build_root()] + cpp.cmd_array(), timeout: 180)
+
+foreach mode : ['compatible', 'native', 'max']
+  filtered_vector_exe = executable('filtered-vector-' + mode, 'filtered-vector.cc',
+    dependencies: [posets_dep], cpp_args:
+      ['-DPOSETS_SIMD_WIDTH=POSETS_SIMD_WIDTH_' + mode.to_upper()] + matrix_target_args)
+  test('antichains/filtered cache publication and failures/' + mode, filtered_vector_exe,
+    env: sharing_allocation_env, timeout: 120)
+endforeach

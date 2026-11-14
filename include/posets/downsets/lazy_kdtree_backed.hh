@@ -9,7 +9,6 @@
 #include <cstdint>
 #include <limits>
 #include <numeric>
-#include <optional>
 #include <ostream>
 #include <span>
 #include <stdexcept>
@@ -47,8 +46,9 @@ namespace posets::downsets {
       lazy_kdtree_policy policy;
       std::vector<V> maxima;
       std::vector<id_type> id_at_slot, slot_of_id, pending;
-      using bounds_type = std::pair<V, V>;
-      std::vector<bounds_type> pending_bounds;
+      using bound_coordinate = V::value_type;
+      using bounds_type = utils::bound_vector<bound_coordinate>;
+      bounds_type pending_bounds;
       index_type index;
       size_t rebuild_count {0}, compact_count {0};
 #if POSETS_LAZY_KDTREE_STATS
@@ -87,27 +87,31 @@ namespace posets::downsets {
             not valid_fraction<false> (settings.dead_fraction))
           throw std::invalid_argument ("invalid lazy_kdtree rebuild policy");
       }
-      template <class T>
-      static void reserve_growing (std::vector<T>& values, size_t needed) {
+      template <class T, class Allocator>
+      static void reserve_growing (std::vector<T, Allocator>& values, size_t needed) {
         if (needed > values.max_size ())
           throw std::length_error ("lazy_kdtree vector capacity exceeded");
         if (needed > values.capacity ())
           values.reserve (std::min (values.max_size (), needed + (needed / 2)));
       }
       template <class Get>
-      [[nodiscard]] std::vector<bounds_type> bound_pending (const std::vector<id_type>& ids,
-                                                            const Get& get) const {
-        std::vector<bounds_type> result;
+      [[nodiscard]] bounds_type bound_pending (const std::vector<id_type>& ids,
+                                               const Get& get) const {
+        bounds_type result;
         const size_t block_size = policy.pending_block_size;
-        result.reserve (ids.size () / block_size);
+        if (ids.size () < block_size)
+          return result;
+        const size_t dim = get (ids.front ()).size ();
+        const size_t width = utils::bound_width<V> (dim);
+        if (ids.size () / block_size > result.max_size () / 2 / width)
+          throw std::length_error ("lazy_kdtree bound capacity exceeded");
+        result.resize ((ids.size () / block_size) * 2 * width);
         for (size_t begin = 0; begin + block_size <= ids.size (); begin += block_size) {
-          auto lower = get (ids[begin]).copy ();
-          auto upper = lower.copy ();
-          for (size_t i = begin + 1; i < begin + block_size; ++i) {
-            lower.meet_with (get (ids[i]));
-            upper.join_with (get (ids[i]));
-          }
-          result.emplace_back (std::move (lower), std::move (upper));
+          auto pair = std::span (result).subspan ((begin / block_size) * 2 * width, 2 * width);
+          get (ids[begin]).to_vector (pair.first (dim));
+          std::ranges::copy (pair.first (width), pair.begin () + width);
+          for (size_t i = begin + 1; i < begin + block_size; ++i)
+            utils::extend_bounds<V> (pair, get (ids[i]));
         }
         return result;
       }
@@ -140,14 +144,16 @@ namespace posets::downsets {
       template <bool Report, class Emit>
       [[nodiscard]] bool scan_pending (const V& value, bool strict, const Emit& emit) const {
         const size_t block_size = policy.pending_block_size;
-        for (size_t block = 0; block < pending_bounds.size (); ++block) {
+        const size_t dim = utils::bound_width<V> (value.size ());
+        const size_t blocks = pending_bounds.size () / (2 * dim);
+        for (size_t block = 0; block < blocks; ++block) {
 #if POSETS_LAZY_KDTREE_STATS
           ++pending_counts.pending_blocks;
           index.record (&index_type::query_stats::pending_blocks);
 #endif
-          const auto& [lower, upper] = pending_bounds[block];
-          const bool possible =
-              Report ? utils::bound_leq (lower, value) : utils::bound_leq (value, upper);
+          const auto pair = std::span (pending_bounds).subspan (block * 2 * dim, 2 * dim);
+          const bool possible = Report ? utils::bound_leq<true, V> (pair.first (dim), value)
+                                       : utils::bound_leq<false, V> (pair.last (dim), value);
           if (not possible) {
 #if POSETS_LAZY_KDTREE_STATS
             ++pending_counts.pending_prunes;
@@ -159,8 +165,8 @@ namespace posets::downsets {
                                                 value, strict, emit))
             return true;
         }
-        return scan_pending_span<Report, true> (pending_bounds.size () * block_size,
-                                                pending.size (), value, strict, emit);
+        return scan_pending_span<Report, true> (blocks * block_size, pending.size (), value,
+                                                strict, emit);
       }
       template <class Get>
       void rebuild_from (size_t count, size_t dimension, const Get& get) {
@@ -230,7 +236,7 @@ namespace posets::downsets {
           index_type::statistics frozen;
           size_t live, created_ids, pending_slots, pending_live, retired_ids;
           size_t generator_object_bytes, map_bytes, known_retained_bytes, rebuilds, compactions;
-          size_t pending_bound_object_bytes;
+          size_t pending_bound_bytes;
           size_t bulk_scan_limit;
           uint64_t bulk_comparisons;
           friend std::ostream& operator<< (std::ostream& os, const statistics& s) {
@@ -246,8 +252,8 @@ namespace posets::downsets {
                       << " map_bytes=" << s.map_bytes
                       << " known_retained=" << s.known_retained_bytes << " rebuilds=" << s.rebuilds
                       << " compactions=" << s.compactions
-                      << " pending_bound_objects=" << s.pending_bound_object_bytes
-                      << " bound_objects=" << s.frozen.bound_object_bytes
+                      << " pending_bound_bytes=" << s.pending_bound_bytes
+                      << " bound_bytes=" << s.frozen.bound_bytes
                       << " bulk_scan_limit=" << s.bulk_scan_limit
                       << " query_stats_enabled=" << POSETS_LAZY_KDTREE_STATS
                       << " bulk_comparisons=" << s.bulk_comparisons;
@@ -438,8 +444,8 @@ namespace posets::downsets {
         std::vector<id_type> dense_ids;
         std::vector<id_type> dense_slots;
         std::vector<id_type> replacement_pending;
-        std::vector<bounds_type> replacement_bounds;
-        std::optional<bounds_type> sealed;
+        bounds_type replacement_bounds;
+        bounds_type sealed;
         if (reset) {
           dense_ids.resize (final_size);
           std::iota (dense_ids.begin (), dense_ids.end (), 0);
@@ -467,23 +473,13 @@ namespace posets::downsets {
           if ((pending.size () + 1) % policy.pending_block_size == 0) {
             // Stage the seal while payloads and the candidate are still intact.
             // Already dead tail IDs are omitted; later retirement only widens it.
-            auto lower = value.copy ();
-            auto upper = value.copy ();
-            for (size_t i = pending_bounds.size () * policy.pending_block_size;
+            sealed = utils::point_bounds (value);
+            const size_t dim = utils::bound_width<V> (value.size ());
+            for (size_t i = (pending_bounds.size () / (2 * dim)) * policy.pending_block_size;
                  i < pending.size (); ++i)
-              if (live (pending[i])) {
-                lower.meet_with (point (pending[i]));
-                upper.join_with (point (pending[i]));
-              }
-            sealed.emplace (std::move (lower), std::move (upper));
-            if constexpr (safe_moves)
-              reserve_growing (pending_bounds, pending_bounds.size () + 1);
-            else {
-              replacement_bounds.reserve (pending_bounds.size () + 1);
-              for (const auto& [old_lower, old_upper] : pending_bounds)
-                replacement_bounds.emplace_back (old_lower.copy (), old_upper.copy ());
-              replacement_bounds.push_back (std::move (*sealed));
-            }
+              if (live (pending[i]))
+                utils::extend_bounds<V> (sealed, point (pending[i]));
+            reserve_growing (pending_bounds, pending_bounds.size () + sealed.size ());
           }
           reserve_growing (pending, pending.size () + 1);
           if constexpr (safe_moves) {
@@ -523,14 +519,7 @@ namespace posets::downsets {
             slot_of_id.swap (positions);
           }
           pending.push_back (new_id);
-          if constexpr (safe_moves) {
-            if (sealed)
-              // clang-tidy 18 misses the check above through if constexpr.
-              // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
-              pending_bounds.push_back (std::move (*sealed));
-          }
-          else if (sealed)
-            pending_bounds.swap (replacement_bounds);
+          pending_bounds.insert (pending_bounds.end (), sealed.begin (), sealed.end ());
         }
         return true;
       }
@@ -608,10 +597,10 @@ namespace posets::downsets {
                 objects,
                 maps,
                 sizeof (*this) + frozen.bytes () - sizeof (index_type) + objects + maps +
-                    (pending_bounds.capacity () * sizeof (bounds_type)),
+                    (pending_bounds.capacity () * sizeof (bound_coordinate)),
                 rebuild_count,
                 compact_count,
-                pending_bounds.capacity () * sizeof (bounds_type),
+                pending_bounds.capacity () * sizeof (bound_coordinate),
                 policy.bulk_scan_limit,
                 bulk_count};
       }
