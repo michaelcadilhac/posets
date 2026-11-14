@@ -118,6 +118,9 @@ antichain_scans_exe = executable('antichain-scans', 'antichain-scans.cc',
 test('antichains/insertion and diagnostic boundaries', antichain_scans_exe,
   env: sharing_allocation_env)
 
+hybrid_exe = executable('vector-or-kdtree', 'vector-or-kdtree.cc', dependencies: [posets_dep])
+test('antichains/hybrid dispatch and failure boundaries', hybrid_exe, env: sharing_allocation_env)
+
 # Keep the 24-backend matrix on the two dynamic vector representations. Synthetic
 # timing still uses downset-bm; --check runs an independent logical scalar oracle.
 # GCC on Darwin/arm64 does not accept -march=native. Keep that flag on x86,
