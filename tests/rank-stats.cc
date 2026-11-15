@@ -129,13 +129,6 @@ int main () {
   CHECK (d.contains (vector (1, 1)));
   CHECK (rank_stats_current ().contains_calls == 1);
 
-  // The unused bucket index is gone; its legacy counters stay at zero.
-  rank_stats_reset ();
-  auto growing = downset (vector (0, 3), vector (1, 2), vector (2, 1));
-  CHECK (growing.size () == 3);
-  CHECK (rank_stats_current ().bucket_rebuilds == 0);
-  CHECK (rank_stats_current ().bucket_rebuild_elements == 0);
-
   rank_stats_reset ();
   auto left = downset (vector (2, 2));
   auto right = downset (vector (1, 3));
@@ -153,8 +146,7 @@ int main () {
   std::ostringstream text;
   posets::utils::rank_stats_print (text);
   CHECK (text.str ().find ("rank_apply_elements=") != std::string::npos);
-  CHECK (text.str ().find ("rank_bucket_rebuilds=0") != std::string::npos);
-  CHECK (text.str ().find ("rank_bucket_rebuild_elements=0") != std::string::npos);
+  CHECK (text.str ().find ("rank_bucket_rebuild") == std::string::npos);
 #else
   // Disabled: the operations must still work, and the macros must expand to
   // nothing that needs a counter to exist.
