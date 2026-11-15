@@ -20,6 +20,7 @@ namespace posets::utils {
 
 #ifdef POSETS_RANK_STATS
 
+  // Rank storage has no bucket index to rebuild.
   struct rank_stats {
       // Membership and the partial order.
       uint64_t contains_calls {0};
@@ -39,9 +40,6 @@ namespace posets::utils {
 
       // Representation size.
       uint64_t peak_backing_size {0};
-      // Legacy counters, kept at zero since the unused bucket index was removed.
-      uint64_t bucket_rebuilds {0};
-      uint64_t bucket_rebuild_elements {0};
 
       void observe_size (uint64_t size) {
         if (size > peak_backing_size)
@@ -68,9 +66,7 @@ namespace posets::utils {
        << " rank_intersection_short_circuits=" << s.intersection_short_circuits
        << " rank_intersection_pair_meets=" << s.intersection_pair_meets
        << " rank_apply_elements=" << s.apply_elements
-       << " rank_peak_backing_size=" << s.peak_backing_size
-       << " rank_bucket_rebuilds=" << s.bucket_rebuilds
-       << " rank_bucket_rebuild_elements=" << s.bucket_rebuild_elements;
+       << " rank_peak_backing_size=" << s.peak_backing_size;
   }
 
 #endif

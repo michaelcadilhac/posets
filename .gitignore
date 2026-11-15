@@ -3,22 +3,11 @@ build*/
 _trash
 builddir
 buildir
-doc/*.aux
-doc/*.bbl
-doc/*.blg
-doc/*.fdb_latexmk
-doc/*.fls
-doc/*.log
-doc/*.pdf
 *.o
 *~
 .dumbjump
-tests/acacia-plus/*pyc
-tests/acacia-plus/__pycache__
 _archive/
 _build
-subprojects/spot
-subprojects/std-simd
 *#*
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos

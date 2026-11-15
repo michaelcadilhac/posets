@@ -6,6 +6,12 @@ package. Its README, source copies, tables, and manifests keep their original
 bytes. This guide sits outside that package so navigation can change without
 changing the evidence.
 
+Profiles recorded before the rank-statistics cleanup in issue #63 contain
+`rank_bucket_rebuilds=0` and `rank_bucket_rebuild_elements=0`. The unused bucket
+index had already been removed, so these counters were always zero. Current
+profiles omit both fields; the frozen sources and parsers retain their original
+format.
+
 ## Find a result
 
 | Question | Saved record |
