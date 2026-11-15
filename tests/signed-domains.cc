@@ -13,7 +13,6 @@
 #include <posets/downsets/bboxtree_backed.hh>
 #include <posets/downsets/rank_bucketed_vector_backed.hh>
 #include <posets/downsets/skiplist_backed.hh>
-#include <posets/downsets/vector_backed_bin.hh>
 #include <posets/utils/reduce.hh>
 #include <posets/vectors.hh>
 
@@ -34,38 +33,21 @@ namespace {
   }
 
   template <class V>
-  void bins (bool regression) {
+  void bins () {
     using T = V::value_type;
     using point = std::array<T, 2>;
-    using set = posets::downsets::vector_backed_bin<V>;
-    if (regression) {
-      set zero (vector<V> (point {0, 0}));
-      require (zero.contains (vector<V> (point {-1, -1})), "#48: (-1,-1) below (0,0)");
-    }
+    require (vector<V> (point {-1, -1}).bin () == 0, "negative bins clamp to zero");
+    require (V (0U).bin () == 0, "zero-dimensional bin");
     std::vector<point> points;
     for (int x = -2; x <= 2; ++x)
       for (int y = -2; y <= 2; ++y)
         points.push_back ({T (x), T (y)});
     const auto leq = [] (const point& a, const point& b) { return a[0] <= b[0] and a[1] <= b[1]; };
     for (const auto& a : points)
-      for (const auto& b : points) {
-        set subject (vector<V> (a));
-        const bool accepted = subject.insert (vector<V> (b));
-        require (accepted == not leq (b, a), "signed bin insertion vs scalar oracle");
-        set intersection (vector<V> (a));
-        intersection.intersect_with (set (vector<V> (b)));
-        set united (vector<V> (a));
-        united.union_with (set (vector<V> (b)));
-        for (const auto& q : points) {
-          const bool in_a = leq (q, a), in_b = leq (q, b);
-          require (subject.contains (vector<V> (q)) == (in_a or in_b),
-                   "signed bin containment vs scalar oracle");
-          require (united.contains (vector<V> (q)) == (in_a or in_b),
-                   "signed bin union vs scalar oracle");
-          require (intersection.contains (vector<V> (q)) == (in_a and in_b),
-                   "signed bin intersection vs scalar oracle");
-        }
-      }
+      for (const auto& b : points)
+        if (leq (a, b))
+          require (vector<V> (a).bin () <= vector<V> (b).bin (),
+                   "signed vector bins must be monotone under scalar order");
   }
 
   void narrow_width () {
@@ -112,7 +94,7 @@ namespace {
     } catch (const std::length_error&) {
       return;
     }
-    require (false, "unsupported dimension or bin count must throw length_error");
+    require (false, "unsupported dimension must throw length_error");
   }
 
   // A custom Vector with a logical dimension and no payload. Its exact cached
@@ -176,15 +158,6 @@ namespace {
         tree.assign_and_build (std::move (values), std::move (keys));
       });
     }
-  }
-
-  void bin_capacity () {
-    using V = posets::vectors::vector_backed<int64_t>;
-    const auto high = vector<V> (std::array<int64_t, 1> {INT64_MAX});
-    posets::downsets::vector_backed_bin<V> subject (vector<V> (std::array<int64_t, 1> {0}));
-    length_error ([&] { subject.insert (high.copy ()); });
-    require (subject.size () == 1 and subject.contains (vector<V> (std::array<int64_t, 1> {0})),
-             "unrepresentable bin count must preserve existing generators");
   }
 
   template <class V>
@@ -272,17 +245,11 @@ int main (int argc, char** argv) {
     require (posets::utils::sum_key (dimension_probe<int64_t> (SIZE_MAX)) == 0,
              "int64 coordinates admit every size_t dimension");
   }
-  if (suite == "all" or suite == "bin-capacity")
-    bin_capacity ();
   if (suite == "all" or suite == "bin" or suite == "oracle") {
-    bins<vector_backed_sum<int8_t>> (suite != "oracle");
-    bins<vector_backed<int8_t>> (suite != "oracle");
-    bins<simd_vector_backed_sum<int8_t>> (suite != "oracle");
-    bins<simd_vector_backed<int8_t>> (suite != "oracle");
-    // Empty coordinate domains still have one usable bin.
-    using V = vector_backed_sum<int8_t>;
-    posets::downsets::vector_backed_bin<V> empty_point (V (0U));
-    require (empty_point.contains (V (0U)), "zero-dimensional bin");
+    bins<vector_backed_sum<int8_t>> ();
+    bins<vector_backed<int8_t>> ();
+    bins<simd_vector_backed_sum<int8_t>> ();
+    bins<simd_vector_backed<int8_t>> ();
   }
   if (suite == "all" or suite == "sum") {
     sums<vector_backed_sum<int8_t>> (65);

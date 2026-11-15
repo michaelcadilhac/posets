@@ -88,6 +88,7 @@ def contains(directory, query, before, expected):
 def main():
     binary = sys.argv[1]
     backends = json.loads(subprocess.check_output([binary, "--metadata"], text=True))["backends"]
+    require("vector_backed_bin" not in backends, "retired backend is registered")
     with tempfile.TemporaryDirectory(prefix="posets-trace-") as temporary:
         root = Path(temporary)
         for dimension, numeric in ((2, 0), (17, 8), (65, 64)):
