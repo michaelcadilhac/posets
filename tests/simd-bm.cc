@@ -96,9 +96,6 @@ VECTOR_TYPES (posets::vectors::array_backed_fixed<test_value_type>,
               posets::vectors::vector_backed<test_value_type>,
               posets::vectors::simd_vector_backed<test_value_type>);
 
-using set_types =
-    template_type_list<posets::downsets::vector_backed, posets::downsets::vector_backed_bin>;
-
 namespace {
   void usage (const char* progname) {
     std::cout << "usage: " << progname << " SETTYPE VECTYPE" << '\n';
@@ -116,7 +113,8 @@ namespace {
 }
 
 int main (int argc, char* argv[]) {
-  register_maker (static_cast<vector_types*> (nullptr), static_cast<set_types*> (nullptr));
+  // The SIMD harness has one backend: vector_backed.
+  register_maker<true, posets::downsets::vector_backed> (static_cast<vector_types*> (nullptr));
 
   if (argc == 2 and std::string_view (argv[1]) == "--help") {
     usage (argv[0]);

@@ -15,7 +15,6 @@
 #include <posets/downsets/simple_sharingtree_backed.hh>
 #include <posets/downsets/skiplist_backed.hh>
 #include <posets/downsets/vector_backed.hh>
-#include <posets/downsets/vector_backed_bin.hh>
 #include <posets/downsets/vector_backed_one_dim_split_intersection_only.hh>
 #include <posets/downsets/vector_or_kdtree_backed.hh>
 
@@ -32,7 +31,6 @@ namespace posets::downsets::concept_checks {
   static_assert (posets::Downset<skiplist_backed<vector_test_int>>);
   static_assert (posets::Downset<vector_backed<vector_test_int>>);
   static_assert (posets::Downset<vector_or_kdtree_backed<vector_test_int>>);
-  static_assert (posets::Downset<vector_backed_bin<vector_test_int>>);
   static_assert (posets::Downset<vector_backed_one_dim_split_intersection_only<vector_test_int>>);
   static_assert (posets::Downset<set_backed<vector_test_int>>);
   static_assert (posets::Downset<sharingtree_backed<vector_test_int>>);

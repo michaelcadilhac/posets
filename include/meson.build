@@ -20,7 +20,6 @@ header_files = [
   'posets/downsets/simple_sharingtree_backed.hh',
   'posets/downsets/skiplist_backed.hh',
   'posets/downsets/vector_backed.hh',
-  'posets/downsets/vector_backed_bin.hh',
   'posets/downsets/vector_backed_one_dim_split_intersection_only.hh',
   'posets/downsets/vector_or_kdtree_backed.hh',
   'posets/downsets.hh',
