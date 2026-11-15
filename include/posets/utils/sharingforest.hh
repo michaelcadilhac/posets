@@ -383,6 +383,10 @@ namespace posets::utils {
           }
           return new_id;
         }
+        // Candidates with children have fresh spans; interned nodes keep their
+        // original spans. A duplicate's fully used tail span is unreferenced.
+        if (node.numchild != 0 and node.cbuffer_offset + node.numchild == cbuffer_nxt)
+          cbuffer_nxt = node.cbuffer_offset;
         return existing_node->second;
       }
 

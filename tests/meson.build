@@ -166,6 +166,10 @@ foreach mode : ['compatible', 'native', 'max']
   sharing_antichain_exe = executable('sharing-antichain-' + mode, 'sharing-antichain.cc',
     dependencies: [posets_dep], cpp_args: matrix_args)
   test('antichains/sharing backends/' + mode, sharing_antichain_exe)
+  forest_lifetime_exe = executable('sharing-forest-lifetime-' + mode,
+    'sharing-forest-lifetime.cc', dependencies: [posets_dep], cpp_args: matrix_args)
+  test('layout/sharing forest lifetime/' + mode, forest_lifetime_exe,
+    env: sharing_allocation_env, timeout: 120)
 endforeach
 
 selected_kd_matrix_exe = executable('downset-matrix-kd-selected', 'downset-bm.cc',

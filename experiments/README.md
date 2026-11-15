@@ -6,6 +6,10 @@ package. Its README, source copies, tables, and manifests keep their original
 bytes. This guide sits outside that package so navigation can change without
 changing the evidence.
 
+The later [sharing-forest lifetime gate](sharing-forest-lifetime.md) records the
+separate #62 L2 baseline, paired results, accounting limits, and reproduction
+commands. It is outside the frozen PR40 package.
+
 Profiles recorded before the rank-statistics cleanup in issue #63 contain
 `rank_bucket_rebuilds=0` and `rank_bucket_rebuild_elements=0`. The unused bucket
 index had already been removed, so these counters were always zero. Current
