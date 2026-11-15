@@ -16,7 +16,8 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get -y install zsh git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config libglib2.0-dev libffi-dev autoconf automake libtool bison flex valgrind
+        # Standalone Meson builds use vendored headers and no Autotools steps.
+        sudo apt-get -y install git gcc python-is-python3 ninja-build gnupg wget python3-pip python3-setuptools pkg-config valgrind
         sudo pip install --upgrade meson
     - name: Checkout repository and submodules
       uses: actions/checkout@v5

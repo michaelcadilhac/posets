@@ -46,9 +46,6 @@
 #if POSETS_ENABLE_DOWNSET_VECTOR_BACKED
 # include <posets/downsets/vector_backed.hh>
 #endif
-#if POSETS_ENABLE_DOWNSET_VECTOR_BACKED_BIN
-# include <posets/downsets/vector_backed_bin.hh>
-#endif
 #if POSETS_ENABLE_DOWNSET_VECTOR_BACKED_ONE_DIM_SPLIT_INTERSECTION_ONLY
 # include <posets/downsets/vector_backed_one_dim_split_intersection_only.hh>
 #endif

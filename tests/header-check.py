@@ -22,6 +22,9 @@ def main():
                 (args.reference_dir / 'posets').rglob('*.hh')}
     actual = {p.relative_to(args.include_dir) for p in
               (args.include_dir / 'posets').rglob('*.hh')}
+    # The unused bin backend is retired from both source and installed APIs.
+    if Path('posets/downsets/vector_backed_bin.hh') in actual | expected:
+        raise RuntimeError('retired vector_backed_bin header is public')
     if not expected or actual != expected:
         raise RuntimeError(f'header inventory differs: missing={expected - actual}, extra={actual - expected}')
     command = args.compiler + ['-std=c++20', '-I' + str(args.include_dir)]

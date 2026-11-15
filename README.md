@@ -115,8 +115,11 @@ column describes nonempty vectors with no coordinates.
 | `block_sharingtrie_backed` (experimental) | Supported | Rejected | Same reduction domain and transaction guarantee as sharingtrie. The utility throws `std::invalid_argument` for zero or mixed dimensions. |
 | `lazy_kdtree_backed` (experimental) | Supported | Rejected | Coordinate comparisons, no rank sums. Dimension errors throw `std::invalid_argument`. Insert/intersection preserve logical contents on failure; union keeps earlier successful inserts. |
 | `bboxtree_backed`, `sharingtree_backed`, `simple_sharingtree_backed`, `cst_backed` | Supported | Use positive dimensions | Sum-based reduction; CST also uses exact prefix sums. Allocation/comparison failures have no blanket strong guarantee. |
-| `vector_backed`, `filtered_vector_backed`, `vector_backed_bin`, `vector_backed_one_dim_split_intersection_only`, `vector_or_kdtree_backed`, `kdtree_backed`, `comptrie_backed`, `skiplist_backed` | Use nonempty inputs | Use positive dimensions | Respect the vector's domain; reducers, cached sums and skiplist keys need the exact integral domain below. Several allocating paths are `noexcept` and terminate on failure. |
+| `vector_backed`, `filtered_vector_backed`, `vector_backed_one_dim_split_intersection_only`, `vector_or_kdtree_backed`, `kdtree_backed`, `comptrie_backed`, `skiplist_backed` | Use nonempty inputs | Use positive dimensions | Respect the vector's domain; reducers, cached sums and skiplist keys need the exact integral domain below. Several allocating paths are `noexcept` and terminate on failure. |
 | `set_backed` | Supported | Use positive dimensions | Coordinate comparisons. The single-vector constructor allocates under `noexcept`; no blanket rollback guarantee. |
+
+`vector_backed_bin` and its enable gate have been retired. Acacia-Bonsai has no
+runtime users of this backend; use `vector_backed` or `rank_bucketed_vector_backed`.
 
 `get_backing_vector()` and mutable iterators are extraction interfaces. Do not edit
 live generators and then query an indexed backend: ranks, trees, filters or
@@ -179,11 +182,10 @@ constant rank and inclusive component comparisons; they do not use the
 integral equal-rank shortcut. Nonintegral cached sums and sum-based reducers
 are rejected at compile time.
 
-`vector_backed_bin` uses `max(0, sum) / dimension` for cached vectors and
+Vectors' `bin()` uses `max(0, sum) / dimension` for cached vectors and
 `max(0, first_coordinate) / dimension` for uncached integral vectors. These
 keys clamp negatives to zero and saturate at `SIZE_MAX` before conversion,
-so they are monotone on every supported `size_t` width. Bin-count growth is
-checked before insertion; unrepresentable counts throw `std::length_error`.
+so they are monotone on every supported `size_t` width.
 Zero-dimensional and nonintegral vectors use bin zero. Acacia's signed-char dimensions remain within the `2^56` bound.
 
 ## SIMD widths
