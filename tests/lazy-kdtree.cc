@@ -398,6 +398,29 @@ namespace {
         require (tree.live_size () ==
                      static_cast<size_t> (std::count (alive.begin (), alive.end (), true)),
                  "live counts differ");
+        // I06: stale bounds/catalogs must still agree with a scalar live-ID scan
+        // after every deletion, including partly dead leaves and empty subtrees.
+        for (const int key : {-128, -1, 0, 1, 126, 127})
+          for (int y = -2; y <= 11; ++y) {
+            const logical query {key, y};
+            const auto value = vector<scalar_vector> (query);
+            std::vector<uint32_t> expected, reported;
+            bool ordinary = false, strict = false;
+            for (size_t i = 0; i < ids.size (); ++i)
+              if (alive[ids[i]]) {
+                ordinary or_eq below (query, rows[i]);
+                strict or_eq query != rows[i] and below (query, rows[i]);
+                if (below (rows[i], query))
+                  expected.push_back (ids[i]);
+              }
+            require (tree.dominates (value, get, live) == ordinary and
+                         tree.dominates (value, get, live, true) == strict,
+                     "I06 deletion bounds lost a live witness");
+            tree.dominated_by (value, get, live,
+                               [&] (uint32_t found) { reported.push_back (found); });
+            std::ranges::sort (reported);
+            require (reported == expected, "I06 deletion reporting differs from live-ID oracle");
+          }
       }
       require (not tree.dominates (vector<scalar_vector> ({-128, -128}), get, live),
                "dead subtree answered");
