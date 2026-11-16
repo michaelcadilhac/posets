@@ -5,6 +5,7 @@
 #include <iostream>
 #include <optional>
 #include <set>
+#include <sstream>
 #include <utility>
 
 #include <posets/downsets/lazy_kdtree_backed.hh>
@@ -25,6 +26,84 @@ namespace {
     for (const auto& v : set)
       result.insert (unpack (v));
     return result;
+  }
+  template <class V, bool Cascade>
+  long bucket_epoch_sweep () {
+    using T = posets::utils::bucket_kdtree<V, Cascade>;
+    const region rows {{0, 6}, {6, 0}, {2, 4}, {4, 2}, {1, 8}, {8, 1}, {3, 6}, {6, 3}};
+    const auto aligned_before = allocation_failure::aligned_failures;
+    for (long fail = 0; fail < 2048; ++fail) {
+      std::vector<V> points;
+      for (const auto& row : rows)
+        points.push_back (vector<V> (row));
+      std::vector<bool> alive (rows.size (), true);
+      const auto get = [&] (uint32_t id) -> const V& {
+        require (alive[id], "I06 accessed a retired payload");
+        return points[id];
+      };
+      const auto live = [&] (uint32_t id) { return alive[id]; };
+      T tree;
+      tree.rebuild ({0, 1, 2, 3}, 2, 2, get);
+      tree.retire (1);
+      alive[1] = false;
+      const auto before = tree.storage ();
+      const auto observe = [&] (const std::vector<uint32_t>& epoch) {
+        for (int x = -1; x <= 9; ++x)
+          for (int y = -1; y <= 9; ++y) {
+            const logical query {x, y};
+            const auto value = vector<V> (query);
+            bool ordinary = false, strict = false;
+            std::vector<uint32_t> expected, reported;
+            for (const auto id : epoch)
+              if (alive[id]) {
+                ordinary or_eq below (query, rows[id]);
+                strict or_eq query != rows[id] and below (query, rows[id]);
+                if (below (rows[id], query))
+                  expected.push_back (id);
+              }
+            require (tree.dominates (value, get, live) == ordinary and
+                         tree.dominates (value, get, live, true) == strict,
+                     "I06 bucket epoch membership changed");
+            tree.dominated_by (value, get, live, [&] (uint32_t id) { reported.push_back (id); });
+            std::ranges::sort (reported);
+            require (reported == expected, "I06 bucket epoch reporting changed");
+            require (tree.check_bridges (static_cast<int8_t> (x), false) and
+                         tree.check_bridges (static_cast<int8_t> (x), true),
+                     "I06 bucket epoch catalogs changed");
+          }
+      };
+      bool threw = false;
+      try {
+        allocations_left = fail;
+        tree.rebuild ({4, 5, 6, 7}, 2, 1, get);
+      } catch (const std::bad_alloc&) {
+        threw = true;
+      }
+      allocations_left = -1;
+      if (threw) {
+        require (tree.storage ().bytes () == before.bytes () and
+                     tree.storage ().keys == before.keys and tree.live_size () == 3,
+                 "I06 failed bucket rebuild published partial storage");
+        observe ({0, 1, 2, 3});
+        // Queries alone cannot detect a damaged ID-to-leaf retirement map.
+        for (const auto id : {0U, 2U, 3U}) {
+          tree.retire (id);
+          tree.retire (id);
+          alive[id] = false;
+          require (tree.live_size () == (id == 0 ? 2U : (id == 2 ? 1U : 0U)),
+                   "I06 failed bucket rebuild changed the retirement map");
+          observe ({0, 1, 2, 3});
+        }
+        tree.rebuild ({4, 5, 6, 7}, 2, 1, get);
+      }
+      observe ({4, 5, 6, 7});
+      if (not threw) {
+        require (allocation_failure::aligned_failures > aligned_before,
+                 "I06 sweep missed bound-slab allocation failure");
+        return fail;
+      }
+    }
+    throw std::runtime_error ("I06 bucket epoch sweep did not finish");
   }
   template <class V, bool Cascade>
   long construction_sweep (int mode) {
@@ -93,6 +172,11 @@ namespace {
     policy.leaf_size = 2;
     policy.min_index_size = 3;
     policy.min_buffer = 4;
+    if (operation == 3 or operation == 6) {
+      policy.min_buffer = 10000;
+      policy.pending_block_size = 2;
+      policy.min_index_size = operation == 3 ? 3 : 1000;
+    }
     for (long fail = 0; fail < 2048; ++fail) {
       struct reset {
           ~reset () { allocations_left = -1; }
@@ -103,6 +187,22 @@ namespace {
         values.push_back (vector<V> (v));
       S subject (std::move (values), policy);
       subject.rebuild ();
+      if (operation == 3 or operation == 6)
+        for (const auto& row : rhs) {
+          subject.insert (vector<V> (row));
+          initial.push_back (row);
+        }
+      if (operation == 3 or operation == 6)
+        require (subject.storage ().created_ids == 14 and subject.storage ().retired_ids == 6 and
+                     subject.storage ().pending_bound_bytes > 0 and
+                     (subject.storage ().frozen.nodes > 0) == (operation == 3),
+                 "I06 rebuild fixture needs tombstones and sealed pending bounds");
+      const auto published = [&] {
+        std::ostringstream out;
+        out << subject.storage ();
+        return out.str ();
+      };
+      const auto before = published ();
       auto other = build<S> (rhs);
       const logical new_raw = operation == 1 ? logical {20, 20, 20} : logical {-1, -1, 20};
       auto candidate = vector<V> (new_raw);
@@ -112,7 +212,8 @@ namespace {
           case 0: result.emplace (subject.apply ([] (const V& v) { return v.copy (); })); break;
           case 1:
           case 2: subject.insert (std::move (candidate)); break;
-          case 3: subject.rebuild (); break;
+          case 3:
+          case 6: subject.rebuild (); break;
           case 4: subject.intersect_with (other); break;
           case 5: subject.union_with (std::move (other)); break;
           default: throw std::runtime_error ("unknown operation");
@@ -127,6 +228,8 @@ namespace {
       }
       allocations_left = -1;
       if (threw) {
+        if (operation == 3 or operation == 6)
+          require (published () == before, "I06 failed rebuild changed the published epoch");
         require (canonical (other) == maxima (rhs), "failure consumed RHS");
         if (operation != 5) {
           check (subject, initial, initial);
@@ -141,7 +244,13 @@ namespace {
           }
           require (allowed, "basic union left an invalid partial result");
         }
-        run ();  // Retry the same valid operands, including partial union.
+        if (operation == 3 or operation == 6) {
+          // Exercise both old maps before a retry can replace and hide damage.
+          subject.insert (vector<V> ({9, 3, 1}));
+          initial.push_back ({9, 3, 1});
+          check (subject, initial, initial);
+        }
+        run ();  // Retry valid operands, including partial union and continued epochs.
       }
       region expected = initial;
       if (operation == 1 or operation == 2)
@@ -270,11 +379,13 @@ namespace {
   static_assert (posets::Vector<throwing_move>);
   template <class V, bool Cascade>
   void test () {
+    std::cout << "I06 cascade=" << Cascade
+              << " bucket_epoch_sites=" << bucket_epoch_sweep<V, Cascade> () << " PASS\n";
     seal_sweep<V, Cascade> ();
     for (int mode = 0; mode < 7; ++mode)
       std::cout << "cascade=" << Cascade << " construction_mode=" << mode
                 << " injected_sites=" << construction_sweep<V, Cascade> (mode) << " PASS\n";
-    for (int operation = 0; operation < 6; ++operation)
+    for (int operation = 0; operation < 7; ++operation)
       std::cout << "cascade=" << Cascade << " operation=" << operation
                 << " injected_sites=" << sweep<V, Cascade> (operation) << " PASS\n";
   }

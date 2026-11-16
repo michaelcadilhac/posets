@@ -33,6 +33,13 @@ namespace posets::downsets {
   // Experimental dense antichain plus a frozen, lazily deleted bucket index.
   // Filter coordinate is fixed at 0. IDs are append-only within an epoch;
   // dense slots may be reused, but IDs are renumbered only with a full rebuild.
+  // I06: for every live ID i, id_at_slot[slot_of_id[i]] == i and its coordinates
+  // stay unchanged within the epoch. A retired ID maps to none, never a new row.
+  // Frozen and sealed-pending bounds enclose every live row they index. Queries
+  // check liveness before resolving an ID, even when stale bounds allow a visit.
+  // Epoch publication is one nonthrowing commit of payloads, both maps, pending
+  // bounds and frozen geometry/catalogs; failed staging preserves logical state.
+  // This is exception atomicity under external synchronization, not concurrency.
   // Mutable generator access has the same index-invalidation restriction as
   // existing indexed backends; use clear()/reassignment instead of editing it.
   template <Vector V, bool Cascade = true>
@@ -170,6 +177,7 @@ namespace posets::downsets {
       }
       template <class Get>
       void rebuild_from (size_t count, size_t dimension, const Get& get) {
+        // I06: stage the new ID epoch without modifying the current maps/index.
         if (count > static_cast<size_t> (none) / 2)
           throw std::length_error ("lazy_kdtree ID capacity exceeded");
         std::vector<id_type> dense (count);
@@ -216,6 +224,7 @@ namespace posets::downsets {
         return dirty or buffered or bytes;
       }
       void erase_id (id_type id) noexcept {
+        // I06: moving a dense slot must preserve the surviving ID's payload.
         const size_t slot = slot_of_id[id];
         const auto last_id = id_at_slot.back ();
         index.retire (id);
@@ -488,7 +497,8 @@ namespace posets::downsets {
             reserve_growing (slot_of_id, slot_of_id.size () + 1);
           }
         }
-        // No allocating or potentially throwing Vector operation follows here.
+        // I06 commit: no allocating or potentially throwing Vector operation
+        // follows here; maps, pending bounds and index must change together.
         if (reset) {
           if constexpr (safe_moves)
             for (const auto id : order)

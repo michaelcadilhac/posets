@@ -85,8 +85,12 @@ namespace posets::utils {
     return bounds;
   }
 
-  // Non-owning frozen geometry. IDs, unlike dense generator slots, remain stable
-  // until rebuild. Rebuild requires unique IDs and common positive dimension.
+  // I06: within a published epoch (until rebuild or whole-state replacement),
+  // each ID denotes the same coordinate payload; retirement is permanent. Splits,
+  // catalogs and bounds describe those original payloads. Deletion only shrinks
+  // the live subset: lower[d] <= live_point[d] <= upper[d] stays conservative.
+  // A bound permits inspection, never supplies a witness; test live before get.
+  // Rebuild requires unique IDs and common positive dimension.
   // Access/live predicates must agree and keep live payloads valid; callbacks may
   // not mutate/rebuild geometry during traversal. Dominates finds stored >= query
   // (strict means unequal); dominated_by reports stored <= query inclusively.
@@ -411,6 +415,8 @@ namespace posets::utils {
       }
       template <class Get>
       void rebuild (std::vector<id_type> points, size_t dim, size_t leaf_size, const Get& get) {
+        // I06 publication: finish all allocations, catalogs and the bound slab in
+        // replacement. Any exception leaves this epoch intact; swap cannot throw.
         if (dim == 0 or dim >= none or leaf_size == 0)
           throw std::invalid_argument (
               "bucket_kdtree requires positive dimension and bucket size");
@@ -441,6 +447,7 @@ namespace posets::utils {
 #endif
       }
       void retire (id_type id) noexcept {
+        // I06: retire counts/leaf membership only; frozen bounds may stay wider.
         if (id >= leaf_for_id.size ())
           return;  // An ID in the pending buffer has no frozen leaf yet.
         id_type index = leaf_for_id[id];
