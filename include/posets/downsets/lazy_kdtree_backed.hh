@@ -562,12 +562,21 @@ namespace posets::downsets {
         if (this == &other or maxima.empty ())
           return;
         lazy_kdtree_backed result (policy, empty_tag {});
-        for (const auto& value : maxima)
-          if (other.contains (value))
-            result.insert (value.copy ());
+        std::vector<const V*> remaining;
+        for (const auto& rhs : other)
+          if (contains (rhs))
+            // rhs is already in the intersection and covers every lhs.meet(rhs).
+            result.insert (rhs.copy ());
           else
-            for (const auto& rhs : other)
-              result.insert (value.meet (rhs));
+            remaining.push_back (&rhs);
+        if (not remaining.empty ()) {
+          for (const auto& value : maxima)
+            if (other.contains (value))
+              result.insert (value.copy ());
+            else
+              for (const auto* rhs : remaining)
+                result.insert (value.meet (*rhs));
+        }
         swap (result);
       }
       [[nodiscard]] auto query_statistics () const {
