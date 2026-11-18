@@ -300,6 +300,77 @@ namespace {
     }
   }
 
+  template <class V, bool Cascade>
+  void intersections () {
+    using S = posets::downsets::lazy_kdtree_backed<V, Cascade>;
+    std::mt19937 random (407);
+    const auto test = [] (const region& lhs, const region& rhs) {
+      region expected;
+      for (const auto& a : lhs)
+        for (const auto& b : rhs) {
+          logical met;
+          for (size_t d = 0; d < a.size (); ++d)
+            met.push_back (std::min (a[d], b[d]));
+          insert_oracle (expected, std::move (met));
+        }
+      auto probes = lhs;
+      probes.insert (probes.end (), rhs.begin (), rhs.end ());
+      probes.insert (probes.end (), expected.begin (), expected.end ());
+      // Exercise both frozen and pending-only results, then query and reuse them.
+      for (const size_t minimum : {3U, 1000U}) {
+        posets::downsets::lazy_kdtree_policy policy;
+        policy.min_index_size = minimum;
+        policy.leaf_size = 2;
+        policy.min_buffer = 4;
+        policy.pending_block_size = 2;
+        std::vector<V> values;
+        for (const auto& row : lhs)
+          values.push_back (vector<V> (row));
+        S subject (std::move (values), policy);
+        auto other = build<S> (rhs);
+        subject.intersect_with (other);
+        observe (subject, expected, probes);
+        observe (other, rhs, probes);
+        subject.rebuild ();
+        observe (subject, expected, probes);
+        if (not probes.empty ()) {
+          const auto& row = probes.front ();
+          auto extended = expected;
+          insert_oracle (extended, row);
+          subject.insert (vector<V> (row));
+          observe (subject, extended, probes);
+        }
+      }
+    };
+    posets::vectors::bool_threshold = posets::vectors::bitset_threshold = 3;
+    // Proper containment, mixed contained/incomparable rhs, duplicate meets,
+    // and incomparable generators (including duplicate constructor inputs).
+    const region a {{3, 3, 3}, {3, 3, 3}, {2, 4, 2}, {-1, -1, -1}};
+    const region b {{5, 1, 3}, {3, 2, 4}, {4, 2, 3}, {2, 4, 2}, {4, 2, 3}};
+    const region c {{3, 2, 3}, {2, 3, 2}, {3, 2, 3}, {-1, -1, -1}};
+    for (const auto& lhs : {region {}, a, b, c})
+      for (const auto& rhs : {region {}, a, b, c})
+        test (lhs, rhs);
+    for (const size_t dim : {1U, 2U, 3U, 7U, 17U, 33U, 65U, 129U}) {
+      posets::vectors::bool_threshold = posets::vectors::bitset_threshold = dim / 2;
+      for (size_t trial = 0; trial < 12; ++trial) {
+        region lhs, rhs;
+        for (auto* rows : {&lhs, &rhs}) {
+          const size_t count = random () % 13;
+          for (size_t i = 0; i < count; ++i) {
+            logical row (dim);
+            for (size_t d = 0; d < dim; ++d)
+              row[d] = static_cast<int> (random () % (d < dim / 2 ? 7 : 2)) - 1;
+            rows->push_back (std::move (row));
+          }
+          if (not rows->empty ())
+            rows->push_back (rows->front ());
+        }
+        test (lhs, rhs);
+      }
+    }
+  }
+
   template <bool Cascade>
   void stable_ids_and_tiny_history () {
     using S = posets::downsets::lazy_kdtree_backed<scalar_vector, Cascade>;
@@ -712,6 +783,12 @@ int main () try {
   random_algebra<posets::vectors::simd_vector_backed<int8_t>, false> ();
   random_algebra<posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed<int8_t>, 3>,
                  true> ();
+  intersections<scalar_vector, true> ();
+  intersections<scalar_vector, false> ();
+  intersections<posets::vectors::simd_vector_backed_sum<int8_t>, true> ();
+  intersections<posets::vectors::simd_vector_backed_sum<int8_t>, false> ();
+  intersections<posets::vectors::x_and_bitset<posets::vectors::simd_vector_backed_sum<int8_t>, 3>,
+                true> ();
   stable_ids_and_tiny_history<true> ();
   stable_ids_and_tiny_history<false> ();
   catalogs<true> ();
